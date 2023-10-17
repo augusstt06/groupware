@@ -13,7 +13,7 @@ export default function Dropdown({ name, dropdownItems }: Drop_Props) {
       <ul className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
         {dropdownItems.map(
           ({ name, url }: { name: string; url: string }, index: number) => (
-            <li key={index}>
+            <li key={index} className="hover:font-bold">
               <Link href={url}>{name}</Link>
             </li>
           )

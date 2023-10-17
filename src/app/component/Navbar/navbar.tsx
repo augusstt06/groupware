@@ -2,11 +2,15 @@
 import { useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import { RxCross1 } from "react-icons/rx";
+import { MdDarkMode } from "react-icons/md";
+import { BsFillSunFill } from "react-icons/bs";
 import Dropdown from "./dropdown";
 import Link from "next/link";
 
 export default function Navbar() {
   const [nav, setNav] = useState(false);
+  const [dark, setDark] = useState(false);
+
   const menu = [
     { name: "Home", url: "/" },
     {
@@ -20,17 +24,11 @@ export default function Navbar() {
     { name: "others", url: "/" },
   ];
   return (
-    <nav className="w-full bg-gray-800 shadow">
+    <nav className="w-full bg-indigo-500 shadow">
       <div className="justify-between px-4 mx-auto lg:max-w-7xl md:items-center md:flex md:px-8">
+        {/*  */}
         <div>
           <div className="flex items-center justify-between py-3 md:py-5 md:block">
-            <a href="#" className="">
-              <div className="avatar">
-                <div className="w-16 rounded">
-                  <h1 className="text-3xl text-white font-bold">test Nav</h1>
-                </div>
-              </div>
-            </a>
             <div className="md:hidden">
               <button
                 className="p-2 text-gray-700 rounded-md outline-none focus:border-gray-400 focus:border"
@@ -39,11 +37,31 @@ export default function Navbar() {
                 {nav ? (
                   <RxCross1 className="text-white" />
                 ) : (
-                  <AiOutlineMenu className="text-white" />
+                  <AiOutlineMenu className="text-white w-10 h-6 hover:text-stone-800" />
+                )}
+              </button>
+            </div>
+
+            <a href="#" className="">
+              <div className="avatar">
+                <div className="w-16 rounded">
+                  <h1 className="text-3xl text-white font-bold">test Nav</h1>
+                </div>
+              </div>
+            </a>
+            <div className="flex-end darkmode w-10 h-6 hover:bg-gray">
+              {/* 다크모드일때 전체 색상 다르게하기 */}
+              <button onClick={() => setDark(!dark)}>
+                {dark ? (
+                  <BsFillSunFill className="w-10 h-6 text-white" />
+                ) : (
+                  <MdDarkMode className="w-10 h-6" />
                 )}
               </button>
             </div>
           </div>
+
+          {/*  */}
         </div>
         <div>
           <div
