@@ -45,20 +45,21 @@ export default function Navbar() {
             <a href="#" className="">
               <div className="avatar">
                 <div className="w-16 rounded">
-                  <h1 className="text-3xl text-white font-bold">test Nav</h1>
+                  {/* 이부분이 다크모드 전환 */}
+                  <h1 className="text-3xl text-white font-bold">
+                    <button onClick={() => setDark(!dark)}>
+                      {dark ? (
+                        <a>test Nav Dark</a>
+                      ) : (
+                        <a className="text-black">test Nav</a>
+                      )}
+                    </button>
+                    {/* test Nav */}
+                  </h1>
                 </div>
               </div>
             </a>
-            <div className="flex-end darkmode w-10 h-6 hover:bg-gray">
-              {/* 다크모드일때 전체 색상 다르게하기 */}
-              <button onClick={() => setDark(!dark)}>
-                {dark ? (
-                  <BsFillSunFill className="w-10 h-6 text-white" />
-                ) : (
-                  <MdDarkMode className="w-10 h-6" />
-                )}
-              </button>
-            </div>
+            <div className="justify-between w-10 h-6 hover:bg-gray"></div>
           </div>
 
           {/*  */}
