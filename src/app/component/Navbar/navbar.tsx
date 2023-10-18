@@ -2,8 +2,6 @@
 import { useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import { RxCross1 } from "react-icons/rx";
-import { MdDarkMode } from "react-icons/md";
-import { BsFillSunFill } from "react-icons/bs";
 import Dropdown from "./dropdown";
 import Link from "next/link";
 
@@ -26,7 +24,6 @@ export default function Navbar() {
   return (
     <nav className="w-full bg-indigo-500 shadow">
       <div className="justify-between px-4 mx-auto lg:max-w-7xl md:items-center md:flex md:px-8">
-        {/*  */}
         <div>
           <div className="flex items-center justify-between py-3 md:py-5 md:block">
             <div className="md:hidden">
@@ -45,24 +42,16 @@ export default function Navbar() {
             <a href="#" className="">
               <div className="avatar">
                 <div className="w-16 rounded">
-                  {/* 이부분이 다크모드 전환 */}
                   <h1 className="text-3xl text-white font-bold">
                     <button onClick={() => setDark(!dark)}>
-                      {dark ? (
-                        <a>test Nav Dark</a>
-                      ) : (
-                        <a className="text-black">test Nav</a>
-                      )}
+                      {dark ? "testNavDark" : "testNav"}
                     </button>
-                    {/* test Nav */}
                   </h1>
                 </div>
               </div>
             </a>
             <div className="justify-between w-10 h-6 hover:bg-gray"></div>
           </div>
-
-          {/*  */}
         </div>
         <div>
           <div
