@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 interface DarkModeState {
   isDark: boolean;
@@ -12,8 +12,10 @@ export const themeSlice = createSlice({
   name: "theme adjust",
   initialState,
   reducers: {
-    changeTheme: (state) => {
-      !state;
+    changeTheme: (state, action: PayloadAction<boolean>) => {
+      return {
+        isDark: action.payload,
+      };
     },
   },
 });

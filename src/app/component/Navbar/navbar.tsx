@@ -1,13 +1,24 @@
 "use client";
+
 import { useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import { RxCross1 } from "react-icons/rx";
 import Dropdown from "./dropdown";
 import Link from "next/link";
+import { AppDispatch } from "@/app/store";
+import { useDispatch } from "react-redux";
+import { changeTheme } from "@/app/features/darkMode";
 
 export default function Navbar() {
   const [nav, setNav] = useState(false);
   const [dark, setDark] = useState(false);
+
+  const dispatch = useDispatch<AppDispatch>();
+
+  // 이부분 dispatch
+  const themeChange = () => {
+    dispatch(changeTheme(!dark));
+  };
 
   const menu = [
     { name: "Home", url: "/" },
