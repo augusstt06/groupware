@@ -5,20 +5,10 @@ import { AiOutlineMenu } from "react-icons/ai";
 import { RxCross1 } from "react-icons/rx";
 import Dropdown from "./dropdown";
 import Link from "next/link";
-import { AppDispatch } from "@/app/store";
-import { useDispatch } from "react-redux";
-import { changeTheme } from "@/app/features/darkMode";
+import DarkmodeBtn from "./darkmodeBtn";
 
 export default function Navbar() {
   const [nav, setNav] = useState(false);
-  const [dark, setDark] = useState(false);
-
-  const dispatch = useDispatch<AppDispatch>();
-
-  // 이부분 dispatch
-  const themeChange = () => {
-    dispatch(changeTheme(!dark));
-  };
 
   const menu = [
     { name: "Home", url: "/" },
@@ -53,15 +43,15 @@ export default function Navbar() {
             <a href="#" className="">
               <div className="avatar">
                 <div className="w-16 rounded">
-                  <h1 className="text-3xl text-white font-bold">
-                    <button onClick={() => setDark(!dark)}>
-                      {dark ? "testNavDark" : "testNav"}
-                    </button>
-                  </h1>
+                  <h3 className="text-3xl text-white font-bold">Test nab</h3>
                 </div>
               </div>
             </a>
-            <div className="justify-between w-10 h-6 hover:bg-gray"></div>
+            <div className="justify-between w-10 h-6 hover:bg-gray  md:hidden">
+              <h3 className="text-2xl text-white font-bold">
+                <DarkmodeBtn />
+              </h3>
+            </div>
           </div>
         </div>
         <div>
@@ -71,9 +61,15 @@ export default function Navbar() {
             }`}
           >
             <ul className="items-center justify-center space-y-8 md:flex md:space-x-6 md:space-y-0">
+              <li
+                className={`text-2xl text-white font-bold ${
+                  nav ? "hidden" : "block"
+                }`}
+              >
+                <DarkmodeBtn />
+              </li>
               {menu.map(({ name, url, dropdown }, index) => (
                 <li key={index} className="text-white">
-                  {/* 이 부분 수정 요망 */}
                   {dropdown && nav ? (
                     <Dropdown name={name} dropdownItems={dropdown} />
                   ) : (

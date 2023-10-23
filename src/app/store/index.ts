@@ -1,10 +1,10 @@
 "use client";
 
 import { configureStore } from "@reduxjs/toolkit";
-import themeReducer from "../features/darkMode";
+import testReducer from "./reducers/testReducers";
 
 export const store = configureStore({
-  reducer: { themeReducer },
+  reducer: { testReducer },
 });
 
 export type RootState = ReturnType<typeof store.getState>;

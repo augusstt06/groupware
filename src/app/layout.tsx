@@ -1,6 +1,7 @@
 import "./globals.css";
 import Header from "./component/Header";
-import { Providers } from "./store/provider";
+import { ReduxProviders } from "./store/reduxProviders";
+import ThemeProviders from "./features/ThemeProviders";
 
 export default function RootLayout({
   children,
@@ -8,13 +9,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <Providers>
+    <ReduxProviders>
       <html lang="en">
         <body>
-          <Header />
-          {children}
+          <ThemeProviders>
+            <Header />
+            {children}
+          </ThemeProviders>
         </body>
       </html>
-    </Providers>
+    </ReduxProviders>
   );
 }
