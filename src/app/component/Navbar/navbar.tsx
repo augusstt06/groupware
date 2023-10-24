@@ -23,7 +23,7 @@ export default function Navbar() {
     { name: "others", url: "/" },
   ];
   return (
-    <nav className="w-full bg-indigo-500 shadow">
+    <nav className="w-full">
       <div className="justify-between px-4 mx-auto lg:max-w-7xl md:items-center md:flex md:px-8">
         <div>
           <div className="flex items-center justify-between py-3 md:py-5 md:block">
@@ -33,22 +33,25 @@ export default function Navbar() {
                 onClick={() => setNav(!nav)}
               >
                 {nav ? (
-                  <RxCross1 className="text-white" />
+                  <RxCross1 className="text-indigo-500 w-10 h-6 hover:text-stone-800" />
                 ) : (
-                  <AiOutlineMenu className="text-white w-10 h-6 hover:text-stone-800" />
+                  <AiOutlineMenu className="text-indigo-500 w-10 h-6 hover:text-stone-800" />
                 )}
               </button>
             </div>
 
             <a href="#" className="">
               <div className="avatar">
+                {/*  bg-indigo-500 shadow */}
                 <div className="w-16 rounded">
-                  <h3 className="text-3xl text-white font-bold">Test nab</h3>
+                  <h3 className="text-3xl text-indigo-500 font-bold">
+                    Test nab
+                  </h3>
                 </div>
               </div>
             </a>
             <div className="justify-between w-10 h-6 hover:bg-gray  md:hidden">
-              <h3 className="text-2xl text-white font-bold">
+              <h3 className="text-2xl text-indigo-500 font-bold">
                 <DarkmodeBtn />
               </h3>
             </div>
@@ -62,14 +65,14 @@ export default function Navbar() {
           >
             <ul className="items-center justify-center space-y-8 md:flex md:space-x-6 md:space-y-0">
               <li
-                className={`text-2xl text-white font-bold ${
+                className={`text-2xl text-indigo-500 font-bold ${
                   nav ? "hidden" : "block"
                 }`}
               >
                 <DarkmodeBtn />
               </li>
               {menu.map(({ name, url, dropdown }, index) => (
-                <li key={index} className="text-white">
+                <li key={index} className="text-indigo-500">
                   {dropdown && nav ? (
                     <Dropdown name={name} dropdownItems={dropdown} />
                   ) : (

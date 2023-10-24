@@ -10,7 +10,7 @@ export default function Dropdown({ name, dropdownItems }: Drop_Props) {
       <label tabIndex={0} className="">
         {name}
       </label>
-      <ul className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+      <ul className="dropdown-content z-[1] menu p-2  bg-base-100 rounded-box w-52">
         {dropdownItems.map(
           ({ name, url }: { name: string; url: string }, index: number) => (
             <li key={index} className="hover:font-bold">
