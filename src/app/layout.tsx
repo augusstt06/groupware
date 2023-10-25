@@ -11,7 +11,7 @@ export default function RootLayout({
   return (
     <ReduxProviders>
       <html lang="en">
-        <body>
+        <body className="font-mono">
           <ThemeProviders>
             <Header />
             {children}

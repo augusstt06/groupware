@@ -40,16 +40,15 @@ export default function Navbar() {
               </button>
             </div>
 
-            <a href="#" className="">
+            <Link href="/">
               <div className="avatar">
-                {/*  bg-indigo-500 shadow */}
                 <div className="w-16 rounded">
                   <h3 className="text-3xl text-indigo-500 font-bold">
-                    Test nab
+                    Group ware
                   </h3>
                 </div>
               </div>
-            </a>
+            </Link>
             <div className="justify-between w-10 h-6 hover:bg-gray  md:hidden">
               <h3 className="text-2xl text-indigo-500 font-bold">
                 <DarkmodeBtn />
