@@ -1,10 +1,11 @@
 import { GitSignin, GoogleSignin } from "../component/Sign/SignBtn";
+import { SigninBtn } from "../component/Sign/SignBtn";
 
 export default function Sign() {
   // 추가적으로 넣을것 생각하기
   return (
-    <div className="flex flex-col justify-center items-center p 1-">
-      <div className="my-10 w-3/5">
+    <div className="flex flex-col justify-center items-center p 1">
+      <div className="mt-10 mb-5 w-3/5">
         {/* Email 입력란 */}
         <label
           htmlFor="input-group-1"
@@ -58,7 +59,11 @@ export default function Sign() {
             placeholder="elonmusk"
           />
         </div>
+        <div className="flex flex-col justify-center items-center p 1 mt-5">
+          <SigninBtn />
+        </div>
       </div>
+
       <div className="flex flex-col justify-center items-center font-sm">
         <a className="mb-5">If tou already have account,</a>
         <div className="flex flex-col justify-center items-center font-sm">
