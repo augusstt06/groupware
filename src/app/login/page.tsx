@@ -1,11 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { GitSignin, GoogleSignin, SigninBtn } from "../component/Sign/SignBtn";
+import { SigninBtn } from "../component/ui/button/SignBtn";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { AiOutlineMail, AiFillPhone } from "react-icons/ai";
 import { BsFillPersonVcardFill, BsMicrosoftTeams } from "react-icons/bs";
-import { SigninInput, SigninHideInput } from "../component/Sign/SignInput";
+import { SigninInput, SigninHideInput } from "../component/ui/input/SignInput";
 
 export default function Sign() {
   const [viewPwd, setViewPwd] = useState(false);
@@ -52,10 +52,10 @@ export default function Sign() {
       </div>
 
       <div className="flex flex-col justify-center items-center font-sm">
-        <a className="mb-5">If you already have account,</a>
+        {/* <a className="mb-5">If you already have account,</a> */}
         <div className="flex flex-col justify-center items-center font-sm">
-          <GitSignin />
-          <GoogleSignin />
+          {/* <GitSignin />
+          <GoogleSignin /> */}
         </div>
       </div>
     </div>

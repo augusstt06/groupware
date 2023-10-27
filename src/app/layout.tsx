@@ -1,7 +1,7 @@
 import "./globals.css";
-import Header from "./component/Header";
-import { ReduxProviders } from "./store/reduxProviders";
-import ThemeProviders from "./features/ThemeProviders";
+import Header from "./component/ui/header/Header";
+import { ReduxProviders } from "./providers/ReduxProviders";
+import ThemeProviders from "./providers/ThemeProviders";
 
 export default function RootLayout({
   children,

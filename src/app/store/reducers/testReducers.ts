@@ -1,10 +1,10 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-interface testState {
+type TestState = {
   isTest: boolean;
-}
+};
 
-const initialState: testState = {
+const initialState: TestState = {
   isTest: false,
 };
 

@@ -1,4 +1,4 @@
-import { SignupBtn } from "./component/Sign/SignBtn";
+import { SignupBtn } from "./component/ui/button/SignBtn";
 import Link from "next/link";
 
 export default function Home() {
@@ -12,7 +12,7 @@ export default function Home() {
       </div>
       <div className="text-medium font-semibold mb-10">other comments...</div>
       <div>
-        <Link href={"/signup"}>
+        <Link href={"/login"}>
           <SignupBtn />
         </Link>
       </div>
