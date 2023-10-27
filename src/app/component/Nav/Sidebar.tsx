@@ -5,6 +5,11 @@ type Props = {
   nav: boolean;
 };
 export default function Sidebar(props: Props) {
+  const menu = [
+    { name: "menu1", url: "/" },
+    { name: "menu2", url: "/" },
+    { name: "menu3", url: "/" },
+  ];
   return (
     <aside
       className={` ${
@@ -22,42 +27,15 @@ export default function Sidebar(props: Props) {
       <nav
         className={`block text-base text-white font-semibold pt-3 dark:hover:text-bold `}
       >
-        <a
-          href=""
-          className="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 dark:hover:text-indigo-500"
-        >
-          menu 1
-        </a>
-        <a
-          href=""
-          className="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 dark:hover:text-indigo-500"
-        >
-          menu 2
-        </a>
-        <a
-          href=""
-          className="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 dark:hover:text-indigo-500"
-        >
-          menu 3
-        </a>
-        <a
-          href=""
-          className="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 dark:hover:text-indigo-500"
-        >
-          menu 4
-        </a>
-        <a
-          href=""
-          className="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 dark:hover:text-indigo-500"
-        >
-          menu 5
-        </a>
-        <a
-          href=""
-          className="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 dark:hover:text-indigo-500"
-        >
-          menu 6
-        </a>
+        {menu.map((data) => (
+          <a
+            key={data.name}
+            href=""
+            className="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 dark:hover:text-indigo-500"
+          >
+            {data.name}
+          </a>
+        ))}
       </nav>
     </aside>
   );
