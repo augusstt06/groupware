@@ -1,9 +1,13 @@
+import React from "react";
 import Navbar from "./Nav/Navbar";
 
-export default function Header() {
+type Props = {
+  children: React.ReactNode;
+};
+export default function Header(props: Props) {
   return (
     <div>
-      <Navbar />
+      <Navbar>{props.children}</Navbar>
     </div>
   );
 }
