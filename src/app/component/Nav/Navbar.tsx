@@ -24,10 +24,10 @@ export default function Navbar() {
   ];
   return (
     <nav className="w-full">
-      <div className="justify-between px-4 mx-auto lg:max-w-7xl md:items-center md:flex md:px-8">
-        <div>
-          <div className="flex items-center justify-between py-3 md:py-5 md:block">
-            <div className="md:hidden">
+      <div className="justify-between px-4 mx-auto">
+        <div className="flex flex-row items-center justify-between">
+          <div className="flex items-center justify-between py-3 md:py-5">
+            <div>
               <button
                 className="p-2 text-gray-700 rounded-md outline-none focus:border-gray-400 focus:border"
                 onClick={() => setNav(!nav)}
@@ -39,47 +39,18 @@ export default function Navbar() {
                 )}
               </button>
             </div>
-
+          </div>
+          <div className="flex justify-center py-3 md:py-5 w-2/5">
             <Link href="/">
               <div className="avatar">
                 <div className="w-16 rounded">
-                  <h3 className="text-3xl text-indigo-500 font-bold">
-                    Group ware
-                  </h3>
+                  <h3 className="text-3xl text-indigo-500 font-bold">Logo</h3>
                 </div>
               </div>
             </Link>
-            <div className="justify-between w-10 h-6 hover:bg-gray  md:hidden">
-              <h3 className="text-2xl text-indigo-500 font-bold">
-                <DarkmodeBtn />
-              </h3>
-            </div>
           </div>
-        </div>
-        <div>
-          <div
-            className={`flex-1 justify-self-center pb-3 mt-8 md:block md:pb-0 md:mt-0 ${
-              nav ? "block" : "hidden"
-            }`}
-          >
-            <ul className="items-center justify-center space-y-8 md:flex md:space-x-6 md:space-y-0">
-              <li
-                className={`text-2xl text-indigo-500 font-bold ${
-                  nav ? "hidden" : "block"
-                }`}
-              >
-                <DarkmodeBtn />
-              </li>
-              {menu.map(({ name, url, dropdown }, index) => (
-                <li key={index} className="text-indigo-500">
-                  {dropdown && nav ? (
-                    <Dropdown name={name} dropdownItems={dropdown} />
-                  ) : (
-                    <Link href={url}>{name}</Link>
-                  )}
-                </li>
-              ))}
-            </ul>
+          <div className="flex items-center justify-center text-2xl text-indigo-500 font-bold py-3 md:py-5">
+            <DarkmodeBtn />
           </div>
         </div>
       </div>
