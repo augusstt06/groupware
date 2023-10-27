@@ -7,7 +7,7 @@ import { TbLogin2 } from "react-icons/tb";
 import Sidebar from "./Sidebar";
 
 import Link from "next/link";
-import DarkmodeBtn from "./darkmodeBtn";
+import DarkmodeBtn from "./DarkmodeBtn";
 
 type Props = {
   children: React.ReactNode;
