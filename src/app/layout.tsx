@@ -10,7 +10,7 @@ export default function RootLayout({
 }) {
   return (
     <ReduxProviders>
-      <html lang="en">
+      <html lang="en" suppressHydrationWarning={true}>
         <body className="font-mono">
           <ThemeProviders>
             <Header>{children}</Header>

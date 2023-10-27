@@ -1,12 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import {
-  GitSignin,
-  GoogleSignin,
-  SigninBtn,
-  DuplicateBtn,
-} from "../component/Sign/SignBtn";
+import { GitSignin, GoogleSignin, SigninBtn } from "../component/Sign/SignBtn";
+import { RiLockPasswordFill } from "react-icons/ri";
+import { AiOutlineMail, AiFillPhone } from "react-icons/ai";
+import { BsFillPersonVcardFill, BsMicrosoftTeams } from "react-icons/bs";
+import { SigninInput, SigninHideInput } from "../component/Sign/SignInput";
 
 export default function Sign() {
   const [viewPwd, setViewPwd] = useState(false);
@@ -14,77 +13,38 @@ export default function Sign() {
   return (
     <div className="flex flex-col justify-center items-center p 1">
       <div className="mt-10 mb-5 w-3/5">
-        {/* Email 입력란 */}
-        <label
-          htmlFor="input-group-1"
-          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-        >
-          Email (for your ID)
-        </label>
-        <div className="relative mb-6">
-          <div className="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
-            <svg
-              className="w-4 h-4 text-gray-500 dark:text-gray-400"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="currentColor"
-              viewBox="0 0 20 16"
-            >
-              <path d="m10.036 8.278 9.258-7.79A1.979 1.979 0 0 0 18 0H2A1.987 1.987 0 0 0 .641.541l9.395 7.737Z" />
-              <path d="M11.241 9.817c-.36.275-.801.425-1.255.427-.428 0-.845-.138-1.187-.395L0 2.6V14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2.5l-8.759 7.317Z" />
-            </svg>
-          </div>
-          <input
-            type="text"
-            id="input-group-1"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="name@sample.com"
-          />
-          {/* 아이디 중복체크 => 서버에 api 요청 */}
-          <div className="absolute inset-y-0 right-4 flex items-center pl-3.5">
-            <input type="checkbox" className="cursor-pointer w-5 h-5" />
-          </div>
-        </div>
-
-        {/* 비밀번호 입력란 */}
-        <label
-          htmlFor="website-admin"
-          className="block mb-1 text-sm font-medium text-gray-900 dark:text-white"
-        >
-          Password (6글자 이상, 숫자, 특수문자,영대문자 포함)
-        </label>
-        <label className="mb-2 text-sm font-medium text-gray-900 dark:text-white">
-          입력문자 보기
-        </label>
-        <input
-          type="checkbox"
-          className="ml-2"
-          defaultChecked={viewPwd}
-          onChange={() => setViewPwd(!viewPwd)}
+        <SigninInput
+          title="Email"
+          placeholder="abc12@sample.com"
+          icon={<AiOutlineMail />}
+          checkBox_dup={true}
         />
-        <div className="flex relative mt-2 mb-6">
-          <span className="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-r-0 border-gray-300 rounded-l-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
-            <svg
-              className="w-4 h-4 text-gray-500 dark:text-gray-400"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
-              <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm0 5a3 3 0 1 1 0 6 3 3 0 0 1 0-6Zm0 13a8.949 8.949 0 0 1-4.951-1.488A3.987 3.987 0 0 1 9 13h2a3.987 3.987 0 0 1 3.951 3.512A8.949 8.949 0 0 1 10 18Z" />
-            </svg>
-          </span>
-          <input
-            type={`${viewPwd ? "text" : "password"}`}
-            id="website-admin"
-            className="rounded-none rounded-r-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="elonmusk"
-          />
-          {/* 비밀번호 중복체크 => 서버에 api 요청 */}
-          <div className="absolute inset-y-0 right-4 flex items-center pl-3.5">
-            <input type="checkbox" className="cursor-pointer w-5 h-5" />
-          </div>
-        </div>
+        <SigninHideInput
+          title="Password (6글자 이상, 숫자, 특수문자,영대문자 포함)"
+          placeholder="Asd12!!"
+          icon={<RiLockPasswordFill />}
+          view={viewPwd}
+          setView={setViewPwd}
+          checkBox_dup={true}
+        />
+        <SigninInput
+          title="Name"
+          placeholder="Min Yeon Kim"
+          icon={<BsFillPersonVcardFill />}
+          checkBox_dup={false}
+        />
+        <SigninInput
+          title="Teams"
+          placeholder="프론트엔드 개발"
+          icon={<BsMicrosoftTeams />}
+          checkBox_dup={false}
+        />
+        <SigninInput
+          title="Phone Number"
+          placeholder="010-0000-0000"
+          icon={<AiFillPhone />}
+          checkBox_dup={true}
+        />
 
         <div className="flex flex-col justify-center items-center p 1 mt-5">
           <SigninBtn />
@@ -92,7 +52,7 @@ export default function Sign() {
       </div>
 
       <div className="flex flex-col justify-center items-center font-sm">
-        <a className="mb-5">If tou already have account,</a>
+        <a className="mb-5">If you already have account,</a>
         <div className="flex flex-col justify-center items-center font-sm">
           <GitSignin />
           <GoogleSignin />
