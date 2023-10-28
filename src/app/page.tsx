@@ -1,4 +1,4 @@
-import { SignupBtn } from "./component/button/SignBtn";
+import { SignupBtn } from "./component/button/LoginBtn";
 import Link from "next/link";
 
 export default function Home() {

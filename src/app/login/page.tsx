@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { SigninBtn } from "../component/button/SignBtn";
+import { SigninBtn } from "../component/button/LoginBtn";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { AiOutlineMail, AiFillPhone } from "react-icons/ai";
 import { BsFillPersonVcardFill, BsMicrosoftTeams } from "react-icons/bs";

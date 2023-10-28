@@ -1,4 +1,13 @@
 import { AiFillGithub, AiOutlineGoogle } from "react-icons/ai";
+import { TbLogin2 } from "react-icons/tb";
+
+export function HeaderLoginBtn() {
+  return (
+    <button className="p-2 text-gray-700 rounded-md outline-none focus:border-gray-400 focus:border">
+      <TbLogin2 className="text-indigo-500 w-10 h-6 hover:text-stone-800" />
+    </button>
+  );
+}
 
 export function SignupBtn() {
   return (
