@@ -6,10 +6,22 @@ import { RiLockPasswordFill } from "react-icons/ri";
 import { AiOutlineMail, AiFillPhone } from "react-icons/ai";
 import { BsFillPersonVcardFill, BsMicrosoftTeams } from "react-icons/bs";
 import { SigninInput, SigninHideInput } from "../component/input/SignInput";
+import Progressbar from "../component/progressbar/Progressbar";
 
 export default function Sign() {
   const [viewPwd, setViewPwd] = useState(false);
-  // 추가적으로 넣을것 생각하기
+  const [items, setItems] = useState({
+    allItems: 5,
+    completedItems: 0,
+  });
+  const entryCompleted = () => {
+    if (items.completedItems === items.allItems) return;
+    setItems({
+      allItems: 5,
+      completedItems: items.completedItems + 1,
+    });
+  };
+
   return (
     <div className="flex flex-col justify-center items-center p 1">
       <div className="mt-10 mb-5 w-3/5">
@@ -49,13 +61,11 @@ export default function Sign() {
         <div className="flex flex-col justify-center items-center p 1 mt-5">
           <SigninBtn />
         </div>
-      </div>
-
-      <div className="flex flex-col justify-center items-center font-sm">
-        {/* <a className="mb-5">If you already have account,</a> */}
-        <div className="flex flex-col justify-center items-center font-sm">
-          {/* <GitSignin />
-          <GoogleSignin /> */}
+        <div>
+          <Progressbar
+            completedItems={items.completedItems}
+            allItems={items.allItems}
+          />
         </div>
       </div>
     </div>
