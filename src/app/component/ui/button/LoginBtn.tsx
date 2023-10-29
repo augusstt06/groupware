@@ -1,32 +1,24 @@
 import { AiFillGithub, AiOutlineGoogle } from "react-icons/ai";
 import { TbLogin2 } from "react-icons/tb";
 
+type Props = {
+  title: string;
+};
+export function SignupBtn(props: Props) {
+  return (
+    <button
+      type="button"
+      className="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 dark:hover:bg-white dark:hover:text-indigo-500 mr-2 mb-2 border-2 dark:hover:border-indigo-500/75"
+    >
+      {props.title}
+    </button>
+  );
+}
+
 export function HeaderLoginBtn() {
   return (
     <button className="p-2 text-gray-700 rounded-md outline-none focus:border-gray-400 focus:border">
       <TbLogin2 className="text-indigo-500 w-10 h-6 hover:text-stone-800" />
-    </button>
-  );
-}
-
-export function SignupBtn() {
-  return (
-    <button
-      type="button"
-      className="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 dark:hover:bg-white dark:hover:text-indigo-500 mr-2 mb-2 border-2 dark:hover:border-indigo-500/75"
-    >
-      Sign up for Free
-    </button>
-  );
-}
-
-export function SigninBtn() {
-  return (
-    <button
-      type="button"
-      className="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 dark:hover:bg-white dark:hover:text-indigo-500 mr-2 mb-2 border-2 dark:hover:border-indigo-500/75"
-    >
-      Sign In
     </button>
   );
 }

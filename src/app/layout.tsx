@@ -1,5 +1,5 @@
 import "./globals.css";
-import Header from "./component/header/Header";
+import Header from "./component/ui/header/Header";
 import { ReduxProviders } from "./providers/ReduxProviders";
 import ThemeProviders from "./providers/ThemeProviders";
 

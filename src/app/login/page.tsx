@@ -1,15 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import { SigninBtn } from "../component/button/LoginBtn";
-import { RiLockPasswordFill } from "react-icons/ri";
-import { AiOutlineMail, AiFillPhone } from "react-icons/ai";
-import { BsFillPersonVcardFill, BsMicrosoftTeams } from "react-icons/bs";
-import { SigninInput, SigninHideInput } from "../component/input/SignInput";
-import Progressbar from "../component/progressbar/Progressbar";
+import Step1 from "../component/pages/login-step/step1";
+import Step2 from "../component/pages/login-step/Step2";
+import { SignupBtn } from "../component/ui/button/LoginBtn";
+import Progressbar from "../component/ui/progressbar/Progressbar";
 
 export default function Sign() {
   const [viewPwd, setViewPwd] = useState(false);
+  const [isItemFull, setIsItemFUll] = useState({
+    step1: false,
+    step2: false,
+  });
   const [items, setItems] = useState({
     allItems: 5,
     completedItems: 0,
@@ -25,41 +27,14 @@ export default function Sign() {
   return (
     <div className="flex flex-col justify-center items-center p 1">
       <div className="mt-10 mb-5 w-3/5">
-        <SigninInput
-          title="Email"
-          placeholder="abc12@sample.com"
-          icon={<AiOutlineMail />}
-          checkBox_dup={true}
-        />
-        <SigninHideInput
-          title="Password (6글자 이상, 숫자, 특수문자,영대문자 포함)"
-          placeholder="Asd12!!"
-          icon={<RiLockPasswordFill />}
-          view={viewPwd}
-          setView={setViewPwd}
-          checkBox_dup={true}
-        />
-        <SigninInput
-          title="Name"
-          placeholder="Min Yeon Kim"
-          icon={<BsFillPersonVcardFill />}
-          checkBox_dup={false}
-        />
-        <SigninInput
-          title="Teams"
-          placeholder="프론트엔드 개발"
-          icon={<BsMicrosoftTeams />}
-          checkBox_dup={false}
-        />
-        <SigninInput
-          title="Phone Number"
-          placeholder="010-0000-0000"
-          icon={<AiFillPhone />}
-          checkBox_dup={true}
-        />
+        {!isItemFull.step1 ? (
+          <Step1 viewPwd={viewPwd} setViewPwd={setViewPwd} />
+        ) : (
+          <Step2 />
+        )}
 
         <div className="flex flex-col justify-center items-center p 1 mt-5">
-          <SigninBtn />
+          <SignupBtn title={!isItemFull.step1 ? "Next" : "Sign In"} />
         </div>
         <div>
           <Progressbar
