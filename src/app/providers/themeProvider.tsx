@@ -6,6 +6,6 @@ type Props = {
   children: React.ReactNode;
 };
 
-export default function ThemeProviders({ children }: Props) {
+export default function CustomThemeProvider({ children }: Props) {
   return <ThemeProvider attribute="class">{children}</ThemeProvider>;
 }

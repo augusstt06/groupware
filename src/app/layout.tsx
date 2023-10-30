@@ -1,7 +1,7 @@
 import "./globals.css";
 import Header from "./component/ui/header/Header";
-import { ReduxProviders } from "./providers/ReduxProviders";
-import ThemeProviders from "./providers/ThemeProviders";
+import { ReduxProvider } from "./providers/reduxProvider";
+import CustomThemeProvider from "./providers/themeProvider";
 
 export default function RootLayout({
   children,
@@ -9,14 +9,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ReduxProviders>
+    <ReduxProvider>
       <html lang="en" suppressHydrationWarning={true}>
         <body className="font-mono">
-          <ThemeProviders>
+          <CustomThemeProvider>
             <Header>{children}</Header>
-          </ThemeProviders>
+          </CustomThemeProvider>
         </body>
       </html>
-    </ReduxProviders>
+    </ReduxProvider>
   );
 }
