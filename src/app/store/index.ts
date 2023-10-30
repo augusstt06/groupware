@@ -5,7 +5,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import duplicateReducer from "./reducers/duplicateReducer";
 
 export const store = configureStore({
-  reducer: { checkDuplicate: duplicateReducer },
+  reducer: { isDuplicateCheck: duplicateReducer },
 });
 
 export type RootState = ReturnType<typeof store.getState>;
