@@ -1,10 +1,11 @@
 "use client";
 
 import { configureStore } from "@reduxjs/toolkit";
-import testReducer from "./reducers/testReducers";
+
+import duplicateReducer from "./reducers/duplicateReducer";
 
 export const store = configureStore({
-  reducer: { testReducer },
+  reducer: { checkDuplicate: duplicateReducer },
 });
 
 export type RootState = ReturnType<typeof store.getState>;
