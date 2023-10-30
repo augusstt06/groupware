@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { InputLabel, InputlabelAdd } from "../label/Inputlabel";
 import { InputIconlabel } from "../label/InputIconlabel";
 
@@ -15,6 +15,16 @@ type HideProps = Props & {
 };
 
 export function SigninInput(props: Props) {
+  // 체크박스 상태
+  const [isDuplicate, setIsDuplicate] = useState(false);
+
+  // 중복체크 api요청 => 응답값으로 체크할지 말지를 handle함수에 넘긴다
+  const fetchDuplicate = async () => {
+    return;
+  };
+
+  // 체크박스 체크함수
+  const handleCheckDuplicate = () => {};
   return (
     <>
       <InputLabel title={props.title} />
