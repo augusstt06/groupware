@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useAppSelector } from "../store/hooks";
 import Step1 from "../component/pages/loginStep/Step1";
 import Step2 from "../component/pages/loginStep/Step2";
 import { SignupBtn } from "../component/ui/button/LoginBtn";
@@ -8,30 +9,29 @@ import Progressbar from "../component/ui/progressbar/Progressbar";
 
 export default function Sign() {
   const [isView, setIsView] = useState(false);
+  const [isNext, setIsNext] = useState(false);
 
-  const [isStepComplete, setIsStepComplete] = useState({
-    step1: false,
-    step2: false,
+  // 스텝1 완료 여부 => 이메일/패스워드 상태값을 확인해 둘다 true면 다음 페이지 가능
+  const isStep1Complete = useAppSelector((state) => {
+    console.log(state.isStep1InputValid, "액션객체 상태");
+    if (
+      state.isStep1InputValid.isEmailAvailable &&
+      state.isStep1InputValid.isPwdAvailable
+    ) {
+      return true;
+    } else {
+      return false;
+    }
   });
 
-  // 추후에 nextStep, backStep 함수 구조 바꾸기
-  // 체크박스 체크 => 중복체크 api 요청 => 응답에 따라 체크박스 상태 변경
-  // api요청은 input 컴포넌트에서? => 그런데 체크박스 상태를 사용하는 컴포넌트는 상위컴포넌트 => 중복체크가 완료되었는지에 대한 상태를 redux로 관리해서 상위 컴포넌트에서 사용하기
-  const nextStep = () => {
-    setIsStepComplete({
-      step1: true,
-      step2: false,
-    });
+  const handleStep = () => {
+    if (isStep1Complete === false) {
+      alert("중복/유효성 체크를 완료해주세요");
+    } else {
+      setIsNext(!isNext);
+    }
   };
 
-  const backStep = () => {
-    setIsStepComplete({
-      step1: false,
-      step2: false,
-    });
-  };
-
-  //  step1을 true로 만드는 조건 : 중복체크가 완료되었다는 응답을 받았을때
   const [items, setItems] = useState({
     allItems: 5,
     completedItems: 0,
@@ -47,36 +47,47 @@ export default function Sign() {
 
   return (
     <div className="flex flex-col justify-center items-center p 1">
-      <div className="mt-10 mb-3 w-3/5">
-        {!isStepComplete.step1 ? (
+      <div className="mt-10 w-3/5">
+        <div className="mb-5">
+          <Progressbar
+            completedItems={items.completedItems}
+            allItems={items.allItems}
+          />
+        </div>
+        {!isStep1Complete || !isNext ? (
           <Step1 isView={isView} setIsView={setIsView} />
         ) : (
           <Step2 />
         )}
 
-        <div className="flex flex-row justify-center items-center mb-5">
-          {isStepComplete.step1 ? (
-            <div
-              className="flex flex-col justify-center items-center p 1 mt-5"
-              onClick={backStep}
-            >
-              <SignupBtn title="Back" />
-            </div>
+        <div className="flex flex-row justify-center items-center">
+          {isStep1Complete ? (
+            isNext ? (
+              <>
+                <div
+                  className="flex flex-col justify-center items-center p 1 "
+                  onClick={handleStep}
+                >
+                  <SignupBtn title="Back" />
+                </div>
+                <div
+                  className="flex flex-col justify-center items-center p 1"
+                  onClick={handleStep}
+                >
+                  <SignupBtn title={"Sign In"} />
+                </div>
+              </>
+            ) : (
+              <div
+                className="flex flex-col justify-center items-center p 1"
+                onClick={handleStep}
+              >
+                <SignupBtn title="Next" />
+              </div>
+            )
           ) : (
             <></>
           )}
-          <div
-            className="flex flex-col justify-center items-center p 1 mt-5"
-            onClick={nextStep}
-          >
-            <SignupBtn title={!isStepComplete.step1 ? "Next" : "Sign In"} />
-          </div>
-        </div>
-        <div>
-          <Progressbar
-            completedItems={items.completedItems}
-            allItems={items.allItems}
-          />
         </div>
       </div>
     </div>

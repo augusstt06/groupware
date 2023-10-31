@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import { useAppDispatch } from "@/app/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/app/store/hooks";
 
 import { InputLabel, InputlabelAdd } from "../label/Inputlabel";
 import { InputIconlabel } from "../label/InputIconlabel";
 import axios from "axios";
 import {
-  isDataDuplicate,
-  isDataUnique,
-} from "@/app/store/reducers/duplicateReducer";
+  emailCheckReducer,
+  pwdCheckReducer,
+} from "@/app/store/reducers/validReducer";
 
 type Props = {
   title: string;
@@ -23,33 +23,37 @@ type HideProps = Props & {
 
 export function SigninInput(props: Props) {
   const dispatch = useAppDispatch();
-  // 체크박스 상태
-  const [isDuplicate, setIsDuplicate] = useState(false);
+  const [isAvailable, setIsAvailable] = useState(false);
 
   // 중복체크 api요청 => 응답값으로 체크할지 말지를 handle함수에 넘긴다
   const fetchDuplicate = async (inputData: string) => {
     try {
-      const res = await axios.get(`${process.env.CHECK_DUPLICATE_API_URL}`, {
-        data: inputData,
-      });
+      const res = await axios.get(
+        `${process.env.CHECK_EMAIL_DUPLICATE_API_URL}`,
+        {
+          data: inputData,
+        }
+      );
       // 추후에 프로퍼티 수정하기
       switch (res.data.isDuplicate) {
         case false:
           alert(`사용가능한 ${inputData}입니다.`);
-          dispatch(isDataUnique());
-          setIsDuplicate(true);
+          dispatch(emailCheckReducer());
+          setIsAvailable(true);
         case true:
           alert(`중복된 ${inputData}입니다. 다른 정보를 입력해 주세요`);
-          dispatch(isDataDuplicate);
       }
     } catch (err) {
       console.log(err);
     }
   };
-
   const handleClickCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // 입력데이터가 매개변수로 들어간다.
     fetchDuplicate("");
+  };
+
+  const testClick = () => {
+    dispatch(emailCheckReducer());
+    setIsAvailable(true);
   };
 
   return (
@@ -69,8 +73,10 @@ export function SigninInput(props: Props) {
             <input
               type="checkbox"
               className="cursor-pointer w-5 h-5"
-              checked={isDuplicate}
-              onChange={handleClickCheckbox}
+              checked={isAvailable}
+              // onChange={handleClickCheckbox}
+              // 상태값 테스트 코드
+              onChange={testClick}
             />
           </div>
         ) : (
@@ -82,6 +88,39 @@ export function SigninInput(props: Props) {
 }
 
 export function SigninHideInput(props: HideProps) {
+  // 비밀번호 유효성은 서버에서?클라이언트에서 체크?
+  const [isAvailable, setIsAvailable] = useState(false);
+  const dispatch = useAppDispatch();
+  const fetchPwdAvailable = async (inputData: string) => {
+    try {
+      const res = await axios.get(
+        `${process.env.CHECK_PWD_AVAILABLE_API_URL}`,
+        {
+          data: inputData,
+        }
+      );
+      // 추후에 프로퍼티 수정하기
+      switch (res.data.isDuplicate) {
+        case false:
+          alert(`사용가능한 ${inputData}입니다.`);
+          dispatch(pwdCheckReducer());
+          setIsAvailable(true);
+        case true:
+          alert(`유효하지 않은 형식입니다. 다시 입력해주세요`);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleClickCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
+    fetchPwdAvailable("");
+  };
+
+  const testClick = () => {
+    dispatch(pwdCheckReducer());
+    setIsAvailable(true);
+  };
   return (
     <>
       <InputLabel title={props.title} />
@@ -93,7 +132,7 @@ export function SigninHideInput(props: HideProps) {
         onChange={() => props.setView!(!props.view)}
       />
 
-      <div className="flex relative mt-2 mb-6">
+      <div className="flex relative mt-2 mb-3">
         <InputIconlabel icon={props.icon} />
         <input
           type={`${props.view ? "text" : "password"}`}
@@ -104,7 +143,14 @@ export function SigninHideInput(props: HideProps) {
         {/* 비밀번호 중복체크 => 서버에 api 요청 */}
         {props.checkBox_dup ? (
           <div className="absolute inset-y-0 right-4 flex items-center pl-3.5">
-            <input type="checkbox" className="cursor-pointer w-5 h-5" />
+            <input
+              type="checkbox"
+              className="cursor-pointer w-5 h-5"
+              checked={isAvailable}
+              // onChange={handleClickCheckbox}
+              // 상태값 테스트 코드
+              onChange={testClick}
+            />
           </div>
         ) : (
           <></>
