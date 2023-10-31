@@ -2,10 +2,10 @@
 
 import { configureStore } from "@reduxjs/toolkit";
 
-import duplicateReducer from "./reducers/duplicateReducer";
+import validReducer from "./reducers/validReducer";
 
 export const store = configureStore({
-  reducer: { isDuplicateCheck: duplicateReducer },
+  reducer: { isStep1InputValid: validReducer },
 });
 
 export type RootState = ReturnType<typeof store.getState>;
