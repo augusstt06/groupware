@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import Step1 from "../component/pages/login-step/Step1";
-import Step2 from "../component/pages/login-step/Step2";
+import Step1 from "../component/pages/loginStep/Step1";
+import Step2 from "../component/pages/loginStep/Step2";
 import { SignupBtn } from "../component/ui/button/LoginBtn";
 import Progressbar from "../component/ui/progressbar/Progressbar";
 

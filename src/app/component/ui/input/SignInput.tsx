@@ -1,6 +1,13 @@
 import React, { useState } from "react";
+import { useAppDispatch } from "@/app/store/hooks";
+
 import { InputLabel, InputlabelAdd } from "../label/Inputlabel";
 import { InputIconlabel } from "../label/InputIconlabel";
+import axios from "axios";
+import {
+  isDataDuplicate,
+  isDataUnique,
+} from "@/app/store/reducers/duplicateReducer";
 
 type Props = {
   title: string;
@@ -15,16 +22,36 @@ type HideProps = Props & {
 };
 
 export function SigninInput(props: Props) {
+  const dispatch = useAppDispatch();
   // 체크박스 상태
   const [isDuplicate, setIsDuplicate] = useState(false);
 
   // 중복체크 api요청 => 응답값으로 체크할지 말지를 handle함수에 넘긴다
-  const fetchDuplicate = async () => {
-    return;
+  const fetchDuplicate = async (inputData: string) => {
+    try {
+      const res = await axios.get(`${process.env.CHECK_DUPLICATE_API_URL}`, {
+        data: inputData,
+      });
+      // 추후에 프로퍼티 수정하기
+      switch (res.data.isDuplicate) {
+        case false:
+          alert(`사용가능한 ${inputData}입니다.`);
+          dispatch(isDataUnique());
+          setIsDuplicate(true);
+        case true:
+          alert(`중복된 ${inputData}입니다. 다른 정보를 입력해 주세요`);
+          dispatch(isDataDuplicate);
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
-  // 체크박스 체크함수
-  const handleCheckDuplicate = () => {};
+  const handleClickCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // 입력데이터가 매개변수로 들어간다.
+    fetchDuplicate("");
+  };
+
   return (
     <>
       <InputLabel title={props.title} />
@@ -39,7 +66,12 @@ export function SigninInput(props: Props) {
         {/* 비밀번호 중복체크 => 서버에 api 요청 */}
         {props.checkBox_dup ? (
           <div className="absolute inset-y-0 right-4 flex items-center pl-3.5">
-            <input type="checkbox" className="cursor-pointer w-5 h-5" />
+            <input
+              type="checkbox"
+              className="cursor-pointer w-5 h-5"
+              checked={isDuplicate}
+              onChange={handleClickCheckbox}
+            />
           </div>
         ) : (
           <></>
