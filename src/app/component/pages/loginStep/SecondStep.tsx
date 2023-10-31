@@ -2,7 +2,7 @@ import { BsFillPersonVcardFill, BsMicrosoftTeams } from "react-icons/bs";
 import SignInput from "../../ui/input/SignInput";
 import { AiFillPhone } from "react-icons/ai";
 
-export default function Step2() {
+export default function SecondStep() {
   return (
     <>
       <SignInput

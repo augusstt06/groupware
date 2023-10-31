@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { useAppSelector } from "../store/hooks";
-import Step1 from "../component/pages/loginStep/Step1";
-import Step2 from "../component/pages/loginStep/Step2";
+import FirstStep from "../component/pages/loginStep/FirstStep";
+import SecondStep from "../component/pages/loginStep/SecondStep";
 import { SignupBtn } from "../component/ui/button/LoginBtn";
 import Progressbar from "../component/ui/progressbar/Progressbar";
 
@@ -55,9 +55,9 @@ export default function Sign() {
           />
         </div>
         {!isStep1Complete || !isNext ? (
-          <Step1 isView={isView} setIsView={setIsView} />
+          <FirstStep isView={isView} setIsView={setIsView} />
         ) : (
-          <Step2 />
+          <SecondStep />
         )}
 
         <div className="flex flex-row justify-center items-center">
@@ -65,13 +65,13 @@ export default function Sign() {
             isNext ? (
               <>
                 <div
-                  className="flex flex-col justify-center items-center p 1 "
+                  className="flex flex-col justify-center items-center p 1 mr-2"
                   onClick={handleStep}
                 >
                   <SignupBtn title="Back" />
                 </div>
                 <div
-                  className="flex flex-col justify-center items-center p 1"
+                  className="flex flex-col justify-center items-center p 1 ml-2"
                   onClick={handleStep}
                 >
                   <SignupBtn title={"Sign In"} />

@@ -4,7 +4,7 @@ import SignHideInput from "../../ui/input/SignHideInput";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { StepComponentTypeProps } from "@/app/types";
 
-export default function Step1(props: StepComponentTypeProps) {
+export default function FirstStep(props: StepComponentTypeProps) {
   return (
     <>
       <SignInput
