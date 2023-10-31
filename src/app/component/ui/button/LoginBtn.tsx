@@ -1,10 +1,8 @@
+import { BtnProps } from "@/app/types";
 import { AiFillGithub, AiOutlineGoogle } from "react-icons/ai";
 import { TbLogin2 } from "react-icons/tb";
 
-type Props = {
-  title: string;
-};
-export function SignupBtn(props: Props) {
+export function SignupBtn(props: BtnProps) {
   return (
     <button
       type="button"

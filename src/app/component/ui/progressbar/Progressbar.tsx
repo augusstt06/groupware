@@ -1,9 +1,6 @@
-type Props = {
-  allItems: number;
-  completedItems: number;
-};
+import { ProgressbarProps } from "@/app/types";
 
-export default function Progressbar(props: Props) {
+export default function Progressbar(props: ProgressbarProps) {
   const progressClassName =
     props.completedItems === 0
       ? "py-0.5 flex items-center justify-center rounded-full"

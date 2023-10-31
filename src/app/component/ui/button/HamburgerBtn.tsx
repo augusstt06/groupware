@@ -1,11 +1,8 @@
 import { AiOutlineMenu } from "react-icons/ai";
 import { RxCross1 } from "react-icons/rx";
+import { HamburgerProps } from "@/app/types";
 
-type Props = {
-  nav: boolean;
-  setNav: (nav: boolean) => void;
-};
-export default function HamburgerBtn(props: Props) {
+export default function HamburgerBtn(props: HamburgerProps) {
   return (
     <button
       className="p-2 text-gray-700 rounded-md outline-none focus:border-gray-400 focus:border"

@@ -1,8 +1,6 @@
-type Props = {
-  title: string;
-};
+import { BtnProps } from "@/app/types";
 
-export function InputLabel(props: Props) {
+export function InputLabel(props: BtnProps) {
   return (
     <label
       htmlFor="input-group-1"
@@ -13,7 +11,7 @@ export function InputLabel(props: Props) {
   );
 }
 
-export function InputlabelAdd(props: Props) {
+export function InputlabelAdd(props: BtnProps) {
   return (
     <label className="mb-2 text-sm font-medium text-gray-900 dark:text-white">
       {props.title}

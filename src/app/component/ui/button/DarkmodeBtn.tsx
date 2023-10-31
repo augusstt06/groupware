@@ -4,7 +4,7 @@ import { BsSunFill, BsMoon } from "react-icons/bs";
 import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
 
-interface Darkmode {}
+type Darkmode = {};
 
 export default function DarkmodeBtn({}: Darkmode) {
   const [mounted, setMounted] = useState(false);

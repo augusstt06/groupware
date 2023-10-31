@@ -1,10 +1,8 @@
 import Link from "next/link";
 import React from "react";
+import { SidebarProps } from "@/app/types";
 
-type Props = {
-  nav: boolean;
-};
-export default function Sidebar(props: Props) {
+export default function Sidebar(props: SidebarProps) {
   const menu = [
     { name: "menu1", url: "/" },
     { name: "menu2", url: "/" },

@@ -7,11 +7,9 @@ import DarkmodeBtn from "../button/DarkmodeBtn";
 import HamburgerBtn from "../button/HamburgerBtn";
 import { HeaderLoginBtn } from "../button/LoginBtn";
 import Logo from "../logo/Logo";
+import { ReactProps } from "@/app/types";
 
-type Props = {
-  children: React.ReactNode;
-};
-export default function Header(props: Props) {
+export default function Header(props: ReactProps) {
   const [nav, setNav] = useState(false);
 
   // 임시로 잠시 로그인 대용 변수 => 추후에 로그인 상태값으로 변경
