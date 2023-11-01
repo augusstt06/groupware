@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useAppSelector } from "../hooks/reduxHooks";
+import { useAppSelector } from "../module/hooks/reduxHooks";
 import FirstStep from "../component/pages/loginStep/FirstStep";
 import SecondStep from "../component/pages/loginStep/SecondStep";
 import { SignupBtn } from "../component/ui/button/LoginBtn";

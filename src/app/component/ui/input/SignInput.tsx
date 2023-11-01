@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { useAppDispatch } from "@/app/hooks/reduxHooks";
+import { useAppDispatch } from "@/app/module/hooks/reduxHooks";
 import { emailCheckReducer } from "@/app/store/reducers/validReducer";
 import { InputLabel } from "../label/Inputlabel";
 import { InputIconlabel } from "../label/InputIconlabel";
-import axios from "axios";
 import { SignInputProps } from "@/app/types";
-import { useInput } from "@/app/hooks/reactHooks";
+import { useInput } from "@/app/module/hooks/reactHooks";
+import { moduleFetch } from "@/app/module/utils";
 
 export default function SignInput(props: SignInputProps) {
   const inputData = useInput("");
@@ -13,30 +13,28 @@ export default function SignInput(props: SignInputProps) {
   const dispatch = useAppDispatch();
   const [isAvailable, setIsAvailable] = useState(false);
 
+  const fetchProps = {
+    inputData: inputData.value,
+    // 추후에 환경변수로 변경
+    fetchUrl: "process.env.CHECK_EMAIL_AVAILABLE_API_URL",
+  };
+
   // 중복체크 api요청 => 응답값으로 체크할지 말지를 handle함수에 넘긴다
-  const fetchDuplicate = async (inputData: string) => {
+  const fetchEmailAvaiable = async () => {
     try {
-      const res = await axios.get(
-        `${process.env.CHECK_EMAIL_DUPLICATE_API_URL}`,
-        {
-          data: inputData,
-        }
-      );
+      const fetchData = await moduleFetch(fetchProps);
       // 추후에 프로퍼티 수정하기
-      switch (res.data.isDuplicate) {
+      switch (fetchData.data) {
         case false:
-          alert(`사용가능한 ${inputData}입니다.`);
+          alert(`사용가능한 ${inputData.value}입니다.`);
           dispatch(emailCheckReducer());
           setIsAvailable(true);
         case true:
-          alert(`중복된 ${inputData}입니다. 다른 정보를 입력해 주세요`);
+          alert(`유효하지 않은 형식입니다. 다시 입력해주세요`);
       }
     } catch (err) {
       console.log(err);
     }
-  };
-  const handleClickCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
-    fetchDuplicate("");
   };
 
   const testClick = () => {
@@ -63,7 +61,7 @@ export default function SignInput(props: SignInputProps) {
               type="checkbox"
               className="cursor-pointer w-5 h-5"
               checked={isAvailable}
-              // onChange={handleClickCheckbox}
+              // onChange={() => fetchEmailAvaiable()}
               // 상태값 테스트 코드
               onChange={testClick}
             />

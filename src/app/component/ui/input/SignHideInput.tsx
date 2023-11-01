@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { useAppDispatch } from "@/app/hooks/reduxHooks";
+import { useAppDispatch } from "@/app/module/hooks/reduxHooks";
 import { pwdCheckReducer } from "@/app/store/reducers/validReducer";
-import axios from "axios";
 import { InputLabel, InputlabelAdd } from "../label/Inputlabel";
 import { InputIconlabel } from "../label/InputIconlabel";
 import { SignHideInputProps } from "@/app/types";
-import { useInput } from "@/app/hooks/reactHooks";
+import { useInput } from "@/app/module/hooks/reactHooks";
+import { moduleFetch } from "@/app/module/utils";
 
 export default function SignHideInput(props: SignHideInputProps) {
   const inputData = useInput("");
@@ -13,18 +13,16 @@ export default function SignHideInput(props: SignHideInputProps) {
   // 비밀번호 유효성은 서버에서?클라이언트에서 체크?
   const [isAvailable, setIsAvailable] = useState(false);
   const dispatch = useAppDispatch();
-  const fetchPwdAvailable = async (inputData: string) => {
+  const fetchProps = {
+    inputData: inputData.value,
+    fetchUrl: "process.env.CHECK_EMAIL_AVAILABLE_API_URL",
+  };
+  const fetchPwdAvailable = async () => {
     try {
-      const res = await axios.get(
-        `${process.env.CHECK_PWD_AVAILABLE_API_URL}`,
-        {
-          data: inputData,
-        }
-      );
-      // 추후에 프로퍼티 수정하기
-      switch (res.data.isDuplicate) {
+      const fetchData = await moduleFetch(fetchProps);
+      switch (fetchData.data) {
         case false:
-          alert(`사용가능한 ${inputData}입니다.`);
+          alert(`사용가능한 ${inputData.value}입니다.`);
           dispatch(pwdCheckReducer());
           setIsAvailable(true);
         case true:
@@ -33,10 +31,6 @@ export default function SignHideInput(props: SignHideInputProps) {
     } catch (err) {
       console.log(err);
     }
-  };
-
-  const handleClickCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
-    fetchPwdAvailable("");
   };
 
   const testClick = () => {
@@ -70,7 +64,7 @@ export default function SignHideInput(props: SignHideInputProps) {
               type="checkbox"
               className="cursor-pointer w-5 h-5"
               checked={isAvailable}
-              // onChange={handleClickCheckbox}
+              // onChange={() => fetchPwdAvailable()}
               // 상태값 테스트 코드
               onChange={testClick}
             />

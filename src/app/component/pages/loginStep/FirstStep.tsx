@@ -5,6 +5,7 @@ import { RiLockPasswordFill } from "react-icons/ri";
 import { StepComponentTypeProps } from "@/app/types";
 
 export default function FirstStep(props: StepComponentTypeProps) {
+  // 이메일, 비밀번호 유효성 체크
   return (
     <>
       <SignInput
