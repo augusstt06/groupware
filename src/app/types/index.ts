@@ -22,7 +22,7 @@ export type SignInputProps = {
   title: string;
   placeholder: string;
   icon: React.ReactNode;
-  checkBox_dup: boolean;
+  checkValid: boolean;
 };
 export type SignHideInputProps = SignInputProps & {
   view?: boolean;

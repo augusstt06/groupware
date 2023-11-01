@@ -9,19 +9,19 @@ export default function SecondStep() {
         title="Name"
         placeholder="Min Yeon Kim"
         icon={<BsFillPersonVcardFill />}
-        checkBox_dup={false}
+        checkValid={false}
       />
       <SignInput
         title="Teams"
         placeholder="프론트엔드 개발"
         icon={<BsMicrosoftTeams />}
-        checkBox_dup={false}
+        checkValid={false}
       />
       <SignInput
         title="Phone Number"
         placeholder="010-0000-0000"
         icon={<AiFillPhone />}
-        checkBox_dup={true}
+        checkValid={true}
       />
     </>
   );

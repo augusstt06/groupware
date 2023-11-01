@@ -12,7 +12,7 @@ export default function FirstStep(props: StepComponentTypeProps) {
         title="Email"
         placeholder="abc12@sample.com"
         icon={<AiOutlineMail />}
-        checkBox_dup={true}
+        checkValid={true}
       />
       <SignHideInput
         title="Password (6글자 이상, 숫자, 특수문자,영대문자 포함)"
@@ -20,7 +20,7 @@ export default function FirstStep(props: StepComponentTypeProps) {
         icon={<RiLockPasswordFill />}
         view={props.isView}
         setView={props.setIsView}
-        checkBox_dup={true}
+        checkValid={true}
       />
     </>
   );
