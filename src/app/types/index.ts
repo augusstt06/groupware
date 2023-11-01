@@ -49,3 +49,9 @@ export type StepComponentTypeProps = {
   isView: boolean;
   setIsView: (view: boolean) => void;
 };
+
+/// hooks
+export type useFetchProps = {
+  inputData: string;
+  fetchUrl: string;
+};
