@@ -13,10 +13,10 @@ export default function Sign() {
 
   // 스텝1 완료 여부 => 이메일/패스워드 상태값을 확인해 둘다 true면 다음 페이지 가능
   const isStep1Complete = useAppSelector((state) => {
-    console.log(state.isStep1InputValid, "액션객체 상태");
+    console.log(state.isFirstStepInputValid, "액션객체 상태");
     if (
-      state.isStep1InputValid.isEmailAvailable &&
-      state.isStep1InputValid.isPwdAvailable
+      state.isFirstStepInputValid.isEmailAvailable &&
+      state.isFirstStepInputValid.isPwdAvailable
     ) {
       return true;
     } else {
