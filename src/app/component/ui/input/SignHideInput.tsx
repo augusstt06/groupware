@@ -1,12 +1,15 @@
 import React, { useState } from "react";
-import { useAppDispatch } from "@/app/store/hooks";
+import { useAppDispatch } from "@/app/hooks/reduxHooks";
 import { pwdCheckReducer } from "@/app/store/reducers/validReducer";
 import axios from "axios";
 import { InputLabel, InputlabelAdd } from "../label/Inputlabel";
 import { InputIconlabel } from "../label/InputIconlabel";
 import { SignHideInputProps } from "@/app/types";
+import { useInput } from "@/app/hooks/reactHooks";
 
 export default function SignHideInput(props: SignHideInputProps) {
+  const inputData = useInput("");
+
   // 비밀번호 유효성은 서버에서?클라이언트에서 체크?
   const [isAvailable, setIsAvailable] = useState(false);
   const dispatch = useAppDispatch();
@@ -55,6 +58,7 @@ export default function SignHideInput(props: SignHideInputProps) {
         <InputIconlabel icon={props.icon} />
         <input
           type={`${props.view ? "text" : "password"}`}
+          {...inputData}
           id={props.title}
           className="rounded-none rounded-r-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder={props.placeholder}

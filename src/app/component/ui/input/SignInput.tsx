@@ -1,12 +1,15 @@
 import React, { useState } from "react";
-import { useAppDispatch } from "@/app/store/hooks";
+import { useAppDispatch } from "@/app/hooks/reduxHooks";
 import { emailCheckReducer } from "@/app/store/reducers/validReducer";
 import { InputLabel } from "../label/Inputlabel";
 import { InputIconlabel } from "../label/InputIconlabel";
 import axios from "axios";
 import { SignInputProps } from "@/app/types";
+import { useInput } from "@/app/hooks/reactHooks";
 
 export default function SignInput(props: SignInputProps) {
+  const inputData = useInput("");
+
   const dispatch = useAppDispatch();
   const [isAvailable, setIsAvailable] = useState(false);
 
@@ -48,6 +51,7 @@ export default function SignInput(props: SignInputProps) {
         <InputIconlabel icon={props.icon} />
         <input
           type="text"
+          {...inputData}
           id={props.title}
           className="rounded-none rounded-r-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder={props.placeholder}
