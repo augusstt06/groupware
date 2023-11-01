@@ -6,32 +6,31 @@ import { InputIconlabel } from "../label/InputIconlabel";
 import { SignInputProps } from "@/app/types";
 import { useInput } from "@/app/module/hooks/reactHooks";
 import { moduleFetch } from "@/app/module/utils";
+import { inputValidate } from "@/app/module/utils";
 
 export default function SignInput(props: SignInputProps) {
-  const inputData = useInput("");
-
   const dispatch = useAppDispatch();
+  const inputData = useInput("");
   const [isAvailable, setIsAvailable] = useState(false);
-
   const fetchProps = {
     inputData: inputData.value,
     // 추후에 환경변수로 변경
     fetchUrl: "process.env.CHECK_EMAIL_AVAILABLE_API_URL",
   };
+  const inputValidateProps = {
+    inputData: inputData.value,
+    dataType: "email",
+  };
 
-  // 중복체크 api요청 => 응답값으로 체크할지 말지를 handle함수에 넘긴다
   const fetchEmailAvaiable = async () => {
+    const isValid = inputValidate(inputValidateProps);
+    if (!isValid) return;
     try {
       const fetchData = await moduleFetch(fetchProps);
       // 추후에 프로퍼티 수정하기
-      switch (fetchData.data) {
-        case false:
-          alert(`사용가능한 ${inputData.value}입니다.`);
-          dispatch(emailCheckReducer());
-          setIsAvailable(true);
-        case true:
-          alert(`유효하지 않은 형식입니다. 다시 입력해주세요`);
-      }
+      console.log(fetchData);
+      dispatch(emailCheckReducer());
+      setIsAvailable(true);
     } catch (err) {
       console.log(err);
     }
