@@ -1,16 +1,6 @@
-import { ModuleFetchProps } from "@/app/types";
 import { InputValidateProps } from "@/app/types";
-import axios from "axios";
 
-export const moduleFetch = (props: ModuleFetchProps) => {
-  const res = axios.post(`${props.fetchUrl}`, {
-    data: props.inputData,
-  });
-
-  return res;
-};
-
-export const inputValidate = (props: InputValidateProps) => {
+const inputValidate = (props: InputValidateProps) => {
   if (props.dataType === "email") {
     const emailRegex =
       /^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
@@ -43,3 +33,5 @@ export const inputValidate = (props: InputValidateProps) => {
   );
   return true;
 };
+
+export default inputValidate;

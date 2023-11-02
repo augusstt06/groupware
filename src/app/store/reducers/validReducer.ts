@@ -1,13 +1,29 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 type State = {
-  isEmailAvailable: boolean;
-  isPwdAvailable: boolean;
+  isEmailCheck: {
+    check: boolean;
+  };
+  isPwdCheck: {
+    check: boolean;
+  };
+  isNameCheck: {
+    check: boolean;
+  };
+  isTeamCheck: {
+    check: boolean;
+  };
+  isPhoneNumCheck: {
+    check: boolean;
+  };
 };
 
 const initialState: State = {
-  isEmailAvailable: false,
-  isPwdAvailable: false,
+  isEmailCheck: { check: false },
+  isPwdCheck: { check: false },
+  isNameCheck: { check: false },
+  isTeamCheck: { check: false },
+  isPhoneNumCheck: { check: false },
 };
 
 export const validSlice = createSlice({
@@ -15,14 +31,49 @@ export const validSlice = createSlice({
   initialState,
   reducers: {
     emailCheckReducer(state) {
-      state.isEmailAvailable = true;
+      if (!state.isEmailCheck.check) {
+        state.isEmailCheck.check = true;
+      } else {
+        state.isEmailCheck.check = false;
+      }
     },
     pwdCheckReducer(state) {
-      state.isPwdAvailable = true;
+      if (!state.isPwdCheck.check) {
+        state.isPwdCheck.check = true;
+      } else {
+        state.isPwdCheck.check = false;
+      }
+    },
+    nameCheckReducer(state) {
+      if (!state.isNameCheck.check) {
+        state.isNameCheck.check = true;
+      } else {
+        state.isNameCheck.check = false;
+      }
+    },
+    teamCheckReducer(state) {
+      if (!state.isTeamCheck.check) {
+        state.isTeamCheck.check = true;
+      } else {
+        state.isTeamCheck.check = false;
+      }
+    },
+    phoneNumCheckReducer(state) {
+      if (!state.isPhoneNumCheck.check) {
+        state.isPhoneNumCheck.check = true;
+      } else {
+        state.isPhoneNumCheck.check = false;
+      }
     },
   },
 });
 
-export const { emailCheckReducer, pwdCheckReducer } = validSlice.actions;
+export const {
+  emailCheckReducer,
+  pwdCheckReducer,
+  nameCheckReducer,
+  teamCheckReducer,
+  phoneNumCheckReducer,
+} = validSlice.actions;
 
 export default validSlice.reducer;

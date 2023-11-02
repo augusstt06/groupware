@@ -5,7 +5,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import validReducer from "./reducers/validReducer";
 
 export const store = configureStore({
-  reducer: { isFirstStepInputValid: validReducer },
+  reducer: { isLoginInfoInputValid: validReducer },
 });
 
 export type RootState = ReturnType<typeof store.getState>;
