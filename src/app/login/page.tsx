@@ -2,30 +2,27 @@
 
 import { useState } from "react";
 import { useAppSelector } from "../module/hooks/reduxHooks";
-import FirstStep from "../component/pages/loginStep/FirstStep";
-import SecondStep from "../component/pages/loginStep/SecondStep";
+
 import { SignupBtn } from "../component/ui/button/LoginBtn";
 import Progressbar from "../component/ui/progressbar/Progressbar";
+import KeyInfo from "../component/pages/enterLoginInfo/KeyInfo";
+import AdditionalInfo from "../component/pages/enterLoginInfo/AdditionalInfo";
 
 export default function Sign() {
   const [isView, setIsView] = useState(false);
   const [isNext, setIsNext] = useState(false);
 
-  // 스텝1 완료 여부 => 이메일/패스워드 상태값을 확인해 둘다 true면 다음 페이지 가능
-  const isStep1Complete = useAppSelector((state) => {
-    console.log(state.isFirstStepInputValid, "액션객체 상태");
-    if (
-      state.isFirstStepInputValid.isEmailAvailable &&
-      state.isFirstStepInputValid.isPwdAvailable
-    ) {
+  const isKeyInfoComplete = useAppSelector((state) => {
+    console.log(state.isLoginInfoInputValid, "액션객체 상태");
+    const isEmailComplete = state.isLoginInfoInputValid.isEmailCheck.check;
+    const isPwdComplete = state.isLoginInfoInputValid.isPwdCheck.check;
+    if (isEmailComplete && isPwdComplete) {
       return true;
-    } else {
-      return false;
-    }
+    } else return false;
   });
 
   const handleStep = () => {
-    if (isStep1Complete === false) {
+    if (isKeyInfoComplete === false) {
       alert("중복/유효성 체크를 완료해주세요");
     } else {
       setIsNext(!isNext);
@@ -54,14 +51,14 @@ export default function Sign() {
             allItems={items.allItems}
           />
         </div>
-        {!isStep1Complete || !isNext ? (
-          <FirstStep isView={isView} setIsView={setIsView} />
+        {!isKeyInfoComplete || !isNext ? (
+          <KeyInfo isView={isView} setIsView={setIsView} />
         ) : (
-          <SecondStep />
+          <AdditionalInfo />
         )}
 
         <div className="flex flex-row justify-center items-center">
-          {isStep1Complete ? (
+          {isKeyInfoComplete ? (
             isNext ? (
               <>
                 <div

@@ -1,17 +1,33 @@
-import React, { useState } from "react";
-import { useAppDispatch } from "@/app/module/hooks/reduxHooks";
-import { emailCheckReducer } from "@/app/store/reducers/validReducer";
+import React from "react";
+import { useAppDispatch, useAppSelector } from "@/app/module/hooks/reduxHooks";
+import {
+  emailCheckReducer,
+  phoneNumCheckReducer,
+} from "@/app/store/reducers/validReducer";
 import { InputLabel } from "../label/Inputlabel";
 import { InputIconlabel } from "../label/InputIconlabel";
 import { SignInputProps } from "@/app/types";
-import { useInput } from "@/app/module/hooks/reactHooks";
-import { moduleFetch } from "@/app/module/utils";
-import { inputValidate } from "@/app/module/utils";
+import { useInput } from "@/app/module/hooks/reactHooks/useInput";
+import { moduleFetch } from "@/app/module/utils/moduleFetch";
+import inputValidate from "@/app/module/utils/inputValidate";
 
 export default function SignInput(props: SignInputProps) {
+  // 근데 생각해보니까 중복체크 하는거 말고는 체크를 따로 안하는데 입력 완료를 어케 구분해야 할까.....
   const dispatch = useAppDispatch();
   const inputData = useInput("");
-  const [isAvailable, setIsAvailable] = useState(false);
+  const isCheck = useAppSelector((state) => {
+    switch (props.title) {
+      case "Email":
+        return state.isLoginInfoInputValid.isEmailCheck.check;
+      case "Name":
+        return state.isLoginInfoInputValid.isNameCheck.check;
+      case "Teams":
+        return state.isLoginInfoInputValid.isTeamCheck.check;
+      case "PhoneNumber":
+        return state.isLoginInfoInputValid.isPhoneNumCheck.check;
+    }
+  });
+
   const fetchProps = {
     inputData: inputData.value,
     // 추후에 환경변수로 변경
@@ -32,18 +48,19 @@ export default function SignInput(props: SignInputProps) {
       if (props.title === "Email") {
         dispatch(emailCheckReducer());
       } else {
-        // 전화번호 관련 리듀서
-        // dispatch()
+        dispatch(phoneNumCheckReducer());
       }
-      setIsAvailable(true);
     } catch (err) {
       console.log(err);
     }
   };
 
   const testClick = () => {
-    dispatch(emailCheckReducer());
-    setIsAvailable(true);
+    if (props.title === "Email") {
+      dispatch(emailCheckReducer());
+    } else {
+      dispatch(phoneNumCheckReducer());
+    }
   };
 
   return (
@@ -64,7 +81,7 @@ export default function SignInput(props: SignInputProps) {
             <input
               type="checkbox"
               className="cursor-pointer w-5 h-5"
-              checked={isAvailable}
+              checked={isCheck}
               // onChange={() => fetchEmailAvaiable()}
               // 상태값 테스트 코드
               onChange={testClick}

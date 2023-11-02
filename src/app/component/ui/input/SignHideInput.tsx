@@ -1,17 +1,20 @@
-import React, { useState } from "react";
-import { useAppDispatch } from "@/app/module/hooks/reduxHooks";
+import React from "react";
+import { useAppDispatch, useAppSelector } from "@/app/module/hooks/reduxHooks";
 import { pwdCheckReducer } from "@/app/store/reducers/validReducer";
 import { InputLabel, InputlabelAdd } from "../label/Inputlabel";
 import { InputIconlabel } from "../label/InputIconlabel";
 import { SignHideInputProps } from "@/app/types";
-import { useInput } from "@/app/module/hooks/reactHooks";
-import { moduleFetch } from "@/app/module/utils";
-import { inputValidate } from "@/app/module/utils";
+import { useInput } from "@/app/module/hooks/reactHooks/useInput";
+import { moduleFetch } from "@/app/module/utils/moduleFetch";
+import inputValidate from "@/app/module/utils/inputValidate";
 
 export default function SignHideInput(props: SignHideInputProps) {
   const dispatch = useAppDispatch();
   const inputData = useInput("");
-  const [isAvailable, setIsAvailable] = useState(false);
+
+  const isCheck = useAppSelector((state) => {
+    return state.isLoginInfoInputValid.isPwdCheck.check;
+  });
   const fetchProps = {
     inputData: inputData.value,
     fetchUrl: "process.env.CHECK_EMAIL_AVAILABLE_API_URL",
@@ -28,7 +31,6 @@ export default function SignHideInput(props: SignHideInputProps) {
       const fetchData = await moduleFetch(fetchProps);
       console.log(fetchData);
       dispatch(pwdCheckReducer());
-      setIsAvailable(true);
     } catch (err) {
       console.log(err);
     }
@@ -36,7 +38,6 @@ export default function SignHideInput(props: SignHideInputProps) {
 
   const testClick = () => {
     dispatch(pwdCheckReducer());
-    setIsAvailable(true);
   };
   return (
     <>
@@ -63,7 +64,7 @@ export default function SignHideInput(props: SignHideInputProps) {
             <input
               type="checkbox"
               className="cursor-pointer w-5 h-5"
-              checked={isAvailable}
+              checked={isCheck}
               // onChange={() => fetchPwdAvailable()}
               // 상태값 테스트 코드
               onChange={testClick}
