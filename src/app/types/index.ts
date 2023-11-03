@@ -18,12 +18,12 @@ export type BtnProps = {
 };
 
 // input
-export type SignInputProps = {
+export type EmailInfoProps = {
   title: string;
   placeholder: string;
-  icon: React.ReactNode;
   checkValid: boolean;
 };
+
 export type PwdInfoProps = {
   placeholder: string;
   checkValid: boolean;
@@ -33,37 +33,20 @@ export type PwdInfoProps = {
   setIsPwdVerifyView: React.Dispatch<SetStateAction<boolean>>;
 };
 
-/////
-export type PwdInputProps = SignInputProps & {
-  inputData: {
-    value: string;
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  };
+export type PwdInputProps = EmailInfoProps & {
+  icon: React.ReactNode;
   isPwdView: boolean;
   setIsPwdView: React.Dispatch<SetStateAction<boolean>>;
   checked: boolean;
   testClick: () => void;
 };
 
-export type PwdVerifyInput = SignInputProps & {
-  inputData: {
-    value: string;
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  };
+export type PwdVerifyInput = EmailInfoProps & {
+  icon: React.ReactNode;
   isPwdVerifyView: boolean;
   setIsPwdVerifyView: React.Dispatch<SetStateAction<boolean>>;
   checked: boolean;
   testClick: () => void;
-};
-////
-export type InputPwdProps = {
-  title: string;
-  inputData: {
-    value: string;
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  };
-  isView: boolean;
-  placeholder: string;
 };
 
 // label

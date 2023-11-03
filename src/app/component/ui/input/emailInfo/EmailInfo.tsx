@@ -6,12 +6,13 @@ import {
 } from "@/app/store/reducers/validReducer";
 import { InputLabel } from "../../label/Inputlabel";
 import { InputIconlabel } from "../../label/InputIconlabel";
-import { SignInputProps } from "@/app/types";
+import { EmailInfoProps } from "@/app/types";
 import { useInput } from "@/app/module/hooks/reactHooks/useInput";
 import { moduleFetch } from "@/app/module/utils/moduleFetch";
 import inputValidate from "@/app/module/utils/inputValidate";
+import { AiOutlineMail } from "react-icons/ai";
 
-export default function EmailInfo(props: SignInputProps) {
+export default function EmailInfo(props: EmailInfoProps) {
   // 근데 생각해보니까 중복체크 하는거 말고는 체크를 따로 안하는데 입력 완료를 어케 구분해야 할까.....
   const dispatch = useAppDispatch();
   const inputData = useInput("");
@@ -67,7 +68,7 @@ export default function EmailInfo(props: SignInputProps) {
     <>
       <InputLabel title={props.title} />
       <div className="flex relative mt-2 mb-6">
-        <InputIconlabel icon={props.icon} />
+        <InputIconlabel icon={<AiOutlineMail />} />
         <input
           type="text"
           {...inputData}

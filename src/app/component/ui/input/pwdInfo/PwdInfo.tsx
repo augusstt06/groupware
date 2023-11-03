@@ -1,7 +1,6 @@
 import React from "react";
 import { useAppDispatch, useAppSelector } from "@/app/module/hooks/reduxHooks";
 import { pwdCheckReducer } from "@/app/store/reducers/validReducer";
-import { verifyPwdReducer } from "@/app/store/reducers/verifyPwdReducer";
 import { useInput } from "@/app/module/hooks/reactHooks/useInput";
 import { moduleFetch } from "@/app/module/utils/moduleFetch";
 import inputValidate from "@/app/module/utils/inputValidate";
@@ -56,7 +55,6 @@ export default function PwdInfo(props: PwdInfoProps) {
     fetchUrl: "process.env.CHECK_EMAIL_AVAILABLE_API_URL",
   };
 
-  // 여기 수정해야한다
   const inputValidateProps = {
     inputData: pwdInputData.value,
     dataType: "pwd",
@@ -86,7 +84,6 @@ export default function PwdInfo(props: PwdInfoProps) {
         checkValid={props.checkValid}
         isPwdView={props.isPwdView}
         setIsPwdView={props.setIsPwdView}
-        inputData={pwdInputData}
         checked={isCheck}
         testClick={testClick}
       />
@@ -97,7 +94,6 @@ export default function PwdInfo(props: PwdInfoProps) {
         checkValid={props.checkValid}
         isPwdVerifyView={props.isPwdVerifyView}
         setIsPwdVerifyView={props.setIsPwdVerifyView}
-        inputData={pwdVetifyInputData}
         checked={isCheck}
         testClick={testClick}
       />

@@ -1,4 +1,3 @@
-import { AiOutlineMail } from "react-icons/ai";
 import { KeyInfoTypeProps } from "@/app/types";
 import PwdInfo from "../../ui/input/pwdInfo/PwdInfo";
 import EmailInfo from "../../ui/input/emailInfo/EmailInfo";
@@ -9,7 +8,6 @@ export default function KeyInfo(props: KeyInfoTypeProps) {
       <EmailInfo
         title="Email"
         placeholder="abc12@sample.com"
-        icon={<AiOutlineMail />}
         checkValid={true}
       />
       <PwdInfo
