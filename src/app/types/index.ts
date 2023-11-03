@@ -25,8 +25,8 @@ export type SignInputProps = {
   checkValid: boolean;
 };
 export type SignHideInputProps = SignInputProps & {
-  view?: boolean;
-  setView?: (view: boolean) => void;
+  isView?: boolean;
+  setIsView?: (view: boolean) => void;
 };
 
 // label

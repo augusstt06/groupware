@@ -3,9 +3,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 
 import validReducer from "./reducers/validReducer";
+import verifyPwdReducer from "./reducers/verifyPwdReducer";
 
 export const store = configureStore({
-  reducer: { isLoginInfoInputValid: validReducer },
+  reducer: {
+    isLoginInfoInputValid: validReducer,
+    verifyPassword: verifyPwdReducer,
+  },
 });
 
 export type RootState = ReturnType<typeof store.getState>;

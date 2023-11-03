@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useAppSelector } from "../module/hooks/reduxHooks";
-
 import { SignupBtn } from "../component/ui/button/LoginBtn";
 import Progressbar from "../component/ui/progressbar/Progressbar";
 import KeyInfo from "../component/pages/enterLoginInfo/KeyInfo";
@@ -13,7 +12,6 @@ export default function Sign() {
   const [isNext, setIsNext] = useState(false);
 
   const isKeyInfoComplete = useAppSelector((state) => {
-    console.log(state.isLoginInfoInputValid, "액션객체 상태");
     const isEmailComplete = state.isLoginInfoInputValid.isEmailCheck.check;
     const isPwdComplete = state.isLoginInfoInputValid.isPwdCheck.check;
     if (isEmailComplete && isPwdComplete) {
