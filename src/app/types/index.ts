@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 
 ////// basic
 export type ReactProps = {
@@ -24,9 +24,46 @@ export type SignInputProps = {
   icon: React.ReactNode;
   checkValid: boolean;
 };
-export type SignHideInputProps = SignInputProps & {
-  isView?: boolean;
-  setIsView?: (view: boolean) => void;
+export type PwdInfoProps = {
+  placeholder: string;
+  checkValid: boolean;
+  isPwdView: boolean;
+  setIsPwdView: React.Dispatch<SetStateAction<boolean>>;
+  isPwdVerifyView: boolean;
+  setIsPwdVerifyView: React.Dispatch<SetStateAction<boolean>>;
+};
+
+/////
+export type PwdInputProps = SignInputProps & {
+  inputData: {
+    value: string;
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  };
+  isPwdView: boolean;
+  setIsPwdView: React.Dispatch<SetStateAction<boolean>>;
+  checked: boolean;
+  testClick: () => void;
+};
+
+export type PwdVerifyInput = SignInputProps & {
+  inputData: {
+    value: string;
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  };
+  isPwdVerifyView: boolean;
+  setIsPwdVerifyView: React.Dispatch<SetStateAction<boolean>>;
+  checked: boolean;
+  testClick: () => void;
+};
+////
+export type InputPwdProps = {
+  title: string;
+  inputData: {
+    value: string;
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  };
+  isView: boolean;
+  placeholder: string;
 };
 
 // label
@@ -45,9 +82,11 @@ export type SidebarProps = {
   nav: boolean;
 };
 //// page
-export type StepComponentTypeProps = {
-  isView: boolean;
-  setIsView: (view: boolean) => void;
+export type KeyInfoTypeProps = {
+  isPwdView: boolean;
+  setIsPwdView: React.Dispatch<SetStateAction<boolean>>;
+  isPwdVerifyView: boolean;
+  setIsPwdVerifyView: React.Dispatch<SetStateAction<boolean>>;
 };
 
 /// module

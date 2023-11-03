@@ -1,5 +1,5 @@
 import { BsFillPersonVcardFill, BsMicrosoftTeams } from "react-icons/bs";
-import SignInput from "../../ui/input/SignInput";
+import SignInput from "../../ui/input/emailInfo/EmailInfo";
 import { AiFillPhone } from "react-icons/ai";
 
 export default function AdditionalInfo() {

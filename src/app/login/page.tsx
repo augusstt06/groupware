@@ -8,7 +8,8 @@ import KeyInfo from "../component/pages/enterLoginInfo/KeyInfo";
 import AdditionalInfo from "../component/pages/enterLoginInfo/AdditionalInfo";
 
 export default function Sign() {
-  const [isView, setIsView] = useState(false);
+  const [isPwdView, setIsPwdView] = useState(false);
+  const [isPwdVerifyView, setIsPwdVerifyView] = useState(false);
   const [isNext, setIsNext] = useState(false);
 
   const isKeyInfoComplete = useAppSelector((state) => {
@@ -50,7 +51,12 @@ export default function Sign() {
           />
         </div>
         {!isKeyInfoComplete || !isNext ? (
-          <KeyInfo isView={isView} setIsView={setIsView} />
+          <KeyInfo
+            isPwdView={isPwdView}
+            setIsPwdView={setIsPwdView}
+            isPwdVerifyView={isPwdVerifyView}
+            setIsPwdVerifyView={setIsPwdVerifyView}
+          />
         ) : (
           <AdditionalInfo />
         )}
