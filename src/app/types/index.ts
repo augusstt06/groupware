@@ -17,6 +17,18 @@ export type BtnProps = {
   title: string;
 };
 
+export type ConditionBtnProps = {
+  isKeyInfoComplete: boolean;
+  isNext: boolean;
+  handleStep: () => void;
+};
+
+export type ConditionBtnElementProps = {
+  title: string;
+  handleStep: () => void;
+  tailwindClass: string;
+};
+
 // input
 export type EmailInfoProps = {
   title: string;
@@ -37,16 +49,14 @@ export type PwdInputProps = EmailInfoProps & {
   icon: React.ReactNode;
   isPwdView: boolean;
   setIsPwdView: React.Dispatch<SetStateAction<boolean>>;
-  checked: boolean;
-  testClick: () => void;
 };
 
-export type PwdVerifyInput = EmailInfoProps & {
+export type PwdVerifyInput = {
+  title: string;
+  placeholder: string;
   icon: React.ReactNode;
   isPwdVerifyView: boolean;
   setIsPwdVerifyView: React.Dispatch<SetStateAction<boolean>>;
-  checked: boolean;
-  testClick: () => void;
 };
 
 // label

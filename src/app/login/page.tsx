@@ -2,10 +2,10 @@
 
 import { useState } from "react";
 import { useAppSelector } from "../module/hooks/reduxHooks";
-import { SignupBtn } from "../component/ui/button/LoginBtn";
 import Progressbar from "../component/ui/progressbar/Progressbar";
 import KeyInfo from "../component/pages/enterLoginInfo/KeyInfo";
 import AdditionalInfo from "../component/pages/enterLoginInfo/AdditionalInfo";
+import ConditionBtnGroup from "../component/ui/button/condition/conditionBtnGroup";
 
 export default function Sign() {
   const [isPwdView, setIsPwdView] = useState(false);
@@ -13,9 +13,10 @@ export default function Sign() {
   const [isNext, setIsNext] = useState(false);
 
   const isKeyInfoComplete = useAppSelector((state) => {
-    const isEmailComplete = state.isLoginInfoInputValid.isEmailCheck.check;
-    const isPwdComplete = state.isLoginInfoInputValid.isPwdCheck.check;
-    if (isEmailComplete && isPwdComplete) {
+    const isEmailComplete = state.isLoginInfoCheck.isEmailCheck.check;
+    const isPwdComplete = state.isLoginInfoCheck.isPwdCheck.check;
+    const isPwdVerifyComplete = state.isLoginInfoCheck.isPwdVerifyCheck.check;
+    if (isEmailComplete && isPwdComplete && isPwdVerifyComplete) {
       return true;
     } else return false;
   });
@@ -62,33 +63,11 @@ export default function Sign() {
         )}
 
         <div className="flex flex-row justify-center items-center">
-          {isKeyInfoComplete ? (
-            isNext ? (
-              <>
-                <div
-                  className="flex flex-col justify-center items-center p 1 mr-2"
-                  onClick={handleStep}
-                >
-                  <SignupBtn title="Back" />
-                </div>
-                <div
-                  className="flex flex-col justify-center items-center p 1 ml-2"
-                  onClick={handleStep}
-                >
-                  <SignupBtn title={"Sign In"} />
-                </div>
-              </>
-            ) : (
-              <div
-                className="flex flex-col justify-center items-center p 1"
-                onClick={handleStep}
-              >
-                <SignupBtn title="Next" />
-              </div>
-            )
-          ) : (
-            <></>
-          )}
+          <ConditionBtnGroup
+            isKeyInfoComplete={isKeyInfoComplete}
+            isNext={isNext}
+            handleStep={handleStep}
+          />
         </div>
       </div>
     </div>
