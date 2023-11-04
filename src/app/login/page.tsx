@@ -3,8 +3,8 @@
 import { useState } from "react";
 import { useAppSelector } from "../module/hooks/reduxHooks";
 import Progressbar from "../component/ui/progressbar/Progressbar";
-import KeyInfo from "../component/pages/enterLoginInfo/KeyInfo";
-import AdditionalInfo from "../component/pages/enterLoginInfo/AdditionalInfo";
+import KeyInfo from "../component/pages/loginInfo/KeyInfo";
+import AdditionalInfo from "../component/pages/loginInfo/AdditionalInfo";
 import ConditionBtnGroup from "../component/ui/button/condition/conditionBtnGroup";
 
 export default function Sign() {
