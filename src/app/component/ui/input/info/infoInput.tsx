@@ -6,13 +6,12 @@ import {
 } from "@/app/store/reducers/checkReducer";
 import { InputLabel } from "../../label/Inputlabel";
 import { InputIconlabel } from "../../label/InputIconlabel";
-import { EmailInfoProps } from "@/app/types";
+import { InfoInputProps } from "@/app/types";
 import { useInput } from "@/app/module/hooks/reactHooks/useInput";
 import { moduleFetch } from "@/app/module/utils/moduleFetch";
 import inputValidate from "@/app/module/utils/inputValidate";
-import { AiOutlineMail } from "react-icons/ai";
 
-export default function InfoInput(props: EmailInfoProps) {
+export default function InfoInput(props: InfoInputProps) {
   const dispatch = useAppDispatch();
   const inputData = useInput("");
   const isCheck = useAppSelector((state) => {
@@ -67,7 +66,7 @@ export default function InfoInput(props: EmailInfoProps) {
     <>
       <InputLabel title={props.title} />
       <div className="flex relative mt-2 mb-6">
-        <InputIconlabel icon={<AiOutlineMail />} />
+        <InputIconlabel icon={props.icon} />
         <input
           type="text"
           {...inputData}

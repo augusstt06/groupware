@@ -30,10 +30,11 @@ export type ConditionBtnElementProps = {
 };
 
 // input
-export type EmailInfoProps = {
+export type InfoInputProps = {
   title: string;
   placeholder: string;
   checkValid: boolean;
+  icon: React.ReactNode;
 };
 
 export type PwdInfoProps = {
@@ -45,7 +46,7 @@ export type PwdInfoProps = {
   setIsPwdVerifyView: React.Dispatch<SetStateAction<boolean>>;
 };
 
-export type PwdInputProps = EmailInfoProps & {
+export type PwdInputProps = InfoInputProps & {
   icon: React.ReactNode;
   isPwdView: boolean;
   setIsPwdView: React.Dispatch<SetStateAction<boolean>>;
