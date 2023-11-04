@@ -5,7 +5,7 @@ import { useAppSelector } from "../module/hooks/reduxHooks";
 import Progressbar from "../component/ui/progressbar/Progressbar";
 import KeyInfo from "../component/pages/loginInfo/KeyInfo";
 import AdditionalInfo from "../component/pages/loginInfo/AdditionalInfo";
-import ConditionBtnGroup from "../component/ui/button/condition/conditionBtnGroup";
+import ConditionBtnGroup from "../component/ui/button/condition/ConditionBtnGroup";
 
 export default function Sign() {
   const [isPwdView, setIsPwdView] = useState(false);
