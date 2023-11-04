@@ -7,6 +7,9 @@ type State = {
   isPwdCheck: {
     check: boolean;
   };
+  isPwdVerifyCheck: {
+    check: boolean;
+  };
   isNameCheck: {
     check: boolean;
   };
@@ -21,13 +24,14 @@ type State = {
 const initialState: State = {
   isEmailCheck: { check: false },
   isPwdCheck: { check: false },
+  isPwdVerifyCheck: { check: false },
   isNameCheck: { check: false },
   isTeamCheck: { check: false },
   isPhoneNumCheck: { check: false },
 };
 
-export const validSlice = createSlice({
-  name: "duplicate Slice",
+export const checkSlice = createSlice({
+  name: "checkReducer",
   initialState,
   reducers: {
     emailCheckReducer(state) {
@@ -44,8 +48,15 @@ export const validSlice = createSlice({
         state.isPwdCheck.check = false;
       }
     },
+    pwdVerifyCheckReducer(state) {
+      if (!state.isPwdVerifyCheck.check) {
+        state.isPwdVerifyCheck.check = true;
+      } else {
+        state.isPwdVerifyCheck.check = false;
+      }
+    },
     nameCheckReducer(state) {
-      if (!state.isNameCheck.check) {
+      if (!state.isPwdVerifyCheck.check) {
         state.isNameCheck.check = true;
       } else {
         state.isNameCheck.check = false;
@@ -71,9 +82,10 @@ export const validSlice = createSlice({
 export const {
   emailCheckReducer,
   pwdCheckReducer,
+  pwdVerifyCheckReducer,
   nameCheckReducer,
   teamCheckReducer,
   phoneNumCheckReducer,
-} = validSlice.actions;
+} = checkSlice.actions;
 
-export default validSlice.reducer;
+export default checkSlice.reducer;

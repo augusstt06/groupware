@@ -2,13 +2,13 @@
 
 import { configureStore } from "@reduxjs/toolkit";
 
-import validReducer from "./reducers/validReducer";
-import verifyPwdReducer from "./reducers/verifyPwdReducer";
+import checkReducer from "./reducers/checkReducer";
+import pwdReducer from "./reducers/pwdReducer";
 
 export const store = configureStore({
   reducer: {
-    isLoginInfoInputValid: validReducer,
-    verifyPassword: verifyPwdReducer,
+    isLoginInfoCheck: checkReducer,
+    pwdState: pwdReducer,
   },
 });
 
