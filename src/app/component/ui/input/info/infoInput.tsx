@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from "@/app/module/hooks/reduxHooks";
 import {
   emailCheckReducer,
   phoneNumCheckReducer,
-} from "@/app/store/reducers/validReducer";
+} from "@/app/store/reducers/checkReducer";
 import { InputLabel } from "../../label/Inputlabel";
 import { InputIconlabel } from "../../label/InputIconlabel";
 import { EmailInfoProps } from "@/app/types";
@@ -12,20 +12,19 @@ import { moduleFetch } from "@/app/module/utils/moduleFetch";
 import inputValidate from "@/app/module/utils/inputValidate";
 import { AiOutlineMail } from "react-icons/ai";
 
-export default function EmailInfo(props: EmailInfoProps) {
-  // 근데 생각해보니까 중복체크 하는거 말고는 체크를 따로 안하는데 입력 완료를 어케 구분해야 할까.....
+export default function InfoInput(props: EmailInfoProps) {
   const dispatch = useAppDispatch();
   const inputData = useInput("");
   const isCheck = useAppSelector((state) => {
     switch (props.title) {
       case "Email":
-        return state.isLoginInfoInputValid.isEmailCheck.check;
+        return state.isLoginInfoCheck.isEmailCheck.check;
       case "Name":
-        return state.isLoginInfoInputValid.isNameCheck.check;
+        return state.isLoginInfoCheck.isNameCheck.check;
       case "Teams":
-        return state.isLoginInfoInputValid.isTeamCheck.check;
+        return state.isLoginInfoCheck.isTeamCheck.check;
       case "PhoneNumber":
-        return state.isLoginInfoInputValid.isPhoneNumCheck.check;
+        return state.isLoginInfoCheck.isPhoneNumCheck.check;
     }
   });
 

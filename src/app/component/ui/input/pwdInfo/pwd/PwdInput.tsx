@@ -2,9 +2,45 @@ import { PwdInputProps } from "@/app/types";
 import { InputLabel, InputlabelAdd } from "../../../label/Inputlabel";
 import { InputIconlabel } from "../../../label/InputIconlabel";
 import { useInput } from "@/app/module/hooks/reactHooks/useInput";
+import { useAppDispatch, useAppSelector } from "@/app/module/hooks/reduxHooks";
+import inputValidate from "@/app/module/utils/inputValidate";
+import { moduleFetch } from "@/app/module/utils/moduleFetch";
+import { pwdCheckReducer } from "@/app/store/reducers/checkReducer";
+import { pwdStateReducer } from "@/app/store/reducers/pwdReducer";
 
 export default function PwdInput(props: PwdInputProps) {
-  const inputData = useInput("");
+  const dispatch = useAppDispatch();
+  const pwdInputData = useInput("");
+
+  const isCheck = useAppSelector((state) => {
+    return state.isLoginInfoCheck.isPwdCheck.check;
+  });
+  const fetchProps = {
+    inputData: pwdInputData.value,
+    // 추후 환경변수로 변경
+    fetchUrl: "process.env.CHECK_EMAIL_AVAILABLE_API_URL",
+  };
+
+  const inputValidateProps = {
+    inputData: pwdInputData.value,
+    dataType: "pwd",
+  };
+
+  const handleFetchPwdInputAvailable = async () => {
+    const isValid = inputValidate(inputValidateProps);
+    if (!isValid) return;
+    try {
+      const res = await moduleFetch(fetchProps);
+      dispatch(pwdCheckReducer());
+      dispatch(pwdStateReducer({ pwd: pwdInputData.value }));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const testClick = () => {
+    dispatch(pwdCheckReducer());
+    dispatch(pwdStateReducer({ pwd: pwdInputData.value }));
+  };
   return (
     <>
       <InputLabel title={props.title} />
@@ -20,7 +56,7 @@ export default function PwdInput(props: PwdInputProps) {
         <InputIconlabel icon={props.icon} />
         <input
           type={props.isPwdView ? "text" : "password"}
-          {...inputData}
+          {...pwdInputData}
           id={props.title}
           className="rounded-none rounded-r-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder={props.placeholder}
@@ -30,10 +66,10 @@ export default function PwdInput(props: PwdInputProps) {
             <input
               type="checkbox"
               className="cursor-pointer w-5 h-5"
-              checked={props.checked}
+              checked={isCheck}
               // onChange={() => fetchPwdAvailable()}
               // 상태값 테스트 코드
-              onChange={props.testClick}
+              onChange={testClick}
             />
           </div>
         ) : (

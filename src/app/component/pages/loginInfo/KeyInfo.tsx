@@ -1,6 +1,6 @@
 import { KeyInfoTypeProps } from "@/app/types";
 import PwdInfo from "../../ui/input/pwdInfo/PwdInfo";
-import EmailInfo from "../../ui/input/emailInfo/EmailInfo";
+import EmailInfo from "../../ui/input/info/infoInput";
 
 export default function KeyInfo(props: KeyInfoTypeProps) {
   return (
