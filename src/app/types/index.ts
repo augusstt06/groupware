@@ -75,6 +75,10 @@ export type ProgressbarProps = {
 export type SidebarProps = {
   nav: boolean;
 };
+
+// Stepper
+export type StepperProps = {};
+
 //// page
 export type KeyInfoTypeProps = {
   isPwdView: boolean;

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useAppSelector } from "../module/hooks/reduxHooks";
-import Progressbar from "../component/ui/progressbar/Progressbar";
+import Stepper from "../component/ui/stepper/Stepper";
 import KeyInfo from "../component/pages/loginInfo/KeyInfo";
 import AdditionalInfo from "../component/pages/loginInfo/AdditionalInfo";
 import ConditionBtnGroup from "../component/ui/button/condition/ConditionBtnGroup";
@@ -45,12 +45,6 @@ export default function Sign() {
   return (
     <div className="flex flex-col justify-center items-center p 1">
       <div className="mt-10 w-3/5">
-        <div className="mb-5">
-          <Progressbar
-            completedItems={items.completedItems}
-            allItems={items.allItems}
-          />
-        </div>
         {!isKeyInfoComplete || !isNext ? (
           <KeyInfo
             isPwdView={isPwdView}
@@ -68,6 +62,9 @@ export default function Sign() {
             isNext={isNext}
             handleStep={handleStep}
           />
+        </div>
+        <div className="mb-5">
+          <Stepper />
         </div>
       </div>
     </div>
