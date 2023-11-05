@@ -5,7 +5,7 @@ import { useAppSelector } from "../module/hooks/reduxHooks";
 import Stepper from "../component/ui/stepper/Stepper";
 import KeyInfo from "../component/pages/loginInfo/KeyInfo";
 import AdditionalInfo from "../component/pages/loginInfo/AdditionalInfo";
-import ConditionBtnGroup from "../component/ui/button/condition/ConditionBtnGroup";
+import ConditionBtnGroup from "../component/ui/button/ConditionBtnGroup";
 
 export default function Sign() {
   const [isPwdView, setIsPwdView] = useState(false);

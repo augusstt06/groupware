@@ -1,7 +1,8 @@
 import { ConditionBtnElementProps, ConditionBtnProps } from "@/app/types";
-import { SignupBtn } from "../LoginBtn";
+import { SignupBtn } from "./LoginBtn";
 
 export default function ConditionBtnGroup(props: ConditionBtnProps) {
+  //
   const btnClass = "flex flex-col justify-center items-center p 1";
   return (
     <>
