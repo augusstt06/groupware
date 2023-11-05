@@ -5,7 +5,7 @@ import PwdVerifyInput from "@/app/component/ui/input/pwdInfo/pwdVerify/PwdVerify
 import { RiLockPasswordFill } from "react-icons/ri";
 import { Si1Password } from "react-icons/si";
 
-export default function PwdInfo(props: PwdInfoProps) {
+export default function PwdInfoInputs(props: PwdInfoProps) {
   return (
     <>
       <PwdInput

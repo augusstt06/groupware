@@ -5,10 +5,12 @@ import { BsFillPersonVcardFill, BsMicrosoftTeams } from "react-icons/bs";
 import { AiFillPhone } from "react-icons/ai";
 import { FaCheck } from "react-icons/fa";
 import { useAppSelector } from "@/app/module/hooks/reduxHooks";
+import { createSelector } from "@reduxjs/toolkit";
 
 export default function Stepper() {
   // 각 항목 완료여부
   // 상태 업데이트 안되는 문제 해결하기!
+
   const isMailComplete = useAppSelector((state) => {
     return state.isLoginInfoCheck.isEmailCheck.check;
   });
@@ -64,6 +66,7 @@ export default function Stepper() {
     return className;
   };
 
+  // 여기가 업데이트 안됨
   const [checkList, setCheckList] = useState([
     {
       title: "mail",
