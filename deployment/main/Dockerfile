@@ -1,4 +1,7 @@
-FROM 250075647450.dkr.ecr.ap-northeast-2.amazonaws.com/groupware-frontend:base as base 
+FROM node:20-alpine as base 
+
+RUN npm install -g pnpm 
+
 WORKDIR /app
 
 FROM base as build
