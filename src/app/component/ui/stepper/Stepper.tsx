@@ -8,6 +8,7 @@ import { useAppSelector } from "@/app/module/hooks/reduxHooks";
 
 export default function Stepper() {
   // 각 항목 완료여부
+  // 상태 업데이트 안되는 문제 해결하기!
   const isMailComplete = useAppSelector((state) => {
     return state.isLoginInfoCheck.isEmailCheck.check;
   });
