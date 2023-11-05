@@ -5,10 +5,10 @@ import { BsFillPersonVcardFill, BsMicrosoftTeams } from "react-icons/bs";
 import { AiFillPhone } from "react-icons/ai";
 import { FaCheck } from "react-icons/fa";
 import { useAppSelector } from "@/app/module/hooks/reduxHooks";
+import { createSelector } from "@reduxjs/toolkit";
 
 export default function Stepper() {
-  // 각 항목 완료여부
-  // 상태 업데이트 안되는 문제 해결하기!
+  // useSelector => createSelector 최적화하기
   const isMailComplete = useAppSelector((state) => {
     return state.isLoginInfoCheck.isEmailCheck.check;
   });
@@ -30,7 +30,6 @@ export default function Stepper() {
     return state.isLoginInfoCheck.isPhoneNumCheck.check;
   });
 
-  // 완료여부에따라 classname 변경
   const tailwindLi = (title: string, complete: boolean) => {
     const completeColor = complete
       ? "text-indigo-500 font-bold"
@@ -64,13 +63,12 @@ export default function Stepper() {
     return className;
   };
 
-  const [checkList, setCheckList] = useState([
+  const checkList = [
     {
       title: "mail",
       icon: <AiOutlineMail />,
       isComplete: isMailComplete,
     },
-    // 여기엔 비밀번호 입력/확인 둘다 포함
     {
       title: "pwd",
       icon: <RiLockPasswordFill />,
@@ -91,7 +89,7 @@ export default function Stepper() {
       icon: <AiFillPhone />,
       isComplete: isPhoneNumComplete,
     },
-  ]);
+  ];
   console.log(checkList);
 
   return (

@@ -62,7 +62,6 @@ export default function InfoInput(props: InfoInputProps) {
     }
   };
 
-  console.log(isCheck, "??여긴 입력컴포넌트");
   return (
     <>
       <InputLabel title={props.title} />
