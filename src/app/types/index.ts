@@ -89,9 +89,13 @@ export type KeyInfoTypeProps = {
 
 /// module
 // utils
-export type ModuleFetchProps = {
+export type ModuleGetFetchProps = {
+  data: string;
+  fetchUrl?: string;
+};
+export type ModulePostFetchProps = {
+  fetchUrl?: string;
   inputData: string;
-  fetchUrl: string;
 };
 
 export type InputValidateProps = {

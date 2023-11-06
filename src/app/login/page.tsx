@@ -29,19 +29,6 @@ export default function Sign() {
     }
   };
 
-  const [items, setItems] = useState({
-    allItems: 5,
-    completedItems: 0,
-  });
-
-  const itemCompleted = () => {
-    if (items.completedItems === items.allItems) return;
-    setItems({
-      allItems: 5,
-      completedItems: items.completedItems + 1,
-    });
-  };
-
   return (
     <div className="flex flex-col justify-center items-center p 1">
       <div className="mt-10 w-3/5">

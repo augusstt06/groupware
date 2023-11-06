@@ -90,7 +90,6 @@ export default function Stepper() {
       isComplete: isPhoneNumComplete,
     },
   ];
-  console.log(checkList);
 
   return (
     <ul className="flex flex-row items-center judtify-center w-full">

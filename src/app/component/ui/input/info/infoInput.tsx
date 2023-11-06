@@ -8,7 +8,7 @@ import { InputLabel } from "../../label/Inputlabel";
 import { InputIconlabel } from "../../label/InputIconlabel";
 import { InfoInputProps } from "@/app/types";
 import { useInput } from "@/app/module/hooks/reactHooks/useInput";
-import { moduleFetch } from "@/app/module/utils/moduleFetch";
+import { moduleGetFetch } from "@/app/module/utils/moduleFetch";
 import inputValidate from "@/app/module/utils/inputValidate";
 
 export default function InfoInput(props: InfoInputProps) {
@@ -28,10 +28,10 @@ export default function InfoInput(props: InfoInputProps) {
   });
 
   const fetchProps = {
-    inputData: inputData.value,
-    // 추후에 환경변수로 변경
-    fetchUrl: "process.env.CHECK_EMAIL_AVAILABLE_API_URL",
+    data: inputData.value,
+    fetchUrl: process.env.NEXT_PUBLIC_EMAIL_REQ_SOURCE,
   };
+
   const inputValidateProps = {
     inputData: inputData.value,
     dataType: "email",
@@ -41,24 +41,15 @@ export default function InfoInput(props: InfoInputProps) {
     const isValid = inputValidate(inputValidateProps);
     if (!isValid) return;
     try {
-      const fetchData = await moduleFetch(fetchProps);
-      // 추후에 프로퍼티 수정하기
+      const fetchData = await moduleGetFetch(fetchProps);
       console.log(fetchData);
       if (props.title === "Email") {
         dispatch(emailCheckReducer());
-      } else {
-        dispatch(phoneNumCheckReducer());
       }
+      alert("이메일 확인이 완료되었습니다.");
     } catch (err) {
       console.log(err);
-    }
-  };
-
-  const testClick = () => {
-    if (props.title === "Email") {
-      dispatch(emailCheckReducer());
-    } else {
-      dispatch(phoneNumCheckReducer());
+      alert("다른 이메일을 사용해 주세요.");
     }
   };
 
@@ -81,9 +72,7 @@ export default function InfoInput(props: InfoInputProps) {
               type="checkbox"
               className="cursor-pointer w-5 h-5"
               checked={isCheck}
-              // onChange={() => fetchEmailAvaiable()}
-              // 상태값 테스트 코드
-              onChange={testClick}
+              onChange={() => fetchInputAvaiable()}
             />
           </div>
         ) : (

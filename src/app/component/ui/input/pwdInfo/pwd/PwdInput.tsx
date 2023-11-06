@@ -4,7 +4,7 @@ import { InputIconlabel } from "../../../label/InputIconlabel";
 import { useInput } from "@/app/module/hooks/reactHooks/useInput";
 import { useAppDispatch, useAppSelector } from "@/app/module/hooks/reduxHooks";
 import inputValidate from "@/app/module/utils/inputValidate";
-import { moduleFetch } from "@/app/module/utils/moduleFetch";
+import { modulePostFetch } from "@/app/module/utils/moduleFetch";
 import { pwdCheckReducer } from "@/app/store/reducers/checkReducer";
 import { pwdStateReducer } from "@/app/store/reducers/pwdReducer";
 
@@ -18,7 +18,7 @@ export default function PwdInput(props: PwdInputProps) {
   const fetchProps = {
     inputData: pwdInputData.value,
     // 추후 환경변수로 변경
-    fetchUrl: "process.env.CHECK_EMAIL_AVAILABLE_API_URL",
+    fetchUrl: process.env.NEXT_PUBLIC_PWD_REQ_SOURCE,
   };
 
   const inputValidateProps = {
@@ -30,7 +30,7 @@ export default function PwdInput(props: PwdInputProps) {
     const isValid = inputValidate(inputValidateProps);
     if (!isValid) return;
     try {
-      const res = await moduleFetch(fetchProps);
+      const res = await modulePostFetch(fetchProps);
       dispatch(pwdCheckReducer());
       dispatch(pwdStateReducer({ pwd: pwdInputData.value }));
     } catch (err) {

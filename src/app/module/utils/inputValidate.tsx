@@ -22,15 +22,6 @@ const inputValidate = (props: InputValidateProps) => {
       }
     }
   }
-  alert(
-    `사용가능한 ${
-      props.dataType === "email"
-        ? "이메일"
-        : props.dataType === "pwd"
-        ? "비밀번호"
-        : "전화번호"
-    }입니다.`
-  );
   return true;
 };
 
