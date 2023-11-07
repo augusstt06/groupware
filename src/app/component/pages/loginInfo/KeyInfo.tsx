@@ -17,8 +17,8 @@ export default function KeyInfo(props: KeyInfoTypeProps) {
         checkValid={true}
         isPwdView={props.isPwdView}
         setIsPwdView={props.setIsPwdView}
-        isPwdVerifyView={props.isPwdVerifyView}
-        setIsPwdVerifyView={props.setIsPwdVerifyView}
+        isPwdConfirmView={props.isPwdConfirmView}
+        setIsPwdConfirmView={props.setIsPwdConfirmView}
       />
     </>
   );

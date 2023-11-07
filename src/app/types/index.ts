@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from "react";
+import React, { SetStateAction } from "react";
 
 ////// basic
 export type ReactProps = {
@@ -47,8 +47,8 @@ export type PwdInfoProps = {
   checkValid: boolean;
   isPwdView: boolean;
   setIsPwdView: React.Dispatch<SetStateAction<boolean>>;
-  isPwdVerifyView: boolean;
-  setIsPwdVerifyView: React.Dispatch<SetStateAction<boolean>>;
+  isPwdConfirmView: boolean;
+  setIsPwdConfirmView: React.Dispatch<SetStateAction<boolean>>;
 };
 
 export type PwdInputProps = InfoInputProps & {
@@ -57,12 +57,12 @@ export type PwdInputProps = InfoInputProps & {
   setIsPwdView: React.Dispatch<SetStateAction<boolean>>;
 };
 
-export type PwdVerifyInput = {
+export type PwdConfirmInput = {
   title: string;
   placeholder: string;
   icon: React.ReactNode;
-  isPwdVerifyView: boolean;
-  setIsPwdVerifyView: React.Dispatch<SetStateAction<boolean>>;
+  isPwdConfirmView: boolean;
+  setIsPwdConfirmView: React.Dispatch<SetStateAction<boolean>>;
 };
 
 // label
@@ -88,8 +88,8 @@ export type StepperProps = {};
 export type KeyInfoTypeProps = {
   isPwdView: boolean;
   setIsPwdView: React.Dispatch<SetStateAction<boolean>>;
-  isPwdVerifyView: boolean;
-  setIsPwdVerifyView: React.Dispatch<SetStateAction<boolean>>;
+  isPwdConfirmView: boolean;
+  setIsPwdConfirmView: React.Dispatch<SetStateAction<boolean>>;
 };
 
 /// module

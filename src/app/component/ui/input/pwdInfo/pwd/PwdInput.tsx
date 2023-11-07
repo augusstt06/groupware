@@ -4,15 +4,14 @@ import { InputIconlabel } from "../../../label/InputIconlabel";
 import { useInput } from "@/app/module/hooks/reactHooks/useInput";
 import { useAppDispatch, useAppSelector } from "@/app/module/hooks/reduxHooks";
 import inputValidate from "@/app/module/utils/inputValidate";
-import { pwdCheckReducer } from "@/app/store/reducers/checkReducer";
-import { pwdStateReducer } from "@/app/store/reducers/pwdReducer";
+import { pwdReducer } from "@/app/store/reducers/loginInfoReducer";
 
 export default function PwdInput(props: PwdInputProps) {
   const dispatch = useAppDispatch();
   const pwdInputData = useInput("");
 
   const isCheck = useAppSelector((state) => {
-    return state.isLoginInfoCheck.isPwdCheck.check;
+    return state.loginInfo.pwd.isCheck;
   });
 
   const inputValidateProps = {
@@ -23,8 +22,7 @@ export default function PwdInput(props: PwdInputProps) {
   const handlePwdInput = () => {
     const isValid = inputValidate(inputValidateProps);
     if (!isValid) return;
-    dispatch(pwdCheckReducer({ check: true, value: pwdInputData.value }));
-    dispatch(pwdStateReducer({ pwd: pwdInputData.value }));
+    dispatch(pwdReducer({ isCheck: true, value: pwdInputData.value }));
   };
   return (
     <>

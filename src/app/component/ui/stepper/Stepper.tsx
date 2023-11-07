@@ -10,24 +10,24 @@ import { createSelector } from "@reduxjs/toolkit";
 export default function Stepper() {
   // useSelector => createSelector 최적화하기
   const isMailComplete = useAppSelector((state) => {
-    return state.isLoginInfoCheck.isEmailCheck.check;
+    return state.loginInfo.email.isCheck;
   });
   const isPwdComplete = useAppSelector((state) => {
-    const pwdComplete = state.isLoginInfoCheck.isPwdCheck.check;
-    const pwdVerifyComplete = state.isLoginInfoCheck.isPwdVerifyCheck.check;
-    if (pwdComplete && pwdVerifyComplete) {
+    const pwdCheck = state.loginInfo.pwd.isCheck;
+    const pwdConfirmCheck = state.loginInfo.pwdConfirm.isCheck;
+    if (pwdCheck && pwdConfirmCheck) {
       return true;
     }
     return false;
   });
   const isNameComplete = useAppSelector((state) => {
-    return state.isLoginInfoCheck.isNameCheck.check;
+    return state.loginInfo.name.isCheck;
   });
   const isTeamComplete = useAppSelector((state) => {
-    return state.isLoginInfoCheck.isTeamCheck.check;
+    return state.loginInfo.team.isCheck;
   });
   const isPhoneNumComplete = useAppSelector((state) => {
-    return state.isLoginInfoCheck.isPhoneNumCheck.check;
+    return state.loginInfo.phoneNumber.isCheck;
   });
 
   const tailwindLi = (title: string, complete: boolean) => {

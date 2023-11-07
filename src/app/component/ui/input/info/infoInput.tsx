@@ -1,9 +1,9 @@
 import React from "react";
 import { useAppDispatch, useAppSelector } from "@/app/module/hooks/reduxHooks";
 import {
-  emailCheckReducer,
-  phoneNumCheckReducer,
-} from "@/app/store/reducers/checkReducer";
+  emailReducer,
+  phoneNumberReducer,
+} from "@/app/store/reducers/loginInfoReducer";
 import { InputLabel } from "../../label/Inputlabel";
 import { InputIconlabel } from "../../label/InputIconlabel";
 import { InfoInputProps } from "@/app/types";
@@ -17,13 +17,13 @@ export default function InfoInput(props: InfoInputProps) {
   const isCheck = useAppSelector((state) => {
     switch (props.title) {
       case "Email":
-        return state.isLoginInfoCheck.isEmailCheck.check;
+        return state.loginInfo.email.isCheck;
       case "Name":
-        return state.isLoginInfoCheck.isNameCheck.check;
+        return state.loginInfo.name.isCheck;
       case "Teams":
-        return state.isLoginInfoCheck.isTeamCheck.check;
+        return state.loginInfo.team.isCheck;
       case "PhoneNumber":
-        return state.isLoginInfoCheck.isPhoneNumCheck.check;
+        return state.loginInfo.phoneNumber.isCheck;
     }
   });
 
@@ -44,7 +44,7 @@ export default function InfoInput(props: InfoInputProps) {
       const res = await moduleGetFetch(fetchProps);
       console.log(res);
       if (props.title === "Email") {
-        dispatch(emailCheckReducer({ check: true, value: inputData.value }));
+        dispatch(emailReducer({ isCheck: true, value: inputData.value }));
       }
       alert("이메일 확인이 완료되었습니다.");
     } catch (err) {

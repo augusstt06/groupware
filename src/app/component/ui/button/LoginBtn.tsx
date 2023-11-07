@@ -6,19 +6,19 @@ import { modulePostFetch } from "@/app/module/utils/moduleFetch";
 
 export function SignupBtn(props: SignupBtnProps) {
   const emailValue = useAppSelector((state) => {
-    return state.isLoginInfoCheck.isEmailCheck.value;
+    return state.loginInfo.email.value;
   });
   const pwdValue = useAppSelector((state) => {
-    return state.isLoginInfoCheck.isPwdCheck.value;
+    return state.loginInfo.pwd.value;
   });
-  const pwdVerifyValue = useAppSelector((state) => {
-    return state.isLoginInfoCheck.isPwdVerifyCheck.value;
+  const pwdConfirmValue = useAppSelector((state) => {
+    return state.loginInfo.pwdConfirm.value;
   });
   const fetchProps = {
     data: {
       email: emailValue,
       password: pwdValue,
-      password_confirm: pwdVerifyValue,
+      password_confirm: pwdConfirmValue,
     },
     fetchUrl: process.env.NEXT_PUBLIC_REGISTER_SOURCE,
   };
