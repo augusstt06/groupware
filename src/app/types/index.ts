@@ -17,6 +17,10 @@ export type BtnProps = {
   title: string;
 };
 
+export type SignupBtnProps = BtnProps & {
+  isKeyInfoComplete: boolean;
+};
+
 export type ConditionBtnProps = {
   isKeyInfoComplete: boolean;
   isNext: boolean;
@@ -25,6 +29,7 @@ export type ConditionBtnProps = {
 
 export type ConditionBtnElementProps = {
   title: string;
+  isKeyInfoComplete: boolean;
   handleStep: () => void;
   tailwindClass: string;
 };
@@ -94,8 +99,8 @@ export type ModuleGetFetchProps = {
   fetchUrl?: string;
 };
 export type ModulePostFetchProps = {
+  data: object;
   fetchUrl?: string;
-  inputData: string;
 };
 
 export type InputValidateProps = {

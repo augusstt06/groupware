@@ -10,9 +10,7 @@ export const moduleGetFetch = (props: ModuleGetFetchProps) => {
 };
 
 export const modulePostFetch = (props: ModulePostFetchProps) => {
-  const res = axios.post(`${props.fetchUrl}`, {
-    data: props.inputData,
-  });
+  const res = axios.post(`${props.fetchUrl}`, props.data);
 
   return res;
 };

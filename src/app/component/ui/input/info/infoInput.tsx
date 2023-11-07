@@ -41,10 +41,10 @@ export default function InfoInput(props: InfoInputProps) {
     const isValid = inputValidate(inputValidateProps);
     if (!isValid) return;
     try {
-      const fetchData = await moduleGetFetch(fetchProps);
-      console.log(fetchData);
+      const res = await moduleGetFetch(fetchProps);
+      console.log(res);
       if (props.title === "Email") {
-        dispatch(emailCheckReducer());
+        dispatch(emailCheckReducer({ check: true, value: inputData.value }));
       }
       alert("이메일 확인이 완료되었습니다.");
     } catch (err) {

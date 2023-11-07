@@ -1,4 +1,5 @@
 import { SignupBtn } from "./component/ui/button/LoginBtn";
+import { NavigateBtn } from "./component/ui/button/NavigateBtn";
 import Link from "next/link";
 
 export default function Home() {
@@ -13,7 +14,7 @@ export default function Home() {
       <div className="text-medium font-semibold mb-10">other comments...</div>
       <div>
         <Link href={"/login"}>
-          <SignupBtn title="Sign Up for Free" />
+          <NavigateBtn title="Sign Up for Free" />
         </Link>
       </div>
     </main>

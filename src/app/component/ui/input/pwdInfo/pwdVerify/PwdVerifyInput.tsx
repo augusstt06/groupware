@@ -27,7 +27,9 @@ export default function PwdVerifyInput(props: PwdVerifyInput) {
       setIsVerify(false);
       return;
     } else {
-      dispatch(pwdVerifyCheckReducer());
+      dispatch(
+        pwdVerifyCheckReducer({ check: true, value: pwdVerifyInputData.value })
+      );
       setIsVerify(true);
     }
   };
