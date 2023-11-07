@@ -9,14 +9,14 @@ import ConditionBtnGroup from "../component/ui/button/ConditionBtnGroup";
 
 export default function Sign() {
   const [isPwdView, setIsPwdView] = useState(false);
-  const [isPwdVerifyView, setIsPwdVerifyView] = useState(false);
+  const [isPwdConfirmView, setisPwdConfirmView] = useState(false);
   const [isNext, setIsNext] = useState(false);
 
   const isKeyInfoComplete = useAppSelector((state) => {
-    const isEmailComplete = state.isLoginInfoCheck.isEmailCheck.check;
-    const isPwdComplete = state.isLoginInfoCheck.isPwdCheck.check;
-    const isPwdVerifyComplete = state.isLoginInfoCheck.isPwdVerifyCheck.check;
-    if (isEmailComplete && isPwdComplete && isPwdVerifyComplete) {
+    const isEmailComplete = state.loginInfo.email.isCheck;
+    const isPwdComplete = state.loginInfo.pwd.isCheck;
+    const isPwdConfirmComplete = state.loginInfo.pwdConfirm.isCheck;
+    if (isEmailComplete && isPwdComplete && isPwdConfirmComplete) {
       return true;
     } else return false;
   });
@@ -29,28 +29,16 @@ export default function Sign() {
     }
   };
 
-  const [items, setItems] = useState({
-    allItems: 5,
-    completedItems: 0,
-  });
-
-  const itemCompleted = () => {
-    if (items.completedItems === items.allItems) return;
-    setItems({
-      allItems: 5,
-      completedItems: items.completedItems + 1,
-    });
-  };
-
   return (
+    // redirection main page after login or sign up
     <div className="flex flex-col justify-center items-center p 1">
       <div className="mt-10 w-3/5">
         {!isKeyInfoComplete || !isNext ? (
           <KeyInfo
             isPwdView={isPwdView}
             setIsPwdView={setIsPwdView}
-            isPwdVerifyView={isPwdVerifyView}
-            setIsPwdVerifyView={setIsPwdVerifyView}
+            isPwdConfirmView={isPwdConfirmView}
+            setIsPwdConfirmView={setisPwdConfirmView}
           />
         ) : (
           <AdditionalInfo />

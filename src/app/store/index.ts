@@ -2,13 +2,11 @@
 
 import { configureStore } from "@reduxjs/toolkit";
 
-import checkReducer from "./reducers/checkReducer";
-import pwdReducer from "./reducers/pwdReducer";
+import loginInfoReducer from "./reducers/loginInfoReducer";
 
 export const store = configureStore({
   reducer: {
-    isLoginInfoCheck: checkReducer,
-    pwdState: pwdReducer,
+    loginInfo: loginInfoReducer,
   },
 });
 

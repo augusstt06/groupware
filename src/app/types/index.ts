@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from "react";
+import React, { SetStateAction } from "react";
 
 ////// basic
 export type ReactProps = {
@@ -17,6 +17,10 @@ export type BtnProps = {
   title: string;
 };
 
+export type SignupBtnProps = BtnProps & {
+  isKeyInfoComplete: boolean;
+};
+
 export type ConditionBtnProps = {
   isKeyInfoComplete: boolean;
   isNext: boolean;
@@ -25,6 +29,7 @@ export type ConditionBtnProps = {
 
 export type ConditionBtnElementProps = {
   title: string;
+  isKeyInfoComplete: boolean;
   handleStep: () => void;
   tailwindClass: string;
 };
@@ -42,8 +47,8 @@ export type PwdInfoProps = {
   checkValid: boolean;
   isPwdView: boolean;
   setIsPwdView: React.Dispatch<SetStateAction<boolean>>;
-  isPwdVerifyView: boolean;
-  setIsPwdVerifyView: React.Dispatch<SetStateAction<boolean>>;
+  isPwdConfirmView: boolean;
+  setIsPwdConfirmView: React.Dispatch<SetStateAction<boolean>>;
 };
 
 export type PwdInputProps = InfoInputProps & {
@@ -52,12 +57,12 @@ export type PwdInputProps = InfoInputProps & {
   setIsPwdView: React.Dispatch<SetStateAction<boolean>>;
 };
 
-export type PwdVerifyInput = {
+export type PwdConfirmInput = {
   title: string;
   placeholder: string;
   icon: React.ReactNode;
-  isPwdVerifyView: boolean;
-  setIsPwdVerifyView: React.Dispatch<SetStateAction<boolean>>;
+  isPwdConfirmView: boolean;
+  setIsPwdConfirmView: React.Dispatch<SetStateAction<boolean>>;
 };
 
 // label
@@ -83,15 +88,19 @@ export type StepperProps = {};
 export type KeyInfoTypeProps = {
   isPwdView: boolean;
   setIsPwdView: React.Dispatch<SetStateAction<boolean>>;
-  isPwdVerifyView: boolean;
-  setIsPwdVerifyView: React.Dispatch<SetStateAction<boolean>>;
+  isPwdConfirmView: boolean;
+  setIsPwdConfirmView: React.Dispatch<SetStateAction<boolean>>;
 };
 
 /// module
 // utils
-export type ModuleFetchProps = {
-  inputData: string;
-  fetchUrl: string;
+export type ModuleGetFetchProps = {
+  data: string;
+  fetchUrl?: string;
+};
+export type ModulePostFetchProps = {
+  data: object;
+  fetchUrl?: string;
 };
 
 export type InputValidateProps = {

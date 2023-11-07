@@ -1,7 +1,7 @@
 import React from "react";
 import { PwdInfoProps } from "@/app/types";
 import PwdInput from "@/app/component/ui/input/pwdInfo/pwd/PwdInput";
-import PwdVerifyInput from "@/app/component/ui/input/pwdInfo/pwdVerify/PwdVerifyInput";
+import PwdConfirmInput from "@/app/component/ui/input/pwdInfo/pwdConfirm/PwdConfirmInput";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { Si1Password } from "react-icons/si";
 
@@ -16,12 +16,12 @@ export default function PwdInfoInputs(props: PwdInfoProps) {
         isPwdView={props.isPwdView}
         setIsPwdView={props.setIsPwdView}
       />
-      <PwdVerifyInput
+      <PwdConfirmInput
         title="Verify Password"
         placeholder="Please Re-enter your password"
         icon={<Si1Password />}
-        isPwdVerifyView={props.isPwdVerifyView}
-        setIsPwdVerifyView={props.setIsPwdVerifyView}
+        isPwdConfirmView={props.isPwdConfirmView}
+        setIsPwdConfirmView={props.setIsPwdConfirmView}
       />
     </>
   );

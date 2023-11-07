@@ -14,23 +14,14 @@ const inputValidate = (props: InputValidateProps) => {
     if (!pwdRegex.test(props.inputData)) {
       alert("8-20사이의 영어대소문자, 특수문자, 숫자를 포함해주세요.");
       return false;
-    } else {
-      const phoneNumRegex = /^01(?:0|1|[6-9])(?:\d{3}|\d{4})\d{4}$/;
-      if (!phoneNumRegex.test(props.dataType)) {
-        alert("- 를 뺴고 입력해주세요");
-        return false;
-      }
+    }
+  } else {
+    const phoneNumRegex = /^01(?:0|1|[6-9])(?:\d{3}|\d{4})\d{4}$/;
+    if (!phoneNumRegex.test(props.dataType)) {
+      alert("- 를 뺴고 입력해주세요");
+      return false;
     }
   }
-  alert(
-    `사용가능한 ${
-      props.dataType === "email"
-        ? "이메일"
-        : props.dataType === "pwd"
-        ? "비밀번호"
-        : "전화번호"
-    }입니다.`
-  );
   return true;
 };
 
