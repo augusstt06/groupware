@@ -5,7 +5,8 @@ import { PwdConfirmInput } from "@/app/types";
 
 import { useAppDispatch, useAppSelector } from "@/app/module/hooks/reduxHooks";
 import { useInput } from "@/app/module/hooks/reactHooks/useInput";
-import { pwdConfirmReducer } from "@/app/store/reducers/loginInfoReducer";
+// import { pwdConfirmReducer } from "@/app/store/reducers/loginInfoReducer";
+import { pwdReducer } from "@/app/store/reducers/loginInfoReducer";
 
 export default function PwdConfirmInput(props: PwdConfirmInput) {
   const dispatch = useAppDispatch();
@@ -13,7 +14,7 @@ export default function PwdConfirmInput(props: PwdConfirmInput) {
 
   const [isPwdConfirm, setIsPwdConfirm] = useState(false);
   const pwdState = useAppSelector((state) => {
-    return state.loginInfo.pwd.value;
+    return state.loginInfo.pwd.pwdValue;
   });
 
   const handlConfirmPwd = () => {
@@ -27,11 +28,13 @@ export default function PwdConfirmInput(props: PwdConfirmInput) {
       return;
     } else {
       dispatch(
-        pwdConfirmReducer({
+        pwdReducer({
           isCheck: true,
-          value: pwdConfirmInputData.value,
+          pwdValue: pwdState,
+          pwdConfirmValue: pwdConfirmInputData.value,
         })
       );
+
       setIsPwdConfirm(true);
     }
   };

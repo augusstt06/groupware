@@ -43,7 +43,6 @@ export type InfoInputProps = {
 };
 
 export type PwdInfoProps = {
-  placeholder: string;
   checkValid: boolean;
   isPwdView: boolean;
   setIsPwdView: React.Dispatch<SetStateAction<boolean>>;

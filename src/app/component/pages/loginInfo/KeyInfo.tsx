@@ -13,7 +13,6 @@ export default function KeyInfo(props: KeyInfoTypeProps) {
         checkValid={true}
       />
       <PwdInfoInputs
-        placeholder="abc12@sample.com"
         checkValid={true}
         isPwdView={props.isPwdView}
         setIsPwdView={props.setIsPwdView}

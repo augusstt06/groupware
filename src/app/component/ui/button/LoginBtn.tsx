@@ -9,10 +9,10 @@ export function SignupBtn(props: SignupBtnProps) {
     return state.loginInfo.email.value;
   });
   const pwdValue = useAppSelector((state) => {
-    return state.loginInfo.pwd.value;
+    return state.loginInfo.pwd.pwdValue;
   });
   const pwdConfirmValue = useAppSelector((state) => {
-    return state.loginInfo.pwdConfirm.value;
+    return state.loginInfo.pwd.pwdConfirmValue;
   });
   const fetchProps = {
     data: {
@@ -22,7 +22,6 @@ export function SignupBtn(props: SignupBtnProps) {
     },
     fetchUrl: process.env.NEXT_PUBLIC_REGISTER_SOURCE,
   };
-
   const handleSignin = async () => {
     if (!props.isKeyInfoComplete || props.title === "Next") return;
     try {

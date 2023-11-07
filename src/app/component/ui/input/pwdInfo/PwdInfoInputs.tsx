@@ -9,15 +9,15 @@ export default function PwdInfoInputs(props: PwdInfoProps) {
   return (
     <>
       <PwdInput
-        title="Password"
-        placeholder="At least 6 characters, A-Z a-z 0-9 !@$%^"
+        title="Password / A-Z a-z 0-9 !@$%^ 포함"
+        placeholder="At least 6 characters"
         icon={<RiLockPasswordFill />}
         checkValid={props.checkValid}
         isPwdView={props.isPwdView}
         setIsPwdView={props.setIsPwdView}
       />
       <PwdConfirmInput
-        title="Verify Password"
+        title="Confirm Password"
         placeholder="Please Re-enter your password"
         icon={<Si1Password />}
         isPwdConfirmView={props.isPwdConfirmView}

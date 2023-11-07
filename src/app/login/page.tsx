@@ -15,8 +15,8 @@ export default function Sign() {
   const isKeyInfoComplete = useAppSelector((state) => {
     const isEmailComplete = state.loginInfo.email.isCheck;
     const isPwdComplete = state.loginInfo.pwd.isCheck;
-    const isPwdConfirmComplete = state.loginInfo.pwdConfirm.isCheck;
-    if (isEmailComplete && isPwdComplete && isPwdConfirmComplete) {
+
+    if (isEmailComplete && isPwdComplete) {
       return true;
     } else return false;
   });

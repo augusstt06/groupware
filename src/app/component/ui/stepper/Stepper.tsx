@@ -14,11 +14,7 @@ export default function Stepper() {
   });
   const isPwdComplete = useAppSelector((state) => {
     const pwdCheck = state.loginInfo.pwd.isCheck;
-    const pwdConfirmCheck = state.loginInfo.pwdConfirm.isCheck;
-    if (pwdCheck && pwdConfirmCheck) {
-      return true;
-    }
-    return false;
+    return pwdCheck;
   });
   const isNameComplete = useAppSelector((state) => {
     return state.loginInfo.name.isCheck;
