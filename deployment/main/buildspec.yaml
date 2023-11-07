@@ -9,8 +9,8 @@ phases:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...
-      # - aws s3 cp s3://$S3_BUCKET_NAME/frontend/.env .
-      - docker buildx build --platform=linux/arm64 -t $IMAGE_REPO_NAME:latest -f deployment/main/Dockerfile .
+      - aws s3 cp s3://$S3_BUCKET_NAME/frontend/.env .
+      - docker build -t $IMAGE_REPO_NAME:latest -f deployment/main/Dockerfile .
       - docker tag $IMAGE_REPO_NAME:latest $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:latest
   post_build:
     commands:
