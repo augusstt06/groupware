@@ -16,6 +16,6 @@ COPY deployment/main/run.sh /app/
 
 RUN chmod +x /app/run.sh
 
-ENTRYPOINT [ "sh", "/app/run.sh" ]
+ENTRYPOINT [ "/bin/sh", "/app/run.sh" ]
 
 EXPOSE 3000 80
