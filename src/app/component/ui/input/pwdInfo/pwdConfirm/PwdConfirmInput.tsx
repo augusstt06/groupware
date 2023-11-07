@@ -1,34 +1,38 @@
 import { useState } from "react";
 import { InputIconlabel } from "../../../label/InputIconlabel";
 import { InputLabel, InputlabelAdd } from "../../../label/Inputlabel";
-import { PwdVerifyInput } from "@/app/types";
+import { PwdConfirmInput } from "@/app/types";
+
 import { useAppDispatch, useAppSelector } from "@/app/module/hooks/reduxHooks";
 import { useInput } from "@/app/module/hooks/reactHooks/useInput";
-import { pwdStateReducer } from "@/app/store/reducers/pwdReducer";
-import { pwdVerifyCheckReducer } from "@/app/store/reducers/checkReducer";
+import { pwdConfirmReducer } from "@/app/store/reducers/loginInfoReducer";
 
-export default function PwdVerifyInput(props: PwdVerifyInput) {
+export default function PwdConfirmInput(props: PwdConfirmInput) {
   const dispatch = useAppDispatch();
-  const pwdVerifyInputData = useInput("");
+  const pwdConfirmInputData = useInput("");
 
-  const [isVerify, setIsVerify] = useState(false);
+  const [isPwdConfirm, setIsPwdConfirm] = useState(false);
   const pwdState = useAppSelector((state) => {
-    return state.pwdState.pwd;
+    return state.loginInfo.pwd.value;
   });
 
-  const handlVerifyPwd = () => {
+  const handlConfirmPwd = () => {
     if (pwdState === "") {
       alert("먼저 비밀번호 입력 및 사용가능한지 확인하세요.");
       return;
     }
-    dispatch(pwdStateReducer({ pwd: pwdState }));
-    if (pwdState !== pwdVerifyInputData.value) {
+    if (pwdState !== pwdConfirmInputData.value) {
       alert("비밀번호가 일치하지 않습니다. 다시 입력해주세요");
-      setIsVerify(false);
+      setIsPwdConfirm(false);
       return;
     } else {
-      dispatch(pwdVerifyCheckReducer());
-      setIsVerify(true);
+      dispatch(
+        pwdConfirmReducer({
+          isCheck: true,
+          value: pwdConfirmInputData.value,
+        })
+      );
+      setIsPwdConfirm(true);
     }
   };
 
@@ -39,15 +43,15 @@ export default function PwdVerifyInput(props: PwdVerifyInput) {
       <input
         type="checkbox"
         className="ml-2"
-        defaultChecked={props.isPwdVerifyView}
-        onChange={() => props.setIsPwdVerifyView(!props.isPwdVerifyView)}
+        defaultChecked={props.isPwdConfirmView}
+        onChange={() => props.setIsPwdConfirmView(!props.isPwdConfirmView)}
       />
 
       <div className="flex relative mt-2 mb-3">
         <InputIconlabel icon={props.icon} />
         <input
-          type={props.isPwdVerifyView ? "text" : "password"}
-          {...pwdVerifyInputData}
+          type={props.isPwdConfirmView ? "text" : "password"}
+          {...pwdConfirmInputData}
           id={props.title}
           className="rounded-none rounded-r-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder={props.placeholder}
@@ -57,8 +61,8 @@ export default function PwdVerifyInput(props: PwdVerifyInput) {
           <input
             type="checkbox"
             className="cursor-pointer w-5 h-5"
-            checked={isVerify}
-            onChange={handlVerifyPwd}
+            checked={isPwdConfirm}
+            onChange={handlConfirmPwd}
           />
         </div>
       </div>
