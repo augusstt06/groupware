@@ -6,13 +6,17 @@ WORKDIR /app
 
 FROM base as build
 
+WORKDIR /app
+
 COPY . .
 RUN pnpm install
 RUN pnpm build
 
-FROM base as execute
+FROM build as execute
 
-COPY deployment/main/run.sh /app/
+WORKDIR /app
+
+COPY deployment/main/run.sh .
 
 RUN chmod +x /app/run.sh
 
