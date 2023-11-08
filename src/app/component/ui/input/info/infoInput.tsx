@@ -42,16 +42,15 @@ export default function InfoInput(props: InfoInputProps) {
       inputData.value = ''
       return
     }
-    const res = await moduleGetFetch(fetchProps)
-    console.log(res)
+    await moduleGetFetch(fetchProps)
+
     if (props.title === 'Email') {
       dispatch(emailReducer({ isCheck: true, value: inputData.value }))
     }
     alert('이메일 확인이 완료되었습니다.')
   }
   const handleChangeInputCheckbox = () => {
-    fetchInputAvaiable().catch((err) => {
-      console.log(err)
+    fetchInputAvaiable().catch(() => {
       alert('다른 이메일을 사용해 주세요.')
     })
   }

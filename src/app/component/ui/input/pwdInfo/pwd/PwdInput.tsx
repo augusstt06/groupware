@@ -3,14 +3,12 @@ import { useEffect } from 'react'
 import { InputIconlabel } from '../../../label/InputIconlabel'
 import { InputLabel, InputlabelAdd } from '../../../label/Inputlabel'
 
-
 import { useInput } from '@/app/module/hooks/reactHooks/useInput'
 import { useAppDispatch } from '@/app/module/hooks/reduxHooks'
 import { pwdReducer } from '@/app/store/reducers/loginInfoReducer'
 import { type PwdInputProps } from '@/app/types'
 
-
-export default function PwdInput (props: PwdInputProps) {
+export default function PwdInput(props: PwdInputProps) {
   const dispatch = useAppDispatch()
   const pwdInputData = useInput('')
 
@@ -19,8 +17,8 @@ export default function PwdInput (props: PwdInputProps) {
       pwdReducer({
         isCheck: false,
         pwdValue: pwdInputData.value,
-        pwdConfirmValue: ''
-      })
+        pwdConfirmValue: '',
+      }),
     )
   }, [pwdInputData.value, dispatch])
   return (
@@ -31,7 +29,9 @@ export default function PwdInput (props: PwdInputProps) {
         type="checkbox"
         className="ml-2"
         defaultChecked={props.isPwdView}
-        onChange={() => { props.setIsPwdView(!props.isPwdView) }}
+        onChange={() => {
+          props.setIsPwdView(!props.isPwdView)
+        }}
       />
 
       <div className="flex relative mt-2 mb-3">

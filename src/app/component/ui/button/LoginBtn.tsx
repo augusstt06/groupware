@@ -26,13 +26,12 @@ export function SignupBtn(props: SignupBtnProps) {
   const fetchSignin = async () => {
     if (!props.isKeyInfoComplete || props.title === 'Next') return
 
-    const res = await modulePostFetch(fetchProps)
-    console.log(res)
+    await modulePostFetch(fetchProps)
+
     alert('회원가입이 완료되었습니다.')
   }
   const handleClickBtn = () => {
-    fetchSignin().catch((err) => {
-      console.log(err)
+    fetchSignin().catch(() => {
       alert('회원가입이 실패했습니다.')
     })
   }

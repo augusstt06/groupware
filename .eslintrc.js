@@ -61,6 +61,7 @@ module.exports = {
         },
       },
     ],
+    'no-console': ['error'],
   },
   ignorePatterns: ['.eslintrc.js', 'inputValidate.tsx'],
 }

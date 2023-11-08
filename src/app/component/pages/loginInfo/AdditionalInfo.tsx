@@ -3,7 +3,7 @@ import { BsFillPersonVcardFill, BsMicrosoftTeams } from 'react-icons/bs'
 
 import InfoInput from '../../ui/input/info/infoInput'
 
-export default function AdditionalInfo () {
+export default function AdditionalInfo() {
   return (
     <>
       <InfoInput

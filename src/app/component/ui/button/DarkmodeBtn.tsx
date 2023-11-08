@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 import { useTheme } from 'next-themes'
 import { BsMoon, BsSunFill } from 'react-icons/bs'
 
-export default function DarkmodeBtn () {
+export default function DarkmodeBtn() {
   const [mounted, setMounted] = useState(false)
   const { systemTheme, theme, setTheme } = useTheme()
 
@@ -24,13 +24,11 @@ export default function DarkmodeBtn () {
 
   return (
     <div>
-      {currentTheme === 'dark'
-        ? (
+      {currentTheme === 'dark' ? (
         <BsSunFill onClick={changeThemeMode('light')} />
-          )
-        : (
+      ) : (
         <BsMoon onClick={changeThemeMode('dark')} />
-          )}
+      )}
     </div>
   )
 }

@@ -5,8 +5,7 @@ import PwdInfoInputs from '../../ui/input/pwdInfo/PwdInfoInputs'
 
 import { type KeyInfoTypeProps } from '@/app/types'
 
-
-export default function KeyInfo (props: KeyInfoTypeProps) {
+export default function KeyInfo(props: KeyInfoTypeProps) {
   return (
     <>
       <InfoInput

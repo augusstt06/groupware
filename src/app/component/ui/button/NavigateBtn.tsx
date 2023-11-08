@@ -1,6 +1,6 @@
 import { type BtnProps } from '@/app/types'
 
-export function NavigateBtn (props: BtnProps) {
+export function NavigateBtn(props: BtnProps) {
   return (
     <button
       type="button"

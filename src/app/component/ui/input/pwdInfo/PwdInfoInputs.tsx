@@ -7,7 +7,7 @@ import PwdInput from '@/app/component/ui/input/pwdInfo/pwd/PwdInput'
 import PwdConfirmInput from '@/app/component/ui/input/pwdInfo/pwdConfirm/PwdConfirmInput'
 import { type PwdInfoProps } from '@/app/types'
 
-export default function PwdInfoInputs (props: PwdInfoProps) {
+export default function PwdInfoInputs(props: PwdInfoProps) {
   return (
     <>
       <PwdInput

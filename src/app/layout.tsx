@@ -4,7 +4,7 @@ import { ReduxProvider } from './providers/reduxProvider'
 import CustomThemeProvider from './providers/themeProvider'
 import { type ReactProps } from './types'
 
-export default function RootLayout ({ children }: ReactProps) {
+export default function RootLayout({ children }: ReactProps) {
   return (
     <ReduxProvider>
       <html lang="en" suppressHydrationWarning={true}>

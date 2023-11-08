@@ -5,7 +5,7 @@ export const useInput = (state: string) => {
   const [value, setValue] = useState('')
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {
-      target: { value }
+      target: { value },
     } = e
     setValue(value)
   }

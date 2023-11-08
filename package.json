@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
-    "lint:fix": "eslint --ext .ts,.tsx . --fix",
+    "lint:fix": "eslint --fix './src/**/*.{js,jsx,ts,tsx}'",
+    "prettier:fix": "prettier --write './src/**/*.{js,jsx,ts,tsx}'",
+    "check-conflict-formatting-rules": "eslint-config-prettier './src/**/*.{js,jsx,ts,tsx}'",
     "prepare": "husky install"
   },
   "dependencies": {
@@ -36,9 +38,17 @@
     "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-react": "^7.33.2",
     "husky": "^8.0.3",
+    "lint-staged": "^15.0.2",
     "postcss": "^8",
     "prettier": "^3.0.3",
     "tailwindcss": "^3",
     "typescript": "^5.2.2"
+  },
+  "lint-staged": {
+    "./src/**/*.{js,jsx,ts,tsx}": [
+      "pnpm run check-conflict-formatting-rules",
+      "pnpm run prettier:fix",
+      "pnpm run lint:fix"
+    ]
   }
 }
