@@ -1,14 +1,11 @@
-import { useState } from "react";
 import { AiOutlineMail } from "react-icons/ai";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { BsFillPersonVcardFill, BsMicrosoftTeams } from "react-icons/bs";
 import { AiFillPhone } from "react-icons/ai";
 import { FaCheck } from "react-icons/fa";
 import { useAppSelector } from "@/app/module/hooks/reduxHooks";
-import { createSelector } from "@reduxjs/toolkit";
 
 export default function Stepper() {
-  // useSelector => createSelector 최적화하기
   const isMailComplete = useAppSelector((state) => {
     return state.loginInfo.email.isCheck;
   });

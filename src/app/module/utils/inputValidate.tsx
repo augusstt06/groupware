@@ -15,12 +15,6 @@ const inputValidate = (props: InputValidateProps) => {
       alert("8-20사이의 영어대소문자, 특수문자, 숫자를 포함해주세요.");
       return false;
     }
-  } else {
-    const phoneNumRegex = /^01(?:0|1|[6-9])(?:\d{3}|\d{4})\d{4}$/;
-    if (!phoneNumRegex.test(props.dataType)) {
-      alert("- 를 뺴고 입력해주세요");
-      return false;
-    }
   }
   return true;
 };

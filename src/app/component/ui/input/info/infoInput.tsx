@@ -1,9 +1,6 @@
 import React from "react";
 import { useAppDispatch, useAppSelector } from "@/app/module/hooks/reduxHooks";
-import {
-  emailReducer,
-  phoneNumberReducer,
-} from "@/app/store/reducers/loginInfoReducer";
+import { emailReducer } from "@/app/store/reducers/loginInfoReducer";
 import { InputLabel } from "../../label/Inputlabel";
 import { InputIconlabel } from "../../label/InputIconlabel";
 import { InfoInputProps } from "@/app/types";

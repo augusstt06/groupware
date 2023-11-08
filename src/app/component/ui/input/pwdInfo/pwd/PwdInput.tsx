@@ -2,8 +2,7 @@ import { PwdInputProps } from "@/app/types";
 import { InputLabel, InputlabelAdd } from "../../../label/Inputlabel";
 import { InputIconlabel } from "../../../label/InputIconlabel";
 import { useInput } from "@/app/module/hooks/reactHooks/useInput";
-import { useAppDispatch, useAppSelector } from "@/app/module/hooks/reduxHooks";
-import inputValidate from "@/app/module/utils/inputValidate";
+import { useAppDispatch } from "@/app/module/hooks/reduxHooks";
 import { pwdReducer } from "@/app/store/reducers/loginInfoReducer";
 import { useEffect } from "react";
 
@@ -19,7 +18,7 @@ export default function PwdInput(props: PwdInputProps) {
         pwdConfirmValue: "",
       })
     );
-  }, [pwdInputData.value]);
+  }, [pwdInputData.value, dispatch]);
   return (
     <>
       <InputLabel title={props.title} />

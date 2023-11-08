@@ -2,10 +2,8 @@ import { useState } from "react";
 import { InputIconlabel } from "../../../label/InputIconlabel";
 import { InputLabel, InputlabelAdd } from "../../../label/Inputlabel";
 import { PwdConfirmInput } from "@/app/types";
-
 import { useAppDispatch, useAppSelector } from "@/app/module/hooks/reduxHooks";
 import { useInput } from "@/app/module/hooks/reactHooks/useInput";
-// import { pwdConfirmReducer } from "@/app/store/reducers/loginInfoReducer";
 import { pwdReducer } from "@/app/store/reducers/loginInfoReducer";
 
 export default function PwdConfirmInput(props: PwdConfirmInput) {
