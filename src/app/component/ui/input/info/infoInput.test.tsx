@@ -13,3 +13,12 @@
 // expect(infoInput).toBeInTheDocument()
 // expect(container).toMatchSnapshot()
 // })
+
+describe('테스트', () => {
+  // define all tasks you have to do before run tests.
+  beforeAll(() => {})
+
+  it('', () => {})
+
+  it('', () => {})
+})
