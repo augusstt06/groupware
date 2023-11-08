@@ -1,4 +1,4 @@
-import { BtnProps } from "@/app/types";
+import { type BtnProps } from '@/app/types'
 
 export function InputLabel(props: BtnProps) {
   return (
@@ -8,13 +8,11 @@ export function InputLabel(props: BtnProps) {
     >
       {props.title}
     </label>
-  );
+  )
 }
 
 export function InputlabelAdd(props: BtnProps) {
   return (
-    <label className="mb-2 text-sm font-medium text-gray-900 dark:text-white">
-      {props.title}
-    </label>
-  );
+    <label className="mb-2 text-sm font-medium text-gray-900 dark:text-white">{props.title}</label>
+  )
 }

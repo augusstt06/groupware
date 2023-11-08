@@ -1,40 +1,42 @@
-import { useState } from "react";
-import { InputIconlabel } from "../../../label/InputIconlabel";
-import { InputLabel, InputlabelAdd } from "../../../label/Inputlabel";
-import { PwdConfirmInput } from "@/app/types";
+import { useState } from 'react'
 
-import { useAppDispatch, useAppSelector } from "@/app/module/hooks/reduxHooks";
-import { useInput } from "@/app/module/hooks/reactHooks/useInput";
-import { pwdConfirmReducer } from "@/app/store/reducers/loginInfoReducer";
+import { InputIconlabel } from '../../../label/InputIconlabel'
+import { InputLabel, InputlabelAdd } from '../../../label/Inputlabel'
 
-export default function PwdConfirmInput(props: PwdConfirmInput) {
-  const dispatch = useAppDispatch();
-  const pwdConfirmInputData = useInput("");
+import { useInput } from '@/app/module/hooks/reactHooks/useInput'
+import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
+import { pwdReducer } from '@/app/store/reducers/loginInfoReducer'
+import { type PwdConfirmInputProps } from '@/app/types'
 
-  const [isPwdConfirm, setIsPwdConfirm] = useState(false);
+export default function PwdConfirmInput(props: PwdConfirmInputProps) {
+  const dispatch = useAppDispatch()
+  const pwdConfirmInputData = useInput('')
+
+  const [isPwdConfirm, setIsPwdConfirm] = useState(false)
   const pwdState = useAppSelector((state) => {
-    return state.loginInfo.pwd.value;
-  });
+    return state.loginInfo.pwd.pwdValue
+  })
 
   const handlConfirmPwd = () => {
-    if (pwdState === "") {
-      alert("먼저 비밀번호 입력 및 사용가능한지 확인하세요.");
-      return;
+    if (pwdState === '') {
+      alert('먼저 비밀번호 입력 및 사용가능한지 확인하세요.')
+      return
     }
     if (pwdState !== pwdConfirmInputData.value) {
-      alert("비밀번호가 일치하지 않습니다. 다시 입력해주세요");
-      setIsPwdConfirm(false);
-      return;
+      alert('비밀번호가 일치하지 않습니다. 다시 입력해주세요')
+      setIsPwdConfirm(false)
     } else {
       dispatch(
-        pwdConfirmReducer({
+        pwdReducer({
           isCheck: true,
-          value: pwdConfirmInputData.value,
-        })
-      );
-      setIsPwdConfirm(true);
+          pwdValue: pwdState,
+          pwdConfirmValue: pwdConfirmInputData.value,
+        }),
+      )
+
+      setIsPwdConfirm(true)
     }
-  };
+  }
 
   return (
     <>
@@ -44,13 +46,15 @@ export default function PwdConfirmInput(props: PwdConfirmInput) {
         type="checkbox"
         className="ml-2"
         defaultChecked={props.isPwdConfirmView}
-        onChange={() => props.setIsPwdConfirmView(!props.isPwdConfirmView)}
+        onChange={() => {
+          props.setIsPwdConfirmView(!props.isPwdConfirmView)
+        }}
       />
 
       <div className="flex relative mt-2 mb-3">
         <InputIconlabel icon={props.icon} />
         <input
-          type={props.isPwdConfirmView ? "text" : "password"}
+          type={props.isPwdConfirmView ? 'text' : 'password'}
           {...pwdConfirmInputData}
           id={props.title}
           className="rounded-none rounded-r-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -67,5 +71,5 @@ export default function PwdConfirmInput(props: PwdConfirmInput) {
         </div>
       </div>
     </>
-  );
+  )
 }

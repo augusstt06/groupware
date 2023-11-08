@@ -1,7 +1,9 @@
-import { KeyInfoTypeProps } from "@/app/types";
-import PwdInfoInputs from "../../ui/input/pwdInfo/PwdInfoInputs";
-import InfoInput from "../../ui/input/info/infoInput";
-import { AiOutlineMail } from "react-icons/ai";
+import { AiOutlineMail } from 'react-icons/ai'
+
+import InfoInput from '../../ui/input/info/infoInput'
+import PwdInfoInputs from '../../ui/input/pwdInfo/PwdInfoInputs'
+
+import { type KeyInfoTypeProps } from '@/app/types'
 
 export default function KeyInfo(props: KeyInfoTypeProps) {
   return (
@@ -13,7 +15,6 @@ export default function KeyInfo(props: KeyInfoTypeProps) {
         checkValid={true}
       />
       <PwdInfoInputs
-        placeholder="abc12@sample.com"
         checkValid={true}
         isPwdView={props.isPwdView}
         setIsPwdView={props.setIsPwdView}
@@ -21,5 +22,5 @@ export default function KeyInfo(props: KeyInfoTypeProps) {
         setIsPwdConfirmView={props.setIsPwdConfirmView}
       />
     </>
-  );
+  )
 }

@@ -1,95 +1,79 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 
 type State = {
   email: {
-    isCheck: boolean;
-    value: string;
-  };
+    isCheck: boolean
+    value: string
+  }
   pwd: {
-    isCheck: boolean;
-    value: string;
-  };
-  pwdConfirm: {
-    isCheck: boolean;
-    value: string;
-  };
+    isCheck: boolean
+    pwdValue: string
+    pwdConfirmValue: string
+  }
   name: {
-    isCheck: boolean;
-  };
+    isCheck: boolean
+  }
   team: {
-    isCheck: boolean;
-  };
+    isCheck: boolean
+  }
   phoneNumber: {
-    isCheck: boolean;
-  };
-};
+    isCheck: boolean
+  }
+}
 
 const initialState: State = {
-  email: { isCheck: false, value: "" },
-  pwd: { isCheck: false, value: "" },
-  pwdConfirm: { isCheck: false, value: "" },
+  email: { isCheck: false, value: '' },
+  pwd: { isCheck: false, pwdValue: '', pwdConfirmValue: '' },
   name: { isCheck: false },
   team: { isCheck: false },
   phoneNumber: { isCheck: false },
-};
+}
 
 export const loginInfoSlice = createSlice({
-  name: "isCheckReducer",
+  name: 'loginInfoReducer',
   initialState,
   reducers: {
-    emailReducer(
-      state,
-      action: PayloadAction<{ isCheck: boolean; value: string }>
-    ) {
-      state.email.isCheck = action.payload.isCheck;
-      state.email.value = action.payload.value;
+    emailReducer(state, action: PayloadAction<{ isCheck: boolean; value: string }>) {
+      state.email.isCheck = action.payload.isCheck
+      state.email.value = action.payload.value
     },
     pwdReducer(
       state,
-      action: PayloadAction<{ isCheck: boolean; value: string }>
+      action: PayloadAction<{
+        isCheck: boolean
+        pwdValue: string
+        pwdConfirmValue: string
+      }>,
     ) {
-      state.pwd.isCheck = action.payload.isCheck;
-      state.pwd.value = action.payload.value;
-    },
-    pwdConfirmReducer(
-      state,
-      action: PayloadAction<{ isCheck: boolean; value: string }>
-    ) {
-      state.pwdConfirm.isCheck = action.payload.isCheck;
-      state.pwdConfirm.value = action.payload.value;
+      state.pwd.isCheck = action.payload.isCheck
+      state.pwd.pwdValue = action.payload.pwdValue
+      state.pwd.pwdConfirmValue = action.payload.pwdConfirmValue
     },
     nameReducer(state) {
-      if (!state.pwdConfirm.isCheck) {
-        state.name.isCheck = true;
+      if (!state.pwd.isCheck) {
+        state.name.isCheck = true
       } else {
-        state.name.isCheck = false;
+        state.name.isCheck = false
       }
     },
     teamReducer(state) {
       if (!state.team.isCheck) {
-        state.team.isCheck = true;
+        state.team.isCheck = true
       } else {
-        state.team.isCheck = false;
+        state.team.isCheck = false
       }
     },
     phoneNumberReducer(state) {
       if (!state.phoneNumber.isCheck) {
-        state.phoneNumber.isCheck = true;
+        state.phoneNumber.isCheck = true
       } else {
-        state.phoneNumber.isCheck = false;
+        state.phoneNumber.isCheck = false
       }
     },
   },
-});
+})
 
-export const {
-  emailReducer,
-  pwdReducer,
-  pwdConfirmReducer,
-  nameReducer,
-  teamReducer,
-  phoneNumberReducer,
-} = loginInfoSlice.actions;
+export const { emailReducer, pwdReducer, nameReducer, teamReducer, phoneNumberReducer } =
+  loginInfoSlice.actions
 
-export default loginInfoSlice.reducer;
+export default loginInfoSlice.reducer
