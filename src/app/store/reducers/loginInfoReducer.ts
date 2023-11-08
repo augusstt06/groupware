@@ -1,6 +1,6 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 
-interface State {
+type State = {
   email: {
     isCheck: boolean
     value: string

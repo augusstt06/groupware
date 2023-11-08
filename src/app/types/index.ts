@@ -2,19 +2,19 @@ import { type SetStateAction } from 'react'
 import type React from 'react'
 
 /// /// basic
-export interface ReactProps {
+export type ReactProps = {
   children: React.ReactNode
 }
 
 /// /// component
 /// / ui
 // button
-export interface HamburgerProps {
+export type HamburgerProps = {
   nav: boolean
   setNav: (nav: boolean) => void
 }
 
-export interface BtnProps {
+export type BtnProps = {
   title: string
 }
 
@@ -22,13 +22,13 @@ export type SignupBtnProps = BtnProps & {
   isKeyInfoComplete: boolean
 }
 
-export interface ConditionBtnProps {
+export type ConditionBtnProps = {
   isKeyInfoComplete: boolean
   isNext: boolean
   handleStep: () => void
 }
 
-export interface ConditionBtnElementProps {
+export type ConditionBtnElementProps = {
   title: string
   isKeyInfoComplete: boolean
   handleStep: () => void
@@ -36,14 +36,14 @@ export interface ConditionBtnElementProps {
 }
 
 // input
-export interface InfoInputProps {
+export type InfoInputProps = {
   title: string
   placeholder: string
   checkValid: boolean
   icon: React.ReactNode
 }
 
-export interface PwdInfoProps {
+export type PwdInfoProps = {
   checkValid: boolean
   isPwdView: boolean
   setIsPwdView: React.Dispatch<SetStateAction<boolean>>
@@ -57,7 +57,7 @@ export type PwdInputProps = InfoInputProps & {
   setIsPwdView: React.Dispatch<SetStateAction<boolean>>
 }
 
-export interface PwdConfirmInputProps {
+export type PwdConfirmInputProps = {
   title: string
   placeholder: string
   icon: React.ReactNode
@@ -66,25 +66,25 @@ export interface PwdConfirmInputProps {
 }
 
 // label
-export interface InputIconLabelProps {
+export type InputIconLabelProps = {
   icon: React.ReactNode
 }
 
 // progressbar
-export interface ProgressbarProps {
+export type ProgressbarProps = {
   allItems: number
   completedItems: number
 }
 
 // sidebar
-export interface SidebarProps {
+export type SidebarProps = {
   nav: boolean
 }
 
 // Stepper
 
 /// / page
-export interface KeyInfoTypeProps {
+export type KeyInfoTypeProps = {
   isPwdView: boolean
   setIsPwdView: React.Dispatch<SetStateAction<boolean>>
   isPwdConfirmView: boolean
@@ -93,16 +93,16 @@ export interface KeyInfoTypeProps {
 
 /// module
 // utils
-export interface ModuleGetFetchProps {
+export type ModuleGetFetchProps = {
   data: string
   fetchUrl?: string
 }
-export interface ModulePostFetchProps {
+export type ModulePostFetchProps = {
   data: object
   fetchUrl?: string
 }
 
-export interface InputValidateProps {
+export type InputValidateProps = {
   inputData: string
   dataType: string
 }
