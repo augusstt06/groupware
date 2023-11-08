@@ -1,35 +1,36 @@
-"use client";
+'use client'
 
-import { BsSunFill, BsMoon } from "react-icons/bs";
-import { useState, useEffect } from "react";
-import { useTheme } from "next-themes";
+import { useEffect, useState } from 'react'
 
-type Darkmode = {};
+import { useTheme } from 'next-themes'
+import { BsMoon, BsSunFill } from 'react-icons/bs'
 
-export default function DarkmodeBtn({}: Darkmode) {
-  const [mounted, setMounted] = useState(false);
-  const { systemTheme, theme, setTheme } = useTheme();
+export default function DarkmodeBtn () {
+  const [mounted, setMounted] = useState(false)
+  const { systemTheme, theme, setTheme } = useTheme()
 
   useEffect(() => {
-    setMounted(true);
-  }, []);
+    setMounted(true)
+  }, [])
 
   if (!mounted) {
-    return null;
+    return null
   }
   const changeThemeMode = (mode: string) => () => {
-    setTheme(mode);
-  };
+    setTheme(mode)
+  }
 
-  const currentTheme = theme === "system" ? systemTheme : theme;
+  const currentTheme = theme === 'system' ? systemTheme : theme
 
   return (
     <div>
-      {currentTheme === "dark" ? (
-        <BsSunFill onClick={changeThemeMode("light")} />
-      ) : (
-        <BsMoon onClick={changeThemeMode("dark")} />
-      )}
+      {currentTheme === 'dark'
+        ? (
+        <BsSunFill onClick={changeThemeMode('light')} />
+          )
+        : (
+        <BsMoon onClick={changeThemeMode('dark')} />
+          )}
     </div>
-  );
+  )
 }

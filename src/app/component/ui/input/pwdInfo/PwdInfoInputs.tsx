@@ -1,11 +1,13 @@
-import React from "react";
-import { PwdInfoProps } from "@/app/types";
-import PwdInput from "@/app/component/ui/input/pwdInfo/pwd/PwdInput";
-import PwdConfirmInput from "@/app/component/ui/input/pwdInfo/pwdConfirm/PwdConfirmInput";
-import { RiLockPasswordFill } from "react-icons/ri";
-import { Si1Password } from "react-icons/si";
+import React from 'react'
 
-export default function PwdInfoInputs(props: PwdInfoProps) {
+import { RiLockPasswordFill } from 'react-icons/ri'
+import { Si1Password } from 'react-icons/si'
+
+import PwdInput from '@/app/component/ui/input/pwdInfo/pwd/PwdInput'
+import PwdConfirmInput from '@/app/component/ui/input/pwdInfo/pwdConfirm/PwdConfirmInput'
+import { type PwdInfoProps } from '@/app/types'
+
+export default function PwdInfoInputs (props: PwdInfoProps) {
   return (
     <>
       <PwdInput
@@ -24,5 +26,5 @@ export default function PwdInfoInputs(props: PwdInfoProps) {
         setIsPwdConfirmView={props.setIsPwdConfirmView}
       />
     </>
-  );
+  )
 }

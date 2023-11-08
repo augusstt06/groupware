@@ -1,18 +1,14 @@
-import Link from "next/link";
-import React from "react";
-import { SidebarProps } from "@/app/types";
+import { type SidebarProps } from '@/app/types'
 
 export default function Sidebar(props: SidebarProps) {
   const menu = [
-    { name: "menu1", url: "/" },
-    { name: "menu2", url: "/" },
-    { name: "menu3", url: "/" },
-  ];
+    { name: 'menu1', url: '/' },
+    { name: 'menu2', url: '/' },
+    { name: 'menu3', url: '/' },
+  ]
   return (
     <aside
-      className={` ${
-        props.nav ? " md:block" : "hidden"
-      } w-64  bg-indigo-500 dark:bg-[#24292F]/90`}
+      className={` ${props.nav ? ' md:block' : 'hidden'} w-64  bg-indigo-500 dark:bg-[#24292F]/90`}
     >
       <div className="p-6">
         <a
@@ -22,9 +18,7 @@ export default function Sidebar(props: SidebarProps) {
           Menu
         </a>
       </div>
-      <nav
-        className={`block text-base text-white font-semibold pt-3 dark:hover:text-bold `}
-      >
+      <nav className={'block text-base text-white font-semibold pt-3 dark:hover:text-bold '}>
         {menu.map((data) => (
           <a
             key={data.name}
@@ -36,5 +30,5 @@ export default function Sidebar(props: SidebarProps) {
         ))}
       </nav>
     </aside>
-  );
+  )
 }

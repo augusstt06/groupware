@@ -1,16 +1,17 @@
-import { ModuleGetFetchProps, ModulePostFetchProps } from "@/app/types";
-import axios from "axios";
+import axios from 'axios'
 
-axios.defaults.withCredentials = true;
+import { type ModuleGetFetchProps, type ModulePostFetchProps } from '@/app/types'
 
-export const moduleGetFetch = (props: ModuleGetFetchProps) => {
-  const urlParams = { email: props.data };
-  const res = axios.get(`${props.fetchUrl}`, { params: urlParams });
-  return res;
-};
+axios.defaults.withCredentials = true
 
-export const modulePostFetch = (props: ModulePostFetchProps) => {
-  const res = axios.post(`${props.fetchUrl}`, props.data);
+export const moduleGetFetch = async (props: ModuleGetFetchProps) => {
+  const urlParams = { email: props.data }
+  const res = axios.get(`${props.fetchUrl}`, { params: urlParams })
+  return await res
+}
 
-  return res;
-};
+export const modulePostFetch = async (props: ModulePostFetchProps) => {
+  const res = axios.post(`${props.fetchUrl}`, props.data)
+
+  return await res
+}

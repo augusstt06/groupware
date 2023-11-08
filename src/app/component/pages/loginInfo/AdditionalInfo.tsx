@@ -1,9 +1,9 @@
-import { BsFillPersonVcardFill, BsMicrosoftTeams } from "react-icons/bs";
-import InfoInput from "../../ui/input/info/infoInput";
-import { AiFillPhone } from "react-icons/ai";
+import { AiFillPhone } from 'react-icons/ai'
+import { BsFillPersonVcardFill, BsMicrosoftTeams } from 'react-icons/bs'
 
-export default function AdditionalInfo() {
-  // Teams 부분은 input말고 드롭다운으로 바꾸기
+import InfoInput from '../../ui/input/info/infoInput'
+
+export default function AdditionalInfo () {
   return (
     <>
       <InfoInput
@@ -25,5 +25,5 @@ export default function AdditionalInfo() {
         checkValid={true}
       />
     </>
-  );
+  )
 }

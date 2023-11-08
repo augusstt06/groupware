@@ -1,108 +1,108 @@
-import React, { SetStateAction } from "react";
+import { type SetStateAction } from 'react'
+import type React from 'react'
 
-////// basic
-export type ReactProps = {
-  children: React.ReactNode;
-};
+/// /// basic
+export interface ReactProps {
+  children: React.ReactNode
+}
 
-////// component
-//// ui
+/// /// component
+/// / ui
 // button
-export type HamburgerProps = {
-  nav: boolean;
-  setNav: (nav: boolean) => void;
-};
+export interface HamburgerProps {
+  nav: boolean
+  setNav: (nav: boolean) => void
+}
 
-export type BtnProps = {
-  title: string;
-};
+export interface BtnProps {
+  title: string
+}
 
 export type SignupBtnProps = BtnProps & {
-  isKeyInfoComplete: boolean;
-};
+  isKeyInfoComplete: boolean
+}
 
-export type ConditionBtnProps = {
-  isKeyInfoComplete: boolean;
-  isNext: boolean;
-  handleStep: () => void;
-};
+export interface ConditionBtnProps {
+  isKeyInfoComplete: boolean
+  isNext: boolean
+  handleStep: () => void
+}
 
-export type ConditionBtnElementProps = {
-  title: string;
-  isKeyInfoComplete: boolean;
-  handleStep: () => void;
-  tailwindClass: string;
-};
+export interface ConditionBtnElementProps {
+  title: string
+  isKeyInfoComplete: boolean
+  handleStep: () => void
+  tailwindClass: string
+}
 
 // input
-export type InfoInputProps = {
-  title: string;
-  placeholder: string;
-  checkValid: boolean;
-  icon: React.ReactNode;
-};
+export interface InfoInputProps {
+  title: string
+  placeholder: string
+  checkValid: boolean
+  icon: React.ReactNode
+}
 
-export type PwdInfoProps = {
-  checkValid: boolean;
-  isPwdView: boolean;
-  setIsPwdView: React.Dispatch<SetStateAction<boolean>>;
-  isPwdConfirmView: boolean;
-  setIsPwdConfirmView: React.Dispatch<SetStateAction<boolean>>;
-};
+export interface PwdInfoProps {
+  checkValid: boolean
+  isPwdView: boolean
+  setIsPwdView: React.Dispatch<SetStateAction<boolean>>
+  isPwdConfirmView: boolean
+  setIsPwdConfirmView: React.Dispatch<SetStateAction<boolean>>
+}
 
 export type PwdInputProps = InfoInputProps & {
-  icon: React.ReactNode;
-  isPwdView: boolean;
-  setIsPwdView: React.Dispatch<SetStateAction<boolean>>;
-};
+  icon: React.ReactNode
+  isPwdView: boolean
+  setIsPwdView: React.Dispatch<SetStateAction<boolean>>
+}
 
-export type PwdConfirmInput = {
-  title: string;
-  placeholder: string;
-  icon: React.ReactNode;
-  isPwdConfirmView: boolean;
-  setIsPwdConfirmView: React.Dispatch<SetStateAction<boolean>>;
-};
+export interface PwdConfirmInputProps {
+  title: string
+  placeholder: string
+  icon: React.ReactNode
+  isPwdConfirmView: boolean
+  setIsPwdConfirmView: React.Dispatch<SetStateAction<boolean>>
+}
 
 // label
-export type InputIconLabelProps = {
-  icon: React.ReactNode;
-};
+export interface InputIconLabelProps {
+  icon: React.ReactNode
+}
 
 // progressbar
-export type ProgressbarProps = {
-  allItems: number;
-  completedItems: number;
-};
+export interface ProgressbarProps {
+  allItems: number
+  completedItems: number
+}
 
 // sidebar
-export type SidebarProps = {
-  nav: boolean;
-};
+export interface SidebarProps {
+  nav: boolean
+}
 
 // Stepper
-export type StepperProps = {};
 
-//// page
-export type KeyInfoTypeProps = {
-  isPwdView: boolean;
-  setIsPwdView: React.Dispatch<SetStateAction<boolean>>;
-  isPwdConfirmView: boolean;
-  setIsPwdConfirmView: React.Dispatch<SetStateAction<boolean>>;
-};
+/// / page
+export interface KeyInfoTypeProps {
+  isPwdView: boolean
+  setIsPwdView: React.Dispatch<SetStateAction<boolean>>
+  isPwdConfirmView: boolean
+  setIsPwdConfirmView: React.Dispatch<SetStateAction<boolean>>
+}
 
 /// module
 // utils
-export type ModuleGetFetchProps = {
-  data: string;
-  fetchUrl?: string;
-};
-export type ModulePostFetchProps = {
-  data: object;
-  fetchUrl?: string;
-};
+export interface ModuleGetFetchProps {
+  data: string
+  fetchUrl?: string
+}
+export interface ModulePostFetchProps {
+  data: object
+  fetchUrl?: string
+}
 
-export type InputValidateProps = {
-  inputData: string;
-  dataType: string;
-};
+export interface InputValidateProps {
+  inputData: string
+  dataType: string
+}
