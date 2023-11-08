@@ -50,5 +50,10 @@
       "pnpm run prettier:fix",
       "pnpm run lint:fix"
     ]
-  }
+  },
+  "eslintIgnore": [
+    "next-env.d.ts",
+    "next.config.js",
+    "postcss.config.js"
+  ]
 }
