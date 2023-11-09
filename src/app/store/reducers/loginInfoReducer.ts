@@ -12,21 +12,19 @@ type State = {
   }
   name: {
     isCheck: boolean
-  }
-  team: {
-    isCheck: boolean
+    value: string
   }
   phoneNumber: {
     isCheck: boolean
+    value: string
   }
 }
 
 const initialState: State = {
   email: { isCheck: false, value: '' },
   pwd: { isCheck: false, pwdValue: '', pwdConfirmValue: '' },
-  name: { isCheck: false },
-  team: { isCheck: false },
-  phoneNumber: { isCheck: false },
+  name: { isCheck: false, value: '' },
+  phoneNumber: { isCheck: false, value: '' },
 }
 
 export const loginInfoSlice = createSlice({
@@ -49,31 +47,17 @@ export const loginInfoSlice = createSlice({
       state.pwd.pwdValue = action.payload.pwdValue
       state.pwd.pwdConfirmValue = action.payload.pwdConfirmValue
     },
-    nameReducer(state) {
-      if (!state.pwd.isCheck) {
-        state.name.isCheck = true
-      } else {
-        state.name.isCheck = false
-      }
+    nameReducer(state, action: PayloadAction<{ isCheck: boolean; value: string }>) {
+      state.name.isCheck = action.payload.isCheck
+      state.name.value = action.payload.value
     },
-    teamReducer(state) {
-      if (!state.team.isCheck) {
-        state.team.isCheck = true
-      } else {
-        state.team.isCheck = false
-      }
-    },
-    phoneNumberReducer(state) {
-      if (!state.phoneNumber.isCheck) {
-        state.phoneNumber.isCheck = true
-      } else {
-        state.phoneNumber.isCheck = false
-      }
+    phoneNumberReducer(state, action: PayloadAction<{ isCheck: boolean; value: string }>) {
+      state.phoneNumber.isCheck = action.payload.isCheck
+      state.phoneNumber.value = action.payload.value
     },
   },
 })
 
-export const { emailReducer, pwdReducer, nameReducer, teamReducer, phoneNumberReducer } =
-  loginInfoSlice.actions
+export const { emailReducer, pwdReducer, nameReducer, phoneNumberReducer } = loginInfoSlice.actions
 
 export default loginInfoSlice.reducer

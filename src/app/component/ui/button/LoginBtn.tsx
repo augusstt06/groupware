@@ -3,9 +3,9 @@ import { TbLogin2 } from 'react-icons/tb'
 
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { modulePostFetch } from '@/app/module/utils/moduleFetch'
-import { type SignupBtnProps } from '@/app/types'
+import { type BtnProps } from '@/app/types'
 
-export function SignupBtn(props: SignupBtnProps) {
+export function SignupBtn(props: BtnProps) {
   const emailValue = useAppSelector((state) => {
     return state.loginInfo.email.value
   })
@@ -24,7 +24,7 @@ export function SignupBtn(props: SignupBtnProps) {
     fetchUrl: process.env.NEXT_PUBLIC_REGISTER_SOURCE,
   }
   const fetchSignin = async () => {
-    if (!props.isKeyInfoComplete || props.title === 'Next') return
+    if (props.title === 'Next') return
 
     await modulePostFetch(fetchProps)
 

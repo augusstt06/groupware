@@ -4,23 +4,36 @@ import { InputIconlabel } from '../../../label/InputIconlabel'
 import { InputLabel, InputlabelAdd } from '../../../label/Inputlabel'
 
 import { useInput } from '@/app/module/hooks/reactHooks/useInput'
-import { useAppDispatch } from '@/app/module/hooks/reduxHooks'
+import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { pwdReducer } from '@/app/store/reducers/loginInfoReducer'
 import { type PwdInputProps } from '@/app/types'
 
 export default function PwdInput(props: PwdInputProps) {
   const dispatch = useAppDispatch()
-  const pwdInputData = useInput('')
+  const inputData = useInput('')
+
+  const pwdState = useAppSelector((state) => {
+    return state.loginInfo.pwd.pwdValue
+  })
+  const pwdConfirmState = useAppSelector((state) => {
+    return state.loginInfo.pwd.pwdConfirmValue
+  })
 
   useEffect(() => {
-    dispatch(
-      pwdReducer({
-        isCheck: false,
-        pwdValue: pwdInputData.value,
-        pwdConfirmValue: '',
-      }),
-    )
-  }, [pwdInputData.value, dispatch])
+    const isInput = inputData.value !== ''
+    const isPwdValueNotEmpty = pwdState !== ''
+    const isPwdConfirmValueNotEmpty = pwdConfirmState !== ''
+
+    const isCheck = isInput && isPwdValueNotEmpty && isPwdConfirmValueNotEmpty
+
+    const reducerData =
+      props.title === 'Confirm Password'
+        ? { isCheck, pwdValue: pwdState, pwdConfirmValue: inputData.value }
+        : { isCheck, pwdValue: inputData.value, pwdConfirmValue: pwdConfirmState }
+
+    dispatch(pwdReducer(reducerData))
+  }, [inputData.value, pwdState, pwdConfirmState, dispatch])
+
   return (
     <>
       <InputLabel title={props.title} />
@@ -28,17 +41,17 @@ export default function PwdInput(props: PwdInputProps) {
       <input
         type="checkbox"
         className="ml-2"
-        defaultChecked={props.isPwdView}
+        defaultChecked={props.isInputValueView}
         onChange={() => {
-          props.setIsPwdView(!props.isPwdView)
+          props.setIsInputValueView(!props.isInputValueView)
         }}
       />
 
       <div className="flex relative mt-2 mb-3">
         <InputIconlabel icon={props.icon} />
         <input
-          type={props.isPwdView ? 'text' : 'password'}
-          {...pwdInputData}
+          type={props.isInputValueView ? 'text' : 'password'}
+          {...inputData}
           id={props.title}
           className="rounded-none rounded-r-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder={props.placeholder}
