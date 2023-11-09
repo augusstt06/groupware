@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 
-import { InputIconlabel } from '../../../label/InputIconlabel'
-import { InputLabel, InputlabelAdd } from '../../../label/Inputlabel'
+import { InputIconlabel } from '../../label/InputIconlabel'
+import { InputLabel, InputlabelAdd } from '../../label/Inputlabel'
 
 import { useInput } from '@/app/module/hooks/reactHooks/useInput'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'

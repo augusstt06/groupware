@@ -4,7 +4,7 @@ import { RiLockPasswordFill } from 'react-icons/ri'
 import { Si1Password } from 'react-icons/si'
 
 import InfoInput from '../../ui/input/info/infoInput'
-import PwdInput from '../../ui/input/pwdInfo/pwd/PwdInput'
+import PwdInput from '../../ui/input/pwdInfo/PwdInput'
 
 import { type KeyInfoTypeProps } from '@/app/types'
 
