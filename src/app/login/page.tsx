@@ -3,7 +3,7 @@
 import { useState } from 'react'
 
 import RegisterInfo from '../component/page/RegisterInfo'
-import RegisterBtn from '../component/ui/button/RegisterBtn'
+import RegisterUserBtn from '../component/ui/button/register/RegisterUserBtn'
 import Stepper from '../component/ui/stepper/Stepper'
 import { useAppSelector } from '../module/hooks/reduxHooks'
 import inputValidate from '../module/utils/inputValidate'
@@ -20,9 +20,7 @@ export default function Register() {
 
     const isInfoComplete = isEmailComplete && isPwdComplete && isNameComplete && isPhoneNumComplete
 
-    if (isInfoComplete) {
-      return true
-    } else return false
+    return isInfoComplete
   })
 
   const isPwdConfirm = useAppSelector((state) => {
@@ -64,7 +62,7 @@ export default function Register() {
         />
 
         <div className="flex flex-row justify-center items-center">
-          <RegisterBtn handleStep={handleStep} />
+          <RegisterUserBtn handleStep={handleStep} />
         </div>
         <div className="mb-5">
           <Stepper />

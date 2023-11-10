@@ -9,11 +9,11 @@ export type BtnProps = {
   title: string
 }
 
-export type RegisterBtnProps = {
+export type RegisterUserBtnProps = {
   handleStep: () => void
 }
 
-export type RegisterBtnElementProps = RegisterBtnProps & {
+export type RegisterUserBtnElementProps = RegisterUserBtnProps & {
   title: string
   tailwindClass: string
 }
@@ -21,4 +21,8 @@ export type RegisterBtnElementProps = RegisterBtnProps & {
 export type OrgChooseBtnProps = {
   organization: string
   setOrganization: React.Dispatch<SetStateAction<string>>
+}
+
+export type RegisterOrnBtnProps = {
+  title: string
 }
