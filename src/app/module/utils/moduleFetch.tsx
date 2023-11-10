@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import { type ModuleGetFetchProps, type ModulePostFetchProps } from '@/app/types'
+import { type ModuleGetFetchProps, type ModulePostFetchProps } from '@/app/types/moduleTypes'
 
 axios.defaults.withCredentials = true
 

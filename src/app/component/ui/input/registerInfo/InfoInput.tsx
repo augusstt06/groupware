@@ -12,7 +12,7 @@ import {
   nameReducer,
   phoneNumberReducer,
 } from '@/app/store/reducers/loginInfoReducer'
-import { type InfoInputProps } from '@/app/types'
+import { type InfoInputProps } from '@/app/types/ui/inputTypes'
 
 export default function InfoInput(props: InfoInputProps) {
   const dispatch = useAppDispatch()

@@ -8,7 +8,7 @@ import { HeaderLoginBtn } from '../button/LoginBtn'
 import Logo from '../logo/Logo'
 import Sidebar from '../sidebar/Sidebar'
 
-import { type ReactProps } from '@/app/types'
+import { type ReactProps } from '@/app/types/pageTypes'
 
 export default function Header(props: ReactProps) {
   const [nav, setNav] = useState(false)

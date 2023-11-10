@@ -6,7 +6,7 @@ import { InputLabel, InputlabelAdd } from '../../label/Inputlabel'
 import { useInput } from '@/app/module/hooks/reactHooks/useInput'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { pwdReducer } from '@/app/store/reducers/loginInfoReducer'
-import { type PwdInputProps } from '@/app/types'
+import { type PwdInputProps } from '@/app/types/ui/inputTypes'
 
 export default function PwdInput(props: PwdInputProps) {
   const dispatch = useAppDispatch()
