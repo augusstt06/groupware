@@ -13,32 +13,32 @@ export default function KeyInfo(props: KeyInfoTypeProps) {
     <>
       <InfoInput
         icon={<AiOutlineMail />}
-        title="Email"
+        title="email"
         placeholder="abc12@sample.com"
         checkValid={true}
       />
       <PwdInput
-        title="Password (A-Z a-z 0-9 !@#$%^*&*? 포함)"
+        title="password (A-Z a-z 0-9 !@#$%^*&*? 포함)"
         placeholder="At least 8 characters"
         icon={<RiLockPasswordFill />}
         isInputValueView={props.isPwdView}
         setIsInputValueView={props.setIsPwdView}
       />
       <PwdInput
-        title="Confirm Password"
+        title="confirm Password"
         placeholder="Please Re-enter your password"
         icon={<Si1Password />}
         isInputValueView={props.isPwdConfirmView}
         setIsInputValueView={props.setIsPwdConfirmView}
       />
       <InfoInput
-        title="Name"
+        title="name"
         placeholder="Min Yeon Kim"
         icon={<BsFillPersonVcardFill />}
         checkValid={false}
       />
       <InfoInput
-        title="PhoneNumber"
+        title="phoneNumber"
         placeholder="010-0000-0000"
         icon={<AiFillPhone />}
         checkValid={false}
