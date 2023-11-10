@@ -1,11 +1,13 @@
+import { useRouter } from 'next/navigation'
 import { AiFillGithub, AiOutlineGoogle } from 'react-icons/ai'
 import { TbLogin2 } from 'react-icons/tb'
 
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { modulePostFetch } from '@/app/module/utils/moduleFetch'
-import { type BtnProps } from '@/app/types'
+import { type BtnProps } from '@/app/types/ui/btnTypes'
 
 export function SignupBtn(props: BtnProps) {
+  const router = useRouter()
   const emailValue = useAppSelector((state) => {
     return state.loginInfo.email.value
   })
@@ -18,7 +20,6 @@ export function SignupBtn(props: BtnProps) {
   const phoneNumberValue = useAppSelector((state) => {
     return state.loginInfo.phoneNumber.value
   })
-
   const fetchProps = {
     data: {
       email: emailValue,
@@ -29,16 +30,18 @@ export function SignupBtn(props: BtnProps) {
     fetchUrl: process.env.NEXT_PUBLIC_REGISTER_SOURCE,
   }
   const fetchSignin = async () => {
-    if (props.title === 'Next') return
-
     await modulePostFetch(fetchProps)
 
     alert('회원가입이 완료되었습니다.')
   }
   const handleClickBtn = () => {
-    fetchSignin().catch(() => {
-      alert('회원가입이 실패했습니다.')
-    })
+    fetchSignin()
+      .then(() => {
+        router.push('/organization')
+      })
+      .catch(() => {
+        alert('회원가입이 실패했습니다.')
+      })
   }
 
   return (

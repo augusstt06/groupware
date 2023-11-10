@@ -1,17 +1,13 @@
 import { SignupBtn } from './LoginBtn'
 
-import { type ConditionBtnElementProps, type ConditionBtnProps } from '@/app/types'
+import { type ConditionBtnElementProps, type ConditionBtnProps } from '@/app/types/ui/btnTypes'
 
 export default function ConditionBtnGroup(props: ConditionBtnProps) {
   const btnClass = 'flex flex-col justify-center items-center p 1'
 
   return (
     <>
-      <SigninBtnElement
-        title={props.isNext ? 'Sign In' : 'Next'}
-        handleStep={props.handleStep}
-        tailwindClass={btnClass}
-      />
+      <SigninBtnElement title="Sign In" handleStep={props.handleStep} tailwindClass={btnClass} />
     </>
   )
 }
