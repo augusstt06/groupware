@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 
-import RegisterInfo from '../component/page/RegisterInfo'
+import RegisterInfo from '../component/page/userRegister/RegisterInfo'
 import RegisterUserBtn from '../component/ui/button/register/RegisterUserBtn'
 import Stepper from '../component/ui/stepper/Stepper'
 import { useAppSelector } from '../module/hooks/reduxHooks'

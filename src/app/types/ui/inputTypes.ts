@@ -24,6 +24,7 @@ export type PwdConfirmInputProps = {
 }
 
 export type OrganizationProps = {
+  componentType: string
   title: string
   placeholder: string
   icon: React.ReactNode

@@ -11,31 +11,24 @@ import { type OrganizationProps } from '@/app/types/ui/inputTypes'
 export default function OrgInput(props: OrganizationProps) {
   const dispatch = useAppDispatch()
   const inputData = useInput('')
-  const orgState = useAppSelector((state) => {
-    return state.orgInfo.createOrg
-  })
+  const orgState = useAppSelector((state) =>
+    props.componentType === 'create' ? state.orgInfo.createOrg : state.orgInfo.joinOrg,
+  )
 
   useEffect(() => {
-    switch (props.title) {
-      case 'Organization name':
-        dispatch(
-          createOrgReducer({
-            name: inputData.value,
-            description: orgState.description,
-            organizationType: orgState.organizationType,
-          }),
-        )
-        return
-      case 'Description':
-        dispatch(
-          createOrgReducer({
-            name: orgState.name,
-            description: inputData.value,
-            organizationType: orgState.organizationType,
-          }),
-        )
+    const payload = {
+      name: props.title === 'Organization name' ? inputData.value : orgState.name,
+      description: props.title === 'Description' ? inputData.value : orgState.description,
+      organizationType: orgState.organizationType,
     }
-  })
+
+    if (props.componentType === 'create') {
+      dispatch(createOrgReducer(payload))
+    } else {
+      // FIXME: join org 상태 dispatch
+    }
+  }, [dispatch, inputData.value, orgState, props.componentType, props.title])
+
   return (
     <>
       <InputLabel title={props.title} />

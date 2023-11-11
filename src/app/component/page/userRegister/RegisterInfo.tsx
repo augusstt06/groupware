@@ -3,8 +3,8 @@ import { BsFillPersonVcardFill } from 'react-icons/bs'
 import { RiLockPasswordFill } from 'react-icons/ri'
 import { Si1Password } from 'react-icons/si'
 
-import InfoInput from '../ui/input/registerInfo/InfoInput'
-import PwdInput from '../ui/input/registerInfo/PwdInput'
+import InfoInput from '../../ui/input/registerInfo/InfoInput'
+import PwdInput from '../../ui/input/registerInfo/PwdInput'
 
 import { type KeyInfoTypeProps } from '@/app/types/pageTypes'
 

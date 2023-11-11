@@ -40,7 +40,7 @@ export default function InfoInput(props: InfoInputProps) {
 
   const fetchEmailAvaiable = async () => {
     const isValid = inputValidate(inputValidateProps)
-    if (!isValid) {
+    if (!isValid as boolean) {
       alert('이메일 형식이 잘못되었습니다.')
       return
     }
