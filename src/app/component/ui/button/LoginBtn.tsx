@@ -8,24 +8,16 @@ import { type BtnProps } from '@/app/types/ui/btnTypes'
 
 export function SignupBtn(props: BtnProps) {
   const router = useRouter()
-  const emailValue = useAppSelector((state) => {
-    return state.loginInfo.email.value
+  const loginState = useAppSelector((state) => {
+    return state.loginInfo
   })
-  const pwdValue = useAppSelector((state) => {
-    return state.loginInfo.pwd.pwdValue
-  })
-  const pwdConfirmValue = useAppSelector((state) => {
-    return state.loginInfo.pwd.pwdConfirmValue
-  })
-  const phoneNumberValue = useAppSelector((state) => {
-    return state.loginInfo.phoneNumber.value
-  })
+
   const fetchProps = {
     data: {
-      email: emailValue,
-      password: pwdValue,
-      passwordConfirm: pwdConfirmValue,
-      phoneNumber: phoneNumberValue,
+      email: loginState.email.value,
+      password: loginState.pwd.pwdValue,
+      passwordConfirm: loginState.pwd.pwdConfirmValue,
+      phoneNumber: loginState.phoneNumber.value,
     },
     fetchUrl: process.env.NEXT_PUBLIC_REGISTER_SOURCE,
   }

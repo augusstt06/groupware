@@ -12,27 +12,22 @@ export default function PwdInput(props: PwdInputProps) {
   const dispatch = useAppDispatch()
   const inputData = useInput('')
 
-  const pwdState = useAppSelector((state) => {
-    return state.loginInfo.pwd.pwdValue
-  })
-  const pwdConfirmState = useAppSelector((state) => {
-    return state.loginInfo.pwd.pwdConfirmValue
-  })
+  const pwdState = useAppSelector((state) => state.loginInfo.pwd)
 
   useEffect(() => {
     const isInput = inputData.value !== ''
-    const isPwdValueNotEmpty = pwdState !== ''
-    const isPwdConfirmValueNotEmpty = pwdConfirmState !== ''
+    const isPwdValueNotEmpty = pwdState.pwdValue !== ''
+    const isPwdConfirmValueNotEmpty = pwdState.pwdConfirmValue !== ''
 
     const isCheck = isInput && isPwdValueNotEmpty && isPwdConfirmValueNotEmpty
 
     const reducerData =
       props.title === 'Confirm Password'
-        ? { isCheck, pwdValue: pwdState, pwdConfirmValue: inputData.value }
-        : { isCheck, pwdValue: inputData.value, pwdConfirmValue: pwdConfirmState }
+        ? { isCheck, pwdValue: pwdState.pwdValue, pwdConfirmValue: inputData.value }
+        : { isCheck, pwdValue: inputData.value, pwdConfirmValue: pwdState.pwdConfirmValue }
 
     dispatch(pwdReducer(reducerData))
-  }, [inputData.value, pwdState, pwdConfirmState, dispatch])
+  }, [inputData.value, pwdState.pwdValue, pwdState.pwdConfirmValue, dispatch])
 
   return (
     <>
