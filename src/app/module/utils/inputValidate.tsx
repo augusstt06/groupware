@@ -6,23 +6,24 @@ const inputValidate = (props: InputValidateProps) => {
   // FIXME: 앞의 세자리 010 고정 => 그냥 입력을 고정시켜도 됨
   const phoneNumeRegex = /^\d{3}-\d{4}-\d{4}$/
 
-  // switch (props.dataType) {
-  //   case 'email':
-  //     return emailRegex.test(props.inputData)
-  //   case 'pwd':
-  //     return pwdRegex.test(props.inputData)
-  //   case 'phoneNumber':
-  //     return phoneNumeRegex.test(props.inputData)
-  //   default:
-  //     return
-  // }
-  if (props.dataType === 'email') {
-    return emailRegex.test(props.inputData)
-  } else if (props.dataType === 'pwd') {
-    return pwdRegex.test(props.inputData)
-  } else {
-    return phoneNumeRegex.test(props.inputData)
+  switch (props.dataType) {
+    case 'email':
+      return props.inputData != null && emailRegex.test(props.inputData)
+    case 'pwd':
+      return props.inputData != null && pwdRegex.test(props.inputData)
+    case 'phoneNumber':
+      return props.inputData != null && phoneNumeRegex.test(props.inputData)
+    default:
+      return false
   }
 }
+
+// if (props.dataType === 'email') {
+//   return emailRegex.test(props.inputData)
+// } else if (props.dataType === 'pwd') {
+//   return pwdRegex.test(props.inputData)
+// } else {
+//   return phoneNumeRegex.test(props.inputData)
+// }
 
 export default inputValidate
