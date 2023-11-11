@@ -35,7 +35,7 @@ export default function InfoInput(props: InfoInputProps) {
 
   const inputValidateProps = {
     inputData: inputData.value,
-    dataType: 'email',
+    dataType: props.title === 'email' ? 'email' : 'phoneNumber',
   }
 
   const fetchEmailAvaiable = async () => {
@@ -44,7 +44,7 @@ export default function InfoInput(props: InfoInputProps) {
       alert('이메일 형식이 잘못되었습니다.')
       return
     }
-    if (props.title !== 'Email') {
+    if (props.title !== 'email') {
       return
     }
 
@@ -56,7 +56,7 @@ export default function InfoInput(props: InfoInputProps) {
 
     await moduleGetFetch(fetchProps)
 
-    if (props.title === 'Email') {
+    if (props.title === 'email') {
       dispatch(emailReducer({ isCheck: true, value: inputData.value }))
     }
 

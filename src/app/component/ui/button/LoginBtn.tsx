@@ -15,11 +15,16 @@ export function SignupBtn(props: BtnProps) {
   const pwdConfirmValue = useAppSelector((state) => {
     return state.loginInfo.pwd.pwdConfirmValue
   })
+  const phoneNumberValue = useAppSelector((state) => {
+    return state.loginInfo.phoneNumber.value
+  })
+
   const fetchProps = {
     data: {
       email: emailValue,
       password: pwdValue,
-      password_confirm: pwdConfirmValue,
+      passwordConfirm: pwdConfirmValue,
+      phoneNumber: phoneNumberValue,
     },
     fetchUrl: process.env.NEXT_PUBLIC_REGISTER_SOURCE,
   }
