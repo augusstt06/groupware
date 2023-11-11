@@ -22,6 +22,9 @@
     "react-redux": "^8.1.3"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^6.1.4",
+    "@testing-library/react": "^14.1.0",
+    "@testing-library/user-event": "^14.5.1",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
@@ -54,6 +57,8 @@
   "eslintIgnore": [
     "next-env.d.ts",
     "next.config.js",
-    "postcss.config.js"
+    "postcss.config.js",
+    "jest.config.js",
+    "jest.setup.js"
   ]
 }

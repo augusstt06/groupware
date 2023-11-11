@@ -1,3 +1,5 @@
+import { useEffect } from 'react'
+
 import { InputIconlabel } from '../../label/InputIconlabel'
 import { InputLabel } from '../../label/Inputlabel'
 
@@ -5,22 +7,24 @@ import { useInput } from '@/app/module/hooks/reactHooks/useInput'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import inputValidate from '@/app/module/utils/inputValidate'
 import { moduleGetFetch } from '@/app/module/utils/moduleFetch'
-import { emailReducer } from '@/app/store/reducers/loginInfoReducer'
+import {
+  emailReducer,
+  nameReducer,
+  phoneNumberReducer,
+} from '@/app/store/reducers/loginInfoReducer'
 import { type InfoInputProps } from '@/app/types'
 
 export default function InfoInput(props: InfoInputProps) {
   const dispatch = useAppDispatch()
   const inputData = useInput('')
-  const isCheck = useAppSelector((state) => {
+  const inputState = useAppSelector((state) => {
     switch (props.title) {
-      case 'Email':
-        return state.loginInfo.email.isCheck
       case 'Name':
-        return state.loginInfo.name.isCheck
-      case 'Teams':
-        return state.loginInfo.team.isCheck
+        return state.loginInfo.name
       case 'PhoneNumber':
-        return state.loginInfo.phoneNumber.isCheck
+        return state.loginInfo.phoneNumber
+      default:
+        return state.loginInfo.email
     }
   })
 
@@ -34,26 +38,49 @@ export default function InfoInput(props: InfoInputProps) {
     dataType: 'email',
   }
 
-  const fetchInputAvaiable = async () => {
+  const fetchEmailAvaiable = async () => {
     const isValid = inputValidate(inputValidateProps)
-    if (!isValid) return
-    if (isCheck ?? false) {
+    if (!isValid) {
+      alert('이메일 형식이 잘못되었습니다.')
+      return
+    }
+    if (props.title !== 'Email') {
+      return
+    }
+
+    if (inputState.isCheck) {
       dispatch(emailReducer({ isCheck: false, value: '' }))
       inputData.value = ''
       return
     }
+
     await moduleGetFetch(fetchProps)
 
     if (props.title === 'Email') {
       dispatch(emailReducer({ isCheck: true, value: inputData.value }))
     }
+
     alert('이메일 확인이 완료되었습니다.')
   }
-  const handleChangeInputCheckbox = () => {
-    fetchInputAvaiable().catch(() => {
+
+  const handleChangeEmailInputCheckbox = () => {
+    fetchEmailAvaiable().catch(() => {
       alert('다른 이메일을 사용해 주세요.')
     })
   }
+  useEffect(() => {
+    const isInput = inputData.value !== ''
+    switch (props.title) {
+      case 'Name':
+        dispatch(nameReducer({ isCheck: isInput, value: inputData.value }))
+        break
+      case 'PhoneNumber':
+        dispatch(phoneNumberReducer({ isCheck: isInput, value: inputData.value }))
+        break
+      default:
+        dispatch(emailReducer({ isCheck: false, value: inputData.value }))
+    }
+  }, [inputData.value, dispatch])
 
   return (
     <>
@@ -73,8 +100,8 @@ export default function InfoInput(props: InfoInputProps) {
             <input
               type="checkbox"
               className="cursor-pointer w-5 h-5"
-              checked={isCheck}
-              onChange={handleChangeInputCheckbox}
+              checked={inputState?.isCheck}
+              onChange={handleChangeEmailInputCheckbox}
             />
           </div>
         ) : (

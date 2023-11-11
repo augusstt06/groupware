@@ -18,19 +18,13 @@ export type BtnProps = {
   title: string
 }
 
-export type SignupBtnProps = BtnProps & {
-  isKeyInfoComplete: boolean
-}
-
 export type ConditionBtnProps = {
-  isKeyInfoComplete: boolean
   isNext: boolean
   handleStep: () => void
 }
 
 export type ConditionBtnElementProps = {
   title: string
-  isKeyInfoComplete: boolean
   handleStep: () => void
   tailwindClass: string
 }
@@ -43,18 +37,12 @@ export type InfoInputProps = {
   icon: React.ReactNode
 }
 
-export type PwdInfoProps = {
-  checkValid: boolean
-  isPwdView: boolean
-  setIsPwdView: React.Dispatch<SetStateAction<boolean>>
-  isPwdConfirmView: boolean
-  setIsPwdConfirmView: React.Dispatch<SetStateAction<boolean>>
-}
-
-export type PwdInputProps = InfoInputProps & {
+export type PwdInputProps = {
+  title: string
+  placeholder: string
   icon: React.ReactNode
-  isPwdView: boolean
-  setIsPwdView: React.Dispatch<SetStateAction<boolean>>
+  isInputValueView: boolean
+  setIsInputValueView: React.Dispatch<SetStateAction<boolean>>
 }
 
 export type PwdConfirmInputProps = {
