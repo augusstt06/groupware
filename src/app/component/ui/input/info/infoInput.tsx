@@ -1,57 +1,86 @@
-import React from "react";
-import { useAppDispatch, useAppSelector } from "@/app/module/hooks/reduxHooks";
+import { useEffect } from 'react'
+
+import { InputIconlabel } from '../../label/InputIconlabel'
+import { InputLabel } from '../../label/Inputlabel'
+
+import { useInput } from '@/app/module/hooks/reactHooks/useInput'
+import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
+import inputValidate from '@/app/module/utils/inputValidate'
+import { moduleGetFetch } from '@/app/module/utils/moduleFetch'
 import {
   emailReducer,
+  nameReducer,
   phoneNumberReducer,
-} from "@/app/store/reducers/loginInfoReducer";
-import { InputLabel } from "../../label/Inputlabel";
-import { InputIconlabel } from "../../label/InputIconlabel";
-import { InfoInputProps } from "@/app/types";
-import { useInput } from "@/app/module/hooks/reactHooks/useInput";
-import { moduleGetFetch } from "@/app/module/utils/moduleFetch";
-import inputValidate from "@/app/module/utils/inputValidate";
+} from '@/app/store/reducers/loginInfoReducer'
+import { type InfoInputProps } from '@/app/types'
 
 export default function InfoInput(props: InfoInputProps) {
-  const dispatch = useAppDispatch();
-  const inputData = useInput("");
-  const isCheck = useAppSelector((state) => {
+  const dispatch = useAppDispatch()
+  const inputData = useInput('')
+  const inputState = useAppSelector((state) => {
     switch (props.title) {
-      case "Email":
-        return state.loginInfo.email.isCheck;
-      case "Name":
-        return state.loginInfo.name.isCheck;
-      case "Teams":
-        return state.loginInfo.team.isCheck;
-      case "PhoneNumber":
-        return state.loginInfo.phoneNumber.isCheck;
+      case 'Name':
+        return state.loginInfo.name
+      case 'PhoneNumber':
+        return state.loginInfo.phoneNumber
+      default:
+        return state.loginInfo.email
     }
-  });
+  })
 
   const fetchProps = {
     data: inputData.value,
     fetchUrl: process.env.NEXT_PUBLIC_EMAIL_REQ_SOURCE,
-  };
+  }
 
   const inputValidateProps = {
     inputData: inputData.value,
-    dataType: "email",
-  };
+    dataType: props.title === 'email' ? 'email' : 'phoneNumber',
+  }
 
-  const fetchInputAvaiable = async () => {
-    const isValid = inputValidate(inputValidateProps);
-    if (!isValid) return;
-    try {
-      const res = await moduleGetFetch(fetchProps);
-      console.log(res);
-      if (props.title === "Email") {
-        dispatch(emailReducer({ isCheck: true, value: inputData.value }));
-      }
-      alert("이메일 확인이 완료되었습니다.");
-    } catch (err) {
-      console.log(err);
-      alert("다른 이메일을 사용해 주세요.");
+  const fetchEmailAvaiable = async () => {
+    const isValid = inputValidate(inputValidateProps)
+    if (!isValid) {
+      alert('이메일 형식이 잘못되었습니다.')
+      return
     }
-  };
+    if (props.title !== 'email') {
+      return
+    }
+
+    if (inputState.isCheck) {
+      dispatch(emailReducer({ isCheck: false, value: '' }))
+      inputData.value = ''
+      return
+    }
+
+    await moduleGetFetch(fetchProps)
+
+    if (props.title === 'email') {
+      dispatch(emailReducer({ isCheck: true, value: inputData.value }))
+    }
+
+    alert('이메일 확인이 완료되었습니다.')
+  }
+
+  const handleChangeEmailInputCheckbox = () => {
+    fetchEmailAvaiable().catch(() => {
+      alert('다른 이메일을 사용해 주세요.')
+    })
+  }
+  useEffect(() => {
+    const isInput = inputData.value !== ''
+    switch (props.title) {
+      case 'Name':
+        dispatch(nameReducer({ isCheck: isInput, value: inputData.value }))
+        break
+      case 'PhoneNumber':
+        dispatch(phoneNumberReducer({ isCheck: isInput, value: inputData.value }))
+        break
+      default:
+        dispatch(emailReducer({ isCheck: false, value: inputData.value }))
+    }
+  }, [inputData.value, dispatch])
 
   return (
     <>
@@ -71,8 +100,8 @@ export default function InfoInput(props: InfoInputProps) {
             <input
               type="checkbox"
               className="cursor-pointer w-5 h-5"
-              checked={isCheck}
-              onChange={() => fetchInputAvaiable()}
+              checked={inputState?.isCheck}
+              onChange={handleChangeEmailInputCheckbox}
             />
           </div>
         ) : (
@@ -80,5 +109,5 @@ export default function InfoInput(props: InfoInputProps) {
         )}
       </div>
     </>
-  );
+  )
 }

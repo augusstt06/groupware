@@ -1,4 +1,4 @@
-import { BtnProps } from "@/app/types";
+import { type BtnProps } from '@/app/types'
 
 export function NavigateBtn(props: BtnProps) {
   return (
@@ -8,5 +8,5 @@ export function NavigateBtn(props: BtnProps) {
     >
       {props.title}
     </button>
-  );
+  )
 }

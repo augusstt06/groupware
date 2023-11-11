@@ -1,109 +1,96 @@
-import React, { SetStateAction } from "react";
+import { type SetStateAction } from 'react'
+import type React from 'react'
 
-////// basic
+/// /// basic
 export type ReactProps = {
-  children: React.ReactNode;
-};
+  children: React.ReactNode
+}
 
-////// component
-//// ui
+/// /// component
+/// / ui
 // button
 export type HamburgerProps = {
-  nav: boolean;
-  setNav: (nav: boolean) => void;
-};
+  nav: boolean
+  setNav: (nav: boolean) => void
+}
 
 export type BtnProps = {
-  title: string;
-};
-
-export type SignupBtnProps = BtnProps & {
-  isKeyInfoComplete: boolean;
-};
+  title: string
+}
 
 export type ConditionBtnProps = {
-  isKeyInfoComplete: boolean;
-  isNext: boolean;
-  handleStep: () => void;
-};
+  isNext: boolean
+  handleStep: () => void
+}
 
 export type ConditionBtnElementProps = {
-  title: string;
-  isKeyInfoComplete: boolean;
-  handleStep: () => void;
-  tailwindClass: string;
-};
+  title: string
+  handleStep: () => void
+  tailwindClass: string
+}
 
 // input
 export type InfoInputProps = {
-  title: string;
-  placeholder: string;
-  checkValid: boolean;
-  icon: React.ReactNode;
-};
+  title: string
+  placeholder: string
+  checkValid: boolean
+  icon: React.ReactNode
+}
 
-export type PwdInfoProps = {
-  placeholder: string;
-  checkValid: boolean;
-  isPwdView: boolean;
-  setIsPwdView: React.Dispatch<SetStateAction<boolean>>;
-  isPwdConfirmView: boolean;
-  setIsPwdConfirmView: React.Dispatch<SetStateAction<boolean>>;
-};
+export type PwdInputProps = {
+  title: string
+  placeholder: string
+  icon: React.ReactNode
+  isInputValueView: boolean
+  setIsInputValueView: React.Dispatch<SetStateAction<boolean>>
+}
 
-export type PwdInputProps = InfoInputProps & {
-  icon: React.ReactNode;
-  isPwdView: boolean;
-  setIsPwdView: React.Dispatch<SetStateAction<boolean>>;
-};
-
-export type PwdConfirmInput = {
-  title: string;
-  placeholder: string;
-  icon: React.ReactNode;
-  isPwdConfirmView: boolean;
-  setIsPwdConfirmView: React.Dispatch<SetStateAction<boolean>>;
-};
+export type PwdConfirmInputProps = {
+  title: string
+  placeholder: string
+  icon: React.ReactNode
+  isPwdConfirmView: boolean
+  setIsPwdConfirmView: React.Dispatch<SetStateAction<boolean>>
+}
 
 // label
 export type InputIconLabelProps = {
-  icon: React.ReactNode;
-};
+  icon: React.ReactNode
+}
 
 // progressbar
 export type ProgressbarProps = {
-  allItems: number;
-  completedItems: number;
-};
+  allItems: number
+  completedItems: number
+}
 
 // sidebar
 export type SidebarProps = {
-  nav: boolean;
-};
+  nav: boolean
+}
 
 // Stepper
-export type StepperProps = {};
 
-//// page
+/// / page
 export type KeyInfoTypeProps = {
-  isPwdView: boolean;
-  setIsPwdView: React.Dispatch<SetStateAction<boolean>>;
-  isPwdConfirmView: boolean;
-  setIsPwdConfirmView: React.Dispatch<SetStateAction<boolean>>;
-};
+  isPwdView: boolean
+  setIsPwdView: React.Dispatch<SetStateAction<boolean>>
+  isPwdConfirmView: boolean
+  setIsPwdConfirmView: React.Dispatch<SetStateAction<boolean>>
+}
 
 /// module
 // utils
 export type ModuleGetFetchProps = {
-  data: string;
-  fetchUrl?: string;
-};
+  data: string
+  fetchUrl?: string
+}
 export type ModulePostFetchProps = {
-  data: object;
-  fetchUrl?: string;
-};
+  data: object
+  fetchUrl?: string
+}
 
 export type InputValidateProps = {
-  inputData: string;
-  dataType: string;
-};
+  inputData: string
+  dataType: string
+}

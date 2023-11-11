@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: false,
   async redirects() {
-    return [];
+    return []
   },
   async rewrites() {
     return [
@@ -14,8 +14,8 @@ const nextConfig = {
         source: process.env.NEXT_PUBLIC_EMAIL_REQ_SOURCE,
         destination: process.env.NEXT_PUBLIC_EMAIL_REQ_DESTINATION,
       },
-    ];
+    ]
   },
-};
+}
 
-module.exports = nextConfig;
+module.exports = nextConfig
