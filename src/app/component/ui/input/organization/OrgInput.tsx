@@ -4,22 +4,36 @@ import { InputIconlabel } from '../../label/InputIconlabel'
 import { InputLabel } from '../../label/Inputlabel'
 
 import { useInput } from '@/app/module/hooks/reactHooks/useInput'
-import { useAppDispatch } from '@/app/module/hooks/reduxHooks'
+import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { createOrgReducer } from '@/app/store/reducers/orgInfoReducer'
 import { type OrganizationProps } from '@/app/types/ui/inputTypes'
 
 export default function OrgInput(props: OrganizationProps) {
   const dispatch = useAppDispatch()
   const inputData = useInput('')
+  const orgState = useAppSelector((state) => {
+    return state.orgInfo.createOrg
+  })
 
   useEffect(() => {
-    // TODO: default 값 수정, 상태값 가져오기
     switch (props.title) {
       case 'Organization name':
-        dispatch(createOrgReducer({ name: inputData.value, description: '', type: 'public' }))
+        dispatch(
+          createOrgReducer({
+            name: inputData.value,
+            description: orgState.description,
+            organizationType: orgState.organizationType,
+          }),
+        )
         return
       case 'Description':
-        dispatch(createOrgReducer({ name: '', description: inputData.value, type: 'public' }))
+        dispatch(
+          createOrgReducer({
+            name: orgState.name,
+            description: inputData.value,
+            organizationType: orgState.organizationType,
+          }),
+        )
     }
   })
   return (

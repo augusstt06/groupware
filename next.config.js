@@ -7,6 +7,10 @@ const nextConfig = {
   async rewrites() {
     return [
       {
+        source: process.env.NEXT_PUBLIC_CREATE_ORGANIZATIONS_SOURCE,
+        destination: process.env.NEXT_PUBLIC_CREATE_ORGANIZATIONS_DESTINATION,
+      },
+      {
         source: process.env.NEXT_PUBLIC_REGISTER_SOURCE,
         destination: process.env.NEXT_PUBLIC_REGISTER_DESTINATION,
       },
