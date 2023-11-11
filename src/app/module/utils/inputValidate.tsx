@@ -17,13 +17,4 @@ const inputValidate = (props: InputValidateProps) => {
       return false
   }
 }
-
-// if (props.dataType === 'email') {
-//   return emailRegex.test(props.inputData)
-// } else if (props.dataType === 'pwd') {
-//   return pwdRegex.test(props.inputData)
-// } else {
-//   return phoneNumeRegex.test(props.inputData)
-// }
-
 export default inputValidate
