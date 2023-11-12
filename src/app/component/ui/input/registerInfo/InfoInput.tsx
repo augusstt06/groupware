@@ -16,7 +16,7 @@ import { type InfoInputProps } from '@/app/types/ui/inputTypes'
 
 export default function InfoInput(props: InfoInputProps) {
   const dispatch = useAppDispatch()
-  const inputData = useInput('')
+  const inputData = useInput('', props.title)
   const inputState = useAppSelector((state) => {
     switch (props.title) {
       case 'Name':
