@@ -12,7 +12,7 @@ export function SignupBtn(props: BtnProps) {
     return state.loginInfo
   })
 
-  const fetchProps = {
+  const fetchSignupProps = {
     data: {
       email: loginState.email.value,
       password: loginState.pwd.pwdValue,
@@ -21,8 +21,17 @@ export function SignupBtn(props: BtnProps) {
     },
     fetchUrl: process.env.NEXT_PUBLIC_REGISTER_SOURCE,
   }
+  const fetchLoginProps = {
+    data: {
+      email: loginState.email.value,
+      password: loginState.pwd.pwdValue,
+    },
+    fetchUrl: process.env.NEXT_PUBLIC_LOGIN_SOURCE,
+  }
   const fetchSignin = async () => {
-    await modulePostFetch(fetchProps)
+    await modulePostFetch(fetchSignupProps)
+    // TODO: 로그인 res result로 토큰 관리
+    await modulePostFetch(fetchLoginProps)
 
     alert('회원가입이 완료되었습니다.')
   }
