@@ -5,38 +5,72 @@ import { type RegisterOrnBtnProps } from '@/app/types/ui/btnTypes'
 export default function RegisterOrgBtn(props: RegisterOrnBtnProps) {
   const isOrgComplete = useAppSelector((state) => {
     const { name, description } = state.orgInfo.createOrg
+    const { code } = state.orgInfo.joinOrg
 
-    return name !== '' && description !== ''
+    switch (props.title) {
+      case 'create':
+        return name !== null && name !== undefined && description !== null && description !== ''
+      case 'join':
+        return code !== null && code !== undefined && code !== ''
+      default:
+        return false
+    }
   })
+
   const orgState = useAppSelector((state) => {
-    return state.orgInfo.createOrg
+    return state.orgInfo
   })
   // FIXME: 회의 후 req데이터 종류 바꾸기
-  const fetchProps = {
+  const fetchCreateOrgProps = {
     data: {
-      description: orgState.description,
-      name: orgState.name,
-      organizationType: orgState.organizationType,
+      description: orgState.createOrg.description,
+      name: orgState.createOrg.name,
+      organizationType: orgState.createOrg.organizationType,
     },
     fetchUrl: process.env.NEXT_PUBLIC_CREATE_ORGANIZATIONS_SOURCE,
   }
+  const fetchJoinOrgProps = {
+    data: {
+      code: orgState.joinOrg.code,
+    },
+    fetchUrl: process.env.NEXT_PUBLIC_JOIN_ORGANIZATIONS_SOURCE,
+  }
+
   const fetchCreateOrg = async () => {
-    await modulePostFetch(fetchProps)
+    await modulePostFetch(fetchCreateOrgProps)
     alert('조직 생성이 완료되었습니다.')
   }
+
+  const fetchJoinOrg = async () => {
+    await modulePostFetch(fetchJoinOrgProps)
+  }
   const handleClick = () => {
-    if (!isOrgComplete) {
-      alert('항목을 다 입력해주세요')
-      return
+    switch (props.title) {
+      case 'create':
+        if (!isOrgComplete) {
+          alert('항목을 모두 입력해주세요')
+          return
+        }
+        fetchCreateOrg()
+          .then(() => {
+            alert('조직생성이 완료되었습니다.')
+          })
+          .catch(() => {})
+        break
+      case 'join':
+        if (!isOrgComplete) {
+          alert('조직 코드를 입력해주세요')
+          return
+        }
+        fetchJoinOrg()
+          .then(() => {
+            alert('조직 가입이 완료되었습니다.')
+          })
+          .catch(() => {})
+        break
+      default:
+        break
     }
-    fetchCreateOrg()
-      .then(() => {
-        // FIXME: 추후에 완료후 실행할 작업 작성하기
-        alert('완료')
-      })
-      .catch(() => {
-        alert('조직생성이 실패했습니다.')
-      })
   }
   return (
     <button

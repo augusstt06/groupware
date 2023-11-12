@@ -1,6 +1,5 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 
-// FIXME: join state 데이터 형식은 수정예정
 type State = {
   createOrg: {
     name: string
@@ -10,9 +9,7 @@ type State = {
     teams: object[]
   }
   joinOrg: {
-    name: string
-    description: string
-    organizationType: string
+    code: string
   }
 }
 
@@ -40,9 +37,7 @@ const initialState: State = {
     ],
   },
   joinOrg: {
-    name: '',
-    description: '',
-    organizationType: '',
+    code: '',
   },
 }
 
@@ -62,13 +57,8 @@ export const orgInfoReducer = createSlice({
       state.createOrg.grades = action.payload.grades
       state.createOrg.teams = action.payload.teams
     },
-    joinOrgReducer(
-      state,
-      action: PayloadAction<{ name: string; description: string; organizationType: string }>,
-    ) {
-      state.joinOrg.name = action.payload.name
-      state.joinOrg.description = action.payload.description
-      state.joinOrg.organizationType = action.payload.organizationType
+    joinOrgReducer(state, action: PayloadAction<{ code: string }>) {
+      state.joinOrg.code = action.payload.code
     },
   },
 })

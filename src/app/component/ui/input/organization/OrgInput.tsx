@@ -5,29 +5,31 @@ import { InputLabel } from '../../label/Inputlabel'
 
 import { useInput } from '@/app/module/hooks/reactHooks/useInput'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
-import { createOrgReducer } from '@/app/store/reducers/orgInfoReducer'
+import { createOrgReducer, joinOrgReducer } from '@/app/store/reducers/orgInfoReducer'
 import { type OrganizationProps } from '@/app/types/ui/inputTypes'
 
 export default function OrgInput(props: OrganizationProps) {
   const dispatch = useAppDispatch()
   const inputData = useInput('')
-  const orgState = useAppSelector((state) =>
-    props.componentType === 'create' ? state.orgInfo.createOrg : state.orgInfo.joinOrg,
-  )
+  const createOrgState = useAppSelector((state) => state.orgInfo.createOrg)
+  const joinOrgState = useAppSelector((state) => state.orgInfo.joinOrg)
 
   useEffect(() => {
-    const payload = {
-      name: props.title === 'Organization name' ? inputData.value : orgState.name,
-      description: props.title === 'Description' ? inputData.value : orgState.description,
-      organizationType: orgState.organizationType,
-    }
-
+    let payload
     if (props.componentType === 'create') {
+      payload = {
+        name: props.title === 'Organization name' ? inputData.value : createOrgState.name,
+        description: props.title === 'Description' ? inputData.value : createOrgState.description,
+        organizationType: createOrgState.organizationType,
+      }
       dispatch(createOrgReducer(payload))
     } else {
-      // FIXME: join org 상태 dispatch
+      payload = {
+        code: joinOrgState.code,
+      }
+      dispatch(joinOrgReducer(payload))
     }
-  }, [dispatch, inputData.value, orgState, props.componentType, props.title])
+  }, [dispatch, inputData.value, createOrgState, joinOrgState, props.componentType, props.title])
 
   return (
     <>
