@@ -1,3 +1,5 @@
+import { getCookie } from 'cookies-next'
+
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { modulePostFetch } from '@/app/module/utils/moduleFetch'
 import { type RegisterOrnBtnProps } from '@/app/types/ui/btnTypes'
@@ -8,10 +10,10 @@ export default function RegisterOrgBtn(props: RegisterOrnBtnProps) {
     const { code } = state.orgInfo.joinOrg
 
     switch (props.title) {
-      case 'create':
-        return name !== null && name !== undefined && description !== null && description !== ''
-      case 'join':
-        return code !== null && code !== undefined && code !== ''
+      case 'Create!':
+        return name !== '' && description !== ''
+      case 'Join!':
+        return code !== ''
       default:
         return false
     }
@@ -20,7 +22,11 @@ export default function RegisterOrgBtn(props: RegisterOrnBtnProps) {
   const orgState = useAppSelector((state) => {
     return state.orgInfo
   })
-  // FIXME: 회의 후 req데이터 종류 바꾸기
+  const accessToken = getCookie('access-token')
+  const fetchCreateOrgHeader = {
+    token: accessToken,
+  }
+
   const fetchCreateOrgProps = {
     data: {
       description: orgState.createOrg.description,
@@ -28,7 +34,11 @@ export default function RegisterOrgBtn(props: RegisterOrnBtnProps) {
       organizationType: orgState.createOrg.organizationType,
     },
     fetchUrl: process.env.NEXT_PUBLIC_CREATE_ORGANIZATIONS_SOURCE,
+    header: {
+      Authorization: fetchCreateOrgHeader,
+    },
   }
+
   const fetchJoinOrgProps = {
     data: {
       code: orgState.joinOrg.code,
@@ -44,9 +54,10 @@ export default function RegisterOrgBtn(props: RegisterOrnBtnProps) {
   const fetchJoinOrg = async () => {
     await modulePostFetch(fetchJoinOrgProps)
   }
+
   const handleClick = () => {
     switch (props.title) {
-      case 'create':
+      case 'Create!':
         if (!isOrgComplete) {
           alert('항목을 모두 입력해주세요')
           return
@@ -57,7 +68,7 @@ export default function RegisterOrgBtn(props: RegisterOrnBtnProps) {
           })
           .catch(() => {})
         break
-      case 'join':
+      case 'Join!':
         if (!isOrgComplete) {
           alert('조직 코드를 입력해주세요')
           return

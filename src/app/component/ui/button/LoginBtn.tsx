@@ -1,3 +1,4 @@
+import { setCookie } from 'cookies-next'
 import { useRouter } from 'next/navigation'
 import { AiFillGithub, AiOutlineGoogle } from 'react-icons/ai'
 import { TbLogin2 } from 'react-icons/tb'
@@ -30,8 +31,8 @@ export function SignupBtn(props: BtnProps) {
   }
   const fetchSignin = async () => {
     await modulePostFetch(fetchSignupProps)
-    // TODO: 로그인 res result로 토큰 관리
-    await modulePostFetch(fetchLoginProps)
+    const loginRes = await modulePostFetch(fetchLoginProps)
+    setCookie('access-token', loginRes.data.result)
 
     alert('회원가입이 완료되었습니다.')
   }

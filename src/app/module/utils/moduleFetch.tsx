@@ -11,7 +11,7 @@ export const moduleGetFetch = async (props: ModuleGetFetchProps) => {
 }
 
 export const modulePostFetch = async (props: ModulePostFetchProps) => {
-  const res = axios.post(`${props.fetchUrl}`, props.data)
+  const res = axios.post(`${props.fetchUrl}`, props.data, { headers: props.header })
 
   return await res
 }
