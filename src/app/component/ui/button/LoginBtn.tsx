@@ -1,3 +1,4 @@
+import { setCookie } from 'cookies-next'
 import { useRouter } from 'next/navigation'
 import { AiFillGithub, AiOutlineGoogle } from 'react-icons/ai'
 import { TbLogin2 } from 'react-icons/tb'
@@ -12,7 +13,7 @@ export function SignupBtn(props: BtnProps) {
     return state.loginInfo
   })
 
-  const fetchProps = {
+  const fetchSignupProps = {
     data: {
       email: loginState.email.value,
       password: loginState.pwd.pwdValue,
@@ -21,14 +22,22 @@ export function SignupBtn(props: BtnProps) {
     },
     fetchUrl: process.env.NEXT_PUBLIC_REGISTER_SOURCE,
   }
+  const fetchLoginProps = {
+    data: {
+      email: loginState.email.value,
+      password: loginState.pwd.pwdValue,
+    },
+    fetchUrl: process.env.NEXT_PUBLIC_LOGIN_SOURCE,
+  }
   const fetchSignin = async () => {
-    await modulePostFetch(fetchProps)
-
-    alert('회원가입이 완료되었습니다.')
+    await modulePostFetch(fetchSignupProps)
+    const loginRes = await modulePostFetch(fetchLoginProps)
+    setCookie('access-token', loginRes.data.result)
   }
   const handleClickBtn = () => {
     fetchSignin()
       .then(() => {
+        alert('회원가입이 완료되었습니다.')
         router.push('/organization')
       })
       .catch(() => {

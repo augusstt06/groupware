@@ -25,7 +25,7 @@ export default function OrgInput(props: OrganizationProps) {
       dispatch(createOrgReducer(payload))
     } else {
       payload = {
-        code: joinOrgState.code,
+        code: inputData.value,
       }
       dispatch(joinOrgReducer(payload))
     }
