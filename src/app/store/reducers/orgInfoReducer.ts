@@ -5,8 +5,8 @@ type State = {
     name: string
     description: string
     organizationType: string
-    grades: object[]
-    teams: object[]
+    grades: object
+    teams: object
   }
   joinOrg: {
     code: string
@@ -20,13 +20,13 @@ const initialState: State = {
     organizationType: 'PUBLIC',
     grades: [
       {
-        deleteAccess: true,
-        inviteAccess: true,
-        maintainAccess: true,
+        deleteAccess: 'TRUE',
+        inviteAccess: 'TRUE',
+        maintainAccess: 'TRUE',
         name: '',
-        readAccess: true,
-        updateAccess: true,
-        writeAccess: true,
+        readAccess: 'TRUE',
+        updateAccess: 'TRUE',
+        writeAccess: 'TRUE',
       },
     ],
     teams: [
@@ -53,10 +53,10 @@ export const orgInfoReducer = createSlice({
       state.createOrg.description = action.payload.description
       state.createOrg.organizationType = action.payload.organizationType
     },
-    createOrgTeamReducer(state, action: PayloadAction<{ grades: object[]; teams: object[] }>) {
-      state.createOrg.grades = action.payload.grades
+    createOrgTeamReducer(state, action: PayloadAction<{ grades: object; teams: object[] }>) {
       state.createOrg.teams = action.payload.teams
     },
+
     joinOrgReducer(state, action: PayloadAction<{ code: string }>) {
       state.joinOrg.code = action.payload.code
     },

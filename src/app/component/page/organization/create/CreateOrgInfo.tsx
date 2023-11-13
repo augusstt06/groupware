@@ -5,6 +5,16 @@ import OrgInput from '../../../ui/input/organization/OrgInput'
 import SelectBox from '../../../ui/selectbox/SelectBox'
 
 export default function CreateOrgInfo() {
+  const selectList = [
+    {
+      value: 'PUBLIC',
+      name: 'Public',
+    },
+    {
+      value: 'PRIVATE',
+      name: 'Private',
+    },
+  ]
   return (
     <>
       <OrgInput
@@ -20,7 +30,11 @@ export default function CreateOrgInfo() {
 Groupware site publishing and feature development"
         icon={<MdOutlineDescription />}
       />
-      <SelectBox />
+      <SelectBox
+        compoenetType="orgType"
+        title="Select an Orgnization Type"
+        selectList={selectList}
+      />
     </>
   )
 }
