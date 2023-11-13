@@ -8,7 +8,7 @@ export default function JoinOrgInfo() {
       <OrgInput
         componentType="join"
         title="Organization Code"
-        placeholder="001"
+        placeholder="ABC12GG"
         icon={<SlOrganization />}
       />
     </>
