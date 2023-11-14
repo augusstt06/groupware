@@ -11,7 +11,6 @@ import RegisterOrgBtn from '../component/ui/button/register/RegisterOrgBtn'
 export default function Organization() {
   const [organization, setOrganization] = useState('create')
   const [isNext, setIsNext] = useState(false)
-  // TODO: 회원가입 후 로그인 api날려서 로그인 상태 유지하기
 
   return (
     <div className="flex flex-col justify-center items-center p 1">

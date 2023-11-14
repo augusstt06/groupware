@@ -17,3 +17,14 @@ export type SelectboxProps = {
   apiKey: string
   selectList: Array<{ name: string; value: string }>
 }
+
+export type ToggleProps = {
+  title: string
+  value: string
+  componentType: string
+}
+
+export type ToggleGroupProps = {
+  compoenetType: string
+  toggleData: Array<{ title: string; value: string }>
+}

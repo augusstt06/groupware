@@ -1,13 +1,12 @@
 import React, { useState } from 'react'
 
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
-import { createOrgReducer, setGradeReducer } from '@/app/store/reducers/orgInfoReducer'
+import { createOrgReducer } from '@/app/store/reducers/orgInfoReducer'
 import { type SelectboxProps } from '@/app/types/ui/uiTypes'
 
 export default function SelectBox(props: SelectboxProps) {
   const dispatch = useAppDispatch()
   const createOrgState = useAppSelector((state) => state.orgInfo.createOrg)
-  const gradesState = useAppSelector((state) => state.orgInfo.grades)
 
   const [select, setSelect] = useState('')
 
@@ -18,10 +17,6 @@ export default function SelectBox(props: SelectboxProps) {
       case 'orgType':
         reducerProps = { ...createOrgState, organizationType: e.target.value }
         dispatch(createOrgReducer(reducerProps))
-        break
-      case 'grades':
-        reducerProps = { ...gradesState, [props.apiKey]: e.target.value }
-        dispatch(setGradeReducer(reducerProps))
         break
     }
   }

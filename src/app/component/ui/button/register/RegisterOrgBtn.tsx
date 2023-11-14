@@ -69,7 +69,7 @@ export default function RegisterOrgBtn(props: RegisterOrnBtnProps) {
   }
 
   const handleClickCreateBtn = () => {
-    // FIXME: grade와 팀 추가해서 확인하기
+    // FIXME: 3)
     if (!isOrgComplete) {
       alert('항목을 모두 입력해주세요')
       return
