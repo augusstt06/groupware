@@ -10,3 +10,10 @@ export type ProgressbarProps = {
 export type SidebarProps = {
   nav: boolean
 }
+
+export type SelectboxProps = {
+  compoenetType: string
+  title: string
+  apiKey: string
+  selectList: Array<{ name: string; value: string }>
+}
