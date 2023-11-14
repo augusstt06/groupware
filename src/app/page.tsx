@@ -7,7 +7,7 @@ import Main from './main/page'
 export default function Home() {
   const accessToken = getCookie('access-token')
 
-  const isLogin = accessToken !== 'undefined'
+  const isLogin = accessToken !== undefined
 
   return (
     <main className="flex flex-col justify-center items-center p-10">
