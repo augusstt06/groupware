@@ -9,13 +9,14 @@ import RegisterOrgBtn from '../component/ui/button/register/RegisterOrgBtn'
 
 export default function Organization() {
   const [organization, setOrganization] = useState('create')
+  const create = 'create'
 
   return (
     <div className="flex flex-col justify-center items-center p 1">
       <OrgChooseBtn organization={organization} setOrganization={setOrganization} />
       <div className="w-3/5">{organization === 'create' ? <CreateOrgInfo /> : <JoinOrgInfo />}</div>
       <div className="flex flex-row justify-center items-center">
-        <RegisterOrgBtn title={organization === 'create' ? 'Create!' : 'Join!'} />
+        <RegisterOrgBtn title={organization === create ? 'Create!' : 'Join!'} />
       </div>
     </div>
   )

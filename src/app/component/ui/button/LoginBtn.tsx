@@ -16,6 +16,7 @@ export function SignupBtn(props: BtnProps) {
   const fetchSignupProps = {
     data: {
       email: loginState.email.value,
+      name: loginState.name.value,
       password: loginState.pwd.pwdValue,
       passwordConfirm: loginState.pwd.pwdConfirmValue,
       phoneNumber: loginState.phoneNumber.value,

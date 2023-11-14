@@ -3,6 +3,7 @@ import { useRouter } from 'next/navigation'
 
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { modulePostFetch } from '@/app/module/utils/moduleFetch'
+import { type ModulePostFetchProps } from '@/app/types/moduleTypes'
 import { type RegisterOrnBtnProps } from '@/app/types/ui/btnTypes'
 
 export default function RegisterOrgBtn(props: RegisterOrnBtnProps) {
@@ -27,7 +28,18 @@ export default function RegisterOrgBtn(props: RegisterOrnBtnProps) {
     return state.orgInfo
   })
 
-  const fetchCreateOrgProps = {
+  // FIXME:  3)
+
+  const fetchJoinOrgProps = {
+    data: {
+      code: orgState.joinOrg.code,
+    },
+    fetchUrl: process.env.NEXT_PUBLIC_JOIN_ORGANIZATIONS_SOURCE,
+    header: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  }
+  const data: ModulePostFetchProps = {
     data: {
       description: orgState.createOrg.description,
       grades: [orgState.grades],
@@ -45,20 +57,8 @@ export default function RegisterOrgBtn(props: RegisterOrnBtnProps) {
       Authorization: `Bearer ${accessToken}`,
     },
   }
-
-  const fetchJoinOrgProps = {
-    data: {
-      code: orgState.joinOrg.code,
-    },
-    fetchUrl: process.env.NEXT_PUBLIC_JOIN_ORGANIZATIONS_SOURCE,
-    header: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  }
-
   const fetchCreateOrg = async () => {
-    // TODO:
-    await modulePostFetch(fetchCreateOrgProps)
+    await modulePostFetch(data)
   }
 
   const fetchJoinOrg = async () => {
@@ -73,6 +73,7 @@ export default function RegisterOrgBtn(props: RegisterOrnBtnProps) {
     fetchCreateOrg()
       .then(() => {
         router.push('/')
+        // TODO: 여기서 스토어에 저장
         alert('조직생성이 완료되었습니다.')
       })
       .catch(() => {

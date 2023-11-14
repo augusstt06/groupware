@@ -9,6 +9,7 @@ import PwdInput from '../../ui/input/registerInfo/PwdInput'
 import { type KeyInfoTypeProps } from '@/app/types/pageTypes'
 
 export default function RegisterInfo(props: KeyInfoTypeProps) {
+  // FIXME: 5)
   return (
     <>
       <InfoInput

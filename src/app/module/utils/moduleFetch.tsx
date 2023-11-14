@@ -15,3 +15,8 @@ export const modulePostFetch = async (props: ModulePostFetchProps) => {
 
   return await res
 }
+
+export const converObjProps = () => {
+  const props
+  return props
+}
