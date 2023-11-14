@@ -39,7 +39,7 @@ export default function RegisterOrgBtn(props: RegisterOrnBtnProps) {
       Authorization: `Bearer ${accessToken}`,
     },
   }
-  const data: ModulePostFetchProps = {
+  const fetchCreateOrgPRops: ModulePostFetchProps = {
     data: {
       description: orgState.createOrg.description,
       grades: [orgState.grades],
@@ -58,7 +58,7 @@ export default function RegisterOrgBtn(props: RegisterOrnBtnProps) {
     },
   }
   const fetchCreateOrg = async () => {
-    await modulePostFetch(data)
+    await modulePostFetch(fetchCreateOrgPRops)
   }
 
   const fetchJoinOrg = async () => {
