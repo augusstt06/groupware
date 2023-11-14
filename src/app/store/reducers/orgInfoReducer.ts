@@ -15,6 +15,10 @@ type State = {
     updateAccess: string
     writeAccess: string
   }
+  teams: {
+    teamDescription: string
+    teamName: string
+  }
   joinOrg: {
     code: string
   }
@@ -34,6 +38,10 @@ const initialState: State = {
     readAccss: 'TRUE',
     updateAccess: 'TRUE',
     writeAccess: 'TRUE',
+  },
+  teams: {
+    teamDescription: '',
+    teamName: '',
   },
   joinOrg: {
     code: '',
@@ -63,12 +71,19 @@ export const orgInfoReducer = createSlice({
     setGradeReducer(state, action: PayloadAction<gradeActionType>) {
       state.grades = { ...action.payload }
     },
+    createTeamOrgReducer(
+      state,
+      action: PayloadAction<{ teamName: string; teamDescription: string }>,
+    ) {
+      state.teams = { ...action.payload }
+    },
     joinOrgReducer(state, action: PayloadAction<{ code: string }>) {
       state.joinOrg.code = action.payload.code
     },
   },
 })
 
-export const { createOrgReducer, setGradeReducer, joinOrgReducer } = orgInfoReducer.actions
+export const { createOrgReducer, setGradeReducer, createTeamOrgReducer, joinOrgReducer } =
+  orgInfoReducer.actions
 
 export default orgInfoReducer.reducer

@@ -5,28 +5,48 @@ import { InputLabel } from '../../label/Inputlabel'
 
 import { useInput } from '@/app/module/hooks/reactHooks/useInput'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
-import { createOrgReducer, joinOrgReducer } from '@/app/store/reducers/orgInfoReducer'
+import {
+  createOrgReducer,
+  createTeamOrgReducer,
+  joinOrgReducer,
+} from '@/app/store/reducers/orgInfoReducer'
 import { type OrganizationProps } from '@/app/types/ui/inputTypes'
 
 export default function OrgInput(props: OrganizationProps) {
   const dispatch = useAppDispatch()
   const inputData = useInput('')
   const createOrgState = useAppSelector((state) => state.orgInfo.createOrg)
+  const createTeamOrgState = useAppSelector((state) => state.orgInfo.teams)
 
   useEffect(() => {
     let payload
-    if (props.componentType === 'create') {
-      payload = {
-        name: props.title === 'Organization name' ? inputData.value : createOrgState.name,
-        description: props.title === 'Description' ? inputData.value : createOrgState.description,
-        organizationType: createOrgState.organizationType,
-      }
-      dispatch(createOrgReducer(payload))
-    } else {
-      payload = {
-        code: inputData.value,
-      }
-      dispatch(joinOrgReducer(payload))
+    switch (props.componentType) {
+      case 'create':
+        payload = {
+          name: props.title === 'Organization name' ? inputData.value : createOrgState.name,
+          description: props.title === 'Description' ? inputData.value : createOrgState.description,
+          organizationType: createOrgState.organizationType,
+        }
+        dispatch(createOrgReducer(payload))
+        break
+      case 'join':
+        payload = {
+          code: inputData.value,
+        }
+        dispatch(joinOrgReducer(payload))
+        break
+      case 'createTeam':
+        payload = {
+          teamName: props.title === 'Team Name' ? inputData.value : createTeamOrgState.teamName,
+          teamDescription:
+            props.title === 'Team Description'
+              ? inputData.value
+              : createTeamOrgState.teamDescription,
+        }
+        dispatch(createTeamOrgReducer(payload))
+        break
+      default:
+        break
     }
   }, [inputData.value])
 

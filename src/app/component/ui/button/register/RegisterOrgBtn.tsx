@@ -12,26 +12,17 @@ export default function RegisterOrgBtn(props: RegisterOrnBtnProps) {
   const isOrgComplete = useAppSelector((state) => {
     const { name, description } = state.orgInfo.createOrg
     const { code } = state.orgInfo.joinOrg
+    const { teamName, teamDescription } = state.orgInfo.teams
 
     switch (props.title) {
       case 'Create!':
-        return name !== '' && description !== ''
-      case 'Next':
-        return name !== '' && description !== ''
+        return name !== '' && description !== '' && teamName !== '' && teamDescription !== ''
       case 'Join!':
         return code !== ''
       default:
         return false
     }
   })
-  const handleNext = () => {
-    if (!isOrgComplete) {
-      alert('항목을 다 입력해주세요')
-      return
-    }
-    props.setIsNext(!props.isNext)
-  }
-
   const orgState = useAppSelector((state) => {
     return state.orgInfo
   })
@@ -39,9 +30,15 @@ export default function RegisterOrgBtn(props: RegisterOrnBtnProps) {
   const fetchCreateOrgProps = {
     data: {
       description: orgState.createOrg.description,
+      grades: [orgState.grades],
       name: orgState.createOrg.name,
       organizationType: orgState.createOrg.organizationType,
-      grades: [orgState.grades],
+      teams: [
+        {
+          description: orgState.teams.teamDescription,
+          name: orgState.teams.teamName,
+        },
+      ],
     },
     fetchUrl: process.env.NEXT_PUBLIC_CREATE_ORGANIZATIONS_SOURCE,
     header: {
@@ -60,7 +57,7 @@ export default function RegisterOrgBtn(props: RegisterOrnBtnProps) {
   }
 
   const fetchCreateOrg = async () => {
-    // TODO: res로 들어오는 id값 다루기
+    // TODO:
     await modulePostFetch(fetchCreateOrgProps)
   }
 
@@ -69,7 +66,6 @@ export default function RegisterOrgBtn(props: RegisterOrnBtnProps) {
   }
 
   const handleClickCreateBtn = () => {
-    // FIXME: grade와 팀 추가해서 확인하기
     if (!isOrgComplete) {
       alert('항목을 모두 입력해주세요')
       return
@@ -99,13 +95,7 @@ export default function RegisterOrgBtn(props: RegisterOrnBtnProps) {
     <button
       type="button"
       className="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 dark:hover:bg-white dark:hover:text-indigo-500 mb-2 border-2 dark:hover:border-indigo-500/75"
-      onClick={
-        props.title === 'Create!'
-          ? handleClickCreateBtn
-          : props.title === 'Join!'
-          ? handleClickJoinBtn
-          : handleNext
-      }
+      onClick={props.title === 'Create!' ? handleClickCreateBtn : handleClickJoinBtn}
     >
       {props.title}
     </button>

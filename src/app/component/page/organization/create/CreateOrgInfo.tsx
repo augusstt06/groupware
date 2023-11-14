@@ -1,8 +1,12 @@
 import { MdOutlineDescription } from 'react-icons/md'
+import { SiMicrosoftteams } from 'react-icons/si'
 import { SlOrganization } from 'react-icons/sl'
 
 import OrgInput from '../../../ui/input/organization/OrgInput'
 import SelectBox from '../../../ui/selectbox/SelectBox'
+
+import { InputLabel } from '@/app/component/ui/label/Inputlabel'
+import ToggleGroup from '@/app/component/ui/toggle/organization/ToggleGroup'
 
 export default function CreateOrgInfo() {
   const selectList = [
@@ -14,6 +18,18 @@ export default function CreateOrgInfo() {
       value: 'PRIVATE',
       name: 'Private',
     },
+  ]
+  const gradesData = [
+    [
+      { title: 'Delete Access', value: 'deleteAccess' },
+      { title: 'Invite Access', value: 'inviteAccess' },
+      { title: 'Maintain Access', value: 'maintainAccess' },
+    ],
+    [
+      { title: 'Read Access', value: 'readAccess' },
+      { title: 'Update Access', value: 'updateAccess' },
+      { title: 'Write Access', value: 'writeAccess' },
+    ],
   ]
   return (
     <>
@@ -35,6 +51,24 @@ Groupware site publishing and feature development"
         apiKey="none"
         title="Select an Orgnization Type"
         selectList={selectList}
+      />
+      <InputLabel title="Organization Setting" />
+      {gradesData.map((data) => (
+        <div key={data[0].title}>
+          <ToggleGroup toggleData={data} compoenetType="grades" />
+        </div>
+      ))}
+      <OrgInput
+        componentType="createTeam"
+        title="Team Name"
+        placeholder="groupware"
+        icon={<SiMicrosoftteams />}
+      />
+      <OrgInput
+        componentType="createTeam"
+        title="Team Description"
+        placeholder="Groupware development"
+        icon={<MdOutlineDescription />}
       />
     </>
   )
