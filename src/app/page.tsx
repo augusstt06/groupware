@@ -1,11 +1,12 @@
-import { getCookie } from 'cookies-next'
+import { cookies } from 'next/headers'
 import Link from 'next/link'
 
 import { NavigationBtn } from './component/ui/button/NavigationBtn'
 import Main from './main/page'
 
 export default function Home() {
-  const accessToken = getCookie('access-token')
+  const cookieStore = cookies()
+  const accessToken = cookieStore.get('access-token')
 
   const isLogin = accessToken !== undefined
 
