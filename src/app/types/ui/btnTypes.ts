@@ -25,6 +25,4 @@ export type OrgChooseBtnProps = {
 
 export type RegisterOrnBtnProps = {
   title: string
-  isNext: boolean
-  setIsNext: React.Dispatch<SetStateAction<boolean>>
 }

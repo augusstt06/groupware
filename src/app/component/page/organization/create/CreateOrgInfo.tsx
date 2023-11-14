@@ -1,9 +1,11 @@
 import { MdOutlineDescription } from 'react-icons/md'
+import { SiMicrosoftteams } from 'react-icons/si'
 import { SlOrganization } from 'react-icons/sl'
 
 import OrgInput from '../../../ui/input/organization/OrgInput'
 import SelectBox from '../../../ui/selectbox/SelectBox'
 
+import { InputLabel } from '@/app/component/ui/label/Inputlabel'
 import ToggleGroup from '@/app/component/ui/toggle/organization/ToggleGroup'
 
 export default function CreateOrgInfo() {
@@ -50,11 +52,24 @@ Groupware site publishing and feature development"
         title="Select an Orgnization Type"
         selectList={selectList}
       />
+      <InputLabel title="Organization Setting" />
       {gradesData.map((data) => (
         <div key={data[0].title}>
           <ToggleGroup toggleData={data} compoenetType="grades" />
         </div>
       ))}
+      <OrgInput
+        componentType="createTeam"
+        title="Team Name"
+        placeholder="groupware"
+        icon={<SiMicrosoftteams />}
+      />
+      <OrgInput
+        componentType="createTeam"
+        title="Team Description"
+        placeholder="Groupware development"
+        icon={<MdOutlineDescription />}
+      />
     </>
   )
 }

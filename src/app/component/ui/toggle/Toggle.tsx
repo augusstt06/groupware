@@ -21,7 +21,6 @@ export default function Toggle(props: ToggleProps) {
         break
     }
   }
-  // FIXME: 2)
   const stateColor = isToggle ? `text-sky-400` : `text-red-300 line-through`
 
   return (
