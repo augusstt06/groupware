@@ -7,12 +7,12 @@ import SelectBox from '@/app/component/ui/selectbox/SelectBox'
 
 export default function AdditionalOrgInfo() {
   const selectData = [
-    'DeleteAccess',
-    'InviteAccess',
-    'MaintainAccess',
-    'ReadAccess',
-    'UpdateAccess',
-    'WriteAccess',
+    { title: 'Delete Access', value: 'deleteAccess' },
+    { title: 'Invite Access', value: 'inviteAccess' },
+    { title: 'Maintain Access', value: 'maintainAccess' },
+    { title: 'Read Access', value: 'readAccess' },
+    { title: 'Update Access', value: 'updateAccess' },
+    { title: 'Write Access', value: 'writeAccess' },
   ]
 
   const valueList = [
@@ -21,9 +21,14 @@ export default function AdditionalOrgInfo() {
   ]
   return (
     <>
-      {selectData.map((title) => (
-        <div key={title}>
-          <SelectBox compoenetType="grades" title={title} selectList={valueList} />
+      {selectData.map((data) => (
+        <div key={data.title}>
+          <SelectBox
+            compoenetType="grades"
+            title={data.title}
+            apiKey={data.value}
+            selectList={valueList}
+          />
         </div>
       ))}
     </>

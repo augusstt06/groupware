@@ -12,7 +12,6 @@ export default function OrgInput(props: OrganizationProps) {
   const dispatch = useAppDispatch()
   const inputData = useInput('')
   const createOrgState = useAppSelector((state) => state.orgInfo.createOrg)
-  const joinOrgState = useAppSelector((state) => state.orgInfo.joinOrg)
 
   useEffect(() => {
     let payload
@@ -29,7 +28,7 @@ export default function OrgInput(props: OrganizationProps) {
       }
       dispatch(joinOrgReducer(payload))
     }
-  }, [dispatch, inputData.value, createOrgState, joinOrgState, props.componentType, props.title])
+  }, [inputData.value])
 
   return (
     <>

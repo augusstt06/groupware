@@ -14,5 +14,6 @@ export type SidebarProps = {
 export type SelectboxProps = {
   compoenetType: string
   title: string
+  apiKey: string
   selectList: Array<{ name: string; value: string }>
 }

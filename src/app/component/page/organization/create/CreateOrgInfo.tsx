@@ -32,6 +32,7 @@ Groupware site publishing and feature development"
       />
       <SelectBox
         compoenetType="orgType"
+        apiKey="none"
         title="Select an Orgnization Type"
         selectList={selectList}
       />
