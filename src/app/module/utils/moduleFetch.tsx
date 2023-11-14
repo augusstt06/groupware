@@ -6,12 +6,9 @@ axios.defaults.withCredentials = true
 
 export const moduleGetFetch = async (props: ModuleGetFetchProps) => {
   const urlParams = { email: props.data }
-  const res = axios.get(`${props.fetchUrl}`, { params: urlParams })
-  return await res
+  return axios.get(`${props.fetchUrl}`, { params: urlParams })
 }
 
 export const modulePostFetch = async (props: ModulePostFetchProps) => {
-  const res = axios.post(`${props.fetchUrl}`, props.data, { headers: props.header })
-
-  return await res
+  return axios.post(`${props.fetchUrl}`, props.data, { headers: props.header })
 }

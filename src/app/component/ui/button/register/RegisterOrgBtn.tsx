@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { getCookie } from 'cookies-next'
 import { useRouter } from 'next/navigation'
 
@@ -39,7 +40,7 @@ export default function RegisterOrgBtn(props: RegisterOrnBtnProps) {
       Authorization: `Bearer ${accessToken}`,
     },
   }
-  const fetchCreateOrgPRops: ModulePostFetchProps = {
+  const fetchCreateOrgProps: ModulePostFetchProps = {
     data: {
       description: orgState.createOrg.description,
       grades: [orgState.grades],
@@ -58,7 +59,16 @@ export default function RegisterOrgBtn(props: RegisterOrnBtnProps) {
     },
   }
   const fetchCreateOrg = async () => {
-    await modulePostFetch(fetchCreateOrgPRops)
+    try {
+      await modulePostFetch(fetchCreateOrgProps)
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err)) {
+        switch (err.status) {
+          case 400:
+          // 400 에러처리
+        }
+      }
+    }
   }
 
   const fetchJoinOrg = async () => {
