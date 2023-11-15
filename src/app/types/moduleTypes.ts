@@ -1,5 +1,6 @@
 export type ModuleGetFetchProps = {
-  data: string
+  keyName: string
+  keyValue: string
   fetchUrl?: string
   header?: object
 }

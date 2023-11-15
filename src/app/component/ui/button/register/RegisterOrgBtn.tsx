@@ -11,7 +11,7 @@ export default function RegisterOrgBtn(props: RegisterOrnBtnProps) {
   const accessToken = getCookie('access-token')
   const router = useRouter()
 
-  const isOrgComplete = useAppSelector((state) => {
+  const isOrgComplete: boolean = useAppSelector((state) => {
     const { name, description } = state.orgInfo.createOrg
     const { code } = state.orgInfo.joinOrg
     const { teamName, teamDescription } = state.orgInfo.teams
@@ -31,7 +31,7 @@ export default function RegisterOrgBtn(props: RegisterOrnBtnProps) {
 
   // FIXME:  3)
 
-  const fetchJoinOrgProps = {
+  const fetchJoinOrgProps: ModulePostFetchProps = {
     data: {
       code: orgState.joinOrg.code,
     },
@@ -58,55 +58,79 @@ export default function RegisterOrgBtn(props: RegisterOrnBtnProps) {
       Authorization: `Bearer ${accessToken}`,
     },
   }
-  const fetchCreateOrg = async () => {
+  const fetchCreateOrg = async (): Promise<void> => {
     try {
       await modulePostFetch(fetchCreateOrgProps)
     } catch (err: unknown) {
       if (axios.isAxiosError(err)) {
         switch (err.status) {
           case 400:
-          // 400 에러처리
+            throw new Error('400 : 잘못된 입력값으로 조직생성이 실패했습니다.')
+          case 500:
+            throw new Error('500 : 조직생성 중 서버측 에러가 발생했습니다.')
         }
       }
     }
   }
 
-  const fetchJoinOrg = async () => {
-    await modulePostFetch(fetchJoinOrgProps)
+  const fetchJoinOrg = async (): Promise<void> => {
+    try {
+      await modulePostFetch(fetchJoinOrgProps)
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        switch (err.status) {
+          case 400:
+            throw new Error('400 : 잘못된 입력값으로 조직 가입이 실패했습니다.')
+          case 500:
+            throw new Error('500 : 조직 가입 중 서버측 에러가 발생했습니다.')
+        }
+      }
+    }
   }
 
-  const handleClickCreateBtn = () => {
+  const handleClickButton = async (): Promise<void> => {
     if (!isOrgComplete) {
-      alert('항목을 모두 입력해주세요')
+      alert(props.title === 'create' ? '항목을 모두 입력해주세요' : '조직 코드를 입력해주세요')
       return
     }
-    fetchCreateOrg()
-      .then(() => {
-        router.push('/')
-        // TODO: 여기서 스토어에 저장
-        alert('조직생성이 완료되었습니다.')
-      })
-      .catch(() => {
-        alert('조직 생성에 실패했습니다.')
-      })
-  }
-  const handleClickJoinBtn = () => {
-    if (!isOrgComplete) {
-      alert('조직 코드를 입력해주세요')
-      return
+
+    try {
+      if (props.title === 'create') {
+        await fetchCreateOrg()
+      } else {
+        await fetchJoinOrg()
+      }
+
+      router.push('/')
+      alert(`조직 ${props.title === 'create' ? '생성' : '가입'}이 완료되었습니다.`)
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        switch (err.status) {
+          case 400:
+            throw new Error(
+              `400 : 잘못된 입력값으로 ${
+                props.title === 'create' ? '조직생성' : '조직가입'
+              }이 실패했습니다.`,
+            )
+          case 500:
+            throw new Error(
+              `500 :   ${
+                props.title === 'create' ? '조직생성' : '조직가입'
+              }중 서버측 에러가 발생했습니다.`,
+            )
+        }
+      }
     }
-    fetchJoinOrg()
-      .then(() => {
-        alert('조직 가입이 완료되었습니다.')
-      })
-      .catch(() => {})
   }
 
   return (
     <button
       type="button"
       className="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 dark:hover:bg-white dark:hover:text-indigo-500 mb-2 border-2 dark:hover:border-indigo-500/75"
-      onClick={props.title === 'Create!' ? handleClickCreateBtn : handleClickJoinBtn}
+      onClick={(event) => {
+        event.preventDefault()
+        void handleClickButton()
+      }}
     >
       {props.title}
     </button>

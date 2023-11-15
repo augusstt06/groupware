@@ -1,5 +1,7 @@
 import { useEffect } from 'react'
 
+import axios from 'axios'
+
 import { InputIconlabel } from '../../label/InputIconlabel'
 import { InputLabel } from '../../label/Inputlabel'
 
@@ -12,6 +14,7 @@ import {
   nameReducer,
   phoneNumberReducer,
 } from '@/app/store/reducers/loginInfoReducer'
+import { type ModuleGetFetchProps } from '@/app/types/moduleTypes'
 import { type InfoInputProps } from '@/app/types/ui/inputTypes'
 
 export default function InfoInput(props: InfoInputProps) {
@@ -28,8 +31,9 @@ export default function InfoInput(props: InfoInputProps) {
     }
   })
 
-  const fetchProps = {
-    data: inputData.value,
+  const getFetchEmailProps: ModuleGetFetchProps = {
+    keyName: 'email',
+    keyValue: inputData.value,
     fetchUrl: process.env.NEXT_PUBLIC_EMAIL_REQ_SOURCE,
   }
 
@@ -38,36 +42,37 @@ export default function InfoInput(props: InfoInputProps) {
     dataType: props.title === 'Email' ? 'email' : 'phoneNumber',
   }
 
-  const fetchEmailAvaiable = async () => {
+  const fetchEmailAvaiable = async (): Promise<void> => {
+    try {
+      await moduleGetFetch(getFetchEmailProps)
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        switch (err.status) {
+          case 400:
+            throw new Error('400 : 잘못된 입력값입니다.')
+          case 500:
+            throw new Error('500 : 서버측 에러가 발생했습니다.')
+        }
+      }
+    }
+  }
+
+  const handleChangeEmailInputCheckbox = async () => {
     const isValid = inputValidate(inputValidateProps)
     if (!isValid as boolean) {
       alert('이메일 형식이 잘못되었습니다.')
       return
     }
-    if (props.title !== 'Email') {
-      return
-    }
-
     if (inputState.isCheck) {
       dispatch(emailReducer({ isCheck: false, value: '' }))
       inputData.value = ''
       return
     }
-
-    await moduleGetFetch(fetchProps)
-
-    if (props.title === 'Email') {
-      dispatch(emailReducer({ isCheck: true, value: inputData.value }))
-    }
-
+    await fetchEmailAvaiable()
+    dispatch(emailReducer({ isCheck: true, value: inputData.value }))
     alert('이메일 확인이 완료되었습니다.')
   }
 
-  const handleChangeEmailInputCheckbox = () => {
-    fetchEmailAvaiable().catch(() => {
-      alert('다른 이메일을 사용해 주세요.')
-    })
-  }
   useEffect(() => {
     const isInput = inputData.value !== ''
     switch (props.title) {
@@ -101,7 +106,10 @@ export default function InfoInput(props: InfoInputProps) {
               type="checkbox"
               className="cursor-pointer w-5 h-5"
               checked={inputState?.isCheck}
-              onChange={handleChangeEmailInputCheckbox}
+              onChange={(event) => {
+                event.preventDefault()
+                void handleChangeEmailInputCheckbox()
+              }}
             />
           </div>
         ) : (
