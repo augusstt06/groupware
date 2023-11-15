@@ -1,3 +1,9 @@
+export type UseInputType = {
+  state: string
+  title?: string
+  teamDependency?: object[]
+}
+
 export type ModuleGetFetchProps = {
   keyName: string
   keyValue: string

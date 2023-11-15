@@ -1,4 +1,4 @@
-import { NavigationBtn } from './NavigationBtn'
+import { NavigationBtn } from '../NavigationBtn'
 
 import { type OrgChooseBtnProps } from '@/app/types/ui/btnTypes'
 

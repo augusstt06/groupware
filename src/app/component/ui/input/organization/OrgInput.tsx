@@ -7,16 +7,16 @@ import { useInput } from '@/app/module/hooks/reactHooks/useInput'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import {
   createOrgReducer,
-  createTeamOrgReducer,
   joinOrgReducer,
+  updateCurrentOrgTeamReducer,
 } from '@/app/store/reducers/orgInfoReducer'
 import { type OrganizationProps } from '@/app/types/ui/inputTypes'
 
 export default function OrgInput(props: OrganizationProps) {
+  const createOrgState = useAppSelector((state) => state.orgInfo.createOrg)
+  const updateOrgTeamState = useAppSelector((state) => state.orgInfo.currentTeam)
   const dispatch = useAppDispatch()
   const inputData = useInput('')
-  const createOrgState = useAppSelector((state) => state.orgInfo.createOrg)
-  const createTeamOrgState = useAppSelector((state) => state.orgInfo.teams)
 
   useEffect(() => {
     let payload
@@ -37,21 +37,22 @@ export default function OrgInput(props: OrganizationProps) {
         break
       case 'createTeam':
         payload = {
-          teamName: props.title === 'Team Name' ? inputData.value : createTeamOrgState.teamName,
+          teamName: props.title === 'Team Name' ? inputData.value : updateOrgTeamState.teamName,
           teamDescription:
             props.title === 'Team Description'
               ? inputData.value
-              : createTeamOrgState.teamDescription,
+              : updateOrgTeamState.teamDescription,
         }
-        dispatch(createTeamOrgReducer(payload))
+        dispatch(updateCurrentOrgTeamReducer(payload))
         break
       default:
         break
     }
   }, [inputData.value])
 
+  const tailwindClassName = props.componentType === 'createTeam' ? `w-2/4` : ``
   return (
-    <>
+    <div className={`${tailwindClassName}`}>
       <InputLabel title={props.title} />
       <div className="flex relative mt-2 mb-6">
         <InputIconlabel icon={props.icon} />
@@ -63,6 +64,6 @@ export default function OrgInput(props: OrganizationProps) {
           placeholder={props.placeholder}
         />
       </div>
-    </>
+    </div>
   )
 }

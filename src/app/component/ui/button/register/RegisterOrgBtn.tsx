@@ -5,20 +5,21 @@ import { useRouter } from 'next/navigation'
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { modulePostFetch } from '@/app/module/utils/moduleFetch'
 import { type ModulePostFetchProps } from '@/app/types/moduleTypes'
-import { type RegisterOrnBtnProps } from '@/app/types/ui/btnTypes'
+import { type RegisterOrgBtnProps } from '@/app/types/ui/btnTypes'
 
-export default function RegisterOrgBtn(props: RegisterOrnBtnProps) {
+export default function RegisterOrgBtn(props: RegisterOrgBtnProps) {
   const accessToken = getCookie('access-token')
   const router = useRouter()
 
   const isOrgComplete: boolean = useAppSelector((state) => {
     const { name, description } = state.orgInfo.createOrg
     const { code } = state.orgInfo.joinOrg
-    const { teamName, teamDescription } = state.orgInfo.teams
+    // 각 배열의 요소가 비었는지 확인
 
     switch (props.title) {
       case 'Create!':
-        return name !== '' && description !== '' && teamName !== '' && teamDescription !== ''
+        // return name !== '' && description !== '' && teamName !== '' && teamDescription !== ''
+        return name !== '' && description !== ''
       case 'Join!':
         return code !== ''
       default:
@@ -46,10 +47,11 @@ export default function RegisterOrgBtn(props: RegisterOrnBtnProps) {
       grades: [orgState.grades],
       name: orgState.createOrg.name,
       organizationType: orgState.createOrg.organizationType,
+      // 팀 수정
       teams: [
         {
-          description: orgState.teams.teamDescription,
-          name: orgState.teams.teamName,
+          description: orgState.teams,
+          name: orgState.teams,
         },
       ],
     },

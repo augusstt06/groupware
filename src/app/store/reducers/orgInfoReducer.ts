@@ -15,9 +15,10 @@ type State = {
     updateAccess: string
     writeAccess: string
   }
-  teams: {
-    teamDescription: string
+  teams: object[]
+  currentTeam: {
     teamName: string
+    teamDescription: string
   }
   joinOrg: {
     code: string
@@ -39,10 +40,8 @@ const initialState: State = {
     updateAccess: 'TRUE',
     writeAccess: 'TRUE',
   },
-  teams: {
-    teamDescription: '',
-    teamName: '',
-  },
+  teams: [],
+  currentTeam: { teamName: '', teamDescription: '' },
   joinOrg: {
     code: '',
   },
@@ -71,11 +70,21 @@ export const orgInfoReducer = createSlice({
     setGradeReducer(state, action: PayloadAction<gradeActionType>) {
       state.grades = { ...action.payload }
     },
-    createTeamOrgReducer(
+    createOrgTeamReducer(
       state,
       action: PayloadAction<{ teamName: string; teamDescription: string }>,
     ) {
-      state.teams = { ...action.payload }
+      state.teams = [...state.teams, action.payload]
+      state.currentTeam = {
+        teamName: '',
+        teamDescription: '',
+      }
+    },
+    updateCurrentOrgTeamReducer(
+      state,
+      action: PayloadAction<{ teamName: string; teamDescription: string }>,
+    ) {
+      state.currentTeam = { ...action.payload }
     },
     joinOrgReducer(state, action: PayloadAction<{ code: string }>) {
       state.joinOrg.code = action.payload.code
@@ -83,7 +92,12 @@ export const orgInfoReducer = createSlice({
   },
 })
 
-export const { createOrgReducer, setGradeReducer, createTeamOrgReducer, joinOrgReducer } =
-  orgInfoReducer.actions
+export const {
+  createOrgReducer,
+  setGradeReducer,
+  createOrgTeamReducer,
+  updateCurrentOrgTeamReducer,
+  joinOrgReducer,
+} = orgInfoReducer.actions
 
 export default orgInfoReducer.reducer

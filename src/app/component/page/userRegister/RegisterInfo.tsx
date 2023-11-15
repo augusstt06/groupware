@@ -1,6 +1,6 @@
 import { AiFillPhone, AiOutlineMail } from 'react-icons/ai'
 import { BsFillPersonVcardFill } from 'react-icons/bs'
-import { RiLockPasswordFill } from 'react-icons/ri'
+import { RiLockPasswordFill, RiTeamLine } from 'react-icons/ri'
 import { Si1Password } from 'react-icons/si'
 
 import InfoInput from '../../ui/input/registerInfo/InfoInput'
@@ -38,6 +38,7 @@ export default function RegisterInfo(props: KeyInfoTypeProps) {
         icon={<BsFillPersonVcardFill />}
         checkValid={false}
       />
+      <InfoInput title="Position" placeholder="fe" icon={<RiTeamLine />} checkValid={false} />
       <InfoInput
         title="PhoneNumber"
         placeholder="010-0000-0000"

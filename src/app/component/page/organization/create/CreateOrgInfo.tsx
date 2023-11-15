@@ -1,5 +1,4 @@
 import { MdOutlineDescription } from 'react-icons/md'
-import { SiMicrosoftteams } from 'react-icons/si'
 import { SlOrganization } from 'react-icons/sl'
 
 import OrgInput from '../../../ui/input/organization/OrgInput'
@@ -58,18 +57,6 @@ Groupware site publishing and feature development"
           <ToggleGroup toggleData={data} compoenetType="grades" />
         </div>
       ))}
-      <OrgInput
-        componentType="createTeam"
-        title="Team Name"
-        placeholder="groupware"
-        icon={<SiMicrosoftteams />}
-      />
-      <OrgInput
-        componentType="createTeam"
-        title="Team Description"
-        placeholder="Groupware development"
-        icon={<MdOutlineDescription />}
-      />
     </>
   )
 }

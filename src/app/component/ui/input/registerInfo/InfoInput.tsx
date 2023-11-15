@@ -13,6 +13,7 @@ import {
   emailReducer,
   nameReducer,
   phoneNumberReducer,
+  positionReducer,
 } from '@/app/store/reducers/loginInfoReducer'
 import { type ModuleGetFetchProps } from '@/app/types/moduleTypes'
 import { type InfoInputProps } from '@/app/types/ui/inputTypes'
@@ -26,6 +27,8 @@ export default function InfoInput(props: InfoInputProps) {
         return state.loginInfo.name
       case 'PhoneNumber':
         return state.loginInfo.phoneNumber
+      case 'Position':
+        return state.loginInfo.position
       default:
         return state.loginInfo.email
     }
@@ -75,15 +78,22 @@ export default function InfoInput(props: InfoInputProps) {
 
   useEffect(() => {
     const isInput = inputData.value !== ''
+    const reducerProps = {
+      isCheck: isInput,
+      value: inputData.value,
+    }
     switch (props.title) {
       case 'Name':
-        dispatch(nameReducer({ isCheck: isInput, value: inputData.value }))
+        dispatch(nameReducer(reducerProps))
         break
       case 'PhoneNumber':
-        dispatch(phoneNumberReducer({ isCheck: isInput, value: inputData.value }))
+        dispatch(phoneNumberReducer(reducerProps))
+        break
+      case 'Position':
+        dispatch(positionReducer(reducerProps))
         break
       default:
-        dispatch(emailReducer({ isCheck: false, value: inputData.value }))
+        dispatch(emailReducer(reducerProps))
     }
   }, [inputData.value, dispatch])
 

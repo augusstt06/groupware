@@ -40,6 +40,7 @@ export function SignupBtn(props: BtnProps) {
       if (axios.isAxiosError(err)) {
         switch (err.status) {
           case 400:
+            // err mo
             throw new Error('400 : 잘못된 입력값으로 회원가입이 실패했습니다.')
           case 500:
             throw new Error('500 : 회원가입 중 서버측 에러가 발생했습니다.')
