@@ -35,7 +35,6 @@ export default function Organization() {
         ) : (
           <RegisterOrgBtn title={organization === 'createTeam' ? 'Create!' : 'Join!'} />
         )}
-        {/* <RegisterOrgBtn title={organization === 'create' ? 'Create!' : 'Join!'} /> */}
       </div>
     </div>
   )

@@ -80,6 +80,15 @@ export const orgInfoReducer = createSlice({
         teamDescription: '',
       }
     },
+    deleteOrgTeamReducer(
+      state,
+      action: PayloadAction<{ teamName: string; teamDescription: string }>,
+    ) {
+      const { teamName, teamDescription } = action.payload
+      state.teams = state.teams.filter(
+        (team) => team.teamName !== teamName || team.teamDescription !== teamDescription,
+      )
+    },
     updateCurrentOrgTeamReducer(
       state,
       action: PayloadAction<{ teamName: string; teamDescription: string }>,
@@ -97,6 +106,7 @@ export const {
   setGradeReducer,
   createOrgTeamReducer,
   updateCurrentOrgTeamReducer,
+  deleteOrgTeamReducer,
   joinOrgReducer,
 } = orgInfoReducer.actions
 
