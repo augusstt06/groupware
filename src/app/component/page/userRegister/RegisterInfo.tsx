@@ -6,6 +6,14 @@ import { Si1Password } from 'react-icons/si'
 import InfoInput from '../../ui/input/registerInfo/InfoInput'
 import PwdInput from '../../ui/input/registerInfo/PwdInput'
 
+import {
+  REGISTER_CONFIRM_PWD,
+  REGISTER_EMAIL,
+  REGISTER_NAME,
+  REGISTER_PHONENUMBER,
+  REGISTER_POSITION,
+  REGISTER_PWD,
+} from '@/app/constant/constant'
 import { type KeyInfoTypeProps } from '@/app/types/pageTypes'
 
 export default function RegisterInfo(props: KeyInfoTypeProps) {
@@ -14,33 +22,38 @@ export default function RegisterInfo(props: KeyInfoTypeProps) {
     <>
       <InfoInput
         icon={<AiOutlineMail />}
-        title="Email"
+        title={REGISTER_EMAIL}
         placeholder="abc12@sample.com"
         checkValid={true}
       />
       <PwdInput
-        title="Password (A-Z a-z 0-9 !@#$%^*&*? 포함)"
+        title={REGISTER_PWD}
         placeholder="At least 8 characters"
         icon={<RiLockPasswordFill />}
         isInputValueView={props.isPwdView}
         setIsInputValueView={props.setIsPwdView}
       />
       <PwdInput
-        title="Confirm Password"
+        title={REGISTER_CONFIRM_PWD}
         placeholder="Please Re-enter your password"
         icon={<Si1Password />}
         isInputValueView={props.isPwdConfirmView}
         setIsInputValueView={props.setIsPwdConfirmView}
       />
       <InfoInput
-        title="Name"
+        title={REGISTER_NAME}
         placeholder="Min Yeon Kim"
         icon={<BsFillPersonVcardFill />}
         checkValid={false}
       />
-      <InfoInput title="Position" placeholder="fe" icon={<RiTeamLine />} checkValid={false} />
       <InfoInput
-        title="PhoneNumber"
+        title={REGISTER_POSITION}
+        placeholder="fe"
+        icon={<RiTeamLine />}
+        checkValid={false}
+      />
+      <InfoInput
+        title={REGISTER_PHONENUMBER}
         placeholder="010-0000-0000"
         icon={<AiFillPhone />}
         checkValid={false}

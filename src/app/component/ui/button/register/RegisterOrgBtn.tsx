@@ -2,6 +2,7 @@ import axios from 'axios'
 import { getCookie } from 'cookies-next'
 import { useRouter } from 'next/navigation'
 
+import { ORG_CREATE, ORG_JOIN } from '@/app/constant/constant'
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { modulePostFetch } from '@/app/module/utils/moduleFetch'
 import { type ModulePostFetchProps } from '@/app/types/moduleTypes'
@@ -16,10 +17,10 @@ export default function RegisterOrgBtn(props: BtnProps) {
     const { code } = state.orgInfo.joinOrg
 
     switch (props.title) {
-      case 'Create!':
+      case ORG_CREATE.toUpperCase():
         // return name !== '' && description !== '' && teamName !== '' && teamDescription !== ''
         return name !== '' && description !== ''
-      case 'Join!':
+      case ORG_JOIN.toUpperCase():
         return code !== ''
       default:
         return false
@@ -97,18 +98,18 @@ export default function RegisterOrgBtn(props: BtnProps) {
 
   const handleClickButton = () => {
     if (!isOrgComplete) {
-      alert(props.title === 'create' ? '항목을 모두 입력해주세요' : '조직 코드를 입력해주세요')
+      alert(props.title === ORG_CREATE ? '항목을 모두 입력해주세요' : '조직 코드를 입력해주세요')
       return
     }
 
-    if (props.title === 'create') {
+    if (props.title === ORG_CREATE) {
       void fetchCreateOrg()
     } else {
       void fetchJoinOrg()
     }
 
     router.push('/')
-    alert(`조직 ${props.title === 'create' ? '생성' : '가입'}이 완료되었습니다.`)
+    alert(`조직 ${props.title === ORG_CREATE ? '생성' : '가입'}이 완료되었습니다.`)
   }
 
   return (

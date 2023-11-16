@@ -6,6 +6,7 @@ import { SiMicrosoftteams } from 'react-icons/si'
 import { OrgTeamConfirmBtn } from '@/app/component/ui/button/organization/OrgTeamBtn'
 import OrgInput from '@/app/component/ui/input/organization/OrgInput'
 import OrgTeamTable from '@/app/component/ui/table/organization/OrgTeamTable'
+import { ORG_CREATETEAM } from '@/app/constant/constant'
 import { useInput } from '@/app/module/hooks/reactHooks/useInput'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import {
@@ -40,14 +41,14 @@ export default function CreateOrgTeam() {
     <div className="flex flex-row justify-center  w-full mb-5">
       <div className="w-3/6  mr-5">
         <OrgInput
-          componentType="createTeam"
+          componentType={ORG_CREATETEAM}
           title="Team Name"
           useInput={teamNameInput}
           placeholder="groupware"
           icon={<SiMicrosoftteams />}
         />
         <OrgInput
-          componentType="createTeam"
+          componentType={ORG_CREATETEAM}
           title="Team Description"
           useInput={teamDescriptionInput}
           placeholder="Groupware development"

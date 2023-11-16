@@ -3,6 +3,7 @@ import { BsFillPersonVcardFill } from 'react-icons/bs'
 import { FaCheck } from 'react-icons/fa'
 import { RiLockPasswordFill } from 'react-icons/ri'
 
+import { REGISTER_EMAIL } from '@/app/constant/constant'
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
 
 export default function Stepper() {
@@ -26,7 +27,7 @@ export default function Stepper() {
       ? 'after:border-indigo-500 dark:after:border-indigo-600'
       : 'after:border-gray-100 dark:after:border-gray-700'
 
-    if (title === 'mail') {
+    if (title === REGISTER_EMAIL.toLowerCase()) {
       const className = `flex w-full ${completeColor} items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-4 after:inline-block ${completeAfter}`
       return className
     }

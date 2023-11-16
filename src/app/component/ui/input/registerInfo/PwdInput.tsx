@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 import { InputIconlabel } from '../../label/InputIconlabel'
 import { InputLabel, InputlabelAdd } from '../../label/Inputlabel'
 
+import { REGISTER_CONFIRM_PWD } from '@/app/constant/constant'
 import { useInput } from '@/app/module/hooks/reactHooks/useInput'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { pwdReducer } from '@/app/store/reducers/loginInfoReducer'
@@ -22,7 +23,7 @@ export default function PwdInput(props: PwdInputProps) {
     const isCheck = isInput && isPwdValueNotEmpty && isPwdConfirmValueNotEmpty
 
     const reducerData =
-      props.title === 'Confirm Password'
+      props.title === REGISTER_CONFIRM_PWD
         ? { isCheck, pwdValue: pwdState.pwdValue, pwdConfirmValue: inputData.value }
         : { isCheck, pwdValue: inputData.value, pwdConfirmValue: pwdState.pwdConfirmValue }
 

@@ -6,6 +6,7 @@ import SelectBox from '../../../ui/selectbox/SelectBox'
 
 import { InputLabel } from '@/app/component/ui/label/Inputlabel'
 import ToggleGroup from '@/app/component/ui/toggle/organization/ToggleGroup'
+import { ORG_CREATE, ORG_GRADES, ORG_SELECTBOX } from '@/app/constant/constant'
 import { useInput } from '@/app/module/hooks/reactHooks/useInput'
 
 export default function CreateOrgInfo() {
@@ -37,21 +38,21 @@ export default function CreateOrgInfo() {
     <>
       <OrgInput
         useInput={orgNameInput}
-        componentType="create"
+        componentType={ORG_CREATE}
         title="Organization name"
         placeholder="frontend"
         icon={<SlOrganization />}
       />
       <OrgInput
         useInput={orgDescriptionInput}
-        componentType="create"
+        componentType={ORG_CREATE}
         title="Description"
         placeholder="
 Groupware site publishing and feature development"
         icon={<MdOutlineDescription />}
       />
       <SelectBox
-        compoenetType="orgType"
+        compoenetType={ORG_SELECTBOX}
         apiKey="none"
         title="Select an Orgnization Type"
         selectList={selectList}
@@ -59,7 +60,7 @@ Groupware site publishing and feature development"
       <InputLabel title="Organization Setting" />
       {gradesData.map((data) => (
         <div key={data[0].title}>
-          <ToggleGroup toggleData={data} compoenetType="grades" />
+          <ToggleGroup toggleData={data} compoenetType={ORG_GRADES} />
         </div>
       ))}
     </>

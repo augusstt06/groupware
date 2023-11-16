@@ -1,3 +1,4 @@
+import { ORG_CREATE, ORG_JOIN } from '@/app/constant/constant'
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { type NextStepOrgTeamProps, type RegisterOrgBtnProps } from '@/app/types/ui/btnTypes'
 
@@ -21,9 +22,9 @@ export function NextStepToOrgTeam(props: NextStepOrgTeamProps) {
     const code = state.orgInfo.joinOrg.code
 
     switch (props.organization) {
-      case 'create':
+      case ORG_CREATE:
         return name !== '' && description !== ''
-      case 'join':
+      case ORG_JOIN:
         return code !== ''
       default:
         return false
@@ -32,14 +33,14 @@ export function NextStepToOrgTeam(props: NextStepOrgTeamProps) {
 
   const handleClick = () => {
     switch (props.organization) {
-      case 'create':
+      case ORG_CREATE:
         if (isOrgComplete) {
           props.setOrganization('createTeam')
         } else {
           alert('입력 항목을 다 입력해주세요')
         }
         break
-      case 'join':
+      case ORG_JOIN:
         break
     }
   }

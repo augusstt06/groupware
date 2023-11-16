@@ -5,6 +5,12 @@ import axios from 'axios'
 import { InputIconlabel } from '../../label/InputIconlabel'
 import { InputLabel } from '../../label/Inputlabel'
 
+import {
+  REGISTER_EMAIL,
+  REGISTER_NAME,
+  REGISTER_PHONENUMBER,
+  REGISTER_POSITION,
+} from '@/app/constant/constant'
 import { useInput } from '@/app/module/hooks/reactHooks/useInput'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import inputValidate from '@/app/module/utils/inputValidate'
@@ -23,11 +29,11 @@ export default function InfoInput(props: InfoInputProps) {
   const inputData = useInput('', props.title)
   const inputState = useAppSelector((state) => {
     switch (props.title) {
-      case 'Name':
+      case REGISTER_NAME:
         return state.loginInfo.name
-      case 'PhoneNumber':
+      case REGISTER_PHONENUMBER:
         return state.loginInfo.phoneNumber
-      case 'Position':
+      case REGISTER_POSITION:
         return state.loginInfo.position
       default:
         return state.loginInfo.email
@@ -35,14 +41,14 @@ export default function InfoInput(props: InfoInputProps) {
   })
 
   const getFetchEmailProps: ModuleGetFetchProps = {
-    keyName: 'email',
+    keyName: REGISTER_EMAIL.toLowerCase(),
     keyValue: inputData.value,
     fetchUrl: process.env.NEXT_PUBLIC_EMAIL_REQ_SOURCE,
   }
 
   const inputValidateProps = {
     inputData: inputData.value,
-    dataType: props.title === 'Email' ? 'email' : 'phoneNumber',
+    dataType: props.title === REGISTER_EMAIL ? 'email' : 'phoneNumber',
   }
 
   const fetchEmailAvaiable = async (): Promise<void> => {
@@ -86,13 +92,13 @@ export default function InfoInput(props: InfoInputProps) {
       value: inputData.value,
     }
     switch (props.title) {
-      case 'Name':
+      case REGISTER_NAME:
         dispatch(nameReducer(reducerProps))
         break
-      case 'PhoneNumber':
+      case REGISTER_PHONENUMBER:
         dispatch(phoneNumberReducer(reducerProps))
         break
-      case 'Position':
+      case REGISTER_POSITION:
         dispatch(positionReducer(reducerProps))
         break
       default:
