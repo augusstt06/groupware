@@ -29,7 +29,8 @@ export type RegisterOrgBtnProps = {
   handleClick: () => void
 }
 
-export type NextStepOrgTeamProps = RegisterOrgBtnProps & {
+export type NextStepOrgTeamProps = {
+  title: string
   organization: string
   setOrganization: React.Dispatch<SetStateAction<string>>
 }

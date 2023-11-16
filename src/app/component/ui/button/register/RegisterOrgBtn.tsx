@@ -5,9 +5,9 @@ import { useRouter } from 'next/navigation'
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { modulePostFetch } from '@/app/module/utils/moduleFetch'
 import { type ModulePostFetchProps } from '@/app/types/moduleTypes'
-import { type RegisterOrgBtnProps } from '@/app/types/ui/btnTypes'
+import { type BtnProps } from '@/app/types/ui/btnTypes'
 
-export default function RegisterOrgBtn(props: RegisterOrgBtnProps) {
+export default function RegisterOrgBtn(props: BtnProps) {
   const accessToken = getCookie('access-token')
   const router = useRouter()
 

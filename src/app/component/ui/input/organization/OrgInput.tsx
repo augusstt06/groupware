@@ -39,9 +39,8 @@ export default function OrgInput(props: OrgInputProps) {
     }
   }, [props.useInput.value])
 
-  const tailwindClassName = props.componentType === 'createTeam' ? `w-2/4` : ``
   return (
-    <div className={`${tailwindClassName}`}>
+    <div>
       <InputLabel title={props.title} />
       <div className="flex relative mt-2 mb-6">
         <InputIconlabel icon={props.icon} />

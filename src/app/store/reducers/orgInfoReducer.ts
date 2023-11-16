@@ -15,7 +15,7 @@ type State = {
     updateAccess: string
     writeAccess: string
   }
-  teams: object[]
+  teams: Array<{ teamName: string; teamDescription: string }>
   currentTeam: {
     teamName: string
     teamDescription: string
