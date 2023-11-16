@@ -26,6 +26,7 @@ export type OrgChooseBtnProps = {
 
 export type RegisterOrgBtnProps = {
   title: string
+  handleClick: () => void
 }
 
 export type NextStepOrgTeamProps = RegisterOrgBtnProps & {

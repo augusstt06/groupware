@@ -6,8 +6,11 @@ import SelectBox from '../../../ui/selectbox/SelectBox'
 
 import { InputLabel } from '@/app/component/ui/label/Inputlabel'
 import ToggleGroup from '@/app/component/ui/toggle/organization/ToggleGroup'
+import { useInput } from '@/app/module/hooks/reactHooks/useInput'
 
 export default function CreateOrgInfo() {
+  const orgNameInput = useInput('')
+  const orgDescriptionInput = useInput('')
   const selectList = [
     {
       value: 'PUBLIC',
@@ -33,12 +36,14 @@ export default function CreateOrgInfo() {
   return (
     <>
       <OrgInput
+        useInput={orgNameInput}
         componentType="create"
         title="Organization name"
         placeholder="frontend"
         icon={<SlOrganization />}
       />
       <OrgInput
+        useInput={orgDescriptionInput}
         componentType="create"
         title="Description"
         placeholder="
