@@ -40,12 +40,14 @@ export function SignupBtn(props: BtnProps) {
       if (axios.isAxiosError(err)) {
         switch (err.status) {
           case 400:
-            // err mo
-            throw new Error('400 : 잘못된 입력값으로 회원가입이 실패했습니다.')
+            alert('입력값이 잘못되었습니다.')
+            break
           case 500:
-            throw new Error('500 : 회원가입 중 서버측 에러가 발생했습니다.')
+            alert('통신오류가 발생했습니다.')
+            break
         }
       }
+      alert('회원가입이 실패했습니다.')
     }
   }
   const fetchLogin = async (): Promise<void> => {
@@ -56,27 +58,29 @@ export function SignupBtn(props: BtnProps) {
       if (axios.isAxiosError(err)) {
         switch (err.status) {
           case 400:
-            throw new Error('400 : 잘못된 입력값으로 로그인이 실패했습니다.')
+            alert('입력값이 잘못되었습니다.')
+            break
           case 500:
-            throw new Error('500 : 로그인 중 서버측 에러가 발생했습니다.')
+            alert('통신오류가 발생했습니다.')
+            break
         }
       }
+      alert('회원가입이 실패했습니다.')
     }
   }
-  const handleClickBtn = async (): Promise<void> => {
-    await fetchSignin()
-    await fetchLogin()
+  const handleClickBtn = () => {
+    void fetchSignin()
+    void fetchLogin()
     alert('회원가입이 완료 되었습니다.')
     router.push('/organization')
   }
-
   return (
     <button
       type="button"
       className="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 dark:hover:bg-white dark:hover:text-indigo-500 mb-2 border-2 dark:hover:border-indigo-500/75"
       onClick={(event) => {
         event.preventDefault()
-        void handleClickBtn()
+        handleClickBtn()
       }}
     >
       {props.title}

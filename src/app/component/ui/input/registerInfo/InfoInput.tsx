@@ -52,15 +52,18 @@ export default function InfoInput(props: InfoInputProps) {
       if (axios.isAxiosError(err)) {
         switch (err.status) {
           case 400:
-            throw new Error('400 : 잘못된 입력값입니다.')
+            alert('입력값이 잘못되었습니다.')
+            break
           case 500:
-            throw new Error('500 : 서버측 에러가 발생했습니다.')
+            alert('통신오류가 발생했습니다.')
+            break
         }
       }
+      alert('이메일 확인에 실패했습니다.')
     }
   }
 
-  const handleChangeEmailInputCheckbox = async () => {
+  const handleChangeEmailInputCheckbox = () => {
     const isValid = inputValidate(inputValidateProps)
     if (!isValid as boolean) {
       alert('이메일 형식이 잘못되었습니다.')
@@ -71,7 +74,7 @@ export default function InfoInput(props: InfoInputProps) {
       inputData.value = ''
       return
     }
-    await fetchEmailAvaiable()
+    void fetchEmailAvaiable()
     dispatch(emailReducer({ isCheck: true, value: inputData.value }))
     alert('이메일 확인이 완료되었습니다.')
   }
@@ -118,7 +121,7 @@ export default function InfoInput(props: InfoInputProps) {
               checked={inputState?.isCheck}
               onChange={(event) => {
                 event.preventDefault()
-                void handleChangeEmailInputCheckbox()
+                handleChangeEmailInputCheckbox()
               }}
             />
           </div>
