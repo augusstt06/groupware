@@ -1,5 +1,6 @@
-import { NavigationBtn } from './NavigationBtn'
+import { NavigationBtn } from '../NavigationBtn'
 
+import { ORG_CREATE, ORG_JOIN } from '@/app/constant/constant'
 import { type OrgChooseBtnProps } from '@/app/types/ui/btnTypes'
 
 export default function OrgChooseBtn(props: OrgChooseBtnProps) {
@@ -8,7 +9,7 @@ export default function OrgChooseBtn(props: OrgChooseBtnProps) {
   }
   return (
     <div className="flex flex-row justify-center items-center p-8">
-      {['create', 'join'].map((title) => (
+      {[ORG_CREATE, ORG_JOIN].map((title) => (
         <div
           key={title}
           className="mr-10"
@@ -16,7 +17,9 @@ export default function OrgChooseBtn(props: OrgChooseBtnProps) {
             handleClickBtn(title)
           }}
         >
-          <NavigationBtn title={title === 'create' ? 'Create Organization' : 'Join Organization'} />
+          <NavigationBtn
+            title={title === ORG_CREATE ? 'Create Organization' : 'Join Organization'}
+          />
         </div>
       ))}
     </div>

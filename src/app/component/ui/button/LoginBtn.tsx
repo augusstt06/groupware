@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { setCookie } from 'cookies-next'
 import { useRouter } from 'next/navigation'
 import { AiFillGithub, AiOutlineGoogle } from 'react-icons/ai'
@@ -5,6 +6,7 @@ import { TbLogin2 } from 'react-icons/tb'
 
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { modulePostFetch } from '@/app/module/utils/moduleFetch'
+import { type ModulePostFetchProps } from '@/app/types/moduleTypes'
 import { type BtnProps } from '@/app/types/ui/btnTypes'
 
 export function SignupBtn(props: BtnProps) {
@@ -13,44 +15,74 @@ export function SignupBtn(props: BtnProps) {
     return state.loginInfo
   })
 
-  const fetchSignupProps = {
+  const fetchSignupProps: ModulePostFetchProps = {
     data: {
       email: loginState.email.value,
       name: loginState.name.value,
       password: loginState.pwd.pwdValue,
       passwordConfirm: loginState.pwd.pwdConfirmValue,
+      position: loginState.position.value,
       phoneNumber: loginState.phoneNumber.value,
     },
     fetchUrl: process.env.NEXT_PUBLIC_REGISTER_SOURCE,
   }
-  const fetchLoginProps = {
+  const fetchLoginProps: ModulePostFetchProps = {
     data: {
       email: loginState.email.value,
       password: loginState.pwd.pwdValue,
     },
     fetchUrl: process.env.NEXT_PUBLIC_LOGIN_SOURCE,
   }
-  const fetchSignin = async () => {
-    await modulePostFetch(fetchSignupProps)
-    const loginRes = await modulePostFetch(fetchLoginProps)
-    setCookie('access-token', loginRes.data.result)
-  }
-  const handleClickBtn = () => {
-    fetchSignin()
-      .then(() => {
-        alert('회원가입이 완료되었습니다.')
-        router.push('/organization')
-      })
-      .catch(() => {
-        alert('회원가입이 실패했습니다.')
-      })
-  }
 
+  const fetchSignin = async (): Promise<void> => {
+    try {
+      await modulePostFetch(fetchSignupProps)
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        switch (err.status) {
+          case 400:
+            alert('입력값이 잘못되었습니다.')
+            break
+          case 500:
+            alert('통신오류가 발생했습니다.')
+            break
+        }
+      }
+      alert('회원가입이 실패했습니다.')
+    }
+  }
+  const fetchLogin = async (): Promise<void> => {
+    try {
+      const res = await modulePostFetch(fetchLoginProps)
+      setCookie('access-token', res.data.result)
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        switch (err.status) {
+          case 400:
+            alert('입력값이 잘못되었습니다.')
+            break
+          case 500:
+            alert('통신오류가 발생했습니다.')
+            break
+        }
+      }
+      alert('로그인이 실패했습니다.')
+    }
+  }
+  const handleClickBtn = async () => {
+    await fetchSignin()
+    await fetchLogin()
+    alert('회원가입이 완료 되었습니다.')
+    router.push('/organization')
+  }
   return (
     <button
       type="button"
       className="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 dark:hover:bg-white dark:hover:text-indigo-500 mb-2 border-2 dark:hover:border-indigo-500/75"
-      onClick={handleClickBtn}
+      onClick={(event) => {
+        event.preventDefault()
+        void handleClickBtn()
+      }}
     >
       {props.title}
     </button>

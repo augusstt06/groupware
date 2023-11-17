@@ -1,3 +1,4 @@
+import type React from 'react'
 import { type SetStateAction } from 'react'
 
 export type InfoInputProps = {
@@ -23,9 +24,13 @@ export type PwdConfirmInputProps = {
   setIsPwdConfirmView: React.Dispatch<SetStateAction<boolean>>
 }
 
-export type OrganizationProps = {
+export type OrgInputProps = {
   componentType: string
   title: string
   placeholder: string
   icon: React.ReactNode
+  useInput: {
+    value: string
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  }
 }

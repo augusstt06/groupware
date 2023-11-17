@@ -1,3 +1,4 @@
+import type React from 'react'
 import { type SetStateAction } from 'react'
 
 export type HamburgerProps = {
@@ -23,6 +24,13 @@ export type OrgChooseBtnProps = {
   setOrganization: React.Dispatch<SetStateAction<string>>
 }
 
-export type RegisterOrnBtnProps = {
+export type RegisterOrgBtnProps = {
   title: string
+  handleClick: () => void
+}
+
+export type NextStepOrgTeamProps = {
+  title: string
+  organization: string
+  setOrganization: React.Dispatch<SetStateAction<string>>
 }

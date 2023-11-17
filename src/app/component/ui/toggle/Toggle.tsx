@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 
+import { FALSE, ORG_GRADES, TRUE } from '@/app/constant/constant'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { setGradeReducer } from '@/app/store/reducers/orgInfoReducer'
 import { type ToggleProps } from '@/app/types/ui/uiTypes'
@@ -13,8 +14,8 @@ export default function Toggle(props: ToggleProps) {
     setIsToggle(!isToggle)
     let reducerProps
     switch (props.componentType) {
-      case 'grades':
-        reducerProps = { ...gradesState, [props.value]: e.target.checked ? 'TRUE' : 'FALSE' }
+      case ORG_GRADES:
+        reducerProps = { ...gradesState, [props.value]: e.target.checked ? TRUE : FALSE }
         dispatch(setGradeReducer(reducerProps))
         break
       default:

@@ -1,5 +1,4 @@
 import { MdOutlineDescription } from 'react-icons/md'
-import { SiMicrosoftteams } from 'react-icons/si'
 import { SlOrganization } from 'react-icons/sl'
 
 import OrgInput from '../../../ui/input/organization/OrgInput'
@@ -7,8 +6,12 @@ import SelectBox from '../../../ui/selectbox/SelectBox'
 
 import { InputLabel } from '@/app/component/ui/label/Inputlabel'
 import ToggleGroup from '@/app/component/ui/toggle/organization/ToggleGroup'
+import { ORG_CREATE, ORG_GRADES, ORG_SELECTBOX } from '@/app/constant/constant'
+import { useInput } from '@/app/module/hooks/reactHooks/useInput'
 
 export default function CreateOrgInfo() {
+  const orgNameInput = useInput('')
+  const orgDescriptionInput = useInput('')
   const selectList = [
     {
       value: 'PUBLIC',
@@ -34,20 +37,22 @@ export default function CreateOrgInfo() {
   return (
     <>
       <OrgInput
-        componentType="create"
+        useInput={orgNameInput}
+        componentType={ORG_CREATE}
         title="Organization name"
         placeholder="frontend"
         icon={<SlOrganization />}
       />
       <OrgInput
-        componentType="create"
+        useInput={orgDescriptionInput}
+        componentType={ORG_CREATE}
         title="Description"
         placeholder="
 Groupware site publishing and feature development"
         icon={<MdOutlineDescription />}
       />
       <SelectBox
-        compoenetType="orgType"
+        compoenetType={ORG_SELECTBOX}
         apiKey="none"
         title="Select an Orgnization Type"
         selectList={selectList}
@@ -55,21 +60,9 @@ Groupware site publishing and feature development"
       <InputLabel title="Organization Setting" />
       {gradesData.map((data) => (
         <div key={data[0].title}>
-          <ToggleGroup toggleData={data} compoenetType="grades" />
+          <ToggleGroup toggleData={data} compoenetType={ORG_GRADES} />
         </div>
       ))}
-      <OrgInput
-        componentType="createTeam"
-        title="Team Name"
-        placeholder="groupware"
-        icon={<SiMicrosoftteams />}
-      />
-      <OrgInput
-        componentType="createTeam"
-        title="Team Description"
-        placeholder="Groupware development"
-        icon={<MdOutlineDescription />}
-      />
     </>
   )
 }

@@ -14,6 +14,10 @@ type State = {
     isCheck: boolean
     value: string
   }
+  position: {
+    isCheck: boolean
+    value: string
+  }
   phoneNumber: {
     isCheck: boolean
     value: string
@@ -24,6 +28,7 @@ const initialState: State = {
   email: { isCheck: false, value: '' },
   pwd: { isCheck: false, pwdValue: '', pwdConfirmValue: '' },
   name: { isCheck: false, value: '' },
+  position: { isCheck: false, value: '' },
   phoneNumber: { isCheck: false, value: '' },
 }
 
@@ -32,8 +37,7 @@ export const loginInfoSlice = createSlice({
   initialState,
   reducers: {
     emailReducer(state, action: PayloadAction<{ isCheck: boolean; value: string }>) {
-      state.email.isCheck = action.payload.isCheck
-      state.email.value = action.payload.value
+      state.email = { ...action.payload }
     },
     pwdReducer(
       state,
@@ -43,21 +47,21 @@ export const loginInfoSlice = createSlice({
         pwdConfirmValue: string
       }>,
     ) {
-      state.pwd.isCheck = action.payload.isCheck
-      state.pwd.pwdValue = action.payload.pwdValue
-      state.pwd.pwdConfirmValue = action.payload.pwdConfirmValue
+      state.pwd = { ...action.payload }
     },
     nameReducer(state, action: PayloadAction<{ isCheck: boolean; value: string }>) {
-      state.name.isCheck = action.payload.isCheck
-      state.name.value = action.payload.value
+      state.name = { ...action.payload }
+    },
+    positionReducer(state, action: PayloadAction<{ isCheck: boolean; value: string }>) {
+      state.position = { ...action.payload }
     },
     phoneNumberReducer(state, action: PayloadAction<{ isCheck: boolean; value: string }>) {
-      state.phoneNumber.isCheck = action.payload.isCheck
-      state.phoneNumber.value = action.payload.value
+      state.phoneNumber = { ...action.payload }
     },
   },
 })
 
-export const { emailReducer, pwdReducer, nameReducer, phoneNumberReducer } = loginInfoSlice.actions
+export const { emailReducer, pwdReducer, nameReducer, positionReducer, phoneNumberReducer } =
+  loginInfoSlice.actions
 
 export default loginInfoSlice.reducer

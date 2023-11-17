@@ -2,24 +2,24 @@ import axios from 'axios'
 import { getCookie } from 'cookies-next'
 import { useRouter } from 'next/navigation'
 
+import { ORG_CREATE, ORG_JOIN } from '@/app/constant/constant'
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { modulePostFetch } from '@/app/module/utils/moduleFetch'
 import { type ModulePostFetchProps } from '@/app/types/moduleTypes'
-import { type RegisterOrnBtnProps } from '@/app/types/ui/btnTypes'
+import { type BtnProps } from '@/app/types/ui/btnTypes'
 
-export default function RegisterOrgBtn(props: RegisterOrnBtnProps) {
+export default function RegisterOrgBtn(props: BtnProps) {
   const accessToken = getCookie('access-token')
   const router = useRouter()
 
-  const isOrgComplete = useAppSelector((state) => {
+  const isOrgComplete: boolean = useAppSelector((state) => {
     const { name, description } = state.orgInfo.createOrg
     const { code } = state.orgInfo.joinOrg
-    const { teamName, teamDescription } = state.orgInfo.teams
 
     switch (props.title) {
-      case 'Create!':
-        return name !== '' && description !== '' && teamName !== '' && teamDescription !== ''
-      case 'Join!':
+      case ORG_CREATE.toUpperCase():
+        return name !== '' && description !== ''
+      case ORG_JOIN.toUpperCase():
         return code !== ''
       default:
         return false
@@ -29,9 +29,7 @@ export default function RegisterOrgBtn(props: RegisterOrnBtnProps) {
     return state.orgInfo
   })
 
-  // FIXME:  3)
-
-  const fetchJoinOrgProps = {
+  const fetchJoinOrgProps: ModulePostFetchProps = {
     data: {
       code: orgState.joinOrg.code,
     },
@@ -46,67 +44,75 @@ export default function RegisterOrgBtn(props: RegisterOrnBtnProps) {
       grades: [orgState.grades],
       name: orgState.createOrg.name,
       organizationType: orgState.createOrg.organizationType,
-      teams: [
-        {
-          description: orgState.teams.teamDescription,
-          name: orgState.teams.teamName,
-        },
-      ],
+      teams: orgState.teams,
     },
     fetchUrl: process.env.NEXT_PUBLIC_CREATE_ORGANIZATIONS_SOURCE,
     header: {
       Authorization: `Bearer ${accessToken}`,
     },
   }
-  const fetchCreateOrg = async () => {
+  const fetchCreateOrg = async (): Promise<void> => {
     try {
       await modulePostFetch(fetchCreateOrgProps)
-    } catch (err: unknown) {
+    } catch (err) {
       if (axios.isAxiosError(err)) {
         switch (err.status) {
           case 400:
-          // 400 에러처리
+            alert('입력값이 잘못되었습니다.')
+            break
+          case 500:
+            alert('통신오류가 발생했습니다.')
+            break
         }
       }
     }
   }
 
-  const fetchJoinOrg = async () => {
-    await modulePostFetch(fetchJoinOrgProps)
+  const fetchJoinOrg = async (): Promise<void> => {
+    try {
+      await modulePostFetch(fetchJoinOrgProps)
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        switch (err.status) {
+          case 400:
+            alert('입력값이 잘못되었습니다.')
+            break
+          case 500:
+            alert('통신오류가 발생했습니다.')
+            break
+        }
+      }
+    }
   }
 
-  const handleClickCreateBtn = () => {
+  const handleClickButton = async () => {
     if (!isOrgComplete) {
-      alert('항목을 모두 입력해주세요')
+      alert(props.title === ORG_CREATE ? '항목을 모두 입력해주세요' : '조직 코드를 입력해주세요')
       return
     }
-    fetchCreateOrg()
-      .then(() => {
-        router.push('/')
-        // TODO: 여기서 스토어에 저장
-        alert('조직생성이 완료되었습니다.')
+
+    if (props.title === ORG_CREATE.toUpperCase()) {
+      await fetchCreateOrg().catch(() => {
+        alert('조직 생성 실패')
       })
-      .catch(() => {
-        alert('조직 생성에 실패했습니다.')
+    } else {
+      await fetchJoinOrg().catch(() => {
+        alert('조직 가입 실패')
       })
-  }
-  const handleClickJoinBtn = () => {
-    if (!isOrgComplete) {
-      alert('조직 코드를 입력해주세요')
-      return
     }
-    fetchJoinOrg()
-      .then(() => {
-        alert('조직 가입이 완료되었습니다.')
-      })
-      .catch(() => {})
+
+    router.push('/')
+    alert(`조직 ${props.title === ORG_CREATE ? '생성' : '가입'}이 완료되었습니다.`)
   }
 
   return (
     <button
       type="button"
       className="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 dark:hover:bg-white dark:hover:text-indigo-500 mb-2 border-2 dark:hover:border-indigo-500/75"
-      onClick={props.title === 'Create!' ? handleClickCreateBtn : handleClickJoinBtn}
+      onClick={(event) => {
+        event.preventDefault()
+        void handleClickButton()
+      }}
     >
       {props.title}
     </button>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 
+import { ORG_SELECTBOX } from '@/app/constant/constant'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { createOrgReducer } from '@/app/store/reducers/orgInfoReducer'
 import { type SelectboxProps } from '@/app/types/ui/uiTypes'
@@ -14,7 +15,7 @@ export default function SelectBox(props: SelectboxProps) {
     setSelect(e.target.value)
     let reducerProps
     switch (props.compoenetType) {
-      case 'orgType':
+      case ORG_SELECTBOX:
         reducerProps = { ...createOrgState, organizationType: e.target.value }
         dispatch(createOrgReducer(reducerProps))
         break
@@ -29,7 +30,7 @@ export default function SelectBox(props: SelectboxProps) {
         {props.title}
       </label>
       <select
-        id="orgtype"
+        id={ORG_SELECTBOX}
         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         onChange={handleChange}
         value={select}
