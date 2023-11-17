@@ -21,6 +21,7 @@ export function SignupBtn(props: BtnProps) {
       name: loginState.name.value,
       password: loginState.pwd.pwdValue,
       passwordConfirm: loginState.pwd.pwdConfirmValue,
+      position: loginState.position.value,
       phoneNumber: loginState.phoneNumber.value,
     },
     fetchUrl: process.env.NEXT_PUBLIC_REGISTER_SOURCE,
@@ -65,12 +66,12 @@ export function SignupBtn(props: BtnProps) {
             break
         }
       }
-      alert('회원가입이 실패했습니다.')
+      alert('로그인이 실패했습니다.')
     }
   }
-  const handleClickBtn = () => {
-    void fetchSignin()
-    void fetchLogin()
+  const handleClickBtn = async () => {
+    await fetchSignin()
+    await fetchLogin()
     alert('회원가입이 완료 되었습니다.')
     router.push('/organization')
   }
@@ -80,7 +81,7 @@ export function SignupBtn(props: BtnProps) {
       className="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 dark:hover:bg-white dark:hover:text-indigo-500 mb-2 border-2 dark:hover:border-indigo-500/75"
       onClick={(event) => {
         event.preventDefault()
-        handleClickBtn()
+        void handleClickBtn()
       }}
     >
       {props.title}

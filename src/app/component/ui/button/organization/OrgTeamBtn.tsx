@@ -3,7 +3,6 @@ import { useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { type NextStepOrgTeamProps, type RegisterOrgBtnProps } from '@/app/types/ui/btnTypes'
 
 export function OrgTeamConfirmBtn(props: RegisterOrgBtnProps) {
-  // FIXME: 버튼 클릭시 현재 작성한 팀의 정보가 오른쪽의 팀 현황ㅇ로 이동하고 밸류 초기화
   return (
     <button
       type="button"

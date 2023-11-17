@@ -18,7 +18,6 @@ export default function RegisterOrgBtn(props: BtnProps) {
 
     switch (props.title) {
       case ORG_CREATE.toUpperCase():
-        // return name !== '' && description !== '' && teamName !== '' && teamDescription !== ''
         return name !== '' && description !== ''
       case ORG_JOIN.toUpperCase():
         return code !== ''
@@ -47,13 +46,7 @@ export default function RegisterOrgBtn(props: BtnProps) {
       grades: [orgState.grades],
       name: orgState.createOrg.name,
       organizationType: orgState.createOrg.organizationType,
-      // 팀 수정
-      teams: [
-        {
-          description: orgState.teams,
-          name: orgState.teams,
-        },
-      ],
+      teams: orgState.teams,
     },
     fetchUrl: process.env.NEXT_PUBLIC_CREATE_ORGANIZATIONS_SOURCE,
     header: {
@@ -74,7 +67,6 @@ export default function RegisterOrgBtn(props: BtnProps) {
             break
         }
       }
-      alert('조직생성이 실패했습니다.')
     }
   }
 
@@ -92,20 +84,23 @@ export default function RegisterOrgBtn(props: BtnProps) {
             break
         }
       }
-      alert('조직가입이 실패했습니다.')
     }
   }
 
-  const handleClickButton = () => {
+  const handleClickButton = async () => {
     if (!isOrgComplete) {
       alert(props.title === ORG_CREATE ? '항목을 모두 입력해주세요' : '조직 코드를 입력해주세요')
       return
     }
 
-    if (props.title === ORG_CREATE) {
-      void fetchCreateOrg()
+    if (props.title === ORG_CREATE.toUpperCase()) {
+      await fetchCreateOrg().catch(() => {
+        alert('조직 생성 실패')
+      })
     } else {
-      void fetchJoinOrg()
+      await fetchJoinOrg().catch(() => {
+        alert('조직 가입 실패')
+      })
     }
 
     router.push('/')
@@ -118,7 +113,7 @@ export default function RegisterOrgBtn(props: BtnProps) {
       className="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 dark:hover:bg-white dark:hover:text-indigo-500 mb-2 border-2 dark:hover:border-indigo-500/75"
       onClick={(event) => {
         event.preventDefault()
-        handleClickButton()
+        void handleClickButton()
       }}
     >
       {props.title}

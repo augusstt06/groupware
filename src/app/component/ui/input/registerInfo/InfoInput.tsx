@@ -39,6 +39,7 @@ export default function InfoInput(props: InfoInputProps) {
         return state.loginInfo.email
     }
   })
+  const emailState = useAppSelector((state) => state.loginInfo.email)
 
   const getFetchEmailProps: ModuleGetFetchProps = {
     keyName: REGISTER_EMAIL.toLowerCase(),
@@ -69,7 +70,7 @@ export default function InfoInput(props: InfoInputProps) {
     }
   }
 
-  const handleChangeEmailInputCheckbox = () => {
+  const handleChangeEmailInputCheckbox = async () => {
     const isValid = inputValidate(inputValidateProps)
     if (!isValid as boolean) {
       alert('이메일 형식이 잘못되었습니다.')
@@ -80,7 +81,7 @@ export default function InfoInput(props: InfoInputProps) {
       inputData.value = ''
       return
     }
-    void fetchEmailAvaiable()
+    await fetchEmailAvaiable()
     dispatch(emailReducer({ isCheck: true, value: inputData.value }))
     alert('이메일 확인이 완료되었습니다.')
   }
@@ -89,6 +90,10 @@ export default function InfoInput(props: InfoInputProps) {
     const isInput = inputData.value !== ''
     const reducerProps = {
       isCheck: isInput,
+      value: inputData.value,
+    }
+    const emailprops = {
+      isCheck: inputState.isCheck,
       value: inputData.value,
     }
     switch (props.title) {
@@ -102,7 +107,7 @@ export default function InfoInput(props: InfoInputProps) {
         dispatch(positionReducer(reducerProps))
         break
       default:
-        dispatch(emailReducer(reducerProps))
+        dispatch(emailReducer(emailprops))
     }
   }, [inputData.value, dispatch])
 
@@ -113,7 +118,8 @@ export default function InfoInput(props: InfoInputProps) {
         <InputIconlabel icon={props.icon} />
         <input
           type="text"
-          {...inputData}
+          value={inputData.value}
+          onChange={inputData.onChange}
           id={props.title}
           className="rounded-none rounded-r-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder={props.placeholder}
@@ -124,10 +130,10 @@ export default function InfoInput(props: InfoInputProps) {
             <input
               type="checkbox"
               className="cursor-pointer w-5 h-5"
-              checked={inputState?.isCheck}
+              checked={emailState.isCheck}
               onChange={(event) => {
                 event.preventDefault()
-                handleChangeEmailInputCheckbox()
+                void handleChangeEmailInputCheckbox()
               }}
             />
           </div>

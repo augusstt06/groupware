@@ -16,7 +16,7 @@ export default function Organization() {
   return (
     <div className="flex flex-col justify-center items-center p 1 overflow-y-scroll mt-5">
       {organization === '' ? (
-        <div className="bg-white">
+        <div>
           <OrgChooseBtn organization={organization} setOrganization={setOrganization} />
         </div>
       ) : (
@@ -40,7 +40,9 @@ export default function Organization() {
             ) : (
               <RegisterOrgBtn
                 title={
-                  organization === ORG_CREATE ? ORG_CREATE.toUpperCase() : ORG_JOIN.toUpperCase()
+                  organization === ORG_CREATE || organization === ORG_CREATETEAM
+                    ? ORG_CREATE.toUpperCase()
+                    : ORG_JOIN.toUpperCase()
                 }
               />
             )}
