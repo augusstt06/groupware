@@ -4,7 +4,7 @@ import { InputIconlabel } from '../../label/InputIconlabel'
 import { InputLabel, InputlabelAdd } from '../../label/Inputlabel'
 
 import { REGISTER_CONFIRM_PWD } from '@/app/constant/constant'
-import { useInput } from '@/app/module/hooks/reactHooks/useInput'
+import useInput from '@/app/module/hooks/reactHooks/useInput'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { pwdReducer } from '@/app/store/reducers/loginInfoReducer'
 import { type PwdInputProps } from '@/app/types/ui/inputTypes'

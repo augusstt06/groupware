@@ -11,7 +11,8 @@ import {
   REGISTER_PHONENUMBER,
   REGISTER_POSITION,
 } from '@/app/constant/constant'
-import { useInput } from '@/app/module/hooks/reactHooks/useInput'
+import useDebounce from '@/app/module/hooks/reactHooks/useDebounce'
+import useInput from '@/app/module/hooks/reactHooks/useInput'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import inputValidate from '@/app/module/utils/inputValidate'
 import { moduleGetFetch } from '@/app/module/utils/moduleFetch'
@@ -27,6 +28,7 @@ import { type InfoInputProps } from '@/app/types/ui/inputTypes'
 export default function InfoInput(props: InfoInputProps) {
   const dispatch = useAppDispatch()
   const inputData = useInput('', props.title)
+  const debounceInput = useDebounce(inputData.value, 1000)
   const inputState = useAppSelector((state) => {
     switch (props.title) {
       case REGISTER_NAME:
@@ -90,11 +92,11 @@ export default function InfoInput(props: InfoInputProps) {
     const isInput = inputData.value !== ''
     const reducerProps = {
       isCheck: isInput,
-      value: inputData.value,
+      value: debounceInput,
     }
     const emailprops = {
       isCheck: inputState.isCheck,
-      value: inputData.value,
+      value: debounceInput,
     }
     switch (props.title) {
       case REGISTER_NAME:
@@ -109,7 +111,7 @@ export default function InfoInput(props: InfoInputProps) {
       default:
         dispatch(emailReducer(emailprops))
     }
-  }, [inputData.value, dispatch])
+  }, [debounceInput])
 
   return (
     <>

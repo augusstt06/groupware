@@ -7,7 +7,7 @@ import SelectBox from '../../../ui/selectbox/SelectBox'
 import { InputLabel } from '@/app/component/ui/label/Inputlabel'
 import ToggleGroup from '@/app/component/ui/toggle/organization/ToggleGroup'
 import { ORG_CREATE, ORG_GRADES, ORG_SELECTBOX } from '@/app/constant/constant'
-import { useInput } from '@/app/module/hooks/reactHooks/useInput'
+import useInput from '@/app/module/hooks/reactHooks/useInput'
 
 export default function CreateOrgInfo() {
   const orgNameInput = useInput('')

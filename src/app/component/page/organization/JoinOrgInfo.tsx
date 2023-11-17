@@ -2,7 +2,7 @@ import { SlOrganization } from 'react-icons/sl'
 
 import OrgInput from '../../ui/input/organization/OrgInput'
 
-import { useInput } from '@/app/module/hooks/reactHooks/useInput'
+import useInput from '@/app/module/hooks/reactHooks/useInput'
 
 export default function JoinOrgInfo() {
   const joinInput = useInput('')

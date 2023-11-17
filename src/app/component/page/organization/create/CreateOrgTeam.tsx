@@ -7,7 +7,7 @@ import { OrgTeamConfirmBtn } from '@/app/component/ui/button/organization/OrgTea
 import OrgInput from '@/app/component/ui/input/organization/OrgInput'
 import OrgTeamTable from '@/app/component/ui/table/organization/OrgTeamTable'
 import { ORG_CREATETEAM } from '@/app/constant/constant'
-import { useInput } from '@/app/module/hooks/reactHooks/useInput'
+import useInput from '@/app/module/hooks/reactHooks/useInput'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import {
   createOrgTeamReducer,
