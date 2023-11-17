@@ -11,7 +11,7 @@ export default function Home() {
   const isLogin = accessToken !== undefined
 
   return (
-    <main className="flex flex-col justify-center items-center p-10">
+    <main className="flex flex-col justify-center items-center h-4/5">
       <div className="text-xl font-bold mb-10">Easily collaborate with your team from anywhere</div>
       <div className="text-medium font-semibold mb-10">other comments...</div>
       <div>

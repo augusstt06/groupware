@@ -8,15 +8,21 @@ import CreateOrgTeam from '../component/page/organization/create/CreateOrgTeam'
 import OrgChooseBtn from '../component/ui/button/organization/OrgChooseBtn'
 import { NextStepToOrgTeam } from '../component/ui/button/organization/OrgTeamBtn'
 import RegisterOrgBtn from '../component/ui/button/register/RegisterOrgBtn'
-import { ORG_CREATE, ORG_CREATETEAM, ORG_JOIN, ORG_NEXT } from '../constant/constant'
+import {
+  ORG_CRAETE_NOTEAM,
+  ORG_CREATE,
+  ORG_CREATETEAM,
+  ORG_JOIN,
+  ORG_NEXT,
+} from '../constant/constant'
 
 export default function Organization() {
   const [organization, setOrganization] = useState('')
 
   return (
-    <div className="flex flex-col justify-center items-center p 1 overflow-y-scroll mt-5">
+    <div className="flex flex-col justify-center items-center h-3/5">
       {organization === '' ? (
-        <div>
+        <div className="w-2/5">
           <OrgChooseBtn organization={organization} setOrganization={setOrganization} />
         </div>
       ) : (
@@ -32,15 +38,22 @@ export default function Organization() {
           </div>
           <div className="flex flex-row justify-center items-center">
             {organization === ORG_CREATE ? (
-              <NextStepToOrgTeam
-                title={ORG_NEXT}
-                organization={organization}
-                setOrganization={setOrganization}
-              />
+              <>
+                <div className="mr-5">
+                  <NextStepToOrgTeam
+                    title={ORG_NEXT}
+                    organization={organization}
+                    setOrganization={setOrganization}
+                  />
+                </div>
+                <div>
+                  <RegisterOrgBtn title={ORG_CRAETE_NOTEAM} />
+                </div>
+              </>
             ) : (
               <RegisterOrgBtn
                 title={
-                  organization === ORG_CREATE || organization === ORG_CREATETEAM
+                  organization === ORG_CREATETEAM
                     ? ORG_CREATE.toUpperCase()
                     : ORG_JOIN.toUpperCase()
                 }
