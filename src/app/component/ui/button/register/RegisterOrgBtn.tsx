@@ -119,7 +119,7 @@ export default function RegisterOrgBtn(props: BtnProps) {
       return
     }
 
-    router.push('/')
+    router.push('/main')
     alert(`조직 ${props.title === ORG_CREATE ? '생성' : '가입'}이 완료되었습니다.`)
   }
 

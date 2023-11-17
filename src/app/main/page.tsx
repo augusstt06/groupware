@@ -1,3 +1,3 @@
 export default function Main() {
-  return <>main page</>
+  return <main className="flex flex-col justify-center items-center h-4/5">et</main>
 }
