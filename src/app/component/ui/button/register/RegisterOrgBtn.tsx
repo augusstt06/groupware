@@ -29,8 +29,6 @@ export default function RegisterOrgBtn(props: BtnProps) {
     return state.orgInfo
   })
 
-  // FIXME:  3)
-
   const fetchJoinOrgProps: ModulePostFetchProps = {
     data: {
       code: orgState.joinOrg.code,

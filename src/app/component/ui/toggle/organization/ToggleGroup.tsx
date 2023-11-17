@@ -2,7 +2,6 @@ import Toggle from '../Toggle'
 
 import { type ToggleGroupProps } from '@/app/types/ui/uiTypes'
 
-// FIXME: 2)
 export default function ToggleGroup(props: ToggleGroupProps) {
   return (
     <>
