@@ -8,7 +8,7 @@ import { HeaderLoginBtn } from '../button/LoginBtn'
 import Logo from '../logo/Logo'
 import Sidebar from '../sidebar/Sidebar'
 
-import { type ReactProps } from '@/app/types'
+import { type ReactProps } from '@/app/types/pageTypes'
 
 export default function Header(props: ReactProps) {
   const [nav, setNav] = useState(false)
@@ -17,14 +17,14 @@ export default function Header(props: ReactProps) {
 
   return (
     <nav className="w-full">
-      <div className="justify-between px-4 mx-auto">
+      <div className="justify-between  px-4 mx-auto">
         <div className="flex flex-row items-center justify-between">
           <div className="flex items-center justify-between py-3 md:py-5">
             {login ? <HamburgerBtn nav={nav} setNav={setNav} /> : <HeaderLoginBtn />}
           </div>
 
           <div
-            className="flex justify-center py-3 md:py-5 w-full"
+            className="flex justify-center items-center py-3 md:py-5 w-full"
             onClick={() => {
               setNav(false)
             }}

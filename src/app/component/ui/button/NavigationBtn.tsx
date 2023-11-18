@@ -1,6 +1,6 @@
-import { type BtnProps } from '@/app/types'
+import { type BtnProps } from '@/app/types/ui/btnTypes'
 
-export function NavigateBtn(props: BtnProps) {
+export function NavigationBtn(props: BtnProps) {
   return (
     <button
       type="button"

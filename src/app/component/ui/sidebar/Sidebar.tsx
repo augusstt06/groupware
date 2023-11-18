@@ -1,4 +1,4 @@
-import { type SidebarProps } from '@/app/types'
+import { type SidebarProps } from '@/app/types/ui/uiTypes'
 
 export default function Sidebar(props: SidebarProps) {
   const menu = [

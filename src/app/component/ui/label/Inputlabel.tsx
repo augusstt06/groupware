@@ -1,4 +1,4 @@
-import { type BtnProps } from '@/app/types'
+import { type BtnProps } from '@/app/types/ui/btnTypes'
 
 export function InputLabel(props: BtnProps) {
   return (
