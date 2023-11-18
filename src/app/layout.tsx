@@ -2,7 +2,7 @@ import './globals.css'
 import Header from './component/ui/header/Header'
 import { ReduxProvider } from './providers/reduxProvider'
 import CustomThemeProvider from './providers/themeProvider'
-import { type ReactProps } from './types'
+import { type ReactProps } from './types/pageTypes'
 
 export default function RootLayout({ children }: ReactProps) {
   return (

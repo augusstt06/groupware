@@ -1,51 +1,71 @@
+import axios, { HttpStatusCode } from 'axios'
+import { setCookie } from 'cookies-next'
+import { useRouter } from 'next/navigation'
 import { AiFillGithub, AiOutlineGoogle } from 'react-icons/ai'
 import { TbLogin2 } from 'react-icons/tb'
 
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { modulePostFetch } from '@/app/module/utils/moduleFetch'
-import { type BtnProps } from '@/app/types'
+import { type ModulePostFetchProps } from '@/app/types/moduleTypes'
+import { type BtnProps } from '@/app/types/ui/btnTypes'
 
 export function SignupBtn(props: BtnProps) {
-  const emailValue = useAppSelector((state) => {
-    return state.loginInfo.email.value
-  })
-  const pwdValue = useAppSelector((state) => {
-    return state.loginInfo.pwd.pwdValue
-  })
-  const pwdConfirmValue = useAppSelector((state) => {
-    return state.loginInfo.pwd.pwdConfirmValue
-  })
-  const phoneNumberValue = useAppSelector((state) => {
-    return state.loginInfo.phoneNumber.value
+  const router = useRouter()
+  const loginState = useAppSelector((state) => {
+    return state.loginInfo
   })
 
-  const fetchProps = {
+  const fetchSignupProps: ModulePostFetchProps = {
     data: {
-      email: emailValue,
-      password: pwdValue,
-      passwordConfirm: pwdConfirmValue,
-      phoneNumber: phoneNumberValue,
+      email: loginState.email.value,
+      name: loginState.name.value,
+      password: loginState.pwd.pwdValue,
+      passwordConfirm: loginState.pwd.pwdConfirmValue,
+      phoneNumber: loginState.phoneNumber.value,
+      position: loginState.position.value,
     },
     fetchUrl: process.env.NEXT_PUBLIC_REGISTER_SOURCE,
   }
-  const fetchSignin = async () => {
-    if (props.title === 'Next') return
-
-    await modulePostFetch(fetchProps)
-
-    alert('회원가입이 완료되었습니다.')
+  const fetchLoginProps: ModulePostFetchProps = {
+    data: {
+      email: loginState.email.value,
+      password: loginState.pwd.pwdValue,
+    },
+    fetchUrl: process.env.NEXT_PUBLIC_LOGIN_SOURCE,
   }
-  const handleClickBtn = () => {
-    fetchSignin().catch(() => {
+
+  const fetchSignin = async (): Promise<void> => {
+    try {
+      await modulePostFetch(fetchSignupProps)
+      const res = await modulePostFetch(fetchLoginProps)
+      setCookie('access-token', res.data.result)
+      alert('회원가입 및 로그인이 완료 되었습니다.')
+      router.push('/organization')
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        switch (err.status) {
+          case HttpStatusCode.BadRequest:
+            alert('입력값이 잘못되었습니다.')
+            break
+          case HttpStatusCode.InternalServerError:
+            alert('통신오류가 발생했습니다.')
+            break
+        }
+      }
       alert('회원가입이 실패했습니다.')
-    })
+    }
   }
-
+  const handleClickBtn = async () => {
+    void fetchSignin()
+  }
   return (
     <button
       type="button"
       className="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 dark:hover:bg-white dark:hover:text-indigo-500 mb-2 border-2 dark:hover:border-indigo-500/75"
-      onClick={handleClickBtn}
+      onClick={(event) => {
+        event.preventDefault()
+        void handleClickBtn()
+      }}
     >
       {props.title}
     </button>

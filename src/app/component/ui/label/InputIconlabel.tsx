@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { type InputIconLabelProps } from '@/app/types'
+import { type InputIconLabelProps } from '@/app/types/ui/uiTypes'
 
 export function InputIconlabel(props: InputIconLabelProps) {
   return (

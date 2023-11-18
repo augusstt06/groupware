@@ -1,17 +1,20 @@
-import { type InputValidateProps } from '@/app/types'
+import { type InputValidateProps } from '@/app/types/moduleTypes'
 
 const inputValidate = (props: InputValidateProps) => {
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
   const pwdRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/
+
   const phoneNumeRegex = /^\d{3}-\d{4}-\d{4}$/
 
-  if (props.dataType === 'email') {
-    return emailRegex.test(props.inputData)
-  } else if (props.dataType === 'pwd') {
-    return pwdRegex.test(props.inputData)
-  } else {
-    return phoneNumeRegex.test(props.inputData)
+  switch (props.dataType) {
+    case 'email':
+      return props.inputData != null && emailRegex.test(props.inputData)
+    case 'pwd':
+      return props.inputData != null && pwdRegex.test(props.inputData)
+    case 'phoneNumber':
+      return props.inputData != null && phoneNumeRegex.test(props.inputData)
+    default:
+      return false
   }
 }
-
 export default inputValidate

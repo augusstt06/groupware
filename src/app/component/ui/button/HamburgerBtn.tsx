@@ -1,7 +1,7 @@
 import { AiOutlineMenu } from 'react-icons/ai'
 import { RxCross1 } from 'react-icons/rx'
 
-import { type HamburgerProps } from '@/app/types'
+import { type HamburgerProps } from '@/app/types/ui/btnTypes'
 
 export default function HamburgerBtn(props: HamburgerProps) {
   return (
