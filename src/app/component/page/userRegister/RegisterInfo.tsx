@@ -34,7 +34,6 @@ export default function RegisterInfo(props: KeyInfoTypeProps) {
     REGISTER_POSITION,
     REGISTER_PHONENUMBER,
   ].map((title: string) => useInput('', title))
-  // 렌더링따로따로 할수 있도록 분리하기
 
   return (
     <>
@@ -45,7 +44,6 @@ export default function RegisterInfo(props: KeyInfoTypeProps) {
         checkValid={true}
         useInput={emailInput}
       />
-      {/* 여기 바꾸기 */}
       <PwdInput
         title={REGISTER_PWD}
         placeholder="At least 8 characters"

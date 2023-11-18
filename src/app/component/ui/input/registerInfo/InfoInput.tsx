@@ -26,7 +26,6 @@ import { type InfoInputProps } from '@/app/types/ui/inputTypes'
 export default function InfoInput(props: InfoInputProps) {
   const dispatch = useAppDispatch()
   const useInput = props.useInput
-  // const debounceInput = useDebounce(useInput.value, 1500)
   const inputState = useAppSelector((state) => {
     switch (props.title) {
       case REGISTER_NAME:

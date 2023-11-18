@@ -1,5 +1,7 @@
 export const TRUE = 'TRUE'
 export const FALSE = 'FALSE'
+export const PUBLIC = 'Public'
+export const PRIVATE = 'Private'
 
 export const ORG_CREATE = 'create'
 export const ORG_JOIN = 'join'

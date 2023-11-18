@@ -10,7 +10,6 @@ import { type PwdInputProps } from '@/app/types/ui/inputTypes'
 
 export default function PwdInput(props: PwdInputProps) {
   const dispatch = useAppDispatch()
-  // const inputData = useInput('')
   const useInput = props.useInput
 
   const pwdState = useAppSelector((state) => state.loginInfo.pwd)

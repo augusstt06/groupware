@@ -10,7 +10,7 @@ import CreateOrgTeam from './CreateOrgTeam'
 
 import { InputLabel } from '@/app/component/ui/label/Inputlabel'
 import ToggleGroup from '@/app/component/ui/toggle/organization/ToggleGroup'
-import { ORG_CREATE, ORG_GRADES, ORG_SELECTBOX } from '@/app/constant/constant'
+import { ORG_CREATE, ORG_GRADES, ORG_SELECTBOX, PRIVATE, PUBLIC } from '@/app/constant/constant'
 import useInput from '@/app/module/hooks/reactHooks/useInput'
 
 export default function CreateOrgInfo() {
@@ -22,12 +22,12 @@ export default function CreateOrgInfo() {
   const orgDescriptionInput = useInput('')
   const selectList = [
     {
-      value: 'PUBLIC',
-      name: 'Public',
+      value: PUBLIC.toUpperCase(),
+      name: PUBLIC,
     },
     {
-      value: 'PRIVATE',
-      name: 'Private',
+      value: PRIVATE.toUpperCase(),
+      name: PRIVATE,
     },
   ]
   const gradesData = [
