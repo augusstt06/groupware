@@ -1,5 +1,5 @@
 import axios, { HttpStatusCode } from 'axios'
-import { getCookie } from 'cookies-next'
+import { getCookie, setCookie } from 'cookies-next'
 import { useRouter } from 'next/navigation'
 
 import { ORG_CRAETE_NOTEAM, ORG_CREATE, ORG_JOIN } from '@/app/constant/constant'
@@ -56,9 +56,10 @@ export default function RegisterOrgBtn(props: BtnProps) {
 
   const fetchCreateOrg = async (): Promise<void> => {
     try {
-      await modulePostFetch(fetchCreateOrgProps)
-      router.push('/main')
+      const res = await modulePostFetch(fetchCreateOrgProps)
+      setCookie('X-ORGANIZATION-CODE', res.data.result)
       alert('조직 생성이 완료되었습니다.')
+      router.push('/main')
     } catch (err) {
       if (axios.isAxiosError(err)) {
         switch (err.status) {
