@@ -1,4 +1,4 @@
-import { NavigationBtn } from '../NavigationBtn'
+import { NavigationBtn } from '../BtnGroups'
 
 import { ORG_CREATE, ORG_JOIN } from '@/app/constant/constant'
 import { type OrgChooseBtnProps } from '@/app/types/ui/btnTypes'

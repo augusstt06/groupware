@@ -1,7 +1,7 @@
 import { cookies } from 'next/headers'
 import Link from 'next/link'
 
-import { NavigationBtn } from './component/ui/button/NavigationBtn'
+import { NavigationBtn } from './component/ui/button/BtnGroups'
 import Main from './main/page'
 
 export default function Home() {
