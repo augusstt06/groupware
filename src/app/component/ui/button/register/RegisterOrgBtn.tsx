@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios, { HttpStatusCode } from 'axios'
 import { getCookie } from 'cookies-next'
 import { useRouter } from 'next/navigation'
 
@@ -53,37 +53,44 @@ export default function RegisterOrgBtn(props: BtnProps) {
       Authorization: `Bearer ${accessToken}`,
     },
   }
+
   const fetchCreateOrg = async (): Promise<void> => {
     try {
       await modulePostFetch(fetchCreateOrgProps)
+      router.push('/main')
+      alert('조직 생성이 완료되었습니다.')
     } catch (err) {
       if (axios.isAxiosError(err)) {
         switch (err.status) {
-          case 400:
+          case HttpStatusCode.BadRequest:
             alert('입력값이 잘못되었습니다.')
             break
-          case 500:
+          case HttpStatusCode.InternalServerError:
             alert('통신오류가 발생했습니다.')
             break
         }
       }
+      alert('조직 생성 실패')
     }
   }
 
   const fetchJoinOrg = async (): Promise<void> => {
     try {
       await modulePostFetch(fetchJoinOrgProps)
+      router.push('/main')
+      alert('조직 가입이 완료되었습니다.')
     } catch (err) {
       if (axios.isAxiosError(err)) {
         switch (err.status) {
-          case 400:
+          case HttpStatusCode.BadRequest:
             alert('입력값이 잘못되었습니다.')
             break
-          case 500:
+          case HttpStatusCode.InternalServerError:
             alert('통신오류가 발생했습니다.')
             break
         }
       }
+      alert('조직 가입 실패')
     }
   }
 
@@ -109,18 +116,10 @@ export default function RegisterOrgBtn(props: BtnProps) {
     }
 
     if (props.title === ORG_CREATE.toUpperCase() || props.title === ORG_CRAETE_NOTEAM) {
-      await fetchCreateOrg().catch(() => {
-        alert('조직 생성 실패')
-      })
+      void fetchCreateOrg()
     } else {
-      await fetchJoinOrg().catch(() => {
-        alert('조직 가입 실패')
-      })
-      return
+      void fetchJoinOrg()
     }
-
-    router.push('/main')
-    alert(`조직 ${props.title === ORG_CREATE ? '생성' : '가입'}이 완료되었습니다.`)
   }
 
   return (

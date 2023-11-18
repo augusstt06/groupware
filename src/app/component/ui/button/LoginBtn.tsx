@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios, { HttpStatusCode } from 'axios'
 import { setCookie } from 'cookies-next'
 import { useRouter } from 'next/navigation'
 import { AiFillGithub, AiOutlineGoogle } from 'react-icons/ai'
@@ -21,8 +21,8 @@ export function SignupBtn(props: BtnProps) {
       name: loginState.name.value,
       password: loginState.pwd.pwdValue,
       passwordConfirm: loginState.pwd.pwdConfirmValue,
-      position: loginState.position.value,
       phoneNumber: loginState.phoneNumber.value,
+      position: loginState.position.value,
     },
     fetchUrl: process.env.NEXT_PUBLIC_REGISTER_SOURCE,
   }
@@ -37,13 +37,17 @@ export function SignupBtn(props: BtnProps) {
   const fetchSignin = async (): Promise<void> => {
     try {
       await modulePostFetch(fetchSignupProps)
+      const res = await modulePostFetch(fetchLoginProps)
+      setCookie('access-token', res.data.result)
+      alert('회원가입 및 로그인이 완료 되었습니다.')
+      router.push('/organization')
     } catch (err) {
       if (axios.isAxiosError(err)) {
         switch (err.status) {
-          case 400:
+          case HttpStatusCode.BadRequest:
             alert('입력값이 잘못되었습니다.')
             break
-          case 500:
+          case HttpStatusCode.InternalServerError:
             alert('통신오류가 발생했습니다.')
             break
         }
@@ -51,29 +55,8 @@ export function SignupBtn(props: BtnProps) {
       alert('회원가입이 실패했습니다.')
     }
   }
-  const fetchLogin = async (): Promise<void> => {
-    try {
-      const res = await modulePostFetch(fetchLoginProps)
-      setCookie('access-token', res.data.result)
-    } catch (err) {
-      if (axios.isAxiosError(err)) {
-        switch (err.status) {
-          case 400:
-            alert('입력값이 잘못되었습니다.')
-            break
-          case 500:
-            alert('통신오류가 발생했습니다.')
-            break
-        }
-      }
-      alert('로그인이 실패했습니다.')
-    }
-  }
   const handleClickBtn = async () => {
-    await fetchSignin()
-    await fetchLogin()
-    alert('회원가입이 완료 되었습니다.')
-    router.push('/organization')
+    void fetchSignin()
   }
   return (
     <button

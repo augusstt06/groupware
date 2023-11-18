@@ -1,8 +1,12 @@
+import { useState } from 'react'
+
 import { MdOutlineDescription } from 'react-icons/md'
 import { SlOrganization } from 'react-icons/sl'
 
 import OrgInput from '../../../ui/input/organization/OrgInput'
 import SelectBox from '../../../ui/selectbox/SelectBox'
+
+import CreateOrgTeam from './CreateOrgTeam'
 
 import { InputLabel } from '@/app/component/ui/label/Inputlabel'
 import ToggleGroup from '@/app/component/ui/toggle/organization/ToggleGroup'
@@ -10,6 +14,10 @@ import { ORG_CREATE, ORG_GRADES, ORG_SELECTBOX } from '@/app/constant/constant'
 import useInput from '@/app/module/hooks/reactHooks/useInput'
 
 export default function CreateOrgInfo() {
+  const [isTeam, setIsTeam] = useState(false)
+  const handleClick = () => {
+    setIsTeam(!isTeam)
+  }
   const orgNameInput = useInput('')
   const orgDescriptionInput = useInput('')
   const selectList = [
@@ -63,6 +71,12 @@ Groupware site publishing and feature development"
           <ToggleGroup toggleData={data} compoenetType={ORG_GRADES} />
         </div>
       ))}
+      <div>
+        <div onClick={handleClick}>
+          <InputLabel title="Team" />
+        </div>
+        {isTeam ? <CreateOrgTeam /> : <></>}
+      </div>
     </>
   )
 }

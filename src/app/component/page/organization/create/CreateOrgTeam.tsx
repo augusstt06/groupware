@@ -24,14 +24,12 @@ export default function CreateOrgTeam() {
     dispatch(createOrgTeamReducer(currentTeamState))
     teamNameInput.resetValue()
     teamDescriptionInput.resetValue()
-
-    alert('팀생성이 완료되었습니다.')
   }
 
   useEffect(() => {
     const payload = {
-      teamName: teamNameInput.value,
-      teamDescription: teamDescriptionInput.value,
+      description: teamDescriptionInput.value,
+      name: teamNameInput.value,
     }
 
     dispatch(updateCurrentOrgTeamReducer(payload))

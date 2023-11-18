@@ -15,10 +15,10 @@ type State = {
     updateAccess: string
     writeAccess: string
   }
-  teams: Array<{ teamName: string; teamDescription: string }>
+  teams: Array<{ description: string; name: string }>
   currentTeam: {
-    teamName: string
-    teamDescription: string
+    name: string
+    description: string
   }
   joinOrg: {
     code: string
@@ -35,13 +35,13 @@ const initialState: State = {
     deleteAccess: 'TRUE',
     inviteAccess: 'TRUE',
     maintainAccess: 'TRUE',
-    name: 'TRUE',
+    name: '',
     readAccss: 'TRUE',
     updateAccess: 'TRUE',
     writeAccess: 'TRUE',
   },
   teams: [],
-  currentTeam: { teamName: '', teamDescription: '' },
+  currentTeam: { description: '', name: '' },
   joinOrg: {
     code: '',
   },
@@ -70,28 +70,22 @@ export const orgInfoReducer = createSlice({
     setGradeReducer(state, action: PayloadAction<gradeActionType>) {
       state.grades = { ...action.payload }
     },
-    createOrgTeamReducer(
-      state,
-      action: PayloadAction<{ teamName: string; teamDescription: string }>,
-    ) {
+    createOrgTeamReducer(state, action: PayloadAction<{ description: string; name: string }>) {
       state.teams = [...state.teams, action.payload]
       state.currentTeam = {
-        teamName: '',
-        teamDescription: '',
+        description: '',
+        name: '',
       }
     },
-    deleteOrgTeamReducer(
-      state,
-      action: PayloadAction<{ teamName: string; teamDescription: string }>,
-    ) {
-      const { teamName, teamDescription } = action.payload
+    deleteOrgTeamReducer(state, action: PayloadAction<{ name: string; description: string }>) {
+      const { name, description } = action.payload
       state.teams = state.teams.filter(
-        (team) => team.teamName !== teamName || team.teamDescription !== teamDescription,
+        (team) => team.name !== name || team.description !== description,
       )
     },
     updateCurrentOrgTeamReducer(
       state,
-      action: PayloadAction<{ teamName: string; teamDescription: string }>,
+      action: PayloadAction<{ description: string; name: string }>,
     ) {
       state.currentTeam = { ...action.payload }
     },
