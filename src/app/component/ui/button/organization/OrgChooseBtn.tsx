@@ -8,11 +8,10 @@ export default function OrgChooseBtn(props: OrgChooseBtnProps) {
     props.setOrganization(`${title}`)
   }
   return (
-    <div className="flex flex-row justify-center items-center p-8">
+    <div className="flex flex-row justify-between w-full">
       {[ORG_CREATE, ORG_JOIN].map((title) => (
         <div
           key={title}
-          className="mr-10"
           onClick={() => {
             handleClickBtn(title)
           }}

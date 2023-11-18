@@ -3,7 +3,8 @@ export const FALSE = 'FALSE'
 
 export const ORG_CREATE = 'create'
 export const ORG_JOIN = 'join'
-export const ORG_NEXT = 'Next'
+export const ORG_NEXT = 'Create Team'
+export const ORG_CRAETE_NOTEAM = 'Create Organization without team'
 export const ORG_SELECTBOX = 'selectbox'
 export const ORG_GRADES = 'grades'
 

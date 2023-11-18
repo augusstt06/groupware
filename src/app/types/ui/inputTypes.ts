@@ -6,6 +6,11 @@ export type InfoInputProps = {
   placeholder: string
   checkValid: boolean
   icon: React.ReactNode
+  useInput: {
+    value: string
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+    resetValue: () => void
+  }
 }
 
 export type PwdInputProps = {
@@ -14,6 +19,11 @@ export type PwdInputProps = {
   icon: React.ReactNode
   isInputValueView: boolean
   setIsInputValueView: React.Dispatch<SetStateAction<boolean>>
+  useInput: {
+    value: string
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+    resetValue: () => void
+  }
 }
 
 export type PwdConfirmInputProps = {
@@ -22,6 +32,11 @@ export type PwdConfirmInputProps = {
   icon: React.ReactNode
   isPwdConfirmView: boolean
   setIsPwdConfirmView: React.Dispatch<SetStateAction<boolean>>
+  useInput: {
+    value: string
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+    resetValue: () => void
+  }
 }
 
 export type OrgInputProps = {

@@ -4,7 +4,6 @@ import { useState } from 'react'
 
 import RegisterInfo from '../component/page/userRegister/RegisterInfo'
 import RegisterUserBtn from '../component/ui/button/register/RegisterUserBtn'
-import Stepper from '../component/ui/stepper/Stepper'
 import { useAppSelector } from '../module/hooks/reduxHooks'
 import inputValidate from '../module/utils/inputValidate'
 
@@ -54,9 +53,6 @@ export default function Register() {
 
         <div className="flex flex-row justify-center items-center">
           <RegisterUserBtn handleStep={handleStep} />
-        </div>
-        <div className="mb-5">
-          <Stepper />
         </div>
       </div>
     </div>

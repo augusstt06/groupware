@@ -1,7 +1,7 @@
-export type UseInputType = {
-  state: string
-  title?: string
-  teamDependency?: object[]
+export type UseInputProps = {
+  value: string
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  resetValue: () => void
 }
 
 export type ModuleGetFetchProps = {

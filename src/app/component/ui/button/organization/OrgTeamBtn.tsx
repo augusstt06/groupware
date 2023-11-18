@@ -1,8 +1,8 @@
 import { ORG_CREATE, ORG_JOIN } from '@/app/constant/constant'
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
-import { type NextStepOrgTeamProps, type RegisterOrgBtnProps } from '@/app/types/ui/btnTypes'
+import { type NextStepOrgTeamProps, type RegisterOrgTeamConfirmBtn } from '@/app/types/ui/btnTypes'
 
-export function OrgTeamConfirmBtn(props: RegisterOrgBtnProps) {
+export function OrgTeamConfirmBtn(props: RegisterOrgTeamConfirmBtn) {
   return (
     <button
       type="button"

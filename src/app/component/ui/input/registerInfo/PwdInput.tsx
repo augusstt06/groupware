@@ -4,19 +4,19 @@ import { InputIconlabel } from '../../label/InputIconlabel'
 import { InputLabel, InputlabelAdd } from '../../label/Inputlabel'
 
 import { REGISTER_CONFIRM_PWD } from '@/app/constant/constant'
-import { useInput } from '@/app/module/hooks/reactHooks/useInput'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { pwdReducer } from '@/app/store/reducers/loginInfoReducer'
 import { type PwdInputProps } from '@/app/types/ui/inputTypes'
 
 export default function PwdInput(props: PwdInputProps) {
   const dispatch = useAppDispatch()
-  const inputData = useInput('')
+  // const inputData = useInput('')
+  const useInput = props.useInput
 
   const pwdState = useAppSelector((state) => state.loginInfo.pwd)
 
   useEffect(() => {
-    const isInput = inputData.value !== ''
+    const isInput = useInput.value !== ''
     const isPwdValueNotEmpty = pwdState.pwdValue !== ''
     const isPwdConfirmValueNotEmpty = pwdState.pwdConfirmValue !== ''
 
@@ -24,11 +24,11 @@ export default function PwdInput(props: PwdInputProps) {
 
     const reducerData =
       props.title === REGISTER_CONFIRM_PWD
-        ? { isCheck, pwdValue: pwdState.pwdValue, pwdConfirmValue: inputData.value }
-        : { isCheck, pwdValue: inputData.value, pwdConfirmValue: pwdState.pwdConfirmValue }
+        ? { isCheck, pwdValue: pwdState.pwdValue, pwdConfirmValue: useInput.value }
+        : { isCheck, pwdValue: useInput.value, pwdConfirmValue: pwdState.pwdConfirmValue }
 
     dispatch(pwdReducer(reducerData))
-  }, [inputData.value, pwdState.pwdValue, pwdState.pwdConfirmValue, dispatch])
+  }, [useInput.value, pwdState.pwdValue, pwdState.pwdConfirmValue, dispatch])
 
   return (
     <>
@@ -47,8 +47,8 @@ export default function PwdInput(props: PwdInputProps) {
         <InputIconlabel icon={props.icon} />
         <input
           type={props.isInputValueView ? 'text' : 'password'}
-          value={inputData.value}
-          onChange={inputData.onChange}
+          value={useInput.value}
+          onChange={useInput.onChange}
           id={props.title}
           className="rounded-none rounded-r-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder={props.placeholder}

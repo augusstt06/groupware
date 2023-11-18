@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-import axios from 'axios'
+import axios, { HttpStatusCode } from 'axios'
 
 import { InputIconlabel } from '../../label/InputIconlabel'
 import { InputLabel } from '../../label/Inputlabel'
@@ -11,7 +11,6 @@ import {
   REGISTER_PHONENUMBER,
   REGISTER_POSITION,
 } from '@/app/constant/constant'
-import { useInput } from '@/app/module/hooks/reactHooks/useInput'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import inputValidate from '@/app/module/utils/inputValidate'
 import { moduleGetFetch } from '@/app/module/utils/moduleFetch'
@@ -26,7 +25,8 @@ import { type InfoInputProps } from '@/app/types/ui/inputTypes'
 
 export default function InfoInput(props: InfoInputProps) {
   const dispatch = useAppDispatch()
-  const inputData = useInput('', props.title)
+  const useInput = props.useInput
+  // const debounceInput = useDebounce(useInput.value, 1500)
   const inputState = useAppSelector((state) => {
     switch (props.title) {
       case REGISTER_NAME:
@@ -43,25 +43,27 @@ export default function InfoInput(props: InfoInputProps) {
 
   const getFetchEmailProps: ModuleGetFetchProps = {
     keyName: REGISTER_EMAIL.toLowerCase(),
-    keyValue: inputData.value,
+    keyValue: useInput.value,
     fetchUrl: process.env.NEXT_PUBLIC_EMAIL_REQ_SOURCE,
   }
 
   const inputValidateProps = {
-    inputData: inputData.value,
+    inputData: useInput.value,
     dataType: props.title === REGISTER_EMAIL ? 'email' : 'phoneNumber',
   }
 
   const fetchEmailAvaiable = async (): Promise<void> => {
     try {
       await moduleGetFetch(getFetchEmailProps)
+      dispatch(emailReducer({ isCheck: true, value: useInput.value }))
+      alert('이메일 확인이 완료되었습니다.')
     } catch (err) {
       if (axios.isAxiosError(err)) {
         switch (err.status) {
-          case 400:
+          case HttpStatusCode.BadRequest:
             alert('입력값이 잘못되었습니다.')
             break
-          case 500:
+          case HttpStatusCode.InternalServerError:
             alert('통신오류가 발생했습니다.')
             break
         }
@@ -78,25 +80,27 @@ export default function InfoInput(props: InfoInputProps) {
     }
     if (inputState.isCheck) {
       dispatch(emailReducer({ isCheck: false, value: '' }))
-      inputData.value = ''
+      useInput.resetValue()
       return
     }
-    await fetchEmailAvaiable()
-    dispatch(emailReducer({ isCheck: true, value: inputData.value }))
-    alert('이메일 확인이 완료되었습니다.')
+    void fetchEmailAvaiable()
   }
 
   useEffect(() => {
-    const isInput = inputData.value !== ''
+    const isInput = useInput.value !== ''
     const reducerProps = {
       isCheck: isInput,
-      value: inputData.value,
+      value: useInput.value,
     }
+
     const emailprops = {
       isCheck: inputState.isCheck,
-      value: inputData.value,
+      value: useInput.value,
     }
     switch (props.title) {
+      case REGISTER_EMAIL:
+        dispatch(emailReducer(emailprops))
+        break
       case REGISTER_NAME:
         dispatch(nameReducer(reducerProps))
         break
@@ -107,9 +111,9 @@ export default function InfoInput(props: InfoInputProps) {
         dispatch(positionReducer(reducerProps))
         break
       default:
-        dispatch(emailReducer(emailprops))
+        break
     }
-  }, [inputData.value, dispatch])
+  }, [useInput.value])
 
   return (
     <>
@@ -118,8 +122,8 @@ export default function InfoInput(props: InfoInputProps) {
         <InputIconlabel icon={props.icon} />
         <input
           type="text"
-          value={inputData.value}
-          onChange={inputData.onChange}
+          value={useInput.value}
+          onChange={useInput.onChange}
           id={props.title}
           className="rounded-none rounded-r-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder={props.placeholder}
