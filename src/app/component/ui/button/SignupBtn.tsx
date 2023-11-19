@@ -35,6 +35,9 @@ export function SignupBtn(props: BtnProps) {
   }
 
   const fetchSignin = async (): Promise<void> => {
+    if (!loginState.email.isCheck) {
+      return
+    }
     try {
       await modulePostFetch(fetchSignupProps)
       const res = await modulePostFetch(fetchLoginProps)

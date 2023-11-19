@@ -22,7 +22,7 @@ export default function Home() {
               Easily collaborate with your team from anywhere
             </div>
             <div className="text-medium font-semibold mb-10">other comments...</div>
-            <Link href="/login">
+            <Link href="/signup">
               <NavigationBtn title="Sign Up for Free" />
             </Link>
           </>
