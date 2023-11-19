@@ -2,7 +2,6 @@ import { cookies } from 'next/headers'
 import Link from 'next/link'
 
 import { NavigationBtn } from './component/ui/button/BtnGroups'
-import Main from './main/page'
 
 export default function Home() {
   const cookieStore = cookies()
@@ -14,14 +13,16 @@ export default function Home() {
     <main className="flex flex-col justify-center items-center h-4/5">
       <div>
         {isLogin ? (
-          <Main />
+          <Link href="/main">
+            <NavigationBtn title="Go Main" />
+          </Link>
         ) : (
           <>
             <div className="text-xl font-bold mb-10">
               Easily collaborate with your team from anywhere
             </div>
             <div className="text-medium font-semibold mb-10">other comments...</div>
-            <Link href={'/login'}>
+            <Link href="/login">
               <NavigationBtn title="Sign Up for Free" />
             </Link>
           </>
