@@ -37,7 +37,7 @@ export default function Login() {
           setIsPwdView={setIsPwdView}
         />
         <div className="flex flex-row justify-center items-center">
-          <LoginBtn title="Login" />{' '}
+          <LoginBtn title="Login" />
         </div>
       </div>
     </div>

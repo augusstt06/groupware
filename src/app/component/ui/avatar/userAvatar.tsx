@@ -1,10 +1,12 @@
+import { useEffect } from 'react'
+
 import { getCookie } from 'cookies-next'
 import { jwtDecode } from 'jwt-decode'
 
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
 
 export default function UserAvatar() {
-  const user = useAppSelector((state) => state.loginInfo)
+  const user = useAppSelector((state) => state.signupInfo)
   const dropMenu = ['DashBoard', 'Setting', 'Organization']
   const token = getCookie('access-token')
   const decodeTime = () => {
@@ -26,15 +28,18 @@ export default function UserAvatar() {
       ]
       const month = monthList[unixTimeStamp.getMonth()]
       const date = unixTimeStamp.getDate()
-      const hours = unixTimeStamp.getHours()
+      const hours = unixTimeStamp.getUTCHours()
       const minutes = unixTimeStamp.getMinutes()
 
-      const convertTime = `${date} ${month} ${hours} ${minutes}`
+      const convertTime = `${date} ${month} ${hours}:${minutes}`
       return convertTime
     }
     return ''
   }
-
+  const time = decodeTime()
+  useEffect(() => {
+    decodeTime()
+  }, [])
   return (
     <>
       <div className="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
@@ -47,7 +52,9 @@ export default function UserAvatar() {
       >
         <div className="px-4 py-3 text-sm text-gray-900 dark:text-white">
           <div>{user.name.value}</div>
-          <div className="font-medium truncate">Login at {decodeTime()}</div>
+          <div className="font-medium truncate">
+            <a>Login at {time}</a>
+          </div>
         </div>
         <ul
           className="py-2 text-sm text-gray-700 dark:text-gray-200"

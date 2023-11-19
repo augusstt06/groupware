@@ -5,9 +5,10 @@ import { NavigationBtn } from './component/ui/button/BtnGroups'
 
 export default function Home() {
   const cookieStore = cookies()
-  const accessToken = cookieStore.get('access-token')
 
-  const isLogin = accessToken !== undefined
+  const token = cookieStore.get('access-token')
+
+  const isLogin = token !== undefined
 
   return (
     <main className="flex flex-col justify-center items-center h-4/5">
@@ -18,7 +19,7 @@ export default function Home() {
           </Link>
         ) : (
           <>
-            <div className="flex flex-col justify-center items-center mb-10">
+            <div className="flex flex-col justify-center items-center mb-10 ">
               <div className="text-xl font-bold mb-6">
                 Easily collaborate with your team from anywhere
               </div>
