@@ -5,14 +5,14 @@ import { InputLabel, InputlabelAdd } from '../../label/Inputlabel'
 
 import { REGISTER_CONFIRM_PWD } from '@/app/constant/constant'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
-import { pwdReducer } from '@/app/store/reducers/loginInfoReducer'
+import { pwdReducer } from '@/app/store/reducers/signupInfoReducer'
 import { type PwdInputProps } from '@/app/types/ui/inputTypes'
 
 export default function PwdInput(props: PwdInputProps) {
   const dispatch = useAppDispatch()
   const useInput = props.useInput
 
-  const pwdState = useAppSelector((state) => state.loginInfo.pwd)
+  const pwdState = useAppSelector((state) => state.signupInfo.pwd)
 
   useEffect(() => {
     const isInput = useInput.value !== ''

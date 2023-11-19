@@ -1,4 +1,4 @@
-import { SignupBtn } from '../LoginBtn'
+import { SignupBtn } from '../SignupBtn'
 
 import {
   type RegisterUserBtnElementProps,
