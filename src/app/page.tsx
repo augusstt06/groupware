@@ -18,13 +18,23 @@ export default function Home() {
           </Link>
         ) : (
           <>
-            <div className="text-xl font-bold mb-10">
-              Easily collaborate with your team from anywhere
+            <div className="flex flex-col justify-center items-center mb-10">
+              <div className="text-xl font-bold mb-6">
+                Easily collaborate with your team from anywhere
+              </div>
+              <div className="text-medium font-semibold">other comments...</div>
             </div>
-            <div className="text-medium font-semibold mb-10">other comments...</div>
-            <Link href="/signup">
-              <NavigationBtn title="Sign Up for Free" />
-            </Link>
+            <div className="flex flex-col justify-around items-center h-2/4">
+              <Link href="/signup">
+                <NavigationBtn title="Sign Up for Free" />
+              </Link>
+              <div className="text-medium font-normal mt-8 mb-3">
+                If you already have an account,
+              </div>
+              <Link href="/login">
+                <NavigationBtn title="Login" />
+              </Link>
+            </div>
           </>
         )}
       </div>

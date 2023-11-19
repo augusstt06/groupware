@@ -19,7 +19,7 @@ import {
   nameReducer,
   phoneNumberReducer,
   positionReducer,
-} from '@/app/store/reducers/loginInfoReducer'
+} from '@/app/store/reducers/signupInfoReducer'
 import { type ModuleGetFetchProps } from '@/app/types/moduleTypes'
 import { type InfoInputProps } from '@/app/types/ui/inputTypes'
 
@@ -29,16 +29,16 @@ export default function InfoInput(props: InfoInputProps) {
   const inputState = useAppSelector((state) => {
     switch (props.title) {
       case REGISTER_NAME:
-        return state.loginInfo.name
+        return state.signupInfo.name
       case REGISTER_PHONENUMBER:
-        return state.loginInfo.phoneNumber
+        return state.signupInfo.phoneNumber
       case REGISTER_POSITION:
-        return state.loginInfo.position
+        return state.signupInfo.position
       default:
-        return state.loginInfo.email
+        return state.signupInfo.email
     }
   })
-  const emailState = useAppSelector((state) => state.loginInfo.email)
+  const emailState = useAppSelector((state) => state.signupInfo.email)
 
   const getFetchEmailProps: ModuleGetFetchProps = {
     keyName: REGISTER_EMAIL.toLowerCase(),

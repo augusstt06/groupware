@@ -12,18 +12,18 @@ export default function Register() {
   const [isPwdConfirmView, setisPwdConfirmView] = useState(false)
 
   const isKeyInfoComplete = useAppSelector((state) => {
-    const { email, pwd, name, phoneNumber } = state.loginInfo
+    const { email, pwd, name, phoneNumber } = state.signupInfo
 
     return email.isCheck && pwd.isCheck && name.isCheck && phoneNumber.isCheck
   })
 
   const isPwdConfirm = useAppSelector((state) => {
-    const { pwdValue, pwdConfirmValue } = state.loginInfo.pwd
+    const { pwdValue, pwdConfirmValue } = state.signupInfo.pwd
     return pwdValue === pwdConfirmValue
   })
 
   const isPwdValidate = useAppSelector((state) => {
-    const isValidate = inputValidate({ inputData: state.loginInfo.pwd.pwdValue, dataType: 'pwd' })
+    const isValidate = inputValidate({ inputData: state.signupInfo.pwd.pwdValue, dataType: 'pwd' })
 
     if (!isValidate) {
       return false
