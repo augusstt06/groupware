@@ -11,30 +11,31 @@ import { type BtnProps } from '@/app/types/ui/btnTypes'
 
 export function SignupBtn(props: BtnProps) {
   const router = useRouter()
-  const loginState = useAppSelector((state) => {
-    return state.loginInfo
-  })
+  const signupState = useAppSelector((state) => state.signupInfo)
 
   const fetchSignupProps: ModulePostFetchProps = {
     data: {
-      email: loginState.email.value,
-      name: loginState.name.value,
-      password: loginState.pwd.pwdValue,
-      passwordConfirm: loginState.pwd.pwdConfirmValue,
-      phoneNumber: loginState.phoneNumber.value,
-      position: loginState.position.value,
+      email: signupState.email.value,
+      name: signupState.name.value,
+      password: signupState.pwd.pwdValue,
+      passwordConfirm: signupState.pwd.pwdConfirmValue,
+      phoneNumber: signupState.phoneNumber.value,
+      position: signupState.position.value,
     },
     fetchUrl: process.env.NEXT_PUBLIC_REGISTER_SOURCE,
   }
   const fetchLoginProps: ModulePostFetchProps = {
     data: {
-      email: loginState.email.value,
-      password: loginState.pwd.pwdValue,
+      email: signupState.email.value,
+      password: signupState.pwd.pwdValue,
     },
     fetchUrl: process.env.NEXT_PUBLIC_LOGIN_SOURCE,
   }
 
   const fetchSignin = async (): Promise<void> => {
+    if (!signupState.email.isCheck) {
+      return
+    }
     try {
       await modulePostFetch(fetchSignupProps)
       const res = await modulePostFetch(fetchLoginProps)

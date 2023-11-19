@@ -8,17 +8,17 @@ import { useAppSelector } from '@/app/module/hooks/reduxHooks'
 
 export default function Stepper() {
   const isMailComplete = useAppSelector((state) => {
-    return state.loginInfo.email.isCheck
+    return state.signupInfo.email.isCheck
   })
   const isPwdComplete = useAppSelector((state) => {
-    const pwdCheck = state.loginInfo.pwd.isCheck
+    const pwdCheck = state.signupInfo.pwd.isCheck
     return pwdCheck
   })
   const isNameComplete = useAppSelector((state) => {
-    return state.loginInfo.name.isCheck
+    return state.signupInfo.name.isCheck
   })
   const isPhoneNumComplete = useAppSelector((state) => {
-    return state.loginInfo.phoneNumber.isCheck
+    return state.signupInfo.phoneNumber.isCheck
   })
 
   const tailwindLi = (title: string, complete: boolean) => {

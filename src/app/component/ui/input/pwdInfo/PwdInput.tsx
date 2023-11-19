@@ -6,7 +6,7 @@ import { InputLabel, InputlabelAdd } from '../../label/Inputlabel'
 import { REGISTER_CONFIRM_PWD } from '@/app/constant/constant'
 import useInput from '@/app/module/hooks/reactHooks/useInput'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
-import { pwdReducer } from '@/app/store/reducers/loginInfoReducer'
+import { pwdReducer } from '@/app/store/reducers/signupInfoReducer'
 import { type PwdInputProps } from '@/app/types/ui/inputTypes'
 
 export default function PwdInput(props: PwdInputProps) {
@@ -14,10 +14,10 @@ export default function PwdInput(props: PwdInputProps) {
   const inputData = useInput('')
 
   const pwdState = useAppSelector((state) => {
-    return state.loginInfo.pwd.pwdValue
+    return state.signupInfo.pwd.pwdValue
   })
   const pwdConfirmState = useAppSelector((state) => {
-    return state.loginInfo.pwd.pwdConfirmValue
+    return state.signupInfo.pwd.pwdConfirmValue
   })
 
   useEffect(() => {

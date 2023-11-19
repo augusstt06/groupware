@@ -49,3 +49,17 @@ export type OrgInputProps = {
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   }
 }
+
+// login
+export type LoginInputProps = {
+  icon: React.ReactNode
+  placeholder: string
+  title: string
+  useInput: {
+    value: string
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+    resetValue: () => void
+  }
+  isPwdView: boolean
+  setIsPwdView: React.Dispatch<SetStateAction<boolean>>
+}

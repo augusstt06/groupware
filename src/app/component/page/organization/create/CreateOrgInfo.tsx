@@ -8,6 +8,7 @@ import SelectBox from '../../../ui/selectbox/SelectBox'
 
 import CreateOrgTeam from './CreateOrgTeam'
 
+import { BasicBtn } from '@/app/component/ui/button/BtnGroups'
 import { InputLabel } from '@/app/component/ui/label/Inputlabel'
 import ToggleGroup from '@/app/component/ui/toggle/organization/ToggleGroup'
 import { ORG_CREATE, ORG_GRADES, ORG_SELECTBOX, PRIVATE, PUBLIC } from '@/app/constant/constant'
@@ -73,7 +74,7 @@ Groupware site publishing and feature development"
       ))}
       <div>
         <div onClick={handleClick}>
-          <InputLabel title="Team" />
+          <BasicBtn title={!isTeam ? 'Create Team' : 'Without Team'} />
         </div>
         {isTeam ? <CreateOrgTeam /> : <></>}
       </div>
