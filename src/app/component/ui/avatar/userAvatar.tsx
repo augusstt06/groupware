@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 import { getCookie } from 'cookies-next'
 import { jwtDecode } from 'jwt-decode'
@@ -6,6 +6,7 @@ import { jwtDecode } from 'jwt-decode'
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
 
 export default function UserAvatar() {
+  const [mount, setMount] = useState(false)
   const user = useAppSelector((state) => state.signupInfo)
   const dropMenu = ['DashBoard', 'Setting', 'Organization']
   const token = getCookie('access-token')
@@ -38,48 +39,55 @@ export default function UserAvatar() {
   }
   const time = decodeTime()
   useEffect(() => {
-    decodeTime()
+    setMount(true)
   }, [])
   return (
     <>
-      <div className="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
-        <span className="font-medium text-gray-600 dark:text-gray-300">{user.name.value}</span>
-      </div>
-
-      <div
-        id="userDropdown"
-        className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600"
-      >
-        <div className="px-4 py-3 text-sm text-gray-900 dark:text-white">
-          <div>{user.name.value}</div>
-          <div className="font-medium truncate">
-            <a>Login at {time}</a>
+      {mount ? (
+        <>
+          <div className="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
+            <span className="font-medium text-gray-600 dark:text-gray-300">{user.name.value}</span>
           </div>
-        </div>
-        <ul
-          className="py-2 text-sm text-gray-700 dark:text-gray-200"
-          aria-labelledby="avatarButton"
-        >
-          {dropMenu.map((data) => (
-            <li key={data}>
+
+          <div
+            id="userDropdown"
+            className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600"
+          >
+            <div className="px-4 py-3 text-sm text-gray-900 dark:text-white">
+              <div>{user.name.value}</div>
+              <div className="font-medium truncate">
+                {/* hydration err */}
+                <a>Login at {time}</a>
+              </div>
+            </div>
+            <ul
+              className="py-2 text-sm text-gray-700 dark:text-gray-200"
+              aria-labelledby="avatarButton"
+            >
+              {dropMenu.map((data) => (
+                <li key={data}>
+                  <a
+                    href="#"
+                    className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                  >
+                    {data}
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <div className="py-1">
               <a
                 href="#"
-                className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
               >
-                {data}
+                Sign out
               </a>
-            </li>
-          ))}
-        </ul>
-        <div className="py-1">
-          <a
-            href="#"
-            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-          >
-            Sign out
-          </a>
-        </div>
-      </div>
+            </div>
+          </div>
+        </>
+      ) : (
+        <></>
+      )}
     </>
   )
 }
