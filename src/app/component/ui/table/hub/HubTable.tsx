@@ -1,4 +1,5 @@
 export default function HubTable() {
+  // FIXME: posting 5개 response 받아서 mapping
   return (
     <div id="detailed-pricing" className="w-4/5 overflow-x-auto">
       <div className="overflow-hidden min-w-max">

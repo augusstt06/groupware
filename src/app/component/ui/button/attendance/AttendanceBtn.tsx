@@ -6,11 +6,12 @@ import { modulePatchFetch, modulePostFetch } from '@/app/module/utils/moduleFetc
 import { type ModulePostFetchProps } from '@/app/types/moduleTypes'
 
 export default function AttendanceBtn() {
-  // FIXME: userid값 가져오기
+  // FIXME: userid값 가져오기 , response 값 확인
   const [isAttendance, setIsAttendance] = useState(false)
   const orgCode = getCookie('X-ORGANIZATION-CODE')
   const fetchProps: ModulePostFetchProps = {
     data: {
+      // FIXME: 추후에 데이터(number)로 전환
       organizationId: 0,
       userId: 0,
     },
