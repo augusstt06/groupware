@@ -2,17 +2,55 @@ import { useState } from 'react'
 
 import { getCookie } from 'cookies-next'
 
-import { modulePatchFetch, modulePostFetch } from '@/app/module/utils/moduleFetch'
-import { type ModulePostFetchProps } from '@/app/types/moduleTypes'
+import { moduleGetFetch, modulePatchFetch, modulePostFetch } from '@/app/module/utils/moduleFetch'
+import { type ModuleGetFetchProps, type ModulePostFetchProps } from '@/app/types/moduleTypes'
 
 export default function AttendanceBtn() {
-  // FIXME: userid값 가져오기 , response 값 확인
   const [isAttendance, setIsAttendance] = useState(false)
-  const orgCode = getCookie('X-ORGANIZATION-CODE')
-  const fetchProps: ModulePostFetchProps = {
+
+  const accessToken =
+    getCookie('access-token') !== undefined ? (getCookie('access-token') as string) : 'undefined'
+  const orgCode =
+    getCookie('X-ORGANIZATION-CODE') !== undefined
+      ? (getCookie('X-ORGANIZATION-CODE') as string)
+      : 'undefined'
+
+  const fetchOrgListProps: ModuleGetFetchProps = {
+    keyName: ['limit', 'offset'],
+    keyValue: ['10', '0'],
+    fetchUrl: process.env.NEXT_PUBLIC_GET_ORG_LIST_SOURCE,
+    header: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  }
+  type ResponseArr = {
+    code: string
+    colleagues: [] // 예시에 맞게 수정
+    createdAt: string
+    description: string
+    grades: [] // 예시에 맞게 수정
+    id: number
+    name: string
+    organizationType: string
+    ownerId: number
+    teams: [] // 예시에 맞게 수정
+    updatedAt: string
+  }
+  const findOrgId = (arr: ResponseArr[], orgCode: string) => {
+    const foundArr = arr.find((data) => data.code === orgCode)
+    return foundArr?.id ?? undefined
+  }
+  const getOrgId = async () => {
+    try {
+      const res = await moduleGetFetch(fetchOrgListProps)
+      const id = findOrgId(res.data.result, orgCode)
+      return id
+    } catch (err) {}
+  }
+
+  const fetchAttendanceProps: ModulePostFetchProps = {
     data: {
-      // FIXME: 추후에 데이터(number)로 전환
-      organizationId: 0,
+      organizationId: getOrgId(),
       userId: 0,
     },
     fetchUrl: process.env.NEXT_PUBLIC_ATTENDANCE_SOURCE,
@@ -21,8 +59,9 @@ export default function AttendanceBtn() {
     },
   }
   const fetchPostAttendance = async () => {
+    // FIXME: uuid값, orgid값
     try {
-      await modulePostFetch(fetchProps)
+      await modulePostFetch(fetchAttendanceProps)
       setIsAttendance(true)
       alert('출근 확인이 완료되었습니다.')
     } catch (err) {
@@ -31,7 +70,7 @@ export default function AttendanceBtn() {
   }
   const fetchLeaveWork = async () => {
     try {
-      await modulePatchFetch(fetchProps)
+      await modulePatchFetch(fetchAttendanceProps)
       setIsAttendance(false)
       alert('퇴근 확인이 완료되었습니다.')
     } catch (err) {
@@ -59,6 +98,7 @@ export default function AttendanceBtn() {
       className="text-indigo-500 hover:text-white border border-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-indigo-500 dark:text-indigo-500 dark:hover:text-white dark:hover:bg-indigo-500 dark:focus:ring-indigo-800"
       onClick={() => {
         void handleClick()
+        // void getOrgId()
       }}
     >
       {isAttendance ? 'Leave Work' : 'Check Attendance'}

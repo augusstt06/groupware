@@ -7,8 +7,20 @@ const nextConfig = {
   async rewrites() {
     return [
       {
+        source: process.env.NEXT_PUBLIC_USERS_SOURCE,
+        destination: process.env.NEXT_PUBLIC_USERS_DESTINATION,
+      },
+      {
         source: process.env.NEXT_PUBLIC_ATTENDANCE_SOURCE,
         destination: process.env.NEXT_PUBLIC_ATTENDANCE_DESTINATION,
+      },
+      {
+        source: process.env.NEXT_PUBLIC_GET_ORG_LIST_SOURCE,
+        destination: process.env.NEXT_PUBLIC_GET_ORG_LIST_DESTINATION,
+      },
+      {
+        source: process.env.NEXT_PUBLIC_GET_ORG_CODE_SOURCE,
+        destination: process.env.NEXT_PUBLIC_GET_ORG_CODE_DESTINATION,
       },
       {
         source: process.env.NEXT_PUBLIC_JOIN_ORGANIZATIONS_SOURCE,

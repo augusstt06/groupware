@@ -5,8 +5,8 @@ export type UseInputProps = {
 }
 
 export type ModuleGetFetchProps = {
-  keyName: string
-  keyValue: string
+  keyName: string[]
+  keyValue: Array<string | number>
   fetchUrl?: string
   header?: object
 }

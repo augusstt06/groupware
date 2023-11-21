@@ -8,10 +8,11 @@ import UserCard from '../component/ui/card/UserCard'
 import { InputLabel } from '../component/ui/label/Inputlabel'
 
 export default function Main() {
-  const token = getCookie('access-token')
+  const accessToken = getCookie('access-token')
+
   return (
     <>
-      {token !== undefined ? (
+      {accessToken !== undefined ? (
         <main className="flex flex-col justify-start items-center h-4/5 pl-10 pr-10 pt-10">
           <div className="flex flex-row justify-around items-center w-5/6">
             <div className="w-3/5 ml-10">
