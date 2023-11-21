@@ -37,3 +37,8 @@ export type NextStepOrgTeamProps = {
   organization: string
   setOrganization: React.Dispatch<SetStateAction<string>>
 }
+
+// main
+export type AttendanceBtnProps = {
+  userId: number
+}

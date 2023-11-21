@@ -5,8 +5,9 @@ import { jwtDecode } from 'jwt-decode'
 
 import { moduleGetFetch, modulePatchFetch, modulePostFetch } from '@/app/module/utils/moduleFetch'
 import { type ModuleGetFetchProps, type ModulePostFetchProps } from '@/app/types/moduleTypes'
+import { type AttendanceBtnProps } from '@/app/types/ui/btnTypes'
 
-export default function AttendanceBtn() {
+export default function AttendanceBtn(props: AttendanceBtnProps) {
   const [isAttendance, setIsAttendance] = useState(false)
 
   const accessToken =
@@ -56,7 +57,7 @@ export default function AttendanceBtn() {
       const fetchAttendanceProps: ModulePostFetchProps = {
         data: {
           organizationId: orgId,
-          userId: decode.uuid,
+          userId: props.userId,
         },
         fetchUrl: process.env.NEXT_PUBLIC_ATTENDANCES_SOURCE,
         header: {
@@ -64,7 +65,6 @@ export default function AttendanceBtn() {
           'X-ORGANIZATION-CODE': orgCode,
         },
       }
-      // FIXME: json: cannot unmarshal string into Go struct field AttendanceRequest.userId of type uint
       await modulePostFetch(fetchAttendanceProps)
       setIsAttendance(true)
       alert('출근 확인이 완료되었습니다.')
