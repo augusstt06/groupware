@@ -1,22 +1,16 @@
-import { useState } from 'react'
-
 import { getCookie } from 'cookies-next'
-import { jwtDecode } from 'jwt-decode'
 
 import { moduleGetFetch, modulePatchFetch, modulePostFetch } from '@/app/module/utils/moduleFetch'
 import { type ModuleGetFetchProps, type ModulePostFetchProps } from '@/app/types/moduleTypes'
 import { type AttendanceBtnProps } from '@/app/types/ui/btnTypes'
 
 export default function AttendanceBtn(props: AttendanceBtnProps) {
-  const [isAttendance, setIsAttendance] = useState(false)
-
   const accessToken =
     getCookie('access-token') !== undefined ? (getCookie('access-token') as string) : 'undefined'
   const orgCode =
     getCookie('X-ORGANIZATION-CODE') !== undefined
       ? (getCookie('X-ORGANIZATION-CODE') as string)
       : 'undefined'
-  const decode: { uuid: string; iss: string; iat: number; exp: number } = jwtDecode(accessToken)
 
   const fetchOrgListProps: ModuleGetFetchProps = {
     keyName: ['limit', 'offset'],
@@ -66,7 +60,7 @@ export default function AttendanceBtn(props: AttendanceBtnProps) {
         },
       }
       await modulePostFetch(fetchAttendanceProps)
-      setIsAttendance(true)
+      props.setIsAttendance(true)
       alert('출근 확인이 완료되었습니다.')
     } catch (err) {
       alert('출근 확인에 실패했습니다.')
@@ -78,7 +72,7 @@ export default function AttendanceBtn(props: AttendanceBtnProps) {
       const fetchAttendanceProps: ModulePostFetchProps = {
         data: {
           organizationId: orgId,
-          userId: decode.uuid,
+          userId: props.userId,
         },
         fetchUrl: process.env.NEXT_PUBLIC_ATTENDANCES_SOURCE,
         header: {
@@ -87,7 +81,7 @@ export default function AttendanceBtn(props: AttendanceBtnProps) {
         },
       }
       await modulePatchFetch(fetchAttendanceProps)
-      setIsAttendance(false)
+      props.setIsAttendance(false)
       alert('퇴근 확인이 완료되었습니다.')
     } catch (err) {
       alert('퇴근 확인에 실패했습니다.')
@@ -99,7 +93,7 @@ export default function AttendanceBtn(props: AttendanceBtnProps) {
       alert('소속된 조직이 없습니다.')
       return
     }
-    switch (isAttendance) {
+    switch (props.isAttendance) {
       case false:
         void fetchPostAttendance()
         break
@@ -116,7 +110,7 @@ export default function AttendanceBtn(props: AttendanceBtnProps) {
         void handleClick()
       }}
     >
-      {isAttendance ? 'Leave' : 'Attendance'}
+      {props.isAttendance ? 'Leave' : 'Attendance'}
     </button>
   )
 }

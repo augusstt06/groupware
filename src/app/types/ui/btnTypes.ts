@@ -41,4 +41,6 @@ export type NextStepOrgTeamProps = {
 // main
 export type AttendanceBtnProps = {
   userId: number
+  isAttendance: boolean
+  setIsAttendance: React.Dispatch<SetStateAction<boolean>>
 }

@@ -10,3 +10,8 @@ export type KeyInfoTypeProps = {
   isPwdConfirmView: boolean
   setIsPwdConfirmView: React.Dispatch<SetStateAction<boolean>>
 }
+
+export type UserCardProps = {
+  userInfo: { name: string; position: string; id: number }
+  decode: { uuid: string; iss: string; iat: number; exp: number }
+}
