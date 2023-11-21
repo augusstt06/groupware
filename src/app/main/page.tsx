@@ -16,7 +16,6 @@ export default function Main() {
         <main className="flex flex-col justify-start items-center h-4/5 pl-10 pr-10 pt-10">
           <div className="flex flex-row justify-around items-center w-5/6">
             <div className="w-3/5 ml-10">
-              {/* FIXME: useravatar 대체가능한지 생각 */}
               <UserCard />
             </div>
             <div className="h-full mr-10">

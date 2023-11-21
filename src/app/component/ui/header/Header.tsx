@@ -45,7 +45,7 @@ export default function Header(props: ReactProps) {
                 <Logo />
               </div>
               <div className="p-2 flex items-center justify-center text-2xl text-indigo-500 font-bold py-3 md:py-5">
-                {isLogin ? <div className="mr-5">user avatar</div> : <div></div>}
+                {/* {isLogin ? <div className="mr-5">user avatar</div> : <div></div>} */}
 
                 <DarkmodeBtn />
               </div>

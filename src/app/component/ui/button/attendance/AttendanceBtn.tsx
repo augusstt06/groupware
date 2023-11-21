@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
 import { getCookie } from 'cookies-next'
+import { jwtDecode } from 'jwt-decode'
 
 import { moduleGetFetch, modulePatchFetch, modulePostFetch } from '@/app/module/utils/moduleFetch'
 import { type ModuleGetFetchProps, type ModulePostFetchProps } from '@/app/types/moduleTypes'
@@ -14,6 +15,7 @@ export default function AttendanceBtn() {
     getCookie('X-ORGANIZATION-CODE') !== undefined
       ? (getCookie('X-ORGANIZATION-CODE') as string)
       : 'undefined'
+  const decode: { uuid: string; iss: string; iat: number; exp: number } = jwtDecode(accessToken)
 
   const fetchOrgListProps: ModuleGetFetchProps = {
     keyName: ['limit', 'offset'],
@@ -25,15 +27,15 @@ export default function AttendanceBtn() {
   }
   type ResponseArr = {
     code: string
-    colleagues: [] // 예시에 맞게 수정
+    colleagues: []
     createdAt: string
     description: string
-    grades: [] // 예시에 맞게 수정
+    grades: []
     id: number
     name: string
     organizationType: string
     ownerId: number
-    teams: [] // 예시에 맞게 수정
+    teams: []
     updatedAt: string
   }
   const findOrgId = (arr: ResponseArr[], orgCode: string) => {
@@ -48,19 +50,21 @@ export default function AttendanceBtn() {
     } catch (err) {}
   }
 
-  const fetchAttendanceProps: ModulePostFetchProps = {
-    data: {
-      organizationId: getOrgId(),
-      userId: 0,
-    },
-    fetchUrl: process.env.NEXT_PUBLIC_ATTENDANCE_SOURCE,
-    header: {
-      'X-ORGANIZATION-CODE': orgCode,
-    },
-  }
   const fetchPostAttendance = async () => {
-    // FIXME: uuid값, orgid값
     try {
+      const orgId = await getOrgId()
+      const fetchAttendanceProps: ModulePostFetchProps = {
+        data: {
+          organizationId: orgId,
+          userId: decode.uuid,
+        },
+        fetchUrl: process.env.NEXT_PUBLIC_ATTENDANCES_SOURCE,
+        header: {
+          Authorization: `Bearer ${accessToken}`,
+          'X-ORGANIZATION-CODE': orgCode,
+        },
+      }
+      // FIXME: json: cannot unmarshal string into Go struct field AttendanceRequest.userId of type uint
       await modulePostFetch(fetchAttendanceProps)
       setIsAttendance(true)
       alert('출근 확인이 완료되었습니다.')
@@ -70,6 +74,18 @@ export default function AttendanceBtn() {
   }
   const fetchLeaveWork = async () => {
     try {
+      const orgId = await getOrgId()
+      const fetchAttendanceProps: ModulePostFetchProps = {
+        data: {
+          organizationId: orgId,
+          userId: decode.uuid,
+        },
+        fetchUrl: process.env.NEXT_PUBLIC_ATTENDANCES_SOURCE,
+        header: {
+          Authorization: `Bearer ${accessToken}`,
+          'X-ORGANIZATION-CODE': orgCode,
+        },
+      }
       await modulePatchFetch(fetchAttendanceProps)
       setIsAttendance(false)
       alert('퇴근 확인이 완료되었습니다.')
@@ -95,13 +111,12 @@ export default function AttendanceBtn() {
 
   return (
     <button
-      className="text-indigo-500 hover:text-white border border-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-indigo-500 dark:text-indigo-500 dark:hover:text-white dark:hover:bg-indigo-500 dark:focus:ring-indigo-800"
+      className="text-indigo-500 hover:text-white dark:text-white dark:bg-indigo-500 dark:border-white bg-white border-indigo-500 hover:bg-indigo-500 focus:ring-4 focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 dark:hover:bg-white dark:hover:text-indigo-500 mb-2 border-2 dark:hover:border-indigo-500/75"
       onClick={() => {
         void handleClick()
-        // void getOrgId()
       }}
     >
-      {isAttendance ? 'Leave Work' : 'Check Attendance'}
+      {isAttendance ? 'Leave' : 'Attendance'}
     </button>
   )
 }
