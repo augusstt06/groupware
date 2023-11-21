@@ -10,8 +10,10 @@ import convertTime from '@/app/module/utils/convertTime'
 import { type UserCardProps } from '@/app/types/pageTypes'
 
 export default function UserCard(props: UserCardProps) {
+  // FIXME: 출퇴근 상태값은 서버에서 받아와서 유지하기
   const [isAttendance, setIsAttendance] = useState(false)
   const timeStamp = convertTime(props.decode.iat)
+  const additionalInfo = ['조직이름', '팀이름', props.userInfo.position]
   return (
     <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
       <div className="flex justify-end px-4 pt-4"></div>
@@ -23,12 +25,16 @@ export default function UserCard(props: UserCardProps) {
           </h5>
           {isAttendance ? <MdWork /> : <MdWorkOff />}
         </div>
-        <span className="text-sm text-gray-500 dark:text-gray-400">{props.userInfo.position}</span>
+        {additionalInfo.map((data) => (
+          <span className="text-sm text-gray-500 dark:text-gray-400" key={data}>
+            {data}
+          </span>
+        ))}
         <span className="text-sm text-gray-500 dark:text-gray-400">Login at : {timeStamp}</span>
         <div className="flex flex-row justify-around mt-4 md:mt-6 w-2/4">
           <div className="px-10">
             <AttendanceBtn
-              userId={props.userInfo.id}
+              userId={props.userInfo.userId}
               isAttendance={isAttendance}
               setIsAttendance={setIsAttendance}
             />

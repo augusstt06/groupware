@@ -12,6 +12,6 @@ export type KeyInfoTypeProps = {
 }
 
 export type UserCardProps = {
-  userInfo: { name: string; position: string; id: number }
+  userInfo: { name: string; position: string; userId: number }
   decode: { uuid: string; iss: string; iat: number; exp: number }
 }

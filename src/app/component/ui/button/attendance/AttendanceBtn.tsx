@@ -1,56 +1,16 @@
-import { getCookie } from 'cookies-next'
-
-import { moduleGetFetch, modulePatchFetch, modulePostFetch } from '@/app/module/utils/moduleFetch'
-import { type ModuleGetFetchProps, type ModulePostFetchProps } from '@/app/types/moduleTypes'
+import { getToken } from '@/app/module/hooks/reactHooks/cookie'
+import { modulePatchFetch, modulePostFetch } from '@/app/module/utils/moduleFetch'
+import { type ModulePostFetchProps } from '@/app/types/moduleTypes'
 import { type AttendanceBtnProps } from '@/app/types/ui/btnTypes'
 
 export default function AttendanceBtn(props: AttendanceBtnProps) {
-  const accessToken =
-    getCookie('access-token') !== undefined ? (getCookie('access-token') as string) : 'undefined'
-  const orgCode =
-    getCookie('X-ORGANIZATION-CODE') !== undefined
-      ? (getCookie('X-ORGANIZATION-CODE') as string)
-      : 'undefined'
-
-  const fetchOrgListProps: ModuleGetFetchProps = {
-    keyName: ['limit', 'offset'],
-    keyValue: ['10', '0'],
-    fetchUrl: process.env.NEXT_PUBLIC_GET_ORG_LIST_SOURCE,
-    header: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  }
-  type ResponseArr = {
-    code: string
-    colleagues: []
-    createdAt: string
-    description: string
-    grades: []
-    id: number
-    name: string
-    organizationType: string
-    ownerId: number
-    teams: []
-    updatedAt: string
-  }
-  const findOrgId = (arr: ResponseArr[], orgCode: string) => {
-    const foundArr = arr.find((data) => data.code === orgCode)
-    return foundArr?.id ?? undefined
-  }
-  const getOrgId = async () => {
-    try {
-      const res = await moduleGetFetch(fetchOrgListProps)
-      const id = findOrgId(res.data.result, orgCode)
-      return id
-    } catch (err) {}
-  }
+  const accessToken = getToken('access-token')
+  const orgCode = getToken('X-ORGANIZATION-CODE')
 
   const fetchPostAttendance = async () => {
     try {
-      const orgId = await getOrgId()
       const fetchAttendanceProps: ModulePostFetchProps = {
         data: {
-          organizationId: orgId,
           userId: props.userId,
         },
         fetchUrl: process.env.NEXT_PUBLIC_ATTENDANCES_SOURCE,
@@ -68,10 +28,8 @@ export default function AttendanceBtn(props: AttendanceBtnProps) {
   }
   const fetchLeaveWork = async () => {
     try {
-      const orgId = await getOrgId()
       const fetchAttendanceProps: ModulePostFetchProps = {
         data: {
-          organizationId: orgId,
           userId: props.userId,
         },
         fetchUrl: process.env.NEXT_PUBLIC_ATTENDANCES_SOURCE,
