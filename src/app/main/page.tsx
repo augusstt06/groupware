@@ -6,8 +6,8 @@ import Link from 'next/link'
 
 import Hub from '../component/page/main/Hub'
 import { NavigationBtn } from '../component/ui/button/BtnGroups'
+import MenuCard from '../component/ui/card/MenuCard'
 import UserCard from '../component/ui/card/UserCard'
-import { InputLabel } from '../component/ui/label/Inputlabel'
 import { getToken } from '../module/hooks/reactHooks/cookie'
 import { moduleGetFetch } from '../module/utils/moduleFetch'
 import { type ModuleGetFetchProps } from '../types/moduleTypes'
@@ -67,15 +67,13 @@ export default function Main() {
   return (
     <>
       {accessToken !== 'undefined' ? (
-        <main className="flex flex-col justify-start items-center h-4/5 pl-10 pr-10 pt-10">
-          <div className="flex flex-row justify-around items-center w-5/6">
-            <div className="w-3/5 ml-10">
-              <UserCard userInfo={userInfo} decode={decode} />
-            </div>
-            <div className="h-full mr-10 w-3/4">
-              <InputLabel title="Current Post" />
-              <Hub />
-            </div>
+        <main className="grid gap-4 grid-cols-4 h-4/5  pt-10 ml-10 mr-10">
+          <div className="col-span-1 w-5/6">
+            <UserCard userInfo={userInfo} decode={decode} />
+            <MenuCard />
+          </div>
+          <div className="col-span-3 mr-10">
+            <Hub />
           </div>
         </main>
       ) : (

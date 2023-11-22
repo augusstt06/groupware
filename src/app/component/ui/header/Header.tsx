@@ -2,9 +2,6 @@
 
 import { useEffect, useState } from 'react'
 
-import { getCookie } from 'cookies-next'
-
-// import UserAvatar from '../avatar/userAvatar'
 import DarkmodeBtn from '../button/DarkmodeBtn'
 import HamburgerBtn from '../button/HamburgerBtn'
 import { HeaderLoginBtn } from '../button/SignupBtn'
@@ -12,21 +9,21 @@ import Logout from '../button/login/LogoutBtn'
 import Logo from '../logo/Logo'
 import Sidebar from '../sidebar/Sidebar'
 
+import { getToken } from '@/app/module/hooks/reactHooks/cookie'
 import { type ReactProps } from '@/app/types/pageTypes'
 
 export default function Header(props: ReactProps) {
   const [nav, setNav] = useState(false)
-  const token = getCookie('access-token')
+  const accessToken = getToken('access-token')
   const isToken = () => {
-    return token !== undefined
+    return accessToken !== 'undefined'
   }
-
   const isLogin = isToken()
-
   const [mount, setMount] = useState(false)
   useEffect(() => {
     setMount(true)
-  }, [setMount])
+  }, [setMount, isLogin])
+
   return (
     <nav className="w-full">
       {mount ? (
@@ -46,7 +43,6 @@ export default function Header(props: ReactProps) {
                 <Logo />
               </div>
               <div className="w-2/6 p-2 flex items-center justify-around text-2xl text-indigo-500 font-bold py-3 md:py-5">
-                {/* {isLogin ? <div className="mr-5">user avatar</div> : <div></div>} */}
                 {isLogin ? <Logout /> : <></>}
                 <DarkmodeBtn />
               </div>
