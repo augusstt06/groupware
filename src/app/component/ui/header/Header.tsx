@@ -8,7 +8,7 @@ import DarkmodeBtn from '../button/DarkmodeBtn'
 import Logout from '../button/login/LogoutBtn'
 import AlertIndicator from '../indicator/alertIndicator'
 
-import { getToken } from '@/app/module/hooks/reactHooks/cookie'
+import { getToken } from '@/app/module/utils/cookie'
 
 export default function Header() {
   const [open, setOpen] = useState({

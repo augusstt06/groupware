@@ -1,7 +1,7 @@
 import { useRouter } from 'next/navigation'
 
-import { deleteToken, getToken } from '@/app/module/hooks/reactHooks/cookie'
 import { useAppDispatch } from '@/app/module/hooks/reduxHooks'
+import { deleteToken, getToken } from '@/app/module/utils/cookie'
 import { modulePostFetch } from '@/app/module/utils/moduleFetch'
 import { resetReducer } from '@/app/store/reducers/loginInfoReducer'
 import { type ModulePostFetchProps } from '@/app/types/moduleTypes'

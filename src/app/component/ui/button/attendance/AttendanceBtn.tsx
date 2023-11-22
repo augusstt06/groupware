@@ -1,4 +1,4 @@
-import { getToken } from '@/app/module/hooks/reactHooks/cookie'
+import { getToken } from '@/app/module/utils/cookie'
 import { modulePatchFetch, modulePostFetch } from '@/app/module/utils/moduleFetch'
 import { type ModulePostFetchProps } from '@/app/types/moduleTypes'
 import { type AttendanceBtnProps } from '@/app/types/ui/btnTypes'

@@ -8,7 +8,7 @@ import Hub from '../component/page/main/Hub'
 import { NavigationBtn } from '../component/ui/button/BtnGroups'
 import MenuCard from '../component/ui/card/MenuCard'
 import UserCard from '../component/ui/card/UserCard'
-import { getToken } from '../module/hooks/reactHooks/cookie'
+import { getToken } from '../module/utils/cookie'
 import { moduleGetFetch } from '../module/utils/moduleFetch'
 import { type ModuleGetFetchProps } from '../types/moduleTypes'
 
