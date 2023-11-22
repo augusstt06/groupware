@@ -31,6 +31,10 @@ const nextConfig = {
         destination: process.env.NEXT_PUBLIC_CREATE_ORGANIZATIONS_DESTINATION,
       },
       {
+        source: process.env.NEXT_PUBLIC_LOGOUT_SOURCE,
+        destination: process.env.NEXT_PUBLIC_LOGOUT_DESTINATION,
+      },
+      {
         source: process.env.NEXT_PUBLIC_LOGIN_SOURCE,
         destination: process.env.NEXT_PUBLIC_LOGIN_DESTINATION,
       },

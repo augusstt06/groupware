@@ -8,6 +8,7 @@ import { getCookie } from 'cookies-next'
 import DarkmodeBtn from '../button/DarkmodeBtn'
 import HamburgerBtn from '../button/HamburgerBtn'
 import { HeaderLoginBtn } from '../button/SignupBtn'
+import Logout from '../button/login/LogoutBtn'
 import Logo from '../logo/Logo'
 import Sidebar from '../sidebar/Sidebar'
 
@@ -44,9 +45,9 @@ export default function Header(props: ReactProps) {
               >
                 <Logo />
               </div>
-              <div className="p-2 flex items-center justify-center text-2xl text-indigo-500 font-bold py-3 md:py-5">
+              <div className="w-2/6 p-2 flex items-center justify-around text-2xl text-indigo-500 font-bold py-3 md:py-5">
                 {/* {isLogin ? <div className="mr-5">user avatar</div> : <div></div>} */}
-
+                {isLogin ? <Logout /> : <></>}
                 <DarkmodeBtn />
               </div>
             </div>
