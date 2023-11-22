@@ -7,6 +7,7 @@ import { type UserCardProps } from '@/app/types/pageTypes'
 
 export default function UserCard(props: UserCardProps) {
   // FIXME: 출퇴근 상태값은 서버에서 받아와서 유지하기
+
   const [isAttendance, setIsAttendance] = useState(false)
   const timeStamp = convertTime(props.decode.iat)
   const tailwindClassName = isAttendance ? 'text-blue-400 font-bold' : 'text-red-400 font-bold'

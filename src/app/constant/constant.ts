@@ -18,3 +18,6 @@ export const REGISTER_CONFIRM_PWD = 'Confirm Password'
 export const REGISTER_NAME = 'Name'
 export const REGISTER_PHONENUMBER = 'PhoneNumber'
 export const REGISTER_POSITION = 'Position'
+
+export const KEY_ACCESS_TOKEN = 'access-token'
+export const KEY_X_ORGANIZATION_CODE = 'X-ORGANIZATION-CODE'
