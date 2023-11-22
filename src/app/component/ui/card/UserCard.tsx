@@ -27,7 +27,7 @@ export default function UserCard(props: UserCardProps) {
         </span>
         <div className="flex flex-start justify-between w-4/5">
           <span className="text-medium text-gray-500 dark:text-gray-400">업무 상태</span>
-          <span className={`${tailwindClassName}`}>{isAttendance ? '업무중' : '퇴근'} </span>
+          <span className={`${tailwindClassName}`}>{isAttendance ? '업무 중' : '업무 종료'} </span>
         </div>
         <div className="flex flex-start justify-between items-center w-4/5">
           <span className="text-medium text-gray-500 dark:text-gray-400">업무 시간</span>

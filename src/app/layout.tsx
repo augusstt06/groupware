@@ -10,7 +10,8 @@ export default function RootLayout({ children }: ReactProps) {
       <html lang="en" suppressHydrationWarning={true}>
         <body className="font-mono">
           <CustomThemeProvider>
-            <Header>{children}</Header>
+            <Header />
+            {children}
           </CustomThemeProvider>
         </body>
       </html>

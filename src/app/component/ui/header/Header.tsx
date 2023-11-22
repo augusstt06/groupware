@@ -2,65 +2,111 @@
 
 import { useEffect, useState } from 'react'
 
+import Link from 'next/link'
+
 import DarkmodeBtn from '../button/DarkmodeBtn'
-import HamburgerBtn from '../button/HamburgerBtn'
-import { HeaderLoginBtn } from '../button/SignupBtn'
 import Logout from '../button/login/LogoutBtn'
-import Logo from '../logo/Logo'
-import Sidebar from '../sidebar/Sidebar'
+import AlertIndicator from '../indicator/alertIndicator'
 
 import { getToken } from '@/app/module/hooks/reactHooks/cookie'
-import { type ReactProps } from '@/app/types/pageTypes'
 
-export default function Header(props: ReactProps) {
-  const [nav, setNav] = useState(false)
+export default function Header() {
+  const [open, setOpen] = useState({
+    board: false,
+    project: false,
+  })
   const accessToken = getToken('access-token')
   const isToken = () => {
     return accessToken !== 'undefined'
   }
   const isLogin = isToken()
+  const handleOpen = (title: string) => {
+    switch (title) {
+      case 'Project':
+        setOpen({
+          board: open.board,
+          project: !open.project,
+        })
+        break
+      case 'Board':
+        setOpen({
+          board: !open.board,
+          project: open.project,
+        })
+    }
+  }
+
+  const menuList = [
+    { title: 'Board', list: ['board 1', 'board 2'], open: open.board },
+    { title: 'Project', list: ['project 1', 'project 2'], open: open.project },
+    { title: 'Team', list: [], open: false },
+  ]
+
   const [mount, setMount] = useState(false)
   useEffect(() => {
     setMount(true)
   }, [setMount, isLogin])
 
   return (
-    <nav className="w-full">
+    <nav className="bg-white border-gray-200 dark:bg-gray-900">
       {mount ? (
         <>
-          <div className="justify-between  px-4 mx-auto">
-            <div className="flex flex-row items-center justify-between">
-              <div className="flex items-center justify-between py-3 md:py-5">
-                {isLogin ? <HamburgerBtn nav={nav} setNav={setNav} /> : <HeaderLoginBtn />}
-              </div>
-
-              <div
-                className="flex justify-center items-center py-3 md:py-5 w-full"
-                onClick={() => {
-                  setNav(false)
-                }}
-              >
-                <Logo />
-              </div>
-              <div className="w-2/6 p-2 flex items-center justify-around text-2xl text-indigo-500 font-bold py-3 md:py-5">
+          <div className="flex flex-wrap items-center justify-between max-w-screen-xl mx-auto p-4">
+            <a className="flex items-center space-x-3 rtl:space-x-reverse">
+              <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
+                <Link href="/main">Logo</Link>
+              </span>
+            </a>
+            <div className="flex items-center md:order-2 space-x-1 md:space-x-2 rtl:space-x-reverse">
+              <a className="text-gray-800 dark:text-white border-solid border-white border-2 hover:border-indigo-500 dark:border-gray-900 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 dark:hover:border-indigo-400 focus:outline-none dark:focus:ring-gray-800">
                 {isLogin ? <Logout /> : <></>}
+              </a>
+              <a className="text-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 focus:outline-none dark:focus:ring-gray-800">
+                <AlertIndicator />
+              </a>
+              <a className="text-gray-800  dark:border-gray-900 dark:text-white border-solid border-white border-2 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5   focus:outline-none dark:focus:ring-gray-800">
                 <DarkmodeBtn />
-              </div>
+              </a>
+            </div>
+            <div
+              id="mega-menu-icons"
+              className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
+            >
+              <ul className="flex flex-col mt-4 font-medium md:flex-row md:mt-0 md:space-x-8 rtl:space-x-reverse">
+                {menuList.map((data) => (
+                  <li key={data.title}>
+                    <button
+                      id={`${data.title}-dropdown-button`}
+                      className="flex items-center justify-between w-full py-2 px-3 font-medium text-gray-900 border-b border-gray-100 md:w-auto hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-indigo-600 md:p-0 dark:text-white md:dark:hover:text-indigo-400 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700"
+                      onClick={() => {
+                        handleOpen(data.title)
+                      }}
+                    >
+                      {data.title}
+                    </button>
+                    <div
+                      id={`${data.title}-dropdown`}
+                      className={`absolute z-11 grid ${
+                        data.open ? '' : 'hidden'
+                      } w-auto grid-cols-2 text-sm bg-white border border-gray-100 rounded-lg shadow-md dark:border-gray-700 md:grid-cols-3 dark:bg-gray-700`}
+                    >
+                      <div className="p-4 pb-0 text-gray-900 md:pb-4 dark:text-white">
+                        <ul className="space-y-4" aria-labelledby="mega-menu-icons-dropdown-button">
+                          {data.list.map((data) => (
+                            <li key={data}>
+                              <a className="flex items-center text-gray-500 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-500 group">
+                                {data}
+                              </a>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
-
-          <main className="flex">
-            <Sidebar nav={nav} />
-            <div className="w-full flex flex-col h-screen overflow-y-hidden ">
-              <slot
-                onClick={() => {
-                  setNav(false)
-                }}
-              >
-                {props.children}
-              </slot>
-            </div>
-          </main>
         </>
       ) : (
         <></>

@@ -33,7 +33,7 @@ export default function Logout() {
     <>
       <button
         type="button"
-        className="text-white bg-indigo-500 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-indigo-500 dark:hover:bg-indigo-700 dark:focus:ring-blue-800"
+        className="text-gray-800 dark:text-white focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5  focus:outline-none dark:focus:ring-gray-800"
         onClick={() => {
           void fetchLogout()
         }}
