@@ -19,6 +19,7 @@ export default function Main() {
   // 로그인시 xorgcode 받아서 토큰에 넣기
   // 조직 정보 get 요청 보내서 usercard에 props로 넘기기
   // 여기서 orgcode를 가져오니까 attendancebtn에도 props
+  // 받아와야할 정보 : 유저 이름, 조직, 팀, 직무(포지션)
   const [mount, setMount] = useState(false)
 
   const accessToken = getToken(KEY_ACCESS_TOKEN)

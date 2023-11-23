@@ -55,26 +55,26 @@ export default function InfoInput(props: InfoInputProps) {
     try {
       await moduleGetFetch(getFetchEmailProps)
       dispatch(emailReducer({ isCheck: true, value: useInput.value }))
-      alert('이메일 확인이 완료되었습니다.')
     } catch (err) {
       if (axios.isAxiosError(err)) {
-        switch (err.status) {
+        switch (err.response?.status) {
           case HttpStatusCode.BadRequest:
-            alert('입력값이 잘못되었습니다.')
+            props.setErrMsg('이메일이 중복됩니다. 다른 이메일을 사용해주세요.')
             break
           case HttpStatusCode.InternalServerError:
-            alert('통신오류가 발생했습니다.')
+            props.setErrMsg('통신오류가 발생했습니다. 다시 시도해주세요')
             break
         }
+      } else {
+        props.setErrMsg('이메일 확인에 실패했습니다.')
       }
-      alert('이메일 확인에 실패했습니다.')
     }
   }
 
   const handleChangeEmailInputCheckbox = async () => {
     const isValid = inputValidate(inputValidateProps)
     if (!isValid as boolean) {
-      alert('이메일 형식이 잘못되었습니다.')
+      props.setErrMsg('이메일 형식이 잘못되었습니다. xxx@xxx.xxx 의 형태로 입력해주세요')
       return
     }
     if (inputState.isCheck) {

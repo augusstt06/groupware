@@ -21,3 +21,8 @@ export const REGISTER_POSITION = 'Position'
 
 export const KEY_ACCESS_TOKEN = 'access-token'
 export const KEY_X_ORGANIZATION_CODE = 'X-ORGANIZATION-CODE'
+
+// err msg
+
+export const LOGIN_EMAIL_FAIL_MESSAGE = 'user not found: record not found'
+export const LOGIN_PWD_FAIL_MESSAGE = 'password does not match'

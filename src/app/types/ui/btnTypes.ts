@@ -12,13 +12,11 @@ export type BtnProps = {
 
 export type RegisterUserBtnProps = {
   handleStep: () => void
+  setErrMsg: (errDecription: string) => void
 }
-
-export type RegisterUserBtnElementProps = RegisterUserBtnProps & {
-  title: string
-  tailwindClass: string
+export type SignupBtnProps = BtnProps & {
+  setErrMsg: (errDecription: string) => void
 }
-
 export type OrgChooseBtnProps = {
   organization: string
   setOrganization: React.Dispatch<SetStateAction<string>>
@@ -38,6 +36,9 @@ export type NextStepOrgTeamProps = {
   setOrganization: React.Dispatch<SetStateAction<string>>
 }
 
+export type LoginBtnProps = BtnProps & {
+  setErrMsg: (errDescription: string) => void
+}
 // main
 export type AttendanceBtnProps = {
   userId: number

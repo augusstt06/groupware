@@ -4,11 +4,12 @@ export type ReactProps = {
   children: React.ReactNode
 }
 
-export type KeyInfoTypeProps = {
+export type RegisterInfoTypeProps = {
   isPwdView: boolean
   setIsPwdView: React.Dispatch<SetStateAction<boolean>>
   isPwdConfirmView: boolean
   setIsPwdConfirmView: React.Dispatch<SetStateAction<boolean>>
+  setErrMsg: (errDescription: string) => void
 }
 
 export type UserCardProps = {

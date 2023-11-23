@@ -62,7 +62,7 @@ export default function RegisterOrgBtn(props: BtnProps) {
       router.push('/main')
     } catch (err) {
       if (axios.isAxiosError(err)) {
-        switch (err.status) {
+        switch (err.response?.status) {
           case HttpStatusCode.BadRequest:
             alert('입력값이 잘못되었습니다.')
             break

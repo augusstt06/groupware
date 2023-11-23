@@ -6,6 +6,7 @@ export type InfoInputProps = {
   placeholder: string
   checkValid: boolean
   icon: React.ReactNode
+  setErrMsg: (errDescription: string) => void
   useInput: {
     value: string
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void

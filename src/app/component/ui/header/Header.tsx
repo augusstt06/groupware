@@ -54,7 +54,7 @@ export default function Header() {
 
   return (
     <nav className="bg-white border-gray-200 dark:bg-gray-900">
-      {mount && isRender ? (
+      {mount && isLogin && isRender ? (
         <>
           <div className="flex flex-wrap items-center justify-between max-w-screen-xl mx-auto p-4">
             <Link href="/main" className="flex items-center space-x-3 rtl:space-x-reverse">

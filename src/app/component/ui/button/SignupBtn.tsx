@@ -8,9 +8,9 @@ import { KEY_ACCESS_TOKEN } from '@/app/constant/constant'
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { modulePostFetch } from '@/app/module/utils/moduleFetch'
 import { type ModulePostFetchProps } from '@/app/types/moduleTypes'
-import { type BtnProps } from '@/app/types/ui/btnTypes'
+import { type SignupBtnProps } from '@/app/types/ui/btnTypes'
 
-export function SignupBtn(props: BtnProps) {
+export function SignupBtn(props: SignupBtnProps) {
   const router = useRouter()
   const signupState = useAppSelector((state) => state.signupInfo)
 
@@ -34,27 +34,28 @@ export function SignupBtn(props: BtnProps) {
   }
 
   const fetchSignin = async (): Promise<void> => {
-    if (!signupState.email.isCheck) {
-      return
-    }
     try {
+      if (!signupState.email.isCheck) {
+        props.setErrMsg('이메일이 중복됩니다. 다른 이메일을 사용해주세요.')
+        return
+      }
       await modulePostFetch(fetchSignupProps)
       const res = await modulePostFetch(fetchLoginProps)
       setCookie(KEY_ACCESS_TOKEN, res.data.result)
-      alert('회원가입 및 로그인이 완료 되었습니다.')
       router.push('/organization')
     } catch (err) {
       if (axios.isAxiosError(err)) {
-        switch (err.status) {
+        switch (err.response?.status) {
           case HttpStatusCode.BadRequest:
-            alert('입력값이 잘못되었습니다.')
+            props.setErrMsg('입력값이 잘못되었습니다.')
             break
           case HttpStatusCode.InternalServerError:
-            alert('통신오류가 발생했습니다.')
+            props.setErrMsg('통신오류가 발생했습니다. 다시 시도해주세요')
             break
         }
+      } else {
+        props.setErrMsg('회원가입에 실패했습니다.')
       }
-      alert('회원가입이 실패했습니다.')
     }
   }
   const handleClickBtn = async () => {
