@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation'
 import { AiFillGithub, AiOutlineGoogle } from 'react-icons/ai'
 import { TbLogin2 } from 'react-icons/tb'
 
+import { KEY_ACCESS_TOKEN } from '@/app/constant/constant'
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { modulePostFetch } from '@/app/module/utils/moduleFetch'
 import { type ModulePostFetchProps } from '@/app/types/moduleTypes'
@@ -39,7 +40,7 @@ export function SignupBtn(props: BtnProps) {
     try {
       await modulePostFetch(fetchSignupProps)
       const res = await modulePostFetch(fetchLoginProps)
-      setCookie('access-token', res.data.result)
+      setCookie(KEY_ACCESS_TOKEN, res.data.result)
       alert('회원가입 및 로그인이 완료 되었습니다.')
       router.push('/organization')
     } catch (err) {

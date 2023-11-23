@@ -2,6 +2,7 @@ import axios, { HttpStatusCode } from 'axios'
 import { setCookie } from 'cookies-next'
 import { useRouter } from 'next/navigation'
 
+import { KEY_ACCESS_TOKEN } from '@/app/constant/constant'
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
 import inputValidate from '@/app/module/utils/inputValidate'
 import { modulePostFetch } from '@/app/module/utils/moduleFetch'
@@ -31,7 +32,7 @@ export default function LoginBtn(props: BtnProps) {
     }
     try {
       const res = await modulePostFetch(fetchLoginProps)
-      setCookie('access-token', res.data.result)
+      setCookie(KEY_ACCESS_TOKEN, res.data.result)
       alert('로그인이 완료되었습니다.')
       router.push('/main')
     } catch (err) {

@@ -1,5 +1,6 @@
 import { useRouter } from 'next/navigation'
 
+import { KEY_ACCESS_TOKEN } from '@/app/constant/constant'
 import { useAppDispatch } from '@/app/module/hooks/reduxHooks'
 import { deleteToken, getToken } from '@/app/module/utils/cookie'
 import { modulePostFetch } from '@/app/module/utils/moduleFetch'
@@ -9,7 +10,7 @@ import { type ModulePostFetchProps } from '@/app/types/moduleTypes'
 export default function Logout() {
   const router = useRouter()
   const dispatch = useAppDispatch()
-  const accessToken = getToken('access-token')
+  const accessToken = getToken(KEY_ACCESS_TOKEN)
 
   const fetchLogoutProps: ModulePostFetchProps = {
     data: {},
@@ -22,7 +23,7 @@ export default function Logout() {
     try {
       await modulePostFetch(fetchLogoutProps)
       dispatch(resetReducer())
-      deleteToken('access-token')
+      deleteToken(KEY_ACCESS_TOKEN)
       alert('로그아웃 되었습니다.')
       router.push('/login')
     } catch (err) {

@@ -3,21 +3,26 @@
 import { useEffect, useState } from 'react'
 
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 import DarkmodeBtn from '../button/DarkmodeBtn'
 import Logout from '../button/login/LogoutBtn'
 import AlertIndicator from '../indicator/alertIndicator'
 
+import { KEY_ACCESS_TOKEN } from '@/app/constant/constant'
 import { getToken } from '@/app/module/utils/cookie'
 
 export default function Header() {
+  const pathname = usePathname()
+  const isRender = !pathname.startsWith('/err')
   const [open, setOpen] = useState({
     board: false,
     project: false,
   })
-  const accessToken = getToken('access-token')
+  const accessToken = getToken(KEY_ACCESS_TOKEN)
+  // istoken이 없어서 접근이 불가한 곳은 어차피 errpage로 리디렉션된다.
   const isToken = () => {
-    return accessToken !== 'undefined'
+    return accessToken !== null
   }
   const isLogin = isToken()
   const handleOpen = (title: string) => {
@@ -49,7 +54,7 @@ export default function Header() {
 
   return (
     <nav className="bg-white border-gray-200 dark:bg-gray-900">
-      {mount ? (
+      {mount && isRender ? (
         <>
           <div className="flex flex-wrap items-center justify-between max-w-screen-xl mx-auto p-4">
             <Link href="/main" className="flex items-center space-x-3 rtl:space-x-reverse">

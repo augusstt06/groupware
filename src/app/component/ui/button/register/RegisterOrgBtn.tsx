@@ -2,14 +2,14 @@ import axios, { HttpStatusCode } from 'axios'
 import { getCookie, setCookie } from 'cookies-next'
 import { useRouter } from 'next/navigation'
 
-import { ORG_CRAETE_NOTEAM, ORG_CREATE, ORG_JOIN } from '@/app/constant/constant'
+import { KEY_ACCESS_TOKEN, ORG_CRAETE_NOTEAM, ORG_CREATE, ORG_JOIN } from '@/app/constant/constant'
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { modulePostFetch } from '@/app/module/utils/moduleFetch'
 import { type ModulePostFetchProps } from '@/app/types/moduleTypes'
 import { type BtnProps } from '@/app/types/ui/btnTypes'
 
 export default function RegisterOrgBtn(props: BtnProps) {
-  const accessToken = getCookie('access-token')
+  const accessToken = getCookie(KEY_ACCESS_TOKEN)
   const router = useRouter()
 
   const isOrgComplete: boolean = useAppSelector((state) => {

@@ -1,10 +1,11 @@
+import { KEY_ACCESS_TOKEN } from '@/app/constant/constant'
 import { getToken } from '@/app/module/utils/cookie'
 import { modulePatchFetch, modulePostFetch } from '@/app/module/utils/moduleFetch'
 import { type ModulePostFetchProps } from '@/app/types/moduleTypes'
 import { type AttendanceBtnProps } from '@/app/types/ui/btnTypes'
 
 export default function AttendanceBtn(props: AttendanceBtnProps) {
-  const accessToken = getToken('access-token')
+  const accessToken = getToken(KEY_ACCESS_TOKEN)
   const orgCode = getToken('X-ORGANIZATION-CODE')
 
   const fetchPostAttendance = async () => {

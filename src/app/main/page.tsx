@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 
 import { jwtDecode } from 'jwt-decode'
 import Link from 'next/link'
+import { redirect } from 'next/navigation'
 
 import Hub from '../component/page/main/Hub'
 import { NavigationBtn } from '../component/ui/button/BtnGroups'
@@ -69,12 +70,17 @@ export default function Main() {
   }
   useEffect(() => {
     setMount(true)
-    void fetchGetUsers()
-    void fetchGetOrgInfo()
+    if (accessToken === null) {
+      redirect('/error/notfound/token')
+    } else {
+      void fetchGetUsers()
+      void fetchGetOrgInfo()
+    }
   }, [])
+
   return (
     <>
-      {mount && accessToken !== null ? (
+      {mount ? (
         <main className="grid gap-4 grid-cols-4 h-4/5  pt-10 ml-10 mr-10">
           <div className="col-span-1 w-5/6">
             <UserCard userInfo={userInfo} decode={decode} />
