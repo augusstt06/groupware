@@ -25,7 +25,7 @@ export default function AttendanceBtn(props: AttendanceBtnProps) {
         },
       }
       await modulePostFetch(fetchAttendanceProps)
-      props.setIsAttendance(true)
+      // 출근 여부 변경
       alert('출근 확인이 완료되었습니다.')
     } catch (err) {
       alert('출근 확인에 실패했습니다.')
@@ -48,7 +48,7 @@ export default function AttendanceBtn(props: AttendanceBtnProps) {
         },
       }
       await modulePatchFetch(fetchAttendanceProps)
-      props.setIsAttendance(false)
+      // 출근 여부 변경
       alert('퇴근 확인이 완료되었습니다.')
     } catch (err) {
       alert('퇴근 확인에 실패했습니다.')

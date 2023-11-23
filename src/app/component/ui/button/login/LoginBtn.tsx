@@ -4,6 +4,8 @@ import { useRouter } from 'next/navigation'
 
 import {
   KEY_ACCESS_TOKEN,
+  KEY_UUID,
+  KEY_X_ORGANIZATION_CODE,
   LOGIN_EMAIL_FAIL_MESSAGE,
   LOGIN_PWD_FAIL_MESSAGE,
 } from '@/app/constant/constant'
@@ -37,7 +39,10 @@ export default function LoginBtn(props: LoginBtnProps) {
         return
       }
       const res = await modulePostFetch(fetchLoginProps)
-      setCookie(KEY_ACCESS_TOKEN, res.data.result)
+      // FIXME: 로그인시 정보를 많이 주는데 쿠키에 다 저장하는것이 맞는가
+      setCookie(KEY_ACCESS_TOKEN, res.data.result.accessToken)
+      setCookie(KEY_X_ORGANIZATION_CODE, res.data.result.organizationCode)
+      setCookie(KEY_UUID, res.data.result.uuid)
       router.push('/main')
     } catch (err) {
       if (axios.isAxiosError(err)) {

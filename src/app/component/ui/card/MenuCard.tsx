@@ -1,6 +1,8 @@
-export default function MenuCard() {
+import { type MenuCardProps } from '@/app/types/pageTypes'
+
+export default function MenuCard(props: MenuCardProps) {
   const menuList = [
-    { name: '조직이름', menu1: '공지사항', menu2: '자유 게시판' },
+    { name: props.userInfo.organizationName, menu1: '공지사항', menu2: '자유 게시판' },
     { name: '팀이름', menu1: '게시판 이름', menu2: '게시판 이름2' },
     { name: '프로젝트이름', menu1: '게시판 이름', menu2: '게시판 이름2' },
   ]

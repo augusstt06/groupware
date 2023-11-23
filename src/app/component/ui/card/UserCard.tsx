@@ -1,16 +1,14 @@
-import { useState } from 'react'
-
 import AttendanceBtn from '../button/attendance/AttendanceBtn'
 
-import convertTime from '@/app/module/utils/convertTime'
+// import convertTime from '@/app/module/utils/convertTime'
 import { type UserCardProps } from '@/app/types/pageTypes'
 
 export default function UserCard(props: UserCardProps) {
   // FIXME: 출퇴근 상태값은 서버에서 받아와서 유지하기
 
-  const [isAttendance, setIsAttendance] = useState(false)
-  const timeStamp = convertTime(props.decode.iat)
-  const tailwindClassName = isAttendance ? 'text-blue-400 font-bold' : 'text-red-400 font-bold'
+  // const timeStamp = convertTime(props.decode.iat)
+  const tailwindClassName =
+    props.userInfo.attendanceStatus === 'in' ? 'text-blue-400 font-bold' : 'text-red-400 font-bold'
   return (
     <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
       <div className="flex justify-end px-4 pt-4"></div>
@@ -23,12 +21,12 @@ export default function UserCard(props: UserCardProps) {
             {props.userInfo.name}
           </h5>
         </div>
-        <span className="text-sm text-gray-500 dark:text-gray-400 w-4/5 mb-1">
-          Login at : {timeStamp}
-        </span>
+        <span className="text-sm text-gray-500 dark:text-gray-400 w-4/5 mb-1">Login at :</span>
         <div className="flex flex-start justify-between w-4/5">
           <span className="text-medium text-gray-500 dark:text-gray-400">업무 상태</span>
-          <span className={`${tailwindClassName}`}>{isAttendance ? '업무 중' : '업무 종료'} </span>
+          <span className={`${tailwindClassName}`}>
+            {props.userInfo.attendanceStatus === 'in' ? '업무 중' : '업무 종료'}{' '}
+          </span>
         </div>
         <div className="flex flex-start justify-between items-center w-4/5">
           <span className="text-medium text-gray-500 dark:text-gray-400">업무 시간</span>
@@ -38,11 +36,7 @@ export default function UserCard(props: UserCardProps) {
         </div>
         <div className="flex flex-row justify-around mt-4 md:mt-6 w-4/5">
           <div className="w-full">
-            <AttendanceBtn
-              userId={props.userInfo.userId}
-              isAttendance={isAttendance}
-              setIsAttendance={setIsAttendance}
-            />
+            <AttendanceBtn userId={props.userInfo.userId} />
           </div>
         </div>
       </div>

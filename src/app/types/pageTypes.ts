@@ -13,6 +13,21 @@ export type RegisterInfoTypeProps = {
 }
 
 export type UserCardProps = {
-  userInfo: { name: string; position: string; userId: number }
-  decode: { uuid: string; iss: string; iat: number; exp: number }
+  userInfo: {
+    name: string
+    position: string
+    userId: number
+    organizationName: string
+    attendanceStatus: string
+  }
+}
+
+export type MenuCardProps = {
+  userInfo: {
+    name: string
+    position: string
+    userId: number
+    organizationName: string
+    attendanceStatus: string
+  }
 }

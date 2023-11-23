@@ -42,6 +42,4 @@ export type LoginBtnProps = BtnProps & {
 // main
 export type AttendanceBtnProps = {
   userId: number
-  isAttendance: boolean
-  setIsAttendance: React.Dispatch<SetStateAction<boolean>>
 }
