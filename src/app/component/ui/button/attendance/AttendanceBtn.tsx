@@ -11,12 +11,17 @@ export default function AttendanceBtn(props: AttendanceBtnProps) {
   const fetchPostAttendance = async () => {
     try {
       if (orgCode === undefined) {
-        alert('소속된 조직이 없습니다.')
+        props.setErrMsg('소속된 조직을 확인할수 없습니다.')
+        return
+      }
+      if (props.userInfo.attendanceStatus === 'in') {
+        props.setErrMsg('이미 출근확인을 완료했습니다.')
         return
       }
       const fetchAttendanceProps: ModulePostFetchProps = {
         data: {
-          userId: props.userId,
+          organizationId: props.userInfo.organizationId,
+          userId: props.userInfo.userId,
         },
         fetchUrl: process.env.NEXT_PUBLIC_ATTENDANCES_SOURCE,
         header: {
@@ -25,21 +30,25 @@ export default function AttendanceBtn(props: AttendanceBtnProps) {
         },
       }
       await modulePostFetch(fetchAttendanceProps)
-      // 출근 여부 변경
-      alert('출근 확인이 완료되었습니다.')
+      props.setRerender(!props.reRender)
     } catch (err) {
-      alert('출근 확인에 실패했습니다.')
+      props.setErrMsg('출근 확인에 실패했습니다.')
     }
   }
   const fetchLeaveWork = async () => {
     try {
       if (orgCode === undefined) {
-        alert('소속된 조직이 없습니다.')
+        props.setErrMsg('소속된 조직을 확인할수 없습니다.')
+        return
+      }
+      if (props.userInfo.attendanceStatus !== 'in') {
+        props.setErrMsg('이미 퇴근확인을 완료했습니다.')
         return
       }
       const fetchAttendanceProps: ModulePostFetchProps = {
         data: {
-          userId: props.userId,
+          organizationId: props.userInfo.organizationId,
+          userId: props.userInfo.userId,
         },
         fetchUrl: process.env.NEXT_PUBLIC_ATTENDANCES_SOURCE,
         header: {
@@ -48,10 +57,9 @@ export default function AttendanceBtn(props: AttendanceBtnProps) {
         },
       }
       await modulePatchFetch(fetchAttendanceProps)
-      // 출근 여부 변경
-      alert('퇴근 확인이 완료되었습니다.')
+      props.setRerender(!props.reRender)
     } catch (err) {
-      alert('퇴근 확인에 실패했습니다.')
+      props.setErrMsg('퇴근 확인에 실패했습니다.')
     }
   }
 
@@ -68,7 +76,7 @@ export default function AttendanceBtn(props: AttendanceBtnProps) {
       <button
         className="w-2/5 justify-center text-indigo-500 hover:text-white dark:text-white dark:bg-indigo-500 dark:border-white bg-white border-indigo-500 hover:bg-indigo-500 focus:ring-4 focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 dark:hover:bg-white dark:hover:text-indigo-500 mb-2 border-2 dark:hover:border-indigo-500/75"
         onClick={() => {
-          void fetchLeaveWork
+          void fetchLeaveWork()
         }}
       >
         퇴근

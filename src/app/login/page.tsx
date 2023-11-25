@@ -22,19 +22,19 @@ export default function Login() {
   const accessToken = getToken(KEY_ACCESS_TOKEN)
 
   const [errorState, setErrorState] = useState({
-    error: false,
+    isError: false,
     description: '',
   })
   const setErrMsg = (errDescripton: string) => {
     setErrorState({
-      error: true,
+      isError: true,
       description: errDescripton,
     })
   }
 
   const handleClickError = () => {
     setErrorState({
-      error: !errorState.error,
+      isError: !errorState.isError,
       description: errorState.description,
     })
   }
@@ -63,7 +63,7 @@ export default function Login() {
           isPwdView={isPwdView}
           setIsPwdView={setIsPwdView}
         />
-        {errorState.error ? (
+        {errorState.isError ? (
           <ErrorAlert description={errorState.description} handleClickError={handleClickError} />
         ) : (
           <></>

@@ -41,5 +41,15 @@ export type LoginBtnProps = BtnProps & {
 }
 // main
 export type AttendanceBtnProps = {
-  userId: number
+  userInfo: {
+    name: string
+    position: string
+    userId: number
+    organizationId: number
+    organizationName: string
+    attendanceStatus: string
+  }
+  setErrMsg: (errDescripton: string) => void
+  reRender: boolean
+  setRerender: React.Dispatch<SetStateAction<boolean>>
 }

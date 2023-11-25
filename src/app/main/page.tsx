@@ -18,10 +18,12 @@ export default function Main() {
   // Invalid token specified => next js에서 prerender하는 과정 살펴보기
   const uuid: string = getToken(KEY_UUID) !== null ? (getToken(KEY_UUID) as string) : ''
 
+  const [reRender, setRerender] = useState(false)
   const [userInfo, setUserInfo] = useState({
     name: '',
     position: '',
     userId: 0,
+    organizationId: 0,
     organizationName: '',
     attendanceStatus: '',
   })
@@ -41,12 +43,14 @@ export default function Main() {
       setUserInfo({
         name: res.data.result.name,
         position: res.data.result.position,
-        userId: res.data.result.id,
+        userId: res.data.result.userId,
+        organizationId: res.data.result.organizationId,
         organizationName: res.data.result.organizationName,
         attendanceStatus: res.data.result.attendanceStatus,
       })
     } catch (err) {
       // FIXME: 에러 핸들링 하기 => 어떤 방식으로? 유저정보를 가져오는데 실패하면 무엇을 어떻게 알려줘야하나. => 유저정보를 가져오는데 실패했다 => 로그인과정에서 문제가 발생했다 => 재로그인
+      // 그럼 굳이 케이스를 나누어서 에러처리를 할 필요가 있나
       if (axios.isAxiosError(err)) {
         switch (err.response?.status) {
           case HttpStatusCode.BadRequest:
@@ -70,13 +74,13 @@ export default function Main() {
     } else {
       void fetchGetUsers()
     }
-  }, [])
+  }, [reRender])
 
   return (
     <>
       <main className="grid gap-4 grid-cols-4 h-4/5  pt-10 ml-10 mr-10">
         <div className="col-span-1 w-5/6">
-          <UserCard userInfo={userInfo} />
+          <UserCard userInfo={userInfo} reRender={reRender} setRerender={setRerender} />
           <MenuCard userInfo={userInfo} />
         </div>
         <div className="col-span-3 mr-10">
