@@ -1,10 +1,13 @@
 import { KEY_ACCESS_TOKEN } from '@/app/constant/constant'
+import { useAppDispatch } from '@/app/module/hooks/reduxHooks'
 import { getToken } from '@/app/module/utils/cookie'
 import { modulePatchFetch, modulePostFetch } from '@/app/module/utils/moduleFetch'
+import { checkAttendanceTimeReducer } from '@/app/store/reducers/attendanceTimeReducer'
 import { type ModulePostFetchProps } from '@/app/types/moduleTypes'
 import { type AttendanceBtnProps } from '@/app/types/ui/btnTypes'
 
 export default function AttendanceBtn(props: AttendanceBtnProps) {
+  const dispatch = useAppDispatch()
   const accessToken = getToken(KEY_ACCESS_TOKEN)
   const orgCode = getToken('X-ORGANIZATION-CODE')
 
@@ -29,7 +32,10 @@ export default function AttendanceBtn(props: AttendanceBtnProps) {
           'X-ORGANIZATION-CODE': orgCode,
         },
       }
+
       await modulePostFetch(fetchAttendanceProps)
+      const currentime = new Date().getTime()
+      dispatch(checkAttendanceTimeReducer({ attendanceTime: currentime }))
       props.setRerender(!props.reRender)
     } catch (err) {
       props.setErrMsg('출근 확인에 실패했습니다.')
@@ -56,7 +62,9 @@ export default function AttendanceBtn(props: AttendanceBtnProps) {
           'X-ORGANIZATION-CODE': orgCode,
         },
       }
+
       await modulePatchFetch(fetchAttendanceProps)
+      dispatch(checkAttendanceTimeReducer({ attendanceTime: 0 }))
       props.setRerender(!props.reRender)
     } catch (err) {
       props.setErrMsg('퇴근 확인에 실패했습니다.')
