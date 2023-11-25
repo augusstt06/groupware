@@ -2,7 +2,6 @@
 
 import { configureStore } from '@reduxjs/toolkit'
 
-import attendanceTimeReducer from './reducers/attendanceTimeReducer'
 import loginInfoReducer from './reducers/loginInfoReducer'
 import orgInfoReducer from './reducers/orgInfoReducer'
 import signupInfoReducer from './reducers/signupInfoReducer'
@@ -12,7 +11,6 @@ export const store = configureStore({
     signupInfo: signupInfoReducer,
     loginInfo: loginInfoReducer,
     orgInfo: orgInfoReducer,
-    attendanceTime: attendanceTimeReducer,
   },
 })
 

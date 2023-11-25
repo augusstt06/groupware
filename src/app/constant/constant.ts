@@ -23,6 +23,7 @@ export const KEY_ACCESS_TOKEN = 'access-token'
 export const KEY_X_ORGANIZATION_CODE = 'X-ORGANIZATION-CODE'
 export const KEY_UUID = 'uuid'
 export const KEY_LOGIN_TIME = 'login-time'
+export const KEY_ATTENDANCE_TIME = 'attendence-time'
 // err msg
 
 export const LOGIN_EMAIL_FAIL_MESSAGE = 'user not found: record not found'

@@ -8,7 +8,7 @@ import Hub from '../component/page/main/Hub'
 import MenuCard from '../component/ui/card/MenuCard'
 import UserCard from '../component/ui/card/UserCard'
 import { KEY_ACCESS_TOKEN, KEY_UUID, KEY_X_ORGANIZATION_CODE } from '../constant/constant'
-import { deleteToken, getToken } from '../module/utils/cookie'
+import { deleteTokens, getToken } from '../module/utils/cookie'
 import { moduleGetFetch } from '../module/utils/moduleFetch'
 import { type ModuleGetFetchProps } from '../types/moduleTypes'
 
@@ -54,9 +54,7 @@ export default function Main() {
       if (axios.isAxiosError(err)) {
         switch (err.response?.status) {
           case HttpStatusCode.BadRequest:
-            deleteToken(KEY_ACCESS_TOKEN)
-            deleteToken(KEY_UUID)
-            deleteToken(KEY_X_ORGANIZATION_CODE)
+            deleteTokens(KEY_ACCESS_TOKEN, KEY_UUID, KEY_X_ORGANIZATION_CODE)
             redirect('/error/notfound')
             break
           case HttpStatusCode.InternalServerError:

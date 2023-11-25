@@ -52,4 +52,6 @@ export type AttendanceBtnProps = {
   setErrMsg: (errDescripton: string) => void
   reRender: boolean
   setRerender: React.Dispatch<SetStateAction<boolean>>
+  elapsed: string
+  setElapsed: React.Dispatch<SetStateAction<string>>
 }

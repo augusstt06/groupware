@@ -1,8 +1,14 @@
 import { useRouter } from 'next/navigation'
 
-import { KEY_ACCESS_TOKEN } from '@/app/constant/constant'
+import {
+  KEY_ACCESS_TOKEN,
+  KEY_ATTENDANCE_TIME,
+  KEY_LOGIN_TIME,
+  KEY_UUID,
+  KEY_X_ORGANIZATION_CODE,
+} from '@/app/constant/constant'
 import { useAppDispatch } from '@/app/module/hooks/reduxHooks'
-import { deleteToken, getToken } from '@/app/module/utils/cookie'
+import { deleteTokens, getToken } from '@/app/module/utils/cookie'
 import { modulePostFetch } from '@/app/module/utils/moduleFetch'
 import { resetReducer } from '@/app/store/reducers/loginInfoReducer'
 import { type ModulePostFetchProps } from '@/app/types/moduleTypes'
@@ -23,7 +29,13 @@ export default function Logout() {
     try {
       await modulePostFetch(fetchLogoutProps)
       dispatch(resetReducer())
-      deleteToken(KEY_ACCESS_TOKEN)
+      deleteTokens(
+        KEY_ACCESS_TOKEN,
+        KEY_ATTENDANCE_TIME,
+        KEY_LOGIN_TIME,
+        KEY_UUID,
+        KEY_X_ORGANIZATION_CODE,
+      )
       alert('로그아웃 되었습니다.')
       router.push('/login')
     } catch (err) {

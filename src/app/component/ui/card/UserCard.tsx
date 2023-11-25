@@ -5,16 +5,13 @@ import { useEffect, useState } from 'react'
 import ErrorAlert from '../alert/ErrorAlert'
 import AttendanceBtn from '../button/attendance/AttendanceBtn'
 
-import { KEY_LOGIN_TIME } from '@/app/constant/constant'
-import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
+import { KEY_ATTENDANCE_TIME, KEY_LOGIN_TIME } from '@/app/constant/constant'
 import { getToken } from '@/app/module/utils/cookie'
-import { updateElapsedReducer } from '@/app/store/reducers/attendanceTimeReducer'
 import { type UserCardProps } from '@/app/types/pageTypes'
 
 export default function UserCard(props: UserCardProps) {
-  const dispatch = useAppDispatch()
-  const elapsed = useAppSelector((state) => state.attendanceTime.elapsed)
-  const attendanceTime = useAppSelector((state) => state.attendanceTime.attendanceTime)
+  const [elapsed, setElapsed] = useState('0')
+  const attendanceTime = getToken(KEY_ATTENDANCE_TIME)
   const [mount, setMount] = useState(false)
 
   const [errorState, setErrorState] = useState({
@@ -48,19 +45,23 @@ export default function UserCard(props: UserCardProps) {
   const tailwindClassName =
     props.userInfo.attendanceStatus === 'in' ? 'text-blue-400 font-bold' : 'text-red-400 font-bold'
   const tailwindAttendanceTimeClassName =
-    elapsed !== 0 ? 'text-blue-400 font-bold' : 'text-red-400 font-bold'
+    elapsed !== '0' ? 'text-blue-400 font-bold' : 'text-red-400 font-bold'
 
   useEffect(() => {
     setMount(true)
-    setInterval(() => {
-      if (attendanceTime !== null && attendanceTime !== 0) {
+    const updateElapsed = () => {
+      if (attendanceTime !== null && attendanceTime !== '0') {
         const now = new Date().getTime()
-        const timeElapsed = Math.floor((now - attendanceTime) / (1000 * 60))
-
-        dispatch(updateElapsedReducer({ elapsed: timeElapsed }))
+        const timeElapsed = Math.floor((now - parseInt(attendanceTime)) / (1000 * 60))
+        setElapsed(timeElapsed.toString())
       }
-    }, 1000 * 60)
-  }, [attendanceTime, dispatch])
+    }
+    updateElapsed()
+    const intervalId = setInterval(updateElapsed, 1000 * 60)
+    return () => {
+      clearInterval(intervalId)
+    }
+  }, [attendanceTime])
 
   return (
     <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
@@ -88,9 +89,6 @@ export default function UserCard(props: UserCardProps) {
             <div className="flex flex-start justify-between items-center w-4/5">
               <span className="text-medium text-gray-500 dark:text-gray-400">업무 시간</span>
               <span className={tailwindAttendanceTimeClassName}>{elapsed}분 </span>
-              {/* <div className="w-2/3 bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
-                <div className="bg-indigo-400 h-2.5 rounded-full w-2/5"></div>
-              </div> */}
             </div>
             <div className="flex flex-row justify-around mt-4 md:mt-6 w-4/5">
               <div className="w-full">
@@ -99,6 +97,8 @@ export default function UserCard(props: UserCardProps) {
                   setErrMsg={setErrMsg}
                   reRender={props.reRender}
                   setRerender={props.setRerender}
+                  elapsed={elapsed}
+                  setElapsed={setElapsed}
                 />
               </div>
             </div>

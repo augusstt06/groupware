@@ -5,6 +5,8 @@ export const getToken = (name: string) => {
   return value
 }
 
-export const deleteToken = (name: string) => {
-  deleteCookie(name)
+export const deleteTokens = (...name: string[]) => {
+  name.forEach((name) => {
+    deleteCookie(name)
+  })
 }
