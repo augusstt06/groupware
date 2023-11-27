@@ -42,12 +42,12 @@ export default function Main() {
     try {
       const res = await (await moduleGetFetch(getFetchUserProps)).json()
       setUserInfo({
-        name: res.data.result.name,
-        position: res.data.result.position,
-        userId: res.data.result.userId,
-        organizationId: res.data.result.organizationId,
-        organizationName: res.data.result.organizationName,
-        attendanceStatus: res.data.result.attendanceStatus,
+        name: res.result.name,
+        position: res.result.position,
+        userId: res.result.userId,
+        organizationId: res.result.organizationId,
+        organizationName: res.result.organizationName,
+        attendanceStatus: res.result.attendanceStatus,
       })
     } catch (err) {
       // FIXME: 에러 핸들링 하기 => 어떤 방식으로? 유저정보를 가져오는데 실패하면 무엇을 어떻게 알려줘야하나. => 유저정보를 가져오는데 실패했다 => 로그인과정에서 문제가 발생했다 => 재로그인

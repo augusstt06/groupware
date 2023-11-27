@@ -12,7 +12,7 @@ export type ModuleGetFetchProps = {
 export type ModulePostFetchProps = {
   data: object
   fetchUrl?: string
-  header?: object
+  header?: Record<string, string>
 }
 
 export type InputValidateProps = {

@@ -20,6 +20,7 @@ export default function AttendanceBtn(props: AttendanceBtnProps) {
         props.setErrMsg('이미 출근확인을 완료했습니다.')
         return
       }
+
       const fetchAttendanceProps: ModulePostFetchProps = {
         data: {
           organizationId: props.userInfo.organizationId,
