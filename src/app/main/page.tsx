@@ -29,8 +29,9 @@ export default function Main() {
   })
 
   const getFetchUserProps: ModuleGetFetchProps = {
-    keyName: [KEY_UUID],
-    keyValue: [uuid],
+    params: {
+      [KEY_UUID]: uuid,
+    },
     fetchUrl: process.env.NEXT_PUBLIC_USERS_SOURCE,
     header: {
       Authorization: `Bearer ${accessToken}`,
@@ -39,7 +40,7 @@ export default function Main() {
 
   const fetchGetUsers = async () => {
     try {
-      const res = await moduleGetFetch(getFetchUserProps)
+      const res = await (await moduleGetFetch(getFetchUserProps)).json()
       setUserInfo({
         name: res.data.result.name,
         position: res.data.result.position,

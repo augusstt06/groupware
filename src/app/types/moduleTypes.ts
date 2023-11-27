@@ -5,10 +5,9 @@ export type UseInputProps = {
 }
 
 export type ModuleGetFetchProps = {
-  keyName: string[]
-  keyValue: Array<string | number>
+  params: Record<string, string>
   fetchUrl?: string
-  header?: object
+  header?: Record<string, string>
 }
 export type ModulePostFetchProps = {
   data: object

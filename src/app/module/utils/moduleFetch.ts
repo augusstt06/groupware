@@ -4,13 +4,17 @@ import { type ModuleGetFetchProps, type ModulePostFetchProps } from '@/app/types
 
 axios.defaults.withCredentials = true
 
-export const moduleGetFetch = async (props: ModuleGetFetchProps): Promise<AxiosResponse> => {
-  const urlParams: Record<string, unknown> = {}
-  props.keyName.forEach((key, index) => {
-    urlParams[key] = props.keyValue[index]
+export const moduleGetFetch = async (props: ModuleGetFetchProps): Promise<Response> => {
+  const queryString = new URLSearchParams()
+  Object.entries(props.params).forEach(([key, value]) => {
+    queryString.append(key, value)
   })
+  const urlWithQueryString = `${props.fetchUrl}?${queryString.toString()}`
 
-  return axios.get(`${props.fetchUrl}`, { params: urlParams, headers: props.header })
+  return fetch(urlWithQueryString, {
+    method: 'GET',
+    headers: props.header,
+  })
 }
 
 export const modulePostFetch = async (props: ModulePostFetchProps): Promise<AxiosResponse> => {

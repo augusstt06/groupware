@@ -31,6 +31,7 @@ export default function UserCard(props: UserCardProps) {
       description: errorState.description,
     })
   }
+  // FIXME:
   const timeString =
     getToken(KEY_LOGIN_TIME) !== null
       ? (getToken(KEY_LOGIN_TIME) as string)

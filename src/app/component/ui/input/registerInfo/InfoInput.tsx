@@ -41,8 +41,7 @@ export default function InfoInput(props: InfoInputProps) {
   const emailState = useAppSelector((state) => state.signupInfo.email)
 
   const getFetchEmailProps: ModuleGetFetchProps = {
-    keyName: [REGISTER_EMAIL.toLowerCase()],
-    keyValue: [useInput.value],
+    params: { [REGISTER_EMAIL.toLowerCase()]: useInput.value },
     fetchUrl: process.env.NEXT_PUBLIC_EMAIL_REQ_SOURCE,
   }
 
