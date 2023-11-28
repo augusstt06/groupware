@@ -13,6 +13,7 @@ import { type ModuleGetFetchProps } from '../types/moduleTypes'
 
 export default function Main() {
   const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
+  // FIXME: uuid decode로 바꾸기
   const uuid = moduleGetCookie(KEY_UUID)
 
   const [reRender, setRerender] = useState(false)
