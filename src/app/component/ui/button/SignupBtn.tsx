@@ -1,5 +1,4 @@
 import { HttpStatusCode } from 'axios'
-import { setCookie } from 'cookies-next'
 import { useRouter } from 'next/navigation'
 import { AiFillGithub, AiOutlineGoogle } from 'react-icons/ai'
 import { TbLogin2 } from 'react-icons/tb'
@@ -7,6 +6,7 @@ import { TbLogin2 } from 'react-icons/tb'
 import { KEY_ACCESS_TOKEN } from '@/app/constant/constant'
 import { ERR_400, ERR_500, ERR_DEFAULT } from '@/app/constant/errorMsg'
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
+import { moduleSetCookies } from '@/app/module/utils/cookie'
 import { modulePostFetch } from '@/app/module/utils/moduleFetch'
 import { type ModulePostFetchProps } from '@/app/types/moduleTypes'
 import { type SignupBtnProps } from '@/app/types/ui/btnTypes'
@@ -36,7 +36,7 @@ export function SignupBtn(props: SignupBtnProps) {
 
   const fetchSignin = async (): Promise<void> => {
     try {
-      if (!signupState.email.isCheck) {
+      if (!(signupState.email.isCheck as boolean)) {
         props.setErrMsg('이메일이 중복됩니다. 다른 이메일을 사용해주세요.')
         return
       }
@@ -47,8 +47,9 @@ export function SignupBtn(props: SignupBtnProps) {
       }
       // FIXME: 응답형태를 타입으로 지정이 가능한가?
       const resJson = await res.json()
-
-      setCookie(KEY_ACCESS_TOKEN, resJson.data.result)
+      moduleSetCookies({
+        [KEY_ACCESS_TOKEN]: resJson.data.result,
+      })
       router.push('/organization')
     } catch (err) {
       if (err instanceof Error) {

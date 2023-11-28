@@ -1,11 +1,6 @@
 import { HttpStatusCode } from 'axios'
-import { setCookie } from 'cookies-next'
 
-import {
-  KEY_ACCESS_TOKEN,
-  KEY_ATTENDANCE_TIME,
-  KEY_X_ORGANIZATION_CODE,
-} from '@/app/constant/constant'
+import { KEY_ACCESS_TOKEN, KEY_X_ORGANIZATION_CODE } from '@/app/constant/constant'
 import {
   ERR_500,
   ERR_COOKIE_NOT_FOUND,
@@ -13,12 +8,15 @@ import {
   ERR_DUPLICATE,
   ERR_NOT_FOUND,
 } from '@/app/constant/errorMsg'
-import { moduleDeleteCookies, moduleGetCookie } from '@/app/module/utils/cookie'
+import { useAppDispatch } from '@/app/module/hooks/reduxHooks'
+import { moduleGetCookie } from '@/app/module/utils/cookie'
 import { modulePatchFetch, modulePostFetch } from '@/app/module/utils/moduleFetch'
+import { checkAttendanceReducer } from '@/app/store/reducers/attendanceReducer'
 import { type ModulePostFetchProps } from '@/app/types/moduleTypes'
 import { type AttendanceBtnProps } from '@/app/types/ui/btnTypes'
 
 export default function AttendanceBtn(props: AttendanceBtnProps) {
+  const dispatch = useAppDispatch()
   const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
   const orgCode = moduleGetCookie(KEY_X_ORGANIZATION_CODE)
 
@@ -50,7 +48,13 @@ export default function AttendanceBtn(props: AttendanceBtnProps) {
         throw new Error(res.status.toString())
       }
       const currentime = new Date().getTime()
-      setCookie(KEY_ATTENDANCE_TIME, currentime)
+      // setCookie(KEY_ATTENDANCE_TIME, currentime)
+      dispatch(
+        checkAttendanceReducer({
+          status: true,
+          time: currentime,
+        }),
+      )
       props.setRerender(!props.reRender)
     } catch (err) {
       if (err instanceof Error) {
@@ -91,7 +95,13 @@ export default function AttendanceBtn(props: AttendanceBtnProps) {
       if (!res.ok) {
         throw new Error(res.status.toString())
       }
-      moduleDeleteCookies(KEY_ATTENDANCE_TIME)
+      // moduleDeleteCookies(KEY_ATTENDANCE_TIME)
+      dispatch(
+        checkAttendanceReducer({
+          status: false,
+          time: 0,
+        }),
+      )
       props.setElapsed('0')
       props.setRerender(!props.reRender)
     } catch (err) {

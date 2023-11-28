@@ -1,15 +1,21 @@
 import { HttpStatusCode } from 'axios'
-import { getCookie, setCookie } from 'cookies-next'
 import { useRouter } from 'next/navigation'
 
-import { KEY_ACCESS_TOKEN, ORG_CRAETE_NOTEAM, ORG_CREATE, ORG_JOIN } from '@/app/constant/constant'
+import {
+  KEY_ACCESS_TOKEN,
+  KEY_X_ORGANIZATION_CODE,
+  ORG_CRAETE_NOTEAM,
+  ORG_CREATE,
+  ORG_JOIN,
+} from '@/app/constant/constant'
 import { ERR_400, ERR_500, ERR_DEFAULT, ERR_NOT_ENTERED } from '@/app/constant/errorMsg'
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
+import { moduleGetCookie, moduleSetCookies } from '@/app/module/utils/cookie'
 import { modulePostFetch } from '@/app/module/utils/moduleFetch'
 import { type ModulePostFetchProps } from '@/app/types/moduleTypes'
 import { type RegisterOrgBtnProps } from '@/app/types/ui/btnTypes'
 export default function RegisterOrgBtn(props: RegisterOrgBtnProps) {
-  const accessToken = getCookie(KEY_ACCESS_TOKEN)
+  const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
   const router = useRouter()
 
   const isOrgComplete: boolean = useAppSelector((state) => {
@@ -61,7 +67,9 @@ export default function RegisterOrgBtn(props: RegisterOrgBtnProps) {
         throw new Error(res.status.toString())
       }
       const resJson = await res.json()
-      setCookie('X-ORGANIZATION-CODE', resJson.data.result)
+      moduleSetCookies({
+        [KEY_X_ORGANIZATION_CODE]: resJson.data.result,
+      })
       router.push('/main')
     } catch (err) {
       if (err instanceof Error) {

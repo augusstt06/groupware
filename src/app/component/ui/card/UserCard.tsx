@@ -5,13 +5,15 @@ import { useEffect, useState } from 'react'
 import ErrorAlert from '../alert/ErrorAlert'
 import AttendanceBtn from '../button/attendance/AttendanceBtn'
 
-import { KEY_ATTENDANCE_TIME, KEY_LOGIN_TIME } from '@/app/constant/constant'
+import { KEY_LOGIN_TIME } from '@/app/constant/constant'
+import { useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleGetCookie } from '@/app/module/utils/cookie'
 import { type UserCardProps } from '@/app/types/pageTypes'
 
 export default function UserCard(props: UserCardProps) {
   const [elapsed, setElapsed] = useState('0')
-  const attendanceTime = moduleGetCookie(KEY_ATTENDANCE_TIME)
+  // const attendanceTime = moduleGetCookie(KEY_ATTENDANCE_TIME)
+  const attendanceTime = useAppSelector((state) => state.attendance.time)
   const [mount, setMount] = useState(false)
 
   const [errorState, setErrorState] = useState({
@@ -55,10 +57,11 @@ export default function UserCard(props: UserCardProps) {
     // 이 경우에는 출근시간을 기준으로 계산을 하는데 이 값이 쿠키에 저장되어 있음
     // 그런데 출근시간기록은 출근버튼을 누를때 쿠키에 저장됨. 로그아웃하고 다시 로그인시에는 출근을 안눌럿기 떄문에 초기화되어잇음
     // 따라서 출근 버튼이나 여기 컴포넌트에서 마지막 출퇴근 기록이 'in'이라면 해당 시간을 받아오는 식으로 해야 할것 같음.
+
     const updateElapsed = () => {
-      if (attendanceTime !== null && attendanceTime !== '0') {
+      if (attendanceTime !== null && attendanceTime !== 0) {
         const now = new Date().getTime()
-        const timeElapsed = Math.floor((now - parseInt(attendanceTime)) / (1000 * 60))
+        const timeElapsed = Math.floor((now - attendanceTime) / (1000 * 60))
         setElapsed(timeElapsed.toString())
       }
     }
