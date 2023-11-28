@@ -19,7 +19,7 @@ export type UserCardProps = {
     userId: number
     organizationId: number
     organizationName: string
-    attendanceStatus: string
+    // attendanceStatus: string
   }
   reRender: boolean
   setRerender: React.Dispatch<SetStateAction<boolean>>
@@ -32,6 +32,6 @@ export type MenuCardProps = {
     userId: number
     organizationId: number
     organizationName: string
-    attendanceStatus: string
+    // attendanceStatus: string
   }
 }

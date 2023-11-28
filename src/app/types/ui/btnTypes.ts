@@ -47,7 +47,7 @@ export type AttendanceBtnProps = {
     userId: number
     organizationId: number
     organizationName: string
-    attendanceStatus: string
+    // attendanceStatus: string
   }
   setErrMsg: (errDescripton: string) => void
   reRender: boolean

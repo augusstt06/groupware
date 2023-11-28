@@ -14,6 +14,7 @@ import { moduleGetCookie, moduleSetCookies } from '@/app/module/utils/cookie'
 import { modulePostFetch } from '@/app/module/utils/moduleFetch'
 import { type ModulePostFetchProps } from '@/app/types/moduleTypes'
 import { type RegisterOrgBtnProps } from '@/app/types/ui/btnTypes'
+
 export default function RegisterOrgBtn(props: RegisterOrgBtnProps) {
   const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
   const router = useRouter()

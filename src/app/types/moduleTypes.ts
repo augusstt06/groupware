@@ -1,3 +1,7 @@
+import { type JwtPayload } from 'jwt-decode'
+
+import { type KEY_UUID, type KEY_X_ORGANIZATION_CODE } from '../constant/constant'
+
 export type UseInputProps = {
   value: string
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
@@ -19,3 +23,6 @@ export type InputValidateProps = {
   inputData: string
   dataType: string
 }
+
+export type CustomDecodeTokenType = JwtPayload &
+  Record<typeof KEY_UUID | typeof KEY_X_ORGANIZATION_CODE, string>

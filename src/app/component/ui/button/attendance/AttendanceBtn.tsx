@@ -3,30 +3,37 @@ import { HttpStatusCode } from 'axios'
 import { KEY_ACCESS_TOKEN, KEY_X_ORGANIZATION_CODE } from '@/app/constant/constant'
 import {
   ERR_500,
-  ERR_COOKIE_NOT_FOUND,
   ERR_DEFAULT,
   ERR_DUPLICATE,
   ERR_NOT_FOUND,
+  ERR_TOKEN_NOT_FOUND,
 } from '@/app/constant/errorMsg'
-import { useAppDispatch } from '@/app/module/hooks/reduxHooks'
-import { moduleGetCookie } from '@/app/module/utils/cookie'
+import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
+import { moduleDecodeToken, moduleGetCookie } from '@/app/module/utils/cookie'
 import { modulePatchFetch, modulePostFetch } from '@/app/module/utils/moduleFetch'
 import { checkAttendanceReducer } from '@/app/store/reducers/attendanceReducer'
-import { type ModulePostFetchProps } from '@/app/types/moduleTypes'
+import { type CustomDecodeTokenType, type ModulePostFetchProps } from '@/app/types/moduleTypes'
 import { type AttendanceBtnProps } from '@/app/types/ui/btnTypes'
 
 export default function AttendanceBtn(props: AttendanceBtnProps) {
   const dispatch = useAppDispatch()
+  const attendanceStatus = useAppSelector((state) => state.attendance)
   const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
-  const orgCode = moduleGetCookie(KEY_X_ORGANIZATION_CODE)
+  const decodeToken = moduleDecodeToken(accessToken)
+  const orgCode =
+    decodeToken !== ERR_TOKEN_NOT_FOUND
+      ? (decodeToken as CustomDecodeTokenType)[KEY_X_ORGANIZATION_CODE]
+      : ERR_TOKEN_NOT_FOUND
+
+  // const orgCode = moduleGetCookie(KEY_X_ORGANIZATION_CODE)
 
   const fetchPostAttendance = async () => {
     try {
-      if (orgCode === ERR_COOKIE_NOT_FOUND) {
+      if (orgCode === ERR_TOKEN_NOT_FOUND) {
         props.setErrMsg(ERR_NOT_FOUND('소속된 조직'))
         return
       }
-      if (props.userInfo.attendanceStatus === 'in') {
+      if (attendanceStatus.status) {
         props.setErrMsg(ERR_DUPLICATE('출근확인'))
         return
       }
@@ -39,7 +46,7 @@ export default function AttendanceBtn(props: AttendanceBtnProps) {
         fetchUrl: process.env.NEXT_PUBLIC_ATTENDANCES_SOURCE,
         header: {
           Authorization: `Bearer ${accessToken}`,
-          KEY_X_ORGANIZATION_CODE: orgCode,
+          [KEY_X_ORGANIZATION_CODE]: orgCode,
         },
       }
 
@@ -71,11 +78,11 @@ export default function AttendanceBtn(props: AttendanceBtnProps) {
   }
   const fetchLeaveWork = async () => {
     try {
-      if (orgCode === ERR_COOKIE_NOT_FOUND) {
+      if (orgCode === ERR_TOKEN_NOT_FOUND) {
         props.setErrMsg(ERR_NOT_FOUND('소속된 조직'))
         return
       }
-      if (props.userInfo.attendanceStatus !== 'in') {
+      if (!attendanceStatus.status) {
         props.setErrMsg(ERR_DUPLICATE('퇴근 확인'))
         return
       }
@@ -87,7 +94,7 @@ export default function AttendanceBtn(props: AttendanceBtnProps) {
         fetchUrl: process.env.NEXT_PUBLIC_ATTENDANCES_SOURCE,
         header: {
           Authorization: `Bearer ${accessToken}`,
-          KEY_X_ORGANIZATION_CODE: orgCode,
+          [KEY_X_ORGANIZATION_CODE]: orgCode,
         },
       }
 

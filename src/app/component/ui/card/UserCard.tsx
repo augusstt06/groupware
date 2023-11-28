@@ -13,7 +13,7 @@ import { type UserCardProps } from '@/app/types/pageTypes'
 export default function UserCard(props: UserCardProps) {
   const [elapsed, setElapsed] = useState('0')
   // const attendanceTime = moduleGetCookie(KEY_ATTENDANCE_TIME)
-  const attendanceTime = useAppSelector((state) => state.attendance.time)
+  const attendanceState = useAppSelector((state) => state.attendance)
   const [mount, setMount] = useState(false)
 
   const [errorState, setErrorState] = useState({
@@ -46,8 +46,9 @@ export default function UserCard(props: UserCardProps) {
     return timePart
   }
 
-  const tailwindClassName =
-    props.userInfo.attendanceStatus === 'in' ? 'text-blue-400 font-bold' : 'text-red-400 font-bold'
+  const tailwindClassName = attendanceState.status
+    ? 'text-blue-400 font-bold'
+    : 'text-red-400 font-bold'
   const tailwindAttendanceTimeClassName =
     elapsed !== '0' ? 'text-blue-400 font-bold' : 'text-red-400 font-bold'
 
@@ -59,9 +60,9 @@ export default function UserCard(props: UserCardProps) {
     // 따라서 출근 버튼이나 여기 컴포넌트에서 마지막 출퇴근 기록이 'in'이라면 해당 시간을 받아오는 식으로 해야 할것 같음.
 
     const updateElapsed = () => {
-      if (attendanceTime !== null && attendanceTime !== 0) {
+      if (attendanceState.time !== null && attendanceState.time !== 0) {
         const now = new Date().getTime()
-        const timeElapsed = Math.floor((now - attendanceTime) / (1000 * 60))
+        const timeElapsed = Math.floor((now - attendanceState.time) / (1000 * 60))
         setElapsed(timeElapsed.toString())
       }
     }
@@ -70,7 +71,7 @@ export default function UserCard(props: UserCardProps) {
     return () => {
       clearInterval(intervalId)
     }
-  }, [attendanceTime])
+  }, [attendanceState])
 
   return (
     <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
@@ -92,7 +93,7 @@ export default function UserCard(props: UserCardProps) {
             <div className="flex flex-start justify-between w-4/5">
               <span className="text-medium text-gray-500 dark:text-gray-400">업무 상태</span>
               <span className={`${tailwindClassName}`}>
-                {props.userInfo.attendanceStatus === 'in' ? '업무 중' : '업무 종료'}{' '}
+                {attendanceState.status ? '업무 중' : '업무 종료'}{' '}
               </span>
             </div>
             <div className="flex flex-start justify-between items-center w-4/5">

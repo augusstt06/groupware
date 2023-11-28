@@ -2,9 +2,6 @@ import { useRouter } from 'next/navigation'
 
 import {
   KEY_ACCESS_TOKEN,
-  KEY_LOGIN_TIME,
-  KEY_UUID,
-  KEY_X_ORGANIZATION_CODE,
   LOGIN_EMAIL_FAIL_MESSAGE,
   LOGIN_PWD_FAIL_MESSAGE,
 } from '@/app/constant/constant'
@@ -44,12 +41,12 @@ export default function LoginBtn(props: LoginBtnProps) {
         throw new Error(res.statusText)
       }
       const resJson = await res.json()
-      const loginTime = performance.now()
+      // const loginTime = performance.now()
       moduleSetCookies({
-        [KEY_LOGIN_TIME]: loginTime,
         [KEY_ACCESS_TOKEN]: resJson.data.result.accessToken,
-        [KEY_X_ORGANIZATION_CODE]: resJson.data.result.organizationCode,
-        [KEY_UUID]: resJson.data.result.uuid,
+        // [KEY_LOGIN_TIME]: loginTime,
+        // [KEY_X_ORGANIZATION_CODE]: resJson.data.result.organizationCode,
+        // [KEY_UUID]: resJson.data.result.uuid,
       })
 
       router.push('/main')
