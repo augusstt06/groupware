@@ -1,10 +1,11 @@
-import axios, { HttpStatusCode } from 'axios'
+import { HttpStatusCode } from 'axios'
 import { setCookie } from 'cookies-next'
 import { useRouter } from 'next/navigation'
 import { AiFillGithub, AiOutlineGoogle } from 'react-icons/ai'
 import { TbLogin2 } from 'react-icons/tb'
 
 import { KEY_ACCESS_TOKEN } from '@/app/constant/constant'
+import { ERR_400, ERR_500, ERR_DEFAULT } from '@/app/constant/errorMsg'
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { modulePostFetch } from '@/app/module/utils/moduleFetch'
 import { type ModulePostFetchProps } from '@/app/types/moduleTypes'
@@ -41,20 +42,27 @@ export function SignupBtn(props: SignupBtnProps) {
       }
       await modulePostFetch(fetchSignupProps)
       const res = await modulePostFetch(fetchLoginProps)
-      setCookie(KEY_ACCESS_TOKEN, res.data.result)
+      if (!res.ok) {
+        throw new Error(res.status.toString())
+      }
+      // FIXME: 응답형태를 타입으로 지정이 가능한가?
+      const resJson = await res.json()
+
+      setCookie(KEY_ACCESS_TOKEN, resJson.data.result)
       router.push('/organization')
     } catch (err) {
-      if (axios.isAxiosError(err)) {
-        switch (err.response?.status) {
-          case HttpStatusCode.BadRequest:
-            props.setErrMsg('입력값이 잘못되었습니다.')
+      if (err instanceof Error) {
+        switch (err.message) {
+          case HttpStatusCode.BadRequest.toString():
+            props.setErrMsg(ERR_400)
             break
-          case HttpStatusCode.InternalServerError:
-            props.setErrMsg('통신오류가 발생했습니다. 다시 시도해주세요')
+          case HttpStatusCode.InternalServerError.toString():
+            props.setErrMsg(ERR_500)
+            break
+          default:
+            props.setErrMsg(ERR_DEFAULT('회원가입'))
             break
         }
-      } else {
-        props.setErrMsg('회원가입에 실패했습니다.')
       }
     }
   }

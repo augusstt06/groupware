@@ -1,22 +1,19 @@
 'use client'
 import { useEffect, useState } from 'react'
 
-import axios, { HttpStatusCode } from 'axios'
 import { redirect } from 'next/navigation'
 
 import Hub from '../component/page/main/Hub'
 import MenuCard from '../component/ui/card/MenuCard'
 import UserCard from '../component/ui/card/UserCard'
 import { KEY_ACCESS_TOKEN, KEY_UUID, KEY_X_ORGANIZATION_CODE } from '../constant/constant'
-import { deleteTokens, getToken } from '../module/utils/cookie'
+import { moduleDeleteCookies, moduleGetCookie } from '../module/utils/cookie'
 import { moduleGetFetch } from '../module/utils/moduleFetch'
 import { type ModuleGetFetchProps } from '../types/moduleTypes'
 
 export default function Main() {
-  const accessToken = getToken(KEY_ACCESS_TOKEN)
-
-  // Invalid token specified => next js에서 prerender하는 과정 살펴보기
-  const uuid: string = getToken(KEY_UUID) !== null ? (getToken(KEY_UUID) as string) : ''
+  const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
+  const uuid = moduleGetCookie(KEY_UUID)
 
   const [reRender, setRerender] = useState(false)
   const [userInfo, setUserInfo] = useState({
@@ -40,29 +37,25 @@ export default function Main() {
 
   const fetchGetUsers = async () => {
     try {
-      const res = await (await moduleGetFetch(getFetchUserProps)).json()
+      const res = await moduleGetFetch(getFetchUserProps)
+      if (!res.ok) {
+        throw new Error(res.status.toString())
+      }
+      const resJson = await res.json()
       setUserInfo({
-        name: res.result.name,
-        position: res.result.position,
-        userId: res.result.userId,
-        organizationId: res.result.organizationId,
-        organizationName: res.result.organizationName,
-        attendanceStatus: res.result.attendanceStatus,
+        name: resJson.result.name,
+        position: resJson.result.position,
+        userId: resJson.result.userId,
+        organizationId: resJson.result.organizationId,
+        organizationName: resJson.result.organizationName,
+        attendanceStatus: resJson.result.attendanceStatus,
       })
     } catch (err) {
       // FIXME: 에러 핸들링 하기 => 어떤 방식으로? 유저정보를 가져오는데 실패하면 무엇을 어떻게 알려줘야하나. => 유저정보를 가져오는데 실패했다 => 로그인과정에서 문제가 발생했다 => 재로그인
       // 그럼 굳이 케이스를 나누어서 에러처리를 할 필요가 있나
-      if (axios.isAxiosError(err)) {
-        switch (err.response?.status) {
-          case HttpStatusCode.BadRequest:
-            deleteTokens(KEY_ACCESS_TOKEN, KEY_UUID, KEY_X_ORGANIZATION_CODE)
-            redirect('/error/notfound')
-            break
-          case HttpStatusCode.InternalServerError:
-            break
-        }
-      } else {
-        // 일반 에러
+      if (err instanceof Error) {
+        moduleDeleteCookies(KEY_ACCESS_TOKEN, KEY_UUID, KEY_X_ORGANIZATION_CODE)
+        redirect('/error/notfound')
       }
     }
   }

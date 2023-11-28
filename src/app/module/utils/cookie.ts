@@ -1,11 +1,20 @@
-import { deleteCookie, getCookie } from 'cookies-next'
+import { deleteCookie, getCookie, hasCookie, setCookie } from 'cookies-next'
 
-export const getToken = (name: string) => {
-  const value = getCookie(name) !== undefined ? (getCookie(name) as string) : null
-  return value
+import { ERR_COOKIE_NOT_FOUND } from '@/app/constant/errorMsg'
+
+export const moduleGetCookie = (name: string) => {
+  if (hasCookie(name)) {
+    return getCookie(name) as string
+  }
+  return ERR_COOKIE_NOT_FOUND
+}
+export const moduleSetCookies = (cookies: Record<string, string | number>) => {
+  Object.entries(cookies).forEach(([key, value]) => {
+    setCookie(key, value)
+  })
 }
 
-export const deleteTokens = (...name: string[]) => {
+export const moduleDeleteCookies = (...name: string[]) => {
   name.forEach((name) => {
     deleteCookie(name)
   })

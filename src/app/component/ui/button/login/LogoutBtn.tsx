@@ -8,7 +8,7 @@ import {
   KEY_X_ORGANIZATION_CODE,
 } from '@/app/constant/constant'
 import { useAppDispatch } from '@/app/module/hooks/reduxHooks'
-import { deleteTokens, getToken } from '@/app/module/utils/cookie'
+import { moduleDeleteCookies, moduleGetCookie } from '@/app/module/utils/cookie'
 import { modulePostFetch } from '@/app/module/utils/moduleFetch'
 import { resetReducer } from '@/app/store/reducers/loginInfoReducer'
 import { type ModulePostFetchProps } from '@/app/types/moduleTypes'
@@ -16,7 +16,7 @@ import { type ModulePostFetchProps } from '@/app/types/moduleTypes'
 export default function Logout() {
   const router = useRouter()
   const dispatch = useAppDispatch()
-  const accessToken = getToken(KEY_ACCESS_TOKEN)
+  const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
 
   const fetchLogoutProps: ModulePostFetchProps = {
     data: {},
@@ -27,16 +27,18 @@ export default function Logout() {
   }
   const fetchLogout = async () => {
     try {
-      await modulePostFetch(fetchLogoutProps)
+      const res = await modulePostFetch(fetchLogoutProps)
+      if (!res.ok) {
+        throw new Error(res.status.toString())
+      }
       dispatch(resetReducer())
-      deleteTokens(
+      moduleDeleteCookies(
         KEY_ACCESS_TOKEN,
         KEY_ATTENDANCE_TIME,
         KEY_LOGIN_TIME,
         KEY_UUID,
         KEY_X_ORGANIZATION_CODE,
       )
-      alert('로그아웃 되었습니다.')
       router.push('/login')
     } catch (err) {
       alert('로그아웃이 실패했습니다.')

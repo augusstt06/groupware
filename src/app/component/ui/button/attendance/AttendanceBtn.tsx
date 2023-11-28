@@ -1,23 +1,35 @@
+import { HttpStatusCode } from 'axios'
 import { setCookie } from 'cookies-next'
 
-import { KEY_ACCESS_TOKEN, KEY_ATTENDANCE_TIME } from '@/app/constant/constant'
-import { deleteTokens, getToken } from '@/app/module/utils/cookie'
+import {
+  KEY_ACCESS_TOKEN,
+  KEY_ATTENDANCE_TIME,
+  KEY_X_ORGANIZATION_CODE,
+} from '@/app/constant/constant'
+import {
+  ERR_500,
+  ERR_COOKIE_NOT_FOUND,
+  ERR_DEFAULT,
+  ERR_DUPLICATE,
+  ERR_NOT_FOUND,
+} from '@/app/constant/errorMsg'
+import { moduleDeleteCookies, moduleGetCookie } from '@/app/module/utils/cookie'
 import { modulePatchFetch, modulePostFetch } from '@/app/module/utils/moduleFetch'
 import { type ModulePostFetchProps } from '@/app/types/moduleTypes'
 import { type AttendanceBtnProps } from '@/app/types/ui/btnTypes'
 
 export default function AttendanceBtn(props: AttendanceBtnProps) {
-  const accessToken = getToken(KEY_ACCESS_TOKEN)
-  const orgCode = getToken('X-ORGANIZATION-CODE')
+  const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
+  const orgCode = moduleGetCookie(KEY_X_ORGANIZATION_CODE)
 
   const fetchPostAttendance = async () => {
     try {
-      if (orgCode === undefined) {
-        props.setErrMsg('소속된 조직을 확인할수 없습니다.')
+      if (orgCode === ERR_COOKIE_NOT_FOUND) {
+        props.setErrMsg(ERR_NOT_FOUND('소속된 조직'))
         return
       }
       if (props.userInfo.attendanceStatus === 'in') {
-        props.setErrMsg('이미 출근확인을 완료했습니다.')
+        props.setErrMsg(ERR_DUPLICATE('출근확인'))
         return
       }
 
@@ -29,26 +41,38 @@ export default function AttendanceBtn(props: AttendanceBtnProps) {
         fetchUrl: process.env.NEXT_PUBLIC_ATTENDANCES_SOURCE,
         header: {
           Authorization: `Bearer ${accessToken}`,
-          'X-ORGANIZATION-CODE': orgCode,
+          KEY_X_ORGANIZATION_CODE: orgCode,
         },
       }
 
-      await modulePostFetch(fetchAttendanceProps)
+      const res = await modulePostFetch(fetchAttendanceProps)
+      if (!res.ok) {
+        throw new Error(res.status.toString())
+      }
       const currentime = new Date().getTime()
       setCookie(KEY_ATTENDANCE_TIME, currentime)
       props.setRerender(!props.reRender)
     } catch (err) {
-      props.setErrMsg('출근 확인에 실패했습니다.')
+      if (err instanceof Error) {
+        switch (err.message) {
+          case HttpStatusCode.InternalServerError.toString():
+            props.setErrMsg(ERR_500)
+            break
+          default:
+            props.setErrMsg(ERR_DEFAULT('출근 확인'))
+            break
+        }
+      }
     }
   }
   const fetchLeaveWork = async () => {
     try {
-      if (orgCode === undefined) {
-        props.setErrMsg('소속된 조직을 확인할수 없습니다.')
+      if (orgCode === ERR_COOKIE_NOT_FOUND) {
+        props.setErrMsg(ERR_NOT_FOUND('소속된 조직'))
         return
       }
       if (props.userInfo.attendanceStatus !== 'in') {
-        props.setErrMsg('이미 퇴근확인을 완료했습니다.')
+        props.setErrMsg(ERR_DUPLICATE('퇴근 확인'))
         return
       }
       const fetchAttendanceProps: ModulePostFetchProps = {
@@ -59,16 +83,28 @@ export default function AttendanceBtn(props: AttendanceBtnProps) {
         fetchUrl: process.env.NEXT_PUBLIC_ATTENDANCES_SOURCE,
         header: {
           Authorization: `Bearer ${accessToken}`,
-          'X-ORGANIZATION-CODE': orgCode,
+          KEY_X_ORGANIZATION_CODE: orgCode,
         },
       }
 
-      await modulePatchFetch(fetchAttendanceProps)
-      deleteTokens(KEY_ATTENDANCE_TIME)
+      const res = await modulePatchFetch(fetchAttendanceProps)
+      if (!res.ok) {
+        throw new Error(res.status.toString())
+      }
+      moduleDeleteCookies(KEY_ATTENDANCE_TIME)
       props.setElapsed('0')
       props.setRerender(!props.reRender)
     } catch (err) {
-      props.setErrMsg('퇴근 확인에 실패했습니다.')
+      if (err instanceof Error) {
+        switch (err.message) {
+          case HttpStatusCode.InternalServerError.toString():
+            props.setErrMsg(ERR_500)
+            break
+          default:
+            props.setErrMsg(ERR_DEFAULT('퇴근 확인'))
+            break
+        }
+      }
     }
   }
 

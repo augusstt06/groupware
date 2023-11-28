@@ -1,5 +1,3 @@
-import axios, { HttpStatusCode } from 'axios'
-import { setCookie } from 'cookies-next'
 import { useRouter } from 'next/navigation'
 
 import {
@@ -10,7 +8,9 @@ import {
   LOGIN_EMAIL_FAIL_MESSAGE,
   LOGIN_PWD_FAIL_MESSAGE,
 } from '@/app/constant/constant'
+import { ERR_DEFAULT } from '@/app/constant/errorMsg'
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
+import { moduleSetCookies } from '@/app/module/utils/cookie'
 import inputValidate from '@/app/module/utils/inputValidate'
 import { modulePostFetch } from '@/app/module/utils/moduleFetch'
 import { type ModulePostFetchProps } from '@/app/types/moduleTypes'
@@ -40,29 +40,32 @@ export default function LoginBtn(props: LoginBtnProps) {
         return
       }
       const res = await modulePostFetch(fetchLoginProps)
-      // FIXME: 로그인시 정보를 많이 주는데 쿠키에 다 저장하는것이 맞는가
-      setCookie(KEY_LOGIN_TIME, res.headers.date)
-      setCookie(KEY_ACCESS_TOKEN, res.data.result.accessToken)
-      setCookie(KEY_X_ORGANIZATION_CODE, res.data.result.organizationCode)
-      setCookie(KEY_UUID, res.data.result.uuid)
+      if (!res.ok) {
+        throw new Error(res.statusText)
+      }
+      const resJson = await res.json()
+      const loginTime = performance.now()
+      moduleSetCookies({
+        [KEY_LOGIN_TIME]: loginTime,
+        [KEY_ACCESS_TOKEN]: resJson.data.result.accessToken,
+        [KEY_X_ORGANIZATION_CODE]: resJson.data.result.organizationCode,
+        [KEY_UUID]: resJson.data.result.uuid,
+      })
 
       router.push('/main')
     } catch (err) {
-      if (axios.isAxiosError(err)) {
-        switch (err.response?.status) {
-          case HttpStatusCode.BadRequest:
-            if (err.response?.data.message === LOGIN_EMAIL_FAIL_MESSAGE) {
-              props.setErrMsg('이메일을 잘못 입력했습니다.')
-            } else if (err.response?.data.message === LOGIN_PWD_FAIL_MESSAGE) {
-              props.setErrMsg('비밀번호를 잘못 입력했습니다.')
-            }
+      // FIXME: 에러메시지 어떻게 응답되는지 확인하기
+      if (err instanceof Error) {
+        switch (err.message) {
+          case LOGIN_EMAIL_FAIL_MESSAGE:
+            props.setErrMsg('이메일을 잘못 입력했습니다.')
             break
-          case HttpStatusCode.InternalServerError:
-            props.setErrMsg('통신오류가 발생했습니다. 다시 시도해주세요')
+          case LOGIN_PWD_FAIL_MESSAGE:
+            props.setErrMsg('비밀번호를 잘못 입력했습니다.')
             break
+          default:
+            props.setErrMsg(ERR_DEFAULT('로그인'))
         }
-      } else {
-        props.setErrMsg('로그인에 실패했습니다.')
       }
     }
   }

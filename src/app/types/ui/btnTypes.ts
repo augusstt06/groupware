@@ -22,8 +22,8 @@ export type OrgChooseBtnProps = {
   setOrganization: React.Dispatch<SetStateAction<string>>
 }
 
-export type RegisterOrgBtnProps = {
-  title: string
+export type RegisterOrgBtnProps = BtnProps & {
+  setErrMsg: (errDescription: string) => void
 }
 export type RegisterOrgTeamConfirmBtn = {
   title: string

@@ -6,12 +6,12 @@ import ErrorAlert from '../alert/ErrorAlert'
 import AttendanceBtn from '../button/attendance/AttendanceBtn'
 
 import { KEY_ATTENDANCE_TIME, KEY_LOGIN_TIME } from '@/app/constant/constant'
-import { getToken } from '@/app/module/utils/cookie'
+import { moduleGetCookie } from '@/app/module/utils/cookie'
 import { type UserCardProps } from '@/app/types/pageTypes'
 
 export default function UserCard(props: UserCardProps) {
   const [elapsed, setElapsed] = useState('0')
-  const attendanceTime = getToken(KEY_ATTENDANCE_TIME)
+  const attendanceTime = moduleGetCookie(KEY_ATTENDANCE_TIME)
   const [mount, setMount] = useState(false)
 
   const [errorState, setErrorState] = useState({
@@ -33,8 +33,8 @@ export default function UserCard(props: UserCardProps) {
   }
   // FIXME:
   const timeString =
-    getToken(KEY_LOGIN_TIME) !== null
-      ? (getToken(KEY_LOGIN_TIME) as string)
+    moduleGetCookie(KEY_LOGIN_TIME) !== null
+      ? moduleGetCookie(KEY_LOGIN_TIME).toString()
       : 'Fail to load Login time'
   const convertTime = (time: string) => {
     const dateStringWithoutGMT = time.slice(0, -4)

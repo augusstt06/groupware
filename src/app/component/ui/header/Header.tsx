@@ -10,7 +10,8 @@ import Logout from '../button/login/LogoutBtn'
 import AlertIndicator from '../indicator/alertIndicator'
 
 import { KEY_ACCESS_TOKEN } from '@/app/constant/constant'
-import { getToken } from '@/app/module/utils/cookie'
+import { ERR_COOKIE_NOT_FOUND } from '@/app/constant/errorMsg'
+import { moduleGetCookie } from '@/app/module/utils/cookie'
 
 export default function Header() {
   const pathname = usePathname()
@@ -19,12 +20,9 @@ export default function Header() {
     board: false,
     project: false,
   })
-  const accessToken = getToken(KEY_ACCESS_TOKEN)
+  const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
   // istoken이 없어서 접근이 불가한 곳은 어차피 errpage로 리디렉션된다.
-  const isToken = () => {
-    return accessToken !== null
-  }
-  const isLogin = isToken()
+
   const handleOpen = (title: string) => {
     switch (title) {
       case 'Project':
@@ -50,11 +48,11 @@ export default function Header() {
   const [mount, setMount] = useState(false)
   useEffect(() => {
     setMount(true)
-  }, [setMount, isLogin])
+  }, [setMount, accessToken])
 
   return (
     <nav className="bg-white border-gray-200 dark:bg-gray-900">
-      {mount && isLogin && isRender ? (
+      {mount && accessToken !== ERR_COOKIE_NOT_FOUND && isRender ? (
         <>
           <div className="flex flex-wrap items-center justify-between max-w-screen-xl mx-auto p-4">
             <Link href="/main" className="flex items-center space-x-3 rtl:space-x-reverse">
@@ -65,7 +63,7 @@ export default function Header() {
 
             <div className="flex items-center md:order-2 space-x-1 md:space-x-2 rtl:space-x-reverse">
               <a className="text-gray-800 dark:text-white border-solid border-white border-2 hover:border-indigo-500 dark:border-gray-900 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 dark:hover:border-indigo-400 focus:outline-none dark:focus:ring-gray-800">
-                {isLogin ? <Logout /> : <></>}
+                {accessToken === ERR_COOKIE_NOT_FOUND ? <Logout /> : <></>}
               </a>
               <a className="text-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 focus:outline-none dark:focus:ring-gray-800">
                 <AlertIndicator />

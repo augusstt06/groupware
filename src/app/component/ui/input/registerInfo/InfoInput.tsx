@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 
-import axios, { HttpStatusCode } from 'axios'
+// FIXME: axios 모듈에서 밖에 없는건가?
+import { HttpStatusCode } from 'axios'
 
 import { InputIconlabel } from '../../label/InputIconlabel'
 import { InputLabel } from '../../label/Inputlabel'
@@ -11,6 +12,7 @@ import {
   REGISTER_PHONENUMBER,
   REGISTER_POSITION,
 } from '@/app/constant/constant'
+import { ERR_500, ERR_DEFAULT } from '@/app/constant/errorMsg'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import inputValidate from '@/app/module/utils/inputValidate'
 import { moduleGetFetch } from '@/app/module/utils/moduleFetch'
@@ -52,20 +54,23 @@ export default function InfoInput(props: InfoInputProps) {
 
   const fetchEmailAvaiable = async (): Promise<void> => {
     try {
-      await moduleGetFetch(getFetchEmailProps)
+      const res = await moduleGetFetch(getFetchEmailProps)
+      if (!res.ok) {
+        throw new Error(res.status.toString())
+      }
       dispatch(emailReducer({ isCheck: true, value: useInput.value }))
     } catch (err) {
-      if (axios.isAxiosError(err)) {
-        switch (err.response?.status) {
-          case HttpStatusCode.BadRequest:
+      if (err instanceof Error) {
+        switch (err.message) {
+          case HttpStatusCode.BadRequest.toString():
             props.setErrMsg('이메일이 중복됩니다. 다른 이메일을 사용해주세요.')
             break
-          case HttpStatusCode.InternalServerError:
-            props.setErrMsg('통신오류가 발생했습니다. 다시 시도해주세요')
+          case HttpStatusCode.InternalServerError.toString():
+            props.setErrMsg(ERR_500)
             break
+          default:
+            props.setErrMsg(ERR_DEFAULT('이메일 확인'))
         }
-      } else {
-        props.setErrMsg('이메일 확인에 실패했습니다.')
       }
     }
   }
