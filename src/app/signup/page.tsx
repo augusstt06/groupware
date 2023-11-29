@@ -8,7 +8,7 @@ import ErrorAlert from '../component/ui/alert/ErrorAlert'
 import { NextBtn } from '../component/ui/button/BtnGroups'
 import OrgChooseBtn from '../component/ui/button/organization/OrgChooseBtn'
 import RegisterUserBtn from '../component/ui/button/register/RegisterUserBtn'
-import { useAppSelector } from '../module/hooks/reduxHooks'
+import { useAppSelector } from '../module/hooks/reduxHooks/index'
 import inputValidate from '../module/utils/inputValidate'
 
 export default function Register() {
@@ -61,21 +61,25 @@ export default function Register() {
   const checkInfoComplete = () => {
     if (!isPrivateInfoComplete) {
       setErrMsg('위 항목을 모두 입력해 주세요.')
+      return false
     } else if (!isPwdValidate) {
       setErrMsg('8글자 이상의 영어대소문자, 특수문자, 숫자를 포함한 문자열을 입력해주세요.')
+      return false
     } else if (!isPwdConfirm) {
       setErrMsg('비밀번호 확인이 잘못되었습니다. 다시 입력해주세요.')
+      return false
     }
   }
   const handleStep = (stepControl: string) => {
     checkInfoComplete()
     // 단계 switch 로 컨트롤 하기
+    if (!(checkInfoComplete() ?? false)) return
     setStep(stepControl)
   }
   return (
     <div className="flex flex-col justify-center items-center p 1">
       <div className="mt-10 w-3/5">
-        {step === 'frst' ? (
+        {step === 'first' ? (
           <RegisterInfo
             isPwdView={isPwdView}
             setIsPwdView={setIsPwdView}
