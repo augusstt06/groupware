@@ -2,7 +2,7 @@ import { HttpStatusCode } from 'axios'
 import { useRouter } from 'next/navigation'
 
 import { KEY_ACCESS_TOKEN, ORG_CREATE, ORG_JOIN } from '@/app/constant/constant'
-import { ERR_400, ERR_500, ERR_DEFAULT, ERR_NOT_ENTERED } from '@/app/constant/errorMsg'
+import { ERR_INPUT_ERROR, ERR_INTERNAL_SERVER, errDefault, errNotEntered } from '@/app/constant/errorMsg'
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleGetCookie, moduleSetCookies } from '@/app/module/utils/cookie'
 import { modulePostFetch } from '@/app/module/utils/moduleFetch'
@@ -55,14 +55,14 @@ export function SignupBtn(props: SignupBtnProps) {
       if (err instanceof Error) {
         switch (err.message) {
           case HttpStatusCode.BadRequest.toString():
-            props.setErrMsg(ERR_400)
+            props.setErrMsg(ERR_INPUT_ERROR)
             break
           case HttpStatusCode.InternalServerError.toString():
-            props.setErrMsg(ERR_500)
+            props.setErrMsg(ERR_INTERNAL_SERVER)
             break
           default:
             props.setErrMsg(
-              props.orgType === ORG_CREATE ? ERR_DEFAULT('조직생성') : ERR_DEFAULT('조직가입'),
+              props.orgType === ORG_CREATE ? errDefault('조직생성') : errDefault('조직가입'),
             )
             break
         }
@@ -72,10 +72,10 @@ export function SignupBtn(props: SignupBtnProps) {
   const isOrgInputError = () => {
     switch (props.title) {
       case ORG_JOIN:
-        props.setErrMsg(ERR_NOT_ENTERED('조직코드'))
+        props.setErrMsg(errNotEntered('조직코드'))
         break
       default:
-        props.setErrMsg(ERR_NOT_ENTERED('필수 항목'))
+        props.setErrMsg(errNotEntered('필수 항목'))
         break
     }
   }
@@ -127,13 +127,13 @@ export function SignupBtn(props: SignupBtnProps) {
       if (err instanceof Error) {
         switch (err.message) {
           case HttpStatusCode.BadRequest.toString():
-            props.setErrMsg(ERR_400)
+            props.setErrMsg(ERR_INPUT_ERROR)
             break
           case HttpStatusCode.InternalServerError.toString():
-            props.setErrMsg(ERR_500)
+            props.setErrMsg(ERR_INTERNAL_SERVER)
             break
           default:
-            props.setErrMsg(ERR_DEFAULT('회원가입'))
+            props.setErrMsg(errDefault('회원가입'))
             break
         }
       }

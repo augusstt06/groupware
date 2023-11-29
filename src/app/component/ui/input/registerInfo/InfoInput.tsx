@@ -11,7 +11,7 @@ import {
   REGISTER_PHONENUMBER,
   REGISTER_POSITION,
 } from '@/app/constant/constant'
-import { ERR_500, ERR_DEFAULT } from '@/app/constant/errorMsg'
+import { ERR_INTERNAL_SERVER, errDefault } from '@/app/constant/errorMsg'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import inputValidate from '@/app/module/utils/inputValidate'
 import { moduleGetFetch } from '@/app/module/utils/moduleFetch'
@@ -62,10 +62,10 @@ export default function InfoInput(props: InfoInputProps) {
             props.setErrMsg('이메일이 중복됩니다. 다른 이메일을 사용해주세요.')
             break
           case HttpStatusCode.InternalServerError.toString():
-            props.setErrMsg(ERR_500)
+            props.setErrMsg(ERR_INTERNAL_SERVER)
             break
           default:
-            props.setErrMsg(ERR_DEFAULT('이메일 확인'))
+            props.setErrMsg(errDefault('이메일 확인'))
         }
       }
     }

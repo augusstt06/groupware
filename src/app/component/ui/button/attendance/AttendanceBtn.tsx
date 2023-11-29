@@ -2,11 +2,11 @@ import { HttpStatusCode } from 'axios'
 
 import { KEY_ACCESS_TOKEN, KEY_X_ORGANIZATION_CODE } from '@/app/constant/constant'
 import {
-  ERR_500,
-  ERR_DEFAULT,
-  ERR_DUPLICATE,
-  ERR_NOT_FOUND,
+  ERR_INTERNAL_SERVER,
   ERR_TOKEN_NOT_FOUND,
+  errDefault,
+  errDuplicate,
+  errNotFound,
 } from '@/app/constant/errorMsg'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleDecodeToken, moduleGetCookie } from '@/app/module/utils/cookie'
@@ -29,11 +29,11 @@ export default function AttendanceBtn(props: AttendanceBtnProps) {
   const fetchPostAttendance = async () => {
     try {
       if (orgCode === ERR_TOKEN_NOT_FOUND) {
-        props.setErrMsg(ERR_NOT_FOUND('소속된 조직'))
+        props.setErrMsg(errNotFound('소속된 조직'))
         return
       }
       if (attendanceStatus.status) {
-        props.setErrMsg(ERR_DUPLICATE('출근확인'))
+        props.setErrMsg(errDuplicate('출근확인'))
         return
       }
 
@@ -61,10 +61,10 @@ export default function AttendanceBtn(props: AttendanceBtnProps) {
       if (err instanceof Error) {
         switch (err.message) {
           case HttpStatusCode.InternalServerError.toString():
-            props.setErrMsg(ERR_500)
+            props.setErrMsg(ERR_INTERNAL_SERVER)
             break
           default:
-            props.setErrMsg(ERR_DEFAULT('출근 확인'))
+            props.setErrMsg(errDefault('출근 확인'))
             break
         }
       }
@@ -73,11 +73,11 @@ export default function AttendanceBtn(props: AttendanceBtnProps) {
   const fetchLeaveWork = async () => {
     try {
       if (orgCode === ERR_TOKEN_NOT_FOUND) {
-        props.setErrMsg(ERR_NOT_FOUND('소속된 조직'))
+        props.setErrMsg(errNotFound('소속된 조직'))
         return
       }
       if (!attendanceStatus.status) {
-        props.setErrMsg(ERR_DUPLICATE('퇴근 확인'))
+        props.setErrMsg(errDuplicate('퇴근 확인'))
         return
       }
       const fetchAttendanceProps: ModulePostFetchProps = {
@@ -108,10 +108,10 @@ export default function AttendanceBtn(props: AttendanceBtnProps) {
       if (err instanceof Error) {
         switch (err.message) {
           case HttpStatusCode.InternalServerError.toString():
-            props.setErrMsg(ERR_500)
+            props.setErrMsg(ERR_INTERNAL_SERVER)
             break
           default:
-            props.setErrMsg(ERR_DEFAULT('퇴근 확인'))
+            props.setErrMsg(errDefault('퇴근 확인'))
             break
         }
       }

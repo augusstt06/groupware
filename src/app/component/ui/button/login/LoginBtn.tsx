@@ -5,7 +5,7 @@ import {
   LOGIN_EMAIL_FAIL_MESSAGE,
   LOGIN_PWD_FAIL_MESSAGE,
 } from '@/app/constant/constant'
-import { ERR_DEFAULT } from '@/app/constant/errorMsg'
+import { errDefault } from '@/app/constant/errorMsg'
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleSetCookies } from '@/app/module/utils/cookie'
 import inputValidate from '@/app/module/utils/inputValidate'
@@ -53,7 +53,7 @@ export default function LoginBtn(props: LoginBtnProps) {
             props.setErrMsg('비밀번호를 잘못 입력했습니다.')
             break
           default:
-            props.setErrMsg(ERR_DEFAULT('로그인'))
+            props.setErrMsg(errDefault('로그인'))
         }
       }
     }
