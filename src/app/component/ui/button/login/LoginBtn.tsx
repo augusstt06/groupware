@@ -29,6 +29,7 @@ export default function LoginBtn(props: LoginBtnProps) {
     dataType: 'email',
   }
 
+  // FIXME:
   const fetchLogin = async (): Promise<void> => {
     try {
       const isEmailValid = inputValidate(inputValidateProps)
@@ -37,16 +38,8 @@ export default function LoginBtn(props: LoginBtnProps) {
         return
       }
       const res = await modulePostFetch(fetchLoginProps)
-      if (!res.ok) {
-        throw new Error(res.statusText)
-      }
-      const resJson = await res.json()
-      // const loginTime = performance.now()
       moduleSetCookies({
-        [KEY_ACCESS_TOKEN]: resJson.data.result.accessToken,
-        // [KEY_LOGIN_TIME]: loginTime,
-        // [KEY_X_ORGANIZATION_CODE]: resJson.data.result.organizationCode,
-        // [KEY_UUID]: resJson.data.result.uuid,
+        [KEY_ACCESS_TOKEN]: res.result.accessToken,
       })
 
       router.push('/main')

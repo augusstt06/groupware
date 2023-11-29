@@ -13,25 +13,16 @@ export type RegisterInfoTypeProps = {
 }
 
 export type UserCardProps = {
-  userInfo: {
-    name: string
-    position: string
-    userId: number
-    organizationId: number
-    organizationName: string
-    // attendanceStatus: string
-  }
+  userInfo: Record<string, string | number>
   reRender: boolean
   setRerender: React.Dispatch<SetStateAction<boolean>>
 }
 
 export type MenuCardProps = {
-  userInfo: {
-    name: string
-    position: string
-    userId: number
-    organizationId: number
-    organizationName: string
-    // attendanceStatus: string
-  }
+  userInfo: Record<string, string | number>
+}
+
+export type RegisterOrgProps = {
+  organization: string
+  setOrganization: React.Dispatch<SetStateAction<string>>
 }

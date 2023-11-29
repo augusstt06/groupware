@@ -42,13 +42,9 @@ export function SignupBtn(props: SignupBtnProps) {
       }
       await modulePostFetch(fetchSignupProps)
       const res = await modulePostFetch(fetchLoginProps)
-      if (!res.ok) {
-        throw new Error(res.status.toString())
-      }
-      // FIXME: 응답형태를 타입으로 지정이 가능한가?
-      const resJson = await res.json()
+
       moduleSetCookies({
-        [KEY_ACCESS_TOKEN]: resJson.data.result,
+        [KEY_ACCESS_TOKEN]: res.result.accessToken,
       })
       router.push('/organization')
     } catch (err) {

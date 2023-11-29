@@ -49,11 +49,7 @@ export default function AttendanceBtn(props: AttendanceBtnProps) {
           [KEY_X_ORGANIZATION_CODE]: orgCode,
         },
       }
-
-      const res = await modulePostFetch(fetchAttendanceProps)
-      if (!res.ok) {
-        throw new Error(res.status.toString())
-      }
+      await modulePostFetch(fetchAttendanceProps)
       const currentime = new Date().getTime()
       // setCookie(KEY_ATTENDANCE_TIME, currentime)
       dispatch(

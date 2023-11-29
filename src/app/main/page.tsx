@@ -15,7 +15,6 @@ import { type CustomDecodeTokenType, type ModuleGetFetchProps } from '../types/m
 export default function Main() {
   const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
   // FIXME: uuid decode로 바꾸기
-  // const uuid = moduleGetCookie(KEY_UUID)
   const decodeToken = moduleDecodeToken(accessToken)
   const uuid =
     decodeToken !== ERR_TOKEN_NOT_FOUND
@@ -23,13 +22,12 @@ export default function Main() {
       : ERR_TOKEN_NOT_FOUND
 
   const [reRender, setRerender] = useState(false)
-  const [userInfo, setUserInfo] = useState({
+  const [userInfo, setUserInfo] = useState<Record<string, string | number>>({
     name: '',
     position: '',
     userId: 0,
     organizationId: 0,
     organizationName: '',
-    // attendanceStatus: '',
   })
 
   const getFetchUserProps: ModuleGetFetchProps = {
@@ -45,17 +43,13 @@ export default function Main() {
   const fetchGetUsers = async () => {
     try {
       const res = await moduleGetFetch(getFetchUserProps)
-      if (!res.ok) {
-        throw new Error(res.status.toString())
-      }
-      const resJson = await res.json()
+
       setUserInfo({
-        name: resJson.result.name,
-        position: resJson.result.position,
-        userId: resJson.result.userId,
-        organizationId: resJson.result.organizationId,
-        organizationName: resJson.result.organizationName,
-        // attendanceStatus: resJson.result.attendanceStatus,
+        name: res.result.name,
+        position: res.result.position,
+        userId: res.result.userId,
+        organizationId: res.result.organizationId,
+        organizationName: res.result.organizationName,
       })
     } catch (err) {
       // FIXME: 에러 핸들링 하기 => 어떤 방식으로? 유저정보를 가져오는데 실패하면 무엇을 어떻게 알려줘야하나. => 유저정보를 가져오는데 실패했다 => 로그인과정에서 문제가 발생했다 => 재로그인

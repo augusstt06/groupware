@@ -1,16 +1,10 @@
 import { HttpStatusCode } from 'axios'
 import { useRouter } from 'next/navigation'
 
-import {
-  KEY_ACCESS_TOKEN,
-  KEY_X_ORGANIZATION_CODE,
-  ORG_CRAETE_NOTEAM,
-  ORG_CREATE,
-  ORG_JOIN,
-} from '@/app/constant/constant'
+import { KEY_ACCESS_TOKEN, ORG_CRAETE_NOTEAM, ORG_CREATE, ORG_JOIN } from '@/app/constant/constant'
 import { ERR_400, ERR_500, ERR_DEFAULT, ERR_NOT_ENTERED } from '@/app/constant/errorMsg'
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
-import { moduleGetCookie, moduleSetCookies } from '@/app/module/utils/cookie'
+import { moduleGetCookie } from '@/app/module/utils/cookie'
 import { modulePostFetch } from '@/app/module/utils/moduleFetch'
 import { type ModulePostFetchProps } from '@/app/types/moduleTypes'
 import { type RegisterOrgBtnProps } from '@/app/types/ui/btnTypes'
@@ -63,14 +57,7 @@ export default function RegisterOrgBtn(props: RegisterOrgBtnProps) {
 
   const fetchCreateOrg = async (): Promise<void> => {
     try {
-      const res = await modulePostFetch(fetchCreateOrgProps)
-      if (!res.ok) {
-        throw new Error(res.status.toString())
-      }
-      const resJson = await res.json()
-      moduleSetCookies({
-        [KEY_X_ORGANIZATION_CODE]: resJson.data.result,
-      })
+      await modulePostFetch(fetchCreateOrgProps)
       router.push('/main')
     } catch (err) {
       if (err instanceof Error) {
@@ -91,10 +78,8 @@ export default function RegisterOrgBtn(props: RegisterOrgBtnProps) {
 
   const fetchJoinOrg = async (): Promise<void> => {
     try {
-      const res = await modulePostFetch(fetchJoinOrgProps)
-      if (!res.ok) {
-        throw new Error(res.status.toString())
-      }
+      await modulePostFetch(fetchJoinOrgProps)
+
       router.push('/main')
     } catch (err) {
       if (err instanceof Error) {

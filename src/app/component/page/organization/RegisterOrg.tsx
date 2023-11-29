@@ -2,15 +2,17 @@
 
 import { useState } from 'react'
 
-import JoinOrgInfo from '../component/page/organization/JoinOrgInfo'
-import CreateOrgInfo from '../component/page/organization/create/CreateOrgInfo'
-import ErrorAlert from '../component/ui/alert/ErrorAlert'
-import { NavigationBtn } from '../component/ui/button/BtnGroups'
-import OrgChooseBtn from '../component/ui/button/organization/OrgChooseBtn'
-import RegisterOrgBtn from '../component/ui/button/register/RegisterOrgBtn'
-import { ORG_CREATE, ORG_JOIN } from '../constant/constant'
+import ErrorAlert from '../../ui/alert/ErrorAlert'
+import { NavigationBtn } from '../../ui/button/BtnGroups'
+import RegisterOrgBtn from '../../ui/button/register/RegisterOrgBtn'
 
-export default function Organization() {
+import CreateOrgInfo from './create/CreateOrgInfo'
+import JoinOrgInfo from './join/JoinOrgInfo'
+
+import { ORG_CREATE, ORG_JOIN } from '@/app/constant/constant'
+import { type RegisterOrgProps } from '@/app/types/pageTypes'
+
+export default function RegisterOrg(props: RegisterOrgProps) {
   const [errorState, setErrorState] = useState({
     isError: false,
     description: '',
@@ -28,19 +30,19 @@ export default function Organization() {
     })
   }
 
-  const [organization, setOrganization] = useState('')
   const goInitialOrg = () => {
-    setOrganization('')
+    props.setOrganization('')
   }
   return (
     <div className="flex flex-col justify-center items-center h-3/5 h-full overflow-y-auto">
-      {organization === '' ? (
-        <div className="w-2/5 h-2/4">
-          <OrgChooseBtn organization={organization} setOrganization={setOrganization} />
-        </div>
+      {props.organization === '' ? (
+        // <div className="w-2/5 h-2/4">
+        //   <OrgChooseBtn organization={props.organization} setOrganization={props.setOrganization} />
+        // </div>
+        <></>
       ) : (
         <div className="h-full w-3/5">
-          <div>{organization === ORG_CREATE ? <CreateOrgInfo /> : <JoinOrgInfo />}</div>
+          <div>{props.organization === ORG_CREATE ? <CreateOrgInfo /> : <JoinOrgInfo />}</div>
           {errorState.isError ? (
             <ErrorAlert description={errorState.description} handleClickError={handleClickError} />
           ) : (
@@ -53,7 +55,9 @@ export default function Organization() {
             <div className="ml-2">
               <RegisterOrgBtn
                 title={
-                  organization === ORG_CREATE ? ORG_CREATE.toUpperCase() : ORG_JOIN.toUpperCase()
+                  props.organization === ORG_CREATE
+                    ? ORG_CREATE.toUpperCase()
+                    : ORG_JOIN.toUpperCase()
                 }
                 setErrMsg={setErrMsg}
               />

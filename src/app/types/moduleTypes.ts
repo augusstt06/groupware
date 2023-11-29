@@ -26,3 +26,8 @@ export type InputValidateProps = {
 
 export type CustomDecodeTokenType = JwtPayload &
   Record<typeof KEY_UUID | typeof KEY_X_ORGANIZATION_CODE, string>
+
+export type ApiResponseType = {
+  status: number
+  result: Record<string, string | number>
+}

@@ -22,6 +22,9 @@ type State = {
     isCheck: boolean
     value: string
   }
+  organization: {
+    isCheck: boolean
+  }
 }
 
 const initialState: State = {
@@ -30,6 +33,7 @@ const initialState: State = {
   name: { isCheck: false, value: '' },
   position: { isCheck: false, value: '' },
   phoneNumber: { isCheck: false, value: '' },
+  organization: { isCheck: false },
 }
 
 export const signupInfoSlice = createSlice({
@@ -57,6 +61,9 @@ export const signupInfoSlice = createSlice({
     },
     phoneNumberReducer(state, action: PayloadAction<{ isCheck: boolean; value: string }>) {
       state.phoneNumber = { ...action.payload }
+    },
+    organizationReducer(state, action: PayloadAction<{ isCheck: boolean }>) {
+      state.organization = { ...action.payload }
     },
   },
 })

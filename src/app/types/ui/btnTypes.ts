@@ -9,9 +9,10 @@ export type HamburgerProps = {
 export type BtnProps = {
   title: string
 }
-
+export type NextBtnProps = BtnProps & {
+  onClick: (stepControl: string) => void
+}
 export type RegisterUserBtnProps = {
-  handleStep: () => void
   setErrMsg: (errDecription: string) => void
 }
 export type SignupBtnProps = BtnProps & {
@@ -41,14 +42,7 @@ export type LoginBtnProps = BtnProps & {
 }
 // main
 export type AttendanceBtnProps = {
-  userInfo: {
-    name: string
-    position: string
-    userId: number
-    organizationId: number
-    organizationName: string
-    // attendanceStatus: string
-  }
+  userInfo: Record<string, string | number>
   setErrMsg: (errDescripton: string) => void
   reRender: boolean
   setRerender: React.Dispatch<SetStateAction<boolean>>

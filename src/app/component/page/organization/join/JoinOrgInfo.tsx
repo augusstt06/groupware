@@ -1,6 +1,6 @@
 import { SlOrganization } from 'react-icons/sl'
 
-import OrgInput from '../../ui/input/organization/OrgInput'
+import OrgInput from '../../../ui/input/organization/OrgInput'
 
 import useInput from '@/app/module/hooks/reactHooks/useInput'
 
