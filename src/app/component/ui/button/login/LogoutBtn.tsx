@@ -27,10 +27,8 @@ export default function Logout() {
   }
   const fetchLogout = async () => {
     try {
-      const res = await modulePostFetch(fetchLogoutProps)
-      if (!res.ok) {
-        throw new Error(res.status.toString())
-      }
+      await modulePostFetch(fetchLogoutProps)
+
       dispatch(resetReducer())
       moduleDeleteCookies(
         KEY_ACCESS_TOKEN,

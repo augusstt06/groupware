@@ -54,10 +54,7 @@ export default function InfoInput(props: InfoInputProps) {
 
   const fetchEmailAvaiable = async (): Promise<void> => {
     try {
-      const res = await moduleGetFetch(getFetchEmailProps)
-      if (!res.ok) {
-        throw new Error(res.status.toString())
-      }
+      await moduleGetFetch(getFetchEmailProps)
       dispatch(emailReducer({ isCheck: true, value: useInput.value }))
     } catch (err) {
       if (err instanceof Error) {
