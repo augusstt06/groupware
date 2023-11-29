@@ -29,7 +29,6 @@ export default function LoginBtn(props: LoginBtnProps) {
     dataType: 'email',
   }
 
-  // FIXME:
   const fetchLogin = async (): Promise<void> => {
     try {
       const isEmailValid = inputValidate(inputValidateProps)

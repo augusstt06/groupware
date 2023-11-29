@@ -25,7 +25,6 @@ export default function AttendanceBtn(props: AttendanceBtnProps) {
       ? (decodeToken as CustomDecodeTokenType)[KEY_X_ORGANIZATION_CODE]
       : ERR_TOKEN_NOT_FOUND
 
-  // const orgCode = moduleGetCookie(KEY_X_ORGANIZATION_CODE)
 
   const fetchPostAttendance = async () => {
     try {
@@ -51,7 +50,6 @@ export default function AttendanceBtn(props: AttendanceBtnProps) {
       }
       await modulePostFetch(fetchAttendanceProps)
       const currentime = new Date().getTime()
-      // setCookie(KEY_ATTENDANCE_TIME, currentime)
       dispatch(
         checkAttendanceReducer({
           status: true,
@@ -98,7 +96,6 @@ export default function AttendanceBtn(props: AttendanceBtnProps) {
       if (!res.ok) {
         throw new Error(res.status.toString())
       }
-      // moduleDeleteCookies(KEY_ATTENDANCE_TIME)
       dispatch(
         checkAttendanceReducer({
           status: false,

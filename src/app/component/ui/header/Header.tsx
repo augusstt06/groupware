@@ -21,7 +21,6 @@ export default function Header() {
     project: false,
   })
   const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
-  // istoken이 없어서 접근이 불가한 곳은 어차피 errpage로 리디렉션된다.
   const handleOpen = (title: string) => {
     switch (title) {
       case 'Project':

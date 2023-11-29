@@ -1,6 +1,5 @@
 import { useEffect } from 'react'
 
-// FIXME: axios 모듈에서 밖에 없는건가?
 import { HttpStatusCode } from 'axios'
 
 import { InputIconlabel } from '../../label/InputIconlabel'

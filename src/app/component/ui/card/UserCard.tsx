@@ -12,7 +12,6 @@ import { type UserCardProps } from '@/app/types/pageTypes'
 
 export default function UserCard(props: UserCardProps) {
   const [elapsed, setElapsed] = useState('0')
-  // const attendanceTime = moduleGetCookie(KEY_ATTENDANCE_TIME)
   const attendanceState = useAppSelector((state) => state.attendance)
   const [mount, setMount] = useState(false)
 
