@@ -2,10 +2,6 @@ import { useRouter } from 'next/navigation'
 
 import {
   KEY_ACCESS_TOKEN,
-  KEY_ATTENDANCE_TIME,
-  KEY_LOGIN_TIME,
-  KEY_UUID,
-  KEY_X_ORGANIZATION_CODE,
 } from '@/app/constant/constant'
 import { useAppDispatch } from '@/app/module/hooks/reduxHooks'
 import { moduleDeleteCookies, moduleGetCookie } from '@/app/module/utils/cookie'
@@ -32,10 +28,6 @@ export default function Logout() {
       dispatch(resetReducer())
       moduleDeleteCookies(
         KEY_ACCESS_TOKEN,
-        KEY_ATTENDANCE_TIME,
-        KEY_LOGIN_TIME,
-        KEY_UUID,
-        KEY_X_ORGANIZATION_CODE,
       )
       router.push('/login')
     } catch (err) {

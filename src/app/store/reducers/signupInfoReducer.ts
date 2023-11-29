@@ -23,7 +23,12 @@ type State = {
     value: string
   }
   organization: {
-    isCheck: boolean
+    create: {
+      isCheck: boolean
+    }
+    join: {
+      isCheck: boolean
+    }
   }
 }
 
@@ -33,7 +38,7 @@ const initialState: State = {
   name: { isCheck: false, value: '' },
   position: { isCheck: false, value: '' },
   phoneNumber: { isCheck: false, value: '' },
-  organization: { isCheck: false },
+  organization: { create: { isCheck: false }, join: { isCheck: false } },
 }
 
 export const signupInfoSlice = createSlice({
@@ -62,13 +67,23 @@ export const signupInfoSlice = createSlice({
     phoneNumberReducer(state, action: PayloadAction<{ isCheck: boolean; value: string }>) {
       state.phoneNumber = { ...action.payload }
     },
-    organizationReducer(state, action: PayloadAction<{ isCheck: boolean }>) {
-      state.organization = { ...action.payload }
+    createOrgStatusReducer(state, action: PayloadAction<{ isCheck: boolean }>) {
+      state.organization.create = { ...action.payload }
+    },
+    joinOrgStatusReducer(state, action: PayloadAction<{ isCheck: boolean }>) {
+      state.organization.join = { ...action.payload }
     },
   },
 })
 
-export const { emailReducer, pwdReducer, nameReducer, positionReducer, phoneNumberReducer } =
-  signupInfoSlice.actions
+export const {
+  emailReducer,
+  pwdReducer,
+  nameReducer,
+  positionReducer,
+  phoneNumberReducer,
+  createOrgStatusReducer,
+  joinOrgStatusReducer,
+} = signupInfoSlice.actions
 
 export default signupInfoSlice.reducer

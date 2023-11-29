@@ -10,12 +10,13 @@ export type BtnProps = {
   title: string
 }
 export type NextBtnProps = BtnProps & {
-  onClick: (stepControl: string) => void
+  onClick: () => void
 }
 export type RegisterUserBtnProps = {
   setErrMsg: (errDecription: string) => void
 }
 export type SignupBtnProps = BtnProps & {
+  orgType: string
   setErrMsg: (errDecription: string) => void
 }
 export type OrgChooseBtnProps = {

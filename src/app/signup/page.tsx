@@ -6,13 +6,13 @@ import RegisterOrg from '../component/page/organization/RegisterOrg'
 import RegisterInfo from '../component/page/userRegister/RegisterInfo'
 import ErrorAlert from '../component/ui/alert/ErrorAlert'
 import { NextBtn } from '../component/ui/button/BtnGroups'
-import OrgChooseBtn from '../component/ui/button/organization/OrgChooseBtn'
-import RegisterUserBtn from '../component/ui/button/register/RegisterUserBtn'
+import { SignupBtn } from '../component/ui/button/signup/SignupBtn'
+import { ORG_CREATE, ORG_JOIN } from '../constant/constant'
 import { useAppSelector } from '../module/hooks/reduxHooks/index'
 import inputValidate from '../module/utils/inputValidate'
 
 export default function Register() {
-  const [step, setStep] = useState('first')
+  const [step, setStep] = useState(false)
   const [isPwdView, setIsPwdView] = useState(false)
   const [isPwdConfirmView, setisPwdConfirmView] = useState(false)
   const [errorState, setErrorState] = useState({
@@ -40,8 +40,8 @@ export default function Register() {
   })
 
   const isSignupInfoComplete: boolean = useAppSelector((state) => {
-    const { organization } = state.signupInfo
-    return organization.isCheck && isPrivateInfoComplete
+    const { create, join } = state.signupInfo.organization
+    return (create.isCheck || join.isCheck) && isPrivateInfoComplete
   })
 
   const isPwdConfirm: boolean = useAppSelector((state) => {
@@ -69,17 +69,24 @@ export default function Register() {
       setErrMsg('비밀번호 확인이 잘못되었습니다. 다시 입력해주세요.')
       return false
     }
+    return true
   }
-  const handleStep = (stepControl: string) => {
-    checkInfoComplete()
-    // 단계 switch 로 컨트롤 하기
+  const handleStep = () => {
     if (!(checkInfoComplete() ?? false)) return
-    setStep(stepControl)
+    setOrganization(ORG_CREATE)
+    setStep(!step)
+  }
+  const changeOrgType = () => {
+    if (organization === ORG_CREATE) {
+      setOrganization(ORG_JOIN)
+      return
+    }
+    setOrganization(ORG_CREATE)
   }
   return (
     <div className="flex flex-col justify-center items-center p 1">
       <div className="mt-10 w-3/5">
-        {step === 'first' ? (
+        {!step ? (
           <RegisterInfo
             isPwdView={isPwdView}
             setIsPwdView={setIsPwdView}
@@ -87,14 +94,8 @@ export default function Register() {
             setIsPwdConfirmView={setisPwdConfirmView}
             setErrMsg={setErrMsg}
           />
-        ) : step === 'second' ? (
-          <div className="w-2/5 h-2/4">
-            <OrgChooseBtn organization={organization} setOrganization={setOrganization} />
-          </div>
         ) : (
-          // <div className="bg-white">
           <RegisterOrg organization={organization} setOrganization={setOrganization} />
-          // </div>
         )}
 
         {errorState.error ? (
@@ -106,9 +107,23 @@ export default function Register() {
         )}
 
         <div className="flex flex-row justify-center items-center">
-          <NextBtn title={step !== 'third' ? 'Next' : 'Back'} onClick={handleStep} />
-          {/* 즉시 로그인 */}
-          {isSignupInfoComplete ? <RegisterUserBtn setErrMsg={setErrMsg} /> : <></>}
+          {organization !== '' ? (
+            <button
+              type="button"
+              onClick={changeOrgType}
+              className="text-indigo-500 hover:text-white dark:text-white dark:bg-indigo-500 dark:border-white bg-white border-indigo-500 hover:bg-indigo-500 focus:ring-4 focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 dark:hover:bg-white dark:hover:text-indigo-500 mb-2 border-2 dark:hover:border-indigo-500/75"
+            >
+              {organization === ORG_CREATE ? 'Join' : 'Create'}
+            </button>
+          ) : (
+            <></>
+          )}
+          <NextBtn title={!step ? 'Next' : 'Previous'} onClick={handleStep} />
+          {isSignupInfoComplete ? (
+            <SignupBtn title="Sign In" orgType={organization} setErrMsg={setErrMsg} />
+          ) : (
+            <></>
+          )}
         </div>
       </div>
     </div>

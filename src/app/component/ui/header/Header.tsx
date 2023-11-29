@@ -22,7 +22,6 @@ export default function Header() {
   })
   const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
   // istoken이 없어서 접근이 불가한 곳은 어차피 errpage로 리디렉션된다.
-
   const handleOpen = (title: string) => {
     switch (title) {
       case 'Project':
@@ -63,7 +62,7 @@ export default function Header() {
 
             <div className="flex items-center md:order-2 space-x-1 md:space-x-2 rtl:space-x-reverse">
               <a className="text-gray-800 dark:text-white border-solid border-white border-2 hover:border-indigo-500 dark:border-gray-900 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 dark:hover:border-indigo-400 focus:outline-none dark:focus:ring-gray-800">
-                {accessToken === ERR_COOKIE_NOT_FOUND ? <Logout /> : <></>}
+                {accessToken !== ERR_COOKIE_NOT_FOUND ? <Logout /> : <></>}
               </a>
               <a className="text-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 focus:outline-none dark:focus:ring-gray-800">
                 <AlertIndicator />
