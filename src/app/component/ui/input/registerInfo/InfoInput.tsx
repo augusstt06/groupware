@@ -20,7 +20,7 @@ import {
   nameReducer,
   phoneNumberReducer,
   positionReducer,
-} from '@/app/store/reducers/signupInfoReducer'
+} from '@/app/store/reducers/login/signupInfoReducer'
 import { type ModuleGetFetchProps } from '@/app/types/moduleTypes'
 import { type InfoInputProps } from '@/app/types/ui/inputTypes'
 

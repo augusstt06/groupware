@@ -1,7 +1,7 @@
 import { deleteCookie, getCookie, hasCookie, setCookie } from 'cookies-next'
 import { jwtDecode } from 'jwt-decode'
 
-import { ERR_COOKIE_NOT_FOUND, ERR_TOKEN_NOT_FOUND } from '@/app/constant/errorMsg'
+import { ERR_COOKIE_NOT_FOUND } from '@/app/constant/errorMsg'
 import { type CustomDecodeTokenType } from '@/app/types/moduleTypes'
 
 export const moduleGetCookie = (name: string) => {
@@ -27,5 +27,5 @@ export const moduleDecodeToken = (token: string): CustomDecodeTokenType | string
     const decodeToken = jwtDecode<CustomDecodeTokenType>(token)
     return decodeToken
   }
-  return ERR_TOKEN_NOT_FOUND
+  return ERR_COOKIE_NOT_FOUND
 }

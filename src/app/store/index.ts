@@ -4,10 +4,10 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import persistReducer from 'redux-persist/es/persistReducer'
 import storage from 'redux-persist/lib/storage'
 
-import attendanceReducer from './reducers/attendanceReducer'
-import loginInfoReducer from './reducers/loginInfoReducer'
-import orgInfoReducer from './reducers/orgInfoReducer'
-import signupInfoReducer from './reducers/signupInfoReducer'
+import loginInfoReducer from './reducers/login/loginInfoReducer'
+import orgInfoReducer from './reducers/login/orgInfoReducer'
+import signupInfoReducer from './reducers/login/signupInfoReducer'
+import userInfoReducer from './reducers/main/userInfoReducer'
 
 /**
  * redux-persist 설치 이후에 모듈을 찾지 못하는 에러 발생
@@ -19,12 +19,12 @@ const rootReducer = combineReducers({
   signupInfo: signupInfoReducer,
   loginInfo: loginInfoReducer,
   orgInfo: orgInfoReducer,
-  attendance: attendanceReducer,
+  userInfo: userInfoReducer,
 })
 const persistConfig = {
   key: 'root',
   storage,
-  whiteList: ['attendance'],
+  whiteList: [],
 }
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 export const store = configureStore({

@@ -1,12 +1,10 @@
 import { useRouter } from 'next/navigation'
 
-import {
-  KEY_ACCESS_TOKEN,
-} from '@/app/constant/constant'
+import { KEY_ACCESS_TOKEN } from '@/app/constant/constant'
 import { useAppDispatch } from '@/app/module/hooks/reduxHooks'
 import { moduleDeleteCookies, moduleGetCookie } from '@/app/module/utils/cookie'
 import { modulePostFetch } from '@/app/module/utils/moduleFetch'
-import { resetReducer } from '@/app/store/reducers/loginInfoReducer'
+import { resetReducer } from '@/app/store/reducers/login/loginInfoReducer'
 import { type ModulePostFetchProps } from '@/app/types/moduleTypes'
 
 export default function Logout() {
@@ -26,9 +24,7 @@ export default function Logout() {
       await modulePostFetch(fetchLogoutProps)
 
       dispatch(resetReducer())
-      moduleDeleteCookies(
-        KEY_ACCESS_TOKEN,
-      )
+      moduleDeleteCookies(KEY_ACCESS_TOKEN)
       router.push('/login')
     } catch (err) {
       alert('로그아웃이 실패했습니다.')

@@ -14,7 +14,7 @@ import ToggleGroup from '@/app/component/ui/toggle/organization/ToggleGroup'
 import { ORG_CREATE, ORG_GRADES, ORG_SELECTBOX, PRIVATE, PUBLIC } from '@/app/constant/constant'
 import useInput from '@/app/module/hooks/reactHooks/useInput'
 import { useAppDispatch } from '@/app/module/hooks/reduxHooks'
-import { createOrgStatusReducer } from '@/app/store/reducers/signupInfoReducer'
+import { createOrgStatusReducer } from '@/app/store/reducers/login/signupInfoReducer'
 
 export default function CreateOrgInfo() {
   const [isTeam, setIsTeam] = useState(false)

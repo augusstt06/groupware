@@ -2,6 +2,7 @@ import { useRouter } from 'next/navigation'
 
 import {
   KEY_ACCESS_TOKEN,
+  KEY_LOGIN_TIME,
   LOGIN_EMAIL_FAIL_MESSAGE,
   LOGIN_PWD_FAIL_MESSAGE,
 } from '@/app/constant/constant'
@@ -37,8 +38,19 @@ export default function LoginBtn(props: LoginBtnProps) {
         return
       }
       const res = await modulePostFetch(fetchLoginProps)
+      const currentTime = new Date()
+      const formatter = new Intl.DateTimeFormat('ko-KR', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false,
+      })
+      const formattedTime = formatter.format(currentTime)
       moduleSetCookies({
         [KEY_ACCESS_TOKEN]: res.result.accessToken,
+        [KEY_LOGIN_TIME]: formattedTime,
       })
 
       router.push('/main')

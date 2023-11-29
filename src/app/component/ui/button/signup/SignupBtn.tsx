@@ -2,7 +2,12 @@ import { HttpStatusCode } from 'axios'
 import { useRouter } from 'next/navigation'
 
 import { KEY_ACCESS_TOKEN, ORG_CREATE, ORG_JOIN } from '@/app/constant/constant'
-import { ERR_INPUT_ERROR, ERR_INTERNAL_SERVER, errDefault, errNotEntered } from '@/app/constant/errorMsg'
+import {
+  ERR_INPUT_ERROR,
+  ERR_INTERNAL_SERVER,
+  errDefault,
+  errNotEntered,
+} from '@/app/constant/errorMsg'
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleGetCookie, moduleSetCookies } from '@/app/module/utils/cookie'
 import { modulePostFetch } from '@/app/module/utils/moduleFetch'
@@ -80,7 +85,7 @@ export function SignupBtn(props: SignupBtnProps) {
     }
   }
 
-  const fetchData : ModulePostFetchProps =
+  const fetchData: ModulePostFetchProps =
     props.orgType === ORG_CREATE
       ? {
           data: {

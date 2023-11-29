@@ -2,45 +2,41 @@ import { HttpStatusCode } from 'axios'
 
 import { KEY_ACCESS_TOKEN, KEY_X_ORGANIZATION_CODE } from '@/app/constant/constant'
 import {
+  ERR_COOKIE_NOT_FOUND,
   ERR_INTERNAL_SERVER,
-  ERR_TOKEN_NOT_FOUND,
   errDefault,
   errDuplicate,
   errNotFound,
 } from '@/app/constant/errorMsg'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
-import { moduleDecodeToken, moduleGetCookie } from '@/app/module/utils/cookie'
+import { moduleGetCookie } from '@/app/module/utils/cookie'
 import { modulePatchFetch, modulePostFetch } from '@/app/module/utils/moduleFetch'
-import { checkAttendanceReducer } from '@/app/store/reducers/attendanceReducer'
-import { type CustomDecodeTokenType, type ModulePostFetchProps } from '@/app/types/moduleTypes'
+import { updateAttendanceStatusReducer } from '@/app/store/reducers/main/userInfoReducer'
+import { type ModulePostFetchProps } from '@/app/types/moduleTypes'
 import { type AttendanceBtnProps } from '@/app/types/ui/btnTypes'
 
 export default function AttendanceBtn(props: AttendanceBtnProps) {
   const dispatch = useAppDispatch()
-  const attendanceStatus = useAppSelector((state) => state.attendance)
+  const userInfoState = useAppSelector((state) => state.userInfo)
   const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
-  const decodeToken = moduleDecodeToken(accessToken)
-  const orgCode =
-    decodeToken !== ERR_TOKEN_NOT_FOUND
-      ? (decodeToken as CustomDecodeTokenType)[KEY_X_ORGANIZATION_CODE]
-      : ERR_TOKEN_NOT_FOUND
-
+  const orgCode = userInfoState[KEY_X_ORGANIZATION_CODE]
+  const isAttendance = userInfoState.attendence.status === 'in'
 
   const fetchPostAttendance = async () => {
     try {
-      if (orgCode === ERR_TOKEN_NOT_FOUND) {
+      if (orgCode === ERR_COOKIE_NOT_FOUND) {
         props.setErrMsg(errNotFound('소속된 조직'))
         return
       }
-      if (attendanceStatus.status) {
+      if (isAttendance) {
         props.setErrMsg(errDuplicate('출근확인'))
         return
       }
 
       const fetchAttendanceProps: ModulePostFetchProps = {
         data: {
-          organizationId: props.userInfo.organizationId,
-          userId: props.userInfo.userId,
+          organizationId: props.extraUserInfo.organizationId,
+          userId: props.extraUserInfo.userId,
         },
         fetchUrl: process.env.NEXT_PUBLIC_ATTENDANCES_SOURCE,
         header: {
@@ -49,14 +45,13 @@ export default function AttendanceBtn(props: AttendanceBtnProps) {
         },
       }
       await modulePostFetch(fetchAttendanceProps)
-      const currentime = new Date().getTime()
+      const currentTime = new Date().getTime()
       dispatch(
-        checkAttendanceReducer({
-          status: true,
-          time: currentime,
+        updateAttendanceStatusReducer({
+          status: 'in',
+          time: currentTime,
         }),
       )
-      props.setRerender(!props.reRender)
     } catch (err) {
       if (err instanceof Error) {
         switch (err.message) {
@@ -72,18 +67,18 @@ export default function AttendanceBtn(props: AttendanceBtnProps) {
   }
   const fetchLeaveWork = async () => {
     try {
-      if (orgCode === ERR_TOKEN_NOT_FOUND) {
+      if (orgCode === ERR_COOKIE_NOT_FOUND) {
         props.setErrMsg(errNotFound('소속된 조직'))
         return
       }
-      if (!attendanceStatus.status) {
+      if (!isAttendance) {
         props.setErrMsg(errDuplicate('퇴근 확인'))
         return
       }
       const fetchAttendanceProps: ModulePostFetchProps = {
         data: {
-          organizationId: props.userInfo.organizationId,
-          userId: props.userInfo.userId,
+          organizationId: props.extraUserInfo.organizationId,
+          userId: props.extraUserInfo.userId,
         },
         fetchUrl: process.env.NEXT_PUBLIC_ATTENDANCES_SOURCE,
         header: {
@@ -97,8 +92,8 @@ export default function AttendanceBtn(props: AttendanceBtnProps) {
         throw new Error(res.status.toString())
       }
       dispatch(
-        checkAttendanceReducer({
-          status: false,
+        updateAttendanceStatusReducer({
+          status: 'out',
           time: 0,
         }),
       )

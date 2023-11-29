@@ -13,13 +13,13 @@ export type RegisterInfoTypeProps = {
 }
 
 export type UserCardProps = {
-  userInfo: Record<string, string | number>
+  extraUserInfo: Record<string, string | number>
   reRender: boolean
   setRerender: React.Dispatch<SetStateAction<boolean>>
 }
 
 export type MenuCardProps = {
-  userInfo: Record<string, string | number>
+  extraUserInfo: Record<string, string | number>
 }
 
 export type RegisterOrgProps = {

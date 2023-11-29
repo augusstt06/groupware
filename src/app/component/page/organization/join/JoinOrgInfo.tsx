@@ -6,7 +6,7 @@ import OrgInput from '../../../ui/input/organization/OrgInput'
 
 import useInput from '@/app/module/hooks/reactHooks/useInput'
 import { useAppDispatch } from '@/app/module/hooks/reduxHooks'
-import { joinOrgStatusReducer } from '@/app/store/reducers/signupInfoReducer'
+import { joinOrgStatusReducer } from '@/app/store/reducers/login/signupInfoReducer'
 
 export default function JoinOrgInfo() {
   const joinInput = useInput('')

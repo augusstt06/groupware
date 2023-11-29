@@ -43,7 +43,7 @@ export type LoginBtnProps = BtnProps & {
 }
 // main
 export type AttendanceBtnProps = {
-  userInfo: Record<string, string | number>
+  extraUserInfo: Record<string, string | number>
   setErrMsg: (errDescripton: string) => void
   reRender: boolean
   setRerender: React.Dispatch<SetStateAction<boolean>>
