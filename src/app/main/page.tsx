@@ -13,6 +13,7 @@ import { moduleDecodeToken, moduleDeleteCookies, moduleGetCookie } from '../modu
 import { moduleGetFetch } from '../module/utils/moduleFetch'
 import {
   updateAttendanceStatusReducer,
+  updateExtraUserInfoReducer,
   updateUserInfoReducer,
 } from '../store/reducers/main/userInfoReducer'
 import {
@@ -31,13 +32,13 @@ export default function Main() {
       : ERR_COOKIE_NOT_FOUND
 
   const [reRender, setRerender] = useState(false)
-  const [extraUserInfo, setExtraUserInfo] = useState<Record<string, string | number>>({
-    name: '',
-    position: '',
-    userId: 0,
-    organizationId: 0,
-    organizationName: '',
-  })
+  // const [extraUserInfo, setExtraUserInfo] = useState<Record<string, string | number>>({
+  //   name: '',
+  //   position: '',
+  //   userId: 0,
+  //   organizationId: 0,
+  //   organizationName: '',
+  // })
 
   const getFetchUserProps: ModuleGetFetchProps = {
     params: {
@@ -52,13 +53,20 @@ export default function Main() {
   const fetchGetUsers = async () => {
     try {
       const res = await moduleGetFetch<ApiRes>(getFetchUserProps)
-      setExtraUserInfo({
+      // setExtraUserInfo({
+      //   name: res.result.name,
+      //   position: res.result.position,
+      //   userId: res.result.userId,
+      //   organizationId: res.result.organizationId,
+      //   organizationName: res.result.organizationName,
+      // })
+      const extraUserInfoReducerProps = {
         name: res.result.name,
         position: res.result.position,
         userId: res.result.userId,
         organizationId: res.result.organizationId,
         organizationName: res.result.organizationName,
-      })
+      }
       const userReducerProps = {
         [KEY_X_ORGANIZATION_CODE]: res.result.organizationCode as string,
         [KEY_UUID]: res.result[KEY_UUID] as string,
@@ -67,6 +75,7 @@ export default function Main() {
         status: res.result.attendanceStatus as string,
         time: 0,
       }
+      dispatch(updateExtraUserInfoReducer(extraUserInfoReducerProps))
       dispatch(updateUserInfoReducer(userReducerProps))
       dispatch(updateAttendanceStatusReducer(attendanceReducerProps))
     } catch (err) {
@@ -88,8 +97,8 @@ export default function Main() {
     <>
       <main className="grid gap-4 grid-cols-4 h-4/5  pt-10 ml-10 mr-10">
         <div className="col-span-1 w-5/6">
-          <UserCard extraUserInfo={extraUserInfo} reRender={reRender} setRerender={setRerender} />
-          <MenuCard extraUserInfo={extraUserInfo} />
+          <UserCard reRender={reRender} setRerender={setRerender} />
+          <MenuCard />
         </div>
         <div className="col-span-3 mr-10">
           <Hub />

@@ -14,6 +14,7 @@ export default function UserCard(props: UserCardProps) {
   const [elapsed, setElapsed] = useState('0')
   const attendanceState = useAppSelector((state) => state.userInfo[KEY_ATTENDANCE])
   const isAttendance = attendanceState.status === 'in'
+  const extraUserInfo = useAppSelector((state) => state.userInfo.extraInfo)
   const [mount, setMount] = useState(false)
 
   const [errorState, setErrorState] = useState({
@@ -73,10 +74,10 @@ export default function UserCard(props: UserCardProps) {
           <div className="flex flex-col items-center pb-4">
             <div className="flex flex-row items-center justify-start w-4/5">
               <h5 className="mb-1 text-xl font-medium text-gray-900 dark:text-white mr-2">
-                {props.extraUserInfo.position}
+                {extraUserInfo.position}
               </h5>
               <h5 className="mb-1 text-xl font-medium text-gray-900 dark:text-white mr-2">
-                {props.extraUserInfo.name}
+                {extraUserInfo.name}
               </h5>
             </div>
             <span className="text-sm text-gray-500 dark:text-gray-400 w-4/5 mb-1">
@@ -95,7 +96,7 @@ export default function UserCard(props: UserCardProps) {
             <div className="flex flex-row justify-around mt-4 md:mt-6 w-4/5">
               <div className="w-full">
                 <AttendanceBtn
-                  extraUserInfo={props.extraUserInfo}
+                  extraUserInfo={extraUserInfo}
                   setErrMsg={setErrMsg}
                   reRender={props.reRender}
                   setRerender={props.setRerender}

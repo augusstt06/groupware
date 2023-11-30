@@ -50,3 +50,9 @@ export type AttendanceBtnProps = {
   elapsed: string
   setElapsed: React.Dispatch<SetStateAction<string>>
 }
+
+export type LogoutBtnProps = {
+  handleOpenConfirm: () => void
+  isConfirmOpen: boolean
+  confirmValue: boolean
+}

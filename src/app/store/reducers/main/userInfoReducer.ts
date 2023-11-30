@@ -9,6 +9,7 @@ type State = {
     status: string
     time: number
   }
+  extraInfo: Record<string, string | number>
 }
 
 const initialState: State = {
@@ -18,6 +19,7 @@ const initialState: State = {
     status: 'out',
     time: 0,
   },
+  extraInfo: { name: '', position: '', userId: 0, organizationId: 0, organizationName: '' },
 }
 
 export const userInfoSlice = createSlice({
@@ -42,8 +44,12 @@ export const userInfoSlice = createSlice({
       state[KEY_ATTENDANCE].status = action.payload.status
       state[KEY_ATTENDANCE].time = action.payload.time
     },
+    updateExtraUserInfoReducer(state, action: PayloadAction<Record<string, string | number>>) {
+      state.extraInfo = { ...action.payload }
+    },
   },
 })
 
-export const { updateUserInfoReducer, updateAttendanceStatusReducer } = userInfoSlice.actions
+export const { updateUserInfoReducer, updateAttendanceStatusReducer, updateExtraUserInfoReducer } =
+  userInfoSlice.actions
 export default userInfoSlice.reducer

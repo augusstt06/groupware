@@ -20,7 +20,7 @@ export default function AttendanceBtn(props: AttendanceBtnProps) {
   const userInfoState = useAppSelector((state) => state.userInfo)
   const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
   const orgCode = userInfoState[KEY_X_ORGANIZATION_CODE]
-  const isAttendance = userInfoState.attendence.status === 'in'
+  const isAttendance = userInfoState.attendance.status === 'in'
 
   const fetchPostAttendance = async () => {
     try {
