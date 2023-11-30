@@ -1,15 +1,25 @@
-import TaskCard from '../../ui/card/TaskCard'
+import HubCategory from './hubCategory/HubCategory'
 
 export default function Hub() {
-  const issueCategory = ['Organization', 'Teams']
+  const hubCategory = [
+    {
+      title: 'Attendance',
+      issue: ['History'],
+    },
+    {
+      title: 'Vacation',
+      issue: [''],
+    },
+    {
+      title: 'Current Issue',
+      issue: ['Organization', 'Teams'],
+    },
+  ]
   return (
-    <>
-      <h2 className="text-bold text-xl mb-5">Current Issue</h2>
-      <div className="w-full grid gap-4 grid-cols-3 mb-6">
-        {issueCategory.map((data) => (
-          <TaskCard key={data} title={data} />
-        ))}
-      </div>
-    </>
+    <div>
+      {hubCategory.map((data) => (
+        <HubCategory key={data.title} title={data.title} issue={data.issue} />
+      ))}
+    </div>
   )
 }

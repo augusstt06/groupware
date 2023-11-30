@@ -13,16 +13,16 @@ export type RegisterInfoTypeProps = {
 }
 
 export type UserCardProps = {
-  // extraUserInfo: Record<string, string | number>
   reRender: boolean
   setRerender: React.Dispatch<SetStateAction<boolean>>
-}
-
-export type MenuCardProps = {
-  // extraUserInfo: Record<string, string | number>
 }
 
 export type RegisterOrgProps = {
   organization: string
   setOrganization: React.Dispatch<SetStateAction<string>>
+}
+
+export type HubCategoryProps = {
+  title: string
+  issue: string[]
 }

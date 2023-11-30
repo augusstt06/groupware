@@ -4,7 +4,6 @@ export default function MenuCard() {
   const extraUserInfo = useAppSelector((state) => state.userInfo.extraInfo)
   const menuList = [
     { name: extraUserInfo.organizationName, menu1: '공지사항', menu2: '자유 게시판' },
-    { name: '팀이름', menu1: '게시판 이름', menu2: '게시판 이름2' },
     { name: '프로젝트이름', menu1: '게시판 이름', menu2: '게시판 이름2' },
   ]
   return (

@@ -34,8 +34,6 @@ export default function UserCard(props: UserCardProps) {
       description: errorState.description,
     })
   }
-
-  // FIXME:
   const timeString =
     moduleGetCookie(KEY_LOGIN_TIME) !== null
       ? moduleGetCookie(KEY_LOGIN_TIME)
@@ -47,11 +45,6 @@ export default function UserCard(props: UserCardProps) {
 
   useEffect(() => {
     setMount(true)
-    // FIXME: 퇴근안누르고 로그아웃시 시간유지
-    // 이 경우에는 출근시간을 기준으로 계산을 하는데 이 값이 쿠키에 저장되어 있음
-    // 그런데 출근시간기록은 출근버튼을 누를때 쿠키에 저장됨. 로그아웃하고 다시 로그인시에는 출근을 안눌럿기 떄문에 초기화되어잇음
-    // 따라서 출근 버튼이나 여기 컴포넌트에서 마지막 출퇴근 기록이 'in'이라면 해당 시간을 받아오는 식으로 해야 할것 같음.
-
     const updateElapsed = () => {
       if (attendanceState.time !== null && attendanceState.time !== 0) {
         const now = new Date().getTime()
