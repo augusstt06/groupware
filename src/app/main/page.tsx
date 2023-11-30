@@ -8,7 +8,7 @@ import MenuCard from '../component/ui/card/MenuCard'
 import UserCard from '../component/ui/card/UserCard'
 import { KEY_ACCESS_TOKEN, KEY_UUID, KEY_X_ORGANIZATION_CODE } from '../constant/constant'
 import { ERR_COOKIE_NOT_FOUND } from '../constant/errorMsg'
-import { useAppDispatch } from '../module/hooks/reduxHooks'
+import { useAppDispatch, useAppSelector } from '../module/hooks/reduxHooks'
 import { moduleDecodeToken, moduleDeleteCookies, moduleGetCookie } from '../module/utils/cookie'
 import { moduleGetFetch } from '../module/utils/moduleFetch'
 import {
@@ -26,20 +26,13 @@ export default function Main() {
   const dispatch = useAppDispatch()
   const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
   const decodeToken = moduleDecodeToken(accessToken)
+  const attendanceTime = useAppSelector((state) => state.userInfo.attendance.time)
   const uuid =
     decodeToken !== ERR_COOKIE_NOT_FOUND
       ? (decodeToken as CustomDecodeTokenType).uuid
       : ERR_COOKIE_NOT_FOUND
 
   const [reRender, setRerender] = useState(false)
-  // const [extraUserInfo, setExtraUserInfo] = useState<Record<string, string | number>>({
-  //   name: '',
-  //   position: '',
-  //   userId: 0,
-  //   organizationId: 0,
-  //   organizationName: '',
-  // })
-
   const getFetchUserProps: ModuleGetFetchProps = {
     params: {
       [KEY_UUID]: uuid,
@@ -53,13 +46,6 @@ export default function Main() {
   const fetchGetUsers = async () => {
     try {
       const res = await moduleGetFetch<ApiRes>(getFetchUserProps)
-      // setExtraUserInfo({
-      //   name: res.result.name,
-      //   position: res.result.position,
-      //   userId: res.result.userId,
-      //   organizationId: res.result.organizationId,
-      //   organizationName: res.result.organizationName,
-      // })
       const extraUserInfoReducerProps = {
         name: res.result.name,
         position: res.result.position,
@@ -73,7 +59,7 @@ export default function Main() {
       }
       const attendanceReducerProps = {
         status: res.result.attendanceStatus as string,
-        time: 0,
+        time: attendanceTime,
       }
       dispatch(updateExtraUserInfoReducer(extraUserInfoReducerProps))
       dispatch(updateUserInfoReducer(userReducerProps))
