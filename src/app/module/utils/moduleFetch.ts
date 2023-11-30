@@ -1,15 +1,12 @@
-import axios from 'axios'
-
 import { FETCH_CONTENT_TYPE, GET, PATCH, POST } from '@/app/constant/constant'
 import {
-  type ApiResponseType,
+  type ApiRes,
   type ModuleGetFetchProps,
   type ModulePostFetchProps,
+  type ReponseType,
 } from '@/app/types/moduleTypes'
 
-axios.defaults.withCredentials = true
-
-export const moduleGetFetch = async (props: ModuleGetFetchProps): Promise<ApiResponseType> => {
+export const moduleGetFetch = async <T>(props: ModuleGetFetchProps): Promise<ReponseType<T>> => {
   const queryString = new URLSearchParams()
   Object.entries(props.params).forEach(([key, value]) => {
     queryString.append(key, value)
@@ -26,7 +23,9 @@ export const moduleGetFetch = async (props: ModuleGetFetchProps): Promise<ApiRes
   return res.json()
 }
 
-export const modulePostFetch = async (props: ModulePostFetchProps): Promise<ApiResponseType> => {
+export const modulePostFetch = async (
+  props: ModulePostFetchProps,
+): Promise<ReponseType<ApiRes>> => {
   const res = await fetch(props.fetchUrl as string, {
     method: POST,
     headers: {

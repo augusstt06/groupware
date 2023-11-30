@@ -15,7 +15,11 @@ import {
   updateAttendanceStatusReducer,
   updateUserInfoReducer,
 } from '../store/reducers/main/userInfoReducer'
-import { type CustomDecodeTokenType, type ModuleGetFetchProps } from '../types/moduleTypes'
+import {
+  type ApiRes,
+  type CustomDecodeTokenType,
+  type ModuleGetFetchProps,
+} from '../types/moduleTypes'
 
 export default function Main() {
   const dispatch = useAppDispatch()
@@ -47,7 +51,7 @@ export default function Main() {
 
   const fetchGetUsers = async () => {
     try {
-      const res = await moduleGetFetch(getFetchUserProps)
+      const res = await moduleGetFetch<ApiRes>(getFetchUserProps)
       setExtraUserInfo({
         name: res.result.name,
         position: res.result.position,
