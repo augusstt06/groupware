@@ -1,22 +1,52 @@
-import axios, { type AxiosResponse } from 'axios'
+import { FETCH_CONTENT_TYPE, GET, PATCH, POST } from '@/app/constant/constant'
+import {
+  type ApiRes,
+  type ModuleGetFetchProps,
+  type ModulePostFetchProps,
+  type ResponseType,
+} from '@/app/types/moduleTypes'
 
-import { type ModuleGetFetchProps, type ModulePostFetchProps } from '@/app/types/moduleTypes'
-
-axios.defaults.withCredentials = true
-
-export const moduleGetFetch = async (props: ModuleGetFetchProps): Promise<AxiosResponse> => {
-  const urlParams: Record<string, unknown> = {}
-  props.keyName.forEach((key, index) => {
-    urlParams[key] = props.keyValue[index]
+export const moduleGetFetch = async <T>(props: ModuleGetFetchProps): Promise<ResponseType<T>> => {
+  const queryString = new URLSearchParams()
+  Object.entries(props.params).forEach(([key, value]) => {
+    queryString.append(key, String(value))
   })
+  const urlWithQueryString = `${props.fetchUrl}?${queryString.toString()}`
 
-  return axios.get(`${props.fetchUrl}`, { params: urlParams, headers: props.header })
+  const res = await fetch(urlWithQueryString, {
+    method: GET,
+    headers: props.header,
+  })
+  if (!res.ok) {
+    throw new Error(res.status.toString())
+  }
+  return res.json()
 }
 
-export const modulePostFetch = async (props: ModulePostFetchProps): Promise<AxiosResponse> => {
-  return axios.post(`${props.fetchUrl}`, props.data, { headers: props.header })
+export const modulePostFetch = async (
+  props: ModulePostFetchProps,
+): Promise<ResponseType<ApiRes>> => {
+  const res = await fetch(props.fetchUrl as string, {
+    method: POST,
+    headers: {
+      'Content-Type': FETCH_CONTENT_TYPE,
+      ...props.header,
+    },
+    body: JSON.stringify(props.data),
+  })
+  if (!res.ok) {
+    throw new Error(res.status.toString())
+  }
+  return res.json()
 }
 
-export const modulePatchFetch = async (props: ModulePostFetchProps): Promise<void> => {
-  return axios.patch(`${props.fetchUrl}`, props.data, { headers: props.header })
+export const modulePatchFetch = async (props: ModulePostFetchProps): Promise<Response> => {
+  return fetch(props.fetchUrl as string, {
+    method: PATCH,
+    headers: {
+      'Content-Type': FETCH_CONTENT_TYPE,
+      ...props.header,
+    },
+    body: JSON.stringify(props.data),
+  })
 }

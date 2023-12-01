@@ -1,3 +1,9 @@
+export const GET = 'GET'
+export const POST = 'POST'
+export const PATCH = 'PATCH'
+export const DELETE = 'DELETE'
+export const FETCH_CONTENT_TYPE = 'application/json'
+
 export const TRUE = 'TRUE'
 export const FALSE = 'FALSE'
 export const PUBLIC = 'Public'
@@ -23,7 +29,7 @@ export const KEY_ACCESS_TOKEN = 'access-token'
 export const KEY_X_ORGANIZATION_CODE = 'X-ORGANIZATION-CODE'
 export const KEY_UUID = 'uuid'
 export const KEY_LOGIN_TIME = 'login-time'
-export const KEY_ATTENDANCE_TIME = 'attendence-time'
+export const KEY_ATTENDANCE = 'attendance'
 // err msg
 
 export const LOGIN_EMAIL_FAIL_MESSAGE = 'user not found: record not found'

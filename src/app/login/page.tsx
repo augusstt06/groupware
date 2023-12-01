@@ -10,8 +10,9 @@ import ErrorAlert from '../component/ui/alert/ErrorAlert'
 import LoginBtn from '../component/ui/button/login/LoginBtn'
 import LoginInput from '../component/ui/input/login/LoginInput'
 import { KEY_ACCESS_TOKEN, REGISTER_EMAIL, REGISTER_PWD } from '../constant/constant'
+import { ERR_COOKIE_NOT_FOUND } from '../constant/errorMsg'
 import useInput from '../module/hooks/reactHooks/useInput'
-import { getToken } from '../module/utils/cookie'
+import { moduleGetCookie } from '../module/utils/cookie'
 import { type UseInputProps } from '../types/moduleTypes'
 
 export default function Login() {
@@ -19,7 +20,7 @@ export default function Login() {
     (title: string) => useInput('', title),
   )
   const [isPwdView, setIsPwdView] = useState(false)
-  const accessToken = getToken(KEY_ACCESS_TOKEN)
+  const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
 
   const [errorState, setErrorState] = useState({
     isError: false,
@@ -39,7 +40,7 @@ export default function Login() {
     })
   }
   useEffect(() => {
-    if (accessToken !== null) {
+    if (accessToken !== ERR_COOKIE_NOT_FOUND) {
       redirect('/main')
     }
   }, [])

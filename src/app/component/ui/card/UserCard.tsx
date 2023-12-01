@@ -3,15 +3,18 @@
 import { useEffect, useState } from 'react'
 
 import ErrorAlert from '../alert/ErrorAlert'
-import AttendanceBtn from '../button/attendance/AttendanceBtn'
+import AttendanceBtn from '../button/main/attendance/AttendanceBtn'
 
-import { KEY_ATTENDANCE_TIME, KEY_LOGIN_TIME } from '@/app/constant/constant'
-import { getToken } from '@/app/module/utils/cookie'
+import { KEY_ATTENDANCE, KEY_LOGIN_TIME } from '@/app/constant/constant'
+import { useAppSelector } from '@/app/module/hooks/reduxHooks'
+import { moduleGetCookie } from '@/app/module/utils/cookie'
 import { type UserCardProps } from '@/app/types/pageTypes'
 
 export default function UserCard(props: UserCardProps) {
   const [elapsed, setElapsed] = useState('0')
-  const attendanceTime = getToken(KEY_ATTENDANCE_TIME)
+  const attendanceState = useAppSelector((state) => state.userInfo[KEY_ATTENDANCE])
+  const isAttendance = attendanceState.status === 'in'
+  const extraUserInfo = useAppSelector((state) => state.userInfo.extraInfo)
   const [mount, setMount] = useState(false)
 
   const [errorState, setErrorState] = useState({
@@ -32,27 +35,20 @@ export default function UserCard(props: UserCardProps) {
     })
   }
   const timeString =
-    getToken(KEY_LOGIN_TIME) !== null
-      ? (getToken(KEY_LOGIN_TIME) as string)
+    moduleGetCookie(KEY_LOGIN_TIME) !== null
+      ? moduleGetCookie(KEY_LOGIN_TIME)
       : 'Fail to load Login time'
-  const convertTime = (time: string) => {
-    const dateStringWithoutGMT = time.slice(0, -4)
-    const timePart = dateStringWithoutGMT.slice(0, -3)
 
-    return timePart
-  }
-
-  const tailwindClassName =
-    props.userInfo.attendanceStatus === 'in' ? 'text-blue-400 font-bold' : 'text-red-400 font-bold'
+  const tailwindClassName = isAttendance ? 'text-blue-400 font-bold' : 'text-red-400 font-bold'
   const tailwindAttendanceTimeClassName =
     elapsed !== '0' ? 'text-blue-400 font-bold' : 'text-red-400 font-bold'
 
   useEffect(() => {
     setMount(true)
     const updateElapsed = () => {
-      if (attendanceTime !== null && attendanceTime !== '0') {
+      if (attendanceState.time !== null && attendanceState.time !== 0) {
         const now = new Date().getTime()
-        const timeElapsed = Math.floor((now - parseInt(attendanceTime)) / (1000 * 60))
+        const timeElapsed = Math.floor((now - attendanceState.time) / (1000 * 60))
         setElapsed(timeElapsed.toString())
       }
     }
@@ -61,7 +57,7 @@ export default function UserCard(props: UserCardProps) {
     return () => {
       clearInterval(intervalId)
     }
-  }, [attendanceTime])
+  }, [attendanceState])
 
   return (
     <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
@@ -71,19 +67,19 @@ export default function UserCard(props: UserCardProps) {
           <div className="flex flex-col items-center pb-4">
             <div className="flex flex-row items-center justify-start w-4/5">
               <h5 className="mb-1 text-xl font-medium text-gray-900 dark:text-white mr-2">
-                {props.userInfo.position}
+                {extraUserInfo.position}
               </h5>
               <h5 className="mb-1 text-xl font-medium text-gray-900 dark:text-white mr-2">
-                {props.userInfo.name}
+                {extraUserInfo.name}
               </h5>
             </div>
             <span className="text-sm text-gray-500 dark:text-gray-400 w-4/5 mb-1">
-              {convertTime(timeString)}
+              Login at {timeString}
             </span>
             <div className="flex flex-start justify-between w-4/5">
               <span className="text-medium text-gray-500 dark:text-gray-400">업무 상태</span>
               <span className={`${tailwindClassName}`}>
-                {props.userInfo.attendanceStatus === 'in' ? '업무 중' : '업무 종료'}{' '}
+                {isAttendance ? '업무 중' : '업무 종료'}{' '}
               </span>
             </div>
             <div className="flex flex-start justify-between items-center w-4/5">
@@ -93,7 +89,7 @@ export default function UserCard(props: UserCardProps) {
             <div className="flex flex-row justify-around mt-4 md:mt-6 w-4/5">
               <div className="w-full">
                 <AttendanceBtn
-                  userInfo={props.userInfo}
+                  extraUserInfo={extraUserInfo}
                   setErrMsg={setErrMsg}
                   reRender={props.reRender}
                   setRerender={props.setRerender}

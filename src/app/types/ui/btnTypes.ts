@@ -9,12 +9,14 @@ export type HamburgerProps = {
 export type BtnProps = {
   title: string
 }
-
+export type NextBtnProps = BtnProps & {
+  onClick: () => void
+}
 export type RegisterUserBtnProps = {
-  handleStep: () => void
   setErrMsg: (errDecription: string) => void
 }
 export type SignupBtnProps = BtnProps & {
+  orgType: string
   setErrMsg: (errDecription: string) => void
 }
 export type OrgChooseBtnProps = {
@@ -22,8 +24,8 @@ export type OrgChooseBtnProps = {
   setOrganization: React.Dispatch<SetStateAction<string>>
 }
 
-export type RegisterOrgBtnProps = {
-  title: string
+export type RegisterOrgBtnProps = BtnProps & {
+  setErrMsg: (errDescription: string) => void
 }
 export type RegisterOrgTeamConfirmBtn = {
   title: string
@@ -41,17 +43,20 @@ export type LoginBtnProps = BtnProps & {
 }
 // main
 export type AttendanceBtnProps = {
-  userInfo: {
-    name: string
-    position: string
-    userId: number
-    organizationId: number
-    organizationName: string
-    attendanceStatus: string
-  }
+  extraUserInfo: Record<string, string | number>
   setErrMsg: (errDescripton: string) => void
   reRender: boolean
   setRerender: React.Dispatch<SetStateAction<boolean>>
   elapsed: string
   setElapsed: React.Dispatch<SetStateAction<string>>
+}
+
+export type AttendanceHistoryBtnProps = {
+  onClick: () => void
+}
+
+export type LogoutBtnProps = {
+  handleOpenConfirm: () => void
+  isConfirmOpen: boolean
+  confirmValue: boolean
 }

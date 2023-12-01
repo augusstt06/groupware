@@ -16,14 +16,14 @@ export default function Home() {
   }
 
   return (
-    <main className="flex flex-col justify-center items-center h-4/5">
-      <div className="flex flex-col justify-center items-center mb-10 ">
+    <main className="flex flex-col justify-center items-center h-4/5 ">
+      <div className="flex flex-col justify-center items-center mb-10 mt-20 ">
         <div className="text-xl font-bold mb-6">
           Easily collaborate with your team from anywhere
         </div>
         <div className="text-medium font-semibold">other comments...</div>
       </div>
-      <div className="flex flex-col justify-around items-center h-2/4">
+      <div className="flex flex-col justify-around items-center h-2/4 mb-10">
         <Link href="/signup">
           <NavigationBtn title="Sign Up for Free" />
         </Link>

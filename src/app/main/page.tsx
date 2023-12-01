@@ -1,36 +1,42 @@
 'use client'
 import { useEffect, useState } from 'react'
 
-import axios, { HttpStatusCode } from 'axios'
 import { redirect } from 'next/navigation'
 
 import Hub from '../component/page/main/Hub'
 import MenuCard from '../component/ui/card/MenuCard'
 import UserCard from '../component/ui/card/UserCard'
 import { KEY_ACCESS_TOKEN, KEY_UUID, KEY_X_ORGANIZATION_CODE } from '../constant/constant'
-import { deleteTokens, getToken } from '../module/utils/cookie'
+import { ERR_COOKIE_NOT_FOUND } from '../constant/errorMsg'
+import { useAppDispatch, useAppSelector } from '../module/hooks/reduxHooks'
+import { moduleDecodeToken, moduleDeleteCookies, moduleGetCookie } from '../module/utils/cookie'
 import { moduleGetFetch } from '../module/utils/moduleFetch'
-import { type ModuleGetFetchProps } from '../types/moduleTypes'
+import {
+  updateAttendanceStatusReducer,
+  updateExtraUserInfoReducer,
+  updateUserInfoReducer,
+} from '../store/reducers/main/userInfoReducer'
+import {
+  type ApiRes,
+  type CustomDecodeTokenType,
+  type ModuleGetFetchProps,
+} from '../types/moduleTypes'
 
 export default function Main() {
-  const accessToken = getToken(KEY_ACCESS_TOKEN)
-
-  // Invalid token specified => next js에서 prerender하는 과정 살펴보기
-  const uuid: string = getToken(KEY_UUID) !== null ? (getToken(KEY_UUID) as string) : ''
+  const dispatch = useAppDispatch()
+  const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
+  const decodeToken = moduleDecodeToken(accessToken)
+  const attendanceTime = useAppSelector((state) => state.userInfo.attendance.time)
+  const uuid =
+    decodeToken !== ERR_COOKIE_NOT_FOUND
+      ? (decodeToken as CustomDecodeTokenType).uuid
+      : ERR_COOKIE_NOT_FOUND
 
   const [reRender, setRerender] = useState(false)
-  const [userInfo, setUserInfo] = useState({
-    name: '',
-    position: '',
-    userId: 0,
-    organizationId: 0,
-    organizationName: '',
-    attendanceStatus: '',
-  })
-
   const getFetchUserProps: ModuleGetFetchProps = {
-    keyName: [KEY_UUID],
-    keyValue: [uuid],
+    params: {
+      [KEY_UUID]: uuid,
+    },
     fetchUrl: process.env.NEXT_PUBLIC_USERS_SOURCE,
     header: {
       Authorization: `Bearer ${accessToken}`,
@@ -39,47 +45,46 @@ export default function Main() {
 
   const fetchGetUsers = async () => {
     try {
-      const res = await moduleGetFetch(getFetchUserProps)
-      setUserInfo({
-        name: res.data.result.name,
-        position: res.data.result.position,
-        userId: res.data.result.userId,
-        organizationId: res.data.result.organizationId,
-        organizationName: res.data.result.organizationName,
-        attendanceStatus: res.data.result.attendanceStatus,
-      })
+      const res = await moduleGetFetch<ApiRes>(getFetchUserProps)
+      const extraUserInfoReducerProps = {
+        name: res.result.name,
+        position: res.result.position,
+        userId: res.result.userId,
+        organizationId: res.result.organizationId,
+        organizationName: res.result.organizationName,
+      }
+      const userReducerProps = {
+        [KEY_X_ORGANIZATION_CODE]: res.result.organizationCode as string,
+        [KEY_UUID]: res.result[KEY_UUID] as string,
+      }
+      const attendanceReducerProps = {
+        status: res.result.attendanceStatus as string,
+        time: attendanceTime,
+      }
+      dispatch(updateExtraUserInfoReducer(extraUserInfoReducerProps))
+      dispatch(updateUserInfoReducer(userReducerProps))
+      dispatch(updateAttendanceStatusReducer(attendanceReducerProps))
     } catch (err) {
-      // FIXME: 에러 핸들링 하기 => 어떤 방식으로? 유저정보를 가져오는데 실패하면 무엇을 어떻게 알려줘야하나. => 유저정보를 가져오는데 실패했다 => 로그인과정에서 문제가 발생했다 => 재로그인
-      // 그럼 굳이 케이스를 나누어서 에러처리를 할 필요가 있나
-      if (axios.isAxiosError(err)) {
-        switch (err.response?.status) {
-          case HttpStatusCode.BadRequest:
-            deleteTokens(KEY_ACCESS_TOKEN, KEY_UUID, KEY_X_ORGANIZATION_CODE)
-            redirect('/error/notfound')
-            break
-          case HttpStatusCode.InternalServerError:
-            break
-        }
-      } else {
-        // 일반 에러
+      if (err instanceof Error) {
+        moduleDeleteCookies(KEY_ACCESS_TOKEN)
+        redirect('/error/notfound')
       }
     }
   }
   useEffect(() => {
-    // 여기서 이미 토큰이 없으면 리디렉션을 하기 때문에 따로 로그인하라고 알려주는 부분이 필요없음
-    if (accessToken === null) {
+    if (accessToken === ERR_COOKIE_NOT_FOUND) {
       redirect('/error/notfound/token')
     } else {
       void fetchGetUsers()
     }
-  }, [reRender])
+  }, [])
 
   return (
     <>
-      <main className="grid gap-4 grid-cols-4 h-4/5  pt-10 ml-10 mr-10">
+      <main className="grid gap-4 grid-cols-5 h-4/5  pt-10 ml-10 mr-10">
         <div className="col-span-1 w-5/6">
-          <UserCard userInfo={userInfo} reRender={reRender} setRerender={setRerender} />
-          <MenuCard userInfo={userInfo} />
+          <UserCard reRender={reRender} setRerender={setRerender} />
+          <MenuCard />
         </div>
         <div className="col-span-3 mr-10">
           <Hub />

@@ -57,7 +57,7 @@ type gradeActionType = {
   writeAccess: string
 }
 
-export const orgInfoReducer = createSlice({
+export const orgInfoSlice = createSlice({
   name: 'orgInfoReducer',
   initialState,
   reducers: {
@@ -102,6 +102,6 @@ export const {
   updateCurrentOrgTeamReducer,
   deleteOrgTeamReducer,
   joinOrgReducer,
-} = orgInfoReducer.actions
+} = orgInfoSlice.actions
 
-export default orgInfoReducer.reducer
+export default orgInfoSlice.reducer

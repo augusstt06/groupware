@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-import axios, { HttpStatusCode } from 'axios'
+import { HttpStatusCode } from 'axios'
 
 import { InputIconlabel } from '../../label/InputIconlabel'
 import { InputLabel } from '../../label/Inputlabel'
@@ -11,6 +11,7 @@ import {
   REGISTER_PHONENUMBER,
   REGISTER_POSITION,
 } from '@/app/constant/constant'
+import { ERR_INTERNAL_SERVER, errDefault } from '@/app/constant/errorMsg'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import inputValidate from '@/app/module/utils/inputValidate'
 import { moduleGetFetch } from '@/app/module/utils/moduleFetch'
@@ -19,7 +20,7 @@ import {
   nameReducer,
   phoneNumberReducer,
   positionReducer,
-} from '@/app/store/reducers/signupInfoReducer'
+} from '@/app/store/reducers/login/signupInfoReducer'
 import { type ModuleGetFetchProps } from '@/app/types/moduleTypes'
 import { type InfoInputProps } from '@/app/types/ui/inputTypes'
 
@@ -41,8 +42,7 @@ export default function InfoInput(props: InfoInputProps) {
   const emailState = useAppSelector((state) => state.signupInfo.email)
 
   const getFetchEmailProps: ModuleGetFetchProps = {
-    keyName: [REGISTER_EMAIL.toLowerCase()],
-    keyValue: [useInput.value],
+    params: { [REGISTER_EMAIL.toLowerCase()]: useInput.value },
     fetchUrl: process.env.NEXT_PUBLIC_EMAIL_REQ_SOURCE,
   }
 
@@ -56,17 +56,17 @@ export default function InfoInput(props: InfoInputProps) {
       await moduleGetFetch(getFetchEmailProps)
       dispatch(emailReducer({ isCheck: true, value: useInput.value }))
     } catch (err) {
-      if (axios.isAxiosError(err)) {
-        switch (err.response?.status) {
-          case HttpStatusCode.BadRequest:
+      if (err instanceof Error) {
+        switch (err.message) {
+          case HttpStatusCode.BadRequest.toString():
             props.setErrMsg('이메일이 중복됩니다. 다른 이메일을 사용해주세요.')
             break
-          case HttpStatusCode.InternalServerError:
-            props.setErrMsg('통신오류가 발생했습니다. 다시 시도해주세요')
+          case HttpStatusCode.InternalServerError.toString():
+            props.setErrMsg(ERR_INTERNAL_SERVER)
             break
+          default:
+            props.setErrMsg(errDefault('이메일 확인'))
         }
-      } else {
-        props.setErrMsg('이메일 확인에 실패했습니다.')
       }
     }
   }

@@ -1,6 +1,8 @@
 import type React from 'react'
 import { type SetStateAction } from 'react'
 
+import { type UseInputProps } from '../moduleTypes'
+
 export type InfoInputProps = {
   title: string
   placeholder: string
@@ -63,4 +65,10 @@ export type LoginInputProps = {
   }
   isPwdView: boolean
   setIsPwdView: React.Dispatch<SetStateAction<boolean>>
+}
+
+// main
+export type AttendanceInputProps = {
+  title: string
+  input: UseInputProps
 }
