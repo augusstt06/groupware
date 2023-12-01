@@ -81,7 +81,7 @@ export default function Main() {
 
   return (
     <>
-      <main className="grid gap-4 grid-cols-4 h-4/5  pt-10 ml-10 mr-10">
+      <main className="grid gap-4 grid-cols-5 h-4/5  pt-10 ml-10 mr-10">
         <div className="col-span-1 w-5/6">
           <UserCard reRender={reRender} setRerender={setRerender} />
           <MenuCard />

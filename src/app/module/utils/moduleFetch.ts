@@ -9,7 +9,7 @@ import {
 export const moduleGetFetch = async <T>(props: ModuleGetFetchProps): Promise<ReponseType<T>> => {
   const queryString = new URLSearchParams()
   Object.entries(props.params).forEach(([key, value]) => {
-    queryString.append(key, value)
+    queryString.append(key, String(value))
   })
   const urlWithQueryString = `${props.fetchUrl}?${queryString.toString()}`
 

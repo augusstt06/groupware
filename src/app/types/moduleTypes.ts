@@ -17,7 +17,7 @@ export type UseInputProps = {
 }
 
 export type ModuleGetFetchProps = {
-  params: Record<string, string>
+  params: Record<string, string | number>
   fetchUrl?: string
   header?: Record<string, string>
 }
