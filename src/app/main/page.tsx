@@ -86,7 +86,7 @@ export default function Main() {
           <UserCard reRender={reRender} setRerender={setRerender} />
           <MenuCard />
         </div>
-        <div className="col-span-3 mr-10">
+        <div className="col-span-4 mr-10">
           <Hub />
         </div>
       </main>
