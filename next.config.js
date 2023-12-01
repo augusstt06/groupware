@@ -13,7 +13,7 @@ const nextConfig = {
       },
       {
         source: process.env.NEXT_PUBLIC_ATTENDANCES_HISTORY_SOURCE,
-        destination: process.env.NEXT_PUBLIC_USERS_DESTINATION,
+        destination: process.env.NEXT_PUBLIC_ATTENDANCES_HISTORY_DESTINATION,
       },
       {
         source: process.env.NEXT_PUBLIC_ATTENDANCES_SOURCE,

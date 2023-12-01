@@ -3,10 +3,10 @@ import {
   type ApiRes,
   type ModuleGetFetchProps,
   type ModulePostFetchProps,
-  type ReponseType,
+  type ResponseType,
 } from '@/app/types/moduleTypes'
 
-export const moduleGetFetch = async <T>(props: ModuleGetFetchProps): Promise<ReponseType<T>> => {
+export const moduleGetFetch = async <T>(props: ModuleGetFetchProps): Promise<ResponseType<T>> => {
   const queryString = new URLSearchParams()
   Object.entries(props.params).forEach(([key, value]) => {
     queryString.append(key, String(value))
@@ -25,7 +25,7 @@ export const moduleGetFetch = async <T>(props: ModuleGetFetchProps): Promise<Rep
 
 export const modulePostFetch = async (
   props: ModulePostFetchProps,
-): Promise<ReponseType<ApiRes>> => {
+): Promise<ResponseType<ApiRes>> => {
   const res = await fetch(props.fetchUrl as string, {
     method: POST,
     headers: {

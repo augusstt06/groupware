@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 
 import ErrorAlert from '../alert/ErrorAlert'
-import AttendanceBtn from '../button/attendance/AttendanceBtn'
+import AttendanceBtn from '../button/main/attendance/AttendanceBtn'
 
 import { KEY_ATTENDANCE, KEY_LOGIN_TIME } from '@/app/constant/constant'
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'

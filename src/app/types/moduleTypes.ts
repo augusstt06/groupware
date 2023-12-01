@@ -6,7 +6,7 @@ export type UnionStrNumber = string | number
 
 export type ApiRes = Record<string, UnionStrNumber>
 
-export type ReponseType<T> = {
+export type ResponseType<T> = {
   status: number
   result: T
 }
