@@ -5,7 +5,7 @@ import { InputLabel } from '../../label/Inputlabel'
 
 import { ORG_CREATE, ORG_JOIN } from '@/app/constant/constant'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
-import { createOrgReducer, joinOrgReducer } from '@/app/store/reducers/orgInfoReducer'
+import { createOrgReducer, joinOrgReducer } from '@/app/store/reducers/login/orgInfoReducer'
 import { type OrgInputProps } from '@/app/types/ui/inputTypes'
 
 export default function OrgInput(props: OrgInputProps) {

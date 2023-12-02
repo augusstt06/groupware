@@ -5,7 +5,7 @@ import { InputLabel, InputlabelAdd } from '../../label/Inputlabel'
 
 import { REGISTER_CONFIRM_PWD } from '@/app/constant/constant'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
-import { pwdReducer } from '@/app/store/reducers/signupInfoReducer'
+import { pwdReducer } from '@/app/store/reducers/login/signupInfoReducer'
 import { type PwdInputProps } from '@/app/types/ui/inputTypes'
 
 export default function PwdInput(props: PwdInputProps) {

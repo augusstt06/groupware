@@ -1,9 +1,22 @@
-import HubTable from '../../ui/table/hub/HubTable'
+import HubCategory from './hubCategory/HubCategory'
+import AttendanceHistory from './hubCategory/attendanceHistory/AttendanceHistory'
 
 export default function Hub() {
+  const hubCategory = [
+    {
+      title: 'Current Issue',
+      issue: ['Organization', 'Teams'],
+    },
+  ]
   return (
-    <div className="w-4/5">
-      <HubTable />
+    <div>
+      <div>
+        <AttendanceHistory />
+      </div>
+      {}
+      {hubCategory.map((data) => (
+        <HubCategory key={data.title} title={data.title} issue={data.issue} />
+      ))}
     </div>
   )
 }

@@ -12,7 +12,7 @@ import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import {
   createOrgTeamReducer,
   updateCurrentOrgTeamReducer,
-} from '@/app/store/reducers/orgInfoReducer'
+} from '@/app/store/reducers/login/orgInfoReducer'
 
 export default function CreateOrgTeam() {
   const teamNameInput = useInput('')
