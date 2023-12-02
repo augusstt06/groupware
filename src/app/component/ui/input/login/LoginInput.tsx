@@ -5,7 +5,7 @@ import { InputLabel, InputlabelAdd } from '../../label/Inputlabel'
 
 import { REGISTER_EMAIL, REGISTER_PWD } from '@/app/constant/constant'
 import { useAppDispatch } from '@/app/module/hooks/reduxHooks'
-import { emailReducer, pwdReducer } from '@/app/store/reducers/loginInfoReducer'
+import { emailReducer, pwdReducer } from '@/app/store/reducers/login/loginInfoReducer'
 import { type LoginInputProps } from '@/app/types/ui/inputTypes'
 
 export default function LoginInput(props: LoginInputProps) {

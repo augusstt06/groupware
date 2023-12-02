@@ -1,14 +1,20 @@
-import axios, { HttpStatusCode } from 'axios'
-import { setCookie } from 'cookies-next'
 import { useRouter } from 'next/navigation'
 
+import {
+  KEY_ACCESS_TOKEN,
+  KEY_LOGIN_TIME,
+  LOGIN_EMAIL_FAIL_MESSAGE,
+  LOGIN_PWD_FAIL_MESSAGE,
+} from '@/app/constant/constant'
+import { errDefault } from '@/app/constant/errorMsg'
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
+import { moduleSetCookies } from '@/app/module/utils/cookie'
 import inputValidate from '@/app/module/utils/inputValidate'
 import { modulePostFetch } from '@/app/module/utils/moduleFetch'
 import { type ModulePostFetchProps } from '@/app/types/moduleTypes'
-import { type BtnProps } from '@/app/types/ui/btnTypes'
+import { type LoginBtnProps } from '@/app/types/ui/btnTypes'
 
-export default function LoginBtn(props: BtnProps) {
+export default function LoginBtn(props: LoginBtnProps) {
   const router = useRouter()
   const loginState = useAppSelector((state) => state.loginInfo)
 
@@ -23,29 +29,45 @@ export default function LoginBtn(props: BtnProps) {
     inputData: loginState.email.value,
     dataType: 'email',
   }
+
   const fetchLogin = async (): Promise<void> => {
-    const isEmailValid = inputValidate(inputValidateProps)
-    if (!isEmailValid) {
-      alert('이메일 형식이 잘못되었습니다')
-      return
-    }
     try {
+      const isEmailValid = inputValidate(inputValidateProps)
+      if (!isEmailValid) {
+        props.setErrMsg('이메일 형식이 잘못되었습니다. xxx@xxx.xxx 의 형태로 입력해주세요')
+        return
+      }
       const res = await modulePostFetch(fetchLoginProps)
-      setCookie('access-token', res.data.result)
-      alert('로그인이 완료되었습니다.')
+      const currentTime = new Date()
+      const formatter = new Intl.DateTimeFormat('ko-KR', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false,
+      })
+      const formattedTime = formatter.format(currentTime)
+      moduleSetCookies({
+        [KEY_ACCESS_TOKEN]: res.result.accessToken,
+        [KEY_LOGIN_TIME]: formattedTime,
+      })
+
       router.push('/main')
     } catch (err) {
-      if (axios.isAxiosError(err)) {
-        switch (err.status) {
-          case HttpStatusCode.BadRequest:
-            alert('입력값이 잘못되었습니다.')
+      // FIXME: 에러메시지 어떻게 응답되는지 확인하기
+      if (err instanceof Error) {
+        switch (err.message) {
+          case LOGIN_EMAIL_FAIL_MESSAGE:
+            props.setErrMsg('이메일을 잘못 입력했습니다.')
             break
-          case HttpStatusCode.InternalServerError:
-            alert('통신오류가 발생했습니다.')
+          case LOGIN_PWD_FAIL_MESSAGE:
+            props.setErrMsg('비밀번호를 잘못 입력했습니다.')
             break
+          default:
+            props.setErrMsg(errDefault('로그인'))
         }
       }
-      alert('로그인이 실패했습니다.')
     }
   }
 

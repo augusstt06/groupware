@@ -1,7 +1,7 @@
 import { InputLabel } from '../../label/Inputlabel'
 
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
-import { deleteOrgTeamReducer } from '@/app/store/reducers/orgInfoReducer'
+import { deleteOrgTeamReducer } from '@/app/store/reducers/login/orgInfoReducer'
 
 export default function OrgTeamTable() {
   const dispatch = useAppDispatch()

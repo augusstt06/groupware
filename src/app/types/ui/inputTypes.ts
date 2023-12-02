@@ -1,11 +1,14 @@
 import type React from 'react'
 import { type SetStateAction } from 'react'
 
+import { type UseInputProps } from '../moduleTypes'
+
 export type InfoInputProps = {
   title: string
   placeholder: string
   checkValid: boolean
   icon: React.ReactNode
+  setErrMsg: (errDescription: string) => void
   useInput: {
     value: string
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
@@ -62,4 +65,10 @@ export type LoginInputProps = {
   }
   isPwdView: boolean
   setIsPwdView: React.Dispatch<SetStateAction<boolean>>
+}
+
+// main
+export type AttendanceInputProps = {
+  title: string
+  input: UseInputProps
 }

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 import { ORG_SELECTBOX } from '@/app/constant/constant'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
-import { createOrgReducer } from '@/app/store/reducers/orgInfoReducer'
+import { createOrgReducer } from '@/app/store/reducers/login/orgInfoReducer'
 import { type SelectboxProps } from '@/app/types/ui/uiTypes'
 
 export default function SelectBox(props: SelectboxProps) {

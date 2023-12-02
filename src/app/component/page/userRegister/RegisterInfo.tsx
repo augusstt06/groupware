@@ -16,9 +16,9 @@ import {
 } from '@/app/constant/constant'
 import useInput from '@/app/module/hooks/reactHooks/useInput'
 import { type UseInputProps } from '@/app/types/moduleTypes'
-import { type KeyInfoTypeProps } from '@/app/types/pageTypes'
+import { type RegisterInfoTypeProps } from '@/app/types/pageTypes'
 
-export default function RegisterInfo(props: KeyInfoTypeProps) {
+export default function RegisterInfo(props: RegisterInfoTypeProps) {
   const [
     emailInput,
     pwdInput,
@@ -43,6 +43,7 @@ export default function RegisterInfo(props: KeyInfoTypeProps) {
         placeholder="abc12@sample.com"
         checkValid={true}
         useInput={emailInput}
+        setErrMsg={props.setErrMsg}
       />
       <PwdInput
         title={REGISTER_PWD}
@@ -66,6 +67,7 @@ export default function RegisterInfo(props: KeyInfoTypeProps) {
         icon={<BsFillPersonVcardFill />}
         checkValid={false}
         useInput={nameInput}
+        setErrMsg={props.setErrMsg}
       />
       <InfoInput
         title={REGISTER_POSITION}
@@ -73,6 +75,7 @@ export default function RegisterInfo(props: KeyInfoTypeProps) {
         icon={<RiTeamLine />}
         checkValid={false}
         useInput={positionInput}
+        setErrMsg={props.setErrMsg}
       />
       <InfoInput
         title={REGISTER_PHONENUMBER}
@@ -80,6 +83,7 @@ export default function RegisterInfo(props: KeyInfoTypeProps) {
         icon={<AiFillPhone />}
         checkValid={false}
         useInput={phoneNumberInput}
+        setErrMsg={props.setErrMsg}
       />
     </>
   )
