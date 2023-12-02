@@ -68,7 +68,9 @@ export type LoginInputProps = {
 }
 
 // main
-export type AttendanceInputProps = {
+export type MainInputProps = {
+  type: string
   title: string
   input: UseInputProps
+  placeholder: string
 }

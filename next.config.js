@@ -12,6 +12,10 @@ const nextConfig = {
         destination: process.env.NEXT_PUBLIC_USERS_DESTINATION,
       },
       {
+        source: process.env.NEXT_PUBLIC_PROJECTS_CREATE_SOURCE,
+        destination: process.env.NEXT_PUBLIC_PROJECTS_CREATE_DESTINATION,
+      },
+      {
         source: process.env.NEXT_PUBLIC_ATTENDANCES_VACATION_SOURCE,
         destination: process.env.NEXT_PUBLIC_ATTENDANCES_VACATION_DESTINATION,
       },

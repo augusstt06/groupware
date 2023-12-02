@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 
 import { redirect } from 'next/navigation'
 
-import Hub from '../component/page/main/Hub'
+import AttendanceHub from '../component/page/main/hub/attendance/AttendanceHub'
 import MenuCard from '../component/ui/card/MenuCard'
 import UserCard from '../component/ui/card/UserCard'
 import { KEY_ACCESS_TOKEN, KEY_UUID, KEY_X_ORGANIZATION_CODE } from '../constant/constant'
@@ -87,7 +87,7 @@ export default function Main() {
           <MenuCard />
         </div>
         <div className="col-span-4 mr-10">
-          <Hub />
+          <AttendanceHub />
         </div>
       </main>
     </>
