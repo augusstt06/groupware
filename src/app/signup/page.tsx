@@ -34,9 +34,9 @@ export default function Register() {
     })
   }
   const isPrivateInfoComplete: boolean = useAppSelector((state) => {
-    const { email, pwd, name, phoneNumber } = state.signupInfo
+    const { email, pwd, name, phoneNumber, position } = state.signupInfo
 
-    return email.isCheck && pwd.isCheck && name.isCheck && phoneNumber.isCheck
+    return email.isCheck && pwd.isCheck && name.isCheck && position.isCheck && phoneNumber.isCheck
   })
 
   const isSignupInfoComplete: boolean = useAppSelector((state) => {
@@ -72,7 +72,7 @@ export default function Register() {
     return true
   }
   const handleStep = () => {
-    if (!(checkInfoComplete() ?? false)) return
+    if (!checkInfoComplete()) return
     setOrganization(ORG_CREATE)
     setStep(!step)
   }
@@ -105,26 +105,35 @@ export default function Register() {
         ) : (
           <></>
         )}
+      </div>
+      <div className="flex flex-row justify-around items-center w-1/3 ">
+        {organization !== '' ? (
+          <button
+            type="button"
+            onClick={changeOrgType}
+            className="text-indigo-500 hover:text-white dark:text-white dark:bg-indigo-500 dark:border-white bg-white border-indigo-500 hover:bg-indigo-500 focus:ring-4 focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 dark:hover:bg-white dark:hover:text-indigo-500 mb-2 border-2 dark:hover:border-indigo-500/75"
+          >
+            {organization === ORG_CREATE ? 'Join' : 'Create'}
+          </button>
+        ) : (
+          <></>
+        )}
+        {isPrivateInfoComplete ? (
+          <NextBtn
+            title={!step ? 'Next' : 'Previous'}
+            onClick={() => {
+              handleStep()
+            }}
+          />
+        ) : (
+          <></>
+        )}
 
-        <div className="flex flex-row justify-center items-center">
-          {organization !== '' ? (
-            <button
-              type="button"
-              onClick={changeOrgType}
-              className="text-indigo-500 hover:text-white dark:text-white dark:bg-indigo-500 dark:border-white bg-white border-indigo-500 hover:bg-indigo-500 focus:ring-4 focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 dark:hover:bg-white dark:hover:text-indigo-500 mb-2 border-2 dark:hover:border-indigo-500/75"
-            >
-              {organization === ORG_CREATE ? 'Join' : 'Create'}
-            </button>
-          ) : (
-            <></>
-          )}
-          <NextBtn title={!step ? 'Next' : 'Previous'} onClick={handleStep} />
-          {isSignupInfoComplete ? (
-            <SignupBtn title="Sign In" orgType={organization} setErrMsg={setErrMsg} />
-          ) : (
-            <></>
-          )}
-        </div>
+        {isSignupInfoComplete ? (
+          <SignupBtn title="Sign In" orgType={organization} setErrMsg={setErrMsg} />
+        ) : (
+          <></>
+        )}
       </div>
     </div>
   )

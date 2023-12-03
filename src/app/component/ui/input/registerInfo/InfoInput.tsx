@@ -26,19 +26,19 @@ import { type ModuleGetFetchProps } from '@/app/types/moduleTypes'
 import { type InfoInputProps } from '@/app/types/ui/inputTypes'
 
 export default function InfoInput(props: InfoInputProps) {
-  const [isEmailValid, setIsEmailValid] = useState({
-    isValid: false,
-    description: '이메일 형식이 올바르지 않습니다.',
+  const [errState, setErrorState] = useState({
+    isError: false,
+    description: '',
   })
   const handleClickError = () => {
-    setIsEmailValid({
-      isValid: !isEmailValid.isValid,
+    setErrorState({
+      isError: !errState.isError,
       description: '이메일 형식이 올바르지 않습니다.',
     })
   }
   const setErrorMsg = (errDescription: string) => {
-    setIsEmailValid({
-      isValid: false,
+    setErrorState({
+      isError: false,
       description: errDescription,
     })
   }
@@ -97,32 +97,45 @@ export default function InfoInput(props: InfoInputProps) {
       value: useInput.value,
     }
     const handleInputFocusOut = () => {
-      if (props.title === REGISTER_EMAIL && isEmailValid.isValid && useInput.value.length !== 0) {
+      if (props.title === REGISTER_EMAIL && errState.isError && useInput.value.length !== 0) {
         void fetchEmailAvaiable()
       }
     }
     document.getElementById(props.title)?.addEventListener('focusout', handleInputFocusOut)
-    const isValid = inputValidate(inputValidateProps)
+    const isError = inputValidate(inputValidateProps)
     switch (props.title) {
       case REGISTER_EMAIL:
-        if (isValid as boolean) {
-          setIsEmailValid({
-            isValid: true,
-            description: isEmailValid.description,
+        if (isError as boolean) {
+          setErrorState({
+            isError: true,
+            description: errState.description,
           })
         } else {
-          setIsEmailValid({
-            isValid: false,
-            description: isEmailValid.description,
+          setErrorState({
+            isError: false,
+            description: errState.description,
           })
+          dispatch(emailReducer(emailprops))
         }
-        dispatch(emailReducer(emailprops))
+
         break
       case REGISTER_NAME:
         dispatch(nameReducer(reducerProps))
         break
+      // FIXME:
       case REGISTER_PHONENUMBER:
-        dispatch(phoneNumberReducer(reducerProps))
+        if (isError as boolean) {
+          setErrorState({
+            isError: true,
+            description: '전화번호 형식이 잘못되었습니다.',
+          })
+        } else {
+          setErrorState({
+            isError: false,
+            description: errState.description,
+          })
+          dispatch(phoneNumberReducer(reducerProps))
+        }
         break
       case REGISTER_POSITION:
         dispatch(positionReducer(reducerProps))
@@ -146,9 +159,11 @@ export default function InfoInput(props: InfoInputProps) {
           placeholder={props.placeholder}
         />
       </div>
-      {props.title === REGISTER_EMAIL && useInput.value.length !== 0 && !isEmailValid.isValid ? (
+      {(props.title === REGISTER_EMAIL || props.title === REGISTER_PHONENUMBER) &&
+      useInput.value.length !== 0 &&
+      !errState.isError ? (
         <div className="mb-6">
-          <ErrorAlert description={isEmailValid.description} handleClickError={handleClickError} />
+          <ErrorAlert description={errState.description} handleClickError={handleClickError} />
         </div>
       ) : (
         <></>

@@ -5,7 +5,7 @@ import { REGISTER_PHONENUMBER } from '@/app/constant/constant'
 import { type UseInputProps } from '@/app/types/moduleTypes'
 
 export default function useInput(state: string, title?: string): UseInputProps {
-  const initialValue = title === REGISTER_PHONENUMBER ? '010' : '' // 초기값 변경
+  const initialValue = ''
   const [value, setValue] = useState(initialValue)
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
