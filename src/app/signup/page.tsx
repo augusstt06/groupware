@@ -16,20 +16,20 @@ export default function Register() {
   const [isPwdView, setIsPwdView] = useState(false)
   const [isPwdConfirmView, setisPwdConfirmView] = useState(false)
   const [errorState, setErrorState] = useState({
-    error: false,
+    isError: false,
     description: '',
   })
   const [organization, setOrganization] = useState('')
 
   const setErrMsg = (errDescription: string) => {
     setErrorState({
-      error: true,
+      isError: true,
       description: errDescription,
     })
   }
   const handleClickError = (): void => {
     setErrorState({
-      error: !errorState.error,
+      isError: !errorState.isError,
       description: errorState.description,
     })
   }
@@ -98,7 +98,7 @@ export default function Register() {
           <RegisterOrg organization={organization} setOrganization={setOrganization} />
         )}
 
-        {errorState.error ? (
+        {errorState.isError ? (
           <div className="mb-5">
             <ErrorAlert description={errorState.description} handleClickError={handleClickError} />
           </div>

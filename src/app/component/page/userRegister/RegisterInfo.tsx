@@ -40,14 +40,14 @@ export default function RegisterInfo(props: RegisterInfoTypeProps) {
       <InfoInput
         icon={<AiOutlineMail />}
         title={REGISTER_EMAIL}
-        placeholder="abc12@sample.com"
+        placeholder="이메일을 입력해주세요."
         checkValid={true}
         useInput={emailInput}
         setErrMsg={props.setErrMsg}
       />
       <PwdInput
         title={REGISTER_PWD}
-        placeholder="At least 8 characters"
+        placeholder="비밀번호를 입력해주세요."
         icon={<RiLockPasswordFill />}
         isInputValueView={props.isPwdView}
         setIsInputValueView={props.setIsPwdView}
@@ -55,7 +55,7 @@ export default function RegisterInfo(props: RegisterInfoTypeProps) {
       />
       <PwdInput
         title={REGISTER_CONFIRM_PWD}
-        placeholder="Please Re-enter your password"
+        placeholder="비밀번호를 입력해주세요."
         icon={<Si1Password />}
         isInputValueView={props.isPwdConfirmView}
         setIsInputValueView={props.setIsPwdConfirmView}
@@ -63,7 +63,7 @@ export default function RegisterInfo(props: RegisterInfoTypeProps) {
       />
       <InfoInput
         title={REGISTER_NAME}
-        placeholder="Min Yeon Kim"
+        placeholder="이름을 입력해주세요."
         icon={<BsFillPersonVcardFill />}
         checkValid={false}
         useInput={nameInput}
@@ -71,7 +71,7 @@ export default function RegisterInfo(props: RegisterInfoTypeProps) {
       />
       <InfoInput
         title={REGISTER_POSITION}
-        placeholder="fe"
+        placeholder="직무를 입력해주세요."
         icon={<RiTeamLine />}
         checkValid={false}
         useInput={positionInput}
@@ -79,7 +79,7 @@ export default function RegisterInfo(props: RegisterInfoTypeProps) {
       />
       <InfoInput
         title={REGISTER_PHONENUMBER}
-        placeholder="010-0000-0000"
+        placeholder="휴대폰 번호를 입력해주세요."
         icon={<AiFillPhone />}
         checkValid={false}
         useInput={phoneNumberInput}

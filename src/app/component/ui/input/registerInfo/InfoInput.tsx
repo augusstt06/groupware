@@ -1,7 +1,8 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 import { HttpStatusCode } from 'axios'
 
+import ErrorAlert from '../../alert/ErrorAlert'
 import { InputIconlabel } from '../../label/InputIconlabel'
 import { InputLabel } from '../../label/Inputlabel'
 
@@ -25,6 +26,22 @@ import { type ModuleGetFetchProps } from '@/app/types/moduleTypes'
 import { type InfoInputProps } from '@/app/types/ui/inputTypes'
 
 export default function InfoInput(props: InfoInputProps) {
+  const [isEmailValid, setIsEmailValid] = useState({
+    isValid: false,
+    description: '이메일 형식이 올바르지 않습니다.',
+  })
+  const handleClickError = () => {
+    setIsEmailValid({
+      isValid: !isEmailValid.isValid,
+      description: '이메일 형식이 올바르지 않습니다.',
+    })
+  }
+  const setErrorMsg = (errDescription: string) => {
+    setIsEmailValid({
+      isValid: false,
+      description: errDescription,
+    })
+  }
   const dispatch = useAppDispatch()
   const useInput = props.useInput
   const inputState = useAppSelector((state) => {
@@ -39,10 +56,8 @@ export default function InfoInput(props: InfoInputProps) {
         return state.signupInfo.email
     }
   })
-  const emailState = useAppSelector((state) => state.signupInfo.email)
-
   const getFetchEmailProps: ModuleGetFetchProps = {
-    params: { [REGISTER_EMAIL.toLowerCase()]: useInput.value },
+    params: { email: useInput.value },
     fetchUrl: process.env.NEXT_PUBLIC_EMAIL_REQ_SOURCE,
   }
 
@@ -59,30 +74,16 @@ export default function InfoInput(props: InfoInputProps) {
       if (err instanceof Error) {
         switch (err.message) {
           case HttpStatusCode.BadRequest.toString():
-            props.setErrMsg('이메일이 중복됩니다. 다른 이메일을 사용해주세요.')
+            setErrorMsg('이미 사용중인 이메일 주소입니다.')
             break
           case HttpStatusCode.InternalServerError.toString():
-            props.setErrMsg(ERR_INTERNAL_SERVER)
+            setErrorMsg(ERR_INTERNAL_SERVER)
             break
           default:
-            props.setErrMsg(errDefault('이메일 확인'))
+            setErrorMsg(errDefault('이메일 확인'))
         }
       }
     }
-  }
-
-  const handleChangeEmailInputCheckbox = async () => {
-    const isValid = inputValidate(inputValidateProps)
-    if (!isValid as boolean) {
-      props.setErrMsg('이메일 형식이 잘못되었습니다. xxx@xxx.xxx 의 형태로 입력해주세요')
-      return
-    }
-    if (inputState.isCheck) {
-      dispatch(emailReducer({ isCheck: false, value: '' }))
-      useInput.resetValue()
-      return
-    }
-    void fetchEmailAvaiable()
   }
 
   useEffect(() => {
@@ -91,13 +92,30 @@ export default function InfoInput(props: InfoInputProps) {
       isCheck: isInput,
       value: useInput.value,
     }
-
     const emailprops = {
       isCheck: inputState.isCheck,
       value: useInput.value,
     }
+    const handleInputFocusOut = () => {
+      if (props.title === REGISTER_EMAIL && isEmailValid.isValid && useInput.value.length !== 0) {
+        void fetchEmailAvaiable()
+      }
+    }
+    document.getElementById(props.title)?.addEventListener('focusout', handleInputFocusOut)
+    const isValid = inputValidate(inputValidateProps)
     switch (props.title) {
       case REGISTER_EMAIL:
+        if (isValid as boolean) {
+          setIsEmailValid({
+            isValid: true,
+            description: isEmailValid.description,
+          })
+        } else {
+          setIsEmailValid({
+            isValid: false,
+            description: isEmailValid.description,
+          })
+        }
         dispatch(emailReducer(emailprops))
         break
       case REGISTER_NAME:
@@ -117,7 +135,7 @@ export default function InfoInput(props: InfoInputProps) {
   return (
     <>
       <InputLabel title={props.title} />
-      <div className="flex relative mt-2 mb-6">
+      <div className="flex relative mt-2 mb-2">
         <InputIconlabel icon={props.icon} />
         <input
           type="text"
@@ -127,23 +145,14 @@ export default function InfoInput(props: InfoInputProps) {
           className="rounded-none rounded-r-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder={props.placeholder}
         />
-
-        {props.checkValid ? (
-          <div className="absolute inset-y-0 right-4 flex items-center pl-3.5">
-            <input
-              type="checkbox"
-              className="cursor-pointer w-5 h-5"
-              checked={emailState.isCheck}
-              onChange={(event) => {
-                event.preventDefault()
-                void handleChangeEmailInputCheckbox()
-              }}
-            />
-          </div>
-        ) : (
-          <></>
-        )}
       </div>
+      {props.title === REGISTER_EMAIL && useInput.value.length !== 0 && !isEmailValid.isValid ? (
+        <div className="mb-6">
+          <ErrorAlert description={isEmailValid.description} handleClickError={handleClickError} />
+        </div>
+      ) : (
+        <></>
+      )}
     </>
   )
 }

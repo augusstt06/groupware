@@ -25,7 +25,7 @@ export default function CreateProject() {
           title: titleInput.input.value,
           projectId: projectIdInput.input.value,
         },
-        fetchUrl: process.env.NEXT_PUBLIC_PROJECTS_CREATE_SOURCE,
+        fetchUrl: process.env.NEXT_PUBLIC_CREATE_PROJECTS_SOURCE,
         header: {
           Authorization: `Bearer ${accessToken}`,
           [KEY_X_ORGANIZATION_CODE]: userInfo[KEY_X_ORGANIZATION_CODE],
