@@ -1,7 +1,5 @@
 import React, { useState } from 'react'
 
-import { addSeconds, format, parse } from 'date-fns'
-
 import AttendanceHistoryBtn from '@/app/component/ui/button/main/attendance/AttendanceHistoryBtn'
 import MainInput from '@/app/component/ui/input/main/MainInput'
 import { InputLabel } from '@/app/component/ui/label/Inputlabel'
@@ -11,6 +9,7 @@ import useInput from '@/app/module/hooks/reactHooks/useInput'
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleGetCookie } from '@/app/module/utils/cookie'
 import { moduleGetFetch } from '@/app/module/utils/moduleFetch'
+import { convertTime } from '@/app/module/utils/time'
 import { type ApiRes, type ModuleGetFetchProps } from '@/app/types/moduleTypes'
 
 export default function AttendanceHistory() {
@@ -20,16 +19,6 @@ export default function AttendanceHistory() {
 
   const fromInput = useInput('')
   const toInput = useInput('')
-
-  const convertTime = (input: string): string => {
-    const date: Date = parse(input, 'yyyy/MM/dd/HH:mm', new Date())
-    const dateWithSeconds: Date = addSeconds(date, 5)
-    const outputString: string = format(dateWithSeconds, "yyyy-MM-dd'T'HH:mm:ss'Z'", {
-      locale: undefined,
-    })
-
-    return outputString
-  }
 
   const [select, setSelect] = useState('attendance')
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {

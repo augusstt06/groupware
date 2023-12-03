@@ -13,7 +13,7 @@ import {
   REGISTER_POSITION,
 } from '@/app/constant/constant'
 import { ERR_INTERNAL_SERVER, errDefault } from '@/app/constant/errorMsg'
-import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
+import { useAppDispatch } from '@/app/module/hooks/reduxHooks'
 import inputValidate from '@/app/module/utils/inputValidate'
 import { moduleGetFetch } from '@/app/module/utils/moduleFetch'
 import {
@@ -36,34 +36,27 @@ export default function InfoInput(props: InfoInputProps) {
       description: '이메일 형식이 올바르지 않습니다.',
     })
   }
-  const setErrorMsg = (errDescription: string) => {
+  const setErrorMsg = (err: boolean, errDescription: string) => {
     setErrorState({
-      isError: false,
+      isError: err,
       description: errDescription,
     })
   }
   const dispatch = useAppDispatch()
   const useInput = props.useInput
-  const inputState = useAppSelector((state) => {
-    switch (props.title) {
-      case REGISTER_NAME:
-        return state.signupInfo.name
-      case REGISTER_PHONENUMBER:
-        return state.signupInfo.phoneNumber
-      case REGISTER_POSITION:
-        return state.signupInfo.position
-      default:
-        return state.signupInfo.email
-    }
-  })
+
   const getFetchEmailProps: ModuleGetFetchProps = {
     params: { email: useInput.value },
     fetchUrl: process.env.NEXT_PUBLIC_EMAIL_REQ_SOURCE,
   }
 
-  const inputValidateProps = {
+  const emailInputValidateProps = {
     inputData: useInput.value,
-    dataType: props.title === REGISTER_EMAIL ? 'email' : 'phoneNumber',
+    dataType: 'email',
+  }
+  const phoneNumberInputValidate = {
+    inputData: useInput.value,
+    dataType: 'phoneNumber',
   }
 
   const fetchEmailAvaiable = async (): Promise<void> => {
@@ -74,13 +67,13 @@ export default function InfoInput(props: InfoInputProps) {
       if (err instanceof Error) {
         switch (err.message) {
           case HttpStatusCode.BadRequest.toString():
-            setErrorMsg('이미 사용중인 이메일 주소입니다.')
+            setErrorMsg(true, '이미 사용중인 이메일 주소입니다.')
             break
           case HttpStatusCode.InternalServerError.toString():
-            setErrorMsg(ERR_INTERNAL_SERVER)
+            setErrorMsg(true, ERR_INTERNAL_SERVER)
             break
           default:
-            setErrorMsg(errDefault('이메일 확인'))
+            setErrorMsg(true, errDefault('이메일 확인'))
         }
       }
     }
@@ -92,50 +85,53 @@ export default function InfoInput(props: InfoInputProps) {
       isCheck: isInput,
       value: useInput.value,
     }
-    const emailprops = {
-      isCheck: inputState.isCheck,
-      value: useInput.value,
-    }
-    const handleInputFocusOut = () => {
-      if (props.title === REGISTER_EMAIL && errState.isError && useInput.value.length !== 0) {
-        void fetchEmailAvaiable()
-      }
-    }
-    document.getElementById(props.title)?.addEventListener('focusout', handleInputFocusOut)
-    const isError = inputValidate(inputValidateProps)
+
+    let isValidate
     switch (props.title) {
       case REGISTER_EMAIL:
-        if (isError as boolean) {
-          setErrorState({
-            isError: true,
-            description: errState.description,
-          })
+        isValidate = !inputValidate(emailInputValidateProps)
+        if (isValidate as boolean) {
+          setErrorMsg(false, '이메일 형식이 올바르지 않습니다.')
+          dispatch(
+            emailReducer({
+              isCheck: false,
+              value: useInput.value,
+            }),
+          )
         } else {
-          setErrorState({
-            isError: false,
-            description: errState.description,
-          })
-          dispatch(emailReducer(emailprops))
+          setErrorMsg(true, '')
+          dispatch(
+            emailReducer({
+              isCheck: true,
+              value: useInput.value,
+            }),
+          )
         }
 
         break
       case REGISTER_NAME:
         dispatch(nameReducer(reducerProps))
         break
-      // FIXME:
       case REGISTER_PHONENUMBER:
-        if (isError as boolean) {
-          setErrorState({
-            isError: true,
-            description: '전화번호 형식이 잘못되었습니다.',
-          })
+        isValidate = !inputValidate(phoneNumberInputValidate)
+        if (isValidate as boolean) {
+          setErrorMsg(false, '전화번호 형식이 잘못되었습니다.')
+          dispatch(
+            phoneNumberReducer({
+              isCheck: false,
+              value: useInput.value,
+            }),
+          )
         } else {
-          setErrorState({
-            isError: false,
-            description: errState.description,
-          })
-          dispatch(phoneNumberReducer(reducerProps))
+          setErrorMsg(true, '')
+          dispatch(
+            phoneNumberReducer({
+              isCheck: true,
+              value: useInput.value,
+            }),
+          )
         }
+
         break
       case REGISTER_POSITION:
         dispatch(positionReducer(reducerProps))
@@ -143,6 +139,12 @@ export default function InfoInput(props: InfoInputProps) {
       default:
         break
     }
+    const handleInputFocusOut = () => {
+      if (props.title === REGISTER_EMAIL && errState.isError && useInput.value.length !== 0) {
+        void fetchEmailAvaiable()
+      }
+    }
+    document.getElementById(props.title)?.addEventListener('focusout', handleInputFocusOut)
   }, [useInput.value])
 
   return (

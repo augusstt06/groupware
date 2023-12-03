@@ -1,5 +1,4 @@
 'use client'
-// hotfix
 import { useState } from 'react'
 
 import RegisterOrg from '../component/page/organization/RegisterOrg'
@@ -19,6 +18,7 @@ export default function Register() {
     isError: false,
     description: '',
   })
+
   const [organization, setOrganization] = useState('')
 
   const setErrMsg = (errDescription: string) => {
@@ -35,13 +35,18 @@ export default function Register() {
   }
   const isPrivateInfoComplete: boolean = useAppSelector((state) => {
     const { email, pwd, name, phoneNumber, position } = state.signupInfo
-
     return email.isCheck && pwd.isCheck && name.isCheck && position.isCheck && phoneNumber.isCheck
   })
 
   const isSignupInfoComplete: boolean = useAppSelector((state) => {
-    const { create, join } = state.signupInfo.organization
-    return (create.isCheck || join.isCheck) && isPrivateInfoComplete
+    // FIXME: 아래 상태가 초기화 되지 않는 문제
+    const { createOrg, joinOrg } = state.orgInfo
+    const isCreateOrgInfoComplete =
+      createOrg.description.length !== 0 && createOrg.name.length !== 0
+
+    const isJoinOrgInfoComplete = joinOrg.code.length !== 0
+
+    return (isCreateOrgInfoComplete || isJoinOrgInfoComplete) && isPrivateInfoComplete
   })
 
   const isPwdConfirm: boolean = useAppSelector((state) => {
@@ -83,6 +88,7 @@ export default function Register() {
     }
     setOrganization(ORG_CREATE)
   }
+
   return (
     <div className="flex flex-col justify-center items-center p 1">
       <div className="mt-10 w-3/5">
