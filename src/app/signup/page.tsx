@@ -1,5 +1,5 @@
 'use client'
-
+// hotfix
 import { useState } from 'react'
 
 import RegisterOrg from '../component/page/organization/RegisterOrg'
