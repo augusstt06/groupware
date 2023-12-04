@@ -27,13 +27,14 @@ export default function RegisterInfo(props: RegisterInfoTypeProps) {
     positionInput,
     phoneNumberInput,
   ]: UseInputProps[] = [
-    REGISTER_EMAIL,
-    REGISTER_PWD,
-    REGISTER_CONFIRM_PWD,
-    REGISTER_NAME,
-    REGISTER_POSITION,
-    REGISTER_PHONENUMBER,
-  ].map((title: string) => useInput('', title))
+    useInput('', REGISTER_EMAIL, 100),
+
+    useInput('', REGISTER_PWD, 20),
+    useInput('', REGISTER_CONFIRM_PWD, 20),
+    useInput('', REGISTER_NAME, 10),
+    useInput('', REGISTER_POSITION, 10),
+    useInput('', REGISTER_PHONENUMBER, 13),
+  ]
 
   return (
     <>

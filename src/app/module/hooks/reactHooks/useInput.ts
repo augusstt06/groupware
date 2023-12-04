@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { REGISTER_PHONENUMBER } from '@/app/constant/constant'
 import { type UseInputProps } from '@/app/types/moduleTypes'
 
-export default function useInput(state: string, title?: string): UseInputProps {
+export default function useInput(state: string, title?: string, limit?: number): UseInputProps {
   const initialValue = ''
   const [value, setValue] = useState(initialValue)
 
@@ -12,7 +12,10 @@ export default function useInput(state: string, title?: string): UseInputProps {
     const {
       target: { value },
     } = e
-    const formattedValue = title === REGISTER_PHONENUMBER ? formatPhoneNumber(value) : value
+
+    const limitValue = limit !== undefined ? value.slice(0, limit) : value
+    const formattedValue =
+      title === REGISTER_PHONENUMBER ? formatPhoneNumber(limitValue) : limitValue
 
     setValue(formattedValue)
   }

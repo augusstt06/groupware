@@ -77,6 +77,7 @@ export default function PwdInput(props: PwdInputProps) {
           id={props.title}
           className="rounded-none rounded-r-lg bg-gray-50 border text-gray-900  block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white "
           placeholder={props.placeholder}
+          maxLength={20}
         />
         <button
           type="submit"
@@ -93,7 +94,9 @@ export default function PwdInput(props: PwdInputProps) {
       errorState.isError &&
       pwdState.pwdValue !== '' &&
       pwdState.pwdConfirmValue !== '' ? (
-        <ErrorAlert description={errorState.description} handleClickError={handleClickError} />
+        <div className="mb-6">
+          <ErrorAlert description={errorState.description} handleClickError={handleClickError} />
+        </div>
       ) : (
         <> </>
       )}

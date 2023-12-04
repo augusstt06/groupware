@@ -22,7 +22,7 @@ export default function CreateOrgInfo() {
   }
 
   const orgNameInput = useInput('')
-  const orgDescriptionInput = useInput('')
+  const orgDescriptionInput = useInput('', 'registerOrg', 100)
 
   const selectList = [
     {

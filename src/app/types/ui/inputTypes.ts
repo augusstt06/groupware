@@ -50,6 +50,7 @@ export type OrgInputProps = {
   useInput: {
     value: string
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+    resetValue: () => void
   }
 }
 
