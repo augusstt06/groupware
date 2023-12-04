@@ -38,6 +38,17 @@ export default function OrgInput(props: OrgInputProps) {
       default:
         break
     }
+    const handleBeforeunload = () => {
+      payload = {
+        name: '',
+        description: '',
+        organizationType: 'PUBLIC',
+      }
+      props.useInput.resetValue()
+      dispatch(createOrgReducer(payload))
+      dispatch(joinOrgReducer({ code: '' }))
+    }
+    window.addEventListener('beforeunload', handleBeforeunload)
   }, [props.useInput.value])
 
   return (
