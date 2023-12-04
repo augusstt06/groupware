@@ -45,9 +45,9 @@ export default function Header() {
   }
 
   const menuList = [
-    { title: 'Board', list: ['board 1', 'board 2'], open: open.board },
-    { title: 'Project', list: ['project 1', 'project 2'], open: open.project },
-    { title: 'Team', list: [], open: false },
+    { title: 'Board', list: ['board 1', 'board 2'], open: open.board, link: '/main' },
+    { title: 'Project', list: [], open: open.project, link: '/project' },
+    { title: 'Team', list: [], open: false, link: '/main' },
   ]
 
   const [mount, setMount] = useState(false)
@@ -100,32 +100,54 @@ export default function Header() {
               <ul className="flex flex-col mt-4 font-medium md:flex-row md:mt-0 md:space-x-8 rtl:space-x-reverse">
                 {menuList.map((data) => (
                   <li key={data.title}>
-                    <button
-                      id={`${data.title}-dropdown-button`}
-                      className="flex items-center justify-between w-full py-2 px-3 font-medium text-gray-900 border-b border-gray-100 md:w-auto hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-indigo-600 md:p-0 dark:text-white md:dark:hover:text-indigo-400 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700"
-                      onClick={() => {
-                        handleOpen(data.title)
-                      }}
-                    >
-                      {data.title}
-                    </button>
+                    {data.list.length !== 0 ? (
+                      <button
+                        id={`${data.title}-dropdown-button`}
+                        className="flex items-center justify-between w-full py-2 px-3 font-medium text-gray-900 border-b border-gray-100 md:w-auto hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-indigo-600 md:p-0 dark:text-white md:dark:hover:text-indigo-400 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700"
+                        onClick={() => {
+                          handleOpen(data.title)
+                        }}
+                      >
+                        {data.title}
+                      </button>
+                    ) : (
+                      <Link href={data.link}>
+                        <button
+                          id={`${data.title}-dropdown-button`}
+                          className="flex items-center justify-between w-full py-2 px-3 font-medium text-gray-900 border-b border-gray-100 md:w-auto hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-indigo-600 md:p-0 dark:text-white md:dark:hover:text-indigo-400 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700"
+                          onClick={() => {
+                            handleOpen(data.title)
+                          }}
+                        >
+                          {data.title}
+                        </button>
+                      </Link>
+                    )}
+
                     <div
                       id={`${data.title}-dropdown`}
                       className={`absolute z-11 grid ${
                         data.open ? '' : 'hidden'
                       } w-auto grid-cols-2 text-sm bg-white border border-gray-100 rounded-lg shadow-md dark:border-gray-700 md:grid-cols-3 dark:bg-gray-700`}
                     >
-                      <div className="p-4 pb-0 text-gray-900 md:pb-4 dark:text-white">
-                        <ul className="space-y-4" aria-labelledby="mega-menu-icons-dropdown-button">
-                          {data.list.map((data) => (
-                            <li key={data}>
-                              <a className="flex items-center text-gray-500 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-500 group">
-                                {data}
-                              </a>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
+                      {data.list.length !== 0 ? (
+                        <div className="p-4 pb-0 text-gray-900 md:pb-4 dark:text-white">
+                          <ul
+                            className="space-y-4"
+                            aria-labelledby="mega-menu-icons-dropdown-button"
+                          >
+                            <Link href={data.link}>
+                              {data.list.map((data) => (
+                                <li key={data}>
+                                  <p className="flex items-center text-gray-500 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-500 group">
+                                    {data}
+                                  </p>
+                                </li>
+                              ))}
+                            </Link>
+                          </ul>
+                        </div>
+                      ) : null}
                     </div>
                   </li>
                 ))}

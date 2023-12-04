@@ -18,12 +18,12 @@ export const ORG_GRADES = 'grades'
 
 export const ORG_CREATETEAM = 'createTeam'
 
-export const REGISTER_EMAIL = 'Email'
-export const REGISTER_PWD = 'Password (A-Z a-z 0-9 !@#$%^*&*? 포함)'
-export const REGISTER_CONFIRM_PWD = 'Confirm Password'
-export const REGISTER_NAME = 'Name'
-export const REGISTER_PHONENUMBER = 'PhoneNumber'
-export const REGISTER_POSITION = 'Position'
+export const REGISTER_EMAIL = '이메일'
+export const REGISTER_PWD = '비밀번호'
+export const REGISTER_CONFIRM_PWD = '비밀번호 확인'
+export const REGISTER_NAME = '이름'
+export const REGISTER_PHONENUMBER = '전화번호'
+export const REGISTER_POSITION = '직무'
 
 export const KEY_ACCESS_TOKEN = 'access-token'
 export const KEY_X_ORGANIZATION_CODE = 'X-ORGANIZATION-CODE'

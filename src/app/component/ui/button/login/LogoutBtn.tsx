@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleDeleteCookies, moduleGetCookie } from '@/app/module/utils/cookie'
 import { modulePatchFetch, modulePostFetch } from '@/app/module/utils/moduleFetch'
 import { resetReducer } from '@/app/store/reducers/login/loginInfoReducer'
+import { resetOrgReducer } from '@/app/store/reducers/login/orgInfoReducer'
 import { updateAttendanceStatusReducer } from '@/app/store/reducers/main/userInfoReducer'
 import { type ModulePostFetchProps } from '@/app/types/moduleTypes'
 import { type LogoutBtnProps } from '@/app/types/ui/btnTypes'
@@ -56,6 +57,7 @@ export default function LogoutBtn(props: LogoutBtnProps) {
           time: 0,
         }),
       )
+      dispatch(resetOrgReducer())
     } catch (err) {}
   }
   const fetchLogout = async () => {

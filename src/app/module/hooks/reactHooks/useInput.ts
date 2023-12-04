@@ -4,18 +4,32 @@ import { useState } from 'react'
 import { REGISTER_PHONENUMBER } from '@/app/constant/constant'
 import { type UseInputProps } from '@/app/types/moduleTypes'
 
-export default function useInput(state: string, title?: string): UseInputProps {
-  const [value, setValue] = useState(title === REGISTER_PHONENUMBER ? '010-' : '')
+export default function useInput(state: string, title?: string, limit?: number): UseInputProps {
+  const initialValue = ''
+  const [value, setValue] = useState(initialValue)
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {
       target: { value },
     } = e
-    setValue(value)
+
+    const limitValue = limit !== undefined ? value.slice(0, limit) : value
+    const formattedValue =
+      title === REGISTER_PHONENUMBER ? formatPhoneNumber(limitValue) : limitValue
+
+    setValue(formattedValue)
   }
+
   const resetValue = () => {
-    setValue('')
+    setValue(initialValue)
   }
 
   return { value, onChange, resetValue }
+}
+
+const formatPhoneNumber = (value: string): string => {
+  const cleaned = value.replace(/[^0-9]/g, '')
+  const parts = [cleaned.slice(0, 3), cleaned.slice(3, 7), cleaned.slice(7)]
+
+  return parts.filter(Boolean).join('-')
 }

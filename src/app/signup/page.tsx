@@ -1,5 +1,4 @@
 'use client'
-
 import { useState } from 'react'
 
 import RegisterOrg from '../component/page/organization/RegisterOrg'
@@ -16,32 +15,38 @@ export default function Register() {
   const [isPwdView, setIsPwdView] = useState(false)
   const [isPwdConfirmView, setisPwdConfirmView] = useState(false)
   const [errorState, setErrorState] = useState({
-    error: false,
+    isError: false,
     description: '',
   })
+
   const [organization, setOrganization] = useState('')
 
   const setErrMsg = (errDescription: string) => {
     setErrorState({
-      error: true,
+      isError: true,
       description: errDescription,
     })
   }
   const handleClickError = (): void => {
     setErrorState({
-      error: !errorState.error,
+      isError: !errorState.isError,
       description: errorState.description,
     })
   }
   const isPrivateInfoComplete: boolean = useAppSelector((state) => {
-    const { email, pwd, name, phoneNumber } = state.signupInfo
-
-    return email.isCheck && pwd.isCheck && name.isCheck && phoneNumber.isCheck
+    const { email, pwd, name, phoneNumber, position } = state.signupInfo
+    return email.isCheck && pwd.isCheck && name.isCheck && position.isCheck && phoneNumber.isCheck
   })
 
   const isSignupInfoComplete: boolean = useAppSelector((state) => {
-    const { create, join } = state.signupInfo.organization
-    return (create.isCheck || join.isCheck) && isPrivateInfoComplete
+    // FIXME: 아래 상태가 초기화 되지 않는 문제
+    const { createOrg, joinOrg } = state.orgInfo
+    const isCreateOrgInfoComplete =
+      createOrg.description.length !== 0 && createOrg.name.length !== 0
+
+    const isJoinOrgInfoComplete = joinOrg.code.length !== 0
+
+    return (isCreateOrgInfoComplete || isJoinOrgInfoComplete) && isPrivateInfoComplete
   })
 
   const isPwdConfirm: boolean = useAppSelector((state) => {
@@ -72,7 +77,7 @@ export default function Register() {
     return true
   }
   const handleStep = () => {
-    if (!(checkInfoComplete() ?? false)) return
+    if (!checkInfoComplete()) return
     setOrganization(ORG_CREATE)
     setStep(!step)
   }
@@ -83,6 +88,7 @@ export default function Register() {
     }
     setOrganization(ORG_CREATE)
   }
+
   return (
     <div className="flex flex-col justify-center items-center p 1">
       <div className="mt-10 w-3/5">
@@ -98,33 +104,42 @@ export default function Register() {
           <RegisterOrg organization={organization} setOrganization={setOrganization} />
         )}
 
-        {errorState.error ? (
+        {errorState.isError ? (
           <div className="mb-5">
             <ErrorAlert description={errorState.description} handleClickError={handleClickError} />
           </div>
         ) : (
           <></>
         )}
+      </div>
+      <div className="flex flex-row justify-around items-center w-1/3 ">
+        {organization !== '' ? (
+          <button
+            type="button"
+            onClick={changeOrgType}
+            className="text-indigo-500 hover:text-white dark:text-white dark:bg-indigo-500 dark:border-white bg-white border-indigo-500 hover:bg-indigo-500 focus:ring-4 focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 dark:hover:bg-white dark:hover:text-indigo-500 mb-2 border-2 dark:hover:border-indigo-500/75"
+          >
+            {organization === ORG_CREATE ? 'Join' : 'Create'}
+          </button>
+        ) : (
+          <></>
+        )}
+        {isPrivateInfoComplete ? (
+          <NextBtn
+            title={!step ? 'Next' : 'Previous'}
+            onClick={() => {
+              handleStep()
+            }}
+          />
+        ) : (
+          <></>
+        )}
 
-        <div className="flex flex-row justify-center items-center">
-          {organization !== '' ? (
-            <button
-              type="button"
-              onClick={changeOrgType}
-              className="text-indigo-500 hover:text-white dark:text-white dark:bg-indigo-500 dark:border-white bg-white border-indigo-500 hover:bg-indigo-500 focus:ring-4 focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 dark:hover:bg-white dark:hover:text-indigo-500 mb-2 border-2 dark:hover:border-indigo-500/75"
-            >
-              {organization === ORG_CREATE ? 'Join' : 'Create'}
-            </button>
-          ) : (
-            <></>
-          )}
-          <NextBtn title={!step ? 'Next' : 'Previous'} onClick={handleStep} />
-          {isSignupInfoComplete ? (
-            <SignupBtn title="Sign In" orgType={organization} setErrMsg={setErrMsg} />
-          ) : (
-            <></>
-          )}
-        </div>
+        {isSignupInfoComplete ? (
+          <SignupBtn title="Sign In" orgType={organization} setErrMsg={setErrMsg} />
+        ) : (
+          <></>
+        )}
       </div>
     </div>
   )

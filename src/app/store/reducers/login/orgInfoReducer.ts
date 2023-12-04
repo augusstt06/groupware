@@ -92,6 +92,29 @@ export const orgInfoSlice = createSlice({
     joinOrgReducer(state, action: PayloadAction<{ code: string }>) {
       state.joinOrg.code = action.payload.code
     },
+    resetOrgReducer(state) {
+      state = {
+        createOrg: {
+          name: '',
+          description: '',
+          organizationType: 'PUBLIC',
+        },
+        grades: {
+          deleteAccess: 'TRUE',
+          inviteAccess: 'TRUE',
+          maintainAccess: 'TRUE',
+          name: '',
+          readAccss: 'TRUE',
+          updateAccess: 'TRUE',
+          writeAccess: 'TRUE',
+        },
+        teams: [],
+        currentTeam: { description: '', name: '' },
+        joinOrg: {
+          code: '',
+        },
+      }
+    },
   },
 })
 
@@ -102,6 +125,7 @@ export const {
   updateCurrentOrgTeamReducer,
   deleteOrgTeamReducer,
   joinOrgReducer,
+  resetOrgReducer,
 } = orgInfoSlice.actions
 
 export default orgInfoSlice.reducer

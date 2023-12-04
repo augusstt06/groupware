@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 import { MdOutlineDescription } from 'react-icons/md'
 import { SlOrganization } from 'react-icons/sl'
@@ -13,18 +13,17 @@ import { InputLabel } from '@/app/component/ui/label/Inputlabel'
 import ToggleGroup from '@/app/component/ui/toggle/organization/ToggleGroup'
 import { ORG_CREATE, ORG_GRADES, ORG_SELECTBOX, PRIVATE, PUBLIC } from '@/app/constant/constant'
 import useInput from '@/app/module/hooks/reactHooks/useInput'
-import { useAppDispatch } from '@/app/module/hooks/reduxHooks'
-import { createOrgStatusReducer } from '@/app/store/reducers/login/signupInfoReducer'
 
 export default function CreateOrgInfo() {
   const [isTeam, setIsTeam] = useState(false)
-  const dispatch = useAppDispatch()
+
   const handleClick = () => {
     setIsTeam(!isTeam)
   }
+
   const orgNameInput = useInput('')
-  const orgDescriptionInput = useInput('')
-  const isOrgComplete = orgNameInput.value !== '' && orgDescriptionInput.value !== ''
+  const orgDescriptionInput = useInput('', 'registerOrg', 100)
+
   const selectList = [
     {
       value: PUBLIC.toUpperCase(),
@@ -47,12 +46,7 @@ export default function CreateOrgInfo() {
       { title: 'Write Access', value: 'writeAccess' },
     ],
   ]
-  useEffect(() => {
-    const reducerProps = {
-      isCheck: isOrgComplete,
-    }
-    dispatch(createOrgStatusReducer(reducerProps))
-  }, [orgNameInput, orgDescriptionInput])
+
   return (
     <>
       <OrgInput
