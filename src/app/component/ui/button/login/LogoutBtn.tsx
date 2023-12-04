@@ -65,7 +65,7 @@ export default function LogoutBtn(props: LogoutBtnProps) {
       await modulePostFetch(fetchLogoutProps)
       dispatch(resetReducer())
       moduleDeleteCookies(KEY_ACCESS_TOKEN)
-      router.push('/login')
+      router.push('/')
     } catch (err) {
       alert('로그아웃이 실패했습니다.')
     }

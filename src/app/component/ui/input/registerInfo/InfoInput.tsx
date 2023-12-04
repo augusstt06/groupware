@@ -1,6 +1,4 @@
-import { useEffect, useState } from 'react'
-
-import { HttpStatusCode } from 'axios'
+import { useEffect, useRef, useState } from 'react'
 
 import ErrorAlert from '../../alert/ErrorAlert'
 import { InputIconlabel } from '../../label/InputIconlabel'
@@ -12,7 +10,13 @@ import {
   REGISTER_PHONENUMBER,
   REGISTER_POSITION,
 } from '@/app/constant/constant'
-import { ERR_INTERNAL_SERVER, errDefault } from '@/app/constant/errorMsg'
+import {
+  ERR_CHECK_MAIL,
+  ERR_INPUT_ERROR,
+  ERR_USER_EXIST,
+  errDefault,
+  errExist,
+} from '@/app/constant/errorMsg'
 import { useAppDispatch } from '@/app/module/hooks/reduxHooks'
 import inputValidate from '@/app/module/utils/inputValidate'
 import { moduleGetFetch } from '@/app/module/utils/moduleFetch'
@@ -22,7 +26,7 @@ import {
   phoneNumberReducer,
   positionReducer,
 } from '@/app/store/reducers/login/signupInfoReducer'
-import { type ModuleGetFetchProps } from '@/app/types/moduleTypes'
+import { type ModuleGetFetchProps, type ResponseType } from '@/app/types/moduleTypes'
 import { type InfoInputProps } from '@/app/types/ui/inputTypes'
 
 export default function InfoInput(props: InfoInputProps) {
@@ -44,11 +48,7 @@ export default function InfoInput(props: InfoInputProps) {
   }
   const dispatch = useAppDispatch()
   const useInput = props.useInput
-
-  const getFetchEmailProps: ModuleGetFetchProps = {
-    params: { email: useInput.value },
-    fetchUrl: process.env.NEXT_PUBLIC_EMAIL_REQ_SOURCE,
-  }
+  const inputRef = useRef(useInput.value)
 
   const emailInputValidateProps = {
     inputData: useInput.value,
@@ -59,18 +59,21 @@ export default function InfoInput(props: InfoInputProps) {
     dataType: 'phoneNumber',
   }
 
-  const fetchEmailAvaiable = async (): Promise<void> => {
+  const fetchEmailAvaiable = async (getFetchEmailProps: ModuleGetFetchProps): Promise<void> => {
     try {
-      await moduleGetFetch(getFetchEmailProps)
+      const res: ResponseType<string> = await moduleGetFetch(getFetchEmailProps)
+      if (res.status !== 200) {
+        throw new Error(res.message)
+      }
       dispatch(emailReducer({ isCheck: true, value: useInput.value }))
     } catch (err) {
       if (err instanceof Error) {
         switch (err.message) {
-          case HttpStatusCode.BadRequest.toString():
-            setErrorMsg(true, '이미 사용중인 이메일 주소입니다.')
+          case ERR_USER_EXIST:
+            setErrorMsg(true, errExist('이메일 주소'))
             break
-          case HttpStatusCode.InternalServerError.toString():
-            setErrorMsg(true, ERR_INTERNAL_SERVER)
+          case ERR_CHECK_MAIL:
+            setErrorMsg(true, ERR_INPUT_ERROR)
             break
           default:
             setErrorMsg(true, errDefault('이메일 확인'))
@@ -80,6 +83,7 @@ export default function InfoInput(props: InfoInputProps) {
   }
 
   useEffect(() => {
+    inputRef.current = useInput.value
     const isInput = useInput.value !== ''
     const reducerProps = {
       isCheck: isInput,
@@ -91,18 +95,18 @@ export default function InfoInput(props: InfoInputProps) {
       case REGISTER_EMAIL:
         isValidate = !inputValidate(emailInputValidateProps)
         if (isValidate as boolean) {
-          setErrorMsg(false, '이메일 형식이 올바르지 않습니다.')
+          setErrorMsg(true, '이메일 형식이 올바르지 않습니다.')
           dispatch(
             emailReducer({
-              isCheck: false,
+              isCheck: true,
               value: useInput.value,
             }),
           )
         } else {
-          setErrorMsg(true, '')
+          setErrorMsg(false, '')
           dispatch(
             emailReducer({
-              isCheck: true,
+              isCheck: false,
               value: useInput.value,
             }),
           )
@@ -115,18 +119,18 @@ export default function InfoInput(props: InfoInputProps) {
       case REGISTER_PHONENUMBER:
         isValidate = !inputValidate(phoneNumberInputValidate)
         if (isValidate as boolean) {
-          setErrorMsg(false, '전화번호 형식이 잘못되었습니다.')
+          setErrorMsg(true, '전화번호 형식이 잘못되었습니다.')
           dispatch(
             phoneNumberReducer({
-              isCheck: false,
+              isCheck: true,
               value: useInput.value,
             }),
           )
         } else {
-          setErrorMsg(true, '')
+          setErrorMsg(false, '')
           dispatch(
             phoneNumberReducer({
-              isCheck: true,
+              isCheck: false,
               value: useInput.value,
             }),
           )
@@ -139,12 +143,24 @@ export default function InfoInput(props: InfoInputProps) {
       default:
         break
     }
+
     const handleInputFocusOut = () => {
-      if (props.title === REGISTER_EMAIL && errState.isError && useInput.value.length !== 0) {
-        void fetchEmailAvaiable()
+      if (props.title === REGISTER_EMAIL && !errState.isError && useInput.value.length !== 0) {
+        const getFetchEmailProps: ModuleGetFetchProps = {
+          params: { email: inputRef.current },
+          fetchUrl: process.env.NEXT_PUBLIC_EMAIL_REQ_SOURCE,
+        }
+
+        void fetchEmailAvaiable(getFetchEmailProps)
       }
     }
-    document.getElementById(props.title)?.addEventListener('focusout', handleInputFocusOut)
+
+    const inputElement = document.getElementById(props.title)
+    inputElement?.addEventListener('focusout', handleInputFocusOut)
+
+    return () => {
+      inputElement?.removeEventListener('focusout', handleInputFocusOut)
+    }
   }, [useInput.value])
 
   return (
@@ -163,7 +179,7 @@ export default function InfoInput(props: InfoInputProps) {
       </div>
       {(props.title === REGISTER_EMAIL || props.title === REGISTER_PHONENUMBER) &&
       useInput.value.length !== 0 &&
-      !errState.isError ? (
+      errState.isError ? (
         <div className="mb-6">
           <ErrorAlert description={errState.description} handleClickError={handleClickError} />
         </div>

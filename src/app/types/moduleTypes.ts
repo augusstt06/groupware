@@ -8,6 +8,11 @@ export type ApiRes = Record<string, UnionStrNumber>
 
 export type ResponseType<T> = {
   status: number
+  message?: string
+  result?: T
+}
+export type SuccessResponseType<T> = {
+  status: number
   result: T
 }
 export type UseInputProps = {

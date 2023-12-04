@@ -1,3 +1,4 @@
+// custom Err Message
 export const errDefault = (description: string) => {
   return `${description}에 실패했습니다.`
 }
@@ -10,7 +11,13 @@ export const errNotFound = (description: string) => {
 export const errNotEntered = (description: string) => {
   return `${description}이/가 입력되지 않았습니다.`
 }
-
+export const errExist = (description: string) => {
+  return `이미 사용중인 ${description} 입니다.`
+}
 export const ERR_INPUT_ERROR = '입력값이 잘못되었습니다.'
 export const ERR_INTERNAL_SERVER = '통신오류가 발생했습니다. 다시 시도해 주세요'
 export const ERR_COOKIE_NOT_FOUND = 'cookies not found'
+
+// Response Error Message
+export const ERR_USER_EXIST = 'user already exists'
+export const ERR_CHECK_MAIL = 'check mail'

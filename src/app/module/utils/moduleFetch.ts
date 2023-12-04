@@ -6,7 +6,7 @@ import {
   type ResponseType,
 } from '@/app/types/moduleTypes'
 
-export const moduleGetFetch = async <T>(props: ModuleGetFetchProps): Promise<ResponseType<T>> => {
+export const moduleGetFetch = async <T>(props: ModuleGetFetchProps): Promise<T> => {
   const queryString = new URLSearchParams()
   Object.entries(props.params).forEach(([key, value]) => {
     queryString.append(key, String(value))
@@ -17,9 +17,6 @@ export const moduleGetFetch = async <T>(props: ModuleGetFetchProps): Promise<Res
     method: GET,
     headers: props.header,
   })
-  if (!res.ok) {
-    throw new Error(res.status.toString())
-  }
   return res.json()
 }
 

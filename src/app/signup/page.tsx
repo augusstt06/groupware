@@ -39,7 +39,6 @@ export default function Register() {
   })
 
   const isSignupInfoComplete: boolean = useAppSelector((state) => {
-    // FIXME: 아래 상태가 초기화 되지 않는 문제
     const { createOrg, joinOrg } = state.orgInfo
     const isCreateOrgInfoComplete =
       createOrg.description.length !== 0 && createOrg.name.length !== 0

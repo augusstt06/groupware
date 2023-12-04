@@ -118,7 +118,9 @@ export function SignupBtn(props: SignupBtnProps) {
       }
       await modulePostFetch(fetchSignupProps)
       const res = await modulePostFetch(fetchLoginProps)
+
       moduleSetCookies({
+        // FIXME: 타입 제네릭 선언 다시하기
         [KEY_ACCESS_TOKEN]: res.result.accessToken,
         [KEY_LOGIN_TIME]: getCurrentTime(),
       })
