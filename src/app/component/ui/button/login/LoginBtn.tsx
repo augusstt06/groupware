@@ -11,6 +11,7 @@ import { useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleSetCookies } from '@/app/module/utils/cookie'
 import inputValidate from '@/app/module/utils/inputValidate'
 import { modulePostFetch } from '@/app/module/utils/moduleFetch'
+import { getCurrentTime } from '@/app/module/utils/time'
 import { type ModulePostFetchProps } from '@/app/types/moduleTypes'
 import { type LoginBtnProps } from '@/app/types/ui/btnTypes'
 
@@ -38,24 +39,12 @@ export default function LoginBtn(props: LoginBtnProps) {
         return
       }
       const res = await modulePostFetch(fetchLoginProps)
-      const currentTime = new Date()
-      const formatter = new Intl.DateTimeFormat('ko-KR', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: false,
-      })
-      const formattedTime = formatter.format(currentTime)
       moduleSetCookies({
         [KEY_ACCESS_TOKEN]: res.result.accessToken,
-        [KEY_LOGIN_TIME]: formattedTime,
+        [KEY_LOGIN_TIME]: getCurrentTime(),
       })
-
       router.push('/main')
     } catch (err) {
-      // FIXME: 에러메시지 어떻게 응답되는지 확인하기
       if (err instanceof Error) {
         switch (err.message) {
           case LOGIN_EMAIL_FAIL_MESSAGE:

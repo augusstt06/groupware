@@ -1,21 +1,24 @@
 import { HttpStatusCode } from 'axios'
 import { useRouter } from 'next/navigation'
 
-import { KEY_ACCESS_TOKEN, ORG_CREATE, ORG_JOIN } from '@/app/constant/constant'
+import { KEY_ACCESS_TOKEN, KEY_LOGIN_TIME, ORG_CREATE, ORG_JOIN } from '@/app/constant/constant'
 import {
   ERR_INPUT_ERROR,
   ERR_INTERNAL_SERVER,
   errDefault,
   errNotEntered,
 } from '@/app/constant/errorMsg'
-import { useAppSelector } from '@/app/module/hooks/reduxHooks'
+import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleGetCookie, moduleSetCookies } from '@/app/module/utils/cookie'
 import { modulePostFetch } from '@/app/module/utils/moduleFetch'
+import { getCurrentTime } from '@/app/module/utils/time'
+import { resetSignupInfoReducer } from '@/app/store/reducers/login/signupInfoReducer'
 import { type ModulePostFetchProps } from '@/app/types/moduleTypes'
 import { type SignupBtnProps } from '@/app/types/ui/btnTypes'
 
 export function SignupBtn(props: SignupBtnProps) {
   const router = useRouter()
+  const dispatch = useAppDispatch()
   const orgState = useAppSelector((state) => state.orgInfo)
   const signupState = useAppSelector((state) => state.signupInfo)
 
@@ -55,7 +58,6 @@ export function SignupBtn(props: SignupBtnProps) {
   const fetchOrg = async (fetchOrgProps: ModulePostFetchProps): Promise<void> => {
     try {
       await modulePostFetch(fetchOrgProps)
-      router.push('/main')
     } catch (err) {
       if (err instanceof Error) {
         switch (err.message) {
@@ -118,9 +120,9 @@ export function SignupBtn(props: SignupBtnProps) {
       const res = await modulePostFetch(fetchLoginProps)
       moduleSetCookies({
         [KEY_ACCESS_TOKEN]: res.result.accessToken,
+        [KEY_LOGIN_TIME]: getCurrentTime(),
       })
       const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
-
       const fetchProps: ModulePostFetchProps = {
         ...fetchData,
         header: {
@@ -128,6 +130,9 @@ export function SignupBtn(props: SignupBtnProps) {
         },
       }
       await fetchOrg(fetchProps)
+      // FIXME: 아래를 호출해도 초기화가 되지 않음
+      dispatch(resetSignupInfoReducer())
+      router.push('/main')
     } catch (err) {
       if (err instanceof Error) {
         switch (err.message) {

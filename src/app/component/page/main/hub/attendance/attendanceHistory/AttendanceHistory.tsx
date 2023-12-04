@@ -1,9 +1,7 @@
 import React, { useState } from 'react'
 
-import { addSeconds, format, parse } from 'date-fns'
-
 import AttendanceHistoryBtn from '@/app/component/ui/button/main/attendance/AttendanceHistoryBtn'
-import AttendanceInput from '@/app/component/ui/input/main/attendance/AttendanceInput'
+import MainInput from '@/app/component/ui/input/main/MainInput'
 import { InputLabel } from '@/app/component/ui/label/Inputlabel'
 import AttendanceHistoryTable from '@/app/component/ui/table/main/AttendanceHistoryTable'
 import { KEY_ACCESS_TOKEN, KEY_X_ORGANIZATION_CODE } from '@/app/constant/constant'
@@ -11,6 +9,7 @@ import useInput from '@/app/module/hooks/reactHooks/useInput'
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleGetCookie } from '@/app/module/utils/cookie'
 import { moduleGetFetch } from '@/app/module/utils/moduleFetch'
+import { convertTime } from '@/app/module/utils/time'
 import { type ApiRes, type ModuleGetFetchProps } from '@/app/types/moduleTypes'
 
 export default function AttendanceHistory() {
@@ -21,17 +20,7 @@ export default function AttendanceHistory() {
   const fromInput = useInput('')
   const toInput = useInput('')
 
-  const convertTime = (input: string): string => {
-    const date: Date = parse(input, 'yyyy/MM/dd/HH:mm', new Date())
-    const dateWithSeconds: Date = addSeconds(date, 5)
-    const outputString: string = format(dateWithSeconds, "yyyy-MM-dd'T'HH:mm:ss'Z'", {
-      locale: undefined,
-    })
-
-    return outputString
-  }
-
-  const [select, setSelect] = useState('')
+  const [select, setSelect] = useState('attendance')
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelect(e.target.value)
   }
@@ -85,8 +74,18 @@ export default function AttendanceHistory() {
                 ))}
               </select>
             </div>
-            <AttendanceInput title="from" input={fromInput} />
-            <AttendanceInput title="to" input={toInput} />
+            <MainInput
+              type="attendance"
+              title="from"
+              input={fromInput}
+              placeholder='"2023/01/12/23:02"'
+            />
+            <MainInput
+              type="attendance"
+              title="to"
+              input={toInput}
+              placeholder='"2023/01/12/23:02"'
+            />
             <AttendanceHistoryBtn onClick={handleClick} />
           </div>
           {attendanceHistory.length === 0 ? (
