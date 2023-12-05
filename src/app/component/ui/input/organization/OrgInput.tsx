@@ -38,6 +38,9 @@ export default function OrgInput(props: OrgInputProps) {
       default:
         break
     }
+    const handleInputFocusOut = () => {
+      localStorage.setItem(props.title, props.useInput.value)
+    }
     const handleBeforeunload = () => {
       payload = {
         name: '',
@@ -48,6 +51,8 @@ export default function OrgInput(props: OrgInputProps) {
       dispatch(createOrgReducer(payload))
       dispatch(joinOrgReducer({ code: '' }))
     }
+    const inputElement = document.getElementById(props.title)
+    inputElement?.addEventListener('focusout', handleInputFocusOut)
     window.addEventListener('beforeunload', handleBeforeunload)
   }, [props.useInput.value])
 

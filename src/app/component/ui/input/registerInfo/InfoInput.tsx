@@ -50,7 +50,9 @@ export default function InfoInput(props: InfoInputProps) {
       description: errDescription,
     })
   }
+
   const dispatch = useAppDispatch()
+
   const useInput = props.useInput
   const inputRef = useRef(useInput.value)
 
@@ -138,10 +140,10 @@ export default function InfoInput(props: InfoInputProps) {
             }),
           )
         }
-
         break
       case REGISTER_POSITION:
         dispatch(positionReducer(reducerProps))
+
         break
       default:
         break
@@ -156,6 +158,7 @@ export default function InfoInput(props: InfoInputProps) {
 
         void fetchEmailAvaiable(getFetchEmailProps)
       }
+      localStorage.setItem(props.title, useInput.value)
     }
 
     const inputElement = document.getElementById(props.title)

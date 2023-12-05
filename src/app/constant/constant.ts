@@ -24,6 +24,8 @@ export const REGISTER_CONFIRM_PWD = '비밀번호 확인'
 export const REGISTER_NAME = '이름'
 export const REGISTER_PHONENUMBER = '전화번호'
 export const REGISTER_POSITION = '직무'
+export const REGISTER_ORG_NAME = '조직 이름'
+export const REGISTER_ORG_DESCRIPTION = '조직설명'
 
 export const KEY_ACCESS_TOKEN = 'access-token'
 export const KEY_X_ORGANIZATION_CODE = 'X-ORGANIZATION-CODE'

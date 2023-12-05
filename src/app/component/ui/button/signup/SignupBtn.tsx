@@ -1,7 +1,18 @@
 import { HttpStatusCode } from 'axios'
 import { useRouter } from 'next/navigation'
 
-import { KEY_ACCESS_TOKEN, KEY_LOGIN_TIME, ORG_CREATE, ORG_JOIN } from '@/app/constant/constant'
+import {
+  KEY_ACCESS_TOKEN,
+  KEY_LOGIN_TIME,
+  ORG_CREATE,
+  ORG_JOIN,
+  REGISTER_EMAIL,
+  REGISTER_NAME,
+  REGISTER_ORG_DESCRIPTION,
+  REGISTER_ORG_NAME,
+  REGISTER_PHONENUMBER,
+  REGISTER_POSITION,
+} from '@/app/constant/constant'
 import {
   ERR_INPUT_ERROR,
   ERR_INTERNAL_SERVER,
@@ -93,6 +104,11 @@ export function SignupBtn(props: SignupBtnProps) {
     }
   }
 
+  const deleteStorage = (arr: string[]) => {
+    arr.forEach((name) => {
+      localStorage.removeItem(name)
+    })
+  }
   const fetchData: ModulePostFetchProps =
     props.orgType === ORG_CREATE
       ? {
@@ -139,8 +155,16 @@ export function SignupBtn(props: SignupBtnProps) {
         },
       }
       await fetchOrg(fetchProps)
-      // FIXME: 아래를 호출해도 초기화가 되지 않음
       dispatch(resetSignupInfoReducer())
+      // FIXME:
+      deleteStorage([
+        REGISTER_EMAIL,
+        REGISTER_NAME,
+        REGISTER_POSITION,
+        REGISTER_PHONENUMBER,
+        REGISTER_ORG_DESCRIPTION,
+        REGISTER_ORG_NAME,
+      ])
       router.push('/main')
     } catch (err) {
       if (err instanceof Error) {

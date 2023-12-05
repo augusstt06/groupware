@@ -1,12 +1,25 @@
 import type React from 'react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { REGISTER_PHONENUMBER } from '@/app/constant/constant'
 import { type UseInputProps } from '@/app/types/moduleTypes'
 
-export default function useInput(state: string, title?: string, limit?: number): UseInputProps {
+export default function useInput(
+  state: string,
+  isPersist: boolean,
+  title?: string,
+  limit?: number,
+): UseInputProps {
   const initialValue = ''
   const [value, setValue] = useState(initialValue)
+  useEffect(() => {
+    if (isPersist) {
+      const storedValue = localStorage.getItem(title as string)
+      if (storedValue?.length !== 0) {
+        setValue(storedValue as string)
+      }
+    }
+  }, [])
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {
