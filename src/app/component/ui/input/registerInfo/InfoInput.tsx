@@ -26,7 +26,11 @@ import {
   phoneNumberReducer,
   positionReducer,
 } from '@/app/store/reducers/login/signupInfoReducer'
-import { type ModuleGetFetchProps, type ResponseType } from '@/app/types/moduleTypes'
+import {
+  type FailResponseType,
+  type FetchResponseType,
+  type ModuleGetFetchProps,
+} from '@/app/types/moduleTypes'
 import { type InfoInputProps } from '@/app/types/ui/inputTypes'
 
 export default function InfoInput(props: InfoInputProps) {
@@ -61,10 +65,9 @@ export default function InfoInput(props: InfoInputProps) {
 
   const fetchEmailAvaiable = async (getFetchEmailProps: ModuleGetFetchProps): Promise<void> => {
     try {
-      const res: ResponseType<string> = await moduleGetFetch(getFetchEmailProps)
-      if (res.status !== 200) {
-        throw new Error(res.message)
-      }
+      const res = await moduleGetFetch<FetchResponseType<string>>(getFetchEmailProps)
+      if (res.status !== 200) throw new Error((res as FailResponseType).message)
+
       dispatch(emailReducer({ isCheck: true, value: useInput.value }))
     } catch (err) {
       if (err instanceof Error) {
@@ -98,7 +101,7 @@ export default function InfoInput(props: InfoInputProps) {
           setErrorMsg(true, '이메일 형식이 올바르지 않습니다.')
           dispatch(
             emailReducer({
-              isCheck: true,
+              isCheck: false,
               value: useInput.value,
             }),
           )
@@ -106,7 +109,7 @@ export default function InfoInput(props: InfoInputProps) {
           setErrorMsg(false, '')
           dispatch(
             emailReducer({
-              isCheck: false,
+              isCheck: true,
               value: useInput.value,
             }),
           )
@@ -122,7 +125,7 @@ export default function InfoInput(props: InfoInputProps) {
           setErrorMsg(true, '전화번호 형식이 잘못되었습니다.')
           dispatch(
             phoneNumberReducer({
-              isCheck: true,
+              isCheck: false,
               value: useInput.value,
             }),
           )
@@ -130,7 +133,7 @@ export default function InfoInput(props: InfoInputProps) {
           setErrorMsg(false, '')
           dispatch(
             phoneNumberReducer({
-              isCheck: false,
+              isCheck: true,
               value: useInput.value,
             }),
           )

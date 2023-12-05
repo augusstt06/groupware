@@ -1,9 +1,8 @@
 import { FETCH_CONTENT_TYPE, GET, PATCH, POST } from '@/app/constant/constant'
 import {
-  type ApiRes,
+  type FetchResponseType,
   type ModuleGetFetchProps,
   type ModulePostFetchProps,
-  type ResponseType,
 } from '@/app/types/moduleTypes'
 
 export const moduleGetFetch = async <T>(props: ModuleGetFetchProps): Promise<T> => {
@@ -20,9 +19,10 @@ export const moduleGetFetch = async <T>(props: ModuleGetFetchProps): Promise<T> 
   return res.json()
 }
 
-export const modulePostFetch = async (
+// FIXME: response가 fail될때와 success일때 값이 다르기 때문에 여기서 에러를 던지면 안된다. -> 사용하는 곳에서 에러 던져서 catch 하기
+export const modulePostFetch = async <T>(
   props: ModulePostFetchProps,
-): Promise<ResponseType<ApiRes>> => {
+): Promise<FetchResponseType<T>> => {
   const res = await fetch(props.fetchUrl as string, {
     method: POST,
     headers: {
@@ -31,9 +31,6 @@ export const modulePostFetch = async (
     },
     body: JSON.stringify(props.data),
   })
-  if (!res.ok) {
-    throw new Error(res.status.toString())
-  }
   return res.json()
 }
 

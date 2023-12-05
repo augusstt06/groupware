@@ -13,7 +13,13 @@ import { moduleGetCookie, moduleSetCookies } from '@/app/module/utils/cookie'
 import { modulePostFetch } from '@/app/module/utils/moduleFetch'
 import { getCurrentTime } from '@/app/module/utils/time'
 import { resetSignupInfoReducer } from '@/app/store/reducers/login/signupInfoReducer'
-import { type ModulePostFetchProps } from '@/app/types/moduleTypes'
+import {
+  type ApiRes,
+  type FailResponseType,
+  type FetchResponseType,
+  type ModulePostFetchProps,
+  type SuccessResponseType,
+} from '@/app/types/moduleTypes'
 import { type SignupBtnProps } from '@/app/types/ui/btnTypes'
 
 export function SignupBtn(props: SignupBtnProps) {
@@ -117,11 +123,12 @@ export function SignupBtn(props: SignupBtnProps) {
         return
       }
       await modulePostFetch(fetchSignupProps)
-      const res = await modulePostFetch(fetchLoginProps)
+      const res = await modulePostFetch<FetchResponseType<ApiRes>>(fetchLoginProps)
+
+      if (res.status !== 200) throw new Error((res as FailResponseType).message)
 
       moduleSetCookies({
-        // FIXME: 타입 제네릭 선언 다시하기
-        [KEY_ACCESS_TOKEN]: res.result.accessToken,
+        [KEY_ACCESS_TOKEN]: (res as SuccessResponseType<ApiRes>).result.accessToken,
         [KEY_LOGIN_TIME]: getCurrentTime(),
       })
       const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)

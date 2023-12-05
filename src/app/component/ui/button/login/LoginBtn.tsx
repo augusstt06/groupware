@@ -12,7 +12,13 @@ import { moduleSetCookies } from '@/app/module/utils/cookie'
 import inputValidate from '@/app/module/utils/inputValidate'
 import { modulePostFetch } from '@/app/module/utils/moduleFetch'
 import { getCurrentTime } from '@/app/module/utils/time'
-import { type ModulePostFetchProps } from '@/app/types/moduleTypes'
+import {
+  type ApiRes,
+  type FailResponseType,
+  type FetchResponseType,
+  type ModulePostFetchProps,
+  type SuccessResponseType,
+} from '@/app/types/moduleTypes'
 import { type LoginBtnProps } from '@/app/types/ui/btnTypes'
 
 export default function LoginBtn(props: LoginBtnProps) {
@@ -38,9 +44,10 @@ export default function LoginBtn(props: LoginBtnProps) {
         props.setErrMsg('이메일 형식이 잘못되었습니다. xxx@xxx.xxx 의 형태로 입력해주세요')
         return
       }
-      const res = await modulePostFetch(fetchLoginProps)
+      const res = await modulePostFetch<FetchResponseType<ApiRes>>(fetchLoginProps)
+      if (res.status !== 200) throw new Error((res as FailResponseType).message)
       moduleSetCookies({
-        [KEY_ACCESS_TOKEN]: res.result.accessToken,
+        [KEY_ACCESS_TOKEN]: (res as SuccessResponseType<ApiRes>).result.accessToken,
         [KEY_LOGIN_TIME]: getCurrentTime(),
       })
       router.push('/main')

@@ -47,6 +47,7 @@ export default function LogoutBtn(props: LogoutBtnProps) {
           [KEY_X_ORGANIZATION_CODE]: orgCode,
         },
       }
+      // FIXME:
       const res = await modulePatchFetch(fetchAttendanceProps)
       if (!res.ok) {
         throw new Error(res.status.toString())
