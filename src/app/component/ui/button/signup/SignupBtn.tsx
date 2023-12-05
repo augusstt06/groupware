@@ -1,4 +1,3 @@
-import { HttpStatusCode } from 'axios'
 import { useRouter } from 'next/navigation'
 
 import {
@@ -15,10 +14,12 @@ import {
   REGISTER_POSITION,
 } from '@/app/constant/constant'
 import {
-  ERR_INPUT_ERROR,
-  ERR_INTERNAL_SERVER,
+  ERR_MESSAGE_RECORD_NOT_FOUND,
+  ERR_MESSAGE_REGISTER_ORG_FAIL_EXIST,
+  ERR_MESSAGE_SIGNUP_USER_EXIST,
   errDefault,
   errNotEntered,
+  errNotFound,
 } from '@/app/constant/errorMsg'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleGetCookie, moduleSetCookies } from '@/app/module/utils/cookie'
@@ -73,27 +74,6 @@ export function SignupBtn(props: SignupBtnProps) {
     fetchUrl: process.env.NEXT_PUBLIC_LOGIN_SOURCE,
   }
 
-  const fetchOrg = async (fetchOrgProps: ModulePostFetchProps): Promise<void> => {
-    try {
-      await modulePostFetch(fetchOrgProps)
-    } catch (err) {
-      if (err instanceof Error) {
-        switch (err.message) {
-          case HttpStatusCode.BadRequest.toString():
-            props.setErrMsg(ERR_INPUT_ERROR)
-            break
-          case HttpStatusCode.InternalServerError.toString():
-            props.setErrMsg(ERR_INTERNAL_SERVER)
-            break
-          default:
-            props.setErrMsg(
-              props.orgType === ORG_CREATE ? errDefault('조직생성') : errDefault('조직가입'),
-            )
-            break
-        }
-      }
-    }
-  }
   const isOrgInputError = () => {
     switch (props.title) {
       case ORG_JOIN:
@@ -110,7 +90,7 @@ export function SignupBtn(props: SignupBtnProps) {
       localStorage.removeItem(name)
     })
   }
-  const fetchData: ModulePostFetchProps =
+  const fetchOrgData: ModulePostFetchProps =
     props.orgType === ORG_CREATE
       ? {
           data: {
@@ -139,23 +119,25 @@ export function SignupBtn(props: SignupBtnProps) {
         isOrgInputError()
         return
       }
-      await modulePostFetch(fetchSignupProps)
-      const res = await modulePostFetch<FetchResponseType<ApiRes>>(fetchLoginProps)
+      const signupRes = await modulePostFetch<FetchResponseType<string>>(fetchSignupProps)
+      if (signupRes.status !== 200) throw new Error((signupRes as FailResponseType).message)
 
-      if (res.status !== 200) throw new Error((res as FailResponseType).message)
+      const loginRes = await modulePostFetch<FetchResponseType<ApiRes>>(fetchLoginProps)
+      if (loginRes.status !== 200) throw new Error((loginRes as FailResponseType).message)
 
       moduleSetCookies({
-        [KEY_ACCESS_TOKEN]: (res as SuccessResponseType<ApiRes>).result.accessToken,
+        [KEY_ACCESS_TOKEN]: (loginRes as SuccessResponseType<ApiRes>).result.accessToken,
         [KEY_LOGIN_TIME]: getCurrentTime(),
       })
       const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
-      const fetchProps: ModulePostFetchProps = {
-        ...fetchData,
+      const fetchOrgProps: ModulePostFetchProps = {
+        ...fetchOrgData,
         header: {
           Authorization: `Bearer ${accessToken}`,
         },
       }
-      await fetchOrg(fetchProps)
+      const orgRes = await modulePostFetch<FetchResponseType<string>>(fetchOrgProps)
+      if (orgRes.status !== 200) throw new Error((orgRes as FailResponseType).message)
       dispatch(resetSignupInfoReducer())
 
       deleteStorage([
@@ -171,11 +153,14 @@ export function SignupBtn(props: SignupBtnProps) {
     } catch (err) {
       if (err instanceof Error) {
         switch (err.message) {
-          case HttpStatusCode.BadRequest.toString():
-            props.setErrMsg(ERR_INPUT_ERROR)
+          case ERR_MESSAGE_SIGNUP_USER_EXIST:
+            props.setErrMsg('이미 유저가 존재합니다.')
             break
-          case HttpStatusCode.InternalServerError.toString():
-            props.setErrMsg(ERR_INTERNAL_SERVER)
+          case ERR_MESSAGE_REGISTER_ORG_FAIL_EXIST:
+            props.setErrMsg('이미 해당 조직에 가입되어 있습니다.')
+            break
+          case ERR_MESSAGE_RECORD_NOT_FOUND:
+            props.setErrMsg(errNotFound('입력한 조직'))
             break
           default:
             props.setErrMsg(errDefault('회원가입'))

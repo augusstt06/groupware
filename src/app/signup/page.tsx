@@ -151,7 +151,11 @@ export default function Register() {
             setErrMsg={setErrMsg}
           />
         ) : (
-          <RegisterOrg organization={organization} setOrganization={setOrganization} />
+          <RegisterOrg
+            organization={organization}
+            setOrganization={setOrganization}
+            setErrMsg={setErrMsg}
+          />
         )}
 
         {errorState.isError ? (

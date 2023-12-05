@@ -25,11 +25,11 @@ export default function Home() {
       </div>
       <div className="flex flex-col justify-around items-center h-2/4 mb-10">
         <Link href="/signup">
-          <NavigationBtn title="Sign Up for Free" />
+          <NavigationBtn title="회원가입" />
         </Link>
         <div className="text-medium font-normal mt-8 mb-3">If you already have an account,</div>
         <Link href="/login">
-          <NavigationBtn title="Login" />
+          <NavigationBtn title="로그인" />
         </Link>
       </div>
     </main>

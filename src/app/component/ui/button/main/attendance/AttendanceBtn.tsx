@@ -92,11 +92,9 @@ export default function AttendanceBtn(props: AttendanceBtnProps) {
           [KEY_X_ORGANIZATION_CODE]: orgCode,
         },
       }
-      // FIXME:
-      const res = await modulePatchFetch(fetchAttendanceProps)
-      if (!res.ok) {
-        throw new Error(res.status.toString())
-      }
+
+      const res = await modulePatchFetch<FetchResponseType<string>>(fetchAttendanceProps)
+      if (res.status !== 200) throw new Error((res as FailResponseType).message)
       dispatch(
         updateAttendanceStatusReducer({
           status: 'out',
@@ -106,6 +104,7 @@ export default function AttendanceBtn(props: AttendanceBtnProps) {
       props.setElapsed('0')
       props.setRerender(!props.reRender)
     } catch (err) {
+      // FIXME:
       if (err instanceof Error) {
         switch (err.message) {
           case HttpStatusCode.InternalServerError.toString():

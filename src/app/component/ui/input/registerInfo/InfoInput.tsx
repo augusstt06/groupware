@@ -11,9 +11,9 @@ import {
   REGISTER_POSITION,
 } from '@/app/constant/constant'
 import {
-  ERR_CHECK_MAIL,
   ERR_INPUT_ERROR,
-  ERR_USER_EXIST,
+  ERR_MESSAGE_CHECK_MAIL,
+  ERR_MESSAGE_USER_EXIST,
   errDefault,
   errExist,
 } from '@/app/constant/errorMsg'
@@ -68,16 +68,19 @@ export default function InfoInput(props: InfoInputProps) {
   const fetchEmailAvaiable = async (getFetchEmailProps: ModuleGetFetchProps): Promise<void> => {
     try {
       const res = await moduleGetFetch<FetchResponseType<string>>(getFetchEmailProps)
-      if (res.status !== 200) throw new Error((res as FailResponseType).message)
+      if (res.status !== 200) {
+        dispatch(emailReducer({ isCheck: false, value: useInput.value }))
+        throw new Error((res as FailResponseType).message)
+      }
 
       dispatch(emailReducer({ isCheck: true, value: useInput.value }))
     } catch (err) {
       if (err instanceof Error) {
         switch (err.message) {
-          case ERR_USER_EXIST:
+          case ERR_MESSAGE_USER_EXIST:
             setErrorMsg(true, errExist('이메일 주소'))
             break
-          case ERR_CHECK_MAIL:
+          case ERR_MESSAGE_CHECK_MAIL:
             setErrorMsg(true, ERR_INPUT_ERROR)
             break
           default:

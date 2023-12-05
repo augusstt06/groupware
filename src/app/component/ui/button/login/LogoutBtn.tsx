@@ -10,7 +10,11 @@ import { modulePatchFetch, modulePostFetch } from '@/app/module/utils/moduleFetc
 import { resetReducer } from '@/app/store/reducers/login/loginInfoReducer'
 import { resetOrgReducer } from '@/app/store/reducers/login/orgInfoReducer'
 import { updateAttendanceStatusReducer } from '@/app/store/reducers/main/userInfoReducer'
-import { type ModulePostFetchProps } from '@/app/types/moduleTypes'
+import {
+  type FailResponseType,
+  type FetchResponseType,
+  type ModulePostFetchProps,
+} from '@/app/types/moduleTypes'
 import { type LogoutBtnProps } from '@/app/types/ui/btnTypes'
 
 export default function LogoutBtn(props: LogoutBtnProps) {
@@ -47,11 +51,8 @@ export default function LogoutBtn(props: LogoutBtnProps) {
           [KEY_X_ORGANIZATION_CODE]: orgCode,
         },
       }
-      // FIXME:
-      const res = await modulePatchFetch(fetchAttendanceProps)
-      if (!res.ok) {
-        throw new Error(res.status.toString())
-      }
+      const res = await modulePatchFetch<FetchResponseType<string>>(fetchAttendanceProps)
+      if (res.status !== 200) throw new Error((res as FailResponseType).message)
       dispatch(
         updateAttendanceStatusReducer({
           status: 'out',

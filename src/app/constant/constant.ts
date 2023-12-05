@@ -33,7 +33,3 @@ export const KEY_X_ORGANIZATION_CODE = 'X-ORGANIZATION-CODE'
 export const KEY_UUID = 'uuid'
 export const KEY_LOGIN_TIME = 'login-time'
 export const KEY_ATTENDANCE = 'attendance'
-// err msg
-
-export const LOGIN_EMAIL_FAIL_MESSAGE = 'user not found: record not found'
-export const LOGIN_PWD_FAIL_MESSAGE = 'password does not match'

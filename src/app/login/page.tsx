@@ -71,10 +71,10 @@ export default function Login() {
         ) : (
           <></>
         )}
-        <div className="flex flex-col justify-center items-center">
-          <LoginBtn title="Login" setErrMsg={setErrMsg} />
+        <div className="flex flex-col justify-center items-center mt-5">
+          <LoginBtn title="로그인" setErrMsg={setErrMsg} />
           <Link href="/" className="mt-2">
-            <NavigationBtn title="Back to Main" />
+            <NavigationBtn title="메인으로" />
           </Link>
         </div>
       </div>

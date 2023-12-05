@@ -19,5 +19,11 @@ export const ERR_INTERNAL_SERVER = '통신오류가 발생했습니다. 다시 �
 export const ERR_COOKIE_NOT_FOUND = 'cookies not found'
 
 // Response Error Message
-export const ERR_USER_EXIST = 'user already exists'
-export const ERR_CHECK_MAIL = 'check mail'
+export const ERR_MESSAGE_USER_EXIST = 'user already exists'
+export const ERR_MESSAGE_SIGNUP_USER_EXIST = 'user already exists: <nil>'
+export const ERR_MESSAGE_LOGIN_NOT_FOUND = 'user not found: record not found'
+export const ERR_MESSAGE_CHECK_MAIL = 'check mail'
+export const ERR_MESSAGE_LOGIN_EMAIL_FAIL = 'user not found: record not found'
+export const ERR_MESSAGE_LOGIN_PWD_FAIL = 'password does not match'
+export const ERR_MESSAGE_REGISTER_ORG_FAIL_EXIST = 'organization already joined'
+export const ERR_MESSAGE_RECORD_NOT_FOUND = 'record not found'
