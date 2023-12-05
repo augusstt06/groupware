@@ -8,7 +8,7 @@ import { usePathname } from 'next/navigation'
 import DarkmodeBtn from '../button/DarkmodeBtn'
 import LogoutBtn from '../button/login/LogoutBtn'
 import Confirm from '../confirm/Confirm'
-import AlertIndicator from '../indicator/alertIndicator'
+import AlertIndicator from '../indicator/AlertIndicator'
 
 import { KEY_ACCESS_TOKEN } from '@/app/constant/constant'
 import { ERR_COOKIE_NOT_FOUND } from '@/app/constant/errorMsg'

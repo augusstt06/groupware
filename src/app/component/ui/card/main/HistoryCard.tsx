@@ -2,15 +2,15 @@
 
 import { useEffect, useState } from 'react'
 
-import ErrorAlert from '../alert/ErrorAlert'
-import AttendanceBtn from '../button/main/attendance/AttendanceBtn'
+import ErrorAlert from '../../alert/ErrorAlert'
+import AttendanceBtn from '../../button/main/attendance/AttendanceBtn'
+import Progressbar from '../../progressbar/Progressbar'
 
-import { KEY_ATTENDANCE, KEY_LOGIN_TIME } from '@/app/constant/constant'
+import { KEY_ATTENDANCE } from '@/app/constant/constant'
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
-import { moduleGetCookie } from '@/app/module/utils/cookie'
-import { type UserCardProps } from '@/app/types/pageTypes'
+import { type UserCardProps } from '@/app/types/ui/cardTypes'
 
-export default function UserCard(props: UserCardProps) {
+export default function HistoryCard(props: UserCardProps) {
   const [elapsed, setElapsed] = useState('0')
   const attendanceState = useAppSelector((state) => state.userInfo[KEY_ATTENDANCE])
   const isAttendance = attendanceState.status === 'in'
@@ -34,14 +34,17 @@ export default function UserCard(props: UserCardProps) {
       description: errorState.description,
     })
   }
-  const timeString =
-    moduleGetCookie(KEY_LOGIN_TIME) !== null
-      ? moduleGetCookie(KEY_LOGIN_TIME)
-      : 'Fail to load Login time'
+
+  const viewCurrentDate = () => {
+    const currentDate = new Date()
+    const month = new Intl.DateTimeFormat('ko-KR', { month: 'long' }).format(currentDate)
+    const day = currentDate.getDate()
+    const dayOfWeek = new Intl.DateTimeFormat('ko-KR', { weekday: 'long' }).format(currentDate)
+    const result = `${month} ${day}일 ${dayOfWeek}`
+    return result
+  }
 
   const tailwindClassName = isAttendance ? 'text-blue-400 font-bold' : 'text-red-400 font-bold'
-  const tailwindAttendanceTimeClassName =
-    elapsed !== '0' ? 'text-blue-400 font-bold' : 'text-red-400 font-bold'
 
   useEffect(() => {
     setMount(true)
@@ -60,21 +63,13 @@ export default function UserCard(props: UserCardProps) {
   }, [attendanceState])
 
   return (
-    <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+    <div className="w-full h-2/3max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mb-5">
       {mount ? (
         <>
           <div className="flex justify-end px-4 pt-4"></div>
           <div className="flex flex-col items-center pb-4">
-            <div className="flex flex-row items-center justify-start w-4/5">
-              <h5 className="mb-1 text-xl font-medium text-gray-900 dark:text-white mr-2">
-                {extraUserInfo.position}
-              </h5>
-              <h5 className="mb-1 text-xl font-medium text-gray-900 dark:text-white mr-2">
-                {extraUserInfo.name}
-              </h5>
-            </div>
-            <span className="text-sm text-gray-500 dark:text-gray-400 w-4/5 mb-1">
-              Login at {timeString}
+            <span className="text-lg text-gray-500 dark:text-white w-4/5 mb-1">
+              {viewCurrentDate()}
             </span>
             <div className="flex flex-start justify-between w-4/5">
               <span className="text-medium text-gray-500 dark:text-gray-400">업무 상태</span>
@@ -84,7 +79,7 @@ export default function UserCard(props: UserCardProps) {
             </div>
             <div className="flex flex-start justify-between items-center w-4/5">
               <span className="text-medium text-gray-500 dark:text-gray-400">업무 시간</span>
-              <span className={tailwindAttendanceTimeClassName}>{elapsed}분 </span>
+              <Progressbar />
             </div>
             <div className="flex flex-row justify-around mt-4 md:mt-6 w-4/5">
               <div className="w-full">
@@ -106,6 +101,16 @@ export default function UserCard(props: UserCardProps) {
             ) : (
               <></>
             )}
+            <div className="flex justify-end px-4 pt-4"></div>
+            <span className="text-lg text-gray-500 dark:text-white w-4/5 mb-1">출퇴근</span>
+            <div className="flex flex-start justify-between w-4/5">
+              <span className="text-medium text-gray-500 dark:text-gray-400">정규 근무</span>
+              <span className="text-white-400 font-bold">정규 근무시간</span>
+            </div>
+            <div className="flex flex-start justify-between w-4/5">
+              <span className="text-medium text-gray-500 dark:text-gray-400">초과 근무</span>
+              <span className="text-white-400 font-bold">초과 근무시간</span>
+            </div>
           </div>
         </>
       ) : (
