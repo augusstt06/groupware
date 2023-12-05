@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -17,6 +17,7 @@ import { moduleGetCookie } from '@/app/module/utils/cookie'
 export default function Header() {
   const pathname = usePathname()
   const isRender = !pathname.startsWith('/err')
+
   const [isConfirmOpen, setIsConfirmOpen] = useState(false)
   const [confirmValue, setConfirmValue] = useState(false)
   const [open, setOpen] = useState({
@@ -51,9 +52,15 @@ export default function Header() {
   ]
 
   const [mount, setMount] = useState(false)
+  const dropRef = useRef<HTMLDivElement>(null)
+  const handleClickOutside = (e: MouseEvent) => {
+    if (dropRef.current != null && !dropRef.current.contains(e.target as Node))
+      setOpen({ board: false, project: false })
+  }
   useEffect(() => {
     setMount(true)
-  }, [setMount, accessToken])
+    document.addEventListener('click', handleClickOutside)
+  }, [dropRef])
 
   return (
     <nav className="bg-white border-gray-200 dark:bg-gray-900">
@@ -96,6 +103,7 @@ export default function Header() {
             <div
               id="mega-menu-icons"
               className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
+              ref={dropRef}
             >
               <ul className="flex flex-col mt-4 font-medium md:flex-row md:mt-0 md:space-x-8 rtl:space-x-reverse">
                 {menuList.map((data) => (
