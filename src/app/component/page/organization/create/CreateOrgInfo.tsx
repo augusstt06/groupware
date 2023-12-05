@@ -30,8 +30,14 @@ export default function CreateOrgInfo() {
   }
 
   const dynamicInput = (isPersist: boolean, title: string, limit?: number) => {
-    const storedValue = isPersist ? localStorage.getItem(title) : ''
-    return useInput(storedValue as string, isPersist, title, limit)
+    let storedValue
+    if (localStorage.getItem(title) === null) {
+      storedValue = ''
+    } else {
+      storedValue = isPersist ? localStorage.getItem(title) : ''
+    }
+
+    return useInput(storedValue as string, title, limit)
   }
   const orgNameInput = dynamicInput(true, REGISTER_ORG_NAME)
   const orgDescriptionInput = dynamicInput(true, REGISTER_ORG_DESCRIPTION, 100)
@@ -65,7 +71,7 @@ export default function CreateOrgInfo() {
         useInput={orgNameInput}
         componentType={ORG_CREATE}
         title={REGISTER_ORG_NAME}
-        placeholder="frontend"
+        placeholder="조직 이름을 입력해주세요"
         icon={<SlOrganization />}
       />
       <OrgInput
@@ -73,16 +79,16 @@ export default function CreateOrgInfo() {
         componentType={ORG_CREATE}
         title={REGISTER_ORG_DESCRIPTION}
         placeholder="
-Groupware site publishing and feature development"
+조직 설명을 입력해주세요"
         icon={<MdOutlineDescription />}
       />
       <SelectBox
         compoenetType={ORG_SELECTBOX}
         apiKey="none"
-        title="Select an Orgnization Type"
+        title="조직 공개 설정"
         selectList={selectList}
       />
-      <InputLabel title="Organization Setting" />
+      <InputLabel title="조직 권한 설정" />
       {gradesData.map((data) => (
         <div key={data[0].title}>
           <ToggleGroup toggleData={data} compoenetType={ORG_GRADES} />

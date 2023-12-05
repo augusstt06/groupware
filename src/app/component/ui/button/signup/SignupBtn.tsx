@@ -9,6 +9,7 @@ import {
   REGISTER_EMAIL,
   REGISTER_NAME,
   REGISTER_ORG_DESCRIPTION,
+  REGISTER_ORG_JOIN,
   REGISTER_ORG_NAME,
   REGISTER_PHONENUMBER,
   REGISTER_POSITION,
@@ -156,7 +157,7 @@ export function SignupBtn(props: SignupBtnProps) {
       }
       await fetchOrg(fetchProps)
       dispatch(resetSignupInfoReducer())
-      // FIXME:
+
       deleteStorage([
         REGISTER_EMAIL,
         REGISTER_NAME,
@@ -164,6 +165,7 @@ export function SignupBtn(props: SignupBtnProps) {
         REGISTER_PHONENUMBER,
         REGISTER_ORG_DESCRIPTION,
         REGISTER_ORG_NAME,
+        REGISTER_ORG_JOIN,
       ])
       router.push('/main')
     } catch (err) {

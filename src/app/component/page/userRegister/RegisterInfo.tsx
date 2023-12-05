@@ -19,9 +19,14 @@ import { type RegisterInfoTypeProps } from '@/app/types/pageTypes'
 
 export default function RegisterInfo(props: RegisterInfoTypeProps) {
   const dynamicInput = (isPersist: boolean, title: string, limit: number) => {
-    const storedValue = isPersist ? localStorage.getItem(title) : ''
+    let storedValue
+    if (localStorage.getItem(title) === null) {
+      storedValue = ''
+    } else {
+      storedValue = isPersist ? localStorage.getItem(title) : ''
+    }
 
-    return useInput(storedValue as string, isPersist, title, limit)
+    return useInput(storedValue as string, title, limit)
   }
 
   const emailInput = dynamicInput(true, REGISTER_EMAIL, 100)

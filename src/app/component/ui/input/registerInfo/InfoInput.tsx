@@ -184,6 +184,7 @@ export default function InfoInput(props: InfoInputProps) {
         />
       </div>
       {(props.title === REGISTER_EMAIL || props.title === REGISTER_PHONENUMBER) &&
+      useInput.value !== null &&
       useInput.value.length !== 0 &&
       errState.isError ? (
         <div className="mb-6">
