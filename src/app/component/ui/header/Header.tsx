@@ -41,10 +41,6 @@ export default function Header() {
     }
   }
 
-  const handleOpenConfirm = () => {
-    setIsConfirmOpen(true)
-  }
-
   const menuList = [
     { title: 'Board', list: ['board 1', 'board 2'], open: open.board, link: '/main' },
     { title: 'Project', list: [], open: open.project, link: '/project' },
@@ -59,6 +55,7 @@ export default function Header() {
   }
   useEffect(() => {
     setMount(true)
+    setConfirmValue(false)
     document.addEventListener('click', handleClickOutside)
   }, [dropRef])
 
@@ -85,9 +82,10 @@ export default function Header() {
               <a className="text-gray-800 dark:text-white border-solid border-white border-2 hover:border-indigo-500 dark:border-gray-900 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 dark:hover:border-indigo-400 focus:outline-none dark:focus:ring-gray-800">
                 {accessToken !== ERR_COOKIE_NOT_FOUND ? (
                   <LogoutBtn
-                    handleOpenConfirm={handleOpenConfirm}
                     isConfirmOpen={isConfirmOpen}
+                    setIsConfirmOpen={setIsConfirmOpen}
                     confirmValue={confirmValue}
+                    setConfirmValue={setConfirmValue}
                   />
                 ) : (
                   <></>
