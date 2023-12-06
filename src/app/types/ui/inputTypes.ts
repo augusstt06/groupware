@@ -9,11 +9,7 @@ export type InfoInputProps = {
   checkValid: boolean
   icon: React.ReactNode
   setErrMsg: (errDescription: string) => void
-  useInput: {
-    value: string
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
-    resetValue: () => void
-  }
+  useInput: UseInputProps
 }
 
 export type PwdInputProps = {

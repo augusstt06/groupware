@@ -1,12 +1,11 @@
 import { FETCH_CONTENT_TYPE, GET, PATCH, POST } from '@/app/constant/constant'
 import {
-  type ApiRes,
+  type FetchResponseType,
   type ModuleGetFetchProps,
   type ModulePostFetchProps,
-  type ResponseType,
 } from '@/app/types/moduleTypes'
 
-export const moduleGetFetch = async <T>(props: ModuleGetFetchProps): Promise<ResponseType<T>> => {
+export const moduleGetFetch = async <T>(props: ModuleGetFetchProps): Promise<T> => {
   const queryString = new URLSearchParams()
   Object.entries(props.params).forEach(([key, value]) => {
     queryString.append(key, String(value))
@@ -17,15 +16,12 @@ export const moduleGetFetch = async <T>(props: ModuleGetFetchProps): Promise<Res
     method: GET,
     headers: props.header,
   })
-  if (!res.ok) {
-    throw new Error(res.status.toString())
-  }
   return res.json()
 }
 
-export const modulePostFetch = async (
+export const modulePostFetch = async <T>(
   props: ModulePostFetchProps,
-): Promise<ResponseType<ApiRes>> => {
+): Promise<FetchResponseType<T>> => {
   const res = await fetch(props.fetchUrl as string, {
     method: POST,
     headers: {
@@ -34,14 +30,13 @@ export const modulePostFetch = async (
     },
     body: JSON.stringify(props.data),
   })
-  if (!res.ok) {
-    throw new Error(res.status.toString())
-  }
   return res.json()
 }
 
-export const modulePatchFetch = async (props: ModulePostFetchProps): Promise<Response> => {
-  return fetch(props.fetchUrl as string, {
+export const modulePatchFetch = async <T>(
+  props: ModulePostFetchProps,
+): Promise<FetchResponseType<T>> => {
+  const res = await fetch(props.fetchUrl as string, {
     method: PATCH,
     headers: {
       'Content-Type': FETCH_CONTENT_TYPE,
@@ -49,4 +44,5 @@ export const modulePatchFetch = async (props: ModulePostFetchProps): Promise<Res
     },
     body: JSON.stringify(props.data),
   })
+  return res.json()
 }

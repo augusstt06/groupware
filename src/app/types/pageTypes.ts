@@ -20,6 +20,7 @@ export type UserCardProps = {
 export type RegisterOrgProps = {
   organization: string
   setOrganization: React.Dispatch<SetStateAction<string>>
+  setErrMsg: (errDescription: string) => void
 }
 
 export type HubCategoryProps = {

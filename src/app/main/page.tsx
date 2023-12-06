@@ -19,7 +19,10 @@ import {
 import {
   type ApiRes,
   type CustomDecodeTokenType,
+  type FailResponseType,
+  type FetchResponseType,
   type ModuleGetFetchProps,
+  type SuccessResponseType,
 } from '../types/moduleTypes'
 
 export default function Main() {
@@ -45,20 +48,23 @@ export default function Main() {
 
   const fetchGetUsers = async () => {
     try {
-      const res = await moduleGetFetch<ApiRes>(getFetchUserProps)
+      const res = await moduleGetFetch<FetchResponseType<ApiRes>>(getFetchUserProps)
+      if (res.status !== 200) throw new Error((res as FailResponseType).message)
+
+      const successRes = res as SuccessResponseType<ApiRes>
       const extraUserInfoReducerProps = {
-        name: res.result.name,
-        position: res.result.position,
-        userId: res.result.userId,
-        organizationId: res.result.organizationId,
-        organizationName: res.result.organizationName,
+        name: successRes.result.name,
+        position: successRes.result.position,
+        userId: successRes.result.userId,
+        organizationId: successRes.result.organizationId,
+        organizationName: successRes.result.organizationName,
       }
       const userReducerProps = {
-        [KEY_X_ORGANIZATION_CODE]: res.result.organizationCode as string,
-        [KEY_UUID]: res.result[KEY_UUID] as string,
+        [KEY_X_ORGANIZATION_CODE]: successRes.result.organizationCode as string,
+        [KEY_UUID]: successRes.result[KEY_UUID] as string,
       }
       const attendanceReducerProps = {
-        status: res.result.attendanceStatus as string,
+        status: successRes.result.attendanceStatus as string,
         time: attendanceTime,
       }
       dispatch(updateExtraUserInfoReducer(extraUserInfoReducerProps))

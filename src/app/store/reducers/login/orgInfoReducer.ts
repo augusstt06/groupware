@@ -90,7 +90,7 @@ export const orgInfoSlice = createSlice({
       state.currentTeam = { ...action.payload }
     },
     joinOrgReducer(state, action: PayloadAction<{ code: string }>) {
-      state.joinOrg.code = action.payload.code
+      state.joinOrg = { ...action.payload }
     },
     resetOrgReducer(state) {
       state = {

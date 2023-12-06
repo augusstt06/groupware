@@ -12,7 +12,11 @@ import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleGetCookie } from '@/app/module/utils/cookie'
 import { modulePatchFetch, modulePostFetch } from '@/app/module/utils/moduleFetch'
 import { updateAttendanceStatusReducer } from '@/app/store/reducers/main/userInfoReducer'
-import { type ModulePostFetchProps } from '@/app/types/moduleTypes'
+import {
+  type FailResponseType,
+  type FetchResponseType,
+  type ModulePostFetchProps,
+} from '@/app/types/moduleTypes'
 import { type AttendanceBtnProps } from '@/app/types/ui/btnTypes'
 
 export default function AttendanceBtn(props: AttendanceBtnProps) {
@@ -44,7 +48,9 @@ export default function AttendanceBtn(props: AttendanceBtnProps) {
           [KEY_X_ORGANIZATION_CODE]: orgCode,
         },
       }
-      await modulePostFetch(fetchAttendanceProps)
+      const res = await modulePostFetch<FetchResponseType<string>>(fetchAttendanceProps)
+      if (res.status !== 200) throw new Error((res as FailResponseType).message)
+
       const currentTime = new Date().getTime()
       dispatch(
         updateAttendanceStatusReducer({
@@ -87,10 +93,8 @@ export default function AttendanceBtn(props: AttendanceBtnProps) {
         },
       }
 
-      const res = await modulePatchFetch(fetchAttendanceProps)
-      if (!res.ok) {
-        throw new Error(res.status.toString())
-      }
+      const res = await modulePatchFetch<FetchResponseType<string>>(fetchAttendanceProps)
+      if (res.status !== 200) throw new Error((res as FailResponseType).message)
       dispatch(
         updateAttendanceStatusReducer({
           status: 'out',
@@ -100,6 +104,7 @@ export default function AttendanceBtn(props: AttendanceBtnProps) {
       props.setElapsed('0')
       props.setRerender(!props.reRender)
     } catch (err) {
+      // FIXME:
       if (err instanceof Error) {
         switch (err.message) {
           case HttpStatusCode.InternalServerError.toString():

@@ -2,11 +2,13 @@
 
 import { useEffect, useState } from 'react'
 
+import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { AiOutlineMail } from 'react-icons/ai'
 import { RiLockPasswordFill } from 'react-icons/ri'
 
 import ErrorAlert from '../component/ui/alert/ErrorAlert'
+import { NavigationBtn } from '../component/ui/button/BtnGroups'
 import LoginBtn from '../component/ui/button/login/LoginBtn'
 import LoginInput from '../component/ui/input/login/LoginInput'
 import { KEY_ACCESS_TOKEN, REGISTER_EMAIL, REGISTER_PWD } from '../constant/constant'
@@ -69,8 +71,11 @@ export default function Login() {
         ) : (
           <></>
         )}
-        <div className="flex flex-row justify-center items-center">
-          <LoginBtn title="Login" setErrMsg={setErrMsg} />
+        <div className="flex flex-col justify-center items-center mt-5">
+          <LoginBtn title="로그인" setErrMsg={setErrMsg} />
+          <Link href="/" className="mt-2">
+            <NavigationBtn title="메인으로" />
+          </Link>
         </div>
       </div>
     </div>

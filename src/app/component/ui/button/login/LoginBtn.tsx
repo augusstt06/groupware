@@ -1,18 +1,23 @@
 import { useRouter } from 'next/navigation'
 
+import { KEY_ACCESS_TOKEN, KEY_LOGIN_TIME } from '@/app/constant/constant'
 import {
-  KEY_ACCESS_TOKEN,
-  KEY_LOGIN_TIME,
-  LOGIN_EMAIL_FAIL_MESSAGE,
-  LOGIN_PWD_FAIL_MESSAGE,
-} from '@/app/constant/constant'
-import { errDefault } from '@/app/constant/errorMsg'
+  ERR_MESSAGE_LOGIN_EMAIL_FAIL,
+  ERR_MESSAGE_LOGIN_PWD_FAIL,
+  errDefault,
+} from '@/app/constant/errorMsg'
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleSetCookies } from '@/app/module/utils/cookie'
 import inputValidate from '@/app/module/utils/inputValidate'
 import { modulePostFetch } from '@/app/module/utils/moduleFetch'
 import { getCurrentTime } from '@/app/module/utils/time'
-import { type ModulePostFetchProps } from '@/app/types/moduleTypes'
+import {
+  type ApiRes,
+  type FailResponseType,
+  type FetchResponseType,
+  type ModulePostFetchProps,
+  type SuccessResponseType,
+} from '@/app/types/moduleTypes'
 import { type LoginBtnProps } from '@/app/types/ui/btnTypes'
 
 export default function LoginBtn(props: LoginBtnProps) {
@@ -38,19 +43,20 @@ export default function LoginBtn(props: LoginBtnProps) {
         props.setErrMsg('이메일 형식이 잘못되었습니다. xxx@xxx.xxx 의 형태로 입력해주세요')
         return
       }
-      const res = await modulePostFetch(fetchLoginProps)
+      const res = await modulePostFetch<FetchResponseType<ApiRes>>(fetchLoginProps)
+      if (res.status !== 200) throw new Error((res as FailResponseType).message)
       moduleSetCookies({
-        [KEY_ACCESS_TOKEN]: res.result.accessToken,
+        [KEY_ACCESS_TOKEN]: (res as SuccessResponseType<ApiRes>).result.accessToken,
         [KEY_LOGIN_TIME]: getCurrentTime(),
       })
       router.push('/main')
     } catch (err) {
       if (err instanceof Error) {
         switch (err.message) {
-          case LOGIN_EMAIL_FAIL_MESSAGE:
+          case ERR_MESSAGE_LOGIN_EMAIL_FAIL:
             props.setErrMsg('이메일을 잘못 입력했습니다.')
             break
-          case LOGIN_PWD_FAIL_MESSAGE:
+          case ERR_MESSAGE_LOGIN_PWD_FAIL:
             props.setErrMsg('비밀번호를 잘못 입력했습니다.')
             break
           default:

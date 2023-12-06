@@ -15,26 +15,26 @@ import {
   REGISTER_PWD,
 } from '@/app/constant/constant'
 import useInput from '@/app/module/hooks/reactHooks/useInput'
-import { type UseInputProps } from '@/app/types/moduleTypes'
 import { type RegisterInfoTypeProps } from '@/app/types/pageTypes'
 
 export default function RegisterInfo(props: RegisterInfoTypeProps) {
-  const [
-    emailInput,
-    pwdInput,
-    pwdConfirmInput,
-    nameInput,
-    positionInput,
-    phoneNumberInput,
-  ]: UseInputProps[] = [
-    useInput('', REGISTER_EMAIL, 100),
+  const dynamicInput = (isPersist: boolean, title: string, limit: number) => {
+    let storedValue
+    if (localStorage.getItem(title) === null) {
+      storedValue = ''
+    } else {
+      storedValue = isPersist ? localStorage.getItem(title) : ''
+    }
 
-    useInput('', REGISTER_PWD, 20),
-    useInput('', REGISTER_CONFIRM_PWD, 20),
-    useInput('', REGISTER_NAME, 10),
-    useInput('', REGISTER_POSITION, 10),
-    useInput('', REGISTER_PHONENUMBER, 13),
-  ]
+    return useInput(storedValue as string, title, limit)
+  }
+
+  const emailInput = dynamicInput(true, REGISTER_EMAIL, 100)
+  const pwdInput = dynamicInput(false, REGISTER_PWD, 20)
+  const pwdConfirmInput = dynamicInput(false, REGISTER_CONFIRM_PWD, 20)
+  const nameInput = dynamicInput(true, REGISTER_NAME, 10)
+  const positionInput = dynamicInput(true, REGISTER_POSITION, 10)
+  const phoneNumberInput = dynamicInput(true, REGISTER_PHONENUMBER, 13)
 
   return (
     <>
