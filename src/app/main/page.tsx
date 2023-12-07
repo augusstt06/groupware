@@ -83,6 +83,7 @@ export default function Main() {
       }
     }
   }
+
   useEffect(() => {
     if (accessToken === ERR_COOKIE_NOT_FOUND) {
       redirect('/error/notfound/token')

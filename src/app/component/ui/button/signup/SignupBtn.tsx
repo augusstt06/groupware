@@ -1,17 +1,10 @@
 import { useRouter } from 'next/navigation'
 
-import {
-  KEY_ACCESS_TOKEN,
-  REGISTER_EMAIL,
-  REGISTER_NAME,
-  REGISTER_PHONENUMBER,
-  REGISTER_POSITION,
-} from '@/app/constant/constant'
+import { KEY_ACCESS_TOKEN } from '@/app/constant/constant'
 import { ERR_MESSAGE_SIGNUP_USER_EXIST, errDefault } from '@/app/constant/errorMsg'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleSetCookies } from '@/app/module/utils/cookie'
 import { modulePostFetch } from '@/app/module/utils/moduleFetch'
-import { deleteStorage } from '@/app/module/utils/storage'
 import { resetSignupInfoReducer } from '@/app/store/reducers/login/signupInfoReducer'
 import {
   type ApiRes,
@@ -64,7 +57,7 @@ export function SignupBtn(props: SignupBtnProps) {
         [KEY_ACCESS_TOKEN]: (loginRes as SuccessResponseType<ApiRes>).result.accessToken,
       })
       dispatch(resetSignupInfoReducer())
-      deleteStorage([REGISTER_EMAIL, REGISTER_NAME, REGISTER_POSITION, REGISTER_PHONENUMBER])
+      // deleteStorage([REGISTER_EMAIL, REGISTER_NAME, REGISTER_POSITION, REGISTER_PHONENUMBER])
       router.push('/signup/registerorg')
     } catch (err) {
       if (err instanceof Error) {

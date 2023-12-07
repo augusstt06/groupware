@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import ErrorAlert from '../../alert/ErrorAlert'
 import { InputIconlabel } from '../../label/InputIconlabel'
@@ -54,7 +54,7 @@ export default function InfoInput(props: InfoInputProps) {
   const dispatch = useAppDispatch()
 
   const useInput = props.useInput
-  const inputRef = useRef(useInput.value)
+  // const inputRef = useRef(useInput.value)
 
   const emailInputValidateProps = {
     inputData: useInput.value,
@@ -90,8 +90,9 @@ export default function InfoInput(props: InfoInputProps) {
     }
   }
 
+  // console.log(useInput.value)
   useEffect(() => {
-    inputRef.current = useInput.value
+    // inputRef.current = useInput.value
     const isInput = useInput.value !== ''
     const reducerProps = {
       isCheck: isInput,
@@ -120,6 +121,7 @@ export default function InfoInput(props: InfoInputProps) {
           )
         }
 
+        // nul2l@test.com
         break
       case REGISTER_NAME:
         dispatch(nameReducer(reducerProps))
@@ -155,13 +157,12 @@ export default function InfoInput(props: InfoInputProps) {
     const handleInputFocusOut = () => {
       if (props.title === REGISTER_EMAIL && !errState.isError && useInput.value.length !== 0) {
         const getFetchEmailProps: ModuleGetFetchProps = {
-          params: { email: inputRef.current },
+          params: { email: useInput.value },
           fetchUrl: process.env.NEXT_PUBLIC_EMAIL_REQ_SOURCE,
         }
 
         void fetchEmailAvaiable(getFetchEmailProps)
       }
-      localStorage.setItem(props.title, useInput.value)
     }
 
     const inputElement = document.getElementById(props.title)
