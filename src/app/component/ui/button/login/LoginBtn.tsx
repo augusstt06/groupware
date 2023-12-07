@@ -1,6 +1,6 @@
 import { useRouter } from 'next/navigation'
 
-import { KEY_ACCESS_TOKEN } from '@/app/constant/constant'
+import { COMPLETE, KEY_ACCESS_TOKEN, KEY_ORGANIZATION } from '@/app/constant/constant'
 import {
   ERR_MESSAGE_LOGIN_EMAIL_FAIL,
   ERR_MESSAGE_LOGIN_PWD_FAIL,
@@ -46,6 +46,7 @@ export default function LoginBtn(props: LoginBtnProps) {
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
       moduleSetCookies({
         [KEY_ACCESS_TOKEN]: (res as SuccessResponseType<ApiRes>).result.accessToken,
+        [KEY_ORGANIZATION]: COMPLETE,
       })
 
       router.push('/main')
