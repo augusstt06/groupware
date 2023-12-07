@@ -18,6 +18,7 @@ export default function JoinOrgInfo() {
   }
 
   const joinInput = dynamicInput(true, REGISTER_ORG_JOIN)
+
   return (
     <>
       <OrgInput

@@ -5,7 +5,13 @@ import { redirect } from 'next/navigation'
 
 import MainHub from '../component/page/main/hub/MainHub'
 import MainCardGroup from '../component/ui/card/MainCardGroup'
-import { KEY_ACCESS_TOKEN, KEY_UUID, KEY_X_ORGANIZATION_CODE } from '../constant/constant'
+import {
+  COMPLETE,
+  KEY_ACCESS_TOKEN,
+  KEY_ORGANIZATION,
+  KEY_UUID,
+  KEY_X_ORGANIZATION_CODE,
+} from '../constant/constant'
 import { ERR_COOKIE_NOT_FOUND } from '../constant/errorMsg'
 import { useAppDispatch, useAppSelector } from '../module/hooks/reduxHooks'
 import { moduleDecodeToken, moduleDeleteCookies, moduleGetCookie } from '../module/utils/cookie'
@@ -27,6 +33,7 @@ import {
 export default function Main() {
   const dispatch = useAppDispatch()
   const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
+  const orgComplete = moduleGetCookie(KEY_ORGANIZATION)
   const decodeToken = moduleDecodeToken(accessToken)
   const attendanceTime = useAppSelector((state) => state.userInfo.attendance.time)
   const uuid =
@@ -79,6 +86,8 @@ export default function Main() {
   useEffect(() => {
     if (accessToken === ERR_COOKIE_NOT_FOUND) {
       redirect('/error/notfound/token')
+    } else if (orgComplete !== COMPLETE) {
+      redirect('/error/notfound/organization')
     } else {
       void fetchGetUsers()
     }

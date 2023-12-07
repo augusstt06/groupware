@@ -1,6 +1,6 @@
 import { useRouter } from 'next/navigation'
 
-import { KEY_ACCESS_TOKEN, KEY_LOGIN_TIME } from '@/app/constant/constant'
+import { KEY_ACCESS_TOKEN } from '@/app/constant/constant'
 import {
   ERR_MESSAGE_LOGIN_EMAIL_FAIL,
   ERR_MESSAGE_LOGIN_PWD_FAIL,
@@ -10,7 +10,6 @@ import { useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleSetCookies } from '@/app/module/utils/cookie'
 import inputValidate from '@/app/module/utils/inputValidate'
 import { modulePostFetch } from '@/app/module/utils/moduleFetch'
-import { getCurrentTime } from '@/app/module/utils/time'
 import {
   type ApiRes,
   type FailResponseType,
@@ -47,8 +46,8 @@ export default function LoginBtn(props: LoginBtnProps) {
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
       moduleSetCookies({
         [KEY_ACCESS_TOKEN]: (res as SuccessResponseType<ApiRes>).result.accessToken,
-        [KEY_LOGIN_TIME]: getCurrentTime(),
       })
+
       router.push('/main')
     } catch (err) {
       if (err instanceof Error) {

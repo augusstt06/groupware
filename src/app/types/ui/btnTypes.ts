@@ -16,6 +16,11 @@ export type RegisterUserBtnProps = {
   setErrMsg: (errDecription: string) => void
 }
 export type SignupBtnProps = BtnProps & {
+  setErrMsg: (errDecription: string) => void
+  checkInfoComplete: () => void
+}
+
+export type RegisterOrgLoginBtnProps = {
   orgType: string
   setErrMsg: (errDecription: string) => void
 }
