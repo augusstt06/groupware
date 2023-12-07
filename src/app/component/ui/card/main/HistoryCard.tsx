@@ -12,6 +12,8 @@ import { type UserCardProps } from '@/app/types/ui/cardTypes'
 
 export default function HistoryCard(props: UserCardProps) {
   const [elapsed, setElapsed] = useState('0')
+  // FIXME:
+  const [convertTime, setConvertTime] = useState('0')
   const attendanceState = useAppSelector((state) => state.userInfo[KEY_ATTENDANCE])
   const isAttendance = attendanceState.status === 'in'
   const extraUserInfo = useAppSelector((state) => state.userInfo.extraInfo)
@@ -53,14 +55,19 @@ export default function HistoryCard(props: UserCardProps) {
         const now = new Date().getTime()
         const timeElapsed = Math.floor((now - attendanceState.time) / (1000 * 60))
         setElapsed(timeElapsed.toString())
+        const numberTime = Number(elapsed)
+        setConvertTime(Math.floor(numberTime / 15).toString())
       }
     }
     updateElapsed()
+
     const intervalId = setInterval(updateElapsed, 1000 * 60)
+
+    if (!isAttendance) setConvertTime('0')
     return () => {
       clearInterval(intervalId)
     }
-  }, [attendanceState])
+  }, [attendanceState, elapsed])
 
   return (
     <div className="w-full h-2/3max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mb-5">
@@ -79,7 +86,7 @@ export default function HistoryCard(props: UserCardProps) {
             </div>
             <div className="flex flex-start justify-between items-center w-4/5">
               <span className="text-medium text-gray-500 dark:text-gray-400">업무 시간</span>
-              <Progressbar />
+              <Progressbar time={convertTime} />
             </div>
             <div className="flex flex-row justify-around mt-4 md:mt-6 w-4/5">
               <div className="w-full">

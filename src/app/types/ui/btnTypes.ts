@@ -1,5 +1,5 @@
 import type React from 'react'
-import { type SetStateAction } from 'react'
+import { type Dispatch, type SetStateAction } from 'react'
 
 export type HamburgerProps = {
   nav: boolean
@@ -56,7 +56,8 @@ export type AttendanceHistoryBtnProps = {
 }
 
 export type LogoutBtnProps = {
-  handleOpenConfirm: () => void
   isConfirmOpen: boolean
+  setIsConfirmOpen: Dispatch<SetStateAction<boolean>>
   confirmValue: boolean
+  setConfirmValue: Dispatch<SetStateAction<boolean>>
 }
