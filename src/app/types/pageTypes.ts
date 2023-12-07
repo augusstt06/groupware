@@ -12,14 +12,10 @@ export type RegisterInfoTypeProps = {
   setErrMsg: (errDescription: string) => void
 }
 
-export type UserCardProps = {
-  reRender: boolean
-  setRerender: React.Dispatch<SetStateAction<boolean>>
-}
-
 export type RegisterOrgProps = {
   organization: string
   setOrganization: React.Dispatch<SetStateAction<string>>
+  setErrMsg: (errDescription: string) => void
 }
 
 export type HubCategoryProps = {

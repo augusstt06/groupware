@@ -6,10 +6,17 @@ export type UnionStrNumber = string | number
 
 export type ApiRes = Record<string, UnionStrNumber>
 
-export type ResponseType<T> = {
+export type SuccessResponseType<T> = {
   status: number
   result: T
 }
+export type FailResponseType = {
+  status: number
+  message: string
+}
+
+export type FetchResponseType<T> = SuccessResponseType<T> | FailResponseType
+
 export type UseInputProps = {
   value: string
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void

@@ -5,8 +5,7 @@ import { REGISTER_PHONENUMBER } from '@/app/constant/constant'
 import { type UseInputProps } from '@/app/types/moduleTypes'
 
 export default function useInput(state: string, title?: string, limit?: number): UseInputProps {
-  const initialValue = ''
-  const [value, setValue] = useState(initialValue)
+  const [value, setValue] = useState(state)
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {
@@ -21,7 +20,7 @@ export default function useInput(state: string, title?: string, limit?: number):
   }
 
   const resetValue = () => {
-    setValue(initialValue)
+    setValue('')
   }
 
   return { value, onChange, resetValue }

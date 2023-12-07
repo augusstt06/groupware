@@ -2,15 +2,16 @@ import { useEffect } from 'react'
 
 import { useRouter } from 'next/navigation'
 
-import { KEY_ACCESS_TOKEN, KEY_X_ORGANIZATION_CODE } from '@/app/constant/constant'
-import { ERR_COOKIE_NOT_FOUND } from '@/app/constant/errorMsg'
+import { KEY_ACCESS_TOKEN, KEY_ORGANIZATION } from '@/app/constant/constant'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleDeleteCookies, moduleGetCookie } from '@/app/module/utils/cookie'
-import { modulePatchFetch, modulePostFetch } from '@/app/module/utils/moduleFetch'
+import { modulePostFetch } from '@/app/module/utils/moduleFetch'
 import { resetReducer } from '@/app/store/reducers/login/loginInfoReducer'
-import { resetOrgReducer } from '@/app/store/reducers/login/orgInfoReducer'
-import { updateAttendanceStatusReducer } from '@/app/store/reducers/main/userInfoReducer'
-import { type ModulePostFetchProps } from '@/app/types/moduleTypes'
+import {
+  type FailResponseType,
+  type FetchResponseType,
+  type ModulePostFetchProps,
+} from '@/app/types/moduleTypes'
 import { type LogoutBtnProps } from '@/app/types/ui/btnTypes'
 
 export default function LogoutBtn(props: LogoutBtnProps) {
@@ -19,9 +20,38 @@ export default function LogoutBtn(props: LogoutBtnProps) {
   const dispatch = useAppDispatch()
   const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
   const attendanceStatus = useAppSelector((state) => state.userInfo.attendance)
-  const userInfo = useAppSelector((state) => state.userInfo)
-  const orgCode = userInfo['X-ORGANIZATION-CODE']
-  const isAttendance = userInfo.attendance.status === 'in'
+  // FIXME: 추후 퇴근을 자동으로 하고싶다면 사용
+  // const userInfo = useAppSelector((state) => state.userInfo)
+  // const orgCode = userInfo['X-ORGANIZATION-CODE']
+  // const isAttendance = userInfo.attendance.status === 'in'
+
+  // const fetchLeaveWork = async () => {
+  //   try {
+  //     if (orgCode === ERR_COOKIE_NOT_FOUND) return
+  //     if (!isAttendance) return
+
+  //     const fetchAttendanceProps: ModulePostFetchProps = {
+  //       data: {
+  //         organizationId: userInfo.extraInfo.organizationId,
+  //         userId: userInfo.extraInfo.userId,
+  //       },
+  //       fetchUrl: process.env.NEXT_PUBLIC_ATTENDANCES_SOURCE,
+  //       header: {
+  //         Authorization: `Bearer ${accessToken}`,
+  //         [KEY_X_ORGANIZATION_CODE]: orgCode,
+  //       },
+  //     }
+  //     const res = await modulePatchFetch<FetchResponseType<string>>(fetchAttendanceProps)
+  //     if (res.status !== 200) throw new Error((res as FailResponseType).message)
+  //     dispatch(
+  //       updateAttendanceStatusReducer({
+  //         status: 'out',
+  //         time: 0,
+  //       }),
+  //     )
+  //     dispatch(resetOrgReducer())
+  //   } catch (err) {}
+  // }
 
   const fetchLogoutProps: ModulePostFetchProps = {
     data: {},
@@ -30,42 +60,14 @@ export default function LogoutBtn(props: LogoutBtnProps) {
       Authorization: `Bearer ${accessToken}`,
     },
   }
-
-  const fetchLeaveWork = async () => {
-    try {
-      if (orgCode === ERR_COOKIE_NOT_FOUND) return
-      if (!isAttendance) return
-
-      const fetchAttendanceProps: ModulePostFetchProps = {
-        data: {
-          organizationId: userInfo.extraInfo.organizationId,
-          userId: userInfo.extraInfo.userId,
-        },
-        fetchUrl: process.env.NEXT_PUBLIC_ATTENDANCES_SOURCE,
-        header: {
-          Authorization: `Bearer ${accessToken}`,
-          [KEY_X_ORGANIZATION_CODE]: orgCode,
-        },
-      }
-      const res = await modulePatchFetch(fetchAttendanceProps)
-      if (!res.ok) {
-        throw new Error(res.status.toString())
-      }
-      dispatch(
-        updateAttendanceStatusReducer({
-          status: 'out',
-          time: 0,
-        }),
-      )
-      dispatch(resetOrgReducer())
-    } catch (err) {}
-  }
   const fetchLogout = async () => {
     try {
-      await modulePostFetch(fetchLogoutProps)
+      const res = await modulePostFetch<FetchResponseType<string>>(fetchLogoutProps)
+      if (res.status !== 200) throw new Error((res as FailResponseType).message)
       dispatch(resetReducer())
-      moduleDeleteCookies(KEY_ACCESS_TOKEN)
-      router.push('/login')
+      moduleDeleteCookies(KEY_ACCESS_TOKEN, KEY_ORGANIZATION)
+      props.setConfirmValue(false)
+      router.push('/')
     } catch (err) {
       alert('로그아웃이 실패했습니다.')
     }
@@ -73,13 +75,16 @@ export default function LogoutBtn(props: LogoutBtnProps) {
 
   const handleClick = () => {
     if (attendanceStatus.status === 'in') {
-      props.handleOpenConfirm()
-      //  FIXME: 클릭값을 기다리지 않고 바로 로그아웃됨
-      if (props.confirmValue) void fetchLeaveWork()
+      props.setIsConfirmOpen(true)
+    } else {
+      void fetchLogout()
     }
-    void fetchLogout()
   }
-  useEffect(() => {}, [props.isConfirmOpen])
+  useEffect(() => {
+    if (props.confirmValue) {
+      void fetchLogout()
+    }
+  }, [props.confirmValue])
   return (
     <>
       <button

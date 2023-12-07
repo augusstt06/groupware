@@ -11,7 +11,15 @@ import CreateOrgTeam from './CreateOrgTeam'
 import { BasicBtn } from '@/app/component/ui/button/BtnGroups'
 import { InputLabel } from '@/app/component/ui/label/Inputlabel'
 import ToggleGroup from '@/app/component/ui/toggle/organization/ToggleGroup'
-import { ORG_CREATE, ORG_GRADES, ORG_SELECTBOX, PRIVATE, PUBLIC } from '@/app/constant/constant'
+import {
+  ORG_CREATE,
+  ORG_GRADES,
+  ORG_SELECTBOX,
+  PRIVATE,
+  PUBLIC,
+  REGISTER_ORG_DESCRIPTION,
+  REGISTER_ORG_NAME,
+} from '@/app/constant/constant'
 import useInput from '@/app/module/hooks/reactHooks/useInput'
 
 export default function CreateOrgInfo() {
@@ -21,8 +29,18 @@ export default function CreateOrgInfo() {
     setIsTeam(!isTeam)
   }
 
-  const orgNameInput = useInput('')
-  const orgDescriptionInput = useInput('', 'registerOrg', 100)
+  const dynamicInput = (isPersist: boolean, title: string, limit?: number) => {
+    let storedValue
+    if (localStorage.getItem(title) === null) {
+      storedValue = ''
+    } else {
+      storedValue = isPersist ? localStorage.getItem(title) : ''
+    }
+
+    return useInput(storedValue as string, title, limit)
+  }
+  const orgNameInput = dynamicInput(true, REGISTER_ORG_NAME)
+  const orgDescriptionInput = dynamicInput(true, REGISTER_ORG_DESCRIPTION, 100)
 
   const selectList = [
     {
@@ -52,25 +70,25 @@ export default function CreateOrgInfo() {
       <OrgInput
         useInput={orgNameInput}
         componentType={ORG_CREATE}
-        title="Organization name"
-        placeholder="frontend"
+        title={REGISTER_ORG_NAME}
+        placeholder="조직 이름을 입력해주세요"
         icon={<SlOrganization />}
       />
       <OrgInput
         useInput={orgDescriptionInput}
         componentType={ORG_CREATE}
-        title="Description"
+        title={REGISTER_ORG_DESCRIPTION}
         placeholder="
-Groupware site publishing and feature development"
+조직 설명을 입력해주세요"
         icon={<MdOutlineDescription />}
       />
       <SelectBox
         compoenetType={ORG_SELECTBOX}
         apiKey="none"
-        title="Select an Orgnization Type"
+        title="조직 공개 설정"
         selectList={selectList}
       />
-      <InputLabel title="Organization Setting" />
+      <InputLabel title="조직 권한 설정" />
       {gradesData.map((data) => (
         <div key={data[0].title}>
           <ToggleGroup toggleData={data} compoenetType={ORG_GRADES} />

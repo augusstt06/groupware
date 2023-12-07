@@ -10,7 +10,13 @@ import { useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleGetCookie } from '@/app/module/utils/cookie'
 import { moduleGetFetch } from '@/app/module/utils/moduleFetch'
 import { convertTime } from '@/app/module/utils/time'
-import { type ApiRes, type ModuleGetFetchProps } from '@/app/types/moduleTypes'
+import {
+  type ApiRes,
+  type FailResponseType,
+  type FetchResponseType,
+  type ModuleGetFetchProps,
+  type SuccessResponseType,
+} from '@/app/types/moduleTypes'
 
 export default function AttendanceHistory() {
   const [attendanceHistory, setAttendanceHistory] = useState<ApiRes[]>([])
@@ -45,8 +51,9 @@ export default function AttendanceHistory() {
           [KEY_X_ORGANIZATION_CODE]: userInfo[KEY_X_ORGANIZATION_CODE],
         },
       }
-      const res = await moduleGetFetch<ApiRes[]>(fetchHistoryProps)
-      const resArr = res.result
+      const res = await moduleGetFetch<FetchResponseType<ApiRes[]>>(fetchHistoryProps)
+      if (res.status !== 200) throw new Error((res as FailResponseType).message)
+      const resArr = (res as SuccessResponseType<ApiRes[]>).result
       setAttendanceHistory(resArr)
     } catch (err) {}
   }

@@ -1,7 +1,9 @@
 import { useEffect } from 'react'
 
+import { IoMdEye } from 'react-icons/io'
+
 import { InputIconlabel } from '../../label/InputIconlabel'
-import { InputLabel, InputlabelAdd } from '../../label/Inputlabel'
+import { InputLabel } from '../../label/Inputlabel'
 
 import { REGISTER_EMAIL, REGISTER_PWD } from '@/app/constant/constant'
 import { useAppDispatch } from '@/app/module/hooks/reduxHooks'
@@ -28,21 +30,6 @@ export default function LoginInput(props: LoginInputProps) {
   return (
     <>
       <InputLabel title={props.title} />
-      {props.title === REGISTER_PWD ? (
-        <>
-          <InputlabelAdd title="입력문자 보기" />
-          <input
-            type="checkbox"
-            className="ml-2"
-            defaultChecked={props.isPwdView}
-            onChange={() => {
-              props.setIsPwdView(!props.isPwdView)
-            }}
-          />
-        </>
-      ) : (
-        <></>
-      )}
       <div className="flex relative mt-2 mb-6">
         <InputIconlabel icon={props.icon} />
         <input
@@ -53,6 +40,21 @@ export default function LoginInput(props: LoginInputProps) {
           className="rounded-none rounded-r-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder={props.placeholder}
         />
+        {props.title === REGISTER_PWD ? (
+          <>
+            <button
+              type="submit"
+              className="absolute top-0 end-0 p-2.5 text-sm font-medium h-full text-white bg-gray-50 rounded-e-lg border darK:border-gray-300 hover:bg-indigo-800 dark:bg-gray-700 dark:hover:bg-indigo-700 "
+              onClick={() => {
+                props.setIsPwdView(!props.isPwdView)
+              }}
+            >
+              <IoMdEye className="w-4 h-4" />
+            </button>
+          </>
+        ) : (
+          <></>
+        )}
       </div>
     </>
   )

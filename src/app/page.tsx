@@ -1,19 +1,24 @@
-import { cookies } from 'next/headers'
+'use client'
+
+import { useEffect } from 'react'
+
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 
 import { NavigationBtn } from './component/ui/button/BtnGroups'
 import { KEY_ACCESS_TOKEN } from './constant/constant'
+import { ERR_COOKIE_NOT_FOUND } from './constant/errorMsg'
+import { moduleGetCookie } from './module/utils/cookie'
 
 export default function Home() {
-  const cookieStore = cookies()
+  const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
+  const isLogin = accessToken !== ERR_COOKIE_NOT_FOUND
 
-  const token = cookieStore.get(KEY_ACCESS_TOKEN)
-
-  const isLogin = token !== undefined
-  if (isLogin) {
-    redirect('/main')
-  }
+  useEffect(() => {
+    if (isLogin) {
+      redirect('/main')
+    }
+  }, [accessToken])
 
   return (
     <main className="flex flex-col justify-center items-center h-4/5 ">
@@ -25,11 +30,11 @@ export default function Home() {
       </div>
       <div className="flex flex-col justify-around items-center h-2/4 mb-10">
         <Link href="/signup">
-          <NavigationBtn title="Sign Up for Free" />
+          <NavigationBtn title="회원가입" />
         </Link>
         <div className="text-medium font-normal mt-8 mb-3">If you already have an account,</div>
         <Link href="/login">
-          <NavigationBtn title="Login" />
+          <NavigationBtn title="로그인" />
         </Link>
       </div>
     </main>
