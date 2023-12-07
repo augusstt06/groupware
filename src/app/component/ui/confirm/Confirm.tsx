@@ -1,13 +1,8 @@
-import React, { type SetStateAction } from 'react'
-
 import { IoCloseSharp } from 'react-icons/io5'
 
-type props = {
-  isConfirmOpen: boolean
-  setIsConfirmOpen: React.Dispatch<SetStateAction<boolean>>
-  setConfirmValue: React.Dispatch<SetStateAction<boolean>>
-}
-export default function Confirm(props: props) {
+import { type ConfirmProps } from '@/app/types/ui/alertTypes'
+
+export default function Confirm(props: ConfirmProps) {
   const tailwindClass = `${
     props.isConfirmOpen ? '' : 'hidden'
   } overflow-y-auto overflow-x-hidden fixed flex justify-center items-center w-2/4 top-0 left-1/3`
@@ -26,10 +21,7 @@ export default function Confirm(props: props) {
               </button>
             </div>
             <p className="text-gray-500 dark:text-gray-300">아직 퇴근확인이 되지 않았습니다.</p>
-            <p className="mb-4 text-gray-500 dark:text-gray-300">
-              {' '}
-              퇴근처리 이후 로그아웃을 진행합니다.
-            </p>
+            <p className="mb-4 text-gray-500 dark:text-gray-300"> 로그아웃 하시겠습니까?</p>
 
             <div className="flex justify-center items-center space-x-4">
               <button

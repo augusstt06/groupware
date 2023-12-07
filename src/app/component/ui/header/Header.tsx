@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -8,15 +8,16 @@ import { usePathname } from 'next/navigation'
 import DarkmodeBtn from '../button/DarkmodeBtn'
 import LogoutBtn from '../button/login/LogoutBtn'
 import Confirm from '../confirm/Confirm'
-import AlertIndicator from '../indicator/alertIndicator'
+import AlertIndicator from '../indicator/AlertIndicator'
 
-import { KEY_ACCESS_TOKEN } from '@/app/constant/constant'
+import { COMPLETE, KEY_ACCESS_TOKEN, KEY_ORGANIZATION } from '@/app/constant/constant'
 import { ERR_COOKIE_NOT_FOUND } from '@/app/constant/errorMsg'
 import { moduleGetCookie } from '@/app/module/utils/cookie'
 
 export default function Header() {
   const pathname = usePathname()
   const isRender = !pathname.startsWith('/err')
+
   const [isConfirmOpen, setIsConfirmOpen] = useState(false)
   const [confirmValue, setConfirmValue] = useState(false)
   const [open, setOpen] = useState({
@@ -24,6 +25,7 @@ export default function Header() {
     project: false,
   })
   const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
+  const isOrgComplete = moduleGetCookie(KEY_ORGANIZATION)
   const handleOpen = (title: string) => {
     switch (title) {
       case 'Project':
@@ -40,10 +42,6 @@ export default function Header() {
     }
   }
 
-  const handleOpenConfirm = () => {
-    setIsConfirmOpen(true)
-  }
-
   const menuList = [
     { title: 'Board', list: ['board 1', 'board 2'], open: open.board, link: '/main' },
     { title: 'Project', list: [], open: open.project, link: '/project' },
@@ -51,13 +49,20 @@ export default function Header() {
   ]
 
   const [mount, setMount] = useState(false)
+  const dropRef = useRef<HTMLDivElement>(null)
+  const handleClickOutside = (e: MouseEvent) => {
+    if (dropRef.current != null && !dropRef.current.contains(e.target as Node))
+      setOpen({ board: false, project: false })
+  }
   useEffect(() => {
     setMount(true)
-  }, [setMount, accessToken])
+    setConfirmValue(false)
+    document.addEventListener('click', handleClickOutside)
+  }, [dropRef])
 
   return (
     <nav className="bg-white border-gray-200 dark:bg-gray-900">
-      {mount && accessToken !== ERR_COOKIE_NOT_FOUND && isRender ? (
+      {mount && isOrgComplete === COMPLETE && accessToken !== ERR_COOKIE_NOT_FOUND && isRender ? (
         <>
           <div className="flex flex-wrap items-center justify-between max-w-screen-xl mx-auto p-4">
             <Link href="/main" className="flex items-center space-x-3 rtl:space-x-reverse">
@@ -78,9 +83,10 @@ export default function Header() {
               <a className="text-gray-800 dark:text-white border-solid border-white border-2 hover:border-indigo-500 dark:border-gray-900 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 dark:hover:border-indigo-400 focus:outline-none dark:focus:ring-gray-800">
                 {accessToken !== ERR_COOKIE_NOT_FOUND ? (
                   <LogoutBtn
-                    handleOpenConfirm={handleOpenConfirm}
                     isConfirmOpen={isConfirmOpen}
+                    setIsConfirmOpen={setIsConfirmOpen}
                     confirmValue={confirmValue}
+                    setConfirmValue={setConfirmValue}
                   />
                 ) : (
                   <></>
@@ -96,6 +102,7 @@ export default function Header() {
             <div
               id="mega-menu-icons"
               className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
+              ref={dropRef}
             >
               <ul className="flex flex-col mt-4 font-medium md:flex-row md:mt-0 md:space-x-8 rtl:space-x-reverse">
                 {menuList.map((data) => (

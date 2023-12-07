@@ -5,7 +5,7 @@ import { useState } from 'react'
 import CreateProject from '../component/page/main/create/CreateProgect'
 import ProjectHub from '../component/page/main/hub/project/ProjectHub'
 import MenuCard from '../component/ui/card/MenuCard'
-import UserCard from '../component/ui/card/UserCard'
+import UserCard from '../component/ui/card/main/HistoryCard'
 
 export default function Project() {
   const [reRender, setRerender] = useState(false)

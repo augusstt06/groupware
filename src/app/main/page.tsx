@@ -3,10 +3,15 @@ import { useEffect, useState } from 'react'
 
 import { redirect } from 'next/navigation'
 
-import AttendanceHub from '../component/page/main/hub/attendance/AttendanceHub'
-import MenuCard from '../component/ui/card/MenuCard'
-import UserCard from '../component/ui/card/UserCard'
-import { KEY_ACCESS_TOKEN, KEY_UUID, KEY_X_ORGANIZATION_CODE } from '../constant/constant'
+import MainHub from '../component/page/main/hub/MainHub'
+import MainCardGroup from '../component/ui/card/MainCardGroup'
+import {
+  COMPLETE,
+  KEY_ACCESS_TOKEN,
+  KEY_ORGANIZATION,
+  KEY_UUID,
+  KEY_X_ORGANIZATION_CODE,
+} from '../constant/constant'
 import { ERR_COOKIE_NOT_FOUND } from '../constant/errorMsg'
 import { useAppDispatch, useAppSelector } from '../module/hooks/reduxHooks'
 import { moduleDecodeToken, moduleDeleteCookies, moduleGetCookie } from '../module/utils/cookie'
@@ -28,6 +33,7 @@ import {
 export default function Main() {
   const dispatch = useAppDispatch()
   const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
+  const orgComplete = moduleGetCookie(KEY_ORGANIZATION)
   const decodeToken = moduleDecodeToken(accessToken)
   const attendanceTime = useAppSelector((state) => state.userInfo.attendance.time)
   const uuid =
@@ -80,6 +86,8 @@ export default function Main() {
   useEffect(() => {
     if (accessToken === ERR_COOKIE_NOT_FOUND) {
       redirect('/error/notfound/token')
+    } else if (orgComplete !== COMPLETE) {
+      redirect('/error/notfound/organization')
     } else {
       void fetchGetUsers()
     }
@@ -87,13 +95,12 @@ export default function Main() {
 
   return (
     <>
-      <main className="grid gap-4 grid-cols-5 h-4/5  pt-10 ml-10 mr-10">
+      <main className="grid gap-4 grid-cols-4 h-4/5  pt-10 ml-10 mr-10">
         <div className="col-span-1 w-5/6">
-          <UserCard reRender={reRender} setRerender={setRerender} />
-          <MenuCard />
+          <MainCardGroup reRender={reRender} setRerender={setRerender} />
         </div>
-        <div className="col-span-4 mr-10">
-          <AttendanceHub />
+        <div className="col-span-3 mr-10">
+          <MainHub />
         </div>
       </main>
     </>

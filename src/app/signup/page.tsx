@@ -3,14 +3,11 @@ import { useEffect, useState } from 'react'
 
 import Link from 'next/link'
 
-import RegisterOrg from '../component/page/organization/RegisterOrg'
 import RegisterInfo from '../component/page/userRegister/RegisterInfo'
 import ErrorAlert from '../component/ui/alert/ErrorAlert'
-import { NavigationBtn, NextBtn } from '../component/ui/button/BtnGroups'
+import { NavigationBtn } from '../component/ui/button/BtnGroups'
 import { SignupBtn } from '../component/ui/button/signup/SignupBtn'
 import {
-  ORG_CREATE,
-  ORG_JOIN,
   REGISTER_EMAIL,
   REGISTER_NAME,
   REGISTER_ORG_DESCRIPTION,
@@ -22,16 +19,13 @@ import {
 import { useAppSelector } from '../module/hooks/reduxHooks/index'
 import inputValidate from '../module/utils/inputValidate'
 
-export default function Register() {
-  const [step, setStep] = useState(false)
+export default function Signup() {
   const [isPwdView, setIsPwdView] = useState(false)
   const [isPwdConfirmView, setisPwdConfirmView] = useState(false)
   const [errorState, setErrorState] = useState({
     isError: false,
     description: '',
   })
-
-  const [organization, setOrganization] = useState('')
 
   const setErrMsg = (errDescription: string) => {
     setErrorState({
@@ -55,19 +49,6 @@ export default function Register() {
       position.isCheck &&
       phoneNumber.isCheck
     )
-  })
-
-  const isSignupInfoComplete: boolean = useAppSelector((state) => {
-    const { createOrg, joinOrg } = state.orgInfo
-
-    const isCreateOrgInfoComplete =
-      createOrg.description.length !== 0 && createOrg.name.length !== 0
-
-    const isJoinOrgInfoComplete = joinOrg.code.length !== 0
-    const isOrgComeplete =
-      organization === ORG_CREATE ? isCreateOrgInfoComplete : isJoinOrgInfoComplete
-
-    return isOrgComeplete && isPrivateInfoComplete
   })
 
   const isPwdConfirm: boolean = useAppSelector((state) => {
@@ -97,18 +78,6 @@ export default function Register() {
     }
     return true
   }
-  const handleStep = () => {
-    if (!checkInfoComplete()) return
-    setOrganization(ORG_CREATE)
-    setStep(!step)
-  }
-  const changeOrgType = () => {
-    if (organization === ORG_CREATE) {
-      setOrganization(ORG_JOIN)
-      return
-    }
-    setOrganization(ORG_CREATE)
-  }
 
   useEffect(() => {
     const deleteStorage = (arr: string[]) => {
@@ -128,38 +97,18 @@ export default function Register() {
   }, [])
   return (
     <div className="flex flex-col justify-center items-center p 1">
-      <div className="mt-10">
-        {organization !== '' && step ? (
-          <button
-            type="button"
-            onClick={changeOrgType}
-            className="text-indigo-500 hover:text-white dark:text-white dark:bg-indigo-500 dark:border-white bg-white border-indigo-500 hover:bg-indigo-500 focus:ring-4 focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 dark:hover:bg-white dark:hover:text-indigo-500 mb-2 border-2 dark:hover:border-indigo-500/75"
-          >
-            {organization === ORG_CREATE ? '기존 조직에 참여하기' : '새로운 조직 생성하기'}
-          </button>
-        ) : (
-          <></>
-        )}
-      </div>
+      <div className="text-xl font-bold mt-20">회원가입</div>
       <div className="mt-5 w-3/5">
-        {!step ? (
-          <RegisterInfo
-            isPwdView={isPwdView}
-            setIsPwdView={setIsPwdView}
-            isPwdConfirmView={isPwdConfirmView}
-            setIsPwdConfirmView={setisPwdConfirmView}
-            setErrMsg={setErrMsg}
-          />
-        ) : (
-          <RegisterOrg
-            organization={organization}
-            setOrganization={setOrganization}
-            setErrMsg={setErrMsg}
-          />
-        )}
+        <RegisterInfo
+          isPwdView={isPwdView}
+          setIsPwdView={setIsPwdView}
+          isPwdConfirmView={isPwdConfirmView}
+          setIsPwdConfirmView={setisPwdConfirmView}
+          setErrMsg={setErrMsg}
+        />
 
         {errorState.isError ? (
-          <div className="mb-5">
+          <div className="mb-5 bg-white w-3/5">
             <ErrorAlert description={errorState.description} handleClickError={handleClickError} />
           </div>
         ) : (
@@ -171,21 +120,8 @@ export default function Register() {
           <NavigationBtn title="메인으로" />
         </Link>
         {isPrivateInfoComplete ? (
-          <NextBtn
-            title={!step ? '다음 단계' : '이전 단계'}
-            onClick={() => {
-              handleStep()
-            }}
-          />
-        ) : (
-          <></>
-        )}
-
-        {isSignupInfoComplete && step ? (
-          <SignupBtn title="회원가입" orgType={organization} setErrMsg={setErrMsg} />
-        ) : (
-          <></>
-        )}
+          <SignupBtn title="회원가입" setErrMsg={setErrMsg} checkInfoComplete={checkInfoComplete} />
+        ) : null}
       </div>
     </div>
   )
