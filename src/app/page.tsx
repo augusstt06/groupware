@@ -3,21 +3,28 @@
 import { useEffect } from 'react'
 
 import Link from 'next/link'
-import { redirect } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 
 import { NavigationBtn } from './component/ui/button/BtnGroups'
-import { KEY_ACCESS_TOKEN, KEY_ORGANIZATION } from './constant/constant'
+import { COMPLETE, KEY_ACCESS_TOKEN, KEY_ORGANIZATION } from './constant/constant'
 import { ERR_COOKIE_NOT_FOUND } from './constant/errorMsg'
 import { moduleDeleteCookies, moduleGetCookie } from './module/utils/cookie'
 
 export default function Home() {
   const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
-  const isLogin = accessToken !== ERR_COOKIE_NOT_FOUND
+  const orgCookie = moduleGetCookie(KEY_ORGANIZATION)
+  const isLogin = accessToken !== ERR_COOKIE_NOT_FOUND && orgCookie === COMPLETE
+  const router = useRouter()
 
   useEffect(() => {
-    moduleDeleteCookies(KEY_ACCESS_TOKEN, KEY_ORGANIZATION)
+    if (accessToken !== ERR_COOKIE_NOT_FOUND && orgCookie !== COMPLETE) {
+      moduleDeleteCookies(KEY_ACCESS_TOKEN)
+    } else if (accessToken === ERR_COOKIE_NOT_FOUND && orgCookie === COMPLETE) {
+      moduleDeleteCookies(KEY_ORGANIZATION)
+    }
+
     if (isLogin) {
-      redirect('/main')
+      router.push('/main')
     }
   }, [accessToken])
 

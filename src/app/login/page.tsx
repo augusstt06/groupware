@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 
 import Link from 'next/link'
-import { redirect } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { AiOutlineMail } from 'react-icons/ai'
 import { RiLockPasswordFill } from 'react-icons/ri'
 
@@ -18,6 +18,7 @@ import { moduleGetCookie } from '../module/utils/cookie'
 import { type UseInputProps } from '../types/moduleTypes'
 
 export default function Login() {
+  const router = useRouter()
   const [emailInput, pwdInput]: UseInputProps[] = [REGISTER_EMAIL, REGISTER_PWD].map(
     (title: string) => useInput('', title),
   )
@@ -43,7 +44,7 @@ export default function Login() {
   }
   useEffect(() => {
     if (accessToken !== ERR_COOKIE_NOT_FOUND) {
-      redirect('/main')
+      router.push('/main')
     }
   }, [])
 
