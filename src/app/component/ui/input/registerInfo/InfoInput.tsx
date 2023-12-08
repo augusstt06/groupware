@@ -54,16 +54,6 @@ export default function InfoInput(props: InfoInputProps) {
   const dispatch = useAppDispatch()
 
   const useInput = props.useInput
-  // const inputRef = useRef(useInput.value)
-
-  const emailInputValidateProps = {
-    inputData: useInput.value,
-    dataType: 'email',
-  }
-  const phoneNumberInputValidate = {
-    inputData: useInput.value,
-    dataType: 'phoneNumber',
-  }
 
   const fetchEmailAvaiable = async (getFetchEmailProps: ModuleGetFetchProps): Promise<void> => {
     try {
@@ -90,45 +80,54 @@ export default function InfoInput(props: InfoInputProps) {
     }
   }
 
-  // console.log(useInput.value)
   useEffect(() => {
-    // inputRef.current = useInput.value
     const isInput = useInput.value !== ''
-    const reducerProps = {
-      isCheck: isInput,
-      value: useInput.value,
-    }
+    let reducerProps
 
     let isValidate
+    let emailInputValidateProps
+    let phoneNumberInputValidate
+
     switch (props.title) {
       case REGISTER_EMAIL:
-        isValidate = !inputValidate(emailInputValidateProps)
-        if (isValidate as boolean) {
-          setErrorMsg(true, '이메일 형식이 올바르지 않습니다.')
-          dispatch(
-            emailReducer({
-              isCheck: false,
-              value: useInput.value,
-            }),
-          )
-        } else {
-          setErrorMsg(false, '')
-          dispatch(
-            emailReducer({
-              isCheck: true,
-              value: useInput.value,
-            }),
-          )
+        emailInputValidateProps = {
+          inputData: useInput.value,
+          dataType: 'email',
         }
 
-        // nul2l@test.com
+        isValidate = inputValidate(emailInputValidateProps)
+
+        if (!isValidate) {
+          setErrorMsg(true, '이메일 형식이 올바르지 않습니다.')
+          reducerProps = {
+            isCheck: false,
+            valus: useInput.value,
+          }
+        } else {
+          setErrorMsg(false, '')
+
+          reducerProps = {
+            isCheck: isInput,
+            value: useInput.value,
+          }
+          dispatch(emailReducer(reducerProps))
+        }
+
         break
       case REGISTER_NAME:
+        reducerProps = {
+          isCheck: isInput,
+          value: useInput.value,
+        }
         dispatch(nameReducer(reducerProps))
         break
       case REGISTER_PHONENUMBER:
-        isValidate = !inputValidate(phoneNumberInputValidate)
-        if (isValidate as boolean) {
+        phoneNumberInputValidate = {
+          inputData: useInput.value,
+          dataType: 'phoneNumber',
+        }
+        isValidate = inputValidate(phoneNumberInputValidate)
+        if (!isValidate) {
           setErrorMsg(true, '전화번호 형식이 잘못되었습니다.')
           dispatch(
             phoneNumberReducer({
@@ -147,6 +146,10 @@ export default function InfoInput(props: InfoInputProps) {
         }
         break
       case REGISTER_POSITION:
+        reducerProps = {
+          isCheck: isInput,
+          value: useInput.value,
+        }
         dispatch(positionReducer(reducerProps))
 
         break
@@ -154,25 +157,27 @@ export default function InfoInput(props: InfoInputProps) {
         break
     }
 
-    const handleInputFocusOut = () => {
+    const handleInputEvent = () => {
       if (props.title === REGISTER_EMAIL && !errState.isError && useInput.value.length !== 0) {
         const getFetchEmailProps: ModuleGetFetchProps = {
           params: { email: useInput.value },
           fetchUrl: process.env.NEXT_PUBLIC_EMAIL_REQ_SOURCE,
         }
-
         void fetchEmailAvaiable(getFetchEmailProps)
       }
     }
 
     const inputElement = document.getElementById(props.title)
-    inputElement?.addEventListener('focusout', handleInputFocusOut)
+    inputElement?.addEventListener('focusout', handleInputEvent)
+    inputElement?.addEventListener('paste', handleInputEvent)
 
     return () => {
-      inputElement?.removeEventListener('focusout', handleInputFocusOut)
+      inputElement?.removeEventListener('focusout', handleInputEvent)
+      inputElement?.addEventListener('paste', handleInputEvent)
     }
-  }, [useInput.value])
+  }, [useInput])
 
+  // 북붙을 할때 input값을 한번 더 입력해야 되는 문제...
   return (
     <>
       <InputLabel title={props.title} />
@@ -180,6 +185,7 @@ export default function InfoInput(props: InfoInputProps) {
         <InputIconlabel icon={props.icon} />
         <input
           type="text"
+          autoComplete="off"
           value={useInput.value}
           onChange={useInput.onChange}
           id={props.title}
