@@ -1,9 +1,8 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 import { AiOutlineMail } from 'react-icons/ai'
 import { RiLockPasswordFill } from 'react-icons/ri'
 
@@ -11,19 +10,15 @@ import ErrorAlert from '../component/ui/alert/ErrorAlert'
 import { NavigationBtn } from '../component/ui/button/BtnGroups'
 import LoginBtn from '../component/ui/button/login/LoginBtn'
 import LoginInput from '../component/ui/input/login/LoginInput'
-import { KEY_ACCESS_TOKEN, REGISTER_EMAIL, REGISTER_PWD } from '../constant/constant'
-import { ERR_COOKIE_NOT_FOUND } from '../constant/errorMsg'
+import { REGISTER_EMAIL, REGISTER_PWD } from '../constant/constant'
 import useInput from '../module/hooks/reactHooks/useInput'
-import { moduleGetCookie } from '../module/utils/cookie'
 import { type UseInputProps } from '../types/moduleTypes'
 
 export default function Login() {
-  const router = useRouter()
   const [emailInput, pwdInput]: UseInputProps[] = [REGISTER_EMAIL, REGISTER_PWD].map(
     (title: string) => useInput('', title),
   )
   const [isPwdView, setIsPwdView] = useState(false)
-  const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
 
   const [errorState, setErrorState] = useState({
     isError: false,
@@ -42,11 +37,6 @@ export default function Login() {
       description: errorState.description,
     })
   }
-  useEffect(() => {
-    if (accessToken !== ERR_COOKIE_NOT_FOUND) {
-      router.push('/main')
-    }
-  }, [])
 
   return (
     <div className="flex flex-col justify-center items-center p 1">

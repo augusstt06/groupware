@@ -2,7 +2,6 @@
 import { useEffect, useState } from 'react'
 
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 
 import RegisterInfo from '../component/page/userRegister/RegisterInfo'
 import ErrorAlert from '../component/ui/alert/ErrorAlert'
@@ -26,7 +25,6 @@ import { moduleDeleteCookies, moduleGetCookie } from '../module/utils/cookie'
 import inputValidate from '../module/utils/inputValidate'
 
 export default function Signup() {
-  const router = useRouter()
   const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
   const orgCookie = moduleGetCookie(KEY_ORGANIZATION)
   const [isPwdView, setIsPwdView] = useState(false)
@@ -50,6 +48,7 @@ export default function Signup() {
   }
   const isPrivateInfoComplete: boolean = useAppSelector((state) => {
     const { email, pwd, name, phoneNumber, position } = state.signupInfo
+
     return (
       email.isCheck &&
       pwd.isCheck &&
@@ -106,10 +105,12 @@ export default function Signup() {
       REGISTER_ORG_NAME,
       REGISTER_ORG_JOIN,
     ])
-    if (accessToken !== ERR_COOKIE_NOT_FOUND) {
-      router.push('/error/nopermission')
-    }
   }, [])
+  // if (accessToken !== ERR_COOKIE_NOT_FOUND) {
+  //   router.push('/error/nopermission')
+  //   return null
+  // }
+
   return (
     <div className="flex flex-col justify-center items-center p 1">
       <div className="text-xl font-bold mt-20">회원가입</div>

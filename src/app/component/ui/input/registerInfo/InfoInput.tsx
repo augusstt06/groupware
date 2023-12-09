@@ -86,73 +86,69 @@ export default function InfoInput(props: InfoInputProps) {
     let isValidate
     let emailInputValidateProps
     let phoneNumberInputValidate
-    const checkEmail = () => {
-      switch (props.title) {
-        case REGISTER_EMAIL:
-          emailInputValidateProps = {
-            inputData: useInput.value,
-            dataType: 'email',
-          }
-
-          isValidate = inputValidate(emailInputValidateProps)
-
-          if (!isValidate) {
-            reducerProps = {
+    switch (props.title) {
+      case REGISTER_NAME:
+        reducerProps = {
+          isCheck: isInput,
+          value: useInput.value,
+        }
+        dispatch(nameReducer(reducerProps))
+        break
+      case REGISTER_PHONENUMBER:
+        phoneNumberInputValidate = {
+          inputData: useInput.value,
+          dataType: 'phoneNumber',
+        }
+        isValidate = inputValidate(phoneNumberInputValidate)
+        if (!isValidate) {
+          setErrorMsg(true, '전화번호 형식이 잘못되었습니다.')
+          dispatch(
+            phoneNumberReducer({
               isCheck: false,
-              valus: useInput.value,
-            }
-          } else {
-            setErrorMsg(false, '')
-
-            reducerProps = {
-              isCheck: isInput,
               value: useInput.value,
-            }
-            dispatch(emailReducer(reducerProps))
-          }
+            }),
+          )
+        } else {
+          setErrorMsg(false, '')
+          dispatch(
+            phoneNumberReducer({
+              isCheck: true,
+              value: useInput.value,
+            }),
+          )
+        }
+        break
+      case REGISTER_POSITION:
+        reducerProps = {
+          isCheck: isInput,
+          value: useInput.value,
+        }
+        dispatch(positionReducer(reducerProps))
 
-          break
-        case REGISTER_NAME:
-          reducerProps = {
-            isCheck: isInput,
-            value: useInput.value,
-          }
-          dispatch(nameReducer(reducerProps))
-          break
-        case REGISTER_PHONENUMBER:
-          phoneNumberInputValidate = {
-            inputData: useInput.value,
-            dataType: 'phoneNumber',
-          }
-          isValidate = inputValidate(phoneNumberInputValidate)
-          if (!isValidate) {
-            setErrorMsg(true, '전화번호 형식이 잘못되었습니다.')
-            dispatch(
-              phoneNumberReducer({
-                isCheck: false,
-                value: useInput.value,
-              }),
-            )
-          } else {
-            setErrorMsg(false, '')
-            dispatch(
-              phoneNumberReducer({
-                isCheck: true,
-                value: useInput.value,
-              }),
-            )
-          }
-          break
-        case REGISTER_POSITION:
-          reducerProps = {
-            isCheck: isInput,
-            value: useInput.value,
-          }
-          dispatch(positionReducer(reducerProps))
+        break
+      default:
+        break
+    }
 
-          break
-        default:
-          break
+    const checkEmail = () => {
+      emailInputValidateProps = {
+        inputData: useInput.value,
+        dataType: 'email',
+      }
+      isValidate = inputValidate(emailInputValidateProps)
+      if (!isValidate) {
+        reducerProps = {
+          isCheck: false,
+          valus: useInput.value,
+        }
+      } else {
+        setErrorMsg(false, '')
+
+        reducerProps = {
+          isCheck: isInput,
+          value: useInput.value,
+        }
+        dispatch(emailReducer(reducerProps))
       }
     }
     const handleInputEvent = () => {

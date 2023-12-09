@@ -7,20 +7,14 @@ import { useRouter } from 'next/navigation'
 import RegisterOrg from '@/app/component/page/organization/RegisterOrg'
 import ErrorAlert from '@/app/component/ui/alert/ErrorAlert'
 import RegisterOrgLoginBtn from '@/app/component/ui/button/signup/RegisterOrgLoginBtn'
-import {
-  COMPLETE,
-  KEY_ACCESS_TOKEN,
-  KEY_ORGANIZATION,
-  ORG_CREATE,
-  ORG_JOIN,
-} from '@/app/constant/constant'
+import { KEY_ACCESS_TOKEN, ORG_CREATE, ORG_JOIN } from '@/app/constant/constant'
 import { ERR_COOKIE_NOT_FOUND } from '@/app/constant/errorMsg'
 import { moduleGetCookie } from '@/app/module/utils/cookie'
 
 export default function RegisterOrgLogin() {
   const router = useRouter()
   const [accessToken, setAccessToken] = useState(moduleGetCookie(KEY_ACCESS_TOKEN))
-  const orgCookie = moduleGetCookie(KEY_ORGANIZATION)
+
   const [organization, setOrganization] = useState(ORG_CREATE)
   const [errorState, setErrorState] = useState({
     isError: false,
@@ -52,8 +46,6 @@ export default function RegisterOrgLogin() {
         router.push('/error/notfound/token/signup')
       } else if (newAccessToken !== accessToken) {
         setAccessToken(newAccessToken)
-      } else if (newAccessToken !== ERR_COOKIE_NOT_FOUND && orgCookie === COMPLETE) {
-        router.push('/error/nopermission')
       }
     }
 
