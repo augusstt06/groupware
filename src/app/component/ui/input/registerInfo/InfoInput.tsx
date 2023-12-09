@@ -11,7 +11,6 @@ import {
   REGISTER_POSITION,
 } from '@/app/constant/constant'
 import {
-  ERR_INPUT_ERROR,
   ERR_MESSAGE_CHECK_MAIL,
   ERR_MESSAGE_USER_EXIST,
   errDefault,
@@ -71,7 +70,7 @@ export default function InfoInput(props: InfoInputProps) {
             setErrorMsg(true, errExist('이메일 주소'))
             break
           case ERR_MESSAGE_CHECK_MAIL:
-            setErrorMsg(true, ERR_INPUT_ERROR)
+            setErrorMsg(true, '이메일 형식이 올바르지 않습니다.')
             break
           default:
             setErrorMsg(true, errDefault('이메일 확인'))
@@ -87,78 +86,78 @@ export default function InfoInput(props: InfoInputProps) {
     let isValidate
     let emailInputValidateProps
     let phoneNumberInputValidate
-
-    switch (props.title) {
-      case REGISTER_EMAIL:
-        emailInputValidateProps = {
-          inputData: useInput.value,
-          dataType: 'email',
-        }
-
-        isValidate = inputValidate(emailInputValidateProps)
-
-        if (!isValidate) {
-          setErrorMsg(true, '이메일 형식이 올바르지 않습니다.')
-          reducerProps = {
-            isCheck: false,
-            valus: useInput.value,
+    const checkEmail = () => {
+      switch (props.title) {
+        case REGISTER_EMAIL:
+          emailInputValidateProps = {
+            inputData: useInput.value,
+            dataType: 'email',
           }
-        } else {
-          setErrorMsg(false, '')
 
+          isValidate = inputValidate(emailInputValidateProps)
+
+          if (!isValidate) {
+            reducerProps = {
+              isCheck: false,
+              valus: useInput.value,
+            }
+          } else {
+            setErrorMsg(false, '')
+
+            reducerProps = {
+              isCheck: isInput,
+              value: useInput.value,
+            }
+            dispatch(emailReducer(reducerProps))
+          }
+
+          break
+        case REGISTER_NAME:
           reducerProps = {
             isCheck: isInput,
             value: useInput.value,
           }
-          dispatch(emailReducer(reducerProps))
-        }
+          dispatch(nameReducer(reducerProps))
+          break
+        case REGISTER_PHONENUMBER:
+          phoneNumberInputValidate = {
+            inputData: useInput.value,
+            dataType: 'phoneNumber',
+          }
+          isValidate = inputValidate(phoneNumberInputValidate)
+          if (!isValidate) {
+            setErrorMsg(true, '전화번호 형식이 잘못되었습니다.')
+            dispatch(
+              phoneNumberReducer({
+                isCheck: false,
+                value: useInput.value,
+              }),
+            )
+          } else {
+            setErrorMsg(false, '')
+            dispatch(
+              phoneNumberReducer({
+                isCheck: true,
+                value: useInput.value,
+              }),
+            )
+          }
+          break
+        case REGISTER_POSITION:
+          reducerProps = {
+            isCheck: isInput,
+            value: useInput.value,
+          }
+          dispatch(positionReducer(reducerProps))
 
-        break
-      case REGISTER_NAME:
-        reducerProps = {
-          isCheck: isInput,
-          value: useInput.value,
-        }
-        dispatch(nameReducer(reducerProps))
-        break
-      case REGISTER_PHONENUMBER:
-        phoneNumberInputValidate = {
-          inputData: useInput.value,
-          dataType: 'phoneNumber',
-        }
-        isValidate = inputValidate(phoneNumberInputValidate)
-        if (!isValidate) {
-          setErrorMsg(true, '전화번호 형식이 잘못되었습니다.')
-          dispatch(
-            phoneNumberReducer({
-              isCheck: false,
-              value: useInput.value,
-            }),
-          )
-        } else {
-          setErrorMsg(false, '')
-          dispatch(
-            phoneNumberReducer({
-              isCheck: true,
-              value: useInput.value,
-            }),
-          )
-        }
-        break
-      case REGISTER_POSITION:
-        reducerProps = {
-          isCheck: isInput,
-          value: useInput.value,
-        }
-        dispatch(positionReducer(reducerProps))
-
-        break
-      default:
-        break
+          break
+        default:
+          break
+      }
     }
-
     const handleInputEvent = () => {
-      if (props.title === REGISTER_EMAIL && !errState.isError && useInput.value.length !== 0) {
+      if (props.title === REGISTER_EMAIL && useInput.value.length !== 0) {
+        checkEmail()
         const getFetchEmailProps: ModuleGetFetchProps = {
           params: { email: useInput.value },
           fetchUrl: process.env.NEXT_PUBLIC_EMAIL_REQ_SOURCE,
@@ -168,16 +167,13 @@ export default function InfoInput(props: InfoInputProps) {
     }
 
     const inputElement = document.getElementById(props.title)
-    inputElement?.addEventListener('focusout', handleInputEvent)
-    inputElement?.addEventListener('paste', handleInputEvent)
+    inputElement?.addEventListener('blur', handleInputEvent)
 
     return () => {
-      inputElement?.removeEventListener('focusout', handleInputEvent)
-      inputElement?.addEventListener('paste', handleInputEvent)
+      inputElement?.removeEventListener('blur', handleInputEvent)
     }
-  }, [useInput])
+  }, [useInput.value])
 
-  // 북붙을 할때 input값을 한번 더 입력해야 되는 문제...
   return (
     <>
       <InputLabel title={props.title} />
@@ -185,7 +181,6 @@ export default function InfoInput(props: InfoInputProps) {
         <InputIconlabel icon={props.icon} />
         <input
           type="text"
-          autoComplete="off"
           value={useInput.value}
           onChange={useInput.onChange}
           id={props.title}

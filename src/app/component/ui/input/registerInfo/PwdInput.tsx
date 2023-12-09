@@ -72,6 +72,7 @@ export default function PwdInput(props: PwdInputProps) {
         <InputIconlabel icon={props.icon} />
         <input
           type={props.isInputValueView ? 'text' : 'password'}
+          autoComplete="off"
           value={useInput.value}
           onChange={useInput.onChange}
           id={props.title}
