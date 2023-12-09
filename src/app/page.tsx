@@ -3,22 +3,15 @@
 import { useEffect } from 'react'
 
 import Link from 'next/link'
-import { redirect } from 'next/navigation'
 
 import { NavigationBtn } from './component/ui/button/BtnGroups'
-import { KEY_ACCESS_TOKEN } from './constant/constant'
-import { ERR_COOKIE_NOT_FOUND } from './constant/errorMsg'
-import { moduleGetCookie } from './module/utils/cookie'
+import { KEY_ACCESS_TOKEN, KEY_ORGANIZATION } from './constant/constant'
+import { moduleDeleteCookies } from './module/utils/cookie'
 
 export default function Home() {
-  const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
-  const isLogin = accessToken !== ERR_COOKIE_NOT_FOUND
-
   useEffect(() => {
-    if (isLogin) {
-      redirect('/main')
-    }
-  }, [accessToken])
+    moduleDeleteCookies(KEY_ACCESS_TOKEN, KEY_ORGANIZATION)
+  }, [])
 
   return (
     <main className="flex flex-col justify-center items-center h-4/5 ">

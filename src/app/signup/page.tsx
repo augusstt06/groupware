@@ -8,6 +8,7 @@ import ErrorAlert from '../component/ui/alert/ErrorAlert'
 import { NavigationBtn } from '../component/ui/button/BtnGroups'
 import { SignupBtn } from '../component/ui/button/signup/SignupBtn'
 import {
+  KEY_ORGANIZATION,
   REGISTER_EMAIL,
   REGISTER_NAME,
   REGISTER_ORG_DESCRIPTION,
@@ -16,10 +17,13 @@ import {
   REGISTER_PHONENUMBER,
   REGISTER_POSITION,
 } from '../constant/constant'
+import { ERR_COOKIE_NOT_FOUND } from '../constant/errorMsg'
 import { useAppSelector } from '../module/hooks/reduxHooks/index'
+import { moduleDeleteCookies, moduleGetCookie } from '../module/utils/cookie'
 import inputValidate from '../module/utils/inputValidate'
 
 export default function Signup() {
+  const orgCookie = moduleGetCookie(KEY_ORGANIZATION)
   const [isPwdView, setIsPwdView] = useState(false)
   const [isPwdConfirmView, setisPwdConfirmView] = useState(false)
   const [errorState, setErrorState] = useState({
@@ -41,6 +45,7 @@ export default function Signup() {
   }
   const isPrivateInfoComplete: boolean = useAppSelector((state) => {
     const { email, pwd, name, phoneNumber, position } = state.signupInfo
+
     return (
       email.isCheck &&
       pwd.isCheck &&
@@ -80,6 +85,9 @@ export default function Signup() {
   }
 
   useEffect(() => {
+    if (orgCookie !== ERR_COOKIE_NOT_FOUND) {
+      moduleDeleteCookies(KEY_ORGANIZATION)
+    }
     const deleteStorage = (arr: string[]) => {
       arr.forEach((name) => {
         localStorage.removeItem(name)
@@ -95,6 +103,7 @@ export default function Signup() {
       REGISTER_ORG_JOIN,
     ])
   }, [])
+
   return (
     <div className="flex flex-col justify-center items-center p 1">
       <div className="text-xl font-bold mt-20">회원가입</div>

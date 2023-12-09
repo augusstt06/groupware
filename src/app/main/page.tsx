@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react'
 
-import { redirect } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 
 import MainHub from '../component/page/main/hub/MainHub'
 import MainCardGroup from '../component/ui/card/MainCardGroup'
@@ -11,6 +11,8 @@ import {
   KEY_ORGANIZATION,
   KEY_UUID,
   KEY_X_ORGANIZATION_CODE,
+  ROUTE_ERR_NOT_FOUND_ACCESS_TOKEN,
+  ROUTE_ERR_NOT_FOUND_ORG_TOKEN,
 } from '../constant/constant'
 import { ERR_COOKIE_NOT_FOUND } from '../constant/errorMsg'
 import { useAppDispatch, useAppSelector } from '../module/hooks/reduxHooks'
@@ -32,8 +34,9 @@ import {
 
 export default function Main() {
   const dispatch = useAppDispatch()
-  const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
-  const orgComplete = moduleGetCookie(KEY_ORGANIZATION)
+  const router = useRouter()
+  const [accessToken, setAccessToken] = useState(moduleGetCookie(KEY_ACCESS_TOKEN))
+  const orgCookie = moduleGetCookie(KEY_ORGANIZATION)
   const decodeToken = moduleDecodeToken(accessToken)
   const attendanceTime = useAppSelector((state) => state.userInfo.attendance.time)
   const uuid =
@@ -79,19 +82,32 @@ export default function Main() {
     } catch (err) {
       if (err instanceof Error) {
         moduleDeleteCookies(KEY_ACCESS_TOKEN)
-        redirect('/error/notfound')
+        router.push(ROUTE_ERR_NOT_FOUND_ACCESS_TOKEN)
       }
     }
   }
+
   useEffect(() => {
-    if (accessToken === ERR_COOKIE_NOT_FOUND) {
-      redirect('/error/notfound/token')
-    } else if (orgComplete !== COMPLETE) {
-      redirect('/error/notfound/organization')
-    } else {
-      void fetchGetUsers()
+    let newAccessToken
+    let newOrgCookie
+    const checkAccessToken = () => {
+      newAccessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
+      newOrgCookie = moduleGetCookie(KEY_ORGANIZATION)
+      if (newAccessToken === ERR_COOKIE_NOT_FOUND) {
+        router.push(ROUTE_ERR_NOT_FOUND_ACCESS_TOKEN)
+      } else if (newAccessToken !== accessToken) {
+        setAccessToken(newAccessToken)
+      }
+      if (newOrgCookie !== COMPLETE) {
+        router.push(ROUTE_ERR_NOT_FOUND_ORG_TOKEN)
+      }
     }
-  }, [])
+    const intervalId = setInterval(checkAccessToken, 500)
+    if (accessToken !== ERR_COOKIE_NOT_FOUND && orgCookie === COMPLETE) void fetchGetUsers()
+    return () => {
+      clearInterval(intervalId)
+    }
+  }, [accessToken, orgCookie])
 
   return (
     <>

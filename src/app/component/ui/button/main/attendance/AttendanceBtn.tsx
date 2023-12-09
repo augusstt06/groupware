@@ -104,7 +104,6 @@ export default function AttendanceBtn(props: AttendanceBtnProps) {
       props.setElapsed('0')
       props.setRerender(!props.reRender)
     } catch (err) {
-      // FIXME:
       if (err instanceof Error) {
         switch (err.message) {
           case HttpStatusCode.InternalServerError.toString():

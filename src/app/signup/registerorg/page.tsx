@@ -1,13 +1,26 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+
+import { useRouter } from 'next/navigation'
 
 import RegisterOrg from '@/app/component/page/organization/RegisterOrg'
 import ErrorAlert from '@/app/component/ui/alert/ErrorAlert'
 import RegisterOrgLoginBtn from '@/app/component/ui/button/signup/RegisterOrgLoginBtn'
-import { ORG_CREATE, ORG_JOIN } from '@/app/constant/constant'
+import {
+  KEY_ACCESS_TOKEN,
+  ORG_CREATE,
+  ORG_JOIN,
+  ROUTE_ERR_NOT_FOUND_ACCESS_TOKEN,
+} from '@/app/constant/constant'
+import { ERR_COOKIE_NOT_FOUND } from '@/app/constant/errorMsg'
+import { moduleGetCookie } from '@/app/module/utils/cookie'
 
 export default function RegisterOrgLogin() {
+  const router = useRouter()
+
+  const [accessToken, setAccessToken] = useState(moduleGetCookie(KEY_ACCESS_TOKEN))
+
   const [organization, setOrganization] = useState(ORG_CREATE)
   const [errorState, setErrorState] = useState({
     isError: false,
@@ -32,6 +45,22 @@ export default function RegisterOrgLogin() {
       description: errorState.description,
     })
   }
+  useEffect(() => {
+    const checkAccessToken = () => {
+      const newAccessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
+      if (newAccessToken === ERR_COOKIE_NOT_FOUND) {
+        router.push(ROUTE_ERR_NOT_FOUND_ACCESS_TOKEN)
+      } else if (newAccessToken !== accessToken) {
+        setAccessToken(newAccessToken)
+      }
+    }
+
+    const intervalId = setInterval(checkAccessToken, 500)
+
+    return () => {
+      clearInterval(intervalId)
+    }
+  }, [accessToken])
 
   return (
     <div className="flex flex-col justify-center items-center p 1">

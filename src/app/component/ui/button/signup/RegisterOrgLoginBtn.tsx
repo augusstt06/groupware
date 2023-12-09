@@ -9,6 +9,7 @@ import {
   REGISTER_ORG_DESCRIPTION,
   REGISTER_ORG_JOIN,
   REGISTER_ORG_NAME,
+  ROUTE_MAIN,
 } from '@/app/constant/constant'
 import {
   ERR_MESSAGE_RECORD_NOT_FOUND,
@@ -98,7 +99,7 @@ export default function RegisterOrgLoginBtn(props: RegisterOrgLoginBtnProps) {
       moduleSetCookies({
         [KEY_ORGANIZATION]: COMPLETE,
       })
-      router.push('/main')
+      router.push(ROUTE_MAIN)
     } catch (err) {
       if (err instanceof Error) {
         switch (err.message) {

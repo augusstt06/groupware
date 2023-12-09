@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import ErrorAlert from '../../alert/ErrorAlert'
 import { InputIconlabel } from '../../label/InputIconlabel'
@@ -11,7 +11,6 @@ import {
   REGISTER_POSITION,
 } from '@/app/constant/constant'
 import {
-  ERR_INPUT_ERROR,
   ERR_MESSAGE_CHECK_MAIL,
   ERR_MESSAGE_USER_EXIST,
   errDefault,
@@ -54,16 +53,6 @@ export default function InfoInput(props: InfoInputProps) {
   const dispatch = useAppDispatch()
 
   const useInput = props.useInput
-  const inputRef = useRef(useInput.value)
-
-  const emailInputValidateProps = {
-    inputData: useInput.value,
-    dataType: 'email',
-  }
-  const phoneNumberInputValidate = {
-    inputData: useInput.value,
-    dataType: 'phoneNumber',
-  }
 
   const fetchEmailAvaiable = async (getFetchEmailProps: ModuleGetFetchProps): Promise<void> => {
     try {
@@ -81,7 +70,7 @@ export default function InfoInput(props: InfoInputProps) {
             setErrorMsg(true, errExist('이메일 주소'))
             break
           case ERR_MESSAGE_CHECK_MAIL:
-            setErrorMsg(true, ERR_INPUT_ERROR)
+            setErrorMsg(true, '이메일 형식이 올바르지 않습니다.')
             break
           default:
             setErrorMsg(true, errDefault('이메일 확인'))
@@ -91,42 +80,27 @@ export default function InfoInput(props: InfoInputProps) {
   }
 
   useEffect(() => {
-    inputRef.current = useInput.value
     const isInput = useInput.value !== ''
-    const reducerProps = {
-      isCheck: isInput,
-      value: useInput.value,
-    }
+    let reducerProps
 
     let isValidate
+    let emailInputValidateProps
+    let phoneNumberInputValidate
     switch (props.title) {
-      case REGISTER_EMAIL:
-        isValidate = !inputValidate(emailInputValidateProps)
-        if (isValidate as boolean) {
-          setErrorMsg(true, '이메일 형식이 올바르지 않습니다.')
-          dispatch(
-            emailReducer({
-              isCheck: false,
-              value: useInput.value,
-            }),
-          )
-        } else {
-          setErrorMsg(false, '')
-          dispatch(
-            emailReducer({
-              isCheck: true,
-              value: useInput.value,
-            }),
-          )
-        }
-
-        break
       case REGISTER_NAME:
+        reducerProps = {
+          isCheck: isInput,
+          value: useInput.value,
+        }
         dispatch(nameReducer(reducerProps))
         break
       case REGISTER_PHONENUMBER:
-        isValidate = !inputValidate(phoneNumberInputValidate)
-        if (isValidate as boolean) {
+        phoneNumberInputValidate = {
+          inputData: useInput.value,
+          dataType: 'phoneNumber',
+        }
+        isValidate = inputValidate(phoneNumberInputValidate)
+        if (!isValidate) {
           setErrorMsg(true, '전화번호 형식이 잘못되었습니다.')
           dispatch(
             phoneNumberReducer({
@@ -145,6 +119,10 @@ export default function InfoInput(props: InfoInputProps) {
         }
         break
       case REGISTER_POSITION:
+        reducerProps = {
+          isCheck: isInput,
+          value: useInput.value,
+        }
         dispatch(positionReducer(reducerProps))
 
         break
@@ -152,23 +130,43 @@ export default function InfoInput(props: InfoInputProps) {
         break
     }
 
-    const handleInputFocusOut = () => {
-      if (props.title === REGISTER_EMAIL && !errState.isError && useInput.value.length !== 0) {
+    const checkEmail = () => {
+      emailInputValidateProps = {
+        inputData: useInput.value,
+        dataType: 'email',
+      }
+      isValidate = inputValidate(emailInputValidateProps)
+      if (!isValidate) {
+        reducerProps = {
+          isCheck: false,
+          valus: useInput.value,
+        }
+      } else {
+        setErrorMsg(false, '')
+
+        reducerProps = {
+          isCheck: isInput,
+          value: useInput.value,
+        }
+        dispatch(emailReducer(reducerProps))
+      }
+    }
+    const handleInputEvent = () => {
+      if (props.title === REGISTER_EMAIL && useInput.value.length !== 0) {
+        checkEmail()
         const getFetchEmailProps: ModuleGetFetchProps = {
-          params: { email: inputRef.current },
+          params: { email: useInput.value },
           fetchUrl: process.env.NEXT_PUBLIC_EMAIL_REQ_SOURCE,
         }
-
         void fetchEmailAvaiable(getFetchEmailProps)
       }
-      localStorage.setItem(props.title, useInput.value)
     }
 
     const inputElement = document.getElementById(props.title)
-    inputElement?.addEventListener('focusout', handleInputFocusOut)
+    inputElement?.addEventListener('blur', handleInputEvent)
 
     return () => {
-      inputElement?.removeEventListener('focusout', handleInputFocusOut)
+      inputElement?.removeEventListener('blur', handleInputEvent)
     }
   }, [useInput.value])
 
