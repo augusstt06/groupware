@@ -10,7 +10,7 @@ export default function Confirm(props: ConfirmProps) {
     <>
       <div id="deleteModal" tabIndex={-1} aria-hidden="true" className={tailwindClass}>
         <div className="flex p-4 w-full max-w-md h-full md:h-auto justify-center items-center">
-          <div className="relative p-4 text-center bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
+          <div className="relative p-4 text-center bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5 border border-1">
             <div className="text-right">
               <button
                 onClick={() => {
@@ -33,7 +33,7 @@ export default function Confirm(props: ConfirmProps) {
                   props.setConfirmValue(false)
                 }}
               >
-                Cancel
+                취소
               </button>
               <button
                 type="submit"
@@ -43,7 +43,7 @@ export default function Confirm(props: ConfirmProps) {
                   props.setConfirmValue(true)
                 }}
               >
-                Confirm
+                로그아웃
               </button>
             </div>
           </div>
