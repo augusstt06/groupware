@@ -20,38 +20,6 @@ export default function LogoutBtn(props: LogoutBtnProps) {
   const dispatch = useAppDispatch()
   const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
   const attendanceStatus = useAppSelector((state) => state.userInfo.attendance)
-  // FIXME: 추후 퇴근을 자동으로 하고싶다면 사용
-  // const userInfo = useAppSelector((state) => state.userInfo)
-  // const orgCode = userInfo['X-ORGANIZATION-CODE']
-  // const isAttendance = userInfo.attendance.status === 'in'
-
-  // const fetchLeaveWork = async () => {
-  //   try {
-  //     if (orgCode === ERR_COOKIE_NOT_FOUND) return
-  //     if (!isAttendance) return
-
-  //     const fetchAttendanceProps: ModulePostFetchProps = {
-  //       data: {
-  //         organizationId: userInfo.extraInfo.organizationId,
-  //         userId: userInfo.extraInfo.userId,
-  //       },
-  //       fetchUrl: process.env.NEXT_PUBLIC_ATTENDANCES_SOURCE,
-  //       header: {
-  //         Authorization: `Bearer ${accessToken}`,
-  //         [KEY_X_ORGANIZATION_CODE]: orgCode,
-  //       },
-  //     }
-  //     const res = await modulePatchFetch<FetchResponseType<string>>(fetchAttendanceProps)
-  //     if (res.status !== 200) throw new Error((res as FailResponseType).message)
-  //     dispatch(
-  //       updateAttendanceStatusReducer({
-  //         status: 'out',
-  //         time: 0,
-  //       }),
-  //     )
-  //     dispatch(resetOrgReducer())
-  //   } catch (err) {}
-  // }
 
   const fetchLogoutProps: ModulePostFetchProps = {
     data: {},
