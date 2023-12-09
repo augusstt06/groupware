@@ -12,7 +12,6 @@ import { type UserCardProps } from '@/app/types/ui/cardTypes'
 
 export default function HistoryCard(props: UserCardProps) {
   const [elapsed, setElapsed] = useState('0')
-  // FIXME:
   const [convertTime, setConvertTime] = useState('0')
   const attendanceState = useAppSelector((state) => state.userInfo[KEY_ATTENDANCE])
   const isAttendance = attendanceState.status === 'in'

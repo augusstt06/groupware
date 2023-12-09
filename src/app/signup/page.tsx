@@ -106,10 +106,6 @@ export default function Signup() {
       REGISTER_ORG_JOIN,
     ])
   }, [])
-  // if (accessToken !== ERR_COOKIE_NOT_FOUND) {
-  //   router.push('/error/nopermission')
-  //   return null
-  // }
 
   return (
     <div className="flex flex-col justify-center items-center p 1">

@@ -57,7 +57,7 @@ export function SignupBtn(props: SignupBtnProps) {
         [KEY_ACCESS_TOKEN]: (loginRes as SuccessResponseType<ApiRes>).result.accessToken,
       })
       dispatch(resetSignupInfoReducer())
-      // deleteStorage([REGISTER_EMAIL, REGISTER_NAME, REGISTER_POSITION, REGISTER_PHONENUMBER])
+
       router.push('/signup/registerorg')
     } catch (err) {
       if (err instanceof Error) {
