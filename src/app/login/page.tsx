@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import Link from 'next/link'
 import { AiOutlineMail } from 'react-icons/ai'
@@ -10,14 +10,17 @@ import ErrorAlert from '../component/ui/alert/ErrorAlert'
 import { NavigationBtn } from '../component/ui/button/BtnGroups'
 import LoginBtn from '../component/ui/button/login/LoginBtn'
 import LoginInput from '../component/ui/input/login/LoginInput'
-import { REGISTER_EMAIL, REGISTER_PWD } from '../constant/constant'
+import { KEY_ORGANIZATION, REGISTER_EMAIL, REGISTER_PWD } from '../constant/constant'
+import { ERR_COOKIE_NOT_FOUND } from '../constant/errorMsg'
 import useInput from '../module/hooks/reactHooks/useInput'
+import { moduleDeleteCookies, moduleGetCookie } from '../module/utils/cookie'
 import { type UseInputProps } from '../types/moduleTypes'
 
 export default function Login() {
   const [emailInput, pwdInput]: UseInputProps[] = [REGISTER_EMAIL, REGISTER_PWD].map(
     (title: string) => useInput('', title),
   )
+  const orgCookie = moduleGetCookie(KEY_ORGANIZATION)
   const [isPwdView, setIsPwdView] = useState(false)
 
   const [errorState, setErrorState] = useState({
@@ -38,6 +41,11 @@ export default function Login() {
     })
   }
 
+  useEffect(() => {
+    if (orgCookie !== ERR_COOKIE_NOT_FOUND) {
+      moduleDeleteCookies(KEY_ORGANIZATION)
+    }
+  }, [])
   return (
     <div className="flex flex-col justify-center items-center p 1">
       <div className="mt-20 w-3/5">

@@ -1,6 +1,6 @@
 import { useRouter } from 'next/navigation'
 
-import { KEY_ACCESS_TOKEN } from '@/app/constant/constant'
+import { KEY_ACCESS_TOKEN, ROUTE_SIGNUP_ORG } from '@/app/constant/constant'
 import { ERR_MESSAGE_SIGNUP_USER_EXIST, errDefault } from '@/app/constant/errorMsg'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleSetCookies } from '@/app/module/utils/cookie'
@@ -58,7 +58,7 @@ export function SignupBtn(props: SignupBtnProps) {
       })
       dispatch(resetSignupInfoReducer())
 
-      router.push('/signup/registerorg')
+      router.push(ROUTE_SIGNUP_ORG)
     } catch (err) {
       if (err instanceof Error) {
         switch (err.message) {

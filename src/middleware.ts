@@ -13,7 +13,7 @@ export function middleware(req: NextRequest) {
     case process.env.NEXT_PUBLIC_SIGNUP:
       if (accessToken !== undefined)
         return NextResponse.redirect(
-          new URL(process.env.NEXT_PUBLIC_ERR_NO_PERMISSION as string, req.url),
+          new URL(process.env.NEXT_PUBLIC_ERR_ALREADY_LOGIN as string, req.url),
         )
       break
     case process.env.NEXT_PUBLIC_SIGNUP_ORG:
@@ -24,13 +24,21 @@ export function middleware(req: NextRequest) {
       else {
         if (orgToken !== undefined)
           return NextResponse.redirect(
-            new URL(process.env.NEXT_PUBLIC_ERR_NO_PERMISSION as string, req.url),
+            new URL(process.env.NEXT_PUBLIC_ERR_ALREADY_LOGIN as string, req.url),
           )
       }
       break
     case process.env.NEXT_PUBLIC_LOGIN:
-      if (accessToken !== undefined)
-        return NextResponse.redirect(new URL(process.env.NEXT_PUBLIC_MAIN as string, req.url))
+      if (accessToken !== undefined) {
+        if (orgToken === undefined) {
+          return NextResponse.redirect(
+            new URL(process.env.NEXT_PUBLIC_ERR_NOT_FOUND_ORG_TOKEN as string, req.url),
+          )
+        }
+        return NextResponse.redirect(
+          new URL(process.env.NEXT_PUBLIC_ERR_ALREADY_LOGIN as string, req.url),
+        )
+      }
       break
     case process.env.NEXT_PUBLIC_MAIN:
       if (accessToken === undefined)

@@ -1,10 +1,12 @@
 'use client'
 import { useRouter } from 'next/navigation'
 
+import { ROUTE_SIGNUP_ORG } from '@/app/constant/constant'
+
 export default function NotFoundOrg() {
   const router = useRouter()
   const handleClick = () => {
-    router.push('/signup/registerorg')
+    router.push(ROUTE_SIGNUP_ORG)
   }
   return (
     <div className="grid h-screen px-4 bg-gray-900 place-content-center">

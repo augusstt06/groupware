@@ -11,6 +11,8 @@ import {
   KEY_ORGANIZATION,
   KEY_UUID,
   KEY_X_ORGANIZATION_CODE,
+  ROUTE_ERR_NOT_FOUND_ACCESS_TOKEN,
+  ROUTE_ERR_NOT_FOUND_ORG_TOKEN,
 } from '../constant/constant'
 import { ERR_COOKIE_NOT_FOUND } from '../constant/errorMsg'
 import { useAppDispatch, useAppSelector } from '../module/hooks/reduxHooks'
@@ -80,7 +82,7 @@ export default function Main() {
     } catch (err) {
       if (err instanceof Error) {
         moduleDeleteCookies(KEY_ACCESS_TOKEN)
-        router.push('/error/notfound')
+        router.push(ROUTE_ERR_NOT_FOUND_ACCESS_TOKEN)
       }
     }
   }
@@ -92,12 +94,12 @@ export default function Main() {
       newAccessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
       newOrgCookie = moduleGetCookie(KEY_ORGANIZATION)
       if (newAccessToken === ERR_COOKIE_NOT_FOUND) {
-        router.push('/error/notfound/token')
+        router.push(ROUTE_ERR_NOT_FOUND_ACCESS_TOKEN)
       } else if (newAccessToken !== accessToken) {
         setAccessToken(newAccessToken)
       }
       if (newOrgCookie !== COMPLETE) {
-        router.push('/error/notfound/organization')
+        router.push(ROUTE_ERR_NOT_FOUND_ORG_TOKEN)
       }
     }
     const intervalId = setInterval(checkAccessToken, 500)

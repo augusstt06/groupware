@@ -2,10 +2,12 @@
 
 import { useRouter } from 'next/navigation'
 
-export default function NoPermission() {
+import { ROUTE_MAIN } from '@/app/constant/constant'
+
+export default function AlreadyLogin() {
   const router = useRouter()
   const handleClick = () => {
-    router.push('/main')
+    router.push(ROUTE_MAIN)
   }
   return (
     <div className="grid h-screen px-4 bg-gray-900 place-content-center">

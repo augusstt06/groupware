@@ -8,8 +8,6 @@ import ErrorAlert from '../component/ui/alert/ErrorAlert'
 import { NavigationBtn } from '../component/ui/button/BtnGroups'
 import { SignupBtn } from '../component/ui/button/signup/SignupBtn'
 import {
-  COMPLETE,
-  KEY_ACCESS_TOKEN,
   KEY_ORGANIZATION,
   REGISTER_EMAIL,
   REGISTER_NAME,
@@ -25,7 +23,6 @@ import { moduleDeleteCookies, moduleGetCookie } from '../module/utils/cookie'
 import inputValidate from '../module/utils/inputValidate'
 
 export default function Signup() {
-  const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
   const orgCookie = moduleGetCookie(KEY_ORGANIZATION)
   const [isPwdView, setIsPwdView] = useState(false)
   const [isPwdConfirmView, setisPwdConfirmView] = useState(false)
@@ -88,7 +85,7 @@ export default function Signup() {
   }
 
   useEffect(() => {
-    if (accessToken === ERR_COOKIE_NOT_FOUND && orgCookie === COMPLETE) {
+    if (orgCookie !== ERR_COOKIE_NOT_FOUND) {
       moduleDeleteCookies(KEY_ORGANIZATION)
     }
     const deleteStorage = (arr: string[]) => {

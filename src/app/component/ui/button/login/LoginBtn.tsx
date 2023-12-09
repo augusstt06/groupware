@@ -1,6 +1,6 @@
 import { useRouter } from 'next/navigation'
 
-import { COMPLETE, KEY_ACCESS_TOKEN, KEY_ORGANIZATION } from '@/app/constant/constant'
+import { COMPLETE, KEY_ACCESS_TOKEN, KEY_ORGANIZATION, ROUTE_MAIN } from '@/app/constant/constant'
 import {
   ERR_MESSAGE_LOGIN_EMAIL_FAIL,
   ERR_MESSAGE_LOGIN_PWD_FAIL,
@@ -49,7 +49,7 @@ export default function LoginBtn(props: LoginBtnProps) {
         [KEY_ORGANIZATION]: COMPLETE,
       })
 
-      router.push('/main')
+      router.push(ROUTE_MAIN)
     } catch (err) {
       if (err instanceof Error) {
         switch (err.message) {
