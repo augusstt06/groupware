@@ -45,7 +45,7 @@ export function middleware(req: NextRequest) {
         return NextResponse.redirect(
           new URL(process.env.NEXT_PUBLIC_ERR_NOT_FOUND_ACCCESS_TOKEN as string, req.url),
         )
-      else if (orgToken === undefined)
+      else if (accessToken !== undefined && orgToken === undefined)
         return NextResponse.redirect(
           new URL(process.env.NEXT_PUBLIC_ERR_NOT_FOUND_ORG_TOKEN as string, req.url),
         )
