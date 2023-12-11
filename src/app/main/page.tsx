@@ -14,7 +14,7 @@ import {
   ROUTE_ERR_NOT_FOUND_ACCESS_TOKEN,
   ROUTE_ERR_NOT_FOUND_ORG_TOKEN,
 } from '../constant/constant'
-import { ERR_COOKIE_NOT_FOUND } from '../constant/errorMsg'
+import { ERR_COOKIE_NOT_FOUND, ERR_ORG_NOT_FOUND } from '../constant/errorMsg'
 import { useAppDispatch, useAppSelector } from '../module/hooks/reduxHooks'
 import { moduleDecodeToken, moduleDeleteCookies, moduleGetCookie } from '../module/utils/cookie'
 import { moduleGetFetch } from '../module/utils/moduleFetch'
@@ -81,8 +81,14 @@ export default function Main() {
       dispatch(updateAttendanceStatusReducer(attendanceReducerProps))
     } catch (err) {
       if (err instanceof Error) {
-        moduleDeleteCookies(KEY_ACCESS_TOKEN)
-        router.push(ROUTE_ERR_NOT_FOUND_ACCESS_TOKEN)
+        switch (err.message) {
+          case ERR_ORG_NOT_FOUND:
+            moduleDeleteCookies(KEY_ORGANIZATION)
+            router.push(ROUTE_ERR_NOT_FOUND_ORG_TOKEN)
+            break
+          default:
+            moduleDeleteCookies(KEY_ACCESS_TOKEN, KEY_ORGANIZATION)
+        }
       }
     }
   }
