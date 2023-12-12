@@ -1,6 +1,12 @@
 import { useRouter } from 'next/navigation'
 
-import { COMPLETE, KEY_ACCESS_TOKEN, KEY_ORGANIZATION, ROUTE_MAIN } from '@/app/constant/constant'
+import {
+  KEY_ACCESS_TOKEN,
+  KEY_LOGIN,
+  KEY_ORGANIZATION,
+  ROUTE_MAIN,
+  TRUE,
+} from '@/app/constant/constant'
 import {
   ERR_MESSAGE_LOGIN_EMAIL_FAIL,
   ERR_MESSAGE_LOGIN_PWD_FAIL,
@@ -46,7 +52,8 @@ export default function LoginBtn(props: LoginBtnProps) {
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
       moduleSetCookies({
         [KEY_ACCESS_TOKEN]: (res as SuccessResponseType<ApiRes>).result.accessToken,
-        [KEY_ORGANIZATION]: COMPLETE,
+        [KEY_LOGIN]: TRUE,
+        [KEY_ORGANIZATION]: TRUE,
       })
 
       router.push(ROUTE_MAIN)
@@ -72,7 +79,7 @@ export default function LoginBtn(props: LoginBtnProps) {
   return (
     <button
       type="button"
-      className="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 dark:hover:bg-white dark:hover:text-indigo-500 mb-2 border-2 dark:hover:border-indigo-500/75"
+      className="w-1/3 text-white justify-center bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 dark:hover:bg-white dark:hover:text-indigo-500 mb-2 border-2 dark:hover:border-indigo-500/75"
       onClick={(event) => {
         event.preventDefault()
         void handleLogin()

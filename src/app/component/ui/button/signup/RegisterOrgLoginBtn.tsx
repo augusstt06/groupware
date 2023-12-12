@@ -1,7 +1,6 @@
 import { useRouter } from 'next/navigation'
 
 import {
-  COMPLETE,
   KEY_ACCESS_TOKEN,
   KEY_ORGANIZATION,
   ORG_CREATE,
@@ -9,7 +8,8 @@ import {
   REGISTER_ORG_DESCRIPTION,
   REGISTER_ORG_JOIN,
   REGISTER_ORG_NAME,
-  ROUTE_MAIN,
+  ROUTE_SIGNUP_COMPLETE,
+  TRUE,
 } from '@/app/constant/constant'
 import {
   ERR_MESSAGE_RECORD_NOT_FOUND,
@@ -17,11 +17,10 @@ import {
   errNotEntered,
   errNotFound,
 } from '@/app/constant/errorMsg'
-import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
+import { useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleGetCookie, moduleSetCookies } from '@/app/module/utils/cookie'
 import { modulePostFetch } from '@/app/module/utils/moduleFetch'
 import { deleteStorage } from '@/app/module/utils/storage'
-import { resetSignupInfoReducer } from '@/app/store/reducers/login/signupInfoReducer'
 import {
   type FailResponseType,
   type FetchResponseType,
@@ -31,10 +30,8 @@ import { type RegisterOrgLoginBtnProps } from '@/app/types/ui/btnTypes'
 
 export default function RegisterOrgLoginBtn(props: RegisterOrgLoginBtnProps) {
   const router = useRouter()
-  const dispatch = useAppDispatch()
   const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
   const orgState = useAppSelector((state) => state.orgInfo)
-
   const isOrgComeplete: boolean = useAppSelector((state) => {
     const { name, description } = state.orgInfo.createOrg
     const { code } = state.orgInfo.joinOrg
@@ -64,10 +61,8 @@ export default function RegisterOrgLoginBtn(props: RegisterOrgLoginBtnProps) {
       ? {
           data: {
             description: orgState.createOrg.description,
-            grades: [orgState.grades],
             name: orgState.createOrg.name,
             organizationType: orgState.createOrg.organizationType,
-            teams: orgState.teams,
           },
           fetchUrl: process.env.NEXT_PUBLIC_CREATE_ORGANIZATIONS_SOURCE,
           header: {
@@ -94,12 +89,11 @@ export default function RegisterOrgLoginBtn(props: RegisterOrgLoginBtnProps) {
       const orgRes = await modulePostFetch<FetchResponseType<string>>(fetchOrgProps)
       if (orgRes.status !== 200) throw new Error((orgRes as FailResponseType).message)
 
-      dispatch(resetSignupInfoReducer())
       deleteStorage([REGISTER_ORG_DESCRIPTION, REGISTER_ORG_NAME, REGISTER_ORG_JOIN])
       moduleSetCookies({
-        [KEY_ORGANIZATION]: COMPLETE,
+        [KEY_ORGANIZATION]: TRUE,
       })
-      router.push(ROUTE_MAIN)
+      router.push(ROUTE_SIGNUP_COMPLETE)
     } catch (err) {
       if (err instanceof Error) {
         switch (err.message) {

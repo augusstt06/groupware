@@ -9,7 +9,7 @@ export default function NotFoundOrg() {
     router.push(ROUTE_SIGNUP_ORG)
   }
   return (
-    <div className="grid h-screen px-4 bg-gray-900 place-content-center">
+    <div className="grid h-screen px-4 place-content-center">
       <h1 className="tracking-widest text-gray-400 font-bold uppercase">
         아직 조직에 생성/가입하지 않은 유저입니다.
       </h1>

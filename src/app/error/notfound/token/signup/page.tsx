@@ -7,7 +7,7 @@ export default function NotfoundAccessTokenInSignup() {
     router.push('/')
   }
   return (
-    <div className="grid h-screen px-4 bg-gray-900 place-content-center">
+    <div className="grid h-screen px-4 place-content-center">
       <h1 className="tracking-widest text-gray-400 font-bold uppercase">
         회원가입/로그인을 먼저 진행해 주세요.
       </h1>

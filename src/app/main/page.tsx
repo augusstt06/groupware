@@ -6,13 +6,14 @@ import { useRouter } from 'next/navigation'
 import MainHub from '../component/page/main/hub/MainHub'
 import MainCardGroup from '../component/ui/card/MainCardGroup'
 import {
-  COMPLETE,
   KEY_ACCESS_TOKEN,
+  KEY_LOGIN,
   KEY_ORGANIZATION,
   KEY_UUID,
   KEY_X_ORGANIZATION_CODE,
   ROUTE_ERR_NOT_FOUND_ACCESS_TOKEN,
   ROUTE_ERR_NOT_FOUND_ORG_TOKEN,
+  TRUE,
 } from '../constant/constant'
 import { ERR_COOKIE_NOT_FOUND, ERR_ORG_NOT_FOUND } from '../constant/errorMsg'
 import { useAppDispatch, useAppSelector } from '../module/hooks/reduxHooks'
@@ -36,7 +37,6 @@ export default function Main() {
   const dispatch = useAppDispatch()
   const router = useRouter()
   const [accessToken, setAccessToken] = useState(moduleGetCookie(KEY_ACCESS_TOKEN))
-  const orgCookie = moduleGetCookie(KEY_ORGANIZATION)
   const decodeToken = moduleDecodeToken(accessToken)
   const attendanceTime = useAppSelector((state) => state.userInfo.attendance.time)
   const uuid =
@@ -96,24 +96,30 @@ export default function Main() {
   useEffect(() => {
     let newAccessToken
     let newOrgCookie
+    let newLoginToken
     const checkAccessToken = () => {
       newAccessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
       newOrgCookie = moduleGetCookie(KEY_ORGANIZATION)
+      newLoginToken = moduleGetCookie(KEY_LOGIN)
       if (newAccessToken === ERR_COOKIE_NOT_FOUND) {
         router.push(ROUTE_ERR_NOT_FOUND_ACCESS_TOKEN)
       } else if (newAccessToken !== accessToken) {
         setAccessToken(newAccessToken)
       }
-      if (newOrgCookie !== COMPLETE) {
+      if (newOrgCookie !== TRUE) {
         router.push(ROUTE_ERR_NOT_FOUND_ORG_TOKEN)
+      }
+      if (newLoginToken !== TRUE) {
+        moduleDeleteCookies(KEY_ACCESS_TOKEN)
+        router.push(ROUTE_ERR_NOT_FOUND_ACCESS_TOKEN)
       }
     }
     const intervalId = setInterval(checkAccessToken, 500)
-    if (accessToken !== ERR_COOKIE_NOT_FOUND && orgCookie === COMPLETE) void fetchGetUsers()
+    if (accessToken !== ERR_COOKIE_NOT_FOUND) void fetchGetUsers()
     return () => {
       clearInterval(intervalId)
     }
-  }, [accessToken, orgCookie])
+  }, [accessToken])
 
   return (
     <>

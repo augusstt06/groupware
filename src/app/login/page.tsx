@@ -7,10 +7,9 @@ import { AiOutlineMail } from 'react-icons/ai'
 import { RiLockPasswordFill } from 'react-icons/ri'
 
 import ErrorAlert from '../component/ui/alert/ErrorAlert'
-import { NavigationBtn } from '../component/ui/button/BtnGroups'
 import LoginBtn from '../component/ui/button/login/LoginBtn'
 import LoginInput from '../component/ui/input/login/LoginInput'
-import { KEY_ORGANIZATION, REGISTER_EMAIL, REGISTER_PWD } from '../constant/constant'
+import { KEY_LOGIN, KEY_ORGANIZATION, REGISTER_EMAIL, REGISTER_PWD } from '../constant/constant'
 import { ERR_COOKIE_NOT_FOUND } from '../constant/errorMsg'
 import useInput from '../module/hooks/reactHooks/useInput'
 import { moduleDeleteCookies, moduleGetCookie } from '../module/utils/cookie'
@@ -21,6 +20,7 @@ export default function Login() {
     (title: string) => useInput('', title),
   )
   const orgCookie = moduleGetCookie(KEY_ORGANIZATION)
+  const loginToken = moduleGetCookie(KEY_LOGIN)
   const [isPwdView, setIsPwdView] = useState(false)
 
   const [errorState, setErrorState] = useState({
@@ -44,6 +44,9 @@ export default function Login() {
   useEffect(() => {
     if (orgCookie !== ERR_COOKIE_NOT_FOUND) {
       moduleDeleteCookies(KEY_ORGANIZATION)
+    }
+    if (loginToken !== ERR_COOKIE_NOT_FOUND) {
+      moduleDeleteCookies(KEY_LOGIN)
     }
   }, [])
   return (
@@ -72,9 +75,15 @@ export default function Login() {
         )}
         <div className="flex flex-col justify-center items-center mt-5">
           <LoginBtn title="로그인" setErrMsg={setErrMsg} />
-          <Link href="/" className="mt-2">
-            <NavigationBtn title="메인으로" />
-          </Link>
+          <div className="flex flex-row justify-around w-1/3 mt-3">
+            <div className="text-gray-400 hover:text-gray-200">
+              <Link href={'/signup'}>회원가입</Link>
+            </div>
+            <div className="text-gray-400 hover:text-gray-200">
+              {/* url 변경 */}
+              <Link href={'/signup'}>비밀번호 찾기</Link>
+            </div>
+          </div>
         </div>
       </div>
     </div>

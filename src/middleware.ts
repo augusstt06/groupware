@@ -1,10 +1,11 @@
 import { type NextRequest, NextResponse } from 'next/server'
 
-import { KEY_ACCESS_TOKEN, KEY_ORGANIZATION } from '@/app/constant/constant'
+import { KEY_ACCESS_TOKEN, KEY_LOGIN, KEY_ORGANIZATION } from '@/app/constant/constant'
 
 export function middleware(req: NextRequest) {
   const accessToken = req.cookies.get(KEY_ACCESS_TOKEN)
   const orgToken = req.cookies.get(KEY_ORGANIZATION)
+  const loginToken = req.cookies.get(KEY_LOGIN)
   switch (req.nextUrl.pathname) {
     case '/':
       if (accessToken !== undefined)
@@ -16,6 +17,15 @@ export function middleware(req: NextRequest) {
           new URL(process.env.NEXT_PUBLIC_ERR_ALREADY_LOGIN as string, req.url),
         )
       break
+    case process.env.NEXT_PUBLIC_SIGNUP_COMPLETE:
+      if (accessToken !== undefined && orgToken !== undefined && loginToken !== undefined) {
+        return NextResponse.redirect(new URL(process.env.NEXT_PUBLIC_MAIN as string, req.url))
+      }
+      if (accessToken === undefined)
+        return NextResponse.redirect(new URL(process.env.NEXT_PUBLIC_SIGNUP as string, req.url))
+      if (orgToken === undefined)
+        return NextResponse.redirect(new URL(process.env.NEXT_PUBLIC_SIGNUP_ORG as string, req.url))
+      break
     case process.env.NEXT_PUBLIC_SIGNUP_ORG:
       if (accessToken === undefined)
         return NextResponse.redirect(
@@ -24,7 +34,7 @@ export function middleware(req: NextRequest) {
       else {
         if (orgToken !== undefined)
           return NextResponse.redirect(
-            new URL(process.env.NEXT_PUBLIC_ERR_ALREADY_LOGIN as string, req.url),
+            new URL(process.env.NEXT_PUBLIC_ERR_NOT_FOUND_ORG_TOKEN as string, req.url),
           )
       }
       break

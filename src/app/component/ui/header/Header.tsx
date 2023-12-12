@@ -10,7 +10,7 @@ import LogoutBtn from '../button/login/LogoutBtn'
 import Confirm from '../confirm/Confirm'
 import AlertIndicator from '../indicator/AlertIndicator'
 
-import { COMPLETE, KEY_ACCESS_TOKEN, KEY_ORGANIZATION } from '@/app/constant/constant'
+import { KEY_ACCESS_TOKEN, KEY_LOGIN, KEY_ORGANIZATION, TRUE } from '@/app/constant/constant'
 import { ERR_COOKIE_NOT_FOUND } from '@/app/constant/errorMsg'
 import { moduleGetCookie } from '@/app/module/utils/cookie'
 
@@ -25,7 +25,8 @@ export default function Header() {
     project: false,
   })
   const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
-  const isOrgComplete = moduleGetCookie(KEY_ORGANIZATION)
+  const loginToken = moduleGetCookie(KEY_LOGIN)
+  const orgToken = moduleGetCookie(KEY_ORGANIZATION)
   const handleOpen = (title: string) => {
     switch (title) {
       case 'Project':
@@ -62,7 +63,11 @@ export default function Header() {
 
   return (
     <nav className="bg-white border-gray-200 dark:bg-gray-900">
-      {mount && isOrgComplete === COMPLETE && accessToken !== ERR_COOKIE_NOT_FOUND && isRender ? (
+      {mount &&
+      loginToken === TRUE &&
+      orgToken === TRUE &&
+      accessToken !== ERR_COOKIE_NOT_FOUND &&
+      isRender ? (
         <>
           <div className="flex flex-wrap items-center justify-between max-w-screen-xl mx-auto p-4">
             <Link href="/main" className="flex items-center space-x-3 rtl:space-x-reverse">

@@ -5,12 +5,12 @@ import { useEffect } from 'react'
 import Link from 'next/link'
 
 import { NavigationBtn } from './component/ui/button/BtnGroups'
-import { KEY_ACCESS_TOKEN, KEY_ORGANIZATION } from './constant/constant'
+import { KEY_ACCESS_TOKEN, KEY_LOGIN, KEY_ORGANIZATION } from './constant/constant'
 import { moduleDeleteCookies } from './module/utils/cookie'
 
 export default function Home() {
   useEffect(() => {
-    moduleDeleteCookies(KEY_ACCESS_TOKEN, KEY_ORGANIZATION)
+    moduleDeleteCookies(KEY_ACCESS_TOKEN, KEY_LOGIN, KEY_ORGANIZATION)
   }, [])
 
   return (

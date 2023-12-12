@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 
 import { useRouter } from 'next/navigation'
 
-import { KEY_ACCESS_TOKEN, KEY_ORGANIZATION } from '@/app/constant/constant'
+import { KEY_ACCESS_TOKEN, KEY_LOGIN, KEY_ORGANIZATION } from '@/app/constant/constant'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleDeleteCookies, moduleGetCookie } from '@/app/module/utils/cookie'
 import { modulePostFetch } from '@/app/module/utils/moduleFetch'
@@ -33,7 +33,7 @@ export default function LogoutBtn(props: LogoutBtnProps) {
       const res = await modulePostFetch<FetchResponseType<string>>(fetchLogoutProps)
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
       dispatch(resetReducer())
-      moduleDeleteCookies(KEY_ACCESS_TOKEN, KEY_ORGANIZATION)
+      moduleDeleteCookies(KEY_ACCESS_TOKEN, KEY_LOGIN, KEY_ORGANIZATION)
       props.setConfirmValue(false)
       router.push('/')
     } catch (err) {
