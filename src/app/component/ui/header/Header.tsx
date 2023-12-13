@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { BsPeopleFill } from 'react-icons/bs'
+import { FaPhoneAlt, FaSearch } from 'react-icons/fa'
 import { GiHamburgerMenu } from 'react-icons/gi'
 import { IoMdClose } from 'react-icons/io'
 
@@ -59,7 +60,6 @@ export default function Header() {
     { title: '게시판', list: ['board 1', 'board 2'], open: open.board, link: '/main' },
     { title: '프로젝트', list: [], open: open.project, link: '/' },
     { title: '팀', list: [], open: false, link: '/main' },
-    { title: '주소록', list: [], open: false, link: '/main' },
   ]
 
   const [mount, setMount] = useState(false)
@@ -155,7 +155,7 @@ export default function Header() {
                               <Link href={data.link}>
                                 {data.list.map((data) => (
                                   <li key={data}>
-                                    <p className="flex items-center text-gray-500 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-500 group">
+                                    <p className="flex md:text-base text-sm items-center text-gray-500 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-500 group">
                                       {data}
                                     </p>
                                   </li>
@@ -169,6 +169,12 @@ export default function Header() {
                   ))}
                 </ul>
                 <div className="flex flex-row items-center">
+                  <a className="md:hidden text-gray-800 dark:border-gray-900 dark:hover:text-indigo-300 dark:text-white border-solid border-white border-2 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5   focus:outline-none dark:focus:ring-gray-800">
+                    <FaSearch className="md:w-5 md:h-5 w-4 h-4" />
+                  </a>
+                  <a className="md:hidden text-gray-800 dark:border-gray-900 dark:hover:text-indigo-300 dark:text-white border-solid border-white border-2 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5   focus:outline-none dark:focus:ring-gray-800">
+                    <FaPhoneAlt className="md:w-5 md:h-5 w-4 h-4" />
+                  </a>
                   <a className="md:hidden text-gray-800 dark:border-gray-900 dark:hover:text-indigo-300 dark:text-white border-solid border-white border-2 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5   focus:outline-none dark:focus:ring-gray-800">
                     <button type="button">
                       <BsPeopleFill className="md:w-5 md:h-5 w-4 h-4" />
@@ -196,6 +202,12 @@ export default function Header() {
               <AlertIndicator />
             </a> */}
             <div className="flex flex-row items-center">
+              <a className="hidden md:inline text-gray-800 dark:border-gray-900 dark:hover:text-indigo-500 dark:text-white border-solid border-white border-2 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5   focus:outline-none dark:focus:ring-gray-800">
+                <FaSearch className="md:w-5 md:h-5 w-4 h-4" />
+              </a>
+              <a className="hidden md:inline text-gray-800 dark:border-gray-900 dark:hover:text-indigo-500 dark:text-white border-solid border-white border-2 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5   focus:outline-none dark:focus:ring-gray-800">
+                <FaPhoneAlt className="md:w-5 md:h-5 w-4 h-4" />
+              </a>
               <a className="hidden md:inline text-gray-800 dark:border-gray-900 dark:hover:text-indigo-500 dark:text-white border-solid border-white border-2 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5   focus:outline-none dark:focus:ring-gray-800">
                 <button type="button">
                   <BsPeopleFill className="md:w-5 md:h-5 w-4 h-4" />
