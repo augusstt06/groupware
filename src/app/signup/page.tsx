@@ -17,9 +17,9 @@ import {
   REGISTER_ORG_NAME,
   REGISTER_PHONENUMBER,
   REGISTER_POSITION,
-  ROUTE_SIGNUP_ORG,
 } from '../constant/constant'
 import { ERR_COOKIE_NOT_FOUND } from '../constant/errorMsg'
+import { ROUTE_SIGNUP_ORG } from '../constant/route-constant'
 import { useAppSelector } from '../module/hooks/reduxHooks/index'
 import { moduleGetCookie } from '../module/utils/cookie'
 import inputValidate from '../module/utils/inputValidate'

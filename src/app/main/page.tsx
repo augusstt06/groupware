@@ -11,11 +11,13 @@ import {
   KEY_ORGANIZATION,
   KEY_UUID,
   KEY_X_ORGANIZATION_CODE,
-  ROUTE_ERR_NOT_FOUND_ACCESS_TOKEN,
-  ROUTE_ERR_NOT_FOUND_ORG_TOKEN,
   TRUE,
 } from '../constant/constant'
 import { ERR_COOKIE_NOT_FOUND, ERR_ORG_NOT_FOUND } from '../constant/errorMsg'
+import {
+  ROUTE_ERR_NOT_FOUND_ACCESS_TOKEN,
+  ROUTE_ERR_NOT_FOUND_ORG_TOKEN,
+} from '../constant/route-constant'
 import { useAppDispatch, useAppSelector } from '../module/hooks/reduxHooks'
 import { moduleDecodeToken, moduleDeleteCookies, moduleGetCookie } from '../module/utils/cookie'
 import { moduleGetFetch } from '../module/utils/moduleFetch'
@@ -107,10 +109,11 @@ export default function Main() {
         setAccessToken(newAccessToken)
       }
       if (newOrgCookie !== TRUE) {
+        moduleDeleteCookies(KEY_LOGIN)
         router.push(ROUTE_ERR_NOT_FOUND_ORG_TOKEN)
       }
       if (newLoginToken !== TRUE) {
-        moduleDeleteCookies(KEY_ACCESS_TOKEN)
+        moduleDeleteCookies(KEY_ACCESS_TOKEN, KEY_LOGIN)
         router.push(ROUTE_ERR_NOT_FOUND_ACCESS_TOKEN)
       }
     }

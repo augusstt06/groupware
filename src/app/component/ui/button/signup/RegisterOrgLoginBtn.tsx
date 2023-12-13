@@ -8,7 +8,6 @@ import {
   REGISTER_ORG_DESCRIPTION,
   REGISTER_ORG_JOIN,
   REGISTER_ORG_NAME,
-  ROUTE_SIGNUP_COMPLETE,
   TRUE,
 } from '@/app/constant/constant'
 import {
@@ -17,6 +16,7 @@ import {
   errNotEntered,
   errNotFound,
 } from '@/app/constant/errorMsg'
+import { ROUTE_SIGNUP_COMPLETE } from '@/app/constant/route-constant'
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleGetCookie, moduleSetCookies } from '@/app/module/utils/cookie'
 import { modulePostFetch } from '@/app/module/utils/moduleFetch'

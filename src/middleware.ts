@@ -7,10 +7,6 @@ export function middleware(req: NextRequest) {
   const orgToken = req.cookies.get(KEY_ORGANIZATION)
   const loginToken = req.cookies.get(KEY_LOGIN)
   switch (req.nextUrl.pathname) {
-    case '/':
-      if (accessToken !== undefined)
-        return NextResponse.redirect(new URL(process.env.NEXT_PUBLIC_MAIN as string, req.url))
-      break
     case process.env.NEXT_PUBLIC_SIGNUP:
       if (accessToken !== undefined)
         return NextResponse.redirect(

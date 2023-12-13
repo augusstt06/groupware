@@ -8,14 +8,9 @@ import RegisterOrg from '@/app/component/page/organization/RegisterOrg'
 import ErrorAlert from '@/app/component/ui/alert/ErrorAlert'
 import { NavigationBtn } from '@/app/component/ui/button/BtnGroups'
 import RegisterOrgLoginBtn from '@/app/component/ui/button/signup/RegisterOrgLoginBtn'
-import {
-  KEY_ACCESS_TOKEN,
-  KEY_LOGIN,
-  ORG_CREATE,
-  ORG_JOIN,
-  ROUTE_ERR_NOT_FOUND_ACCESS_TOKEN,
-} from '@/app/constant/constant'
+import { KEY_ACCESS_TOKEN, KEY_LOGIN, ORG_CREATE, ORG_JOIN } from '@/app/constant/constant'
 import { ERR_COOKIE_NOT_FOUND } from '@/app/constant/errorMsg'
+import { ROUTE_ERR_NOT_FOUND_ACCESS_TOKEN } from '@/app/constant/route-constant'
 import { moduleDeleteCookies, moduleGetCookie } from '@/app/module/utils/cookie'
 
 export default function RegisterOrgLogin() {
@@ -69,14 +64,14 @@ export default function RegisterOrgLogin() {
   }, [accessToken])
 
   return (
-    <div className="flex flex-col justify-center items-center p 1">
+    <div className="flex flex-col justify-center items-center h-screen px-4 place-content-center">
       {organization === '' ? (
-        <div className="grid h-screen px-4 place-content-center">
+        <>
           <h2 className="mb-5 text-2xl font-bold text-center">조직 선택</h2>
           <span className="text-medium mt-5">
             조직을 생성하거나 초대코드를 입력해 조직에 참가해 주세요
           </span>
-          <div className="flex flex-row w-full justify-around mt-10">
+          <div className="flex flex-row w-1/3 justify-around mt-10">
             <div
               onClick={() => {
                 setOrganization(ORG_CREATE)
@@ -92,9 +87,9 @@ export default function RegisterOrgLogin() {
               <NavigationBtn title="조직 가입" />
             </div>
           </div>
-        </div>
+        </>
       ) : (
-        <>
+        <div className="flex flex-col w-full justify-center items-center h-screen px-4 place-content-center">
           <div className="text-2xl font-bold mt-20">
             {organization === ORG_CREATE ? '조직 생성' : '조직 가입'}
           </div>
@@ -123,7 +118,7 @@ export default function RegisterOrgLogin() {
           <div className="flex flex-row justify-around items-center w-1/3 mt-5">
             <RegisterOrgLoginBtn orgType={organization} setErrMsg={setErrMsg} />
           </div>
-        </>
+        </div>
       )}
     </div>
   )

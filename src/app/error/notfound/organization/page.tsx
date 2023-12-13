@@ -1,7 +1,7 @@
 'use client'
 import { useRouter } from 'next/navigation'
 
-import { ROUTE_SIGNUP_ORG } from '@/app/constant/constant'
+import { ROUTE_SIGNUP_ORG } from '@/app/constant/route-constant'
 
 export default function NotFoundOrg() {
   const router = useRouter()

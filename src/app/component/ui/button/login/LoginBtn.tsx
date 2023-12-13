@@ -1,17 +1,12 @@
 import { useRouter } from 'next/navigation'
 
-import {
-  KEY_ACCESS_TOKEN,
-  KEY_LOGIN,
-  KEY_ORGANIZATION,
-  ROUTE_MAIN,
-  TRUE,
-} from '@/app/constant/constant'
+import { KEY_ACCESS_TOKEN, KEY_LOGIN, KEY_ORGANIZATION, TRUE } from '@/app/constant/constant'
 import {
   ERR_MESSAGE_LOGIN_EMAIL_FAIL,
   ERR_MESSAGE_LOGIN_PWD_FAIL,
   errDefault,
 } from '@/app/constant/errorMsg'
+import { ROUTE_MAIN } from '@/app/constant/route-constant'
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleSetCookies } from '@/app/module/utils/cookie'
 import inputValidate from '@/app/module/utils/inputValidate'

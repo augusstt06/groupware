@@ -4,7 +4,8 @@ import { useEffect } from 'react'
 
 import { useRouter } from 'next/navigation'
 
-import { KEY_ACCESS_TOKEN, KEY_ORGANIZATION, ROUTE_LOGIN } from '@/app/constant/constant'
+import { KEY_ACCESS_TOKEN, KEY_ORGANIZATION } from '@/app/constant/constant'
+import { ROUTE_LOGIN } from '@/app/constant/route-constant'
 import { useAppDispatch } from '@/app/module/hooks/reduxHooks'
 import { moduleDeleteCookies } from '@/app/module/utils/cookie'
 import { resetOrgReducer } from '@/app/store/reducers/login/orgInfoReducer'

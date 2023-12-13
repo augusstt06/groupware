@@ -1,11 +1,19 @@
 'use client'
+import { useEffect } from 'react'
+
 import { useRouter } from 'next/navigation'
+
+import { KEY_LOGIN, KEY_ORGANIZATION } from '@/app/constant/constant'
+import { moduleDeleteCookies } from '@/app/module/utils/cookie'
 
 export default function NotfoundAccessTokenInSignup() {
   const router = useRouter()
   const handleClick = () => {
     router.push('/')
   }
+  useEffect(() => {
+    moduleDeleteCookies(KEY_ORGANIZATION, KEY_LOGIN)
+  })
   return (
     <div className="grid h-screen px-4 place-content-center">
       <h1 className="tracking-widest text-gray-400 font-bold uppercase">
