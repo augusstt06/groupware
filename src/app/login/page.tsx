@@ -50,8 +50,9 @@ export default function Login() {
     }
   }, [])
   return (
-    <div className="flex flex-col justify-center items-center p 1">
-      <div className="mt-20 w-3/5">
+    <div className="flex flex-col justify-center items-center h-screen px-4 place-content-center">
+      <div className="text-xl font-bold mb-6">로그인</div>
+      <div className="w-2/5 ">
         <LoginInput
           icon={<AiOutlineMail />}
           title={REGISTER_EMAIL}

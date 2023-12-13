@@ -14,7 +14,7 @@ export default function Home() {
   }, [])
 
   return (
-    <main className="flex flex-col justify-center items-center h-4/5 ">
+    <main className="grid h-screen px-4 place-content-center">
       <div className="flex flex-col justify-center items-center mb-10 mt-20 ">
         <div className="text-xl font-bold mb-6">
           Easily collaborate with your team from anywhere

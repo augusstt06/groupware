@@ -28,7 +28,7 @@ export default function LoginInput(props: LoginInputProps) {
     }
   }, [useInput.value])
   return (
-    <>
+    <div className="w-full">
       <InputLabel title={props.title} />
       <div className="flex relative mt-2 mb-6">
         <InputIconlabel icon={props.icon} />
@@ -56,6 +56,6 @@ export default function LoginInput(props: LoginInputProps) {
           <></>
         )}
       </div>
-    </>
+    </div>
   )
 }
