@@ -53,8 +53,8 @@ export default function Login() {
 
   return (
     <div className="flex flex-col justify-center items-center h-screen px-4 place-content-center">
-      <div className="text-xl font-bold mb-6">로그인</div>
-      <div className="w-2/5 ">
+      <div className="text-xl md:font-bold mb-6">로그인</div>
+      <div className="w-4/5 md:w-2/5">
         <LoginInput
           icon={<AiOutlineMail />}
           title={REGISTER_EMAIL}
@@ -77,13 +77,14 @@ export default function Login() {
           <></>
         )}
         <div className="flex flex-col justify-center items-center mt-5">
-          <LoginBtn title="로그인" setErrMsg={setErrMsg} />
-          <div className="flex flex-row justify-around w-1/3 mt-3">
+          <div className="w-2/3">
+            <LoginBtn title="로그인" setErrMsg={setErrMsg} />
+          </div>
+          <div className="flex flex-row justify-around md:w-2/3 w-full mt-3">
             <div className="text-sm text-gray-400 hover:text-gray-200">
               <Link href={ROUTE_SIGNUP}>회원가입</Link>
             </div>
             <div className="text-sm text-gray-400 hover:text-gray-200">
-              {/* url 변경 */}
               <Link href={ROUTE_FIND_PWD}>비밀번호찾기</Link>
             </div>
           </div>

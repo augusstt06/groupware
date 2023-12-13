@@ -126,11 +126,12 @@ export default function Main() {
 
   return (
     <>
-      <main className="grid gap-4 grid-cols-4 h-4/5  pt-10 ml-10 mr-10">
-        <div className="col-span-1 w-5/6">
+      <main className="w-full grid gap-4 grid-cols-4 h-4/5  pt-10 md:ml-10 md:mr-10 ml-5 z-1">
+        {/* 모바일시 토글 */}
+        <div className="col-span-1 md:w-5/6 md:block hidden">
           <MainCardGroup reRender={reRender} setRerender={setRerender} />
         </div>
-        <div className="col-span-3 mr-10">
+        <div className="md:col-span-3 mr-10 col-span-4">
           <MainHub />
         </div>
       </main>

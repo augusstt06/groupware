@@ -113,8 +113,8 @@ export default function Signup() {
 
   return (
     <div className="flex flex-col justify-center items-center p 1">
-      <div className="text-xl font-bold mt-20">회원가입</div>
-      <div className="mt-5 w-3/5">
+      <div className="md:text-xl text-medium font-bold mt-20">회원가입</div>
+      <div className="mt-5 md:w-3/5 w-4/5">
         <RegisterInfo
           isPwdView={isPwdView}
           setIsPwdView={setIsPwdView}
@@ -131,7 +131,7 @@ export default function Signup() {
           <></>
         )}
       </div>
-      <div className="flex flex-row justify-around items-center w-1/3 mt-5">
+      <div className="flex flex-row justify-around items-center md:w-1/3 w-2/3 mt-5">
         <Link href="/">
           <NavigationBtn title="메인으로" />
         </Link>

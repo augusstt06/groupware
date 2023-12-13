@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 
 import { useRouter } from 'next/navigation'
+import { FaPowerOff } from 'react-icons/fa'
 
 import { KEY_ACCESS_TOKEN, KEY_LOGIN, KEY_ORGANIZATION } from '@/app/constant/constant'
 import { ROUTE_LOGIN } from '@/app/constant/route-constant'
@@ -56,12 +57,8 @@ export default function LogoutBtn(props: LogoutBtnProps) {
   }, [props.confirmValue])
   return (
     <>
-      <button
-        type="button"
-        className="text-gray-800 dark:text-white focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5  focus:outline-none dark:focus:ring-gray-800"
-        onClick={handleClick}
-      >
-        Logout
+      <button type="button" onClick={handleClick}>
+        <FaPowerOff className="md:w-5 md:h-5 w-4 h-4" />
       </button>
     </>
   )

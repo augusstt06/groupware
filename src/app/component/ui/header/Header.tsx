@@ -4,13 +4,17 @@ import { useEffect, useRef, useState } from 'react'
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { BsPeopleFill } from 'react-icons/bs'
+import { GiHamburgerMenu } from 'react-icons/gi'
+import { IoMdClose } from 'react-icons/io'
 
 import DarkmodeBtn from '../button/DarkmodeBtn'
 import LogoutBtn from '../button/login/LogoutBtn'
 import Confirm from '../confirm/Confirm'
-import AlertIndicator from '../indicator/AlertIndicator'
 
-import { KEY_ACCESS_TOKEN, KEY_LOGIN, KEY_ORGANIZATION, TRUE } from '@/app/constant/constant'
+// import AlertIndicator from '../indicator/AlertIndicator'
+
+import { FALSE, KEY_ACCESS_TOKEN, KEY_LOGIN, KEY_ORGANIZATION, TRUE } from '@/app/constant/constant'
 import { ERR_COOKIE_NOT_FOUND } from '@/app/constant/errorMsg'
 import { moduleGetCookie } from '@/app/module/utils/cookie'
 
@@ -20,6 +24,14 @@ export default function Header() {
 
   const [isConfirmOpen, setIsConfirmOpen] = useState(false)
   const [confirmValue, setConfirmValue] = useState(false)
+  const [isDropOpen, setDropOpen] = useState(FALSE)
+  const clickDropdownMenu = () => {
+    if (isDropOpen === TRUE) {
+      setDropOpen(FALSE)
+    } else {
+      setDropOpen(TRUE)
+    }
+  }
   const [open, setOpen] = useState({
     board: false,
     project: false,
@@ -44,9 +56,10 @@ export default function Header() {
   }
 
   const menuList = [
-    { title: 'Board', list: ['board 1', 'board 2'], open: open.board, link: '/main' },
-    { title: 'Project', list: [], open: open.project, link: '/project' },
-    { title: 'Team', list: [], open: false, link: '/main' },
+    { title: '게시판', list: ['board 1', 'board 2'], open: open.board, link: '/main' },
+    { title: '프로젝트', list: [], open: open.project, link: '/project' },
+    { title: '팀', list: [], open: false, link: '/main' },
+    { title: '주소록', list: [], open: false, link: '/main' },
   ]
 
   const [mount, setMount] = useState(false)
@@ -62,16 +75,16 @@ export default function Header() {
   }, [dropRef])
 
   return (
-    <nav className="bg-white border-gray-200 dark:bg-gray-900">
+    <nav className="relative bg-white border-gray-200 dark:bg-gray-900 z-999">
       {mount &&
       loginToken === TRUE &&
       orgToken === TRUE &&
       accessToken !== ERR_COOKIE_NOT_FOUND &&
       isRender ? (
         <>
-          <div className="flex flex-wrap items-center justify-between max-w-screen-xl mx-auto p-4">
+          <div className="flex items-center justify-between max-w-screen-xl mx-auto p-4">
             <Link href="/main" className="flex items-center space-x-3 rtl:space-x-reverse">
-              <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
+              <span className="self-center md:text-2xl text-medium font-semibold whitespace-nowrap dark:text-white">
                 Logo
               </span>
             </Link>
@@ -84,8 +97,123 @@ export default function Header() {
             ) : (
               <></>
             )}
-            <div className="flex items-center md:order-2 space-x-1 md:space-x-2 rtl:space-x-reverse">
-              <a className="text-gray-800 dark:text-white border-solid border-white border-2 hover:border-indigo-500 dark:border-gray-900 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 dark:hover:border-indigo-400 focus:outline-none dark:focus:ring-gray-800">
+            <div
+              className={`${
+                isDropOpen === TRUE ? '' : 'hidden'
+              } md:flex md:flex-row justify-center md:w-4/5 md:static bg-white md:border-none dark:bg-gray-900 border-b border-1 dark:border-indigo-300 z-999 absolute top-14 left-0 right-0 flex flex-col`}
+            >
+              <div
+                id="mega-menu-icons"
+                className="flex md:flex-row flex-col items-center w-full justify-center"
+                ref={dropRef}
+              >
+                <ul className="md:w-2/3 w-1/3 flex flex-col items-center mt-4 text-sm md:font-medium md:flex-row md:mt-0 md:space-x-8 rtl:space-x-reverse mb-3">
+                  {menuList.map((data) => (
+                    <li
+                      key={data.title}
+                      className="w-full flex justify-center dark:hover:bg-indigo-300 dark:hover:rounded"
+                    >
+                      {data.list.length !== 0 ? (
+                        <button
+                          id={`${data.title}-dropdown-button`}
+                          className="flex items-center justify-between py-2 px-3 font-medium text-gray-900 md:w-auto md:border-0 md:p-2  dark:text-white"
+                          onClick={() => {
+                            handleOpen(data.title)
+                          }}
+                        >
+                          {data.title}
+                        </button>
+                      ) : (
+                        <Link href={data.link}>
+                          <button
+                            id={`${data.title}-dropdown-button`}
+                            className="flex items-center justify-between w-full py-2 px-3 font-medium text-gray-900 md:w-auto md:p-2 dark:text-white "
+                            onClick={() => {
+                              handleOpen(data.title)
+                            }}
+                          >
+                            {data.title}
+                          </button>
+                        </Link>
+                      )}
+
+                      <div
+                        id={`${data.title}-dropdown`}
+                        className={`absolute z-11 grid ${
+                          data.open ? '' : 'hidden'
+                        } w-auto grid-cols-2 text-sm bg-white border border-gray-100 rounded-lg shadow-md dark:border-gray-700 md:grid-cols-3 dark:bg-gray-700`}
+                      >
+                        {data.list.length !== 0 ? (
+                          <div className="p-4 pb-0 text-gray-900 md:pb-4 dark:text-white">
+                            <ul
+                              className="space-y-4"
+                              aria-labelledby="mega-menu-icons-dropdown-button"
+                            >
+                              <Link href={data.link}>
+                                {data.list.map((data) => (
+                                  <li key={data}>
+                                    <p className="flex items-center text-gray-500 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-500 group">
+                                      {data}
+                                    </p>
+                                  </li>
+                                ))}
+                              </Link>
+                            </ul>
+                          </div>
+                        ) : null}
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+                <div className="flex flex-row items-center">
+                  <a className="md:hidden text-gray-800 dark:border-gray-900 dark:hover:text-indigo-300 dark:text-white border-solid border-white border-2 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5   focus:outline-none dark:focus:ring-gray-800">
+                    <button type="button">
+                      <BsPeopleFill className="md:w-5 md:h-5 w-4 h-4" />
+                    </button>
+                  </a>
+                  <a className="md:hidden text-gray-800 dark:border-gray-900 dark:hover:text-yellow-400 hover:text-yellow-400 dark:text-white border-solid border-white border-2 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5   focus:outline-none dark:focus:ring-gray-800">
+                    <DarkmodeBtn />
+                  </a>
+                  <a className="md:hidden text-gray-800 dark:border-gray-900 dark:hover:text-red-500 dark:text-white border-solid border-white border-2 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5   focus:outline-none dark:focus:ring-gray-800">
+                    {accessToken !== ERR_COOKIE_NOT_FOUND ? (
+                      <LogoutBtn
+                        isConfirmOpen={isConfirmOpen}
+                        setIsConfirmOpen={setIsConfirmOpen}
+                        confirmValue={confirmValue}
+                        setConfirmValue={setConfirmValue}
+                      />
+                    ) : (
+                      <></>
+                    )}
+                  </a>
+                </div>
+              </div>
+            </div>
+            {/* <a className="inline text-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 focus:outline-none dark:focus:ring-gray-800">
+              <AlertIndicator />
+            </a> */}
+            <div className="flex flex-row items-center">
+              <a className="hidden md:inline text-gray-800 dark:border-gray-900 dark:hover:text-indigo-500 dark:text-white border-solid border-white border-2 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5   focus:outline-none dark:focus:ring-gray-800">
+                <button type="button">
+                  <BsPeopleFill className="md:w-5 md:h-5 w-4 h-4" />
+                </button>
+              </a>
+              <a className="hidden md:inline text-gray-800 dark:border-gray-900 dark:hover:text-yellow-400 hover:text-yellow-400 dark:text-white border-solid border-white border-2 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5   focus:outline-none dark:focus:ring-gray-800">
+                <DarkmodeBtn />
+              </a>
+              {isDropOpen === FALSE ? (
+                <GiHamburgerMenu
+                  className="md:hidden rounded-lg focus:outline-none focus:shadow-outline mr-3"
+                  onClick={clickDropdownMenu}
+                />
+              ) : (
+                <IoMdClose
+                  className="md:hidden rounded-lg focus:outline-none focus:shadow-outline mr-3"
+                  onClick={clickDropdownMenu}
+                />
+              )}
+
+              <a className="hidden md:inline text-gray-800 dark:border-gray-900 dark:hover:text-red-500 dark:text-white border-solid border-white border-2 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5   focus:outline-none dark:focus:ring-gray-800">
                 {accessToken !== ERR_COOKIE_NOT_FOUND ? (
                   <LogoutBtn
                     isConfirmOpen={isConfirmOpen}
@@ -97,73 +225,6 @@ export default function Header() {
                   <></>
                 )}
               </a>
-              <a className="text-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 focus:outline-none dark:focus:ring-gray-800">
-                <AlertIndicator />
-              </a>
-              <a className="text-gray-800  dark:border-gray-900 dark:text-white border-solid border-white border-2 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5   focus:outline-none dark:focus:ring-gray-800">
-                <DarkmodeBtn />
-              </a>
-            </div>
-            <div
-              id="mega-menu-icons"
-              className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
-              ref={dropRef}
-            >
-              <ul className="flex flex-col mt-4 font-medium md:flex-row md:mt-0 md:space-x-8 rtl:space-x-reverse">
-                {menuList.map((data) => (
-                  <li key={data.title}>
-                    {data.list.length !== 0 ? (
-                      <button
-                        id={`${data.title}-dropdown-button`}
-                        className="flex items-center justify-between w-full py-2 px-3 font-medium text-gray-900 border-b border-gray-100 md:w-auto hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-indigo-600 md:p-0 dark:text-white md:dark:hover:text-indigo-400 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700"
-                        onClick={() => {
-                          handleOpen(data.title)
-                        }}
-                      >
-                        {data.title}
-                      </button>
-                    ) : (
-                      <Link href={data.link}>
-                        <button
-                          id={`${data.title}-dropdown-button`}
-                          className="flex items-center justify-between w-full py-2 px-3 font-medium text-gray-900 border-b border-gray-100 md:w-auto hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-indigo-600 md:p-0 dark:text-white md:dark:hover:text-indigo-400 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700"
-                          onClick={() => {
-                            handleOpen(data.title)
-                          }}
-                        >
-                          {data.title}
-                        </button>
-                      </Link>
-                    )}
-
-                    <div
-                      id={`${data.title}-dropdown`}
-                      className={`absolute z-11 grid ${
-                        data.open ? '' : 'hidden'
-                      } w-auto grid-cols-2 text-sm bg-white border border-gray-100 rounded-lg shadow-md dark:border-gray-700 md:grid-cols-3 dark:bg-gray-700`}
-                    >
-                      {data.list.length !== 0 ? (
-                        <div className="p-4 pb-0 text-gray-900 md:pb-4 dark:text-white">
-                          <ul
-                            className="space-y-4"
-                            aria-labelledby="mega-menu-icons-dropdown-button"
-                          >
-                            <Link href={data.link}>
-                              {data.list.map((data) => (
-                                <li key={data}>
-                                  <p className="flex items-center text-gray-500 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-500 group">
-                                    {data}
-                                  </p>
-                                </li>
-                              ))}
-                            </Link>
-                          </ul>
-                        </div>
-                      ) : null}
-                    </div>
-                  </li>
-                ))}
-              </ul>
             </div>
           </div>
         </>

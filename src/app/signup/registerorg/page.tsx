@@ -67,11 +67,11 @@ export default function RegisterOrgLogin() {
     <div className="flex flex-col justify-center items-center h-screen px-4 place-content-center">
       {organization === '' ? (
         <>
-          <h2 className="mb-5 text-2xl font-bold text-center">조직 선택</h2>
-          <span className="text-medium mt-5">
-            조직을 생성하거나 초대코드를 입력해 조직에 참가해 주세요
+          <h2 className="mb-5 md:text-2xl text-xl font-bold text-center">조직 선택</h2>
+          <span className="md:text-medium text-xs mt-5">
+            조직 생성/코드 입력으로 조직에 참가해 주세요
           </span>
-          <div className="flex flex-row w-1/3 justify-around mt-10">
+          <div className="flex flex-row md:w-1/3 w-full justify-around mt-10">
             <div
               onClick={() => {
                 setOrganization(ORG_CREATE)
@@ -90,15 +90,18 @@ export default function RegisterOrgLogin() {
         </>
       ) : (
         <div className="flex flex-col w-full justify-center items-center h-screen px-4 place-content-center">
-          <div className="text-2xl font-bold mt-20">
+          <div className="md:text-2xl text-xl font-bold mt-20">
             {organization === ORG_CREATE ? '조직 생성' : '조직 가입'}
           </div>
           <div className="mt-5">
-            <span className="text-sm text-gray-400 hover:text-gray-200" onClick={changeOrgType}>
+            <span
+              className="md:text-sm text-xs text-gray-400 hover:text-gray-200"
+              onClick={changeOrgType}
+            >
               {organization === ORG_CREATE ? '기존 조직에 참여하기' : '새로운 조직 생성하기'}
             </span>
           </div>
-          <div className="mt-5 w-3/5">
+          <div className="mt-5 md:w-3/5 w-full">
             <RegisterOrg
               organization={organization}
               setOrganization={setOrganization}
@@ -115,7 +118,7 @@ export default function RegisterOrgLogin() {
               <></>
             )}
           </div>
-          <div className="flex flex-row justify-around items-center w-1/3 mt-5">
+          <div className="flex flex-row justify-around items-center md:w-1/3 w-2/3 mt-5">
             <RegisterOrgLoginBtn orgType={organization} setErrMsg={setErrMsg} />
           </div>
         </div>
