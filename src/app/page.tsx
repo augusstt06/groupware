@@ -11,6 +11,7 @@ import LoginBtn from './component/ui/button/login/LoginBtn'
 import LoginInput from './component/ui/input/login/LoginInput'
 import { KEY_LOGIN, KEY_ORGANIZATION, REGISTER_EMAIL, REGISTER_PWD } from './constant/constant'
 import { ERR_COOKIE_NOT_FOUND } from './constant/errorMsg'
+import { ROUTE_FIND_PWD, ROUTE_SIGNUP } from './constant/route-constant'
 import useInput from './module/hooks/reactHooks/useInput'
 import { moduleDeleteCookies, moduleGetCookie } from './module/utils/cookie'
 import { type UseInputProps } from './types/moduleTypes'
@@ -49,6 +50,7 @@ export default function Login() {
       moduleDeleteCookies(KEY_LOGIN)
     }
   }, [])
+
   return (
     <div className="flex flex-col justify-center items-center h-screen px-4 place-content-center">
       <div className="text-xl font-bold mb-6">로그인</div>
@@ -78,11 +80,11 @@ export default function Login() {
           <LoginBtn title="로그인" setErrMsg={setErrMsg} />
           <div className="flex flex-row justify-around w-1/3 mt-3">
             <div className="text-sm text-gray-400 hover:text-gray-200">
-              <Link href={'/signup'}>회원가입</Link>
+              <Link href={ROUTE_SIGNUP}>회원가입</Link>
             </div>
             <div className="text-sm text-gray-400 hover:text-gray-200">
               {/* url 변경 */}
-              <Link href={'/signup'}>비밀번호찾기</Link>
+              <Link href={ROUTE_FIND_PWD}>비밀번호찾기</Link>
             </div>
           </div>
         </div>

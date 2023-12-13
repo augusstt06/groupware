@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 
 import { KEY_ACCESS_TOKEN, KEY_LOGIN, KEY_ORGANIZATION } from '@/app/constant/constant'
+import { ROUTE_LOGIN } from '@/app/constant/route-constant'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleDeleteCookies, moduleGetCookie } from '@/app/module/utils/cookie'
 import { modulePostFetch } from '@/app/module/utils/moduleFetch'
@@ -35,7 +36,7 @@ export default function LogoutBtn(props: LogoutBtnProps) {
       dispatch(resetReducer())
       moduleDeleteCookies(KEY_ACCESS_TOKEN, KEY_LOGIN, KEY_ORGANIZATION)
       props.setConfirmValue(false)
-      router.push('/')
+      router.push(ROUTE_LOGIN)
     } catch (err) {
       alert('로그아웃이 실패했습니다.')
     }
