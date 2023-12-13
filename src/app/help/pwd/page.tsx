@@ -1,10 +1,12 @@
 'use client'
 
+import Link from 'next/link'
 import { AiOutlineMail } from 'react-icons/ai'
 
 import { InputIconlabel } from '@/app/component/ui/label/InputIconlabel'
 import { InputLabel } from '@/app/component/ui/label/Inputlabel'
 import { REGISTER_EMAIL } from '@/app/constant/constant'
+import { ROUTE_LOGIN } from '@/app/constant/route-constant'
 import useInput from '@/app/module/hooks/reactHooks/useInput'
 import { type UseInputProps } from '@/app/types/moduleTypes'
 
@@ -14,9 +16,9 @@ export default function FindPwd() {
     <div className="flex flex-col justify-center items-center h-screen px-4 place-content-center">
       <div className="flex flex-col justify-center items-center mb-5">
         <div className="text-xl font-bold mb-6">비밀번호 찾기</div>
-        <div className="text-sm">회원정보에 입력한 이메일로 비밀번호 재설정 메일이 발송됩니다.</div>
+        <div className="text-sm">회원정보의 이메일로 비밀번호 재설정 메일이 발송됩니다.</div>
       </div>
-      <div className="w-2/5">
+      <div className="md:w-2/5 w-4/5 mt-3">
         <div className="w-full">
           <InputLabel title="이메일" />
           <div className="flex relative mt-2 mb-6">
@@ -38,6 +40,9 @@ export default function FindPwd() {
       >
         발송하기
       </button>
+      <div className="text-sm text-gray-400 hover:text-gray-200">
+        <Link href={ROUTE_LOGIN}>메인으로</Link>
+      </div>
     </div>
   )
 }

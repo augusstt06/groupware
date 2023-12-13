@@ -14,7 +14,7 @@ import Confirm from '../confirm/Confirm'
 
 // import AlertIndicator from '../indicator/AlertIndicator'
 
-import { FALSE, KEY_ACCESS_TOKEN, KEY_LOGIN, KEY_ORGANIZATION, TRUE } from '@/app/constant/constant'
+import { KEY_ACCESS_TOKEN, KEY_LOGIN, KEY_ORGANIZATION, TRUE } from '@/app/constant/constant'
 import { ERR_COOKIE_NOT_FOUND } from '@/app/constant/errorMsg'
 import { moduleGetCookie } from '@/app/module/utils/cookie'
 
@@ -24,12 +24,12 @@ export default function Header() {
 
   const [isConfirmOpen, setIsConfirmOpen] = useState(false)
   const [confirmValue, setConfirmValue] = useState(false)
-  const [isDropOpen, setDropOpen] = useState(FALSE)
+  const [isDropOpen, setDropOpen] = useState(false)
   const clickDropdownMenu = () => {
-    if (isDropOpen === TRUE) {
-      setDropOpen(FALSE)
+    if (isDropOpen) {
+      setDropOpen(false)
     } else {
-      setDropOpen(TRUE)
+      setDropOpen(true)
     }
   }
   const [open, setOpen] = useState({
@@ -57,7 +57,7 @@ export default function Header() {
 
   const menuList = [
     { title: '게시판', list: ['board 1', 'board 2'], open: open.board, link: '/main' },
-    { title: '프로젝트', list: [], open: open.project, link: '/project' },
+    { title: '프로젝트', list: [], open: open.project, link: '/' },
     { title: '팀', list: [], open: false, link: '/main' },
     { title: '주소록', list: [], open: false, link: '/main' },
   ]
@@ -73,6 +73,9 @@ export default function Header() {
     setConfirmValue(false)
     document.addEventListener('click', handleClickOutside)
   }, [dropRef])
+  useEffect(() => {
+    setDropOpen(false)
+  }, [])
 
   return (
     <nav className="relative bg-white border-gray-200 dark:bg-gray-900 z-999">
@@ -83,7 +86,7 @@ export default function Header() {
       isRender ? (
         <>
           <div className="flex items-center justify-between max-w-screen-xl mx-auto p-4">
-            <Link href="/main" className="flex items-center space-x-3 rtl:space-x-reverse">
+            <Link href="/main" className="flex items-center space-x-3 rtl:space-x-reverse ml-3">
               <span className="self-center md:text-2xl text-medium font-semibold whitespace-nowrap dark:text-white">
                 Logo
               </span>
@@ -99,7 +102,7 @@ export default function Header() {
             )}
             <div
               className={`${
-                isDropOpen === TRUE ? '' : 'hidden'
+                isDropOpen ? '' : 'hidden'
               } md:flex md:flex-row justify-center md:w-4/5 md:static bg-white md:border-none dark:bg-gray-900 border-b border-1 dark:border-indigo-300 z-999 absolute top-14 left-0 right-0 flex flex-col`}
             >
               <div
@@ -201,14 +204,14 @@ export default function Header() {
               <a className="hidden md:inline text-gray-800 dark:border-gray-900 dark:hover:text-yellow-400 hover:text-yellow-400 dark:text-white border-solid border-white border-2 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5   focus:outline-none dark:focus:ring-gray-800">
                 <DarkmodeBtn />
               </a>
-              {isDropOpen === FALSE ? (
+              {!isDropOpen ? (
                 <GiHamburgerMenu
-                  className="md:hidden rounded-lg focus:outline-none focus:shadow-outline mr-3"
+                  className="md:hidden rounded-lg focus:outline-none focus:shadow-outline mr-3 cursor-pointer"
                   onClick={clickDropdownMenu}
                 />
               ) : (
                 <IoMdClose
-                  className="md:hidden rounded-lg focus:outline-none focus:shadow-outline mr-3"
+                  className="md:hidden rounded-lg focus:outline-none focus:shadow-outline mr-3 cursor-pointer"
                   onClick={clickDropdownMenu}
                 />
               )}

@@ -49,7 +49,7 @@ export default function LoginInput(props: LoginInputProps) {
                 props.setIsPwdView(!props.isPwdView)
               }}
             >
-              <IoMdEye className="w-4 h-4" />
+              <IoMdEye className="w-4 h-4 text-black dark:text-white" />
             </button>
           </>
         ) : (
