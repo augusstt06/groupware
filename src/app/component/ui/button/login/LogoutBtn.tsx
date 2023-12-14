@@ -1,10 +1,8 @@
 import { useEffect } from 'react'
 
-import { useRouter } from 'next/navigation'
 import { FaPowerOff } from 'react-icons/fa'
 
 import { KEY_ACCESS_TOKEN, KEY_LOGIN, KEY_ORGANIZATION } from '@/app/constant/constant'
-import { ROUTE_LOGIN } from '@/app/constant/route-constant'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleDeleteCookies, moduleGetCookie } from '@/app/module/utils/cookie'
 import { modulePostFetch } from '@/app/module/utils/moduleFetch'
@@ -17,8 +15,6 @@ import {
 import { type LogoutBtnProps } from '@/app/types/ui/btnTypes'
 
 export default function LogoutBtn(props: LogoutBtnProps) {
-  const router = useRouter()
-
   const dispatch = useAppDispatch()
   const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
   const attendanceStatus = useAppSelector((state) => state.userInfo.attendance)
@@ -35,9 +31,8 @@ export default function LogoutBtn(props: LogoutBtnProps) {
       const res = await modulePostFetch<FetchResponseType<string>>(fetchLogoutProps)
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
       dispatch(resetReducer())
-      moduleDeleteCookies(KEY_ACCESS_TOKEN, KEY_LOGIN, KEY_ORGANIZATION)
       props.setConfirmValue(false)
-      router.push(ROUTE_LOGIN)
+      moduleDeleteCookies(KEY_ACCESS_TOKEN, KEY_LOGIN, KEY_ORGANIZATION)
     } catch (err) {
       alert('로그아웃이 실패했습니다.')
     }

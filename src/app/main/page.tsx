@@ -40,6 +40,7 @@ export default function Main() {
   const dispatch = useAppDispatch()
   const router = useRouter()
   const [accessToken, setAccessToken] = useState(moduleGetCookie(KEY_ACCESS_TOKEN))
+  const orgToken = moduleGetCookie(KEY_ORGANIZATION)
   const decodeToken = moduleDecodeToken(accessToken)
   const attendanceTime = useAppSelector((state) => state.userInfo.attendance.time)
   const uuid =
@@ -97,24 +98,33 @@ export default function Main() {
   }
 
   useEffect(() => {
+    if (accessToken === ERR_COOKIE_NOT_FOUND) {
+      router.push(ROUTE_ERR_NOT_FOUND_ACCESS_TOKEN)
+      return
+    }
+    if (orgToken === ERR_COOKIE_NOT_FOUND) {
+      router.push(ROUTE_ERR_NOT_FOUND_ORG_TOKEN)
+      return
+    }
     let newAccessToken
-    let newOrgCookie
+    let newOrgToken
     let newLoginToken
     const checkAccessToken = () => {
       newAccessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
-      newOrgCookie = moduleGetCookie(KEY_ORGANIZATION)
+      newOrgToken = moduleGetCookie(KEY_ORGANIZATION)
       newLoginToken = moduleGetCookie(KEY_LOGIN)
       if (newAccessToken === ERR_COOKIE_NOT_FOUND) {
+        moduleDeleteCookies(KEY_LOGIN, KEY_ORGANIZATION)
         router.push(ROUTE_ERR_NOT_FOUND_ACCESS_TOKEN)
       } else if (newAccessToken !== accessToken) {
         setAccessToken(newAccessToken)
       }
-      if (newOrgCookie !== TRUE) {
+      if (newOrgToken !== TRUE) {
         moduleDeleteCookies(KEY_ORGANIZATION, KEY_LOGIN)
         router.push(ROUTE_ERR_NOT_FOUND_ORG_TOKEN)
       }
       if (newLoginToken !== TRUE) {
-        moduleDeleteCookies(KEY_ACCESS_TOKEN, KEY_LOGIN)
+        moduleDeleteCookies(KEY_ACCESS_TOKEN, KEY_LOGIN, KEY_ORGANIZATION)
         router.push(ROUTE_ERR_NOT_FOUND_ACCESS_TOKEN)
       }
     }

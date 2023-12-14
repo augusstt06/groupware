@@ -3,15 +3,27 @@
 import { useEffect, useState } from 'react'
 
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { AiOutlineMail } from 'react-icons/ai'
 import { RiLockPasswordFill } from 'react-icons/ri'
 
 import ErrorAlert from './component/ui/alert/ErrorAlert'
 import LoginBtn from './component/ui/button/login/LoginBtn'
 import LoginInput from './component/ui/input/login/LoginInput'
-import { KEY_LOGIN, KEY_ORGANIZATION, REGISTER_EMAIL, REGISTER_PWD } from './constant/constant'
+import {
+  KEY_ACCESS_TOKEN,
+  KEY_LOGIN,
+  KEY_ORGANIZATION,
+  REGISTER_EMAIL,
+  REGISTER_PWD,
+} from './constant/constant'
 import { ERR_COOKIE_NOT_FOUND } from './constant/errorMsg'
-import { ROUTE_FIND_PWD, ROUTE_SIGNUP } from './constant/route-constant'
+import {
+  ROUTE_ERR_NOT_FOUND_ORG_TOKEN,
+  ROUTE_FIND_PWD,
+  ROUTE_MAIN,
+  ROUTE_SIGNUP,
+} from './constant/route-constant'
 import useInput from './module/hooks/reactHooks/useInput'
 import { moduleDeleteCookies, moduleGetCookie } from './module/utils/cookie'
 import { type UseInputProps } from './types/moduleTypes'
@@ -20,8 +32,11 @@ export default function Login() {
   const [emailInput, pwdInput]: UseInputProps[] = [REGISTER_EMAIL, REGISTER_PWD].map(
     (title: string) => useInput('', title),
   )
-  const orgCookie = moduleGetCookie(KEY_ORGANIZATION)
+
+  const router = useRouter()
+  const orgToken = moduleGetCookie(KEY_ORGANIZATION)
   const loginToken = moduleGetCookie(KEY_LOGIN)
+  const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
   const [isPwdView, setIsPwdView] = useState(false)
 
   const [errorState, setErrorState] = useState({
@@ -43,7 +58,15 @@ export default function Login() {
   }
 
   useEffect(() => {
-    if (orgCookie !== ERR_COOKIE_NOT_FOUND) {
+    if (accessToken !== ERR_COOKIE_NOT_FOUND) {
+      if (orgToken === ERR_COOKIE_NOT_FOUND) {
+        router.push(ROUTE_ERR_NOT_FOUND_ORG_TOKEN)
+      } else {
+        router.push(ROUTE_MAIN)
+      }
+      return
+    }
+    if (orgToken !== ERR_COOKIE_NOT_FOUND) {
       moduleDeleteCookies(KEY_ORGANIZATION)
     }
     if (loginToken !== ERR_COOKIE_NOT_FOUND) {

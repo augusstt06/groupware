@@ -10,13 +10,14 @@ import { NavigationBtn } from '@/app/component/ui/button/BtnGroups'
 import RegisterOrgLoginBtn from '@/app/component/ui/button/signup/RegisterOrgLoginBtn'
 import { KEY_ACCESS_TOKEN, KEY_LOGIN, ORG_CREATE, ORG_JOIN } from '@/app/constant/constant'
 import { ERR_COOKIE_NOT_FOUND } from '@/app/constant/errorMsg'
-import { ROUTE_ERR_NOT_FOUND_ACCESS_TOKEN } from '@/app/constant/route-constant'
+import { ROUTE_ERR_NOT_FOUND_ACCESS_TOKEN, ROUTE_MAIN } from '@/app/constant/route-constant'
 import { moduleDeleteCookies, moduleGetCookie } from '@/app/module/utils/cookie'
 
 export default function RegisterOrgLogin() {
   const router = useRouter()
 
   const [accessToken, setAccessToken] = useState(moduleGetCookie(KEY_ACCESS_TOKEN))
+  const loginToken = moduleGetCookie(KEY_LOGIN)
 
   const [organization, setOrganization] = useState('')
   const [errorState, setErrorState] = useState({
@@ -43,8 +44,11 @@ export default function RegisterOrgLogin() {
     })
   }
   useEffect(() => {
+    if (accessToken !== ERR_COOKIE_NOT_FOUND && loginToken !== ERR_COOKIE_NOT_FOUND) {
+      router.push(ROUTE_MAIN)
+      return
+    }
     const checkAccessToken = () => {
-      const loginToken = moduleGetCookie(KEY_LOGIN)
       const newAccessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
       if (newAccessToken === ERR_COOKIE_NOT_FOUND) {
         router.push(ROUTE_ERR_NOT_FOUND_ACCESS_TOKEN)

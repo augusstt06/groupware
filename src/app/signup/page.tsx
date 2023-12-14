@@ -10,6 +10,7 @@ import { NavigationBtn } from '../component/ui/button/BtnGroups'
 import { SignupBtn } from '../component/ui/button/signup/SignupBtn'
 import {
   KEY_ACCESS_TOKEN,
+  KEY_LOGIN,
   REGISTER_EMAIL,
   REGISTER_NAME,
   REGISTER_ORG_DESCRIPTION,
@@ -19,12 +20,13 @@ import {
   REGISTER_POSITION,
 } from '../constant/constant'
 import { ERR_COOKIE_NOT_FOUND } from '../constant/errorMsg'
-import { ROUTE_SIGNUP_ORG } from '../constant/route-constant'
+import { ROUTE_MAIN, ROUTE_SIGNUP_ORG } from '../constant/route-constant'
 import { useAppSelector } from '../module/hooks/reduxHooks/index'
 import { moduleGetCookie } from '../module/utils/cookie'
 import inputValidate from '../module/utils/inputValidate'
 
 export default function Signup() {
+  const loginToken = moduleGetCookie(KEY_LOGIN)
   const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
   const orgState = useAppSelector((state) => state.orgInfo)
   const router = useRouter()
@@ -90,6 +92,10 @@ export default function Signup() {
 
   useEffect(() => {
     if (accessToken !== ERR_COOKIE_NOT_FOUND) {
+      if (loginToken !== ERR_COOKIE_NOT_FOUND) {
+        router.push(ROUTE_MAIN)
+        return
+      }
       router.push(ROUTE_SIGNUP_ORG)
     }
     if (orgState.createOrg.name !== '' || orgState.joinOrg.code !== '') {
