@@ -20,7 +20,9 @@ export function middleware(req: NextRequest) {
   const loginToken = req.cookies.get(KEY_LOGIN)
 
   // eslint-disable-next-line no-console
-  console.log('At beginning', accessToken)
+  console.log('MIDDLEWARE, PATH NAME:', req.nextUrl.pathname)
+  // eslint-disable-next-line no-console
+  console.log('MIDDLEWARE, BASE PATH:', req.nextUrl.basePath)
 
   switch (req.nextUrl.pathname) {
     case ROUTE_FIND_PWD:
@@ -47,20 +49,46 @@ export function middleware(req: NextRequest) {
       }
       break
     case ROUTE_LOGIN:
+      // eslint-disable-next-line no-console
+      console.log('IN LOGIN, PATH NAME:', req.nextUrl.pathname)
+      // eslint-disable-next-line no-console
+      console.log('IN LOGIN, BASE PATH:', req.nextUrl.basePath)
+      // eslint-disable-next-line no-console
+      console.log('IN LOGIN, req.url:', req.url)
+
       if (accessToken !== undefined && accessToken !== null) {
+        // eslint-disable-next-line no-console
+        console.log('IN LOGIN, ACCESS TOKEN IS NOT NULL:', accessToken)
+
         if (orgToken === undefined) {
+          // eslint-disable-next-line no-console
+          console.log('IN LOGIN, ORG TOKEN IS NOT NULL:', orgToken)
+
           return NextResponse.redirect(new URL(ROUTE_ERR_NOT_FOUND_ORG_TOKEN, req.url))
         }
+
+        // eslint-disable-next-line no-console
+        console.log('IN LOGIN, ORG TOKEN IS NULL AND ACCESS TOKEN IS NOT NULL')
+
         return NextResponse.redirect(new URL(ROUTE_ERR_ALREADY_LOGIN, req.url))
       }
+
       // eslint-disable-next-line no-console
-      console.log(accessToken)
+      console.log('IN LOGIN, ACCESS TOKEN IS NULL')
 
       break
     case ROUTE_MAIN:
-      if (accessToken === undefined)
+      // eslint-disable-next-line no-console
+      console.log('IN, MAIN:', accessToken, orgToken)
+
+      if (accessToken === undefined) {
+        // eslint-disable-next-line no-console
+        console.log('IN MAIN, ACCESS TOKEN IS UNDEFINED', accessToken)
         return NextResponse.redirect(new URL(ROUTE_ERR_NOT_FOUND_ACCESS_TOKEN, req.url))
-      else if (accessToken !== undefined && orgToken === undefined)
+      } else if (accessToken !== undefined && orgToken === undefined) {
+        // eslint-disable-next-line no-console
+        console.log('IN MAIN, ACCESS TOKEN AND ORG TOKEN ARE NOT UNDEFINED', accessToken, orgToken)
         return NextResponse.redirect(new URL(ROUTE_ERR_NOT_FOUND_ORG_TOKEN, req.url))
+      }
   }
 }
