@@ -28,7 +28,7 @@ export default function LoginInput(props: LoginInputProps) {
     }
   }, [useInput.value])
   return (
-    <>
+    <div className="w-full">
       <InputLabel title={props.title} />
       <div className="flex relative mt-2 mb-6">
         <InputIconlabel icon={props.icon} />
@@ -49,13 +49,13 @@ export default function LoginInput(props: LoginInputProps) {
                 props.setIsPwdView(!props.isPwdView)
               }}
             >
-              <IoMdEye className="w-4 h-4" />
+              <IoMdEye className="w-4 h-4 text-black dark:text-white" />
             </button>
           </>
         ) : (
           <></>
         )}
       </div>
-    </>
+    </div>
   )
 }

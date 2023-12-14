@@ -2,13 +2,14 @@
 import { useEffect, useState } from 'react'
 
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 import RegisterInfo from '../component/page/userRegister/RegisterInfo'
 import ErrorAlert from '../component/ui/alert/ErrorAlert'
 import { NavigationBtn } from '../component/ui/button/BtnGroups'
 import { SignupBtn } from '../component/ui/button/signup/SignupBtn'
 import {
-  KEY_ORGANIZATION,
+  KEY_ACCESS_TOKEN,
   REGISTER_EMAIL,
   REGISTER_NAME,
   REGISTER_ORG_DESCRIPTION,
@@ -18,12 +19,15 @@ import {
   REGISTER_POSITION,
 } from '../constant/constant'
 import { ERR_COOKIE_NOT_FOUND } from '../constant/errorMsg'
+import { ROUTE_SIGNUP_ORG } from '../constant/route-constant'
 import { useAppSelector } from '../module/hooks/reduxHooks/index'
-import { moduleDeleteCookies, moduleGetCookie } from '../module/utils/cookie'
+import { moduleGetCookie } from '../module/utils/cookie'
 import inputValidate from '../module/utils/inputValidate'
 
 export default function Signup() {
-  const orgCookie = moduleGetCookie(KEY_ORGANIZATION)
+  const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
+  const orgState = useAppSelector((state) => state.orgInfo)
+  const router = useRouter()
   const [isPwdView, setIsPwdView] = useState(false)
   const [isPwdConfirmView, setisPwdConfirmView] = useState(false)
   const [errorState, setErrorState] = useState({
@@ -85,8 +89,11 @@ export default function Signup() {
   }
 
   useEffect(() => {
-    if (orgCookie !== ERR_COOKIE_NOT_FOUND) {
-      moduleDeleteCookies(KEY_ORGANIZATION)
+    if (accessToken !== ERR_COOKIE_NOT_FOUND) {
+      router.push(ROUTE_SIGNUP_ORG)
+    }
+    if (orgState.createOrg.name !== '' || orgState.joinOrg.code !== '') {
+      router.push(ROUTE_SIGNUP_ORG)
     }
     const deleteStorage = (arr: string[]) => {
       arr.forEach((name) => {
@@ -106,8 +113,8 @@ export default function Signup() {
 
   return (
     <div className="flex flex-col justify-center items-center p 1">
-      <div className="text-xl font-bold mt-20">회원가입</div>
-      <div className="mt-5 w-3/5">
+      <div className="md:text-xl text-medium font-bold mt-20">회원가입</div>
+      <div className="mt-5 md:w-3/5 w-4/5">
         <RegisterInfo
           isPwdView={isPwdView}
           setIsPwdView={setIsPwdView}
@@ -124,7 +131,7 @@ export default function Signup() {
           <></>
         )}
       </div>
-      <div className="flex flex-row justify-around items-center w-1/3 mt-5">
+      <div className="flex flex-row justify-around items-center md:w-1/3 w-2/3 mt-5">
         <Link href="/">
           <NavigationBtn title="메인으로" />
         </Link>
