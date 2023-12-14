@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation'
 
-import { ROUTE_MAIN } from '@/app/constant/constant'
+import { ROUTE_MAIN } from '@/app/constant/route-constant'
 
 export default function AlreadyLogin() {
   const router = useRouter()
@@ -10,7 +10,7 @@ export default function AlreadyLogin() {
     router.push(ROUTE_MAIN)
   }
   return (
-    <div className="grid h-screen px-4 bg-gray-900 place-content-center">
+    <div className="grid h-screen px-4 place-content-center">
       <h1 className="tracking-widest text-gray-400 font-bold uppercase">
         이미 로그인되어 있는 유저입니다.
       </h1>

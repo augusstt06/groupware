@@ -2,19 +2,23 @@
 import { useEffect, useState } from 'react'
 
 import { useRouter } from 'next/navigation'
+import { TbSquareArrowLeftFilled, TbSquareArrowRightFilled } from 'react-icons/tb'
 
 import MainHub from '../component/page/main/hub/MainHub'
 import MainCardGroup from '../component/ui/card/MainCardGroup'
 import {
-  COMPLETE,
   KEY_ACCESS_TOKEN,
+  KEY_LOGIN,
   KEY_ORGANIZATION,
   KEY_UUID,
   KEY_X_ORGANIZATION_CODE,
-  ROUTE_ERR_NOT_FOUND_ACCESS_TOKEN,
-  ROUTE_ERR_NOT_FOUND_ORG_TOKEN,
+  TRUE,
 } from '../constant/constant'
 import { ERR_COOKIE_NOT_FOUND, ERR_ORG_NOT_FOUND } from '../constant/errorMsg'
+import {
+  ROUTE_ERR_NOT_FOUND_ACCESS_TOKEN,
+  ROUTE_ERR_NOT_FOUND_ORG_TOKEN,
+} from '../constant/route-constant'
 import { useAppDispatch, useAppSelector } from '../module/hooks/reduxHooks'
 import { moduleDecodeToken, moduleDeleteCookies, moduleGetCookie } from '../module/utils/cookie'
 import { moduleGetFetch } from '../module/utils/moduleFetch'
@@ -36,7 +40,6 @@ export default function Main() {
   const dispatch = useAppDispatch()
   const router = useRouter()
   const [accessToken, setAccessToken] = useState(moduleGetCookie(KEY_ACCESS_TOKEN))
-  const orgCookie = moduleGetCookie(KEY_ORGANIZATION)
   const decodeToken = moduleDecodeToken(accessToken)
   const attendanceTime = useAppSelector((state) => state.userInfo.attendance.time)
   const uuid =
@@ -96,32 +99,64 @@ export default function Main() {
   useEffect(() => {
     let newAccessToken
     let newOrgCookie
+    let newLoginToken
     const checkAccessToken = () => {
       newAccessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
       newOrgCookie = moduleGetCookie(KEY_ORGANIZATION)
+      newLoginToken = moduleGetCookie(KEY_LOGIN)
       if (newAccessToken === ERR_COOKIE_NOT_FOUND) {
         router.push(ROUTE_ERR_NOT_FOUND_ACCESS_TOKEN)
       } else if (newAccessToken !== accessToken) {
         setAccessToken(newAccessToken)
       }
-      if (newOrgCookie !== COMPLETE) {
+      if (newOrgCookie !== TRUE) {
+        moduleDeleteCookies(KEY_ORGANIZATION, KEY_LOGIN)
         router.push(ROUTE_ERR_NOT_FOUND_ORG_TOKEN)
+      }
+      if (newLoginToken !== TRUE) {
+        moduleDeleteCookies(KEY_ACCESS_TOKEN, KEY_LOGIN)
+        router.push(ROUTE_ERR_NOT_FOUND_ACCESS_TOKEN)
       }
     }
     const intervalId = setInterval(checkAccessToken, 500)
-    if (accessToken !== ERR_COOKIE_NOT_FOUND && orgCookie === COMPLETE) void fetchGetUsers()
+    if (accessToken !== ERR_COOKIE_NOT_FOUND) void fetchGetUsers()
     return () => {
       clearInterval(intervalId)
     }
-  }, [accessToken, orgCookie])
+  }, [accessToken])
 
+  const [isSideOpen, setIsSideOpen] = useState(false)
+  const clickSideOpen = () => {
+    if (isSideOpen) setIsSideOpen(false)
+    else {
+      setIsSideOpen(true)
+    }
+  }
   return (
     <>
-      <main className="grid gap-4 grid-cols-4 h-4/5  pt-10 ml-10 mr-10">
-        <div className="col-span-1 w-5/6">
+      <main className="w-full grid gap-4 grid-cols-4 h-4/5 pt-10 md:ml-10 md:mr-10 ml-5 z-1">
+        {!isSideOpen ? (
+          <TbSquareArrowRightFilled
+            className="md:hidden w-8 h-8 absolute top-1/2 dark:text-gray-300 left-0"
+            onClick={clickSideOpen}
+          />
+        ) : (
+          <TbSquareArrowLeftFilled
+            className="md:hidden w-8 h-8 absolute top-1/2 dark:text-gray-300 left-40"
+            onClick={clickSideOpen}
+          />
+        )}
+
+        <div
+          className={`md:static col-span-1 md:w-5/6 md:block ${
+            isSideOpen
+              ? 'absolute md:bg-none bg-white dark:bg-gray-900 top-14 p-2 left-0 z-10'
+              : 'hidden'
+          }`}
+        >
           <MainCardGroup reRender={reRender} setRerender={setRerender} />
         </div>
-        <div className="col-span-3 mr-10">
+        <div className="md:col-span-3 mr-10 col-span-4">
           <MainHub />
         </div>
       </main>

@@ -23,11 +23,11 @@ export default function DarkmodeBtn() {
   const currentTheme = theme === 'system' ? systemTheme : theme
 
   return (
-    <button className="relative inline-flex items-center text-gray-900 dark:text-white hover:text-yellow-400 dark:hover:text-yellow-400 dark:hover:border-yellow-400 border-2 border-white dark:border-gray-900 hover:border-yellow-400 px-5 py-2.5 text-sm font-medium text-center rounded-lg  focus:ring-4 focus:outline-none focus:ring-yellow-400  dark:focus:ring-yellow-400">
+    <button>
       {currentTheme === 'dark' ? (
-        <BsSunFill onClick={changeThemeMode('light')} className="w-5 h-5" />
+        <BsSunFill onClick={changeThemeMode('light')} className="md:w-5 md:h-5 w-4 h-4" />
       ) : (
-        <BsMoonFill onClick={changeThemeMode('dark')} className="w-5 h-5" />
+        <BsMoonFill onClick={changeThemeMode('dark')} className="md:w-5 md:h-5 w-4 h-4" />
       )}
     </button>
   )

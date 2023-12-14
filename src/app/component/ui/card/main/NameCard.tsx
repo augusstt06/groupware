@@ -16,12 +16,12 @@ export default function NameCard() {
           <div className="flex justify-end px-4 pt-4"></div>
           <div className="flex flex-col items-center pb-4">
             <div className="flex flex-col items-center justify-start w-4/5">
-              <h5 className="mb-1 text-xl font-medium text-gray-900 dark:text-white mr-2">
+              <span className="mb-1 text-base md:text-2xl text-gray-900 dark:text-white mr-2">
                 {extraUserInfo.name}
-              </h5>
-              <p className="mb-1 text-medium font-medium text-gray-900 dark:text-white mr-2">
+              </span>
+              <span className="mb-1 md:text-base text-sm text-gray-900 dark:text-white mr-2">
                 {extraUserInfo.organizationName}
-              </p>
+              </span>
             </div>
           </div>
         </>

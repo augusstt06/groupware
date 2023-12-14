@@ -6,22 +6,19 @@ import { useRouter } from 'next/navigation'
 
 import RegisterOrg from '@/app/component/page/organization/RegisterOrg'
 import ErrorAlert from '@/app/component/ui/alert/ErrorAlert'
+import { NavigationBtn } from '@/app/component/ui/button/BtnGroups'
 import RegisterOrgLoginBtn from '@/app/component/ui/button/signup/RegisterOrgLoginBtn'
-import {
-  KEY_ACCESS_TOKEN,
-  ORG_CREATE,
-  ORG_JOIN,
-  ROUTE_ERR_NOT_FOUND_ACCESS_TOKEN,
-} from '@/app/constant/constant'
+import { KEY_ACCESS_TOKEN, KEY_LOGIN, ORG_CREATE, ORG_JOIN } from '@/app/constant/constant'
 import { ERR_COOKIE_NOT_FOUND } from '@/app/constant/errorMsg'
-import { moduleGetCookie } from '@/app/module/utils/cookie'
+import { ROUTE_ERR_NOT_FOUND_ACCESS_TOKEN } from '@/app/constant/route-constant'
+import { moduleDeleteCookies, moduleGetCookie } from '@/app/module/utils/cookie'
 
 export default function RegisterOrgLogin() {
   const router = useRouter()
 
   const [accessToken, setAccessToken] = useState(moduleGetCookie(KEY_ACCESS_TOKEN))
 
-  const [organization, setOrganization] = useState(ORG_CREATE)
+  const [organization, setOrganization] = useState('')
   const [errorState, setErrorState] = useState({
     isError: false,
     description: '',
@@ -47,11 +44,15 @@ export default function RegisterOrgLogin() {
   }
   useEffect(() => {
     const checkAccessToken = () => {
+      const loginToken = moduleGetCookie(KEY_LOGIN)
       const newAccessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
       if (newAccessToken === ERR_COOKIE_NOT_FOUND) {
         router.push(ROUTE_ERR_NOT_FOUND_ACCESS_TOKEN)
       } else if (newAccessToken !== accessToken) {
         setAccessToken(newAccessToken)
+      }
+      if (loginToken !== ERR_COOKIE_NOT_FOUND) {
+        moduleDeleteCookies(KEY_LOGIN)
       }
     }
 
@@ -63,34 +64,65 @@ export default function RegisterOrgLogin() {
   }, [accessToken])
 
   return (
-    <div className="flex flex-col justify-center items-center p 1">
-      <div className="text-xl font-bold mt-20">조직 생성 / 가입</div>
-      <div className="mt-5">
-        <button
-          type="button"
-          onClick={changeOrgType}
-          className="text-indigo-500 hover:text-white dark:text-white dark:bg-indigo-500 dark:border-white bg-white border-indigo-500 hover:bg-indigo-500 focus:ring-4 focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 dark:hover:bg-white dark:hover:text-indigo-500 mb-2 border-2 dark:hover:border-indigo-500/75"
-        >
-          {organization === ORG_CREATE ? '기존 조직에 참여하기' : '새로운 조직 생성하기'}
-        </button>
-      </div>
-      <div className="mt-5 w-3/5">
-        <RegisterOrg
-          organization={organization}
-          setOrganization={setOrganization}
-          setErrMsg={setErrMsg}
-        />
-        {errorState.isError ? (
-          <div className="mb-5 flex flex-col justify-center items-center">
-            <ErrorAlert description={errorState.description} handleClickError={handleClickError} />
+    <div className="flex flex-col justify-center items-center h-screen px-4 place-content-center">
+      {organization === '' ? (
+        <>
+          <h2 className="mb-5 md:text-2xl text-xl font-bold text-center">조직 선택</h2>
+          <span className="md:text-medium text-xs mt-5">
+            조직 생성/코드 입력으로 조직에 참가해 주세요
+          </span>
+          <div className="flex flex-row md:w-1/3 w-full justify-around mt-10">
+            <div
+              onClick={() => {
+                setOrganization(ORG_CREATE)
+              }}
+            >
+              <NavigationBtn title="조직 생성" />
+            </div>
+            <div
+              onClick={() => {
+                setOrganization(ORG_JOIN)
+              }}
+            >
+              <NavigationBtn title="조직 가입" />
+            </div>
           </div>
-        ) : (
-          <></>
-        )}
-      </div>
-      <div className="flex flex-row justify-around items-center w-1/3 mt-5">
-        <RegisterOrgLoginBtn orgType={organization} setErrMsg={setErrMsg} />
-      </div>
+        </>
+      ) : (
+        <div className="flex flex-col w-full justify-center items-center h-screen px-4 place-content-center">
+          <div className="md:text-2xl text-xl font-bold mt-20">
+            {organization === ORG_CREATE ? '조직 생성' : '조직 가입'}
+          </div>
+          <div className="mt-5">
+            <span
+              className="md:text-sm text-xs text-gray-400 hover:text-gray-200"
+              onClick={changeOrgType}
+            >
+              {organization === ORG_CREATE ? '기존 조직에 참여하기' : '새로운 조직 생성하기'}
+            </span>
+          </div>
+          <div className="mt-5 md:w-3/5 w-full">
+            <RegisterOrg
+              organization={organization}
+              setOrganization={setOrganization}
+              setErrMsg={setErrMsg}
+            />
+            {errorState.isError ? (
+              <div className="mb-5 flex flex-col justify-center items-center">
+                <ErrorAlert
+                  description={errorState.description}
+                  handleClickError={handleClickError}
+                />
+              </div>
+            ) : (
+              <></>
+            )}
+          </div>
+          <div className="flex flex-row justify-around items-center md:w-1/3 w-2/3 mt-5">
+            <RegisterOrgLoginBtn orgType={organization} setErrMsg={setErrMsg} />
+          </div>
+        </div>
+      )}
     </div>
   )
 }

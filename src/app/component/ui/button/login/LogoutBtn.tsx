@@ -1,8 +1,10 @@
 import { useEffect } from 'react'
 
 import { useRouter } from 'next/navigation'
+import { FaPowerOff } from 'react-icons/fa'
 
-import { KEY_ACCESS_TOKEN, KEY_ORGANIZATION } from '@/app/constant/constant'
+import { KEY_ACCESS_TOKEN, KEY_LOGIN, KEY_ORGANIZATION } from '@/app/constant/constant'
+import { ROUTE_LOGIN } from '@/app/constant/route-constant'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleDeleteCookies, moduleGetCookie } from '@/app/module/utils/cookie'
 import { modulePostFetch } from '@/app/module/utils/moduleFetch'
@@ -33,9 +35,9 @@ export default function LogoutBtn(props: LogoutBtnProps) {
       const res = await modulePostFetch<FetchResponseType<string>>(fetchLogoutProps)
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
       dispatch(resetReducer())
-      moduleDeleteCookies(KEY_ACCESS_TOKEN, KEY_ORGANIZATION)
+      moduleDeleteCookies(KEY_ACCESS_TOKEN, KEY_LOGIN, KEY_ORGANIZATION)
       props.setConfirmValue(false)
-      router.push('/')
+      router.push(ROUTE_LOGIN)
     } catch (err) {
       alert('로그아웃이 실패했습니다.')
     }
@@ -55,12 +57,8 @@ export default function LogoutBtn(props: LogoutBtnProps) {
   }, [props.confirmValue])
   return (
     <>
-      <button
-        type="button"
-        className="text-gray-800 dark:text-white focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5  focus:outline-none dark:focus:ring-gray-800"
-        onClick={handleClick}
-      >
-        Logout
+      <button type="button" onClick={handleClick}>
+        <FaPowerOff className="md:w-5 md:h-5 w-4 h-4" />
       </button>
     </>
   )

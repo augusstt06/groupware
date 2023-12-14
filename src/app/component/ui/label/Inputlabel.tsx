@@ -4,7 +4,7 @@ export function InputLabel(props: BtnProps) {
   return (
     <label
       htmlFor="input-group-1"
-      className="block mb-2 text-sm font-bold text-gray-900 dark:text-white"
+      className="block mb-2 md:text-sm text-xs md:font-bold text-gray-900 dark:text-white"
     >
       {props.title}
     </label>
