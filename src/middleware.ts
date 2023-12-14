@@ -19,6 +19,9 @@ export function middleware(req: NextRequest) {
   const orgToken = req.cookies.get(KEY_ORGANIZATION)
   const loginToken = req.cookies.get(KEY_LOGIN)
 
+  // eslint-disable-next-line no-console
+  console.log('At beginning', accessToken)
+
   switch (req.nextUrl.pathname) {
     case ROUTE_FIND_PWD:
       if (accessToken !== undefined)
@@ -44,12 +47,15 @@ export function middleware(req: NextRequest) {
       }
       break
     case ROUTE_LOGIN:
-      if (accessToken !== undefined) {
+      if (accessToken !== undefined && accessToken !== null) {
         if (orgToken === undefined) {
           return NextResponse.redirect(new URL(ROUTE_ERR_NOT_FOUND_ORG_TOKEN, req.url))
         }
         return NextResponse.redirect(new URL(ROUTE_ERR_ALREADY_LOGIN, req.url))
       }
+      // eslint-disable-next-line no-console
+      console.log(accessToken)
+
       break
     case ROUTE_MAIN:
       if (accessToken === undefined)
