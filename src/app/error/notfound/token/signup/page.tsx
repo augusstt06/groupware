@@ -4,12 +4,13 @@ import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 
 import { KEY_LOGIN, KEY_ORGANIZATION } from '@/app/constant/constant'
+import { ROUTE_LOGIN } from '@/app/constant/route-constant'
 import { moduleDeleteCookies } from '@/app/module/utils/cookie'
 
 export default function NotfoundAccessTokenInSignup() {
   const router = useRouter()
   const handleClick = () => {
-    router.push('/')
+    router.push(ROUTE_LOGIN)
   }
   useEffect(() => {
     moduleDeleteCookies(KEY_ORGANIZATION, KEY_LOGIN)
@@ -24,7 +25,7 @@ export default function NotfoundAccessTokenInSignup() {
         className=" mt-5 text-medium font-bold bg-gray-500 text-white hover:text-white focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 "
         onClick={handleClick}
       >
-        메인으로
+        로그인 화면으로
       </button>
     </div>
   )
