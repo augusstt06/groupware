@@ -13,15 +13,16 @@ import {
   KEY_X_ORGANIZATION_CODE,
   MAIN,
   TODO,
-  TRUE,
 } from '../constant/constant'
 import { ERR_COOKIE_NOT_FOUND, ERR_ORG_NOT_FOUND } from '../constant/errorMsg'
-import {
-  ROUTE_ERR_NOT_FOUND_ACCESS_TOKEN,
-  ROUTE_ERR_NOT_FOUND_ORG_TOKEN,
-} from '../constant/route-constant'
+import { ROUTE_ERR_NOT_FOUND_ORG_TOKEN } from '../constant/route-constant'
 import { useAppDispatch, useAppSelector } from '../module/hooks/reduxHooks'
-import { moduleDecodeToken, moduleDeleteCookies, moduleGetCookie } from '../module/utils/cookie'
+import { moduleCheckUserState } from '../module/utils/moduleCheckUserState'
+import {
+  moduleDecodeToken,
+  moduleDeleteCookies,
+  moduleGetCookie,
+} from '../module/utils/moduleCookie'
 import { moduleGetFetch } from '../module/utils/moduleFetch'
 import {
   updateAttendanceStatusReducer,
@@ -34,6 +35,7 @@ import {
   type CustomDecodeTokenType,
   type FailResponseType,
   type FetchResponseType,
+  type ModuleCheckUserStateProps,
   type ModuleGetFetchProps,
   type SuccessResponseType,
 } from '../types/moduleTypes'
@@ -100,42 +102,15 @@ export default function Main() {
   }
 
   useEffect(() => {
-    if (accessToken === ERR_COOKIE_NOT_FOUND) {
-      router.push(ROUTE_ERR_NOT_FOUND_ACCESS_TOKEN)
-      return
+    const moduleProps: ModuleCheckUserStateProps = {
+      useRouter: router,
+      token: accessToken,
+      setToken: setAccessToken,
+      isCheckInterval: true,
+      completeState: loginCompleteState,
+      fetchFunc: fetchGetUsers,
     }
-    if (loginCompleteState !== TRUE) {
-      router.push(ROUTE_ERR_NOT_FOUND_ORG_TOKEN)
-      return
-    }
-    let newAccessToken
-    // let newOrgState
-    // let newLoginState
-    const checkAccessToken = () => {
-      newAccessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
-      // newOrgState = useAppSelector((state) => state.maintain['organization-complete'])
-      // newLoginState = useAppSelector((state) => state.maintain['login-complete'])
-      if (newAccessToken === ERR_COOKIE_NOT_FOUND) {
-        moduleDeleteCookies(KEY_LOGIN_COMPLETE)
-        router.push(ROUTE_ERR_NOT_FOUND_ACCESS_TOKEN)
-      } else if (newAccessToken !== accessToken) {
-        setAccessToken(newAccessToken)
-      }
-      // if (newOrgState !== TRUE) {
-      //   dispatch(resetMaintainReucer())
-      //   router.push(ROUTE_ERR_NOT_FOUND_ORG_TOKEN)
-      // }
-      // if (newLoginState !== TRUE) {
-      //   moduleDeleteCookies(KEY_ACCESS_TOKEN)
-      //   dispatch(resetMaintainReucer())
-      //   router.push(ROUTE_ERR_NOT_FOUND_ACCESS_TOKEN)
-      // }
-    }
-    const intervalid = setInterval(checkAccessToken, 500)
-    if (accessToken !== ERR_COOKIE_NOT_FOUND) void fetchGetUsers()
-    return () => {
-      clearInterval(intervalid)
-    }
+    moduleCheckUserState(moduleProps)
   }, [accessToken])
 
   return (

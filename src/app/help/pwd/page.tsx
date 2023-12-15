@@ -11,7 +11,7 @@ import { KEY_ACCESS_TOKEN, REGISTER_EMAIL } from '@/app/constant/constant'
 import { ERR_COOKIE_NOT_FOUND } from '@/app/constant/errorMsg'
 import { ROUTE_LOGIN, ROUTE_MAIN } from '@/app/constant/route-constant'
 import useInput from '@/app/module/hooks/reactHooks/useInput'
-import { moduleGetCookie } from '@/app/module/utils/cookie'
+import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
 import { type UseInputProps } from '@/app/types/moduleTypes'
 
 export default function FindPwd() {

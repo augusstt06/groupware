@@ -6,14 +6,11 @@ import { useRouter } from 'next/navigation'
 
 import MainHub from '../component/page/main/hub/MainHub'
 import Sidebar from '../component/ui/sidebar/Sidebar'
-import { BOARD, KEY_ACCESS_TOKEN, KEY_LOGIN_COMPLETE, TRUE } from '../constant/constant'
-import { ERR_COOKIE_NOT_FOUND } from '../constant/errorMsg'
-import {
-  ROUTE_ERR_NOT_FOUND_ACCESS_TOKEN,
-  ROUTE_ERR_NOT_FOUND_ORG_TOKEN,
-} from '../constant/route-constant'
+import { BOARD, KEY_ACCESS_TOKEN, KEY_LOGIN_COMPLETE } from '../constant/constant'
 import { useAppSelector } from '../module/hooks/reduxHooks'
-import { moduleDeleteCookies, moduleGetCookie } from '../module/utils/cookie'
+import { moduleCheckUserState } from '../module/utils/moduleCheckUserState'
+import { moduleGetCookie } from '../module/utils/moduleCookie'
+import { type ModuleCheckUserStateProps } from '../types/moduleTypes'
 
 export default function Board() {
   const router = useRouter()
@@ -21,29 +18,14 @@ export default function Board() {
   const loginCompleteState = useAppSelector((state) => state.maintain[KEY_LOGIN_COMPLETE])
 
   useEffect(() => {
-    if (accessToken === ERR_COOKIE_NOT_FOUND) {
-      router.push(ROUTE_ERR_NOT_FOUND_ACCESS_TOKEN)
-      return
+    const moduleProps: ModuleCheckUserStateProps = {
+      useRouter: router,
+      token: accessToken,
+      setToken: setAccessToken,
+      completeState: loginCompleteState,
+      isCheckInterval: false,
     }
-    if (loginCompleteState !== TRUE) {
-      router.push(ROUTE_ERR_NOT_FOUND_ORG_TOKEN)
-      return
-    }
-    let newAccessToken
-    const checkAccessToken = () => {
-      newAccessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
-      if (newAccessToken === ERR_COOKIE_NOT_FOUND) {
-        moduleDeleteCookies(KEY_ACCESS_TOKEN)
-        router.push(ROUTE_ERR_NOT_FOUND_ACCESS_TOKEN)
-      } else if (newAccessToken !== accessToken) {
-        setAccessToken(newAccessToken)
-      }
-    }
-    const intervalid = setInterval(checkAccessToken, 500)
-
-    return () => {
-      clearInterval(intervalid)
-    }
+    moduleCheckUserState(moduleProps)
   })
   return (
     <main className="w-full grid gap-4 grid-cols-4 h-4/5 pt-10 md:ml-10 md:mr-10 ml-5 z-1">

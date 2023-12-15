@@ -17,8 +17,8 @@ import {
   errExist,
 } from '@/app/constant/errorMsg'
 import { useAppDispatch } from '@/app/module/hooks/reduxHooks'
-import inputValidate from '@/app/module/utils/inputValidate'
 import { moduleGetFetch } from '@/app/module/utils/moduleFetch'
+import inputValidate from '@/app/module/utils/moduleInputValidate'
 import {
   emailReducer,
   nameReducer,

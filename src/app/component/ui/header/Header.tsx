@@ -19,7 +19,7 @@ import { KEY_ACCESS_TOKEN, KEY_LOGIN_COMPLETE, TRUE } from '@/app/constant/const
 import { ERR_COOKIE_NOT_FOUND } from '@/app/constant/errorMsg'
 import { ROUTE_BOARD, ROUTE_MAIN } from '@/app/constant/route-constant'
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
-import { moduleGetCookie } from '@/app/module/utils/cookie'
+import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
 
 export default function Header() {
   const pathname = usePathname()
