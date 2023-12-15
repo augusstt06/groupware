@@ -5,7 +5,9 @@ import { TbSquareArrowLeftFilled, TbSquareArrowRightFilled } from 'react-icons/t
 
 import MainCardGroup from '../card/MainCardGroup'
 
-export default function Sidebar() {
+import { type SidebarProps } from '@/app/types/ui/uiTypes'
+
+export default function Sidebar(props: SidebarProps) {
   const [reRender, setRerender] = useState(false)
   const [isSideOpen, setIsSideOpen] = useState(false)
   const clickSideOpen = () => {
@@ -35,7 +37,7 @@ export default function Sidebar() {
             : 'hidden'
         }`}
       >
-        <MainCardGroup reRender={reRender} setRerender={setRerender} />
+        <MainCardGroup title={props.title} reRender={reRender} setRerender={setRerender} />
       </div>
     </>
   )

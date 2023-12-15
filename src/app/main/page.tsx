@@ -9,9 +9,10 @@ import {
   FALSE,
   KEY_ACCESS_TOKEN,
   KEY_LOGIN_COMPLETE,
-  KEY_ORGANIZATION_COMPLETE,
   KEY_UUID,
   KEY_X_ORGANIZATION_CODE,
+  MAIN,
+  TODO,
   TRUE,
 } from '../constant/constant'
 import { ERR_COOKIE_NOT_FOUND, ERR_ORG_NOT_FOUND } from '../constant/errorMsg'
@@ -115,7 +116,7 @@ export default function Main() {
       // newOrgState = useAppSelector((state) => state.maintain['organization-complete'])
       // newLoginState = useAppSelector((state) => state.maintain['login-complete'])
       if (newAccessToken === ERR_COOKIE_NOT_FOUND) {
-        moduleDeleteCookies(KEY_LOGIN_COMPLETE, KEY_ORGANIZATION_COMPLETE)
+        moduleDeleteCookies(KEY_LOGIN_COMPLETE)
         router.push(ROUTE_ERR_NOT_FOUND_ACCESS_TOKEN)
       } else if (newAccessToken !== accessToken) {
         setAccessToken(newAccessToken)
@@ -130,19 +131,19 @@ export default function Main() {
       //   router.push(ROUTE_ERR_NOT_FOUND_ACCESS_TOKEN)
       // }
     }
-    const intervalId = setInterval(checkAccessToken, 500)
+    const intervalid = setInterval(checkAccessToken, 500)
     if (accessToken !== ERR_COOKIE_NOT_FOUND) void fetchGetUsers()
     return () => {
-      clearInterval(intervalId)
+      clearInterval(intervalid)
     }
   }, [accessToken])
 
   return (
     <>
       <main className="w-full grid gap-4 grid-cols-4 h-4/5 pt-10 md:ml-10 md:mr-10 ml-5 z-1">
-        <Sidebar />
+        <Sidebar title={MAIN} />
         <div className="md:col-span-3 mr-10 col-span-4">
-          <MainHub title="TODO" />
+          <MainHub title={TODO} />
         </div>
       </main>
     </>
