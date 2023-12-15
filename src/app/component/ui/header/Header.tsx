@@ -103,10 +103,10 @@ export default function Header() {
             >
               <div
                 id="mega-menu-icons"
-                className="flex md:flex-row flex-col items-center w-full justify-center"
+                className="flex md:flex-row flex-col justify-center items-center w-full "
                 ref={dropRef}
               >
-                <ul className="md:w-2/3 w-1/3 flex flex-col items-center mt-4 text-sm md:font-medium md:flex-row md:mt-0 md:space-x-8 rtl:space-x-reverse mb-3">
+                <ul className="md:w-2/3 w-1/3 flex flex-col items-center mt-4 text-sm md:font-medium md:flex-row md:mt-0 md:space-x-8 rtl:space-x-reverse">
                   {menuList.map((data) => (
                     <li
                       key={data.title}
