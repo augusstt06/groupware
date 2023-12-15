@@ -15,8 +15,9 @@ import Confirm from '../confirm/Confirm'
 
 // import AlertIndicator from '../indicator/AlertIndicator'
 
-import { KEY_ACCESS_TOKEN, KEY_LOGIN, KEY_ORGANIZATION, TRUE } from '@/app/constant/constant'
+import { KEY_ACCESS_TOKEN, KEY_LOGIN_COMPLETE, TRUE } from '@/app/constant/constant'
 import { ERR_COOKIE_NOT_FOUND } from '@/app/constant/errorMsg'
+import { useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleGetCookie } from '@/app/module/utils/cookie'
 
 export default function Header() {
@@ -38,8 +39,7 @@ export default function Header() {
     project: false,
   })
   const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
-  const loginToken = moduleGetCookie(KEY_LOGIN)
-  const orgToken = moduleGetCookie(KEY_ORGANIZATION)
+  const loginCompleteState = useAppSelector((state) => state.maintain[KEY_LOGIN_COMPLETE])
   const handleOpen = (title: string) => {
     switch (title) {
       case 'Project':
@@ -79,11 +79,7 @@ export default function Header() {
 
   return (
     <nav className="relative bg-white border-gray-200 dark:bg-gray-900 z-999">
-      {mount &&
-      loginToken === TRUE &&
-      orgToken === TRUE &&
-      accessToken !== ERR_COOKIE_NOT_FOUND &&
-      isRender ? (
+      {mount && loginCompleteState === TRUE && accessToken !== ERR_COOKIE_NOT_FOUND && isRender ? (
         <>
           <div className="flex items-center justify-between max-w-screen-xl mx-auto p-4">
             <Link href="/main" className="flex items-center space-x-3 rtl:space-x-reverse ml-3">

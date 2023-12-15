@@ -2,11 +2,11 @@ import { useEffect } from 'react'
 
 import { FaPowerOff } from 'react-icons/fa'
 
-import { KEY_ACCESS_TOKEN, KEY_LOGIN, KEY_ORGANIZATION } from '@/app/constant/constant'
+import { FALSE, KEY_ACCESS_TOKEN } from '@/app/constant/constant'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleDeleteCookies, moduleGetCookie } from '@/app/module/utils/cookie'
 import { modulePostFetch } from '@/app/module/utils/moduleFetch'
-import { resetReducer } from '@/app/store/reducers/login/loginInfoReducer'
+import { updateLoginCompleteReducer } from '@/app/store/reducers/maintain/maintainReducer'
 import {
   type FailResponseType,
   type FetchResponseType,
@@ -30,9 +30,9 @@ export default function LogoutBtn(props: LogoutBtnProps) {
     try {
       const res = await modulePostFetch<FetchResponseType<string>>(fetchLogoutProps)
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
-      dispatch(resetReducer())
       props.setConfirmValue(false)
-      moduleDeleteCookies(KEY_ACCESS_TOKEN, KEY_LOGIN, KEY_ORGANIZATION)
+      moduleDeleteCookies(KEY_ACCESS_TOKEN)
+      dispatch(updateLoginCompleteReducer(FALSE))
     } catch (err) {
       alert('로그아웃이 실패했습니다.')
     }

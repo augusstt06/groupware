@@ -4,21 +4,21 @@ import { useEffect } from 'react'
 
 import { useRouter } from 'next/navigation'
 
-import { KEY_ACCESS_TOKEN, KEY_ORGANIZATION } from '@/app/constant/constant'
+import { KEY_ACCESS_TOKEN, KEY_LOGIN_COMPLETE, TRUE } from '@/app/constant/constant'
 import { ERR_COOKIE_NOT_FOUND } from '@/app/constant/errorMsg'
 import {
   ROUTE_ERR_NOT_FOUND_ORG_TOKEN,
   ROUTE_LOGIN,
   ROUTE_MAIN,
 } from '@/app/constant/route-constant'
-import { useAppDispatch } from '@/app/module/hooks/reduxHooks'
+import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleGetCookie } from '@/app/module/utils/cookie'
 import { resetOrgReducer } from '@/app/store/reducers/login/orgInfoReducer'
 
 export default function SignupComplete() {
   const router = useRouter()
   const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
-  const orgToken = moduleGetCookie(KEY_ORGANIZATION)
+  const loginCompleteState = useAppSelector((state) => state.maintain[KEY_LOGIN_COMPLETE])
   const dispatch = useAppDispatch()
 
   const handleClick = () => {
@@ -27,7 +27,7 @@ export default function SignupComplete() {
 
   useEffect(() => {
     if (accessToken !== ERR_COOKIE_NOT_FOUND) {
-      if (orgToken === ERR_COOKIE_NOT_FOUND) {
+      if (loginCompleteState !== TRUE) {
         router.push(ROUTE_ERR_NOT_FOUND_ORG_TOKEN)
       } else {
         router.push(ROUTE_MAIN)
