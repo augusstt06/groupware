@@ -103,14 +103,14 @@ export default function Header() {
             >
               <div
                 id="mega-menu-icons"
-                className="flex md:flex-row flex-col items-center w-full justify-center"
+                className="flex md:flex-row flex-col justify-center items-center w-full "
                 ref={dropRef}
               >
-                <ul className="md:w-2/3 w-1/3 flex flex-col items-center mt-4 text-sm md:font-medium md:flex-row md:mt-0 md:space-x-8 rtl:space-x-reverse mb-3">
+                <ul className="md:w-2/3 w-1/3 flex flex-col items-center mt-4 text-sm md:font-medium md:flex-row md:mt-0 md:space-x-8 rtl:space-x-reverse">
                   {menuList.map((data) => (
                     <li
                       key={data.title}
-                      className="w-full flex justify-center dark:hover:bg-indigo-300 dark:hover:rounded"
+                      className="w-full flex justify-center hover:bg-indigo-300 hover:rounded dark:hover:bg-indigo-300 dark:hover:rounded"
                     >
                       {data.list.length !== 0 ? (
                         <button
@@ -165,13 +165,13 @@ export default function Header() {
                   ))}
                 </ul>
                 <div className="flex flex-row items-center">
-                  <a className="md:hidden text-gray-800 dark:border-gray-900 dark:hover:text-indigo-300 dark:text-white border-solid border-white border-2 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5   focus:outline-none dark:focus:ring-gray-800">
+                  <a className="md:hidden text-gray-800 dark:border-gray-900 hover:text-indigo-500 dark:hover:text-indigo-300 dark:text-white border-solid border-white border-2 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5   focus:outline-none dark:focus:ring-gray-800">
                     <FaSearch className="md:w-5 md:h-5 w-4 h-4" />
                   </a>
-                  <a className="md:hidden text-gray-800 dark:border-gray-900 dark:hover:text-indigo-300 dark:text-white border-solid border-white border-2 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5   focus:outline-none dark:focus:ring-gray-800">
+                  <a className="md:hidden text-gray-800 dark:border-gray-900 hover:text-indigo-500 dark:hover:text-indigo-300 dark:text-white border-solid border-white border-2 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5   focus:outline-none dark:focus:ring-gray-800">
                     <FaPhoneAlt className="md:w-5 md:h-5 w-4 h-4" />
                   </a>
-                  <a className="md:hidden text-gray-800 dark:border-gray-900 dark:hover:text-indigo-300 dark:text-white border-solid border-white border-2 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5   focus:outline-none dark:focus:ring-gray-800">
+                  <a className="md:hidden text-gray-800 dark:border-gray-900 hover:text-indigo-5  00 dark:hover:text-indigo-300 dark:text-white border-solid border-white border-2 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5   focus:outline-none dark:focus:ring-gray-800">
                     <button type="button">
                       <BsPeopleFill className="md:w-5 md:h-5 w-4 h-4" />
                     </button>
@@ -179,7 +179,7 @@ export default function Header() {
                   <a className="md:hidden text-gray-800 dark:border-gray-900 dark:hover:text-yellow-400 hover:text-yellow-400 dark:text-white border-solid border-white border-2 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5   focus:outline-none dark:focus:ring-gray-800">
                     <DarkmodeBtn />
                   </a>
-                  <a className="md:hidden text-gray-800 dark:border-gray-900 dark:hover:text-red-500 dark:text-white border-solid border-white border-2 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5   focus:outline-none dark:focus:ring-gray-800">
+                  <a className="md:hidden text-gray-800 dark:border-gray-900 hover:text-red-500 dark:hover:text-red-500 dark:text-white border-solid border-white border-2 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5   focus:outline-none dark:focus:ring-gray-800">
                     {accessToken !== ERR_COOKIE_NOT_FOUND ? (
                       <LogoutBtn
                         isConfirmOpen={isConfirmOpen}
@@ -198,13 +198,13 @@ export default function Header() {
               <AlertIndicator />
             </a> */}
             <div className="flex flex-row items-center">
-              <a className="hidden md:inline text-gray-800 dark:border-gray-900 dark:hover:text-indigo-500 dark:text-white border-solid border-white border-2 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5   focus:outline-none dark:focus:ring-gray-800">
+              <a className="hidden md:inline text-gray-800 dark:border-gray-900 hover:text-indigo-500 dark:hover:text-indigo-500 dark:text-white border-solid border-white border-2 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5   focus:outline-none dark:focus:ring-gray-800">
                 <FaSearch className="md:w-5 md:h-5 w-4 h-4" />
               </a>
-              <a className="hidden md:inline text-gray-800 dark:border-gray-900 dark:hover:text-indigo-500 dark:text-white border-solid border-white border-2 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5   focus:outline-none dark:focus:ring-gray-800">
+              <a className="hidden md:inline text-gray-800 dark:border-gray-900 hover:text-indigo-500 dark:hover:text-indigo-500 dark:text-white border-solid border-white border-2 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5   focus:outline-none dark:focus:ring-gray-800">
                 <FaPhoneAlt className="md:w-5 md:h-5 w-4 h-4" />
               </a>
-              <a className="hidden md:inline text-gray-800 dark:border-gray-900 dark:hover:text-indigo-500 dark:text-white border-solid border-white border-2 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5   focus:outline-none dark:focus:ring-gray-800">
+              <a className="hidden md:inline text-gray-800 dark:border-gray-900 hover:text-indigo-500 dark:hover:text-indigo-500 dark:text-white border-solid border-white border-2 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5   focus:outline-none dark:focus:ring-gray-800">
                 <button type="button">
                   <BsPeopleFill className="md:w-5 md:h-5 w-4 h-4" />
                 </button>
@@ -224,7 +224,7 @@ export default function Header() {
                 />
               )}
 
-              <a className="hidden md:inline text-gray-800 dark:border-gray-900 dark:hover:text-red-500 dark:text-white border-solid border-white border-2 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5   focus:outline-none dark:focus:ring-gray-800">
+              <a className="hidden md:inline text-gray-800 dark:border-gray-900 hover:text-red-500 dark:hover:text-red-500 dark:text-white border-solid border-white border-2 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5   focus:outline-none dark:focus:ring-gray-800">
                 {accessToken !== ERR_COOKIE_NOT_FOUND ? (
                   <LogoutBtn
                     isConfirmOpen={isConfirmOpen}
