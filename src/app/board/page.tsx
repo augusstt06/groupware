@@ -20,11 +20,6 @@ export default function Board() {
   const [accessToken, setAccessToken] = useState(moduleGetCookie(KEY_ACCESS_TOKEN))
   const loginCompleteState = useAppSelector((state) => state.maintain[KEY_LOGIN_COMPLETE])
 
-  /**
-   * TODO: 접근 제한사항
-   * 1. 로그인 여부
-   * 2. 조직은 물어봐야함
-   */
   useEffect(() => {
     if (accessToken === ERR_COOKIE_NOT_FOUND) {
       router.push(ROUTE_ERR_NOT_FOUND_ACCESS_TOKEN)
