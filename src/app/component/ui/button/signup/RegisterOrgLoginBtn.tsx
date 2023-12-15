@@ -1,14 +1,13 @@
 import { useRouter } from 'next/navigation'
 
 import {
+  FALSE,
   KEY_ACCESS_TOKEN,
-  KEY_ORGANIZATION,
   ORG_CREATE,
   ORG_JOIN,
   REGISTER_ORG_DESCRIPTION,
   REGISTER_ORG_JOIN,
   REGISTER_ORG_NAME,
-  TRUE,
 } from '@/app/constant/constant'
 import {
   ERR_MESSAGE_RECORD_NOT_FOUND,
@@ -17,10 +16,11 @@ import {
   errNotFound,
 } from '@/app/constant/errorMsg'
 import { ROUTE_SIGNUP_COMPLETE } from '@/app/constant/route-constant'
-import { useAppSelector } from '@/app/module/hooks/reduxHooks'
-import { moduleGetCookie, moduleSetCookies } from '@/app/module/utils/cookie'
+import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
+import { moduleDeleteCookies, moduleGetCookie } from '@/app/module/utils/cookie'
 import { modulePostFetch } from '@/app/module/utils/moduleFetch'
 import { deleteStorage } from '@/app/module/utils/storage'
+import { updateLoginCompleteReducer } from '@/app/store/reducers/maintain/maintainReducer'
 import {
   type FailResponseType,
   type FetchResponseType,
@@ -30,6 +30,7 @@ import { type RegisterOrgLoginBtnProps } from '@/app/types/ui/btnTypes'
 
 export default function RegisterOrgLoginBtn(props: RegisterOrgLoginBtnProps) {
   const router = useRouter()
+  const dispatch = useAppDispatch()
   const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
   const orgState = useAppSelector((state) => state.orgInfo)
   const isOrgComeplete: boolean = useAppSelector((state) => {
@@ -90,9 +91,8 @@ export default function RegisterOrgLoginBtn(props: RegisterOrgLoginBtnProps) {
       if (orgRes.status !== 200) throw new Error((orgRes as FailResponseType).message)
 
       deleteStorage([REGISTER_ORG_DESCRIPTION, REGISTER_ORG_NAME, REGISTER_ORG_JOIN])
-      moduleSetCookies({
-        [KEY_ORGANIZATION]: TRUE,
-      })
+      dispatch(updateLoginCompleteReducer(FALSE))
+      moduleDeleteCookies(KEY_ACCESS_TOKEN)
       router.push(ROUTE_SIGNUP_COMPLETE)
     } catch (err) {
       if (err instanceof Error) {

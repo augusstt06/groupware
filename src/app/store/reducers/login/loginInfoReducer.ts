@@ -24,12 +24,12 @@ export const loginInfoSlice = createSlice({
     pwdReducer(state, action: PayloadAction<{ value: string }>) {
       state.pwd = { ...action.payload }
     },
-    resetReducer(state) {
+    resetLoginReducer(state) {
       state.email.value = ''
       state.pwd.value = ''
     },
   },
 })
 
-export const { emailReducer, pwdReducer, resetReducer } = loginInfoSlice.actions
+export const { emailReducer, pwdReducer, resetLoginReducer } = loginInfoSlice.actions
 export default loginInfoSlice.reducer

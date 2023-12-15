@@ -8,6 +8,7 @@ import { loginInfoSlice } from './reducers/login/loginInfoReducer'
 import { orgInfoSlice } from './reducers/login/orgInfoReducer'
 import { signupInfoSlice } from './reducers/login/signupInfoReducer'
 import { userInfoSlice } from './reducers/main/userInfoReducer'
+import { maintainSlice } from './reducers/maintain/maintainReducer'
 
 const createNoopStorage = () => {
   return {
@@ -30,11 +31,12 @@ const rootReducer = combineReducers({
   loginInfo: loginInfoSlice.reducer,
   orgInfo: orgInfoSlice.reducer,
   userInfo: userInfoSlice.reducer,
+  maintain: maintainSlice.reducer,
 })
 const persistConfig = {
   key: 'root',
   storage,
-  whiteList: ['userInfo'],
+  whiteList: ['userInfo', 'maintain'],
 }
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 

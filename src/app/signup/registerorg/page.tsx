@@ -8,15 +8,23 @@ import RegisterOrg from '@/app/component/page/organization/RegisterOrg'
 import ErrorAlert from '@/app/component/ui/alert/ErrorAlert'
 import { NavigationBtn } from '@/app/component/ui/button/BtnGroups'
 import RegisterOrgLoginBtn from '@/app/component/ui/button/signup/RegisterOrgLoginBtn'
-import { KEY_ACCESS_TOKEN, KEY_LOGIN, ORG_CREATE, ORG_JOIN } from '@/app/constant/constant'
+import {
+  KEY_ACCESS_TOKEN,
+  KEY_LOGIN_COMPLETE,
+  ORG_CREATE,
+  ORG_JOIN,
+  TRUE,
+} from '@/app/constant/constant'
 import { ERR_COOKIE_NOT_FOUND } from '@/app/constant/errorMsg'
-import { ROUTE_ERR_NOT_FOUND_ACCESS_TOKEN } from '@/app/constant/route-constant'
+import { ROUTE_ERR_NOT_FOUND_ACCESS_TOKEN, ROUTE_MAIN } from '@/app/constant/route-constant'
+import { useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleDeleteCookies, moduleGetCookie } from '@/app/module/utils/cookie'
 
 export default function RegisterOrgLogin() {
   const router = useRouter()
 
   const [accessToken, setAccessToken] = useState(moduleGetCookie(KEY_ACCESS_TOKEN))
+  const loginCompleteState = useAppSelector((state) => state.maintain['login-complete'])
 
   const [organization, setOrganization] = useState('')
   const [errorState, setErrorState] = useState({
@@ -43,16 +51,19 @@ export default function RegisterOrgLogin() {
     })
   }
   useEffect(() => {
+    if (accessToken !== ERR_COOKIE_NOT_FOUND && loginCompleteState === TRUE) {
+      router.push(ROUTE_MAIN)
+      return
+    }
     const checkAccessToken = () => {
-      const loginToken = moduleGetCookie(KEY_LOGIN)
       const newAccessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
       if (newAccessToken === ERR_COOKIE_NOT_FOUND) {
         router.push(ROUTE_ERR_NOT_FOUND_ACCESS_TOKEN)
       } else if (newAccessToken !== accessToken) {
         setAccessToken(newAccessToken)
       }
-      if (loginToken !== ERR_COOKIE_NOT_FOUND) {
-        moduleDeleteCookies(KEY_LOGIN)
+      if (loginCompleteState === TRUE) {
+        moduleDeleteCookies(KEY_LOGIN_COMPLETE)
       }
     }
 
