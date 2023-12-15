@@ -10,3 +10,4 @@ export const ROUTE_SIGNUP_ORG = process.env.NEXT_PUBLIC_ROUTE_SIGNUP_ORG as stri
 export const ROUTE_SIGNUP_COMPLETE = process.env.NEXT_PUBLIC_ROUTE_SIGNUP_COMPLETE as string
 export const ROUTE_LOGIN = process.env.NEXT_PUBLIC_ROUTE_LOGIN as string
 export const ROUTE_FIND_PWD = process.env.NEXT_PUBLIC_ROUTE_FIND_PWD as string
+export const ROUTE_BOARD = process.env.NEXT_PUBLIC_ROUTE_BOARD as string

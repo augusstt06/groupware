@@ -2,10 +2,9 @@
 import { useEffect, useState } from 'react'
 
 import { useRouter } from 'next/navigation'
-import { TbSquareArrowLeftFilled, TbSquareArrowRightFilled } from 'react-icons/tb'
 
 import MainHub from '../component/page/main/hub/MainHub'
-import MainCardGroup from '../component/ui/card/MainCardGroup'
+import Sidebar from '../component/ui/sidebar/Sidebar'
 import {
   FALSE,
   KEY_ACCESS_TOKEN,
@@ -50,7 +49,6 @@ export default function Main() {
       ? (decodeToken as CustomDecodeTokenType).uuid
       : ERR_COOKIE_NOT_FOUND
 
-  const [reRender, setRerender] = useState(false)
   const getFetchUserProps: ModuleGetFetchProps = {
     params: {
       [KEY_UUID]: uuid,
@@ -139,39 +137,12 @@ export default function Main() {
     }
   }, [accessToken])
 
-  const [isSideOpen, setIsSideOpen] = useState(false)
-  const clickSideOpen = () => {
-    if (isSideOpen) setIsSideOpen(false)
-    else {
-      setIsSideOpen(true)
-    }
-  }
   return (
     <>
       <main className="w-full grid gap-4 grid-cols-4 h-4/5 pt-10 md:ml-10 md:mr-10 ml-5 z-1">
-        {!isSideOpen ? (
-          <TbSquareArrowRightFilled
-            className="md:hidden w-8 h-8 absolute top-1/2 dark:text-gray-300 left-0"
-            onClick={clickSideOpen}
-          />
-        ) : (
-          <TbSquareArrowLeftFilled
-            className="md:hidden w-8 h-8 absolute top-1/2 dark:text-gray-300 left-40"
-            onClick={clickSideOpen}
-          />
-        )}
-
-        <div
-          className={`md:static col-span-1 md:w-5/6 md:block ${
-            isSideOpen
-              ? 'absolute md:bg-none bg-white dark:bg-gray-900 top-14 p-2 left-0 z-10'
-              : 'hidden'
-          }`}
-        >
-          <MainCardGroup reRender={reRender} setRerender={setRerender} />
-        </div>
+        <Sidebar />
         <div className="md:col-span-3 mr-10 col-span-4">
-          <MainHub />
+          <MainHub title="TODO" />
         </div>
       </main>
     </>
