@@ -17,15 +17,17 @@ import {
   REGISTER_ORG_NAME,
   REGISTER_PHONENUMBER,
   REGISTER_POSITION,
+  TRUE,
 } from '../constant/constant'
 import { ERR_COOKIE_NOT_FOUND } from '../constant/errorMsg'
-import { ROUTE_SIGNUP_ORG } from '../constant/route-constant'
+import { ROUTE_MAIN, ROUTE_SIGNUP_ORG } from '../constant/route-constant'
 import { useAppSelector } from '../module/hooks/reduxHooks/index'
 import { moduleGetCookie } from '../module/utils/cookie'
 import inputValidate from '../module/utils/inputValidate'
 
 export default function Signup() {
   const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
+  const loginCompleteState = useAppSelector((state) => state.maintain['login-complete'])
   const orgState = useAppSelector((state) => state.orgInfo)
   const router = useRouter()
   const [isPwdView, setIsPwdView] = useState(false)
@@ -90,6 +92,10 @@ export default function Signup() {
 
   useEffect(() => {
     if (accessToken !== ERR_COOKIE_NOT_FOUND) {
+      if (loginCompleteState === TRUE) {
+        router.push(ROUTE_MAIN)
+        return
+      }
       router.push(ROUTE_SIGNUP_ORG)
     }
     if (orgState.createOrg.name !== '' || orgState.joinOrg.code !== '') {

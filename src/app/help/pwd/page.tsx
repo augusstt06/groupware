@@ -1,17 +1,29 @@
 'use client'
+import { useEffect } from 'react'
 
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { AiOutlineMail } from 'react-icons/ai'
 
 import { InputIconlabel } from '@/app/component/ui/label/InputIconlabel'
 import { InputLabel } from '@/app/component/ui/label/Inputlabel'
-import { REGISTER_EMAIL } from '@/app/constant/constant'
-import { ROUTE_LOGIN } from '@/app/constant/route-constant'
+import { KEY_ACCESS_TOKEN, REGISTER_EMAIL } from '@/app/constant/constant'
+import { ERR_COOKIE_NOT_FOUND } from '@/app/constant/errorMsg'
+import { ROUTE_LOGIN, ROUTE_MAIN } from '@/app/constant/route-constant'
 import useInput from '@/app/module/hooks/reactHooks/useInput'
+import { moduleGetCookie } from '@/app/module/utils/cookie'
 import { type UseInputProps } from '@/app/types/moduleTypes'
 
 export default function FindPwd() {
+  const router = useRouter()
   const emailInput: UseInputProps = useInput('', REGISTER_EMAIL)
+  const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
+
+  useEffect(() => {
+    if (accessToken !== ERR_COOKIE_NOT_FOUND) {
+      router.push(ROUTE_MAIN)
+    }
+  }, [])
   return (
     <div className="flex flex-col justify-center items-center h-screen px-4 place-content-center">
       <div className="flex flex-col justify-center items-center mb-5">

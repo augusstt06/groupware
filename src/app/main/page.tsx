@@ -7,9 +7,10 @@ import { TbSquareArrowLeftFilled, TbSquareArrowRightFilled } from 'react-icons/t
 import MainHub from '../component/page/main/hub/MainHub'
 import MainCardGroup from '../component/ui/card/MainCardGroup'
 import {
+  FALSE,
   KEY_ACCESS_TOKEN,
-  KEY_LOGIN,
-  KEY_ORGANIZATION,
+  KEY_LOGIN_COMPLETE,
+  KEY_ORGANIZATION_COMPLETE,
   KEY_UUID,
   KEY_X_ORGANIZATION_CODE,
   TRUE,
@@ -27,6 +28,7 @@ import {
   updateExtraUserInfoReducer,
   updateUserInfoReducer,
 } from '../store/reducers/main/userInfoReducer'
+import { updateLoginCompleteReducer } from '../store/reducers/maintain/maintainReducer'
 import {
   type ApiRes,
   type CustomDecodeTokenType,
@@ -40,6 +42,7 @@ export default function Main() {
   const dispatch = useAppDispatch()
   const router = useRouter()
   const [accessToken, setAccessToken] = useState(moduleGetCookie(KEY_ACCESS_TOKEN))
+  const loginCompleteState = useAppSelector((state) => state.maintain[KEY_LOGIN_COMPLETE])
   const decodeToken = moduleDecodeToken(accessToken)
   const attendanceTime = useAppSelector((state) => state.userInfo.attendance.time)
   const uuid =
@@ -86,37 +89,48 @@ export default function Main() {
       if (err instanceof Error) {
         switch (err.message) {
           case ERR_ORG_NOT_FOUND:
-            moduleDeleteCookies(KEY_ORGANIZATION)
+            dispatch(updateLoginCompleteReducer(FALSE))
             router.push(ROUTE_ERR_NOT_FOUND_ORG_TOKEN)
             break
           default:
-            moduleDeleteCookies(KEY_ACCESS_TOKEN, KEY_ORGANIZATION)
+            dispatch(updateLoginCompleteReducer(FALSE))
+            moduleDeleteCookies(KEY_ACCESS_TOKEN)
         }
       }
     }
   }
 
   useEffect(() => {
+    if (accessToken === ERR_COOKIE_NOT_FOUND) {
+      router.push(ROUTE_ERR_NOT_FOUND_ACCESS_TOKEN)
+      return
+    }
+    if (loginCompleteState !== TRUE) {
+      router.push(ROUTE_ERR_NOT_FOUND_ORG_TOKEN)
+      return
+    }
     let newAccessToken
-    let newOrgCookie
-    let newLoginToken
+    // let newOrgState
+    // let newLoginState
     const checkAccessToken = () => {
       newAccessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
-      newOrgCookie = moduleGetCookie(KEY_ORGANIZATION)
-      newLoginToken = moduleGetCookie(KEY_LOGIN)
+      // newOrgState = useAppSelector((state) => state.maintain['organization-complete'])
+      // newLoginState = useAppSelector((state) => state.maintain['login-complete'])
       if (newAccessToken === ERR_COOKIE_NOT_FOUND) {
+        moduleDeleteCookies(KEY_LOGIN_COMPLETE, KEY_ORGANIZATION_COMPLETE)
         router.push(ROUTE_ERR_NOT_FOUND_ACCESS_TOKEN)
       } else if (newAccessToken !== accessToken) {
         setAccessToken(newAccessToken)
       }
-      if (newOrgCookie !== TRUE) {
-        moduleDeleteCookies(KEY_ORGANIZATION, KEY_LOGIN)
-        router.push(ROUTE_ERR_NOT_FOUND_ORG_TOKEN)
-      }
-      if (newLoginToken !== TRUE) {
-        moduleDeleteCookies(KEY_ACCESS_TOKEN, KEY_LOGIN)
-        router.push(ROUTE_ERR_NOT_FOUND_ACCESS_TOKEN)
-      }
+      // if (newOrgState !== TRUE) {
+      //   dispatch(resetMaintainReucer())
+      //   router.push(ROUTE_ERR_NOT_FOUND_ORG_TOKEN)
+      // }
+      // if (newLoginState !== TRUE) {
+      //   moduleDeleteCookies(KEY_ACCESS_TOKEN)
+      //   dispatch(resetMaintainReucer())
+      //   router.push(ROUTE_ERR_NOT_FOUND_ACCESS_TOKEN)
+      // }
     }
     const intervalId = setInterval(checkAccessToken, 500)
     if (accessToken !== ERR_COOKIE_NOT_FOUND) void fetchGetUsers()
