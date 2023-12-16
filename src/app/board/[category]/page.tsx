@@ -1,10 +1,33 @@
+'use client'
+
+import { useEffect, useState } from 'react'
+
+import { useRouter } from 'next/navigation'
+
 import BoardHub from '@/app/component/page/main/hub/board/BoardHub'
 import Sidebar from '@/app/component/ui/sidebar/Sidebar'
-import { ANNOUNCE, BOARD } from '@/app/constant/constant'
+import { ANNOUNCE, BOARD, KEY_ACCESS_TOKEN, KEY_LOGIN_COMPLETE } from '@/app/constant/constant'
+import { useAppSelector } from '@/app/module/hooks/reduxHooks'
+import { moduleCheckUserState } from '@/app/module/utils/moduleCheckUserState'
+import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
+import { type ModuleCheckUserStateProps } from '@/app/types/moduleTypes'
 import { type PageParam } from '@/app/types/pageTypes'
 
 export default function BoardCategory({ params }: { params: PageParam }) {
+  const router = useRouter()
+  const [accessToken, setAccessToken] = useState(moduleGetCookie(KEY_ACCESS_TOKEN))
+  const loginCompleteState = useAppSelector((state) => state.maintain[KEY_LOGIN_COMPLETE])
   const category = params.category === ANNOUNCE ? '공지사항' : ''
+  useEffect(() => {
+    const moduleProps: ModuleCheckUserStateProps = {
+      useRouter: router,
+      token: accessToken,
+      setToken: setAccessToken,
+      completeState: loginCompleteState,
+      isCheckInterval: true,
+    }
+    moduleCheckUserState(moduleProps)
+  }, [])
   return (
     <main className="w-full grid gap-4 grid-cols-4 h-4/5 pt-10 md:ml-10 md:mr-10 ml-5 z-1">
       <Sidebar title={BOARD} />
