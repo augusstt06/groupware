@@ -75,4 +75,6 @@ export type MainInputProps = {
 // board
 export type BoardHubInputProps = {
   searchInput: UseInputProps
+  isWrite: boolean
+  setIsWrite: React.Dispatch<SetStateAction<boolean>>
 }

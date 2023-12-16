@@ -2,12 +2,17 @@ import { IoMdCloseCircle } from 'react-icons/io'
 import { IoSearchSharp } from 'react-icons/io5'
 
 import { InputIconlabel } from '../../label/InputIconlabel'
+import BoardWriteModal from '../../modal/BoardWriteModal'
 
 import { type BoardHubInputProps } from '@/app/types/ui/inputTypes'
 
 export default function BoardHubInput(props: BoardHubInputProps) {
+  const handleClickWrite = () => {
+    props.setIsWrite(!props.isWrite)
+  }
   return (
     <div className="flex flex-row justify-around">
+      {props.isWrite ? <BoardWriteModal onClick={handleClickWrite} /> : <></>}
       <div className="flex mt-3 mb-3 mr-2 w-4/6">
         <InputIconlabel icon={<IoSearchSharp className="w-4 h-4" />} />
         <input
@@ -25,7 +30,10 @@ export default function BoardHubInput(props: BoardHubInputProps) {
         <button className="mr-2 mt-3 mb-3 w-1/2 md:text-sm text-xs text-indigo-500 hover:text-white dark:text-white dark:bg-indigo-500 dark:border-white border-indigo-500 hover:bg-indigo-500 rounded-lg text-center items-center dark:hover:bg-white dark:hover:text-indigo-500 border-2 dark:hover:border-indigo-500/75">
           검색
         </button>
-        <button className="mt-3 mb-3 w-1/2 md:text-sm text-xs text-indigo-500 hover:text-white dark:text-white dark:bg-indigo-500 dark:border-white border-indigo-500 hover:bg-indigo-500 rounded-lg text-center items-center dark:hover:bg-white dark:hover:text-indigo-500 border-2 dark:hover:border-indigo-500/75">
+        <button
+          className="mt-3 mb-3 w-1/2 md:text-sm text-xs text-indigo-500 hover:text-white dark:text-white dark:bg-indigo-500 dark:border-white border-indigo-500 hover:bg-indigo-500 rounded-lg text-center items-center dark:hover:bg-white dark:hover:text-indigo-500 border-2 dark:hover:border-indigo-500/75"
+          onClick={handleClickWrite}
+        >
           글쓰기
         </button>
       </div>
