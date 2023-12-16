@@ -71,3 +71,8 @@ export type MainInputProps = {
   input: UseInputProps
   placeholder: string
 }
+
+// board
+export type BoardHubInputProps = {
+  searchInput: UseInputProps
+}
