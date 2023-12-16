@@ -13,19 +13,15 @@ export default function MenuCard() {
           className="flex flex-col items-center pb-4 w-full justify-center mt-3 border-b-1"
           key={data.name}
         >
-          <span className="text-medium font-bold text-gray-500 dark:text-white w-4/5 mb-1">
+          <span className="text-medium font-bold text-gray-600 dark:text-white w-4/5 mb-1">
             {data.name}
           </span>
 
-          <span className="text-sm text-gray-500 dark:text-gray-400 w-4/5 mb-1">
-            <span className="text-medium hover:font-bold hover:text-indigo-400 text-gray-500 dark:text-white dark:hover:text-indigo-400 dark:hover:font-bold">
-              {data.menu1}
-            </span>
+          <span className="text-sm text-gray-500 dark:text-gray-400 w-4/5 mb-1 cursor-pointer hover:text-indigo-500 dark:hover:text-white">
+            {data.menu1}
           </span>
-          <span className="text-sm text-gray-500 dark:text-gray-400 w-4/5 mb-1">
-            <span className="text-medium hover:font-bold hover:text-indigo-400 text-gray-500 dark:text-white dark:hover:text-indigo-400 dark:hover:font-bold">
-              {data.menu2}
-            </span>
+          <span className="text-sm text-gray-500 dark:text-gray-400 w-4/5 mb-1 cursor-pointer hover:text-indigo-500 dark:hover:text-white">
+            {data.menu2}
           </span>
         </div>
       ))}
