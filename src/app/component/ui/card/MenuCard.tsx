@@ -1,10 +1,21 @@
+import Link from 'next/link'
+
+import { ROUTE_BOARD, ROUTE_BOARD_ANNOUNCE } from '@/app/constant/route-constant'
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
 
 export default function MenuCard() {
   const extraUserInfo = useAppSelector((state) => state.userInfo.extraInfo)
   const menuList = [
-    { name: extraUserInfo.organizationName, menu1: '공지사항', menu2: '자유 게시판' },
-    { name: '프로젝트이름', menu1: '게시판 이름', menu2: '게시판 이름2' },
+    {
+      name: extraUserInfo.organizationName,
+      menu1: { name: '공지사항', link: ROUTE_BOARD_ANNOUNCE },
+      menu2: { name: '자유 게시판', link: ROUTE_BOARD },
+    },
+    {
+      name: '프로젝트이름',
+      menu1: { name: '게시판 이름', link: ROUTE_BOARD },
+      menu2: { name: '게시판 이름2', link: ROUTE_BOARD },
+    },
   ]
   return (
     <div className="w-full mt-5 max-w-sm border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
@@ -18,10 +29,11 @@ export default function MenuCard() {
           </span>
 
           <span className="text-sm text-gray-500 dark:text-gray-400 w-4/5 mb-1 cursor-pointer hover:text-indigo-500 dark:hover:text-white">
-            {data.menu1}
+            <Link href={data.menu1.link}>{data.menu1.name}</Link>
           </span>
+
           <span className="text-sm text-gray-500 dark:text-gray-400 w-4/5 mb-1 cursor-pointer hover:text-indigo-500 dark:hover:text-white">
-            {data.menu2}
+            <Link href={data.menu2.link}>{data.menu2.name}</Link>
           </span>
         </div>
       ))}
