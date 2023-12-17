@@ -4,6 +4,7 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import persistReducer from 'redux-persist/es/persistReducer'
 import createWebStorage from 'redux-persist/lib/storage/createWebStorage'
 
+import { boardCategorySlice } from './reducers/board/boardCategoryReducer'
 import { loginInfoSlice } from './reducers/login/loginInfoReducer'
 import { orgInfoSlice } from './reducers/login/orgInfoReducer'
 import { signupInfoSlice } from './reducers/login/signupInfoReducer'
@@ -32,11 +33,12 @@ const rootReducer = combineReducers({
   orgInfo: orgInfoSlice.reducer,
   userInfo: userInfoSlice.reducer,
   maintain: maintainSlice.reducer,
+  boardCategory: boardCategorySlice.reducer,
 })
 const persistConfig = {
   key: 'root',
   storage,
-  whiteList: ['userInfo', 'maintain'],
+  whiteList: ['userInfo', 'maintain', 'boardCategory'],
 }
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 

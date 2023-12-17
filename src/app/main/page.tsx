@@ -70,6 +70,7 @@ export default function Main() {
       const successRes = res as SuccessResponseType<ApiRes>
       const extraUserInfoReducerProps = {
         name: successRes.result.name,
+        email: successRes.result.email,
         position: successRes.result.position,
         userId: successRes.result.userId,
         organizationId: successRes.result.organizationId,

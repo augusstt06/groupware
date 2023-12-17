@@ -78,3 +78,7 @@ export type BoardHubInputProps = {
   isWrite: boolean
   setIsWrite: React.Dispatch<SetStateAction<boolean>>
 }
+
+export type BoardModalInputGruopProps = {
+  titleInput: UseInputProps
+}

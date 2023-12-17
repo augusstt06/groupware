@@ -19,16 +19,28 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
       >
         <div className="absolute top-20 left-20 right-20 p-4 w-5/6">
           <div className="relative rounded-lg shadow dark:bg-gray-700">
-            <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white">게시글 설정</h3>
-              <button
-                type="button"
-                className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                data-modal-hide="static-modal"
-                onClick={props.onClick}
-              >
-                <IoClose className="w-4 h-4" />
-              </button>
+            <div className="flex flex-row justify-between items-center border-b rounded-t dark:border-gray-600 w-full p-3">
+              <div className="w-1/6 text-center">
+                <button
+                  type="button"
+                  className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                  data-modal-hide="static-modal"
+                  onClick={props.onClick}
+                >
+                  <IoClose className="w-4 h-4" />
+                </button>
+              </div>
+              <div className="w-2/3 text-center">
+                <h3 className="text-xl font-semibold text-gray-900 dark:text-white">게시글 설정</h3>
+              </div>
+              <div className="w-1/5 flex flex-row items-center justify-around">
+                <button className="mt-3 mb-3 w-2/5  md:text-sm text-xs text-indigo-500 hover:text-white dark:text-white dark:bg-indigo-500 dark:border-white border-indigo-500 hover:bg-indigo-500 rounded-lg text-center items-center dark:hover:bg-white dark:hover:text-indigo-500 border-2 dark:hover:border-indigo-500/75">
+                  임시저장
+                </button>
+                <button className="mt-3 mb-3 w-2/5 md:text-sm text-xs text-indigo-500 hover:text-white dark:text-white dark:bg-indigo-500 dark:border-white border-indigo-500 hover:bg-indigo-500 rounded-lg text-center items-center dark:hover:bg-white dark:hover:text-indigo-500 border-2 dark:hover:border-indigo-500/75">
+                  등록
+                </button>
+              </div>
             </div>
 
             <div className="p-2 space-y-4 flex flex-row w-full">

@@ -26,7 +26,3 @@ export type HubCategoryProps = {
 export type PageParam = {
   category: string
 }
-
-export type BoardHubType = {
-  params: string
-}
