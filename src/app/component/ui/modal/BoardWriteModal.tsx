@@ -2,6 +2,7 @@
 import { IoClose } from 'react-icons/io5'
 
 import BoardModalInputGroup from '../input/board/BoardModalInputGroup'
+import TextEditor from '../textEditor/TextEditor'
 
 import useInput from '@/app/module/hooks/reactHooks/useInput'
 import { type BoardWriteModalprops } from '@/app/types/ui/modalTypes'
@@ -46,7 +47,9 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
             <div className="p-2 space-y-4 flex flex-row w-full">
               <BoardModalInputGroup titleInput={titleInput} />
               {/*  */}
-              <div className="bg-indigo-300 w-2/3">텍스트 에디터</div>
+              <div className="bg-indigo-300 w-2/3">
+                <TextEditor />
+              </div>
             </div>
 
             <div className="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
