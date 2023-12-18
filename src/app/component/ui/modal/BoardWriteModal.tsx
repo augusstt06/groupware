@@ -1,11 +1,15 @@
 'use client'
+import dynamic from 'next/dynamic'
 import { IoClose } from 'react-icons/io5'
 
 import BoardModalInputGroup from '../input/board/BoardModalInputGroup'
-import TextEditor from '../textEditor/TextEditor'
 
 import useInput from '@/app/module/hooks/reactHooks/useInput'
 import { type BoardWriteModalprops } from '@/app/types/ui/modalTypes'
+
+const Editor = dynamic(async () => import('../textEditor/TextEditor'), {
+  ssr: false,
+})
 
 export default function BoardWriteModal(props: BoardWriteModalprops) {
   const titleInput = useInput('')
@@ -47,8 +51,8 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
             <div className="p-2 space-y-4 flex flex-row w-full">
               <BoardModalInputGroup titleInput={titleInput} />
               {/*  */}
-              <div className="bg-indigo-300 w-2/3">
-                <TextEditor />
+              <div className="bg-gray-400 w-2/3">
+                <Editor />
               </div>
             </div>
 
