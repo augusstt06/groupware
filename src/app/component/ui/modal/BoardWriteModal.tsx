@@ -51,27 +51,28 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
             <div className="p-2 space-y-4 flex flex-row w-full">
               <BoardModalInputGroup titleInput={titleInput} />
               {/*  */}
-              <div className="bg-gray-400 w-2/3">
+              <div className="w-2/3 bg-gray-300">
                 <TextEditor />
                 {/* <Editor /> */}
               </div>
             </div>
 
-            <div className="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
-              <button
-                data-modal-hide="static-modal"
-                type="button"
-                className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-              >
-                I accept
-              </button>
-              <button
-                data-modal-hide="static-modal"
-                type="button"
-                className="ms-3 text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600"
-              >
-                Decline
-              </button>
+            <div className="flex items-center border-t border-gray-200 rounded-b dark:border-gray-600">
+              <div className="flex items-center ps-4 border border-gray-200 rounded dark:border-gray-700">
+                <input
+                  id="bordered-checkbox-1"
+                  type="checkbox"
+                  value=""
+                  name="bordered-checkbox"
+                  className="w-4 h-4 p-3 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                />
+                <label
+                  htmlFor="bordered-checkbox-1"
+                  className="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                >
+                  공지글로 지정
+                </label>
+              </div>
             </div>
           </div>
         </div>
