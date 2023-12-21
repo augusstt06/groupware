@@ -5,7 +5,7 @@ import 'highlight.js/styles/monokai-sublime.css'
 import ReactQuill, { Quill } from 'react-quill'
 
 import hljs from 'highlight.js'
-import { ImageResize } from 'quill-image-resize-module-ts'
+import ImageResize from 'quill-image-resize'
 
 Quill.register('modules/ImageResize', ImageResize)
 
@@ -49,12 +49,10 @@ export default function TextEditor() {
       modules={module}
       theme="snow"
       value={textValue}
-      // onChange={setTextValue}
-      onChange={(content, delta, source, editor) => {
-        setTextValue(editor.getHTML())
-      }}
-      className="text-gray-800 h-1/2"
-      style={{ height: '87%' }}
+      onChange={setTextValue}
+      placeholder="게시글을 입력해주세요"
+      className="text-gray-800 h-2/3"
+      style={{ height: '80%' }}
     />
   )
 }
