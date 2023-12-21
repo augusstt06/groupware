@@ -75,7 +75,7 @@ export default function RegisterOrgLogin() {
   }, [accessToken])
 
   return (
-    <div className="flex flex-col justify-center items-center h-screen px-4 place-content-center">
+    <div className="flex flex-col justify-center items-center h-screen px-4">
       {organization === '' ? (
         <>
           <h2 className="mb-5 md:text-2xl text-xl font-bold text-center">조직 선택</h2>
@@ -112,14 +112,14 @@ export default function RegisterOrgLogin() {
               {organization === ORG_CREATE ? '기존 조직에 참여하기' : '새로운 조직 생성하기'}
             </span>
           </div>
-          <div className="mt-5 md:w-3/5 w-full">
+          <div className="mt-5 md:w-3/5 w-full mb-16">
             <RegisterOrg
               organization={organization}
               setOrganization={setOrganization}
               setErrMsg={setErrMsg}
             />
             {errorState.isError ? (
-              <div className="mb-5 flex flex-col justify-center items-center">
+              <div className="flex flex-col justify-center items-center">
                 <ErrorAlert
                   description={errorState.description}
                   handleClickError={handleClickError}
@@ -129,7 +129,7 @@ export default function RegisterOrgLogin() {
               <></>
             )}
           </div>
-          <div className="flex flex-row justify-around items-center md:w-1/3 w-2/3 mt-5">
+          <div className="flex flex-row justify-around items-center md:w-1/3 w-2/3 mt-2">
             <RegisterOrgLoginBtn orgType={organization} setErrMsg={setErrMsg} />
           </div>
         </div>

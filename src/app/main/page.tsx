@@ -14,7 +14,7 @@ import {
   MAIN,
   TODO,
 } from '../constant/constant'
-import { ERR_COOKIE_NOT_FOUND, ERR_ORG_NOT_FOUND } from '../constant/errorMsg'
+import { ERR_COOKIE_NOT_FOUND, ERR_ORG_NOT_FOUND, ERR_UNAUTHORIZED } from '../constant/errorMsg'
 import { ROUTE_ERR_NOT_FOUND_ORG_TOKEN } from '../constant/route-constant'
 import { useAppDispatch, useAppSelector } from '../module/hooks/reduxHooks'
 import { moduleCheckUserState } from '../module/utils/moduleCheckUserState'
@@ -22,6 +22,7 @@ import {
   moduleDecodeToken,
   moduleDeleteCookies,
   moduleGetCookie,
+  moduleRefreshToken,
 } from '../module/utils/moduleCookie'
 import { moduleGetFetch } from '../module/utils/moduleFetch'
 import {
@@ -90,6 +91,11 @@ export default function Main() {
     } catch (err) {
       if (err instanceof Error) {
         switch (err.message) {
+          case ERR_UNAUTHORIZED:
+            if (accessToken !== ERR_COOKIE_NOT_FOUND) {
+              void moduleRefreshToken(accessToken)
+            }
+            break
           case ERR_ORG_NOT_FOUND:
             dispatch(updateLoginCompleteReducer(FALSE))
             router.push(ROUTE_ERR_NOT_FOUND_ORG_TOKEN)
