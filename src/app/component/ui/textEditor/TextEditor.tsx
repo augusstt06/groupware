@@ -12,9 +12,8 @@ Quill.register('modules/ImageResize', ImageResize)
 export default function TextEditor() {
   const [textValue, setTextValue] = useState('')
   hljs.configure({
-    languages: ['javascript', 'CSS', 'HTML', 'python'],
+    languages: ['javascript', 'CSS', 'HTML', 'python', 'go'],
   })
-
   const toolbarOptions = [
     ['bold', 'italic'],
     ['link', 'image'],
