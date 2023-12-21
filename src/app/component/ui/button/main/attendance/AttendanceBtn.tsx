@@ -9,7 +9,7 @@ import {
   errNotFound,
 } from '@/app/constant/errorMsg'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
-import { moduleGetCookie } from '@/app/module/utils/cookie'
+import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
 import { modulePatchFetch, modulePostFetch } from '@/app/module/utils/moduleFetch'
 import { updateAttendanceStatusReducer } from '@/app/store/reducers/main/userInfoReducer'
 import {

@@ -18,7 +18,7 @@ import Confirm from '../confirm/Confirm'
 import { KEY_ACCESS_TOKEN, KEY_LOGIN_COMPLETE, TRUE } from '@/app/constant/constant'
 import { ERR_COOKIE_NOT_FOUND } from '@/app/constant/errorMsg'
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
-import { moduleGetCookie } from '@/app/module/utils/cookie'
+import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
 
 export default function Header() {
   const pathname = usePathname()
