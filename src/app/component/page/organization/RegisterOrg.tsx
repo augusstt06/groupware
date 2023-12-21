@@ -8,8 +8,8 @@ import { type RegisterOrgProps } from '@/app/types/pageTypes'
 
 export default function RegisterOrg(props: RegisterOrgProps) {
   return (
-    <div className="flex flex-col justify-center items-center h-3/5 h-full overflow-y-auto">
-      <div className="h-full md:w-3/5 w-full mb-3">
+    <div className="flex flex-col justify-center items-center h-full overflow-y-auto">
+      <div className="md:w-3/5 w-full">
         <div>{props.organization === ORG_CREATE ? <CreateOrgInfo /> : <JoinOrgInfo />}</div>
       </div>
     </div>

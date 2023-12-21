@@ -30,6 +30,7 @@ export const REGISTER_ORG_DESCRIPTION = '조직설명'
 export const REGISTER_ORG_JOIN = '조직 코드'
 
 export const KEY_ACCESS_TOKEN = 'access-token'
+export const KEY_REFRESH_TOKEN = 'refresh-token'
 export const KEY_X_ORGANIZATION_CODE = 'X-ORGANIZATION-CODE'
 export const KEY_UUID = 'uuid'
 export const KEY_USER = 'user'
