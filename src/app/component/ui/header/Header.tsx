@@ -17,6 +17,7 @@ import Confirm from '../confirm/Confirm'
 
 import { KEY_ACCESS_TOKEN, KEY_LOGIN_COMPLETE, TRUE } from '@/app/constant/constant'
 import { ERR_COOKIE_NOT_FOUND } from '@/app/constant/errorMsg'
+import { ROUTE_BOARD, ROUTE_MAIN } from '@/app/constant/route-constant'
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
 
@@ -57,9 +58,9 @@ export default function Header() {
   }
 
   const menuList = [
-    { title: '게시판', list: ['board 1', 'board 2'], open: open.board, link: '/main' },
-    { title: '프로젝트', list: [], open: open.project, link: '/' },
-    { title: '팀', list: [], open: false, link: '/main' },
+    { title: '게시판', list: [], open: open.board, link: ROUTE_BOARD },
+    { title: '프로젝트', list: [], open: open.project, link: ROUTE_MAIN },
+    { title: '팀', list: [], open: false, link: ROUTE_MAIN },
   ]
 
   const [mount, setMount] = useState(false)
