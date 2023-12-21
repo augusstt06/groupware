@@ -37,6 +37,7 @@ const persistConfig = {
   key: 'root',
   storage,
   whiteList: ['userInfo', 'maintain'],
+  blacklist: ['signupInfo', 'loginInfo', 'orgInfo'],
 }
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 

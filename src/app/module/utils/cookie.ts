@@ -1,8 +1,16 @@
 import { deleteCookie, getCookie, hasCookie, setCookie } from 'cookies-next'
 import { jwtDecode } from 'jwt-decode'
 
+import { modulePostFetch } from './moduleFetch'
+
 import { ERR_COOKIE_NOT_FOUND } from '@/app/constant/errorMsg'
-import { type CustomDecodeTokenType } from '@/app/types/moduleTypes'
+import {
+  type ApiRes,
+  type CustomDecodeTokenType,
+  type FailResponseType,
+  type FetchResponseType,
+  type ModulePostFetchProps,
+} from '@/app/types/moduleTypes'
 
 export const moduleGetCookie = (name: string) => {
   if (hasCookie(name)) {
@@ -28,4 +36,18 @@ export const moduleDecodeToken = (token: string): CustomDecodeTokenType | string
     return decodeToken
   }
   return ERR_COOKIE_NOT_FOUND
+}
+
+export const moduleRefreshToken = async (accessToken: string) => {
+  try {
+    const refreshProps: ModulePostFetchProps = {
+      data: {},
+      fetchUrl: process.env.NEXT_PUBLIC_REFRESH_TOKEN_SOURCE,
+      header: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }
+    const res = await modulePostFetch<FetchResponseType<ApiRes>>(refreshProps)
+    if (res.status !== 200) throw new Error((res as FailResponseType).message)
+  } catch (err) {}
 }
