@@ -46,11 +46,12 @@ export default function LoginBtn(props: LoginBtnProps) {
         props.setErrMsg('이메일 형식이 잘못되었습니다. xxx@xxx.xxx 의 형태로 입력해주세요')
         return
       }
-      const res = await modulePostFetch<FetchResponseType<ApiRes>>(fetchLoginProps)
-      if (res.status !== 200) throw new Error((res as FailResponseType).message)
+      const loginRes = await modulePostFetch<FetchResponseType<ApiRes>>(fetchLoginProps)
+      if (loginRes.status !== 200) throw new Error((loginRes as FailResponseType).message)
       moduleSetCookies({
-        [KEY_ACCESS_TOKEN]: (res as SuccessResponseType<ApiRes>).result.accessToken,
+        [KEY_ACCESS_TOKEN]: (loginRes as SuccessResponseType<ApiRes>).result.accessToken,
       })
+
       dispatch(updateLoginCompleteReducer(TRUE))
       dispatch(resetLoginReducer())
       router.push(ROUTE_MAIN)
