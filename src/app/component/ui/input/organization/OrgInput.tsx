@@ -65,7 +65,7 @@ export default function OrgInput(props: OrgInputProps) {
   return (
     <div>
       <InputLabel title={props.title} />
-      <div className="flex relative mt-2 mb-6">
+      <div className="flex relative mt-2 mb-4">
         <InputIconlabel icon={props.icon} />
         <input
           type="text"
