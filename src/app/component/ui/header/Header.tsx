@@ -39,6 +39,7 @@ export default function Header() {
     board: false,
     project: false,
   })
+  //
   const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
   const loginCompleteState = useAppSelector((state) => state.maintain[KEY_LOGIN_COMPLETE])
   const handleOpen = (title: string) => {
