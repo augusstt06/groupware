@@ -9,15 +9,25 @@ import Sidebar from '../component/ui/sidebar/Sidebar'
 import { BOARD, KEY_ACCESS_TOKEN, KEY_LOGIN_COMPLETE } from '../constant/constant'
 import { useAppSelector } from '../module/hooks/reduxHooks'
 import { moduleCheckUserState } from '../module/utils/moduleCheckUserState'
-import { moduleGetCookie } from '../module/utils/moduleCookie'
-import { type ModuleCheckUserStateProps } from '../types/moduleTypes'
+import {
+  checkTokenExpired,
+  moduleDecodeToken,
+  moduleGetCookie,
+  moduleRefreshToken,
+} from '../module/utils/moduleCookie'
+import { type CustomDecodeTokenType, type ModuleCheckUserStateProps } from '../types/moduleTypes'
 
 export default function Board() {
   const router = useRouter()
   const [accessToken, setAccessToken] = useState(moduleGetCookie(KEY_ACCESS_TOKEN))
+  const decodeToken = moduleDecodeToken(accessToken)
+  const accessTokenTime = Number((decodeToken as CustomDecodeTokenType).exp)
   const loginCompleteState = useAppSelector((state) => state.maintain[KEY_LOGIN_COMPLETE])
 
   useEffect(() => {
+    if (checkTokenExpired(accessTokenTime)) {
+      void moduleRefreshToken(accessToken)
+    }
     const moduleProps: ModuleCheckUserStateProps = {
       useRouter: router,
       token: accessToken,
