@@ -19,11 +19,11 @@ import { ROUTE_ERR_NOT_FOUND_ORG_TOKEN } from '../constant/route-constant'
 import { useAppDispatch, useAppSelector } from '../module/hooks/reduxHooks'
 import { moduleCheckUserState } from '../module/utils/moduleCheckUserState'
 import {
-  // checkTokenExpired,
+  checkTokenExpired,
   moduleDecodeToken,
   moduleDeleteCookies,
   moduleGetCookie,
-  // moduleRefreshToken,
+  moduleRefreshToken,
 } from '../module/utils/moduleCookie'
 import { moduleGetFetch } from '../module/utils/moduleFetch'
 import {
@@ -49,7 +49,7 @@ export default function Main() {
   const loginCompleteState = useAppSelector((state) => state.maintain[KEY_LOGIN_COMPLETE])
   const decodeToken = moduleDecodeToken(accessToken)
 
-  // const accessTokenTime = Number((decodeToken as CustomDecodeTokenType).exp)
+  const accessTokenTime = Number((decodeToken as CustomDecodeTokenType).exp)
   const attendanceTime = useAppSelector((state) => state.userInfo.attendance.time)
   const uuid =
     decodeToken !== ERR_COOKIE_NOT_FOUND
@@ -112,6 +112,9 @@ export default function Main() {
   }
 
   useEffect(() => {
+    if (checkTokenExpired(accessTokenTime)) {
+      void moduleRefreshToken(accessToken)
+    }
     const moduleProps: ModuleCheckUserStateProps = {
       useRouter: router,
       token: accessToken,
