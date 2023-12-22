@@ -51,3 +51,11 @@ export const moduleRefreshToken = async (accessToken: string) => {
     if (res.status !== 200) throw new Error((res as FailResponseType).message)
   } catch (err) {}
 }
+
+export const isRefresh = (accessTime: number) => {
+  const current = Math.floor(Date.now() / 1000)
+
+  const difference = accessTime - current
+
+  return difference <= 900
+}
