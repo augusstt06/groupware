@@ -51,3 +51,12 @@ export const moduleRefreshToken = async (accessToken: string) => {
     if (res.status !== 200) throw new Error((res as FailResponseType).message)
   } catch (err) {}
 }
+
+export const checkTokenExpired = (accessTime: number) => {
+  // 현재시간이 액세스토큰 만료 15분이하라면 true를 반환하고 아니라면 false를 반환한다.
+  const current = Math.floor(Date.now() / 1000)
+
+  const difference = accessTime - current
+
+  return difference <= 900
+}
