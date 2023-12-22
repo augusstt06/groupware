@@ -4,7 +4,7 @@ import { KEY_ACCESS_TOKEN } from '@/app/constant/constant'
 import { ERR_MESSAGE_SIGNUP_USER_EXIST, errDefault } from '@/app/constant/errorMsg'
 import { ROUTE_SIGNUP_ORG } from '@/app/constant/route-constant'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
-import { moduleSetCookies } from '@/app/module/utils/cookie'
+import { moduleSetCookies } from '@/app/module/utils/moduleCookie'
 import { modulePostFetch } from '@/app/module/utils/moduleFetch'
 import { resetSignupInfoReducer } from '@/app/store/reducers/login/signupInfoReducer'
 import {

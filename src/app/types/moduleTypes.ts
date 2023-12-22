@@ -1,4 +1,7 @@
+import { type SetStateAction } from 'react'
+
 import { type JwtPayload } from 'jwt-decode'
+import { type AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime'
 
 import { type KEY_UUID, type KEY_X_ORGANIZATION_CODE } from '../constant/constant'
 
@@ -41,3 +44,12 @@ export type InputValidateProps = {
 
 export type CustomDecodeTokenType = JwtPayload &
   Record<typeof KEY_UUID | typeof KEY_X_ORGANIZATION_CODE, string>
+
+export type ModuleCheckUserStateProps = {
+  token: string
+  setToken: React.Dispatch<SetStateAction<string>>
+  useRouter: AppRouterInstance
+  isCheckInterval: boolean
+  completeState: string
+  fetchFunc?: () => Promise<void>
+}

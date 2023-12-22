@@ -8,7 +8,7 @@ export type ProgressbarProps = {
 }
 
 export type SidebarProps = {
-  nav: boolean
+  title: string
 }
 
 export type SelectboxProps = {
