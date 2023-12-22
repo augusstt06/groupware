@@ -22,7 +22,7 @@ import {
 } from '../constant/route-constant'
 import { useAppDispatch, useAppSelector } from '../module/hooks/reduxHooks'
 import {
-  isRefresh,
+  checkTokenExpired,
   moduleDecodeToken,
   moduleDeleteCookies,
   moduleGetCookie,
@@ -114,7 +114,7 @@ export default function Main() {
   }
 
   useEffect(() => {
-    if (isRefresh(accessTokenTime)) {
+    if (checkTokenExpired(accessTokenTime)) {
       void moduleRefreshToken(accessToken)
     }
     if (accessToken === ERR_COOKIE_NOT_FOUND) {
