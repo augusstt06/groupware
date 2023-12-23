@@ -6,13 +6,15 @@ import { type BoardModalInputGruopProps } from '@/app/types/ui/inputTypes'
 export default function BoardModalInputGroup(props: BoardModalInputGruopProps) {
   const userInfo = useAppSelector((state) => state.userInfo)
   const params = useAppSelector((state) => state.boardCategory.category)
+
   return (
     <div className="w-1/3 h-full p-2 mb-5">
       <div className="p-2">
         <InputLabel title="게시판" />
         <input
           type="text"
-          value={params}
+          // select로 변경
+          value={params !== '' ? params : 'test'}
           className="rounded rounded bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-600 dark:border-white-600 dark:placeholder-gray-400 dark:text-gray-700 dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder="게시글 제목을 입력해주세요"
           readOnly
