@@ -4,7 +4,6 @@ type State = {
   createOrg: {
     name: string
     description: string
-    organizationType: string
   }
 
   joinOrg: {
@@ -16,7 +15,6 @@ const initialState: State = {
   createOrg: {
     name: '',
     description: '',
-    organizationType: 'PUBLIC',
   },
 
   joinOrg: {
@@ -42,7 +40,6 @@ export const orgInfoSlice = createSlice({
       state.createOrg = {
         name: '',
         description: '',
-        organizationType: 'PUBLIC',
       }
       state.joinOrg = {
         code: '',
