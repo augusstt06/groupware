@@ -17,6 +17,12 @@ export default function BoardModalInputGroup(props: BoardModalInputGruopProps) {
     setSelect(e.target.value)
   }
 
+  // const [image, setImage] = useState(null)
+  // FIXME: 파일 업로드
+  // const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+  // setImage(e.target.value)
+  // }
+
   return (
     <div className="w-1/3 h-full p-2 mb-5">
       <div className="p-2">
