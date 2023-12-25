@@ -63,7 +63,6 @@ export default function RegisterOrgLoginBtn(props: RegisterOrgLoginBtnProps) {
           data: {
             description: orgState.createOrg.description,
             name: orgState.createOrg.name,
-            organizationType: orgState.createOrg.organizationType,
           },
           fetchUrl: process.env.NEXT_PUBLIC_CREATE_ORGANIZATIONS_SOURCE,
           header: {
