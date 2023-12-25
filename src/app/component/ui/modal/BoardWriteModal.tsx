@@ -1,11 +1,13 @@
 'use client'
+import { useState } from 'react'
 
 import dynamic from 'next/dynamic'
 import { IoClose } from 'react-icons/io5'
 
+import BoardWriteModalCheckBox from '../checkbox/BoardWriteModalCheckBox'
 import BoardModalInputGroup from '../input/board/BoardModalInputGroup'
-// import TextEditor from '../textEditor/TextEditor'
 
+import { FALSE, TRUE } from '@/app/constant/constant'
 import useInput from '@/app/module/hooks/reactHooks/useInput'
 import { type BoardWriteModalprops } from '@/app/types/ui/modalTypes'
 const Editor = dynamic(async () => import('../textEditor/TextEditor'), {
@@ -14,6 +16,12 @@ const Editor = dynamic(async () => import('../textEditor/TextEditor'), {
 
 export default function BoardWriteModal(props: BoardWriteModalprops) {
   const titleInput = useInput('')
+  const [isAnnounce, setIsAnnounce] = useState(FALSE)
+  const handleClick = () => {
+    if (isAnnounce === FALSE) setIsAnnounce(TRUE)
+    else setIsAnnounce(FALSE)
+  }
+
   return (
     <>
       <div
@@ -51,30 +59,13 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
 
             <div className="p-2 space-y-4 flex flex-row w-full">
               <BoardModalInputGroup titleInput={titleInput} />
-              {/*  */}
+
               <div className="w-2/3 bg-gray-300">
-                {/* <TextEditor /> */}
                 <Editor />
               </div>
             </div>
 
-            <div className="flex items-center border-t border-gray-200 rounded-b dark:border-gray-600">
-              <div className="flex items-center ps-4 border border-gray-200 rounded dark:border-gray-700">
-                <input
-                  id="bordered-checkbox-1"
-                  type="checkbox"
-                  value=""
-                  name="bordered-checkbox"
-                  className="w-4 h-4 p-3 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                />
-                <label
-                  htmlFor="bordered-checkbox-1"
-                  className="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                >
-                  공지글로 지정
-                </label>
-              </div>
-            </div>
+            <BoardWriteModalCheckBox isAnnounce={isAnnounce} handleClick={handleClick} />
           </div>
         </div>
       </div>
