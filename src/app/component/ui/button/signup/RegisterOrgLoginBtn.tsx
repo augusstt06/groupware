@@ -17,7 +17,7 @@ import {
 } from '@/app/constant/errorMsg'
 import { ROUTE_SIGNUP_COMPLETE } from '@/app/constant/route-constant'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
-import { moduleDeleteCookies, moduleGetCookie } from '@/app/module/utils/moduleCookie'
+import moduleGetCookie, { moduleDeleteCookies } from '@/app/module/utils/moduleCookie'
 import { modulePostFetch } from '@/app/module/utils/moduleFetch'
 import { deleteStorage } from '@/app/module/utils/moduleStorage'
 import { updateLoginCompleteReducer } from '@/app/store/reducers/maintain/maintainReducer'
