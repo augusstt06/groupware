@@ -7,6 +7,7 @@ export type TaskCardProps = {
 }
 
 export type UserCardProps = {
+  title: string
   reRender: boolean
   setRerender: React.Dispatch<SetStateAction<boolean>>
 }

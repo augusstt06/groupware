@@ -7,9 +7,9 @@ import AttendanceHistoryTable from '@/app/component/ui/table/main/AttendanceHist
 import { KEY_ACCESS_TOKEN, KEY_X_ORGANIZATION_CODE } from '@/app/constant/constant'
 import useInput from '@/app/module/hooks/reactHooks/useInput'
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
-import { moduleGetCookie } from '@/app/module/utils/cookie'
+import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
 import { moduleGetFetch } from '@/app/module/utils/moduleFetch'
-import { convertTime } from '@/app/module/utils/time'
+import { convertTime } from '@/app/module/utils/moduleTime'
 import {
   type ApiRes,
   type FailResponseType,

@@ -8,7 +8,7 @@ import { InputLabel } from '../../label/Inputlabel'
 
 import { REGISTER_CONFIRM_PWD } from '@/app/constant/constant'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
-import inputValidate from '@/app/module/utils/inputValidate'
+import inputValidate from '@/app/module/utils/moduleInputValidate'
 import { pwdReducer } from '@/app/store/reducers/login/signupInfoReducer'
 import { type PwdInputProps } from '@/app/types/ui/inputTypes'
 

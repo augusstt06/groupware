@@ -27,7 +27,7 @@ import {
 } from './constant/route-constant'
 import useInput from './module/hooks/reactHooks/useInput'
 import { useAppDispatch, useAppSelector } from './module/hooks/reduxHooks'
-import { moduleGetCookie } from './module/utils/cookie'
+import { moduleGetCookie } from './module/utils/moduleCookie'
 import { updateLoginCompleteReducer } from './store/reducers/maintain/maintainReducer'
 import { type UseInputProps } from './types/moduleTypes'
 
