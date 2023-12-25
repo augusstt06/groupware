@@ -26,10 +26,7 @@ export const orgInfoSlice = createSlice({
   name: 'orgInfoReducer',
   initialState,
   reducers: {
-    createOrgReducer(
-      state,
-      action: PayloadAction<{ name: string; description: string; organizationType: string }>,
-    ) {
+    createOrgReducer(state, action: PayloadAction<{ name: string; description: string }>) {
       state.createOrg = { ...action.payload }
     },
 

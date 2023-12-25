@@ -29,7 +29,6 @@ export default function OrgInput(props: OrgInputProps) {
           name: props.title === REGISTER_ORG_NAME ? useInput.value : createOrgState.name,
           description:
             props.title === REGISTER_ORG_DESCRIPTION ? useInput.value : createOrgState.description,
-          organizationType: createOrgState.organizationType,
         }
         dispatch(createOrgReducer(payload))
 
@@ -52,7 +51,6 @@ export default function OrgInput(props: OrgInputProps) {
       payload = {
         name: '',
         description: '',
-        organizationType: 'PUBLIC',
       }
       dispatch(createOrgReducer(payload))
       dispatch(joinOrgReducer({ code: '' }))
