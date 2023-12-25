@@ -2,7 +2,7 @@ import AttendanceInput from '@/app/component/ui/input/main/MainInput'
 import { KEY_ACCESS_TOKEN, KEY_X_ORGANIZATION_CODE } from '@/app/constant/constant'
 import useInput from '@/app/module/hooks/reactHooks/useInput'
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
-import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
+import moduleGetCookie from '@/app/module/utils/moduleCookie'
 import { modulePostFetch } from '@/app/module/utils/moduleFetch'
 import { type ModulePostFetchProps } from '@/app/types/moduleTypes'
 
