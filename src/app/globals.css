@@ -15,3 +15,12 @@
   --background-end-rgb: 0, 0, 0;
   --hello: #e5e5;
 }
+
+body {
+  font-family: -apple-system, PretendardVariable;
+}
+
+@font-face {
+  font-family: 'PretendardVariable';
+  font-weight: 200;
+}
