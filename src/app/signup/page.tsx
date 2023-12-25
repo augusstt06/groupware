@@ -22,7 +22,7 @@ import {
 import { ERR_COOKIE_NOT_FOUND } from '../constant/errorMsg'
 import { ROUTE_MAIN, ROUTE_SIGNUP_ORG } from '../constant/route-constant'
 import { useAppSelector } from '../module/hooks/reduxHooks/index'
-import { moduleGetCookie } from '../module/utils/moduleCookie'
+import moduleGetCookie from '../module/utils/moduleCookie'
 import inputValidate from '../module/utils/moduleInputValidate'
 
 export default function Signup() {

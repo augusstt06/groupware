@@ -4,7 +4,7 @@ import { FaPowerOff } from 'react-icons/fa'
 
 import { FALSE, KEY_ACCESS_TOKEN } from '@/app/constant/constant'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
-import { moduleDeleteCookies, moduleGetCookie } from '@/app/module/utils/moduleCookie'
+import moduleGetCookie, { moduleDeleteCookies } from '@/app/module/utils/moduleCookie'
 import { modulePostFetch } from '@/app/module/utils/moduleFetch'
 import { updateLoginCompleteReducer } from '@/app/store/reducers/maintain/maintainReducer'
 import {

@@ -3,6 +3,7 @@ import { jwtDecode } from 'jwt-decode'
 
 import { modulePostFetch } from './moduleFetch'
 
+import { KEY_ACCESS_TOKEN } from '@/app/constant/constant'
 import { ERR_COOKIE_NOT_FOUND } from '@/app/constant/errorMsg'
 import {
   type ApiRes,
@@ -12,7 +13,7 @@ import {
   type ModulePostFetchProps,
 } from '@/app/types/moduleTypes'
 
-export const moduleGetCookie = (name: string) => {
+export default (name: string) => {
   if (hasCookie(name)) {
     return getCookie(name) as string
   }
@@ -49,7 +50,9 @@ export const moduleRefreshToken = async (accessToken: string) => {
     }
     const res = await modulePostFetch<FetchResponseType<ApiRes>>(refreshProps)
     if (res.status !== 200) throw new Error((res as FailResponseType).message)
-  } catch (err) {}
+  } catch (err) {
+    moduleDeleteCookies(KEY_ACCESS_TOKEN)
+  }
 }
 
 export const checkTokenExpired = (accessTime: number) => {

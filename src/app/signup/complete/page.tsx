@@ -12,7 +12,7 @@ import {
   ROUTE_MAIN,
 } from '@/app/constant/route-constant'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
-import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
+import moduleGetCookie from '@/app/module/utils/moduleCookie'
 import { resetOrgReducer } from '@/app/store/reducers/login/orgInfoReducer'
 
 export default function SignupComplete() {
