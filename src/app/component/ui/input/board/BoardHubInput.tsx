@@ -4,17 +4,15 @@ import { IoSearchSharp } from 'react-icons/io5'
 import { InputIconlabel } from '../../label/InputIconlabel'
 import BoardWriteModal from '../../modal/BoardWriteModal'
 
-import { useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { type BoardHubInputProps } from '@/app/types/ui/inputTypes'
 
 export default function BoardHubInput(props: BoardHubInputProps) {
-  const params = useAppSelector((state) => state.boardCategory.category)
   const handleClickWrite = () => {
     props.setIsWrite(!props.isWrite)
   }
   return (
     <div className="flex flex-row justify-around">
-      {props.isWrite ? <BoardWriteModal params={params} onClick={handleClickWrite} /> : <></>}
+      {props.isWrite ? <BoardWriteModal onClick={handleClickWrite} /> : <></>}
       <div className="flex mt-3 mb-3 mr-2 w-4/6">
         <InputIconlabel icon={<IoSearchSharp className="w-4 h-4" />} />
         <input

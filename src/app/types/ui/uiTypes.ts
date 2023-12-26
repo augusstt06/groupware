@@ -28,3 +28,8 @@ export type ToggleGroupProps = {
   compoenetType: string
   toggleData: Array<{ title: string; value: string }>
 }
+
+export type BoardWriteModalCheckBoxProps = {
+  isAnnounce: string
+  handleClick: () => void
+}
