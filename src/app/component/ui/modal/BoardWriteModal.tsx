@@ -10,10 +10,10 @@ import BoardModalInputGroup from '../input/board/BoardModalInputGroup'
 import { FALSE, TRUE } from '@/app/constant/constant'
 import useInput from '@/app/module/hooks/reactHooks/useInput'
 import { type BoardWriteModalprops } from '@/app/types/ui/modalTypes'
-const Editor = dynamic(async () => import('../textEditor/TextEditor'), {
+const Editor = dynamic(async () => import('../Editor/TextEditor'), {
   ssr: false,
 })
-const Viewer = dynamic(async () => import('../textEditor/TextViewer'), {
+const Viewer = dynamic(async () => import('../Editor/TextViewer'), {
   ssr: false,
 })
 
