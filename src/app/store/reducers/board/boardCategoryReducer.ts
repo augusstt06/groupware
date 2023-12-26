@@ -18,6 +18,9 @@ export const boardCategorySlice = createSlice({
       switch (action.payload) {
         case ANNOUNCE:
           state.category = '공지사항'
+          break
+        default:
+          state.category = ''
       }
     },
   },

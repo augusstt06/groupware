@@ -5,25 +5,34 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 
 import MainHub from '../component/page/main/hub/MainHub'
+import BoardWriteModal from '../component/ui/modal/BoardWriteModal'
 import Sidebar from '../component/ui/sidebar/Sidebar'
 import { BOARD, KEY_ACCESS_TOKEN, KEY_LOGIN_COMPLETE } from '../constant/constant'
-import { useAppSelector } from '../module/hooks/reduxHooks'
+import { useAppDispatch, useAppSelector } from '../module/hooks/reduxHooks'
 import { moduleCheckUserState } from '../module/utils/moduleCheckUserState'
 import moduleGetCookie, {
   checkTokenExpired,
   moduleDecodeToken,
   moduleRefreshToken,
 } from '../module/utils/moduleCookie'
+import { categoryReduer } from '../store/reducers/board/boardCategoryReducer'
+import { openBoardWriteModalReducer } from '../store/reducers/board/openBoardWriteModalReducer'
 import { type CustomDecodeTokenType, type ModuleCheckUserStateProps } from '../types/moduleTypes'
 
 export default function Board() {
   const router = useRouter()
+  const dispatch = useAppDispatch()
   const [accessToken, setAccessToken] = useState(moduleGetCookie(KEY_ACCESS_TOKEN))
   const decodeToken = moduleDecodeToken(accessToken)
   const accessTokenTime = Number((decodeToken as CustomDecodeTokenType).exp)
   const loginCompleteState = useAppSelector((state) => state.maintain[KEY_LOGIN_COMPLETE])
 
+  const isModalOpen = useAppSelector((state) => state.openBoardWriteModal.isOpen)
+  const handleModal = () => {
+    dispatch(openBoardWriteModalReducer())
+  }
   useEffect(() => {
+    dispatch(categoryReduer(''))
     if (checkTokenExpired(accessTokenTime)) {
       void moduleRefreshToken(accessToken)
     }
@@ -41,6 +50,7 @@ export default function Board() {
       <Sidebar title={BOARD} />
       <div className="md:col-span-3 mr-10 col-span-4">
         <MainHub title="게시판" />
+        {isModalOpen ? <BoardWriteModal onClick={handleModal} /> : <></>}
       </div>
     </main>
   )
