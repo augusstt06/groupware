@@ -13,6 +13,9 @@ import { type BoardWriteModalprops } from '@/app/types/ui/modalTypes'
 const Editor = dynamic(async () => import('../textEditor/TextEditor'), {
   ssr: false,
 })
+const Viewer = dynamic(async () => import('../textEditor/TextViewer'), {
+  ssr: false,
+})
 
 export default function BoardWriteModal(props: BoardWriteModalprops) {
   const titleInput = useInput('')
@@ -62,6 +65,7 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
 
               <div className="w-2/3 bg-gray-300">
                 <Editor />
+                <Viewer />
               </div>
             </div>
 
