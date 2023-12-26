@@ -57,7 +57,7 @@ export default function HistoryCard(props: UserCardProps) {
         const timeElapsed = Math.floor((now - attendanceState.time) / (1000 * 60))
         setElapsed(timeElapsed.toString())
         const numberTime = Number(elapsed)
-        setConvertTime(Math.floor(numberTime / 15).toString())
+        setConvertTime(Math.floor(numberTime / 45).toString())
       }
     }
     updateElapsed()
