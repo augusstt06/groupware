@@ -51,7 +51,7 @@ export default function AttendanceBtn(props: AttendanceBtnProps) {
       const res = await modulePostFetch<FetchResponseType<string>>(fetchAttendanceProps)
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
 
-      const currentTime = new Date().getTime()
+      const currentTime = Math.floor(new Date().getTime() / 1000)
       dispatch(
         updateAttendanceStatusReducer({
           status: 'in',

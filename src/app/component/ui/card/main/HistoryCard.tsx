@@ -49,15 +49,18 @@ export default function HistoryCard(props: UserCardProps) {
     ? 'text-blue-400 font-bold text-xs md:text-base'
     : 'text-red-400 font-bold text-xs md:text-base '
 
+  const getElapsedTime = (attendanceTime: number) => {
+    const now = Math.floor(new Date().getTime() / 1000)
+    const elapsedTime = now - attendanceTime
+    return elapsedTime / 60
+  }
   useEffect(() => {
     setMount(true)
     const updateElapsed = () => {
       if (attendanceState.time !== null && attendanceState.time !== 0) {
-        const now = new Date().getTime()
-        const timeElapsed = Math.floor((now - attendanceState.time) / (1000 * 60))
-        setElapsed(timeElapsed.toString())
-        const numberTime = Number(elapsed)
-        setConvertTime(Math.floor(numberTime / 45).toString())
+        const elapsedTime = getElapsedTime(attendanceState.time)
+        setElapsed(elapsedTime.toString())
+        setConvertTime(Math.floor(elapsedTime / 45).toString())
       }
     }
     updateElapsed()
