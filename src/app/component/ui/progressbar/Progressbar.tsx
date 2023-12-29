@@ -1,5 +1,6 @@
 export default function Progressbar(props: { time: string }) {
   // 45분 마다 w-1씩 증가
+
   const tailwindClassName =
     props.time === '0'
       ? `bg-gray-200 w-full h-2.5 rounded-full dark:bg-gray-700`
