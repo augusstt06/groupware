@@ -10,9 +10,9 @@ import {
   ROUTE_ERR_NOT_FOUND_ORG_TOKEN,
   ROUTE_LOGIN,
   ROUTE_MAIN,
-} from '@/app/constant/route-constant'
+} from '@/app/constant/route/route-constant'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
-import moduleGetCookie from '@/app/module/utils/moduleCookie'
+import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
 import { resetOrgReducer } from '@/app/store/reducers/login/orgInfoReducer'
 
 export default function SignupComplete() {

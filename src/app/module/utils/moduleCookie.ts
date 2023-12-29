@@ -5,6 +5,7 @@ import { modulePostFetch } from './moduleFetch'
 
 import { KEY_ACCESS_TOKEN } from '@/app/constant/constant'
 import { ERR_COOKIE_NOT_FOUND } from '@/app/constant/errorMsg'
+import { API_URL_REFRESH } from '@/app/constant/route/api-route-constant'
 import {
   type ApiRes,
   type CustomDecodeTokenType,
@@ -13,7 +14,7 @@ import {
   type ModulePostFetchProps,
 } from '@/app/types/moduleTypes'
 
-export default (name: string) => {
+export const moduleGetCookie = (name: string) => {
   if (hasCookie(name)) {
     return getCookie(name) as string
   }
@@ -43,7 +44,7 @@ export const moduleRefreshToken = async (accessToken: string) => {
   try {
     const refreshProps: ModulePostFetchProps = {
       data: {},
-      fetchUrl: process.env.NEXT_PUBLIC_REFRESH_TOKEN_SOURCE,
+      fetchUrl: API_URL_REFRESH,
       header: {
         Authorization: `Bearer ${accessToken}`,
       },

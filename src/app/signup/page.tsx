@@ -20,9 +20,9 @@ import {
   TRUE,
 } from '../constant/constant'
 import { ERR_COOKIE_NOT_FOUND } from '../constant/errorMsg'
-import { ROUTE_MAIN, ROUTE_SIGNUP_ORG } from '../constant/route-constant'
+import { ROUTE_MAIN, ROUTE_SIGNUP_ORG } from '../constant/route/route-constant'
 import { useAppSelector } from '../module/hooks/reduxHooks/index'
-import moduleGetCookie from '../module/utils/moduleCookie'
+import { moduleGetCookie } from '../module/utils/moduleCookie'
 import inputValidate from '../module/utils/moduleInputValidate'
 
 export default function Signup() {

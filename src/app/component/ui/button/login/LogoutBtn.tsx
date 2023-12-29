@@ -3,8 +3,9 @@ import { useEffect } from 'react'
 import { FaPowerOff } from 'react-icons/fa'
 
 import { FALSE, KEY_ACCESS_TOKEN } from '@/app/constant/constant'
+import { API_URL_LOGOUT } from '@/app/constant/route/api-route-constant'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
-import moduleGetCookie, { moduleDeleteCookies } from '@/app/module/utils/moduleCookie'
+import { moduleDeleteCookies, moduleGetCookie } from '@/app/module/utils/moduleCookie'
 import { modulePostFetch } from '@/app/module/utils/moduleFetch'
 import { updateLoginCompleteReducer } from '@/app/store/reducers/maintain/maintainReducer'
 import {
@@ -21,7 +22,7 @@ export default function LogoutBtn(props: LogoutBtnProps) {
 
   const fetchLogoutProps: ModulePostFetchProps = {
     data: {},
-    fetchUrl: process.env.NEXT_PUBLIC_LOGOUT_SOURCE,
+    fetchUrl: API_URL_LOGOUT,
     header: {
       Authorization: `Bearer ${accessToken}`,
     },

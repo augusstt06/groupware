@@ -15,13 +15,15 @@ import {
   TODO,
 } from '../constant/constant'
 import { ERR_COOKIE_NOT_FOUND, ERR_ORG_NOT_FOUND } from '../constant/errorMsg'
-import { ROUTE_ERR_NOT_FOUND_ORG_TOKEN } from '../constant/route-constant'
+import { API_URL_GET_USERS } from '../constant/route/api-route-constant'
+import { ROUTE_ERR_NOT_FOUND_ORG_TOKEN } from '../constant/route/route-constant'
 import { useAppDispatch, useAppSelector } from '../module/hooks/reduxHooks'
 import { moduleCheckUserState } from '../module/utils/moduleCheckUserState'
-import moduleGetCookie, {
+import {
   checkTokenExpired,
   moduleDecodeToken,
   moduleDeleteCookies,
+  moduleGetCookie,
   moduleRefreshToken,
 } from '../module/utils/moduleCookie'
 import { moduleGetFetch } from '../module/utils/moduleFetch'
@@ -59,7 +61,7 @@ export default function Main() {
     params: {
       [KEY_UUID]: uuid,
     },
-    fetchUrl: process.env.NEXT_PUBLIC_USERS_SOURCE,
+    fetchUrl: API_URL_GET_USERS,
     header: {
       Authorization: `Bearer ${accessToken}`,
     },

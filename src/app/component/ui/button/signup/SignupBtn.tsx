@@ -2,7 +2,8 @@ import { useRouter } from 'next/navigation'
 
 import { KEY_ACCESS_TOKEN } from '@/app/constant/constant'
 import { ERR_MESSAGE_SIGNUP_USER_EXIST, errDefault } from '@/app/constant/errorMsg'
-import { ROUTE_SIGNUP_ORG } from '@/app/constant/route-constant'
+import { API_URL_LOGIN, API_URL_REGISTER } from '@/app/constant/route/api-route-constant'
+import { ROUTE_SIGNUP_ORG } from '@/app/constant/route/route-constant'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleSetCookies } from '@/app/module/utils/moduleCookie'
 import { modulePostFetch } from '@/app/module/utils/moduleFetch'
@@ -30,7 +31,7 @@ export function SignupBtn(props: SignupBtnProps) {
       phoneNumber: signupState.phoneNumber.value,
       position: signupState.position.value,
     },
-    fetchUrl: process.env.NEXT_PUBLIC_REGISTER_SOURCE,
+    fetchUrl: API_URL_REGISTER,
   }
 
   const fetchLoginProps: ModulePostFetchProps = {
@@ -38,7 +39,7 @@ export function SignupBtn(props: SignupBtnProps) {
       email: signupState.email.value,
       password: signupState.pwd.pwdValue,
     },
-    fetchUrl: process.env.NEXT_PUBLIC_LOGIN_SOURCE,
+    fetchUrl: API_URL_LOGIN,
   }
 
   const fetchSignin = async (): Promise<void> => {

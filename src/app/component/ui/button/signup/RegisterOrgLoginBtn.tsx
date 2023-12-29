@@ -15,9 +15,10 @@ import {
   errNotEntered,
   errNotFound,
 } from '@/app/constant/errorMsg'
-import { ROUTE_SIGNUP_COMPLETE } from '@/app/constant/route-constant'
+import { API_URL_CREATE_ORG, API_URL_JOIN_ORG } from '@/app/constant/route/api-route-constant'
+import { ROUTE_SIGNUP_COMPLETE } from '@/app/constant/route/route-constant'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
-import moduleGetCookie, { moduleDeleteCookies } from '@/app/module/utils/moduleCookie'
+import { moduleDeleteCookies, moduleGetCookie } from '@/app/module/utils/moduleCookie'
 import { modulePostFetch } from '@/app/module/utils/moduleFetch'
 import { deleteStorage } from '@/app/module/utils/moduleStorage'
 import { updateLoginCompleteReducer } from '@/app/store/reducers/maintain/maintainReducer'
@@ -64,7 +65,7 @@ export default function RegisterOrgLoginBtn(props: RegisterOrgLoginBtnProps) {
             description: orgState.createOrg.description,
             name: orgState.createOrg.name,
           },
-          fetchUrl: process.env.NEXT_PUBLIC_CREATE_ORGANIZATIONS_SOURCE,
+          fetchUrl: API_URL_CREATE_ORG,
           header: {
             Authorization: `Bearer ${accessToken}`,
           },
@@ -73,7 +74,7 @@ export default function RegisterOrgLoginBtn(props: RegisterOrgLoginBtnProps) {
           data: {
             code: orgState.joinOrg.code,
           },
-          fetchUrl: process.env.NEXT_PUBLIC_JOIN_ORGANIZATIONS_SOURCE,
+          fetchUrl: API_URL_JOIN_ORG,
           header: {
             Authorization: `Bearer ${accessToken}`,
           },
