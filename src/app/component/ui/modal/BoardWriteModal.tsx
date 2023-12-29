@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import React, { useRef, useState } from 'react'
 
 import dynamic from 'next/dynamic'
 import { IoClose } from 'react-icons/io5'
@@ -10,13 +10,17 @@ import BoardModalInputGroup from '../input/board/BoardModalInputGroup'
 import { FALSE, TRUE } from '@/app/constant/constant'
 import useInput from '@/app/module/hooks/reactHooks/useInput'
 import { type BoardWriteModalprops } from '@/app/types/ui/modalTypes'
+
 const Editor = dynamic(async () => import('../editor/TextEditor'), {
   ssr: false,
 })
 
 export default function BoardWriteModal(props: BoardWriteModalprops) {
+  const editorRef = useRef(null)
   const titleInput = useInput('')
   const [isAnnounce, setIsAnnounce] = useState(FALSE)
+  const [content, setContent] = useState('')
+
   const handleClick = () => {
     if (isAnnounce === FALSE) setIsAnnounce(TRUE)
     else setIsAnnounce(FALSE)
@@ -61,7 +65,7 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
               <BoardModalInputGroup titleInput={titleInput} />
 
               <div className="w-2/3 bg-gray-100 dark:bg-gray-300 dark:text-black">
-                <Editor />
+                <Editor content={content} setContent={setContent} editorRef={editorRef} />
               </div>
             </div>
 

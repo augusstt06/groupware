@@ -1,6 +1,5 @@
 'use client'
-
-import { useRef } from 'react'
+import { type Dispatch, type SetStateAction } from 'react'
 
 import codeSyntaxHighlightPlugin from '@toast-ui/editor-plugin-code-syntax-highlight'
 import colorSyntax from '@toast-ui/editor-plugin-color-syntax'
@@ -12,7 +11,12 @@ import '@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin
 import 'prismjs/themes/prism.css'
 import Prism from 'prismjs'
 
-export default function TextEditor() {
+type EditorProps = {
+  content: string
+  setContent: Dispatch<SetStateAction<string>>
+  editorRef: React.MutableRefObject<Editor | null>
+}
+export default function TextEditor({ content, setContent, editorRef }: EditorProps) {
   // type HookCallback = (url: string, text?: string) => void
   // const onUploadImage = async (blob: File, callback: HookCallback) => {
   //   const formData = new FormData()
@@ -21,7 +25,7 @@ export default function TextEditor() {
   //   const imgUrl = 'http://localhost:3000/test'
   //   callback(imgUrl, 'image')
   // }
-  const editorRef = useRef(null)
+
   const toolbarItems = [
     ['heading', 'bold', 'italic', 'strike'],
     ['hr'],
@@ -31,16 +35,21 @@ export default function TextEditor() {
     ['image'],
     ['scrollSync'],
   ]
-
+  const onEditorChange = () => {
+    const editorHtml = editorRef.current?.getInstance().getHTML()
+    setContent(editorHtml)
+  }
   return (
     <Editor
       ref={editorRef}
       placeholder="게시글을 작성해주세요"
+      initialValue={content}
       initialEditType="markdown"
       toolbarItems={toolbarItems}
       height={'100%'}
       previewStyle="vertical"
       plugins={[colorSyntax, [codeSyntaxHighlightPlugin, { highlighter: Prism }]]}
+      onChange={onEditorChange}
       // hooks={{ addImageBlobHook: onUploadImage }}
     />
   )
