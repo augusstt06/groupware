@@ -7,8 +7,12 @@ import { IoClose } from 'react-icons/io5'
 import BoardWriteModalCheckBox from '../checkbox/BoardWriteModalCheckBox'
 import BoardModalInputGroup from '../input/board/BoardModalInputGroup'
 
-import { FALSE, TRUE } from '@/app/constant/constant'
+import { FALSE, KEY_ACCESS_TOKEN, KEY_X_ORGANIZATION_CODE, TRUE } from '@/app/constant/constant'
+import { API_URL_POSTINGS } from '@/app/constant/route/api-route-constant'
 import useInput from '@/app/module/hooks/reactHooks/useInput'
+import { useAppSelector } from '@/app/module/hooks/reduxHooks'
+import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
+import { modulePostFetch } from '@/app/module/utils/moduleFetch'
 import { type BoardWriteModalprops } from '@/app/types/ui/modalTypes'
 
 const Editor = dynamic(async () => import('../editor/TextEditor'), {
@@ -18,14 +22,32 @@ const Editor = dynamic(async () => import('../editor/TextEditor'), {
 export default function BoardWriteModal(props: BoardWriteModalprops) {
   const editorRef = useRef(null)
   const titleInput = useInput('')
+  const userInfo = useAppSelector((state) => state.userInfo)
+  const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
   const [isAnnounce, setIsAnnounce] = useState(FALSE)
-  const [content, setContent] = useState('')
+  const [editorContent, setEditorContent] = useState('')
 
   const handleClick = () => {
     if (isAnnounce === FALSE) setIsAnnounce(TRUE)
     else setIsAnnounce(FALSE)
   }
 
+  const fetchPostContent = async () => {
+    try {
+      const fetchProps = {
+        data: { content: editorContent, title: titleInput.value },
+        fetchUrl: API_URL_POSTINGS,
+        header: {
+          Authorization: `Bearer ${accessToken}`,
+          [KEY_X_ORGANIZATION_CODE]: userInfo[KEY_X_ORGANIZATION_CODE],
+        },
+      }
+      await modulePostFetch(fetchProps)
+    } catch (err) {}
+  }
+  const handleClickPosting = () => {
+    void fetchPostContent()
+  }
   return (
     <>
       <div
@@ -55,7 +77,10 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
                 <button className="mt-3 mb-3 w-2/5 md:text-sm text-xs text-indigo-500 hover:text-white dark:text-white dark:bg-indigo-500 dark:border-white border-indigo-500 hover:bg-indigo-500 rounded-lg text-center items-center dark:hover:bg-white dark:hover:text-indigo-500 border-2 dark:hover:border-indigo-500/75">
                   임시저장
                 </button>
-                <button className="mt-3 mb-3 w-2/5 md:text-sm text-xs text-indigo-500 hover:text-white dark:text-white dark:bg-indigo-500 dark:border-white border-indigo-500 hover:bg-indigo-500 rounded-lg text-center items-center dark:hover:bg-white dark:hover:text-indigo-500 border-2 dark:hover:border-indigo-500/75">
+                <button
+                  className="mt-3 mb-3 w-2/5 md:text-sm text-xs text-indigo-500 hover:text-white dark:text-white dark:bg-indigo-500 dark:border-white border-indigo-500 hover:bg-indigo-500 rounded-lg text-center items-center dark:hover:bg-white dark:hover:text-indigo-500 border-2 dark:hover:border-indigo-500/75"
+                  onClick={handleClickPosting}
+                >
                   등록
                 </button>
               </div>
@@ -65,7 +90,11 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
               <BoardModalInputGroup titleInput={titleInput} />
 
               <div className="w-2/3 bg-gray-100 dark:bg-gray-300 dark:text-black">
-                <Editor content={content} setContent={setContent} editorRef={editorRef} />
+                <Editor
+                  editorContent={editorContent}
+                  setEditorContent={setEditorContent}
+                  editorRef={editorRef}
+                />
               </div>
             </div>
 

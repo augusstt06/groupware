@@ -12,11 +12,11 @@ import 'prismjs/themes/prism.css'
 import Prism from 'prismjs'
 
 type EditorProps = {
-  content: string
-  setContent: Dispatch<SetStateAction<string>>
+  editorContent: string
+  setEditorContent: Dispatch<SetStateAction<string>>
   editorRef: React.MutableRefObject<Editor | null>
 }
-export default function TextEditor({ content, setContent, editorRef }: EditorProps) {
+export default function TextEditor({ editorContent, setEditorContent, editorRef }: EditorProps) {
   // type HookCallback = (url: string, text?: string) => void
   // const onUploadImage = async (blob: File, callback: HookCallback) => {
   //   const formData = new FormData()
@@ -37,13 +37,13 @@ export default function TextEditor({ content, setContent, editorRef }: EditorPro
   ]
   const onEditorChange = () => {
     const editorHtml = editorRef.current?.getInstance().getHTML()
-    setContent(editorHtml)
+    setEditorContent(editorHtml)
   }
   return (
     <Editor
       ref={editorRef}
       placeholder="게시글을 작성해주세요"
-      initialValue={content}
+      initialValue={editorContent}
       initialEditType="markdown"
       toolbarItems={toolbarItems}
       height={'100%'}
