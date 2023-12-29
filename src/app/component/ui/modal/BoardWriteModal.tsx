@@ -32,7 +32,7 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
         className="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
       >
         <div className="absolute top-20 left-20 right-20 p-4 w-5/6">
-          <div className="relative rounded-lg shadow dark:bg-gray-700">
+          <div className="relative rounded-lg shadow dark:bg-gray-700 border-solid border-2 border-indigo-300 bg-white">
             <div className="flex flex-row justify-between items-center border-b rounded-t dark:border-gray-600 w-full p-3">
               <div className="w-1/6 text-center">
                 <button
@@ -57,10 +57,10 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
               </div>
             </div>
 
-            <div className="p-2 space-y-4 flex flex-row w-full">
+            <div className="p-2 flex flex-row w-full">
               <BoardModalInputGroup titleInput={titleInput} />
 
-              <div className="w-2/3 bg-gray-300">
+              <div className="w-2/3 bg-gray-100 dark:bg-gray-300 dark:text-black">
                 <Editor />
               </div>
             </div>
