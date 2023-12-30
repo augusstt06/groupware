@@ -25,7 +25,9 @@ export const ERR_MESSAGE_LOGIN_NOT_FOUND = 'user not found: record not found'
 export const ERR_MESSAGE_CHECK_MAIL = 'check mail'
 export const ERR_MESSAGE_LOGIN_EMAIL_FAIL = 'user not found: record not found'
 export const ERR_MESSAGE_LOGIN_PWD_FAIL = 'password does not match'
-export const ERR_MESSAGE_REGISTER_ORG_FAIL_EXIST = 'organization already joined'
+export const ERR_MESSAGE_JOIN_ORG_FAIL_EXIST = 'organization already joined'
+export const ERR_MESSAGE_ORG_ALREADY_EXIST =
+  "Error 1062 (23000): Duplicate entry 'test' for key 'organizations.name'"
 export const ERR_MESSAGE_RECORD_NOT_FOUND = 'record not found'
 export const ERR_ORG_NOT_FOUND = 'organization not found'
 export const ERR_UNAUTHORIZED = 'unauthorized'

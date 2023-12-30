@@ -10,8 +10,9 @@ import {
   REGISTER_ORG_NAME,
 } from '@/app/constant/constant'
 import {
+  ERR_MESSAGE_JOIN_ORG_FAIL_EXIST,
+  ERR_MESSAGE_ORG_ALREADY_EXIST,
   ERR_MESSAGE_RECORD_NOT_FOUND,
-  ERR_MESSAGE_REGISTER_ORG_FAIL_EXIST,
   errNotEntered,
   errNotFound,
 } from '@/app/constant/errorMsg'
@@ -100,8 +101,11 @@ export default function RegisterOrgLoginBtn(props: RegisterOrgLoginBtnProps) {
           case ERR_MESSAGE_RECORD_NOT_FOUND:
             props.setErrMsg(errNotFound('입력한 조직'))
             break
-          case ERR_MESSAGE_REGISTER_ORG_FAIL_EXIST:
+          case ERR_MESSAGE_JOIN_ORG_FAIL_EXIST:
             props.setErrMsg('이미 해당 조직에 가입되어 있습니다.')
+            break
+          case ERR_MESSAGE_ORG_ALREADY_EXIST:
+            props.setErrMsg('이미 같은 이름의 조직이 존재합니다.')
             break
         }
       }
