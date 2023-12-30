@@ -9,7 +9,7 @@ import BoardWriteModalCheckBox from '../checkbox/BoardWriteModalCheckBox'
 import BoardModalInputGroup from '../input/board/BoardModalInputGroup'
 
 import { FALSE, KEY_ACCESS_TOKEN, KEY_X_ORGANIZATION_CODE, TRUE } from '@/app/constant/constant'
-import { ERR_EMPTRY_POSTING_FIELD } from '@/app/constant/errorMsg'
+import { ERR_EMPTRY_POSTING_FIELD, errNotEntered } from '@/app/constant/errorMsg'
 import { API_URL_POSTINGS } from '@/app/constant/route/api-route-constant'
 import useInput from '@/app/module/hooks/reactHooks/useInput'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
@@ -41,6 +41,7 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
   const fetchPostContent = async () => {
     try {
       const fetchProps = {
+        // FIXME: fetch시 어느 카테고리의 글인지 확인하는 column이 추가되어야 할듯
         data: { content: editorContent, title: titleInput.value },
         fetchUrl: API_URL_POSTINGS,
         header: {
@@ -52,13 +53,16 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
 
       dispatch(openBoardWriteModalReducer())
-      // soft refresh => 변한 부분만 merge됨
+      alert('글이 정상적으로 등록되었습니다.')
+      // FIXME: 상세 페이지로 이동으로 바꾸기
       router.refresh()
     } catch (err) {
       if (err instanceof Error) {
+        // FIXME: 위 fixme의 case 추가하기
         switch (err.message) {
           case ERR_EMPTRY_POSTING_FIELD:
             // 필수 입력사항이 입력 안된 경우
+            alert(errNotEntered('필수항목'))
             break
         }
       }
