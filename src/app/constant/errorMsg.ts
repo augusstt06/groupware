@@ -31,3 +31,6 @@ export const ERR_MESSAGE_ORG_ALREADY_EXIST =
 export const ERR_MESSAGE_RECORD_NOT_FOUND = 'record not found'
 export const ERR_ORG_NOT_FOUND = 'organization not found'
 export const ERR_UNAUTHORIZED = 'unauthorized'
+
+export const ERR_EMPTRY_POSTING_FIELD =
+  "Key: 'CreatePostingRequest.Title' Error:Field validation for 'Title' failed on the 'required' tag\nKey: 'CreatePostingRequest.Content' Error:Field validation for 'Content' failed on the 'required' tag"

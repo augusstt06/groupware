@@ -2,17 +2,21 @@
 import React, { useRef, useState } from 'react'
 
 import dynamic from 'next/dynamic'
+import { useRouter } from 'next/navigation'
 import { IoClose } from 'react-icons/io5'
 
 import BoardWriteModalCheckBox from '../checkbox/BoardWriteModalCheckBox'
 import BoardModalInputGroup from '../input/board/BoardModalInputGroup'
 
 import { FALSE, KEY_ACCESS_TOKEN, KEY_X_ORGANIZATION_CODE, TRUE } from '@/app/constant/constant'
+import { ERR_EMPTRY_POSTING_FIELD } from '@/app/constant/errorMsg'
 import { API_URL_POSTINGS } from '@/app/constant/route/api-route-constant'
 import useInput from '@/app/module/hooks/reactHooks/useInput'
-import { useAppSelector } from '@/app/module/hooks/reduxHooks'
+import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
 import { modulePostFetch } from '@/app/module/utils/moduleFetch'
+import { openBoardWriteModalReducer } from '@/app/store/reducers/board/openBoardWriteModalReducer'
+import { type ApiRes, type FailResponseType, type FetchResponseType } from '@/app/types/moduleTypes'
 import { type BoardWriteModalprops } from '@/app/types/ui/modalTypes'
 
 const Editor = dynamic(async () => import('../editor/TextEditor'), {
@@ -20,6 +24,8 @@ const Editor = dynamic(async () => import('../editor/TextEditor'), {
 })
 
 export default function BoardWriteModal(props: BoardWriteModalprops) {
+  const dispatch = useAppDispatch()
+  const router = useRouter()
   const editorRef = useRef(null)
   const titleInput = useInput('')
   const userInfo = useAppSelector((state) => state.userInfo)
@@ -42,8 +48,21 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
           [KEY_X_ORGANIZATION_CODE]: userInfo[KEY_X_ORGANIZATION_CODE],
         },
       }
-      await modulePostFetch(fetchProps)
-    } catch (err) {}
+      const res = await modulePostFetch<FetchResponseType<ApiRes>>(fetchProps)
+      if (res.status !== 200) throw new Error((res as FailResponseType).message)
+
+      dispatch(openBoardWriteModalReducer())
+      // soft refresh => 변한 부분만 merge됨
+      router.refresh()
+    } catch (err) {
+      if (err instanceof Error) {
+        switch (err.message) {
+          case ERR_EMPTRY_POSTING_FIELD:
+            // 필수 입력사항이 입력 안된 경우
+            break
+        }
+      }
+    }
   }
   const handleClickPosting = () => {
     void fetchPostContent()
