@@ -3,6 +3,7 @@ import {
   type FetchResponseType,
   type ModuleGetFetchProps,
   type ModulePostFetchProps,
+  type ModulePostFileFetchProps,
 } from '@/app/types/moduleTypes'
 
 export const moduleGetFetch = async <T>(props: ModuleGetFetchProps): Promise<T> => {
@@ -25,10 +26,23 @@ export const modulePostFetch = async <T>(
   const res = await fetch(props.fetchUrl as string, {
     method: POST,
     headers: {
-      'Content-Type': FETCH_CONTENT_TYPE,
+      'Content-Type': 'application/x-www-form-urlencoded',
       ...props.header,
     },
     body: JSON.stringify(props.data),
+  })
+  return res.json()
+}
+
+export const modulePostFileFetch = async <T>(
+  props: ModulePostFileFetchProps,
+): Promise<FetchResponseType<T>> => {
+  const res = await fetch(props.fetchUrl as string, {
+    method: POST,
+    headers: {
+      ...props.header,
+    },
+    body: props.file,
   })
   return res.json()
 }

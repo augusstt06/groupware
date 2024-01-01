@@ -28,3 +28,4 @@ export const API_URL_PROJECTS = process.env.NEXT_PUBLIC_CREATE_PROJECTS_SOURCE a
 
 // board
 export const API_URL_POSTINGS = process.env.NEXT_PUBLIC_POSTING_SOURCE as string
+export const API_URL_UPLOAD_IMG = process.env.NEXT_PUBLIC_UPLOAD_IMAGE_SOURCE as string

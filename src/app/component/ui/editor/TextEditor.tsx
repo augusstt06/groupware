@@ -11,20 +11,39 @@ import '@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin
 import 'prismjs/themes/prism.css'
 import Prism from 'prismjs'
 
+import { KEY_ACCESS_TOKEN } from '@/app/constant/constant'
+import { API_URL_UPLOAD_IMG } from '@/app/constant/route/api-route-constant'
+import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
+import { modulePostFileFetch } from '@/app/module/utils/moduleFetch'
+import { type ModulePostFileFetchProps, type SuccessResponseType } from '@/app/types/moduleTypes'
+
 type EditorProps = {
   editorContent: string
   setEditorContent: Dispatch<SetStateAction<string>>
   editorRef: React.MutableRefObject<Editor | null>
 }
 export default function TextEditor({ editorContent, setEditorContent, editorRef }: EditorProps) {
-  // type HookCallback = (url: string, text?: string) => void
-  // const onUploadImage = async (blob: File, callback: HookCallback) => {
-  //   const formData = new FormData()
-  //   formData.append('image', blob)
-  //   // 회의 후 imgUrl 부분에서 post 요청을 날려 이미지를 서버에 저장후 url를 리턴받기
-  //   const imgUrl = 'http://localhost:3000/test'
-  //   callback(imgUrl, 'image')
-  // }
+  const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
+  type HookCallback = (url: string, text?: string) => void
+  const onUploadImage = async (blob: File, callback: HookCallback) => {
+    try {
+      const formData = new FormData()
+      formData.append('image', blob)
+
+      const fetchImgProps: ModulePostFileFetchProps = {
+        file: formData,
+        fetchUrl: API_URL_UPLOAD_IMG,
+        header: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+      const res = await modulePostFileFetch(fetchImgProps)
+      // console.log(res)
+      // FIXME: 객체 url이 와야하는거 같은데 확인해보기
+      const imgUrl = (res as SuccessResponseType<[string]>).result
+      callback(imgUrl[0], 'image')
+    } catch (err) {}
+  }
 
   const toolbarItems = [
     ['heading', 'bold', 'italic', 'strike'],
@@ -50,7 +69,7 @@ export default function TextEditor({ editorContent, setEditorContent, editorRef 
       previewStyle="vertical"
       plugins={[colorSyntax, [codeSyntaxHighlightPlugin, { highlighter: Prism }]]}
       onChange={onEditorChange}
-      // hooks={{ addImageBlobHook: onUploadImage }}
+      hooks={{ addImageBlobHook: onUploadImage }}
     />
   )
 }
