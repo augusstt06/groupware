@@ -8,12 +8,16 @@ const nextConfig = {
   async rewrites() {
     return [
       {
+        source: process.env.NEXT_PUBLIC_GET_BOARD_ORG_LIST_SOURCE,
+        destination: process.env.NEXT_PUBLIC_GET_BOARD_ORG_LIST_DESTINATION,
+      },
+      {
         source: process.env.NEXT_PUBLIC_UPLOAD_IMAGE_SOURCE,
         destination: process.env.NEXT_PUBLIC_UPLOAD_IMAGE_DESTINATION,
       },
       {
-        source: process.env.NEXT_PUBLIC_POSTING_SOURCE,
-        destination: process.env.NEXT_PUBLIC_POSTING_DESTINATION,
+        source: process.env.NEXT_PUBLIC_POSTING_ORG_SOURCE,
+        destination: process.env.NEXT_PUBLIC_POSTING_ORG_DESTINATION,
       },
       {
         source: process.env.NEXT_PUBLIC_USERS_SOURCE,

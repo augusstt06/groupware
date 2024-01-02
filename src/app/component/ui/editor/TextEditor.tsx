@@ -22,6 +22,7 @@ type EditorProps = {
   setEditorContent: Dispatch<SetStateAction<string>>
   editorRef: React.MutableRefObject<Editor | null>
 }
+// FIXME: 최대 파일은 5개까지 가능
 export default function TextEditor({ editorContent, setEditorContent, editorRef }: EditorProps) {
   const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
   type HookCallback = (url: string, text?: string) => void
@@ -29,7 +30,6 @@ export default function TextEditor({ editorContent, setEditorContent, editorRef 
     try {
       const formData = new FormData()
       formData.append('image', blob)
-
       const fetchImgProps: ModulePostFileFetchProps = {
         file: formData,
         fetchUrl: API_URL_UPLOAD_IMG,
@@ -40,8 +40,9 @@ export default function TextEditor({ editorContent, setEditorContent, editorRef 
       const res = await modulePostFileFetch(fetchImgProps)
       // console.log(res)
       // FIXME: 객체 url이 와야하는거 같은데 확인해보기
-      const imgUrl = (res as SuccessResponseType<[string]>).result
-      callback(imgUrl[0], 'image')
+      const imgUrl = (res as SuccessResponseType<string>).result
+
+      callback(imgUrl, 'image')
     } catch (err) {}
   }
 

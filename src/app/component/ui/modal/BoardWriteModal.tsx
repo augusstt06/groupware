@@ -10,7 +10,7 @@ import BoardModalInputGroup from '../input/board/BoardModalInputGroup'
 
 import { FALSE, KEY_ACCESS_TOKEN, KEY_X_ORGANIZATION_CODE, TRUE } from '@/app/constant/constant'
 import { ERR_EMPTRY_POSTING_FIELD, errNotEntered } from '@/app/constant/errorMsg'
-import { API_URL_POSTINGS } from '@/app/constant/route/api-route-constant'
+import { API_URL_POSTINGS_ORG } from '@/app/constant/route/api-route-constant'
 import useInput from '@/app/module/hooks/reactHooks/useInput'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
@@ -25,6 +25,7 @@ const Editor = dynamic(async () => import('../editor/TextEditor'), {
 
 export default function BoardWriteModal(props: BoardWriteModalprops) {
   const dispatch = useAppDispatch()
+  const params = useAppSelector((state) => state.boardCategory.category)
   const router = useRouter()
   const editorRef = useRef(null)
   const titleInput = useInput('')
@@ -38,18 +39,29 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
     else setIsAnnounce(FALSE)
   }
 
+  const convertBoardCategory = (): number => {
+    switch (params) {
+      case '공지사항':
+        return 1
+      default:
+        return 0
+    }
+  }
+
   const fetchPostContent = async () => {
     try {
+      const boardCategory = convertBoardCategory()
       const fetchProps = {
-        // FIXME: fetch시 어느 카테고리의 글인지 확인하는 column이 추가되어야 할듯
-        data: { content: editorContent, title: titleInput.value },
-        fetchUrl: API_URL_POSTINGS,
+        data: { boardId: boardCategory, content: editorContent, title: titleInput.value },
+        fetchUrl: API_URL_POSTINGS_ORG,
         header: {
           Authorization: `Bearer ${accessToken}`,
           [KEY_X_ORGANIZATION_CODE]: userInfo[KEY_X_ORGANIZATION_CODE],
         },
       }
+
       const res = await modulePostFetch<FetchResponseType<ApiRes>>(fetchProps)
+
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
 
       dispatch(openBoardWriteModalReducer())
