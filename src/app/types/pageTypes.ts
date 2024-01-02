@@ -1,4 +1,4 @@
-import { type SetStateAction } from 'react'
+import { type Dispatch, type SetStateAction } from 'react'
 
 import { type boardListResponsetype } from './variableTypes'
 
@@ -31,4 +31,10 @@ export type PageParam = {
 
 export type BoardItemProps = {
   boardListItem: boardListResponsetype
+}
+
+export type PaginationProps = {
+  size: number
+  pageNumber: number
+  setPageNumber: Dispatch<SetStateAction<number>>
 }

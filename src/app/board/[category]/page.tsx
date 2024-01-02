@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation'
 import BoardItem from '@/app/component/page/main/hub/board/BoardItem'
 import BoardHubInput from '@/app/component/ui/input/board/BoardHubInput'
 import BoardWriteModal from '@/app/component/ui/modal/BoardWriteModal'
+import Pagination from '@/app/component/ui/pagination/Pagination'
 import Sidebar from '@/app/component/ui/sidebar/Sidebar'
 import {
   BOARD,
@@ -37,13 +38,15 @@ export default function BoardCategory({ params }: { params: PageParam }) {
   const router = useRouter()
   const dispatch = useAppDispatch()
   const searchInput = useInput('')
-  const [accessToken, setAccessToken] = useState(moduleGetCookie(KEY_ACCESS_TOKEN))
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
   const loginCompleteState = useAppSelector((state) => state.maintain[KEY_LOGIN_COMPLETE])
   const isModalOpen = useAppSelector((state) => state.openBoardWriteModal.isOpen)
   const boardCategory = useAppSelector((state) => state.boardCategory.category)
 
-  const [boardList, setBoardList] = useState<[boardListResponsetype]>()
+  const [accessToken, setAccessToken] = useState(moduleGetCookie(KEY_ACCESS_TOKEN))
+  const [pageNumber, setPageNumber] = useState(0)
+
+  const [boardList, setBoardList] = useState<boardListResponsetype[][]>()
   const handleModal = () => {
     dispatch(openBoardWriteModalReducer())
   }
@@ -55,7 +58,13 @@ export default function BoardCategory({ params }: { params: PageParam }) {
         return 0
     }
   }
-
+  const convertArray = <T,>(boardList: T[], size: number): T[][] => {
+    const convertList: T[][] = []
+    for (let i = 0; i < boardList.length; i += size) {
+      convertList.push(boardList.slice(i, i + size))
+    }
+    return convertList
+  }
   const fetchGetBoardList = async () => {
     try {
       const boardId = convertBoardId()
@@ -74,12 +83,14 @@ export default function BoardCategory({ params }: { params: PageParam }) {
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
 
       const boardList = (res as SuccessResponseType<[boardListResponsetype]>).result
-      setBoardList(boardList)
+      setBoardList(convertArray(boardList, 10))
     } catch (err) {}
   }
+
   useEffect(() => {
     dispatch(categoryReduer(params.category))
     void fetchGetBoardList()
+
     const moduleProps: ModuleCheckUserStateProps = {
       useRouter: router,
       token: accessToken,
@@ -89,6 +100,7 @@ export default function BoardCategory({ params }: { params: PageParam }) {
     }
     moduleCheckUserState(moduleProps)
   }, [boardCategory])
+
   return (
     <main className="w-full grid gap-4 grid-cols-4 h-4/5 pt-10 md:ml-10 md:mr-10 ml-5 z-1">
       <Sidebar title={BOARD} />
@@ -99,8 +111,22 @@ export default function BoardCategory({ params }: { params: PageParam }) {
               <span>{boardCategory}</span>
             </div>
             <BoardHubInput searchInput={searchInput} />
-            {boardList?.map((data) => <BoardItem key={data.id} boardListItem={data} />)}
+
+            {boardList !== undefined ? (
+              boardList[pageNumber]?.map((data) => <BoardItem key={data.id} boardListItem={data} />)
+            ) : (
+              <></>
+            )}
           </div>
+          {boardList !== undefined ? (
+            <Pagination
+              size={boardList.length}
+              pageNumber={pageNumber}
+              setPageNumber={setPageNumber}
+            />
+          ) : (
+            <></>
+          )}
         </div>
         {isModalOpen ? <BoardWriteModal onClick={handleModal} /> : <></>}
       </div>
