@@ -1,5 +1,7 @@
 import { type SetStateAction } from 'react'
 
+import { type boardListResponsetype } from './variableTypes'
+
 export type ReactProps = {
   children: React.ReactNode
 }
@@ -25,4 +27,8 @@ export type HubCategoryProps = {
 
 export type PageParam = {
   category: string
+}
+
+export type BoardItemProps = {
+  boardListItem: boardListResponsetype
 }
