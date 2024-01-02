@@ -58,8 +58,11 @@ export default function BoardCategory({ params }: { params: PageParam }) {
         return 0
     }
   }
-  const convertArray = <T,>(boardList: T[], size: number): T[][] => {
-    const convertList: T[][] = []
+  const convertArray = <boardListResponsetype,>(
+    boardList: boardListResponsetype[],
+    size: number,
+  ): boardListResponsetype[][] => {
+    const convertList: boardListResponsetype[][] = []
     for (let i = 0; i < boardList.length; i += size) {
       convertList.push(boardList.slice(i, i + size))
     }
