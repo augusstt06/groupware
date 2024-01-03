@@ -9,6 +9,8 @@ import { FaComment, FaHeart, FaRegHeart } from 'react-icons/fa'
 import { IoIosArrowBack } from 'react-icons/io'
 import { MdRemoveRedEye } from 'react-icons/md'
 
+import Comment from '@/app/component/page/board/comment/Comment'
+import WriteComment from '@/app/component/page/board/comment/WriteComment'
 import Sidebar from '@/app/component/ui/sidebar/Sidebar'
 import {
   BOARD,
@@ -89,17 +91,20 @@ export default function BoardDetail() {
   return (
     <>
       {content != null ? (
-        <main className="w-full grid gap-4 grid-cols-4 h-4/5 pt-10 md:ml-10 md:mr-10 ml-5 z-1">
+        <main className="w-full grid gap-4 grid-cols-4 h-4/5 pt-10 pb-10 md:ml-10 md:mr-10 ml-5 z-1">
           <Sidebar title={BOARD} />
           <div className="w-4/5 rounded md:col-span-3 mr-10 col-span-4 bg-gray-100 dark:bg-gray-500 dark:text-white p-5">
             <div className="">
-              <div className="flex flex-row mb-3 items-center" onClick={moveBoardListPage}>
-                <IoIosArrowBack className="cursor-pointer" />
-                <span className="text-sm">목록보기</span>
+              <div
+                className="flex flex-row mb-3 items-center cursor-pointer inline w-20 hover:font-bold"
+                onClick={moveBoardListPage}
+              >
+                <IoIosArrowBack className="mr-2" />
+                <span className="text-xs">목록보기</span>
               </div>
 
               <div className="flex flex-col border-b-2 border-gray-300 pb-2">
-                <span className="text-xl font-bold">{content.title}</span>
+                <span className="text-xl font-bold mb-2">{content.title}</span>
                 <span className="text-xs">
                   {content.name}({content.position})
                 </span>
@@ -109,17 +114,17 @@ export default function BoardDetail() {
                       {moduleConvertDate(content?.createdAt).split(' ')[0]}
                     </span>
                     {/* 조회수 */}
-                    <div className="flex flex-row text-xs justify-around items-center w-1/6">
+                    <div className="flex flex-row text-xs justify-around items-center w-6 mr-2">
                       <MdRemoveRedEye />
                       <span>3</span>
                     </div>
                     {/* 좋아요 */}
-                    <div className="flex flex-row text-xs justify-around items-center w-1/6">
+                    <div className="flex flex-row text-xs justify-around items-center w-6 mr-2">
                       <FaHeart className="text-red-400" />
                       <span>8</span>
                     </div>
                     {/* 댓글 수 */}
-                    <div className="flex flex-row text-xs justify-around items-center w-1/6">
+                    <div className="flex flex-row text-xs justify-around items-center w-6">
                       <FaComment />
                       <span>3</span>
                     </div>
@@ -138,14 +143,22 @@ export default function BoardDetail() {
             </div>
             <div className="border-b-2 border-gray-300 pt-2 pb-4">
               <Viewbox content={content.content} />
-              <div className="border-2 rounded-lg border-red-400 p-2 flex flex-row justify-around items-center w-16">
+              <div className="border-2 rounded-lg border-red-400 p-2 flex flex-row justify-around items-center w-16 hover:font-bold hover:bg-red-400 hover:text-white text-red-400">
                 {/* FIXME: 누르면 아이콘 변경 */}
-                {/* <FaHeart className="text-red-400 w-3 h-3" /> */}
-                <FaRegHeart className="text-red-400 w-3 h-3 font-bold" />
+                {/* <FaHeart className="w-3 h-3" /> */}
+                <FaRegHeart className=" w-3 h-3" />
                 <span className="text-xs">8</span>
               </div>
             </div>
-            <div className="pt-2 pb-2">댓글</div>
+            <div className="pt-2 pb-2 ">
+              <span className="font-bold text-base">댓글 3</span>
+              {/* FIXME: 댓글 api 필요 => response로 mapping하기 */}
+              <Comment />
+              <Comment />
+            </div>
+            <div>
+              <WriteComment />
+            </div>
           </div>
         </main>
       ) : (
