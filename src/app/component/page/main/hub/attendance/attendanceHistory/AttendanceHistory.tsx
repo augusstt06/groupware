@@ -13,7 +13,7 @@ import useInput from '@/app/module/hooks/reactHooks/useInput'
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
 import { moduleGetFetch } from '@/app/module/utils/moduleFetch'
-import { convertTime } from '@/app/module/utils/moduleTime'
+import { moduleConvertTime } from '@/app/module/utils/moduleTime'
 import {
   type ApiRes,
   type FailResponseType,
@@ -40,10 +40,10 @@ export default function AttendanceHistory() {
       if (select === '') return
       const fetchHistoryProps: ModuleGetFetchProps = {
         params: {
-          from: convertTime(fromInput.value),
+          from: moduleConvertTime(fromInput.value),
           limit: '10',
           organizationId: userInfo.extraInfo.organizationId,
-          to: convertTime(toInput.value),
+          to: moduleConvertTime(toInput.value),
           userId: userInfo.extraInfo.userId,
         },
         fetchUrl: select === 'attendance' ? API_URL_GET_ATTENDANCE_HISTORY : API_URL_VACATION,

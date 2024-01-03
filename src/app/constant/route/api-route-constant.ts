@@ -31,3 +31,6 @@ export const API_URL_POSTINGS_ORG = process.env.NEXT_PUBLIC_POSTING_ORG_SOURCE a
 export const API_URL_UPLOAD_IMG = process.env.NEXT_PUBLIC_UPLOAD_IMAGE_SOURCE as string
 
 export const API_URL_BOARD_ORG_LIST = process.env.NEXT_PUBLIC_GET_BOARD_ORG_LIST_SOURCE as string
+
+// postings
+export const API_URL_POSTINGS = process.env.NEXT_PUBLIC_POSTINGS_SOURCE as string

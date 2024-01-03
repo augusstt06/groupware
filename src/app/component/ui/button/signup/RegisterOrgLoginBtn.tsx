@@ -21,7 +21,7 @@ import { ROUTE_SIGNUP_COMPLETE } from '@/app/constant/route/route-constant'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleDeleteCookies, moduleGetCookie } from '@/app/module/utils/moduleCookie'
 import { modulePostFetch } from '@/app/module/utils/moduleFetch'
-import { deleteStorage } from '@/app/module/utils/moduleStorage'
+import { moduleDeleteStorage } from '@/app/module/utils/moduleStorage'
 import { updateLoginCompleteReducer } from '@/app/store/reducers/maintain/maintainReducer'
 import {
   type FailResponseType,
@@ -91,7 +91,7 @@ export default function RegisterOrgLoginBtn(props: RegisterOrgLoginBtnProps) {
       const orgRes = await modulePostFetch<FetchResponseType<string>>(fetchOrgProps)
       if (orgRes.status !== 200) throw new Error((orgRes as FailResponseType).message)
 
-      deleteStorage([REGISTER_ORG_DESCRIPTION, REGISTER_ORG_NAME, REGISTER_ORG_JOIN])
+      moduleDeleteStorage([REGISTER_ORG_DESCRIPTION, REGISTER_ORG_NAME, REGISTER_ORG_JOIN])
       dispatch(updateLoginCompleteReducer(FALSE))
       moduleDeleteCookies(KEY_ACCESS_TOKEN)
       router.push(ROUTE_SIGNUP_COMPLETE)

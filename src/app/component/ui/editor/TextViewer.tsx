@@ -2,6 +2,6 @@
 
 import { Viewer } from '@toast-ui/react-editor'
 
-export default function TextViewer() {
-  return <Viewer />
+export default function TextViewer(props: { content: string }) {
+  return <Viewer initialValue={props.content} />
 }
