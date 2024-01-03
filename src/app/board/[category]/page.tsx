@@ -44,12 +44,15 @@ export default function BoardCategory({ params }: { params: PageParam }) {
   const boardCategory = useAppSelector((state) => state.boardCategory.category)
 
   const [accessToken, setAccessToken] = useState(moduleGetCookie(KEY_ACCESS_TOKEN))
-  const [pageNumber, setPageNumber] = useState(0)
 
-  const [boardList, setBoardList] = useState<boardListResponsetype[][]>()
+  const [boardList, setBoardList] = useState<boardListResponsetype[]>()
+  const [pageSize, setPageSize] = useState<number>(1)
+  const [pageNumber, setPageNumber] = useState<number>(0)
+
   const handleModal = () => {
     dispatch(openBoardWriteModalReducer())
   }
+
   const convertBoardId = () => {
     switch (boardCategory) {
       case '공지사항':
@@ -58,16 +61,6 @@ export default function BoardCategory({ params }: { params: PageParam }) {
         return 0
     }
   }
-  const convertArray = <boardListResponsetype,>(
-    boardList: boardListResponsetype[],
-    size: number,
-  ): boardListResponsetype[][] => {
-    const convertList: boardListResponsetype[][] = []
-    for (let i = 0; i < boardList.length; i += size) {
-      convertList.push(boardList.slice(i, i + size))
-    }
-    return convertList
-  }
   const fetchGetBoardList = async () => {
     try {
       const boardId = convertBoardId()
@@ -75,6 +68,8 @@ export default function BoardCategory({ params }: { params: PageParam }) {
       const fetchGetBoardListProps: ModuleGetFetchProps = {
         params: {
           organizationBoardId: boardId,
+          limit: 10,
+          offset: 10 * pageNumber,
         },
         fetchUrl: API_URL_BOARD_ORG_LIST,
         header: {
@@ -82,11 +77,23 @@ export default function BoardCategory({ params }: { params: PageParam }) {
           [KEY_X_ORGANIZATION_CODE]: orgCode,
         },
       }
-      const res = await moduleGetFetch<FetchResponseType<ApiRes[]>>(fetchGetBoardListProps)
+      type resType = {
+        postings: [boardListResponsetype]
+        total: number
+        size: number
+      }
+      const res =
+        await moduleGetFetch<FetchResponseType<ApiRes[] | resType>>(fetchGetBoardListProps)
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
 
-      const boardList = (res as SuccessResponseType<[boardListResponsetype]>).result
-      setBoardList(convertArray(boardList, 10))
+      const resBoardList = (res as SuccessResponseType<resType>).result.postings
+      // FIXME: response로 오는 total값이 offset이 변하면 0으로 응답됨
+      // FIXME: 일단 임시로 막아놓자
+      if (pageSize === 1) {
+        const pageSize = Math.ceil((res as SuccessResponseType<resType>).result.total / 10)
+        setPageSize(pageSize)
+      }
+      setBoardList(resBoardList)
     } catch (err) {}
   }
 
@@ -102,7 +109,7 @@ export default function BoardCategory({ params }: { params: PageParam }) {
       isCheckInterval: true,
     }
     moduleCheckUserState(moduleProps)
-  }, [boardCategory])
+  }, [boardCategory, pageNumber])
 
   return (
     <main className="w-full grid gap-4 grid-cols-4 h-4/5 pt-10 md:ml-10 md:mr-10 ml-5 z-1">
@@ -116,17 +123,13 @@ export default function BoardCategory({ params }: { params: PageParam }) {
             <BoardHubInput searchInput={searchInput} />
 
             {boardList !== undefined ? (
-              boardList[pageNumber]?.map((data) => <BoardItem key={data.id} boardListItem={data} />)
+              boardList.map((data) => <BoardItem key={data.id} boardListItem={data} />)
             ) : (
               <></>
             )}
           </div>
           {boardList !== undefined ? (
-            <Pagination
-              size={boardList.length}
-              pageNumber={pageNumber}
-              setPageNumber={setPageNumber}
-            />
+            <Pagination size={pageSize} pageNumber={pageNumber} setPageNumber={setPageNumber} />
           ) : (
             <></>
           )}
