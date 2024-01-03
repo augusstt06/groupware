@@ -93,7 +93,7 @@ export default function BoardDetail() {
       {content != null ? (
         <main className="w-full grid gap-4 grid-cols-4 h-4/5 pt-10 pb-10 md:ml-10 md:mr-10 ml-5 z-1">
           <Sidebar title={BOARD} />
-          <div className="w-4/5 rounded md:col-span-3 mr-10 col-span-4 bg-gray-100 dark:bg-gray-500 dark:text-white p-5">
+          <div className="w-4/5 rounded md:col-span-3 mr-10 col-span-4 bg-white dark:bg-gray-700 dark:text-white p-5 border-2">
             <div className="">
               <div
                 className="flex flex-row mb-3 items-center cursor-pointer inline w-20 hover:font-bold"
@@ -126,7 +126,7 @@ export default function BoardDetail() {
                     {/* 댓글 수 */}
                     <div className="flex flex-row text-xs justify-around items-center w-6">
                       <FaComment />
-                      <span>3</span>
+                      <span>2</span>
                     </div>
                   </div>
                   {/* FIXME: 본인 글에만 표시 */}
@@ -143,7 +143,7 @@ export default function BoardDetail() {
             </div>
             <div className="border-b-2 border-gray-300 pt-2 pb-4">
               <Viewbox content={content.content} />
-              <div className="border-2 rounded-lg border-red-400 p-2 flex flex-row justify-around items-center w-16 hover:font-bold hover:bg-red-400 hover:text-white text-red-400">
+              <div className="cursor-pointer border-2 rounded-lg border-red-400 p-2 flex flex-row justify-around items-center w-16 hover:font-bold hover:bg-red-400 hover:text-white text-red-400">
                 {/* FIXME: 누르면 아이콘 변경 */}
                 {/* <FaHeart className="w-3 h-3" /> */}
                 <FaRegHeart className=" w-3 h-3" />
@@ -153,7 +153,7 @@ export default function BoardDetail() {
             <div className="pt-2 pb-2 ">
               <span className="font-bold text-base">댓글 3</span>
               {/* FIXME: 댓글 api 필요 => response로 mapping하기 */}
-              <Comment />
+              {/* <Comment /> */}
               <Comment />
             </div>
             <div>

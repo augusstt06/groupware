@@ -4,10 +4,10 @@ export default function WriteComment() {
   return (
     <div className=" pt-2 pb-2">
       <div className="border-2 border-gray-300 rounded-lg flex flex-col p-2">
-        <span className="text-sm font-bold pl-3">작성자 이름</span>
+        <span className="text-sm font-bold pl-3 mb-2">작성자 이름</span>
         <input
           placeholder="댓글을 남겨보세요"
-          className="outline-none bg-gray-100 dark:bg-gray-500 p-3 text-sm"
+          className="outline-none bg-white dark:bg-gray-700 p-3 text-sm"
         />
         <div className="flex flex-row justify-between w-full items-center pl-3">
           {/* FIXME: 클릭시 파일 첨부 */}
