@@ -23,8 +23,8 @@ type EditorProps = {
   setEditorContent: Dispatch<SetStateAction<string>>
   editorRef: React.MutableRefObject<Editor | null>
 }
-// FIXME: 최대 파일은 5개까지 가능
-// 조직코드 들어갸는걸로 바뀌었는데 이거 맞는건지 물어보기
+// TODO: checkList.md - 8
+// FIXME: checkList.md - 7
 export default function TextEditor({ editorContent, setEditorContent, editorRef }: EditorProps) {
   const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])

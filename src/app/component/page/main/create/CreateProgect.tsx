@@ -33,10 +33,7 @@ export default function CreateProject() {
         },
       }
       await modulePostFetch(fetchCreateProject)
-      //   console.log(res)
-    } catch (err) {
-      //   console.log(err)
-    }
+    } catch (err) {}
   }
   const handleClick = () => {
     void fetchCreateProject()

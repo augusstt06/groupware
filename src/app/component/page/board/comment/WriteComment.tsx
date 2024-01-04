@@ -1,6 +1,7 @@
 'use client'
 import { type ChangeEvent, useState } from 'react'
 
+import { useRouter } from 'next/navigation'
 import { IoCameraOutline } from 'react-icons/io5'
 
 import { KEY_ACCESS_TOKEN, KEY_X_ORGANIZATION_CODE } from '@/app/constant/constant'
@@ -17,6 +18,7 @@ import {
 } from '@/app/types/moduleTypes'
 
 export default function WriteComment(props: { postingID: number; parentID: number | null }) {
+  const router = useRouter()
   const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
   const commentInput = useInput('')
@@ -58,10 +60,9 @@ export default function WriteComment(props: { postingID: number; parentID: numbe
     try {
       const res = await modulePostFetch<FetchResponseType<ApiRes>>(fetchPostCommentProps)
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
-      // console.log(fetchPostCommentProps)
-      // console.log('댓글 작성 ', res)
       commentInput.resetValue()
       setInputCount(0)
+      router.refresh()
     } catch (err) {}
   }
 

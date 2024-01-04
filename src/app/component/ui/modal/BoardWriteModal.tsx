@@ -80,12 +80,11 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
 
       dispatch(openBoardWriteModalReducer())
       alert('글이 정상적으로 등록되었습니다.')
-      // FIXME: 상세 페이지로 이동으로 바꾸기
-      // 상세페이지로 이동해야 해서 성공 response에 해당 글 id값을 달라고 해야 할듯
+      // TODO:  FIXME: checkList - 10
+
       router.refresh()
     } catch (err) {
       if (err instanceof Error) {
-        // FIXME: 위 fixme의 case 추가하기
         switch (err.message) {
           case ERR_EMPTRY_POSTING_FIELD:
             alert(errNotEntered('필수항목'))

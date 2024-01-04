@@ -1,5 +1,5 @@
 'use client'
-// 상세페이지
+
 import { useEffect, useState } from 'react'
 
 import '@toast-ui/editor/dist/toastui-editor-viewer.css'
@@ -32,14 +32,18 @@ import {
   type ModuleGetFetchProps,
   type SuccessResponseType,
 } from '@/app/types/moduleTypes'
+import { type CommentObjType } from '@/app/types/pageTypes'
 
 const Viewbox = dynamic(async () => import('../../../component/ui/editor/TextViewer'), {
   ssr: false,
 })
 export default function BoardDetail() {
+  // TODO: checkList.md - 7
   const param = useParams()
   const router = useRouter()
+
   type DetailResponseType = {
+    comments: CommentObjType[]
     content: string
     createdAt: string
     id: number
@@ -49,10 +53,14 @@ export default function BoardDetail() {
     updatedAt: string
     writerId: number
   }
+
   const [content, setContent] = useState<DetailResponseType>()
+
+  const [commentLength, setCommentLength] = useState<number>(0)
   const [accessToken, setAccessToken] = useState(moduleGetCookie(KEY_ACCESS_TOKEN))
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
   const loginCOmpleteState = useAppSelector((state) => state.maintain[KEY_LOGIN_COMPLETE])
+
   const fetchGetPostingDetailProps: ModuleGetFetchProps = {
     params: {
       id: param.id as string,
@@ -65,7 +73,6 @@ export default function BoardDetail() {
   }
   const fetchFetPostingDetail = async () => {
     try {
-      // console.log(fetchGetPostingDetailProps, '????')
       const res = await moduleGetFetch<FetchResponseType<DetailResponseType>>(
         fetchGetPostingDetailProps,
       )
@@ -78,8 +85,17 @@ export default function BoardDetail() {
   const moveBoardListPage = () => {
     router.push(ROUTE_BOARD)
   }
+
   useEffect(() => {
     void fetchFetPostingDetail()
+    if (content !== undefined) {
+      const parentCommentLength = content.comments.length
+      let childCommentLength = 0
+      content.comments.forEach((parentComment) => {
+        childCommentLength += parentComment.childComments.length
+      })
+      setCommentLength(parentCommentLength + childCommentLength)
+    }
     const moduleProps: ModuleCheckUserStateProps = {
       useRouter: router,
       token: accessToken,
@@ -88,7 +104,8 @@ export default function BoardDetail() {
       isCheckInterval: true,
     }
     moduleCheckUserState(moduleProps)
-  }, [])
+  }, [content?.id])
+
   return (
     <>
       {content != null ? (
@@ -127,7 +144,7 @@ export default function BoardDetail() {
                     {/* 댓글 수 */}
                     <div className="flex flex-row text-xs justify-around items-center w-6">
                       <FaComment />
-                      <span>2</span>
+                      <span>{commentLength}</span>
                     </div>
                   </div>
                   {/* FIXME: 본인 글에만 표시 */}
@@ -152,10 +169,12 @@ export default function BoardDetail() {
               </div>
             </div>
             <div className="pt-2 pb-2 ">
-              <span className="font-bold text-base">댓글 3</span>
-              {/* FIXME: 댓글 api 필요 => response로 mapping하기 */}
-              {/* <Comment /> */}
-              <Comment />
+              <span className="font-bold text-base">댓글 {commentLength}</span>
+              {content.comments.map((data) => (
+                <div key={data.id} className="border-b-1 border-gray-300">
+                  <Comment comments={data} postingID={content.id} />
+                </div>
+              ))}
             </div>
             <div>
               <WriteComment postingID={content.id} parentID={null} />

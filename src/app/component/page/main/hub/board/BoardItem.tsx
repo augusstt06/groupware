@@ -7,9 +7,6 @@ import { moduleConvertDate } from '@/app/module/utils/moduleTime'
 import { type BoardItemProps } from '@/app/types/pageTypes'
 
 export default function BoardItem(props: BoardItemProps) {
-  // const spanList = ['팀', '작성자', '날짜']
-  // const [isWrite, setIsWrite] = useState(false)
-
   return (
     <div className="flex flex-col text-left mt-3 mb-3 p-3 bg-gray-100 dark:bg-gray-700 rounded">
       <span className="md:text-base md:font-bold text-base p-1 mb-2">

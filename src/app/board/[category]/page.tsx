@@ -85,15 +85,13 @@ export default function BoardCategory({ params }: { params: PageParam }) {
       const res =
         await moduleGetFetch<FetchResponseType<ApiRes[] | resType>>(fetchGetBoardListProps)
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
-
       const resBoardList = (res as SuccessResponseType<resType>).result.postings
-      // FIXME: response로 오는 total값이 offset이 변하면 0으로 응답됨
-      // FIXME: 일단 임시로 막아놓음
+      // FIXME: checkList.md - 3 => 임시로 막아놓음
       if (pageSize === 1) {
         const pageSize = Math.ceil((res as SuccessResponseType<resType>).result.total / 10)
         setPageSize(pageSize)
       }
-      // FIXME: 현재 최신순으로 오지 않고 옛날에 온것부터 차례로 옴 => 최신순으로 변경 요망
+      // FIXME: checkList.md - 2
       setBoardList(resBoardList)
     } catch (err) {}
   }

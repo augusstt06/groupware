@@ -38,3 +38,23 @@ export type PaginationProps = {
   pageNumber: number
   setPageNumber: Dispatch<SetStateAction<number>>
 }
+
+export type CommentObjType = {
+  childComments: CommentObjType[]
+  content: string
+  id: number
+  name: string
+  position: string
+  writerId: number
+}
+export type CommentProps = {
+  postingID: number
+  comments: {
+    childComments: CommentObjType[]
+    content: string
+    id: number
+    name: string
+    position: string
+    writerId: number
+  }
+}
