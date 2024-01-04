@@ -104,7 +104,7 @@ export default function BoardDetail() {
       isCheckInterval: true,
     }
     moduleCheckUserState(moduleProps)
-  }, [content?.id])
+  }, [content?.comments])
 
   return (
     <>
