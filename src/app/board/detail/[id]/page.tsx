@@ -65,10 +65,12 @@ export default function BoardDetail() {
   }
   const fetchFetPostingDetail = async () => {
     try {
+      // console.log(fetchGetPostingDetailProps, '????')
       const res = await moduleGetFetch<FetchResponseType<DetailResponseType>>(
         fetchGetPostingDetailProps,
       )
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
+
       const contentRes = (res as SuccessResponseType<DetailResponseType>).result
       setContent(contentRes)
     } catch (err) {}
@@ -78,7 +80,6 @@ export default function BoardDetail() {
   }
   useEffect(() => {
     void fetchFetPostingDetail()
-
     const moduleProps: ModuleCheckUserStateProps = {
       useRouter: router,
       token: accessToken,
@@ -157,7 +158,7 @@ export default function BoardDetail() {
               <Comment />
             </div>
             <div>
-              <WriteComment />
+              <WriteComment postingID={content.id} parentID={null} />
             </div>
           </div>
         </main>

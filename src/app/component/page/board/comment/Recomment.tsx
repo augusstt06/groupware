@@ -26,7 +26,8 @@ export default function Recomment() {
           </div>
         </div>
       </div>
-      {isWriteComment ? <WriteComment /> : <></>}
+      {/* FIXME: 추후 props 수정하기 */}
+      {isWriteComment ? <WriteComment postingID={0} parentID={null} /> : <></>}
     </>
   )
 }

@@ -34,3 +34,6 @@ export const API_URL_BOARD_ORG_LIST = process.env.NEXT_PUBLIC_GET_BOARD_ORG_LIST
 
 // postings
 export const API_URL_POSTINGS = process.env.NEXT_PUBLIC_POSTINGS_SOURCE as string
+
+// Comment
+export const API_URL_COMMENT = process.env.NEXT_PUBLIC_COMMENT_SOURCE as string

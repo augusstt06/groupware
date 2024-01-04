@@ -27,7 +27,10 @@ export default function Comment() {
           </div>
         </div>
       </div>
-      <div className="pl-7">{isWriteComment ? <WriteComment /> : <></>}</div>
+      <div className="pl-7">
+        {/* id 값 변경해주기 */}
+        {isWriteComment ? <WriteComment postingID={0} parentID={0} /> : <></>}
+      </div>
       {/* FIXME: response에 댓글이 있는 걍우 아레 div로 감싼 html 표시 */}
       <div className="pl-7 border-b-2 border-gray-300">
         <Recomment />

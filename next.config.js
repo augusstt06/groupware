@@ -8,6 +8,10 @@ const nextConfig = {
   async rewrites() {
     return [
       {
+        source: process.env.NEXT_PUBLIC_COMMENT_SOURCE,
+        destination: process.env.NEXT_PUBLIC_COMMENT_DESTINATION,
+      },
+      {
         source: process.env.NEXT_PUBLIC_GET_BOARD_ORG_LIST_SOURCE,
         destination: process.env.NEXT_PUBLIC_GET_BOARD_ORG_LIST_DESTINATION,
       },
