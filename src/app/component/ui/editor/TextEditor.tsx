@@ -11,8 +11,9 @@ import '@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin
 import 'prismjs/themes/prism.css'
 import Prism from 'prismjs'
 
-import { KEY_ACCESS_TOKEN } from '@/app/constant/constant'
+import { KEY_ACCESS_TOKEN, KEY_X_ORGANIZATION_CODE } from '@/app/constant/constant'
 import { API_URL_UPLOAD_IMG } from '@/app/constant/route/api-route-constant'
+import { useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
 import { modulePostFileFetch } from '@/app/module/utils/moduleFetch'
 import { type ModulePostFileFetchProps, type SuccessResponseType } from '@/app/types/moduleTypes'
@@ -23,8 +24,11 @@ type EditorProps = {
   editorRef: React.MutableRefObject<Editor | null>
 }
 // FIXME: 최대 파일은 5개까지 가능
+// 조직코드 들어갸는걸로 바뀌었는데 이거 맞는건지 물어보기
 export default function TextEditor({ editorContent, setEditorContent, editorRef }: EditorProps) {
   const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
+  const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
+
   type HookCallback = (url: string, text?: string) => void
   const onUploadImage = async (blob: File, callback: HookCallback) => {
     try {
@@ -35,11 +39,10 @@ export default function TextEditor({ editorContent, setEditorContent, editorRef 
         fetchUrl: API_URL_UPLOAD_IMG,
         header: {
           Authorization: `Bearer ${accessToken}`,
+          [KEY_X_ORGANIZATION_CODE]: orgCode,
         },
       }
       const res = await modulePostFileFetch(fetchImgProps)
-      // console.log(res)
-      // FIXME: 객체 url이 와야하는거 같은데 확인해보기
       const imgUrl = (res as SuccessResponseType<string>).result
 
       callback(imgUrl, 'image')

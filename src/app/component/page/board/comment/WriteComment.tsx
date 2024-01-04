@@ -56,11 +56,6 @@ export default function WriteComment(props: { postingID: number; parentID: numbe
 
   const fetchPostComment = async () => {
     try {
-      if (commentInput.value === '') {
-        alert('내용을 입력해주세요')
-        return
-      }
-
       const res = await modulePostFetch<FetchResponseType<ApiRes>>(fetchPostCommentProps)
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
       // console.log(fetchPostCommentProps)
@@ -71,6 +66,10 @@ export default function WriteComment(props: { postingID: number; parentID: numbe
   }
 
   const handleClick = () => {
+    if (commentInput.value === '') {
+      alert('내용을 입력해주세요')
+      return
+    }
     void fetchPostComment()
   }
 

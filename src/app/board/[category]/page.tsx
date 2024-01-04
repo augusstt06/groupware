@@ -121,6 +121,7 @@ export default function BoardCategory({ params }: { params: PageParam }) {
             <div className="p-2 font-bold md:text-lg text-base">
               <span>{boardCategory}</span>
             </div>
+
             <BoardHubInput searchInput={searchInput} />
 
             {boardList !== undefined ? (
@@ -135,6 +136,7 @@ export default function BoardCategory({ params }: { params: PageParam }) {
             <></>
           )}
         </div>
+
         {isModalOpen ? <BoardWriteModal onClick={handleModal} /> : <></>}
       </div>
     </main>

@@ -5,6 +5,7 @@ import dynamic from 'next/dynamic'
 import { useRouter } from 'next/navigation'
 import { IoClose } from 'react-icons/io5'
 
+import BoardWriteAlert from '../alert/BoardWriteAlert'
 import BoardWriteModalCheckBox from '../checkbox/BoardWriteModalCheckBox'
 import BoardModalInputGroup from '../input/board/BoardModalInputGroup'
 
@@ -33,6 +34,19 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
   const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
   const [isAnnounce, setIsAnnounce] = useState(FALSE)
   const [editorContent, setEditorContent] = useState('')
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [alertState, setAlertState] = useState({
+    headDescription: '',
+    additianoalDescription: '',
+    option: {
+      positive: '',
+      negative: '',
+    },
+  })
+
+  const handleModalState = () => {
+    setIsModalOpen(!isModalOpen)
+  }
 
   const handleClick = () => {
     if (isAnnounce === FALSE) setIsAnnounce(TRUE)
@@ -67,21 +81,37 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
       dispatch(openBoardWriteModalReducer())
       alert('글이 정상적으로 등록되었습니다.')
       // FIXME: 상세 페이지로 이동으로 바꾸기
+      // 상세페이지로 이동해야 해서 성공 response에 해당 글 id값을 달라고 해야 할듯
       router.refresh()
     } catch (err) {
       if (err instanceof Error) {
         // FIXME: 위 fixme의 case 추가하기
         switch (err.message) {
           case ERR_EMPTRY_POSTING_FIELD:
-            // 필수 입력사항이 입력 안된 경우
             alert(errNotEntered('필수항목'))
             break
         }
       }
     }
   }
+
   const handleClickPosting = () => {
-    void fetchPostContent()
+    const parser = new DOMParser()
+    const doc = parser.parseFromString(editorContent, 'text/html')
+    const isContentEmpty = doc.body.textContent?.trim() === ''
+    if (titleInput.value === '' || isContentEmpty) {
+      alert('제목과 내용은 필수 입력항목입니다.')
+      return
+    }
+    setAlertState({
+      headDescription: '게시글을 등록하시겠습니까?',
+      additianoalDescription: '확인버튼을 누르면 게시글이 등록됩니다.',
+      option: {
+        positive: '확인',
+        negative: '취소',
+      },
+    })
+    setIsModalOpen(true)
   }
   return (
     <>
@@ -90,7 +120,7 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
         data-modal-backdrop="static"
         tabIndex={-1}
         aria-hidden="true"
-        className="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
+        className="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
       >
         <div className="absolute top-20 left-20 right-20 p-4 w-5/6">
           <div className="relative rounded-lg shadow dark:bg-gray-700 border-solid border-2 border-indigo-300 bg-white">
@@ -105,6 +135,7 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
                   <IoClose className="w-4 h-4" />
                 </button>
               </div>
+
               <div className="w-2/3 text-center">
                 <h3 className="text-xl font-semibold text-gray-900 dark:text-white">게시글 설정</h3>
               </div>
@@ -134,6 +165,15 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
             </div>
 
             <BoardWriteModalCheckBox isAnnounce={isAnnounce} handleClick={handleClick} />
+            {isModalOpen ? (
+              <BoardWriteAlert
+                handleModalState={handleModalState}
+                alertState={alertState}
+                fetchPost={fetchPostContent}
+              />
+            ) : (
+              <></>
+            )}
           </div>
         </div>
       </div>
