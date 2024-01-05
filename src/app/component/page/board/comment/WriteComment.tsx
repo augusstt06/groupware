@@ -16,8 +16,9 @@ import {
   type FetchResponseType,
   type ModulePostFetchProps,
 } from '@/app/types/moduleTypes'
+import { type WriteCommentProps } from '@/app/types/pageTypes'
 
-export default function WriteComment(props: { postingID: number; parentID: number | null }) {
+export default function WriteComment(props: WriteCommentProps) {
   const router = useRouter()
   const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
@@ -62,6 +63,7 @@ export default function WriteComment(props: { postingID: number; parentID: numbe
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
       commentInput.resetValue()
       setInputCount(0)
+      props.doRerender()
       router.refresh()
     } catch (err) {}
   }

@@ -48,6 +48,7 @@ export type CommentObjType = {
   writerId: number
 }
 export type CommentProps = {
+  doRerender: () => void
   postingID: number
   comments: {
     childComments: CommentObjType[]
@@ -57,4 +58,9 @@ export type CommentProps = {
     position: string
     writerId: number
   }
+}
+export type WriteCommentProps = {
+  doRerender: () => void
+  postingID: number
+  parentID: number | null
 }

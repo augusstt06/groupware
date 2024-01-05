@@ -60,6 +60,10 @@ export default function BoardDetail() {
   const [accessToken, setAccessToken] = useState(moduleGetCookie(KEY_ACCESS_TOKEN))
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
   const loginCOmpleteState = useAppSelector((state) => state.maintain[KEY_LOGIN_COMPLETE])
+  const [isRerender, setIsRerender] = useState<boolean>(false)
+  const doRerender = () => {
+    setIsRerender(!isRerender)
+  }
 
   const fetchGetPostingDetailProps: ModuleGetFetchProps = {
     params: {
@@ -88,6 +92,7 @@ export default function BoardDetail() {
 
   useEffect(() => {
     void fetchFetPostingDetail()
+
     if (content !== undefined) {
       const parentCommentLength = content.comments.length
       let childCommentLength = 0
@@ -104,7 +109,7 @@ export default function BoardDetail() {
       isCheckInterval: true,
     }
     moduleCheckUserState(moduleProps)
-  }, [content?.comments])
+  }, [isRerender])
 
   return (
     <>
@@ -171,13 +176,13 @@ export default function BoardDetail() {
             <div className="pt-2 pb-2 ">
               <span className="font-bold text-base">댓글 {commentLength}</span>
               {content.comments.map((data) => (
-                <div key={data.id} className="border-b-1 border-gray-300">
-                  <Comment comments={data} postingID={content.id} />
+                <div key={data.content} className="border-b-1 border-gray-300">
+                  <Comment comments={data} postingID={content.id} doRerender={doRerender} />
                 </div>
               ))}
             </div>
             <div>
-              <WriteComment postingID={content.id} parentID={null} />
+              <WriteComment postingID={content.id} parentID={null} doRerender={doRerender} />
             </div>
           </div>
         </main>

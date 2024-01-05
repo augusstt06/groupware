@@ -2,6 +2,8 @@
 
 import { useState } from 'react'
 
+import { FaRegHeart } from 'react-icons/fa'
+
 import Recomment from './Recomment'
 import WriteComment from './WriteComment'
 
@@ -12,6 +14,7 @@ export default function Comment(props: CommentProps) {
   const clickWriteComment = () => {
     setIsWriteComment(!isWriteComment)
   }
+  // console.log(props)
 
   return (
     <div className="border-b-1 border-gray-300">
@@ -24,6 +27,13 @@ export default function Comment(props: CommentProps) {
           <span className="text-sm mb-2">{props.comments.content}</span>
           <div className="text-xs text-gray-400 flex flex-row justify-start items-center">
             <span className="mr-4">2024.01.01</span>
+
+            <span className="mr-1 cursor-pointer">
+              {/* 클릭시 변경 */}
+              <FaRegHeart className="text-red-400 hover:text-red-800" />
+              {/* <FaHeart className="text-red-400" /> */}
+            </span>
+            <span className="mr-4">5</span>
             <span className="cursor-pointer" onClick={clickWriteComment}>
               {isWriteComment ? '취소' : '답글쓰기'}
             </span>
@@ -32,13 +42,17 @@ export default function Comment(props: CommentProps) {
       </div>
       <div className="pl-7 border-b-2 border-gray-300">
         {isWriteComment ? (
-          <WriteComment postingID={props.postingID} parentID={props.comments.id} />
+          <WriteComment
+            postingID={props.postingID}
+            parentID={props.comments.id}
+            doRerender={props.doRerender}
+          />
         ) : (
           <></>
         )}
         {props.comments.childComments.map((data) => (
-          <div className="pl-7 " key={data.id}>
-            <Recomment comments={data} postingID={props.postingID} />
+          <div className="pl-7 " key={data.content}>
+            <Recomment comments={data} postingID={props.postingID} doRerender={props.doRerender} />
           </div>
         ))}
       </div>

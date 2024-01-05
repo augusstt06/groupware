@@ -37,3 +37,4 @@ export const API_URL_POSTINGS = process.env.NEXT_PUBLIC_POSTINGS_SOURCE as strin
 
 // Comment
 export const API_URL_COMMENT = process.env.NEXT_PUBLIC_COMMENT_SOURCE as string
+export const APU_URL_COMMENT_LIKE = process.env.NEXT_PUBLIC_COMMENT_LIKE_SOURCE as string
