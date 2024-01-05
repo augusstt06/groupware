@@ -24,6 +24,7 @@ export default function Recomment(props: CommentProps) {
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
   const userInfo = useAppSelector((state) => state.userInfo.extraInfo)
   const [isWriteComment, setIsWriteComment] = useState(false)
+
   const clickWriteComment = () => {
     setIsWriteComment(!isWriteComment)
   }
@@ -40,7 +41,6 @@ export default function Recomment(props: CommentProps) {
   const fetchDeleteComment = async () => {
     try {
       const res = await moduleDeleteFetch<FetchResponseType<ApiRes>>(fetchDeleteCommentProps)
-      // FIXME: 요청/응답은 잘 오는데 데이터 값이 안바뀜 (삭제 반영 X)
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
       props.doRerender()
     } catch (err) {}
@@ -68,7 +68,14 @@ export default function Recomment(props: CommentProps) {
               <></>
             )}
           </div>
-          <span className="text-sm mb-2">{props.comments.content}</span>
+          <span className="text-sm mb-2">
+            {props.mention?.isMention ?? false ? (
+              <span className="font-bold mr-2">@{props.mention?.parentName}</span>
+            ) : (
+              <></>
+            )}
+            {props.comments.content}
+          </span>
           <div className="text-xs text-gray-400 flex flex-row justify-start items-center">
             <span className="mr-4">2024.01.01</span>
             <span className="mr-1 cursor-pointer">
@@ -83,7 +90,6 @@ export default function Recomment(props: CommentProps) {
           </div>
         </div>
       </div>
-      {/* FIXME: 추후 props 수정하기 */}
       {isWriteComment ? (
         <WriteComment
           postingID={props.postingID}
@@ -95,8 +101,13 @@ export default function Recomment(props: CommentProps) {
       )}
       {props.comments.childComments.length !== 0 ? (
         props.comments.childComments.map((data) => (
-          <div className="pl-7 " key={data.content}>
-            <Recomment comments={data} postingID={props.postingID} doRerender={props.doRerender} />
+          <div className="" key={data.content}>
+            <Recomment
+              comments={data}
+              postingID={props.postingID}
+              doRerender={props.doRerender}
+              mention={{ isMention: true, parentName: props.comments.name }}
+            />
           </div>
         ))
       ) : (

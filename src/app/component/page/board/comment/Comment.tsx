@@ -87,6 +87,7 @@ export default function Comment(props: CommentProps) {
       const res = await moduleDeleteFetch<FetchResponseType<ApiRes>>(fetchDeleteCommentProps)
       // FIXME: 요청/응답은 잘 오는데 데이터 값이 안바뀜 (삭제 반영 X)
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
+
       props.doRerender()
     } catch (err) {}
   }

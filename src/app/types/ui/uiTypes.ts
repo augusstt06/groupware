@@ -1,3 +1,7 @@
+import { type Dispatch, type SetStateAction } from 'react'
+
+import { type Editor } from '@toast-ui/react-editor'
+
 export type InputIconLabelProps = {
   icon: React.ReactNode
 }
@@ -32,4 +36,11 @@ export type ToggleGroupProps = {
 export type BoardWriteModalCheckBoxProps = {
   isAnnounce: string
   handleClick: () => void
+}
+
+export type EditorProps = {
+  editorContent: string
+  setEditorContent: Dispatch<SetStateAction<string>>
+  editorRef: React.MutableRefObject<Editor | null>
+  countImgFiles: () => number
 }

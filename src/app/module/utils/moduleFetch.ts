@@ -64,7 +64,13 @@ export const modulePatchFetch = async <T>(
 export const moduleDeleteFetch = async <T>(
   props: ModuleGetFetchProps,
 ): Promise<FetchResponseType<T>> => {
-  const res = await fetch(props.fetchUrl as string, {
+  const queryString = new URLSearchParams()
+  Object.entries(props.params).forEach(([key, value]) => {
+    queryString.append(key, String(value))
+  })
+  const urlWithQueryString = `${props.fetchUrl}?${queryString.toString()}`
+
+  const res = await fetch(urlWithQueryString, {
     method: DELETE,
     headers: {
       'Content-Type': FETCH_CONTENT_TYPE,

@@ -58,6 +58,10 @@ export type CommentProps = {
     position: string
     writerId: number
   }
+  mention?: {
+    isMention: boolean
+    parentName: string
+  }
 }
 export type WriteCommentProps = {
   doRerender: () => void

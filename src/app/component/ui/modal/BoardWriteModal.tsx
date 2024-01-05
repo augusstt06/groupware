@@ -35,6 +35,7 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
   const [isAnnounce, setIsAnnounce] = useState(FALSE)
   const [editorContent, setEditorContent] = useState('')
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [imgCount, setImgCount] = useState<number>(0)
   const [alertState, setAlertState] = useState({
     headDescription: '',
     additianoalDescription: '',
@@ -44,6 +45,13 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
     },
   })
 
+  const countImgFiles = () => {
+    const parser = new DOMParser()
+    const doc = parser.parseFromString(editorContent, 'text/html')
+    const imgTags = doc.querySelectorAll('img')
+    setImgCount(imgTags.length)
+    return imgCount
+  }
   const handleModalState = () => {
     setIsModalOpen(!isModalOpen)
   }
@@ -112,6 +120,7 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
     })
     setIsModalOpen(true)
   }
+
   return (
     <>
       <div
@@ -159,6 +168,7 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
                   editorContent={editorContent}
                   setEditorContent={setEditorContent}
                   editorRef={editorRef}
+                  countImgFiles={countImgFiles}
                 />
               </div>
             </div>

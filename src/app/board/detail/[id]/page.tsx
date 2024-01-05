@@ -82,6 +82,7 @@ export default function BoardDetail() {
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
 
       const contentRes = (res as SuccessResponseType<DetailResponseType>).result
+
       setContent(contentRes)
     } catch (err) {}
   }
@@ -107,6 +108,7 @@ export default function BoardDetail() {
       isCheckInterval: true,
     }
     moduleCheckUserState(moduleProps)
+    // FIXME:
   }, [isRerender])
 
   return (

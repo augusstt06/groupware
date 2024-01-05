@@ -1,5 +1,5 @@
 'use client'
-import { type Dispatch, type SetStateAction } from 'react'
+import { useEffect } from 'react'
 
 import codeSyntaxHighlightPlugin from '@toast-ui/editor-plugin-code-syntax-highlight'
 import colorSyntax from '@toast-ui/editor-plugin-color-syntax'
@@ -17,19 +17,18 @@ import { useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
 import { modulePostFileFetch } from '@/app/module/utils/moduleFetch'
 import { type ModulePostFileFetchProps, type SuccessResponseType } from '@/app/types/moduleTypes'
+import { type EditorProps } from '@/app/types/ui/uiTypes'
 
-type EditorProps = {
-  editorContent: string
-  setEditorContent: Dispatch<SetStateAction<string>>
-  editorRef: React.MutableRefObject<Editor | null>
-}
 // TODO: checkList.md - 8
 // FIXME: checkList.md - 7
-export default function TextEditor({ editorContent, setEditorContent, editorRef }: EditorProps) {
+export default function TextEditor(props: EditorProps) {
+  let imgCount: number = 0
   const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
-
   type HookCallback = (url: string, text?: string) => void
+  const viewAlert = () => {
+    alert('최대 5개 이상의 파일을 첨부할수 없습니다.')
+  }
   const onUploadImage = async (blob: File, callback: HookCallback) => {
     try {
       const formData = new FormData()
@@ -44,7 +43,6 @@ export default function TextEditor({ editorContent, setEditorContent, editorRef 
       }
       const res = await modulePostFileFetch(fetchImgProps)
       const imgUrl = (res as SuccessResponseType<string>).result
-
       callback(imgUrl, 'image')
     } catch (err) {}
   }
@@ -59,21 +57,27 @@ export default function TextEditor({ editorContent, setEditorContent, editorRef 
     ['scrollSync'],
   ]
   const onEditorChange = () => {
-    const editorHtml = editorRef.current?.getInstance().getHTML()
-    setEditorContent(editorHtml)
+    const editorHtml = props.editorRef.current?.getInstance().getHTML()
+    props.setEditorContent(editorHtml)
   }
+
+  useEffect(() => {
+    imgCount = props.countImgFiles()
+    // console.log(imgCount)
+  }, [props.editorContent])
   return (
     <Editor
-      ref={editorRef}
+      ref={props.editorRef}
       placeholder="게시글을 작성해주세요"
-      initialValue={editorContent}
+      initialValue={props.editorContent}
       initialEditType="markdown"
       toolbarItems={toolbarItems}
       height={'100%'}
       previewStyle="vertical"
       plugins={[colorSyntax, [codeSyntaxHighlightPlugin, { highlighter: Prism }]]}
       onChange={onEditorChange}
-      hooks={{ addImageBlobHook: onUploadImage }}
+      // hooks={{ addImageBlobHook: onUploadImage }}
+      hooks={{ addImageBlobHook: imgCount <= 5 ? onUploadImage : viewAlert }}
     />
   )
 }
