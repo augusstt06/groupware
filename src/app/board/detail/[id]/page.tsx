@@ -55,7 +55,6 @@ export default function BoardDetail() {
   }
 
   const [content, setContent] = useState<DetailResponseType>()
-
   const [commentLength, setCommentLength] = useState<number>(0)
   const [accessToken, setAccessToken] = useState(moduleGetCookie(KEY_ACCESS_TOKEN))
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
@@ -92,8 +91,7 @@ export default function BoardDetail() {
 
   useEffect(() => {
     void fetchFetPostingDetail()
-
-    if (content !== undefined) {
+    if (content !== undefined && content !== null) {
       const parentCommentLength = content.comments.length
       let childCommentLength = 0
       content.comments.forEach((parentComment) => {

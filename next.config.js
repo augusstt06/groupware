@@ -16,6 +16,10 @@ const nextConfig = {
         destination: process.env.NEXT_PUBLIC_COMMENT_DESTINATION,
       },
       {
+        source: process.env.NEXT_PUBLIC_COMMENT_POSTING_SOURCE,
+        destination: process.env.NEXT_PUBLIC_COMMENT_POSTING_DESTINATION,
+      },
+      {
         source: process.env.NEXT_PUBLIC_GET_BOARD_ORG_LIST_SOURCE,
         destination: process.env.NEXT_PUBLIC_GET_BOARD_ORG_LIST_DESTINATION,
       },

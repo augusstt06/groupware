@@ -1,4 +1,4 @@
-import { FETCH_CONTENT_TYPE, GET, PATCH, POST } from '@/app/constant/constant'
+import { DELETE, FETCH_CONTENT_TYPE, GET, PATCH, POST } from '@/app/constant/constant'
 import {
   type FetchResponseType,
   type ModuleGetFetchProps,
@@ -57,6 +57,19 @@ export const modulePatchFetch = async <T>(
       ...props.header,
     },
     body: JSON.stringify(props.data),
+  })
+  return res.json()
+}
+
+export const moduleDeleteFetch = async <T>(
+  props: ModuleGetFetchProps,
+): Promise<FetchResponseType<T>> => {
+  const res = await fetch(props.fetchUrl as string, {
+    method: DELETE,
+    headers: {
+      'Content-Type': FETCH_CONTENT_TYPE,
+      ...props.header,
+    },
   })
   return res.json()
 }

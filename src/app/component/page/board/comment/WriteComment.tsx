@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import { IoCameraOutline } from 'react-icons/io5'
 
 import { KEY_ACCESS_TOKEN, KEY_X_ORGANIZATION_CODE } from '@/app/constant/constant'
-import { API_URL_COMMENT } from '@/app/constant/route/api-route-constant'
+import { API_URL_COMMENT_POSTING } from '@/app/constant/route/api-route-constant'
 import useInput from '@/app/module/hooks/reactHooks/useInput'
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
@@ -39,7 +39,7 @@ export default function WriteComment(props: WriteCommentProps) {
             parentId: props.parentID,
             postingId: props.postingID,
           },
-          fetchUrl: API_URL_COMMENT,
+          fetchUrl: API_URL_COMMENT_POSTING,
           header: {
             Authorization: `Bearer ${accessToken}`,
             [KEY_X_ORGANIZATION_CODE]: orgCode,
@@ -50,7 +50,7 @@ export default function WriteComment(props: WriteCommentProps) {
             content: commentInput.value,
             postingId: props.postingID,
           },
-          fetchUrl: API_URL_COMMENT,
+          fetchUrl: API_URL_COMMENT_POSTING,
           header: {
             Authorization: `Bearer ${accessToken}`,
             [KEY_X_ORGANIZATION_CODE]: orgCode,
