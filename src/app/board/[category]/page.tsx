@@ -86,6 +86,7 @@ export default function BoardCategory({ params }: { params: PageParam }) {
         await moduleGetFetch<FetchResponseType<ApiRes[] | resType>>(fetchGetBoardListProps)
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
       const resBoardList = (res as SuccessResponseType<resType>).result.postings
+
       // FIXME: checkList.md - 3 => 임시로 막아놓음
       if (pageSize === 1) {
         const pageSize = Math.ceil((res as SuccessResponseType<resType>).result.total / 10)

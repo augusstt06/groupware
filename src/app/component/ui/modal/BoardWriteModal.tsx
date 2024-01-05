@@ -143,7 +143,6 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
                   <IoClose className="w-4 h-4" />
                 </button>
               </div>
-
               <div className="w-2/3 text-center">
                 <h3 className="text-xl font-semibold text-gray-900 dark:text-white">게시글 설정</h3>
               </div>
@@ -159,10 +158,8 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
                 </button>
               </div>
             </div>
-
             <div className="p-2 flex flex-row w-full">
               <BoardModalInputGroup titleInput={titleInput} />
-
               <div className="w-2/3 bg-gray-100 dark:bg-gray-300 dark:text-black">
                 <Editor
                   editorContent={editorContent}
@@ -172,7 +169,6 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
                 />
               </div>
             </div>
-
             <BoardWriteModalCheckBox isAnnounce={isAnnounce} handleClick={handleClick} />
             {isModalOpen ? (
               <BoardWriteAlert
