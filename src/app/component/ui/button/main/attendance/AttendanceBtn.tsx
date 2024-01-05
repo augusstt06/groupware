@@ -8,8 +8,9 @@ import {
   errDuplicate,
   errNotFound,
 } from '@/app/constant/errorMsg'
+import { API_URL_ATTENDANCE } from '@/app/constant/route/api-route-constant'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
-import moduleGetCookie from '@/app/module/utils/moduleCookie'
+import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
 import { modulePatchFetch, modulePostFetch } from '@/app/module/utils/moduleFetch'
 import { updateAttendanceStatusReducer } from '@/app/store/reducers/main/userInfoReducer'
 import {
@@ -42,7 +43,7 @@ export default function AttendanceBtn(props: AttendanceBtnProps) {
           organizationId: props.extraUserInfo.organizationId,
           userId: props.extraUserInfo.userId,
         },
-        fetchUrl: process.env.NEXT_PUBLIC_ATTENDANCES_SOURCE,
+        fetchUrl: API_URL_ATTENDANCE,
         header: {
           Authorization: `Bearer ${accessToken}`,
           [KEY_X_ORGANIZATION_CODE]: orgCode,
@@ -81,19 +82,19 @@ export default function AttendanceBtn(props: AttendanceBtnProps) {
         props.setErrMsg(errDuplicate('퇴근 확인'))
         return
       }
-      const fetchAttendanceProps: ModulePostFetchProps = {
+      const fetchLeaveAttendanceProps: ModulePostFetchProps = {
         data: {
           organizationId: props.extraUserInfo.organizationId,
           userId: props.extraUserInfo.userId,
         },
-        fetchUrl: process.env.NEXT_PUBLIC_ATTENDANCES_SOURCE,
+        fetchUrl: API_URL_ATTENDANCE,
         header: {
           Authorization: `Bearer ${accessToken}`,
           [KEY_X_ORGANIZATION_CODE]: orgCode,
         },
       }
 
-      const res = await modulePatchFetch<FetchResponseType<string>>(fetchAttendanceProps)
+      const res = await modulePatchFetch<FetchResponseType<string>>(fetchLeaveAttendanceProps)
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
       dispatch(
         updateAttendanceStatusReducer({

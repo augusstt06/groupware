@@ -1,4 +1,6 @@
-import { type SetStateAction } from 'react'
+import { type Dispatch, type SetStateAction } from 'react'
+
+import { type boardListResponsetype } from './variableTypes'
 
 export type ReactProps = {
   children: React.ReactNode
@@ -25,4 +27,44 @@ export type HubCategoryProps = {
 
 export type PageParam = {
   category: string
+}
+
+export type BoardItemProps = {
+  boardListItem: boardListResponsetype
+}
+
+export type PaginationProps = {
+  size: number
+  pageNumber: number
+  setPageNumber: Dispatch<SetStateAction<number>>
+}
+
+export type CommentObjType = {
+  childComments: CommentObjType[]
+  content: string
+  id: number
+  name: string
+  position: string
+  writerId: number
+}
+export type CommentProps = {
+  doRerender: () => void
+  postingID: number
+  comments: {
+    childComments: CommentObjType[]
+    content: string
+    id: number
+    name: string
+    position: string
+    writerId: number
+  }
+  mention?: {
+    isMention: boolean
+    parentName: string
+  }
+}
+export type WriteCommentProps = {
+  doRerender: () => void
+  postingID: number
+  parentID: number | null
 }

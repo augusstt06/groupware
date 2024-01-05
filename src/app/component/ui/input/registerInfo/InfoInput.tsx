@@ -16,6 +16,7 @@ import {
   errDefault,
   errExist,
 } from '@/app/constant/errorMsg'
+import { API_URL_CHECK_EMAIL } from '@/app/constant/route/api-route-constant'
 import { useAppDispatch } from '@/app/module/hooks/reduxHooks'
 import { moduleGetFetch } from '@/app/module/utils/moduleFetch'
 import inputValidate from '@/app/module/utils/moduleInputValidate'
@@ -156,7 +157,7 @@ export default function InfoInput(props: InfoInputProps) {
         checkEmail()
         const getFetchEmailProps: ModuleGetFetchProps = {
           params: { email: useInput.value },
-          fetchUrl: process.env.NEXT_PUBLIC_EMAIL_REQ_SOURCE,
+          fetchUrl: API_URL_CHECK_EMAIL,
         }
         void fetchEmailAvaiable(getFetchEmailProps)
       }

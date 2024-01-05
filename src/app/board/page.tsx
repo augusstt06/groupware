@@ -10,9 +10,10 @@ import Sidebar from '../component/ui/sidebar/Sidebar'
 import { BOARD, KEY_ACCESS_TOKEN, KEY_LOGIN_COMPLETE } from '../constant/constant'
 import { useAppDispatch, useAppSelector } from '../module/hooks/reduxHooks'
 import { moduleCheckUserState } from '../module/utils/moduleCheckUserState'
-import moduleGetCookie, {
+import {
   checkTokenExpired,
   moduleDecodeToken,
+  moduleGetCookie,
   moduleRefreshToken,
 } from '../module/utils/moduleCookie'
 import { categoryReduer } from '../store/reducers/board/boardCategoryReducer'

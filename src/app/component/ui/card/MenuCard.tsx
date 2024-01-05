@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-import { ROUTE_BOARD, ROUTE_BOARD_ANNOUNCE } from '@/app/constant/route-constant'
+import { ROUTE_BOARD, ROUTE_BOARD_ANNOUNCE } from '@/app/constant/route/route-constant'
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
 
 export default function MenuCard() {

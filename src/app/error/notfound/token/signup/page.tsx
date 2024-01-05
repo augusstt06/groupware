@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation'
 
-import { ROUTE_LOGIN } from '@/app/constant/route-constant'
+import { ROUTE_LOGIN } from '@/app/constant/route/route-constant'
 
 export default function NotfoundAccessTokenInSignup() {
   const router = useRouter()

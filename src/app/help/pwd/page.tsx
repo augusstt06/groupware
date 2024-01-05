@@ -9,9 +9,9 @@ import { InputIconlabel } from '@/app/component/ui/label/InputIconlabel'
 import { InputLabel } from '@/app/component/ui/label/Inputlabel'
 import { KEY_ACCESS_TOKEN, REGISTER_EMAIL } from '@/app/constant/constant'
 import { ERR_COOKIE_NOT_FOUND } from '@/app/constant/errorMsg'
-import { ROUTE_LOGIN, ROUTE_MAIN } from '@/app/constant/route-constant'
+import { ROUTE_LOGIN, ROUTE_MAIN } from '@/app/constant/route/route-constant'
 import useInput from '@/app/module/hooks/reactHooks/useInput'
-import moduleGetCookie from '@/app/module/utils/moduleCookie'
+import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
 import { type UseInputProps } from '@/app/types/moduleTypes'
 
 export default function FindPwd() {

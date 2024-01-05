@@ -36,6 +36,11 @@ export type ModulePostFetchProps = {
   fetchUrl?: string
   header?: Record<string, string>
 }
+export type ModulePostFileFetchProps = {
+  file: FormData
+  fetchUrl?: string
+  header?: Record<string, string>
+}
 
 export type InputValidateProps = {
   inputData: string

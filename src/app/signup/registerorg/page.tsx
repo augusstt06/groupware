@@ -16,9 +16,9 @@ import {
   TRUE,
 } from '@/app/constant/constant'
 import { ERR_COOKIE_NOT_FOUND } from '@/app/constant/errorMsg'
-import { ROUTE_ERR_NOT_FOUND_ACCESS_TOKEN, ROUTE_MAIN } from '@/app/constant/route-constant'
+import { ROUTE_ERR_NOT_FOUND_ACCESS_TOKEN, ROUTE_MAIN } from '@/app/constant/route/route-constant'
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
-import moduleGetCookie, { moduleDeleteCookies } from '@/app/module/utils/moduleCookie'
+import { moduleDeleteCookies, moduleGetCookie } from '@/app/module/utils/moduleCookie'
 
 export default function RegisterOrgLogin() {
   const router = useRouter()

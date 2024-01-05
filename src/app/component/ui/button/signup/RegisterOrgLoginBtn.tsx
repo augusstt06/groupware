@@ -10,16 +10,18 @@ import {
   REGISTER_ORG_NAME,
 } from '@/app/constant/constant'
 import {
+  ERR_MESSAGE_JOIN_ORG_FAIL_EXIST,
+  ERR_MESSAGE_ORG_ALREADY_EXIST,
   ERR_MESSAGE_RECORD_NOT_FOUND,
-  ERR_MESSAGE_REGISTER_ORG_FAIL_EXIST,
   errNotEntered,
   errNotFound,
 } from '@/app/constant/errorMsg'
-import { ROUTE_SIGNUP_COMPLETE } from '@/app/constant/route-constant'
+import { API_URL_CREATE_ORG, API_URL_JOIN_ORG } from '@/app/constant/route/api-route-constant'
+import { ROUTE_SIGNUP_COMPLETE } from '@/app/constant/route/route-constant'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
-import moduleGetCookie, { moduleDeleteCookies } from '@/app/module/utils/moduleCookie'
+import { moduleDeleteCookies, moduleGetCookie } from '@/app/module/utils/moduleCookie'
 import { modulePostFetch } from '@/app/module/utils/moduleFetch'
-import { deleteStorage } from '@/app/module/utils/moduleStorage'
+import { moduleDeleteStorage } from '@/app/module/utils/moduleStorage'
 import { updateLoginCompleteReducer } from '@/app/store/reducers/maintain/maintainReducer'
 import {
   type FailResponseType,
@@ -64,7 +66,7 @@ export default function RegisterOrgLoginBtn(props: RegisterOrgLoginBtnProps) {
             description: orgState.createOrg.description,
             name: orgState.createOrg.name,
           },
-          fetchUrl: process.env.NEXT_PUBLIC_CREATE_ORGANIZATIONS_SOURCE,
+          fetchUrl: API_URL_CREATE_ORG,
           header: {
             Authorization: `Bearer ${accessToken}`,
           },
@@ -73,7 +75,7 @@ export default function RegisterOrgLoginBtn(props: RegisterOrgLoginBtnProps) {
           data: {
             code: orgState.joinOrg.code,
           },
-          fetchUrl: process.env.NEXT_PUBLIC_JOIN_ORGANIZATIONS_SOURCE,
+          fetchUrl: API_URL_JOIN_ORG,
           header: {
             Authorization: `Bearer ${accessToken}`,
           },
@@ -89,7 +91,7 @@ export default function RegisterOrgLoginBtn(props: RegisterOrgLoginBtnProps) {
       const orgRes = await modulePostFetch<FetchResponseType<string>>(fetchOrgProps)
       if (orgRes.status !== 200) throw new Error((orgRes as FailResponseType).message)
 
-      deleteStorage([REGISTER_ORG_DESCRIPTION, REGISTER_ORG_NAME, REGISTER_ORG_JOIN])
+      moduleDeleteStorage([REGISTER_ORG_DESCRIPTION, REGISTER_ORG_NAME, REGISTER_ORG_JOIN])
       dispatch(updateLoginCompleteReducer(FALSE))
       moduleDeleteCookies(KEY_ACCESS_TOKEN)
       router.push(ROUTE_SIGNUP_COMPLETE)
@@ -99,8 +101,11 @@ export default function RegisterOrgLoginBtn(props: RegisterOrgLoginBtnProps) {
           case ERR_MESSAGE_RECORD_NOT_FOUND:
             props.setErrMsg(errNotFound('입력한 조직'))
             break
-          case ERR_MESSAGE_REGISTER_ORG_FAIL_EXIST:
+          case ERR_MESSAGE_JOIN_ORG_FAIL_EXIST:
             props.setErrMsg('이미 해당 조직에 가입되어 있습니다.')
+            break
+          case ERR_MESSAGE_ORG_ALREADY_EXIST:
+            props.setErrMsg('이미 같은 이름의 조직이 존재합니다.')
             break
         }
       }

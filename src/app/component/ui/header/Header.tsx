@@ -17,9 +17,9 @@ import Confirm from '../confirm/Confirm'
 
 import { KEY_ACCESS_TOKEN, KEY_LOGIN_COMPLETE, TRUE } from '@/app/constant/constant'
 import { ERR_COOKIE_NOT_FOUND } from '@/app/constant/errorMsg'
-import { ROUTE_BOARD, ROUTE_MAIN } from '@/app/constant/route-constant'
+import { ROUTE_BOARD, ROUTE_MAIN } from '@/app/constant/route/route-constant'
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
-import moduleGetCookie from '@/app/module/utils/moduleCookie'
+import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
 
 export default function Header() {
   const pathname = usePathname()
@@ -39,7 +39,6 @@ export default function Header() {
     board: false,
     project: false,
   })
-  //
   const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
   const loginCompleteState = useAppSelector((state) => state.maintain[KEY_LOGIN_COMPLETE])
   const handleOpen = (title: string) => {

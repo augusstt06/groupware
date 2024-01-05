@@ -1,8 +1,9 @@
 import AttendanceInput from '@/app/component/ui/input/main/MainInput'
 import { KEY_ACCESS_TOKEN, KEY_X_ORGANIZATION_CODE } from '@/app/constant/constant'
+import { API_URL_PROJECTS } from '@/app/constant/route/api-route-constant'
 import useInput from '@/app/module/hooks/reactHooks/useInput'
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
-import moduleGetCookie from '@/app/module/utils/moduleCookie'
+import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
 import { modulePostFetch } from '@/app/module/utils/moduleFetch'
 import { type ModulePostFetchProps } from '@/app/types/moduleTypes'
 
@@ -25,17 +26,14 @@ export default function CreateProject() {
           title: titleInput.input.value,
           projectId: projectIdInput.input.value,
         },
-        fetchUrl: process.env.NEXT_PUBLIC_CREATE_PROJECTS_SOURCE,
+        fetchUrl: API_URL_PROJECTS,
         header: {
           Authorization: `Bearer ${accessToken}`,
           [KEY_X_ORGANIZATION_CODE]: userInfo[KEY_X_ORGANIZATION_CODE],
         },
       }
       await modulePostFetch(fetchCreateProject)
-      //   console.log(res)
-    } catch (err) {
-      //   console.log(err)
-    }
+    } catch (err) {}
   }
   const handleClick = () => {
     void fetchCreateProject()

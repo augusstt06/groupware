@@ -1,6 +1,6 @@
 import { addSeconds, format, parse } from 'date-fns'
 
-export const convertTime = (input: string): string => {
+export const moduleConvertTime = (input: string): string => {
   const date: Date = parse(input, 'yyyy/MM/dd/HH:mm', new Date())
   const dateWithSeconds: Date = addSeconds(date, 5)
   const outputString: string = format(dateWithSeconds, "yyyy-MM-dd'T'HH:mm:ss'Z'", {
@@ -10,7 +10,7 @@ export const convertTime = (input: string): string => {
   return outputString
 }
 
-export const getCurrentTime = (): string => {
+export const moduleGetCurrentTime = (): string => {
   const currentTime = new Date()
   const formatter = new Intl.DateTimeFormat('ko-KR', {
     year: 'numeric',
@@ -22,4 +22,15 @@ export const getCurrentTime = (): string => {
   })
   const formattedTime = formatter.format(currentTime)
   return formattedTime
+}
+
+export const moduleConvertDate = (date: string) => {
+  const dateObj = new Date(date)
+  const year = dateObj.getFullYear()
+  const month = String(dateObj.getMonth() + 1).padStart(2, '0')
+  const day = String(dateObj.getDate()).padStart(2, '0')
+  const hours = String(dateObj.getHours()).padStart(2, '0')
+  const minutes = String(dateObj.getMinutes()).padStart(2, '0')
+
+  return `${year}/${month}/${day} ${hours}:${minutes}`
 }
