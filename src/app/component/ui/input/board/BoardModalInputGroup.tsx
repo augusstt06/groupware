@@ -17,8 +17,8 @@ export default function BoardModalInputGroup(props: BoardModalInputGruopProps) {
     setSelect(e.target.value)
   }
 
+  // TODO: checkList - 9
   // const [image, setImage] = useState(null)
-  // FIXME: 파일 업로드
   // const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
   // setImage(e.target.value)
   // }

@@ -36,10 +36,11 @@ next-env.d.ts
 
 .env
 
-feedback.md
-
 memo.md
 
 todo.md
 
 redux-persist.d.ts
+
+
+checkList.md

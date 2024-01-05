@@ -12,3 +12,4 @@ export const ROUTE_LOGIN = process.env.NEXT_PUBLIC_ROUTE_LOGIN as string
 export const ROUTE_FIND_PWD = process.env.NEXT_PUBLIC_ROUTE_FIND_PWD as string
 export const ROUTE_BOARD = process.env.NEXT_PUBLIC_ROUTE_BOARD as string
 export const ROUTE_BOARD_ANNOUNCE = process.env.NEXT_PUBLIC_ROUTE_BOARD_ANNOUNCE as string
+export const ROUTE_POSTING_DETAIL = process.env.NEXT_PUBLIC_ROUTE_POSTING_DETAIL as string

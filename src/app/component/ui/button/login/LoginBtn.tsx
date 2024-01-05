@@ -6,7 +6,8 @@ import {
   ERR_MESSAGE_LOGIN_PWD_FAIL,
   errDefault,
 } from '@/app/constant/errorMsg'
-import { ROUTE_MAIN } from '@/app/constant/route-constant'
+import { API_URL_LOGIN } from '@/app/constant/route/api-route-constant'
+import { ROUTE_MAIN } from '@/app/constant/route/route-constant'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleSetCookies } from '@/app/module/utils/moduleCookie'
 import { modulePostFetch } from '@/app/module/utils/moduleFetch'
@@ -32,7 +33,7 @@ export default function LoginBtn(props: LoginBtnProps) {
       email: loginState.email.value,
       password: loginState.pwd.value,
     },
-    fetchUrl: process.env.NEXT_PUBLIC_LOGIN_SOURCE,
+    fetchUrl: API_URL_LOGIN,
   }
   const inputValidateProps = {
     inputData: loginState.email.value,

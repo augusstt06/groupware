@@ -5,11 +5,15 @@ import MainInput from '@/app/component/ui/input/main/MainInput'
 import { InputLabel } from '@/app/component/ui/label/Inputlabel'
 import AttendanceHistoryTable from '@/app/component/ui/table/main/AttendanceHistoryTable'
 import { KEY_ACCESS_TOKEN, KEY_X_ORGANIZATION_CODE } from '@/app/constant/constant'
+import {
+  API_URL_GET_ATTENDANCE_HISTORY,
+  API_URL_VACATION,
+} from '@/app/constant/route/api-route-constant'
 import useInput from '@/app/module/hooks/reactHooks/useInput'
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
-import moduleGetCookie from '@/app/module/utils/moduleCookie'
+import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
 import { moduleGetFetch } from '@/app/module/utils/moduleFetch'
-import { convertTime } from '@/app/module/utils/moduleTime'
+import { moduleConvertTime } from '@/app/module/utils/moduleTime'
 import {
   type ApiRes,
   type FailResponseType,
@@ -36,16 +40,13 @@ export default function AttendanceHistory() {
       if (select === '') return
       const fetchHistoryProps: ModuleGetFetchProps = {
         params: {
-          from: convertTime(fromInput.value),
+          from: moduleConvertTime(fromInput.value),
           limit: '10',
           organizationId: userInfo.extraInfo.organizationId,
-          to: convertTime(toInput.value),
+          to: moduleConvertTime(toInput.value),
           userId: userInfo.extraInfo.userId,
         },
-        fetchUrl:
-          select === 'attendance'
-            ? process.env.NEXT_PUBLIC_ATTENDANCES_HISTORY_SOURCE
-            : process.env.NEXT_PUBLIC_ATTENDANCES_VACATION_SOURCE,
+        fetchUrl: select === 'attendance' ? API_URL_GET_ATTENDANCE_HISTORY : API_URL_VACATION,
         header: {
           Authorization: `Bearer ${accessToken}`,
           [KEY_X_ORGANIZATION_CODE]: userInfo[KEY_X_ORGANIZATION_CODE],

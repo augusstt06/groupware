@@ -4,15 +4,19 @@ import { IoSearchSharp } from 'react-icons/io5'
 import { InputIconlabel } from '../../label/InputIconlabel'
 import BoardWriteModal from '../../modal/BoardWriteModal'
 
+import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
+import { openBoardWriteModalReducer } from '@/app/store/reducers/board/openBoardWriteModalReducer'
 import { type BoardHubInputProps } from '@/app/types/ui/inputTypes'
 
 export default function BoardHubInput(props: BoardHubInputProps) {
+  const dispatch = useAppDispatch()
+  const isModalOpen = useAppSelector((state) => state.openBoardWriteModal.isOpen)
   const handleClickWrite = () => {
-    props.setIsWrite(!props.isWrite)
+    dispatch(openBoardWriteModalReducer())
   }
   return (
     <div className="flex flex-row justify-around">
-      {props.isWrite ? <BoardWriteModal onClick={handleClickWrite} /> : <></>}
+      {isModalOpen ? <BoardWriteModal onClick={handleClickWrite} /> : <></>}
       <div className="flex mt-3 mb-3 mr-2 w-4/6">
         <InputIconlabel icon={<IoSearchSharp className="w-4 h-4" />} />
         <input
