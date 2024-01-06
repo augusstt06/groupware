@@ -17,12 +17,16 @@ import {
   KEY_LOGIN_COMPLETE,
   KEY_X_ORGANIZATION_CODE,
 } from '@/app/constant/constant'
+import { errDefault } from '@/app/constant/errorMsg'
 import {
   API_URL_POSTINGS,
   API_URL_POSTINGS_LIKE,
   API_URL_POSTINGS_UNLIKE,
 } from '@/app/constant/route/api-route-constant'
-import { ROUTE_BOARD } from '@/app/constant/route/route-constant'
+import {
+  ROUTE_BOARD,
+  ROUTE_ERR_NOT_FOUND_POSTING_DETAIL,
+} from '@/app/constant/route/route-constant'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleCheckUserState } from '@/app/module/utils/moduleCheckUserState'
 import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
@@ -58,6 +62,10 @@ export default function BoardDetail() {
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
   const loginCompleteState = useAppSelector((state) => state.maintain[KEY_LOGIN_COMPLETE])
   const [isRerender, setIsRerender] = useState<boolean>(false)
+  const [errorState, setErrorState] = useState({
+    isError: false,
+    description: '',
+  })
   const isPostLike = likeState?.includes(content?.id as number)
   const isAuthor = content?.name === userInfo.name
   const doRerender = () => {
@@ -74,7 +82,7 @@ export default function BoardDetail() {
       [KEY_X_ORGANIZATION_CODE]: orgCode,
     },
   }
-  const fetchPostingDetail = async () => {
+  const fetchGetPostingDetail = async () => {
     try {
       const res = await moduleGetFetch<FetchResponseType<DetailResponseType>>(
         fetchGetPostingDetailProps,
@@ -84,7 +92,9 @@ export default function BoardDetail() {
       const contentRes = (res as SuccessResponseType<DetailResponseType>).result
       setContent(contentRes)
       setCommentCount(contentRes.comments.length)
-    } catch (err) {}
+    } catch (err) {
+      setErrorState({ isError: true, description: errDefault('게시글') })
+    }
   }
   const moveBoardListPage = () => {
     router.push(ROUTE_BOARD)
@@ -105,7 +115,9 @@ export default function BoardDetail() {
       await modulePostFetch<string>(fetchPostingLikeProps)
       dispatch(addPostingLikeReducer(content?.id as number))
       doRerender()
-    } catch (err) {}
+    } catch (err) {
+      alert(errDefault('좋아요'))
+    }
   }
 
   const fetchPostingUnLikeProps: ModulePostFetchProps = {
@@ -123,7 +135,9 @@ export default function BoardDetail() {
       await modulePostFetch<string>(fetchPostingUnLikeProps)
       dispatch(deletePostingLikeReducer(content?.id as number))
       doRerender()
-    } catch (err) {}
+    } catch (err) {
+      alert(errDefault('좋아요 취소'))
+    }
   }
 
   const clickLike = () => {
@@ -146,14 +160,18 @@ export default function BoardDetail() {
       const res = await moduleDeleteFetch<string>(fetchDeletePostingsProps)
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
       router.back()
-    } catch (err) {}
+    } catch (err) {
+      alert(errDefault('게시글 삭제'))
+    }
   }
   const clickDelete = () => {
     void fetchDeletePostings()
   }
   useEffect(() => {
-    void fetchPostingDetail()
-
+    void fetchGetPostingDetail()
+    if (errorState.isError) {
+      router.push(ROUTE_ERR_NOT_FOUND_POSTING_DETAIL)
+    }
     // if (content?.comments != null) {
     //   console.log(content.comments)
     //   const parentCommentLength = content?.comments?.length + 0
@@ -176,7 +194,7 @@ export default function BoardDetail() {
     moduleCheckUserState(moduleProps)
     // FIXME:
   }, [isRerender])
-
+  // console.log(content)
   return (
     <>
       {content != null ? (
