@@ -16,7 +16,11 @@ import { API_URL_UPLOAD_IMG } from '@/app/constant/route/api-route-constant'
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
 import { modulePostFileFetch } from '@/app/module/utils/moduleFetch'
-import { type ModulePostFileFetchProps, type SuccessResponseType } from '@/app/types/moduleTypes'
+import {
+  type FailResponseType,
+  type ModulePostFileFetchProps,
+  type SuccessResponseType,
+} from '@/app/types/moduleTypes'
 import { type EditorProps } from '@/app/types/ui/uiTypes'
 
 // TODO: checkList.md - 8
@@ -41,7 +45,8 @@ export default function TextEditor(props: EditorProps) {
           [KEY_X_ORGANIZATION_CODE]: orgCode,
         },
       }
-      const res = await modulePostFileFetch(fetchImgProps)
+      const res = await modulePostFileFetch<string>(fetchImgProps)
+      if (res.status !== 200) throw new Error((res as FailResponseType).message)
       const imgUrl = (res as SuccessResponseType<string>).result
       callback(imgUrl, 'image')
     } catch (err) {}

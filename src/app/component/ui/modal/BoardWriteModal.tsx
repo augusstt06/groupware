@@ -12,12 +12,18 @@ import BoardModalInputGroup from '../input/board/BoardModalInputGroup'
 import { FALSE, KEY_ACCESS_TOKEN, KEY_X_ORGANIZATION_CODE, TRUE } from '@/app/constant/constant'
 import { ERR_EMPTRY_POSTING_FIELD, errNotEntered } from '@/app/constant/errorMsg'
 import { API_URL_POSTINGS_ORG } from '@/app/constant/route/api-route-constant'
+import { ROUTE_POSTING_DETAIL } from '@/app/constant/route/route-constant'
 import useInput from '@/app/module/hooks/reactHooks/useInput'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
 import { modulePostFetch } from '@/app/module/utils/moduleFetch'
 import { openBoardWriteModalReducer } from '@/app/store/reducers/board/openBoardWriteModalReducer'
-import { type ApiRes, type FailResponseType, type FetchResponseType } from '@/app/types/moduleTypes'
+import {
+  type ApiRes,
+  type FailResponseType,
+  type FetchResponseType,
+  type SuccessResponseType,
+} from '@/app/types/moduleTypes'
 import { type BoardWriteModalprops } from '@/app/types/ui/modalTypes'
 
 const Editor = dynamic(async () => import('../editor/TextEditor'), {
@@ -73,6 +79,11 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
   const fetchPostContent = async () => {
     try {
       const boardCategory = convertBoardCategory()
+      if (boardCategory === 0) {
+        alert('게시글 카테고리를 선택하지 않았습니다.')
+        setIsModalOpen(false)
+        return
+      }
       const fetchProps = {
         data: { boardId: boardCategory, content: editorContent, title: titleInput.value },
         fetchUrl: API_URL_POSTINGS_ORG,
@@ -83,14 +94,13 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
       }
 
       const res = await modulePostFetch<FetchResponseType<ApiRes>>(fetchProps)
-
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
-
+      const detailUrl = (res as SuccessResponseType<ApiRes>).result.id
       dispatch(openBoardWriteModalReducer())
       alert('글이 정상적으로 등록되었습니다.')
       // TODO:  FIXME: checkList - 10
 
-      router.refresh()
+      router.push(`${ROUTE_POSTING_DETAIL}/${detailUrl}`)
     } catch (err) {
       if (err instanceof Error) {
         switch (err.message) {
@@ -107,7 +117,8 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
     const doc = parser.parseFromString(editorContent, 'text/html')
     const isContentEmpty = doc.body.textContent?.trim() === ''
     if (titleInput.value === '' || isContentEmpty) {
-      alert('제목과 내용은 필수 입력항목입니다.')
+      // alert('제목과 내용은 필수 입력항목입니다.')
+      alert(errNotEntered('제목 또는 내용'))
       return
     }
     setAlertState({

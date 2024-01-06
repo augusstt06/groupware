@@ -75,6 +75,7 @@ export type MainInputProps = {
 // board
 export type BoardHubInputProps = {
   searchInput: UseInputProps
+  clickSearchPostings: () => void
 }
 
 export type BoardModalInputGruopProps = {
