@@ -27,7 +27,7 @@ import { ROUTE_BOARD } from '@/app/constant/route/route-constant'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleCheckUserState } from '@/app/module/utils/moduleCheckUserState'
 import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
-import { moduleGetFetch, modulePostFetch } from '@/app/module/utils/moduleFetch'
+import { moduleDeleteFetch, moduleGetFetch, modulePostFetch } from '@/app/module/utils/moduleFetch'
 import { moduleConvertDate } from '@/app/module/utils/moduleTime'
 import {
   addPostingLikeReducer,
@@ -146,6 +146,26 @@ export default function BoardDetail() {
     else void fetchPostingLike()
   }
 
+  const fetchDeletePostingsProps: ModuleGetFetchProps = {
+    params: {
+      id: content?.id as number,
+    },
+    fetchUrl: API_URL_POSTINGS,
+    header: {
+      Authorization: `Bearer ${accessToken}`,
+      [KEY_X_ORGANIZATION_CODE]: orgCode,
+    },
+  }
+  const fetchDeletePostings = async () => {
+    try {
+      const res = await moduleDeleteFetch<string>(fetchDeletePostingsProps)
+      if (res.status !== 200) throw new Error((res as FailResponseType).message)
+      router.back()
+    } catch (err) {}
+  }
+  const clickDelete = () => {
+    void fetchDeletePostings()
+  }
   useEffect(() => {
     void fetchPostingDetail()
 
@@ -219,7 +239,10 @@ export default function BoardDetail() {
                       <button className="w-2/5 md:text-sm text-xs text-indigo-500 hover:text-white dark:text-white dark:bg-indigo-500 dark:border-white border-indigo-500 hover:bg-indigo-500 rounded-lg text-center items-center dark:hover:bg-white dark:hover:text-indigo-500 border-2 dark:hover:border-indigo-500/75">
                         수정
                       </button>
-                      <button className="w-2/5 md:text-sm text-xs text-indigo-500 hover:text-white dark:text-white dark:bg-indigo-500 dark:border-white border-indigo-500 hover:bg-indigo-500 rounded-lg text-center items-center dark:hover:bg-white dark:hover:text-indigo-500 border-2 dark:hover:border-indigo-500/75">
+                      <button
+                        className="w-2/5 md:text-sm text-xs text-indigo-500 hover:text-white dark:text-white dark:bg-indigo-500 dark:border-white border-indigo-500 hover:bg-indigo-500 rounded-lg text-center items-center dark:hover:bg-white dark:hover:text-indigo-500 border-2 dark:hover:border-indigo-500/75"
+                        onClick={clickDelete}
+                      >
                         삭제
                       </button>
                     </div>
