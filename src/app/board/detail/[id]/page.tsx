@@ -68,7 +68,7 @@ export default function BoardDetail() {
   const likeState = useAppSelector((state) => state.boardLike.postingLikeList)
   const userInfo = useAppSelector((state) => state.userInfo.extraInfo)
   const [content, setContent] = useState<DetailResponseType>()
-  const [commentLength, setCommentLength] = useState<number>(0)
+  const [commentCount, setCommentCount] = useState<number>(0)
   const [accessToken, setAccessToken] = useState(moduleGetCookie(KEY_ACCESS_TOKEN))
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
   const loginCompleteState = useAppSelector((state) => state.maintain[KEY_LOGIN_COMPLETE])
@@ -98,6 +98,7 @@ export default function BoardDetail() {
 
       const contentRes = (res as SuccessResponseType<DetailResponseType>).result
       setContent(contentRes)
+      setCommentCount(contentRes.comments.length)
     } catch (err) {}
   }
   const moveBoardListPage = () => {
@@ -147,14 +148,18 @@ export default function BoardDetail() {
 
   useEffect(() => {
     void fetchPostingDetail()
-    if (content?.comments != null) {
-      const parentCommentLength = content?.comments?.length + 0
-      let childCommentLength = 0
-      content?.comments?.forEach((parentComment) => {
-        childCommentLength += parentComment.childComments.length
-      })
-      setCommentLength(parentCommentLength + childCommentLength)
-    }
+
+    // if (content?.comments != null) {
+    //   console.log(content.comments)
+    //   const parentCommentLength = content?.comments?.length + 0
+    //   let childCommentLength = 0
+    //   content?.comments?.forEach((parentComment) => {
+    //     childCommentLength += parentComment.childComments.length
+    //   })
+    //   console.log(parentCommentLength, '댓글수')
+    //   console.log(childCommentLength, '대댓수')
+    //   setCommentLength(parentCommentLength + childCommentLength)
+    // }
 
     const moduleProps: ModuleCheckUserStateProps = {
       useRouter: router,
@@ -205,7 +210,7 @@ export default function BoardDetail() {
                     {/* 댓글 수 */}
                     <div className="flex flex-row text-xs justify-around items-center w-6">
                       <FaComment />
-                      <span>{commentLength}</span>
+                      <span>{commentCount}</span>
                     </div>
                   </div>
                   {/* FIXME: 본인 글에만 표시 */}
@@ -236,7 +241,7 @@ export default function BoardDetail() {
               </div>
             </div>
             <div className="pt-2 pb-2 ">
-              <span className="font-bold text-base">댓글 {commentLength}</span>
+              <span className="font-bold text-base">댓글 {commentCount}</span>
               {content.comments?.map((data) => (
                 <div key={data.content} className="border-b-1 border-gray-300">
                   <Comment comments={data} postingID={content.id} doRerender={doRerender} />

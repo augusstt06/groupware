@@ -99,10 +99,7 @@ export default function Comment(props: CommentProps) {
   const clickDeleteComment = () => {
     void fetchDeleteComment()
   }
-  // useEffect(() => {
-  //   isCommentLike = likeState.includes(props.comments.id)
-  //   console.log(isCommentLike, '댓')
-  // }, [])
+
   return (
     <div className="border-b-1 border-gray-300">
       <div className="flex flex-row items-center justify-around p-2">

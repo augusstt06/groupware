@@ -66,6 +66,7 @@ export type CommentProps = {
     parentName: string
   }
 }
+
 export type WriteCommentProps = {
   doRerender: () => void
   postingID: number

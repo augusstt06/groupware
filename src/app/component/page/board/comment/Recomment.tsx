@@ -99,10 +99,6 @@ export default function Recomment(props: CommentProps) {
     else void fetchCommentLike()
   }
 
-  // useEffect(() => {
-  //   isCommentLike = likeState.includes(props.comments.id)
-  //   console.log(isCommentLike, '대댓')
-  // }, [])
   return (
     <>
       <div className="flex flex-row items-center justify-around p-2">
