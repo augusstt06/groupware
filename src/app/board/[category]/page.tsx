@@ -49,6 +49,11 @@ export default function BoardCategory({ params }: { params: PageParam }) {
   const [pageSize, setPageSize] = useState<number>(1)
   const [pageNumber, setPageNumber] = useState<number>(0)
 
+  type resType = {
+    postings: [boardListResponsetype]
+    total: number
+    size: number
+  }
   const isCurrentPost = (targetDate: string): boolean => {
     const targetDateTime = new Date(targetDate).getTime()
     const currentTime = new Date().getTime()
@@ -84,24 +89,43 @@ export default function BoardCategory({ params }: { params: PageParam }) {
           [KEY_X_ORGANIZATION_CODE]: orgCode,
         },
       }
-      type resType = {
-        postings: [boardListResponsetype]
-        total: number
-        size: number
-      }
       const res =
         await moduleGetFetch<FetchResponseType<ApiRes[] | resType>>(fetchGetBoardListProps)
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
       const resBoardList = (res as SuccessResponseType<resType>).result.postings
-
-      // FIXME: checkList.md - 3 => 임시로 막아놓음
       if (pageSize === 1) {
         const pageSize = Math.ceil((res as SuccessResponseType<resType>).result.total / 10)
         setPageSize(pageSize)
       }
-      // FIXME: checkList.md - 2
       setBoardList(resBoardList)
     } catch (err) {}
+  }
+
+  const fetchGetSearchPostings = async () => {
+    try {
+      const boardId = convertBoardId()
+      const fetchSeachPostingsProps: ModuleGetFetchProps = {
+        params: {
+          organizationBoardId: boardId,
+          limit: 10,
+          offset: 10 * pageNumber,
+          keyword: searchInput.value,
+        },
+        fetchUrl: API_URL_BOARD_ORG_LIST,
+        header: {
+          Authorization: `Bearer ${accessToken}`,
+          [KEY_X_ORGANIZATION_CODE]: orgCode,
+        },
+      }
+      const res =
+        await moduleGetFetch<FetchResponseType<ApiRes[] | resType>>(fetchSeachPostingsProps)
+      if (res.status !== 200) throw new Error((res as FailResponseType).message)
+      const resSearchBoardList = (res as SuccessResponseType<resType>).result.postings
+      setBoardList(resSearchBoardList)
+    } catch (err) {}
+  }
+  const clickSearchPostings = () => {
+    void fetchGetSearchPostings()
   }
 
   useEffect(() => {
@@ -127,16 +151,20 @@ export default function BoardCategory({ params }: { params: PageParam }) {
               <span>{boardCategory}</span>
             </div>
 
-            <BoardHubInput searchInput={searchInput} />
+            <BoardHubInput searchInput={searchInput} clickSearchPostings={clickSearchPostings} />
 
             {boardList !== undefined ? (
-              boardList.map((data) => (
-                <BoardItem
-                  key={data.id}
-                  boardListItem={data}
-                  isCurrent={isCurrentPost(data.createdAt)}
-                />
-              ))
+              boardList.length !== 0 ? (
+                boardList.map((data) => (
+                  <BoardItem
+                    key={data.id}
+                    boardListItem={data}
+                    isCurrent={isCurrentPost(data.createdAt)}
+                  />
+                ))
+              ) : (
+                <div className="p-10 text-center">게시글이 없습니다.</div>
+              )
             ) : (
               <></>
             )}
