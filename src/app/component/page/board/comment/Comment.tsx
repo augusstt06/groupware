@@ -2,16 +2,20 @@
 
 import { useState } from 'react'
 
-import { FaRegHeart } from 'react-icons/fa'
+import { FaHeart, FaRegHeart } from 'react-icons/fa'
 
 import Recomment from './Recomment'
 import WriteComment from './WriteComment'
 
 import { KEY_ACCESS_TOKEN, KEY_X_ORGANIZATION_CODE } from '@/app/constant/constant'
 import { API_URL_COMMENT, API_URL_COMMENT_LIKE } from '@/app/constant/route/api-route-constant'
-import { useAppSelector } from '@/app/module/hooks/reduxHooks'
+import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
 import { moduleDeleteFetch, modulePostFetch } from '@/app/module/utils/moduleFetch'
+import {
+  addCommentLikeReducer,
+  deleteCommentLikeReducer,
+} from '@/app/store/reducers/board/boardLikeReducer'
 import {
   type ApiRes,
   type FailResponseType,
@@ -22,10 +26,14 @@ import {
 import { type CommentProps } from '@/app/types/pageTypes'
 
 export default function Comment(props: CommentProps) {
+  const dispatch = useAppDispatch()
   const userInfo = useAppSelector((state) => state.userInfo.extraInfo)
+  const likeState = useAppSelector((state) => state.boardLike.commentLikeList)
+  const isCommentLike = likeState.includes(props.comments.id)
   const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
   const [isWriteComment, setIsWriteComment] = useState(false)
+
   const clickWriteComment = () => {
     setIsWriteComment(!isWriteComment)
   }
@@ -39,38 +47,37 @@ export default function Comment(props: CommentProps) {
       [KEY_X_ORGANIZATION_CODE]: orgCode,
     },
   }
-  const fetchPostLike = async () => {
+  const fetchCommentLike = async () => {
     try {
       const res = await modulePostFetch<FetchResponseType<ApiRes>>(fetchPostLikeProps)
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
+      dispatch(addCommentLikeReducer(props.comments.id))
+      props.doRerender()
     } catch (err) {}
   }
-  // const fetchDeleteLikeProps: ModuleGetFetchProps = {
-  //   params: {
-  //     commentId: props.comments.id,
-  //   },
-  //   fetchUrl: API_URL_COMMENT_LIKE,
-  //   header: {
-  //     Authorization: `Bearer ${accessToken}`,
-  //     [KEY_X_ORGANIZATION_CODE]: orgCode,
-  //   },
-  // }
-  // const fetchDeleteLike = async () => {
-  //   try {
-  //     const res = await moduleDeleteFetch<FetchResponseType<ApiRes>>(fetchDeleteLikeProps)
-  //     if (res.status !== 200) throw new Error((res as FailResponseType).message)
-  //     console.log('delete like', res)
-  //   } catch (err) {}
-  // }
-
-  // FIXME: 나중에 게시글 좋아요 상태 response로 오면 함수 두개 합치기
-  const clickPostCommentLike = () => {
-    void fetchPostLike()
+  const fetchDeleteLikeProps: ModuleGetFetchProps = {
+    params: {
+      commentId: props.comments.id,
+    },
+    fetchUrl: API_URL_COMMENT_LIKE,
+    header: {
+      Authorization: `Bearer ${accessToken}`,
+      [KEY_X_ORGANIZATION_CODE]: orgCode,
+    },
   }
-  // const clickCommentLikeDelete = () => {
-  //   // 현재는 record not found err 발생
-  //   void fetchDeleteLike()
-  // }
+  const fetchDeleteLike = async () => {
+    try {
+      const res = await moduleDeleteFetch<FetchResponseType<ApiRes>>(fetchDeleteLikeProps)
+      if (res.status !== 200) throw new Error((res as FailResponseType).message)
+      dispatch(deleteCommentLikeReducer(props.comments.id))
+      props.doRerender()
+    } catch (err) {}
+  }
+
+  const clickPostCommentLike = () => {
+    if (isCommentLike) void fetchDeleteLike()
+    else void fetchCommentLike()
+  }
 
   const fetchDeleteCommentProps: ModuleGetFetchProps = {
     params: {
@@ -92,6 +99,7 @@ export default function Comment(props: CommentProps) {
   const clickDeleteComment = () => {
     void fetchDeleteComment()
   }
+
   return (
     <div className="border-b-1 border-gray-300">
       <div className="flex flex-row items-center justify-around p-2">
@@ -117,14 +125,16 @@ export default function Comment(props: CommentProps) {
             <span className="mr-4">2024.01.01</span>
 
             <span className="mr-1 cursor-pointer">
-              {/* 클릭시 변경 */}
-              <FaRegHeart
-                className="text-red-400 hover:text-red-800"
-                onClick={clickPostCommentLike}
-              />
-              {/* <FaHeart className="text-red-400" /> */}
+              {isCommentLike ? (
+                <FaHeart className="text-red-400" onClick={clickPostCommentLike} />
+              ) : (
+                <FaRegHeart
+                  className="text-red-400 hover:text-red-800"
+                  onClick={clickPostCommentLike}
+                />
+              )}
             </span>
-            <span className="mr-4">5</span>
+            <span className="mr-4">{props.comments.like}</span>
             <span className="cursor-pointer" onClick={clickWriteComment}>
               {isWriteComment ? '취소' : '답글쓰기'}
             </span>

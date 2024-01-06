@@ -1,6 +1,9 @@
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
+  images: {
+    domains: [process.env.NEXT_PUBLIC_IMG_DOMAIN],
+  },
   reactStrictMode: false,
   async redirects() {
     return []
@@ -26,6 +29,14 @@ const nextConfig = {
       {
         source: process.env.NEXT_PUBLIC_UPLOAD_IMAGE_SOURCE,
         destination: process.env.NEXT_PUBLIC_UPLOAD_IMAGE_DESTINATION,
+      },
+      {
+        source: process.env.NEXT_PUBLIC_POSTINGS_UNLIKE_SOURCE,
+        destination: process.env.NEXT_PUBLIC_POSTINGS_UNLIKE_DESTINATION,
+      },
+      {
+        source: process.env.NEXT_PUBLIC_POSTINGS_LIKE_SOURCE,
+        destination: process.env.NEXT_PUBLIC_POSTINGS_LIKE_DESTINATION,
       },
       {
         source: process.env.NEXT_PUBLIC_POSTINGS_SOURCE,
