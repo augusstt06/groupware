@@ -29,7 +29,10 @@ import { moduleCheckUserState } from '@/app/module/utils/moduleCheckUserState'
 import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
 import { moduleGetFetch, modulePostFetch } from '@/app/module/utils/moduleFetch'
 import { moduleConvertDate } from '@/app/module/utils/moduleTime'
-import { addLikeReducer, deleteLikeReducer } from '@/app/store/reducers/board/boadLikeReducer'
+import {
+  addPostingLikeReducer,
+  deletePostingLikeReducer,
+} from '@/app/store/reducers/board/boardLikeReducer'
 import {
   type FailResponseType,
   type FetchResponseType,
@@ -62,14 +65,16 @@ export default function BoardDetail() {
   }
 
   const dispatch = useAppDispatch()
-  const likeState = useAppSelector((state) => state.boardLike.likeList)
+  const likeState = useAppSelector((state) => state.boardLike.postingLikeList)
+  const userInfo = useAppSelector((state) => state.userInfo.extraInfo)
   const [content, setContent] = useState<DetailResponseType>()
   const [commentLength, setCommentLength] = useState<number>(0)
   const [accessToken, setAccessToken] = useState(moduleGetCookie(KEY_ACCESS_TOKEN))
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
   const loginCompleteState = useAppSelector((state) => state.maintain[KEY_LOGIN_COMPLETE])
   const [isRerender, setIsRerender] = useState<boolean>(false)
-  const isPostLike = likeState.includes(content?.id as number)
+  const isPostLike = likeState?.includes(content?.id as number)
+  const isAuthor = content?.name === userInfo.name
   const doRerender = () => {
     setIsRerender(!isRerender)
   }
@@ -112,7 +117,7 @@ export default function BoardDetail() {
   const fetchPostingLike = async () => {
     try {
       await modulePostFetch<string>(fetchPostingLikeProps)
-      dispatch(addLikeReducer(content?.id as number))
+      dispatch(addPostingLikeReducer(content?.id as number))
       doRerender()
     } catch (err) {}
   }
@@ -130,7 +135,7 @@ export default function BoardDetail() {
   const fetchPostingUnLike = async () => {
     try {
       await modulePostFetch<string>(fetchPostingUnLikeProps)
-      dispatch(deleteLikeReducer(content?.id as number))
+      dispatch(deletePostingLikeReducer(content?.id as number))
       doRerender()
     } catch (err) {}
   }
@@ -204,14 +209,18 @@ export default function BoardDetail() {
                     </div>
                   </div>
                   {/* FIXME: 본인 글에만 표시 */}
-                  <div className="flex flex-row items-center justify-around w-1/3">
-                    <button className="w-2/5 md:text-sm text-xs text-indigo-500 hover:text-white dark:text-white dark:bg-indigo-500 dark:border-white border-indigo-500 hover:bg-indigo-500 rounded-lg text-center items-center dark:hover:bg-white dark:hover:text-indigo-500 border-2 dark:hover:border-indigo-500/75">
-                      수정
-                    </button>
-                    <button className="w-2/5 md:text-sm text-xs text-indigo-500 hover:text-white dark:text-white dark:bg-indigo-500 dark:border-white border-indigo-500 hover:bg-indigo-500 rounded-lg text-center items-center dark:hover:bg-white dark:hover:text-indigo-500 border-2 dark:hover:border-indigo-500/75">
-                      삭제
-                    </button>
-                  </div>
+                  {isAuthor ? (
+                    <div className="flex flex-row items-center justify-around w-1/3">
+                      <button className="w-2/5 md:text-sm text-xs text-indigo-500 hover:text-white dark:text-white dark:bg-indigo-500 dark:border-white border-indigo-500 hover:bg-indigo-500 rounded-lg text-center items-center dark:hover:bg-white dark:hover:text-indigo-500 border-2 dark:hover:border-indigo-500/75">
+                        수정
+                      </button>
+                      <button className="w-2/5 md:text-sm text-xs text-indigo-500 hover:text-white dark:text-white dark:bg-indigo-500 dark:border-white border-indigo-500 hover:bg-indigo-500 rounded-lg text-center items-center dark:hover:bg-white dark:hover:text-indigo-500 border-2 dark:hover:border-indigo-500/75">
+                        삭제
+                      </button>
+                    </div>
+                  ) : (
+                    <></>
+                  )}
                 </div>
               </div>
             </div>

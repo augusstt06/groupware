@@ -79,6 +79,11 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
   const fetchPostContent = async () => {
     try {
       const boardCategory = convertBoardCategory()
+      if (boardCategory === 0) {
+        alert('게시글 카테고리를 선택하지 않았습니다.')
+        setIsModalOpen(false)
+        return
+      }
       const fetchProps = {
         data: { boardId: boardCategory, content: editorContent, title: titleInput.value },
         fetchUrl: API_URL_POSTINGS_ORG,
@@ -112,7 +117,8 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
     const doc = parser.parseFromString(editorContent, 'text/html')
     const isContentEmpty = doc.body.textContent?.trim() === ''
     if (titleInput.value === '' || isContentEmpty) {
-      alert('제목과 내용은 필수 입력항목입니다.')
+      // alert('제목과 내용은 필수 입력항목입니다.')
+      alert(errNotEntered('제목 또는 내용'))
       return
     }
     setAlertState({

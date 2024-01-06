@@ -2,24 +2,32 @@
 
 import { useState } from 'react'
 
-import { FaRegHeart } from 'react-icons/fa'
+import { FaHeart, FaRegHeart } from 'react-icons/fa'
 
 import WriteComment from './WriteComment'
 
 import { KEY_ACCESS_TOKEN, KEY_X_ORGANIZATION_CODE } from '@/app/constant/constant'
-import { API_URL_COMMENT } from '@/app/constant/route/api-route-constant'
-import { useAppSelector } from '@/app/module/hooks/reduxHooks'
+import { API_URL_COMMENT, API_URL_COMMENT_LIKE } from '@/app/constant/route/api-route-constant'
+import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
-import { moduleDeleteFetch } from '@/app/module/utils/moduleFetch'
+import { moduleDeleteFetch, modulePostFetch } from '@/app/module/utils/moduleFetch'
+import {
+  addCommentLikeReducer,
+  deleteCommentLikeReducer,
+} from '@/app/store/reducers/board/boardLikeReducer'
 import {
   type ApiRes,
   type FailResponseType,
   type FetchResponseType,
   type ModuleGetFetchProps,
+  type ModulePostFetchProps,
 } from '@/app/types/moduleTypes'
 import { type CommentProps } from '@/app/types/pageTypes'
 
 export default function Recomment(props: CommentProps) {
+  const dispatch = useAppDispatch()
+  const likeState = useAppSelector((state) => state.boardLike.commentLikeList)
+  const isCommentLike = likeState.includes(props.comments.id)
   const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
   const userInfo = useAppSelector((state) => state.userInfo.extraInfo)
@@ -48,6 +56,53 @@ export default function Recomment(props: CommentProps) {
   const clickDeleteComment = () => {
     void fetchDeleteComment()
   }
+
+  const fetchPostLikeProps: ModulePostFetchProps = {
+    data: {
+      commentId: props.comments.id,
+    },
+    fetchUrl: API_URL_COMMENT_LIKE,
+    header: {
+      Authorization: `Bearer ${accessToken}`,
+      [KEY_X_ORGANIZATION_CODE]: orgCode,
+    },
+  }
+  const fetchCommentLike = async () => {
+    try {
+      const res = await modulePostFetch<FetchResponseType<ApiRes>>(fetchPostLikeProps)
+      if (res.status !== 200) throw new Error((res as FailResponseType).message)
+      dispatch(addCommentLikeReducer(props.comments.id))
+      props.doRerender()
+    } catch (err) {}
+  }
+  const fetchDeleteLikeProps: ModuleGetFetchProps = {
+    params: {
+      commentId: props.comments.id,
+    },
+    fetchUrl: API_URL_COMMENT_LIKE,
+    header: {
+      Authorization: `Bearer ${accessToken}`,
+      [KEY_X_ORGANIZATION_CODE]: orgCode,
+    },
+  }
+  const fetchDeleteLike = async () => {
+    try {
+      const res = await moduleDeleteFetch<FetchResponseType<ApiRes>>(fetchDeleteLikeProps)
+      if (res.status !== 200) throw new Error((res as FailResponseType).message)
+      dispatch(deleteCommentLikeReducer(props.comments.id))
+      props.doRerender()
+    } catch (err) {}
+  }
+
+  const clickPostCommentLike = () => {
+    if (isCommentLike) void fetchDeleteLike()
+    else void fetchCommentLike()
+  }
+
+  // useEffect(() => {
+  //   isCommentLike = likeState.includes(props.comments.id)
+  //   console.log(isCommentLike, '대댓')
+  // }, [])
   return (
     <>
       <div className="flex flex-row items-center justify-around p-2">
@@ -79,9 +134,14 @@ export default function Recomment(props: CommentProps) {
           <div className="text-xs text-gray-400 flex flex-row justify-start items-center">
             <span className="mr-4">2024.01.01</span>
             <span className="mr-1 cursor-pointer">
-              {/* 클릭시 변경 */}
-              <FaRegHeart className="text-red-400 hover:text-red-800" />
-              {/* <FaHeart className="text-red-400" /> */}
+              {isCommentLike ? (
+                <FaHeart className="text-red-400" onClick={clickPostCommentLike} />
+              ) : (
+                <FaRegHeart
+                  className="text-red-400 hover:text-red-800"
+                  onClick={clickPostCommentLike}
+                />
+              )}
             </span>
             <span className="mr-4">{props.comments.like}</span>
             <span className="cursor-pointer" onClick={clickWriteComment}>

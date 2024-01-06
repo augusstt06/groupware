@@ -4,8 +4,8 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import persistReducer from 'redux-persist/es/persistReducer'
 import createWebStorage from 'redux-persist/lib/storage/createWebStorage'
 
-import { boardLikeSlice } from './reducers/board/boadLikeReducer'
 import { boardCategorySlice } from './reducers/board/boardCategoryReducer'
+import { boardLikeSlice } from './reducers/board/boardLikeReducer'
 import { openBoardWriteModalSlice } from './reducers/board/openBoardWriteModalReducer'
 import { loginInfoSlice } from './reducers/login/loginInfoReducer'
 import { orgInfoSlice } from './reducers/login/orgInfoReducer'
@@ -42,7 +42,7 @@ const rootReducer = combineReducers({
 const persistConfig = {
   key: 'root',
   storage,
-  whiteList: ['userInfo', 'maintain', 'boardCategory', 'openBoardWriteModal', 'boardLikeReducer'],
+  whiteList: ['userInfo', 'maintain', 'boardCategory', 'openBoardWriteModal', 'boardLike'],
   blacklist: ['signupInfo', 'loginInfo', 'orgInfo'],
 }
 const persistedReducer = persistReducer(persistConfig, rootReducer)
