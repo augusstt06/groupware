@@ -1,20 +1,26 @@
 'use client'
 import { type ChangeEvent, useState } from 'react'
 
+import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { IoCameraOutline } from 'react-icons/io5'
 
 import { KEY_ACCESS_TOKEN, KEY_X_ORGANIZATION_CODE } from '@/app/constant/constant'
-import { API_URL_COMMENT_POSTING } from '@/app/constant/route/api-route-constant'
+import {
+  API_URL_COMMENT_POSTING,
+  API_URL_UPLOAD_IMG,
+} from '@/app/constant/route/api-route-constant'
 import useInput from '@/app/module/hooks/reactHooks/useInput'
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
-import { modulePostFetch } from '@/app/module/utils/moduleFetch'
+import { modulePostFetch, modulePostFileFetch } from '@/app/module/utils/moduleFetch'
 import {
   type ApiRes,
   type FailResponseType,
   type FetchResponseType,
   type ModulePostFetchProps,
+  type ModulePostFileFetchProps,
+  type SuccessResponseType,
 } from '@/app/types/moduleTypes'
 import { type WriteCommentProps } from '@/app/types/pageTypes'
 
@@ -24,11 +30,32 @@ export default function WriteComment(props: WriteCommentProps) {
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
   const commentInput = useInput('')
   const [inputCount, setInputCount] = useState<number>()
+  const [img, setImg] = useState('')
 
   const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
     const inputText = e.target.value
     commentInput.onChange(e)
     setInputCount(inputText.length)
+  }
+
+  const uploadImg = async (e: ChangeEvent<HTMLInputElement>) => {
+    try {
+      const file = e.target.files?.[0]
+      const formData = new FormData()
+      formData.append('commentImg', file as File)
+      const fetchImgProps: ModulePostFileFetchProps = {
+        file: formData,
+        fetchUrl: API_URL_UPLOAD_IMG,
+        header: {
+          Authorization: `Bearer ${accessToken}`,
+          [KEY_X_ORGANIZATION_CODE]: orgCode,
+        },
+      }
+      const res = await modulePostFileFetch<string>(fetchImgProps)
+      if (res.status !== 200) throw new Error((res as FailResponseType).message)
+      const imgUrl = (res as SuccessResponseType<string>).result
+      setImg(imgUrl)
+    } catch (err) {}
   }
 
   const fetchPostCommentProps: ModulePostFetchProps =
@@ -76,6 +103,10 @@ export default function WriteComment(props: WriteCommentProps) {
     void fetchPostComment()
   }
 
+  const inputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    void uploadImg(e)
+  }
+
   return (
     <div className=" pt-2 pb-2">
       <div className="border-2 border-gray-300 rounded-lg flex flex-col p-2">
@@ -91,8 +122,38 @@ export default function WriteComment(props: WriteCommentProps) {
           onChange={handleInput}
         />
         <div className="flex flex-row justify-between w-full items-center pl-3">
-          {/* FIXME: 클릭시 파일 첨부 */}
-          <IoCameraOutline className="w-5 h-5" />
+          <div className="flex flex-col justify-around mr-2">
+            {/* <IoCameraOutline className="w-5 h-5"> */}
+            <div className="mb-2">
+              <label htmlFor="imgInput">
+                <IoCameraOutline className="w-10 h-5 cursor-pointer" />
+                <input
+                  type="file"
+                  id="imgInput"
+                  name="commentImg"
+                  className="hidden"
+                  accept="image/*"
+                  onChange={inputChange}
+                />
+              </label>
+            </div>
+            {img !== '' ? (
+              <div>
+                <Image
+                  src={img}
+                  alt="img"
+                  width={100}
+                  height={200}
+                  layout="responsive"
+                  className="rounded-lg"
+                />
+              </div>
+            ) : (
+              <></>
+            )}
+
+            {/* </IoCameraOutline> */}
+          </div>
           <button
             className="w-1/5 md:text-sm text-xs text-indigo-500 hover:text-white dark:text-white dark:bg-indigo-500 dark:border-white border-indigo-500 hover:bg-indigo-500 rounded-lg text-center items-center dark:hover:bg-white dark:hover:text-indigo-500 border-2 dark:hover:border-indigo-500/75"
             onClick={handleClick}

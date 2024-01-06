@@ -19,7 +19,7 @@ export const moduleGetFetch = async <T>(props: ModuleGetFetchProps): Promise<T> 
   })
   return res.json()
 }
-
+// FIXME: 제네릭 변경하기
 export const modulePostFetch = async <T>(
   props: ModulePostFetchProps,
 ): Promise<FetchResponseType<T>> => {

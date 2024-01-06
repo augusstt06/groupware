@@ -1,6 +1,9 @@
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
+  images: {
+    domains: [process.env.NEXT_PUBLIC_IMG_DOMAIN],
+  },
   reactStrictMode: false,
   async redirects() {
     return []
