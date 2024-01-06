@@ -18,18 +18,24 @@ import {
   KEY_LOGIN_COMPLETE,
   KEY_X_ORGANIZATION_CODE,
 } from '@/app/constant/constant'
-import { API_URL_POSTINGS } from '@/app/constant/route/api-route-constant'
+import {
+  API_URL_POSTINGS,
+  API_URL_POSTINGS_LIKE,
+  API_URL_POSTINGS_UNLIKE,
+} from '@/app/constant/route/api-route-constant'
 import { ROUTE_BOARD } from '@/app/constant/route/route-constant'
-import { useAppSelector } from '@/app/module/hooks/reduxHooks'
+import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleCheckUserState } from '@/app/module/utils/moduleCheckUserState'
 import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
-import { moduleGetFetch } from '@/app/module/utils/moduleFetch'
+import { moduleGetFetch, modulePostFetch } from '@/app/module/utils/moduleFetch'
 import { moduleConvertDate } from '@/app/module/utils/moduleTime'
+import { addLikeReducer, deleteLikeReducer } from '@/app/store/reducers/board/boadLikeReducer'
 import {
   type FailResponseType,
   type FetchResponseType,
   type ModuleCheckUserStateProps,
   type ModuleGetFetchProps,
+  type ModulePostFetchProps,
   type SuccessResponseType,
 } from '@/app/types/moduleTypes'
 import { type CommentObjType } from '@/app/types/pageTypes'
@@ -52,14 +58,18 @@ export default function BoardDetail() {
     title: string
     updatedAt: string
     writerId: number
+    like: number
   }
 
+  const dispatch = useAppDispatch()
+  const likeState = useAppSelector((state) => state.boardLike.likeList)
   const [content, setContent] = useState<DetailResponseType>()
   const [commentLength, setCommentLength] = useState<number>(0)
   const [accessToken, setAccessToken] = useState(moduleGetCookie(KEY_ACCESS_TOKEN))
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
-  const loginCOmpleteState = useAppSelector((state) => state.maintain[KEY_LOGIN_COMPLETE])
+  const loginCompleteState = useAppSelector((state) => state.maintain[KEY_LOGIN_COMPLETE])
   const [isRerender, setIsRerender] = useState<boolean>(false)
+  const isPostLike = likeState.includes(content?.id as number)
   const doRerender = () => {
     setIsRerender(!isRerender)
   }
@@ -74,7 +84,7 @@ export default function BoardDetail() {
       [KEY_X_ORGANIZATION_CODE]: orgCode,
     },
   }
-  const fetchFetPostingDetail = async () => {
+  const fetchPostingDetail = async () => {
     try {
       const res = await moduleGetFetch<FetchResponseType<DetailResponseType>>(
         fetchGetPostingDetailProps,
@@ -89,8 +99,49 @@ export default function BoardDetail() {
     router.push(ROUTE_BOARD)
   }
 
+  const fetchPostingLikeProps: ModulePostFetchProps = {
+    data: {
+      postingId: content?.id,
+    },
+    fetchUrl: API_URL_POSTINGS_LIKE,
+    header: {
+      Authorization: `Bearer ${accessToken}`,
+      [KEY_X_ORGANIZATION_CODE]: orgCode,
+    },
+  }
+  const fetchPostingLike = async () => {
+    try {
+      await modulePostFetch<string>(fetchPostingLikeProps)
+      dispatch(addLikeReducer(content?.id as number))
+      doRerender()
+    } catch (err) {}
+  }
+
+  const fetchPostingUnLikeProps: ModulePostFetchProps = {
+    data: {
+      postingId: content?.id,
+    },
+    fetchUrl: API_URL_POSTINGS_UNLIKE,
+    header: {
+      Authorization: `Bearer ${accessToken}`,
+      [KEY_X_ORGANIZATION_CODE]: orgCode,
+    },
+  }
+  const fetchPostingUnLike = async () => {
+    try {
+      await modulePostFetch<string>(fetchPostingUnLikeProps)
+      dispatch(deleteLikeReducer(content?.id as number))
+      doRerender()
+    } catch (err) {}
+  }
+
+  const clickLike = () => {
+    if (isPostLike) void fetchPostingUnLike()
+    else void fetchPostingLike()
+  }
+
   useEffect(() => {
-    void fetchFetPostingDetail()
+    void fetchPostingDetail()
     if (content?.comments != null) {
       const parentCommentLength = content?.comments?.length + 0
       let childCommentLength = 0
@@ -104,7 +155,7 @@ export default function BoardDetail() {
       useRouter: router,
       token: accessToken,
       setToken: setAccessToken,
-      completeState: loginCOmpleteState,
+      completeState: loginCompleteState,
       isCheckInterval: true,
     }
     moduleCheckUserState(moduleProps)
@@ -144,7 +195,7 @@ export default function BoardDetail() {
                     {/* 좋아요 */}
                     <div className="flex flex-row text-xs justify-around items-center w-6 mr-2">
                       <FaHeart className="text-red-400" />
-                      <span>8</span>
+                      <span>{content.like}</span>
                     </div>
                     {/* 댓글 수 */}
                     <div className="flex flex-row text-xs justify-around items-center w-6">
@@ -166,11 +217,13 @@ export default function BoardDetail() {
             </div>
             <div className="border-b-2 border-gray-300 pt-2 pb-4">
               <Viewbox content={content.content} />
-              <div className="cursor-pointer border-2 rounded-lg border-red-400 p-2 flex flex-row justify-around items-center w-16 hover:font-bold hover:bg-red-400 hover:text-white text-red-400">
+              <div
+                className="cursor-pointer border-2 rounded-lg border-red-400 p-2 flex flex-row justify-around items-center w-16 hover:font-bold hover:bg-red-400 hover:text-white text-red-400"
+                onClick={clickLike}
+              >
                 {/* FIXME: 누르면 아이콘 변경 */}
-                {/* <FaHeart className="w-3 h-3" /> */}
-                <FaRegHeart className=" w-3 h-3" />
-                <span className="text-xs">8</span>
+                {isPostLike ? <FaHeart className="w-3 h-3" /> : <FaRegHeart className=" w-3 h-3" />}
+                <span className="text-xs">{content.like}</span>
               </div>
             </div>
             <div className="pt-2 pb-2 ">
