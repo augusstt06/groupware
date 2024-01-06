@@ -91,14 +91,15 @@ export default function BoardDetail() {
 
   useEffect(() => {
     void fetchFetPostingDetail()
-    if (content !== undefined && content !== null) {
-      const parentCommentLength = content.comments.length
+    if (content?.comments != null) {
+      const parentCommentLength = content?.comments?.length + 0
       let childCommentLength = 0
-      content.comments.forEach((parentComment) => {
+      content?.comments?.forEach((parentComment) => {
         childCommentLength += parentComment.childComments.length
       })
       setCommentLength(parentCommentLength + childCommentLength)
     }
+
     const moduleProps: ModuleCheckUserStateProps = {
       useRouter: router,
       token: accessToken,
@@ -174,7 +175,7 @@ export default function BoardDetail() {
             </div>
             <div className="pt-2 pb-2 ">
               <span className="font-bold text-base">댓글 {commentLength}</span>
-              {content.comments.map((data) => (
+              {content.comments?.map((data) => (
                 <div key={data.content} className="border-b-1 border-gray-300">
                   <Comment comments={data} postingID={content.id} doRerender={doRerender} />
                 </div>

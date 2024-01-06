@@ -49,6 +49,13 @@ export default function BoardCategory({ params }: { params: PageParam }) {
   const [pageSize, setPageSize] = useState<number>(1)
   const [pageNumber, setPageNumber] = useState<number>(0)
 
+  const isCurrentPost = (targetDate: string): boolean => {
+    const targetDateTime = new Date(targetDate).getTime()
+    const currentTime = new Date().getTime()
+    const threeDaysInMilliseconds = 3 * 24 * 60 * 60 * 1000
+
+    return currentTime - targetDateTime <= threeDaysInMilliseconds
+  }
   const handleModal = () => {
     dispatch(openBoardWriteModalReducer())
   }
@@ -124,7 +131,13 @@ export default function BoardCategory({ params }: { params: PageParam }) {
             <BoardHubInput searchInput={searchInput} />
 
             {boardList !== undefined ? (
-              boardList.map((data) => <BoardItem key={data.id} boardListItem={data} />)
+              boardList.map((data) => (
+                <BoardItem
+                  key={data.id}
+                  boardListItem={data}
+                  isCurrent={isCurrentPost(data.createdAt)}
+                />
+              ))
             ) : (
               <></>
             )}

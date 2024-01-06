@@ -31,6 +31,7 @@ export type PageParam = {
 
 export type BoardItemProps = {
   boardListItem: boardListResponsetype
+  isCurrent: boolean
 }
 
 export type PaginationProps = {
@@ -46,6 +47,7 @@ export type CommentObjType = {
   name: string
   position: string
   writerId: number
+  like: number
 }
 export type CommentProps = {
   doRerender: () => void
@@ -57,6 +59,7 @@ export type CommentProps = {
     name: string
     position: string
     writerId: number
+    like: number
   }
   mention?: {
     isMention: boolean

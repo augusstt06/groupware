@@ -124,7 +124,7 @@ export default function Comment(props: CommentProps) {
               />
               {/* <FaHeart className="text-red-400" /> */}
             </span>
-            <span className="mr-4">5</span>
+            <span className="mr-4">{props.comments.like}</span>
             <span className="cursor-pointer" onClick={clickWriteComment}>
               {isWriteComment ? '취소' : '답글쓰기'}
             </span>
