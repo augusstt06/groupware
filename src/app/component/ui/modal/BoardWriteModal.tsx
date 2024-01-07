@@ -52,6 +52,7 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
       positive: '',
       negative: '',
     },
+    isFetch: false,
   })
   const countImgFiles = () => {
     const parser = new DOMParser()
@@ -80,12 +81,6 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
 
   const fetchPostContent = async () => {
     try {
-      if (boardCategoryNumber === 0) {
-        alert('게시글 카테고리를 선택하지 않았습니다.')
-        alert('test')
-        setIsModalOpen(false)
-        return
-      }
       const fetchProps = {
         data: { boardId: boardCategoryNumber, content: editorContent, title: titleInput.value },
         fetchUrl: API_URL_POSTINGS_ORG,
@@ -115,17 +110,37 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
   }
 
   const handleClickPosting = () => {
+    if (boardCategoryNumber === 0) {
+      setAlertState({
+        headDescription: '게시판 카테고리를 선택해 주세요',
+        additianoalDescription: '',
+        option: {
+          positive: '확인',
+          negative: '',
+        },
+        isFetch: false,
+      })
+      handleModalState()
+      return
+    }
     const parser = new DOMParser()
     const doc = parser.parseFromString(editorContent, 'text/html')
     const isImageInclude = doc.body.querySelector('img') !== null
-
     const textContent = Array.from(doc.body.childNodes)
       .map((node) => node.textContent != null || '')
       .join('')
-
     const isContentEmpty = textContent.trim() === '' && !isImageInclude
     if (titleInput.value === '' || isContentEmpty) {
-      alert(errNotEntered('제목 또는 내용'))
+      setAlertState({
+        headDescription: '제목과 내용은 필수 입력 항목입니다.',
+        additianoalDescription: '',
+        option: {
+          positive: '확인',
+          negative: '',
+        },
+        isFetch: false,
+      })
+      setIsModalOpen(true)
       return
     }
     setAlertState({
@@ -135,6 +150,7 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
         positive: '확인',
         negative: '취소',
       },
+      isFetch: true,
     })
     setIsModalOpen(true)
   }
@@ -205,6 +221,7 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
                 handleModalState={handleModalState}
                 alertState={alertState}
                 fetchPost={fetchPostContent}
+                boardCategoryNumber={boardCategoryNumber}
               />
             ) : (
               <></>
