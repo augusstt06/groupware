@@ -21,7 +21,7 @@ import { ROUTE_BOARD, ROUTE_MAIN } from '@/app/constant/route/route-constant'
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
 
-export default function Header() {
+export default function GlobalNavigationbar() {
   const pathname = usePathname()
   const isRender = !pathname.startsWith('/err')
 
@@ -79,9 +79,9 @@ export default function Header() {
   }, [])
 
   return (
-    <nav className="relative bg-white border-gray-200 dark:bg-gray-900 z-999">
+    <>
       {mount && loginCompleteState === TRUE && accessToken !== ERR_COOKIE_NOT_FOUND && isRender ? (
-        <>
+        <nav className="relative bg-white border-gray-200 dark:bg-gray-900 z-999">
           <div className="flex items-center justify-between max-w-screen-xl mx-auto p-4">
             <Link href="/main" className="flex items-center space-x-3 rtl:space-x-reverse ml-3">
               <span className="self-center md:text-2xl text-medium font-semibold whitespace-nowrap dark:text-white">
@@ -239,10 +239,14 @@ export default function Header() {
               </a>
             </div>
           </div>
-        </>
+        </nav>
       ) : (
-        <></>
+        <div className="absolute right-10 top-10">
+          <a className="md:inline text-gray-800 dark:hover:text-yellow-400 hover:text-yellow-400 dark:text-white focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm  focus:outline-none dark:focus:ring-gray-800">
+            <DarkmodeBtn />
+          </a>
+        </div>
       )}
-    </nav>
+    </>
   )
 }

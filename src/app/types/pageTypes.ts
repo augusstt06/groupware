@@ -1,6 +1,6 @@
 import { type Dispatch, type SetStateAction } from 'react'
 
-import { type boardListResponsetype } from './variableTypes'
+import { type boardListResponsetype, type CommentType } from './variableTypes'
 
 export type ReactProps = {
   children: React.ReactNode
@@ -40,20 +40,11 @@ export type PaginationProps = {
   setPageNumber: Dispatch<SetStateAction<number>>
 }
 
-export type CommentObjType = {
-  childComments: CommentObjType[]
-  content: string
-  id: number
-  name: string
-  position: string
-  writerId: number
-  like: number
-}
 export type CommentProps = {
   doRerender: () => void
   postingID: number
   comments: {
-    childComments: CommentObjType[]
+    childComments: CommentType[]
     content: string
     id: number
     name: string

@@ -1,5 +1,5 @@
 import type React from 'react'
-import { type SetStateAction } from 'react'
+import { type Dispatch, type SetStateAction } from 'react'
 
 import { type UseInputProps } from '../moduleTypes'
 
@@ -80,4 +80,7 @@ export type BoardHubInputProps = {
 
 export type BoardModalInputGruopProps = {
   titleInput: UseInputProps
+  select: string
+  setSelect: Dispatch<SetStateAction<string>>
+  selectList: Array<{ title: string }>
 }

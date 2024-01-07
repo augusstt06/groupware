@@ -1,5 +1,3 @@
-import { useState } from 'react'
-
 import { InputLabel } from '../../label/Inputlabel'
 
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
@@ -8,13 +6,9 @@ import { type BoardModalInputGruopProps } from '@/app/types/ui/inputTypes'
 export default function BoardModalInputGroup(props: BoardModalInputGruopProps) {
   const userInfo = useAppSelector((state) => state.userInfo)
   const params = useAppSelector((state) => state.boardCategory.category)
-  const [select, setSelect] = useState('')
-  const selectList = [
-    { value: 'announce', title: '공지사항' },
-    { value: 'project', title: '프로젝트' },
-  ]
+
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelect(e.target.value)
+    props.setSelect(e.target.value)
   }
 
   // TODO: checkList - 9
@@ -39,12 +33,12 @@ export default function BoardModalInputGroup(props: BoardModalInputGruopProps) {
           <select
             id="boardCategory"
             onChange={handleChange}
-            value={select}
+            value={props.select}
             className="appearance-none rounded rounded bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-white-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           >
             <option value="none">글 카테고리를 골라주세요</option>
-            {selectList.map((data) => (
-              <option value={data.value} key={data.title}>
+            {props.selectList.map((data) => (
+              <option value={data.title} key={data.title}>
                 {data.title}
               </option>
             ))}
