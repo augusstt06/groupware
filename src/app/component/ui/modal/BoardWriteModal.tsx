@@ -1,5 +1,5 @@
 'use client'
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/navigation'
@@ -31,6 +31,7 @@ const Editor = dynamic(async () => import('../editor/TextEditor'), {
 })
 
 export default function BoardWriteModal(props: BoardWriteModalprops) {
+  const [boardCategoryNumber, setBoardCategoryNumber] = useState<number>(0)
   const dispatch = useAppDispatch()
   const params = useAppSelector((state) => state.boardCategory.category)
   const router = useRouter()
@@ -42,6 +43,8 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
   const [editorContent, setEditorContent] = useState('')
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [imgCount, setImgCount] = useState<number>(0)
+  const [select, setSelect] = useState('')
+  const selectList = [{ title: '공지사항' }, { title: '프로젝트' }]
   const [alertState, setAlertState] = useState({
     headDescription: '',
     additianoalDescription: '',
@@ -50,7 +53,6 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
       negative: '',
     },
   })
-
   const countImgFiles = () => {
     const parser = new DOMParser()
     const doc = parser.parseFromString(editorContent, 'text/html')
@@ -67,8 +69,8 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
     else setIsAnnounce(FALSE)
   }
 
-  const convertBoardCategory = (): number => {
-    switch (params) {
+  const convertBoardCategory = (title: string): number => {
+    switch (title) {
       case '공지사항':
         return 1
       default:
@@ -78,14 +80,14 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
 
   const fetchPostContent = async () => {
     try {
-      const boardCategory = convertBoardCategory()
-      if (boardCategory === 0) {
+      if (boardCategoryNumber === 0) {
         alert('게시글 카테고리를 선택하지 않았습니다.')
+        alert('test')
         setIsModalOpen(false)
         return
       }
       const fetchProps = {
-        data: { boardId: boardCategory, content: editorContent, title: titleInput.value },
+        data: { boardId: boardCategoryNumber, content: editorContent, title: titleInput.value },
         fetchUrl: API_URL_POSTINGS_ORG,
         header: {
           Authorization: `Bearer ${accessToken}`,
@@ -115,9 +117,14 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
   const handleClickPosting = () => {
     const parser = new DOMParser()
     const doc = parser.parseFromString(editorContent, 'text/html')
-    const isContentEmpty = doc.body.textContent?.trim() === ''
+    const isImageInclude = doc.body.querySelector('img') !== null
+
+    const textContent = Array.from(doc.body.childNodes)
+      .map((node) => node.textContent != null || '')
+      .join('')
+
+    const isContentEmpty = textContent.trim() === '' && !isImageInclude
     if (titleInput.value === '' || isContentEmpty) {
-      // alert('제목과 내용은 필수 입력항목입니다.')
       alert(errNotEntered('제목 또는 내용'))
       return
     }
@@ -131,6 +138,13 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
     })
     setIsModalOpen(true)
   }
+  useEffect(() => {
+    if (params === '') {
+      setBoardCategoryNumber(convertBoardCategory(select))
+    } else {
+      setBoardCategoryNumber(convertBoardCategory(params))
+    }
+  }, [select, params])
 
   return (
     <>
@@ -170,7 +184,12 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
               </div>
             </div>
             <div className="p-2 flex flex-row w-full">
-              <BoardModalInputGroup titleInput={titleInput} />
+              <BoardModalInputGroup
+                titleInput={titleInput}
+                select={select}
+                setSelect={setSelect}
+                selectList={selectList}
+              />
               <div className="w-2/3 bg-gray-100 dark:bg-gray-300 dark:text-black">
                 <Editor
                   editorContent={editorContent}
