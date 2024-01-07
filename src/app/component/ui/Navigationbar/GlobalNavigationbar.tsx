@@ -241,7 +241,7 @@ export default function GlobalNavigationbar() {
           </div>
         </nav>
       ) : (
-        <div className="absolute right-10 top-5">
+        <div className="absolute right-10 top-10">
           <a className="md:inline text-gray-800 dark:hover:text-yellow-400 hover:text-yellow-400 dark:text-white focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm  focus:outline-none dark:focus:ring-gray-800">
             <DarkmodeBtn />
           </a>
