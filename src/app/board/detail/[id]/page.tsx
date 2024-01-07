@@ -43,13 +43,12 @@ import {
   type ModulePostFetchProps,
   type SuccessResponseType,
 } from '@/app/types/moduleTypes'
-import { type DetailResponseType } from '@/app/types/variableTypes'
+import { type CommentType, type DetailResponseType } from '@/app/types/variableTypes'
 
 const Viewbox = dynamic(async () => import('../../../component/ui/editor/TextViewer'), {
   ssr: false,
 })
 export default function BoardDetail() {
-  // TODO: checkList.md - 7
   const param = useParams()
   const router = useRouter()
 
@@ -72,6 +71,20 @@ export default function BoardDetail() {
     setIsRerender(!isRerender)
   }
 
+  const countComments = (comments: CommentType[]): number => {
+    let sum = 0
+
+    comments.forEach((comment) => {
+      sum++
+
+      if (Array.isArray(comment.childComments)) {
+        sum += countComments(comment.childComments)
+      }
+    })
+
+    return sum
+  }
+
   const fetchGetPostingDetailProps: ModuleGetFetchProps = {
     params: {
       id: param.id as string,
@@ -91,7 +104,8 @@ export default function BoardDetail() {
 
       const contentRes = (res as SuccessResponseType<DetailResponseType>).result
       setContent(contentRes)
-      setCommentCount(contentRes.comments.length)
+      const commentsNum = countComments(contentRes.comments)
+      setCommentCount(commentsNum)
     } catch (err) {
       setErrorState({ isError: true, description: errDefault('게시글') })
     }
@@ -172,18 +186,6 @@ export default function BoardDetail() {
     if (errorState.isError) {
       router.push(ROUTE_ERR_NOT_FOUND_POSTING_DETAIL)
     }
-    // if (content?.comments != null) {
-    //   console.log(content.comments)
-    //   const parentCommentLength = content?.comments?.length + 0
-    //   let childCommentLength = 0
-    //   content?.comments?.forEach((parentComment) => {
-    //     childCommentLength += parentComment.childComments.length
-    //   })
-    //   console.log(parentCommentLength, '댓글수')
-    //   console.log(childCommentLength, '대댓수')
-    //   setCommentLength(parentCommentLength + childCommentLength)
-    // }
-
     const moduleProps: ModuleCheckUserStateProps = {
       useRouter: router,
       token: accessToken,
@@ -192,9 +194,8 @@ export default function BoardDetail() {
       isCheckInterval: true,
     }
     moduleCheckUserState(moduleProps)
-    // FIXME:
   }, [isRerender])
-  // console.log(content)
+
   return (
     <>
       {content != null ? (

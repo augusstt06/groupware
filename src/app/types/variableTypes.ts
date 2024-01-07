@@ -1,5 +1,3 @@
-import { type CommentObjType } from './pageTypes'
-
 export type DecodeType = { uuid: string; iss: string; iat: number; exp: number }
 
 export type boardListResponsetype = {
@@ -14,7 +12,7 @@ export type boardListResponsetype = {
 }
 
 export type DetailResponseType = {
-  comments: CommentObjType[]
+  comments: CommentType[]
   content: string
   createdAt: string
   id: number
@@ -24,4 +22,16 @@ export type DetailResponseType = {
   updatedAt: string
   writerId: number
   like: number
+}
+
+export type CommentType = {
+  childComments: CommentType[]
+  content: string
+  createdAt: string
+  id: number
+  like: number
+  name: string
+  position: string
+  updatedAt: string
+  writerId: number
 }
