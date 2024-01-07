@@ -44,7 +44,7 @@ export default function LoginInput(props: LoginInputProps) {
           <>
             <button
               type="submit"
-              className="absolute top-0 end-0 p-2.5 text-sm font-medium h-full text-white bg-gray-50 rounded-e-lg border darK:border-gray-300 hover:bg-indigo-300  dark:bg-gray-700 dark:hover:bg-indigo-700 "
+              className="absolute top-0 end-0 p-2.5 text-sm font-medium h-full text-white bg-gray-50 rounded-e-lg border dark:border-gray-600 hover:bg-indigo-200  dark:bg-gray-700 dark:hover:bg-indigo-400 "
               onClick={() => {
                 props.setIsPwdView(!props.isPwdView)
               }}
@@ -52,7 +52,7 @@ export default function LoginInput(props: LoginInputProps) {
               {!props.isPwdView ? (
                 <IoMdEye className="w-4 h-4 text-black dark:text-white" />
               ) : (
-                <IoMdEyeOff className="w-4 h-4 text-black dark:text-white" />
+                <IoMdEyeOff className="w-4 h-4 text-black hover:text-white dark:text-white" />
               )}
             </button>
           </>

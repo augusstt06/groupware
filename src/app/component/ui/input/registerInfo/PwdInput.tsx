@@ -82,7 +82,7 @@ export default function PwdInput(props: PwdInputProps) {
         />
         <button
           type="submit"
-          className="absolute top-0 end-0 p-2.5 text-sm font-medium h-full text-gray-800 dark:text-white bg-gray-50 rounded-e-lg border darK:border-gray-300 hover:bg-indigo-300 hover:dark:bg-indigo-800 dark:bg-gray-700 dark:hover:bg-indigo-700 "
+          className="absolute top-0 end-0 p-2.5 text-sm font-medium h-full text-white bg-gray-50 rounded-e-lg border dark:border-gray-600 hover:bg-indigo-200  dark:bg-gray-700 dark:hover:bg-indigo-400 "
           onClick={() => {
             props.setIsInputValueView(!props.isInputValueView)
           }}
