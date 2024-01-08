@@ -17,7 +17,12 @@ phases:
       - echo Build completed on `date`
       - echo Pushing the Docker image...
       - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:latest
+      - cp deployment/main/taskdef.json deployment/main/appspec.yaml .
       - printf '[{"name":"%s","imageUri":"%s"}]' "$ENVIRONMENT" "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:latest" > imageDetail.json
 
 artifacts:
-  files: imageDetail.json
+  files: 
+    - imageDetail.json
+    - taskdef.json
+    - appspec.yaml
+  
