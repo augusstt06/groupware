@@ -11,7 +11,6 @@ import { resetSignupInfoReducer } from '@/app/store/reducers/login/signupInfoRed
 import {
   type ApiRes,
   type FailResponseType,
-  type FetchResponseType,
   type ModulePostFetchProps,
   type SuccessResponseType,
 } from '@/app/types/moduleTypes'
@@ -49,10 +48,10 @@ export function SignupBtn(props: SignupBtnProps) {
         return
       }
 
-      const signupRes = await modulePostFetch<FetchResponseType<string>>(fetchSignupProps)
+      const signupRes = await modulePostFetch<string>(fetchSignupProps)
       if (signupRes.status !== 200) throw new Error((signupRes as FailResponseType).message)
 
-      const loginRes = await modulePostFetch<FetchResponseType<ApiRes>>(fetchLoginProps)
+      const loginRes = await modulePostFetch<ApiRes>(fetchLoginProps)
       if (loginRes.status !== 200) throw new Error((loginRes as FailResponseType).message)
 
       moduleSetCookies({

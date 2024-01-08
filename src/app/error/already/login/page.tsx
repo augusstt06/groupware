@@ -11,7 +11,7 @@ export default function AlreadyLogin() {
   }
   return (
     <div className="grid h-screen px-4 place-content-center">
-      <h1 className="tracking-widest text-gray-400 font-bold uppercase">
+      <h1 className="tracking-widest text-gray-600 dark:text-gray-400 font-bold uppercase">
         이미 로그인되어 있는 유저입니다.
       </h1>
       <button

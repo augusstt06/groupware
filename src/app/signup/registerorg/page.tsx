@@ -106,7 +106,7 @@ export default function RegisterOrgLogin() {
           </div>
           <div className="mt-5">
             <span
-              className="md:text-sm text-xs text-gray-400 hover:text-gray-200"
+              className="md:text-sm text-xs text-gray-400 hover:text-gray-700 hover:font-bold hover:dark:text-gray-200 cursor-pointer"
               onClick={changeOrgType}
             >
               {organization === ORG_CREATE ? '기존 조직에 참여하기' : '새로운 조직 생성하기'}

@@ -19,7 +19,6 @@ import {
 import {
   type ApiRes,
   type FailResponseType,
-  type FetchResponseType,
   type ModuleGetFetchProps,
   type ModulePostFetchProps,
 } from '@/app/types/moduleTypes'
@@ -49,7 +48,7 @@ export default function Comment(props: CommentProps) {
   }
   const fetchCommentLike = async () => {
     try {
-      const res = await modulePostFetch<FetchResponseType<ApiRes>>(fetchPostLikeProps)
+      const res = await modulePostFetch<ApiRes>(fetchPostLikeProps)
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
       dispatch(addCommentLikeReducer(props.comments.id))
       props.doRerender()
@@ -67,7 +66,7 @@ export default function Comment(props: CommentProps) {
   }
   const fetchDeleteLike = async () => {
     try {
-      const res = await moduleDeleteFetch<FetchResponseType<ApiRes>>(fetchDeleteLikeProps)
+      const res = await moduleDeleteFetch<ApiRes>(fetchDeleteLikeProps)
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
       dispatch(deleteCommentLikeReducer(props.comments.id))
       props.doRerender()
@@ -91,7 +90,7 @@ export default function Comment(props: CommentProps) {
   }
   const fetchDeleteComment = async () => {
     try {
-      const res = await moduleDeleteFetch<FetchResponseType<ApiRes>>(fetchDeleteCommentProps)
+      const res = await moduleDeleteFetch<ApiRes>(fetchDeleteCommentProps)
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
       props.doRerender()
     } catch (err) {}

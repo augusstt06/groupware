@@ -6,7 +6,9 @@ import {
   type ModulePostFileFetchProps,
 } from '@/app/types/moduleTypes'
 
-export const moduleGetFetch = async <T>(props: ModuleGetFetchProps): Promise<T> => {
+export const moduleGetFetch = async <T>(
+  props: ModuleGetFetchProps,
+): Promise<FetchResponseType<T>> => {
   const queryString = new URLSearchParams()
   Object.entries(props.params).forEach(([key, value]) => {
     queryString.append(key, String(value))

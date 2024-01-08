@@ -26,13 +26,12 @@ import { openBoardWriteModalReducer } from '@/app/store/reducers/board/openBoard
 import {
   type ApiRes,
   type FailResponseType,
-  type FetchResponseType,
   type ModuleCheckUserStateProps,
   type ModuleGetFetchProps,
   type SuccessResponseType,
 } from '@/app/types/moduleTypes'
 import { type PageParam } from '@/app/types/pageTypes'
-import { type boardListResponsetype } from '@/app/types/variableTypes'
+import { type boardListResponsetype, type resType } from '@/app/types/variableTypes'
 
 export default function BoardCategory({ params }: { params: PageParam }) {
   const router = useRouter()
@@ -49,11 +48,6 @@ export default function BoardCategory({ params }: { params: PageParam }) {
   const [pageSize, setPageSize] = useState<number>(1)
   const [pageNumber, setPageNumber] = useState<number>(0)
 
-  type resType = {
-    postings: [boardListResponsetype]
-    total: number
-    size: number
-  }
   const isCurrentPost = (targetDate: string): boolean => {
     const targetDateTime = new Date(targetDate).getTime()
     const currentTime = new Date().getTime()
@@ -89,8 +83,7 @@ export default function BoardCategory({ params }: { params: PageParam }) {
           [KEY_X_ORGANIZATION_CODE]: orgCode,
         },
       }
-      const res =
-        await moduleGetFetch<FetchResponseType<ApiRes[] | resType>>(fetchGetBoardListProps)
+      const res = await moduleGetFetch<ApiRes[] | resType>(fetchGetBoardListProps)
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
       const resBoardList = (res as SuccessResponseType<resType>).result.postings
       if (pageSize === 1) {
@@ -117,8 +110,7 @@ export default function BoardCategory({ params }: { params: PageParam }) {
           [KEY_X_ORGANIZATION_CODE]: orgCode,
         },
       }
-      const res =
-        await moduleGetFetch<FetchResponseType<ApiRes[] | resType>>(fetchSeachPostingsProps)
+      const res = await moduleGetFetch<ApiRes[] | resType>(fetchSeachPostingsProps)
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
       const resSearchBoardList = (res as SuccessResponseType<resType>).result.postings
       setBoardList(resSearchBoardList)

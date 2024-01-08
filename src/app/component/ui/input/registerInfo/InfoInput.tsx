@@ -26,11 +26,7 @@ import {
   phoneNumberReducer,
   positionReducer,
 } from '@/app/store/reducers/login/signupInfoReducer'
-import {
-  type FailResponseType,
-  type FetchResponseType,
-  type ModuleGetFetchProps,
-} from '@/app/types/moduleTypes'
+import { type FailResponseType, type ModuleGetFetchProps } from '@/app/types/moduleTypes'
 import { type InfoInputProps } from '@/app/types/ui/inputTypes'
 
 export default function InfoInput(props: InfoInputProps) {
@@ -57,7 +53,7 @@ export default function InfoInput(props: InfoInputProps) {
 
   const fetchEmailAvaiable = async (getFetchEmailProps: ModuleGetFetchProps): Promise<void> => {
     try {
-      const res = await moduleGetFetch<FetchResponseType<string>>(getFetchEmailProps)
+      const res = await moduleGetFetch<string>(getFetchEmailProps)
       if (res.status !== 200) {
         dispatch(emailReducer({ isCheck: false, value: useInput.value }))
         throw new Error((res as FailResponseType).message)

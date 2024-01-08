@@ -35,3 +35,9 @@ export type CommentType = {
   updatedAt: string
   writerId: number
 }
+
+export type resType = {
+  postings: [boardListResponsetype]
+  total: number
+  size: number
+}

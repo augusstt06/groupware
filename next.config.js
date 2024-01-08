@@ -31,6 +31,10 @@ const nextConfig = {
         destination: process.env.NEXT_PUBLIC_UPLOAD_IMAGE_DESTINATION,
       },
       {
+        source: process.env.NEXT_PUBLIC_POSTINGS_PENDING_SOURCE,
+        destination: process.env.NEXT_PUBLIC_POSTINGS_PENDING_DESTINATION,
+      },
+      {
         source: process.env.NEXT_PUBLIC_POSTINGS_UNLIKE_SOURCE,
         destination: process.env.NEXT_PUBLIC_POSTINGS_UNLIKE_DESTINATION,
       },

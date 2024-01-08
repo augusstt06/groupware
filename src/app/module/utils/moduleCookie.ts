@@ -10,7 +10,6 @@ import {
   type ApiRes,
   type CustomDecodeTokenType,
   type FailResponseType,
-  type FetchResponseType,
   type ModulePostFetchProps,
 } from '@/app/types/moduleTypes'
 
@@ -49,7 +48,7 @@ export const moduleRefreshToken = async (accessToken: string) => {
         Authorization: `Bearer ${accessToken}`,
       },
     }
-    const res = await modulePostFetch<FetchResponseType<ApiRes>>(refreshProps)
+    const res = await modulePostFetch<ApiRes>(refreshProps)
     if (res.status !== 200) throw new Error((res as FailResponseType).message)
   } catch (err) {
     moduleDeleteCookies(KEY_ACCESS_TOKEN)
