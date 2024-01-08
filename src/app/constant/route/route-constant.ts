@@ -2,6 +2,8 @@ export const ROUTE_ERR_NOT_FOUND_ACCESS_TOKEN = process.env
   .NEXT_PUBLIC_ERR_NOT_FOUND_ACCCESS_TOKEN as string
 export const ROUTE_ERR_NOT_FOUND_ORG_TOKEN = process.env
   .NEXT_PUBLIC_ERR_NOT_FOUND_ORG_TOKEN as string
+export const ROUTE_ERR_NOT_FOUND_POSTING_DETAIL = process.env
+  .NEXT_PUBLIC_ERR_NOT_FOUND_POSTING_DETAIL as string
 export const ROUTE_ERR_ALREADY_LOGIN = process.env.NEXT_PUBLIC_ERR_ALREADY_LOGIN as string
 
 export const ROUTE_MAIN = process.env.NEXT_PUBLIC_ROUTE_MAIN as string

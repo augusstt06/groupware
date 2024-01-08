@@ -1,5 +1,4 @@
 'use client'
-import { useEffect } from 'react'
 
 import codeSyntaxHighlightPlugin from '@toast-ui/editor-plugin-code-syntax-highlight'
 import colorSyntax from '@toast-ui/editor-plugin-color-syntax'
@@ -23,18 +22,21 @@ import {
 } from '@/app/types/moduleTypes'
 import { type EditorProps } from '@/app/types/ui/uiTypes'
 
-// TODO: checkList.md - 8
-// FIXME: checkList.md - 7
 export default function TextEditor(props: EditorProps) {
-  let imgCount: number = 0
+  let imgList: string[] = []
   const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
   type HookCallback = (url: string, text?: string) => void
-  const viewAlert = () => {
-    alert('최대 5개 이상의 파일을 첨부할수 없습니다.')
+  const checkImgCount = () => {
+    const img = props.editorRef.current?.getInstance().getHTML()
+    imgList = imgList.filter((data) => img?.includes(data))
   }
   const onUploadImage = async (blob: File, callback: HookCallback) => {
     try {
+      if (imgList.length >= 5) {
+        alert('파일첨부는 5개를 초과할수 없습니다.')
+        return
+      }
       const formData = new FormData()
       formData.append('image', blob)
       const fetchImgProps: ModulePostFileFetchProps = {
@@ -48,6 +50,7 @@ export default function TextEditor(props: EditorProps) {
       const res = await modulePostFileFetch<string>(fetchImgProps)
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
       const imgUrl = (res as SuccessResponseType<string>).result
+      imgList.push(imgUrl)
       callback(imgUrl, 'image')
     } catch (err) {}
   }
@@ -64,12 +67,9 @@ export default function TextEditor(props: EditorProps) {
   const onEditorChange = () => {
     const editorHtml = props.editorRef.current?.getInstance().getHTML()
     props.setEditorContent(editorHtml)
+    checkImgCount()
   }
 
-  useEffect(() => {
-    imgCount = props.countImgFiles()
-    // console.log(imgCount)
-  }, [props.editorContent])
   return (
     <Editor
       ref={props.editorRef}
@@ -81,8 +81,7 @@ export default function TextEditor(props: EditorProps) {
       previewStyle="vertical"
       plugins={[colorSyntax, [codeSyntaxHighlightPlugin, { highlighter: Prism }]]}
       onChange={onEditorChange}
-      // hooks={{ addImageBlobHook: onUploadImage }}
-      hooks={{ addImageBlobHook: imgCount <= 5 ? onUploadImage : viewAlert }}
+      hooks={{ addImageBlobHook: onUploadImage }}
     />
   )
 }

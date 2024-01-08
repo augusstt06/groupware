@@ -104,10 +104,10 @@ export default function Login() {
             <LoginBtn title="로그인" setErrMsg={setErrMsg} />
           </div>
           <div className="flex flex-row justify-around md:w-2/3 w-full mt-3">
-            <div className="text-sm text-gray-400 hover:text-gray-200">
+            <div className="text-sm text-gray-400 hover:text-gray-500 hover:font-bold hover:dark:text-gray-200">
               <Link href={ROUTE_SIGNUP}>회원가입</Link>
             </div>
-            <div className="text-sm text-gray-400 hover:text-gray-200">
+            <div className="text-sm text-gray-400 hover:text-gray-500 hover:font-bold hover:dark:text-gray-200">
               <Link href={ROUTE_FIND_PWD}>비밀번호찾기</Link>
             </div>
           </div>

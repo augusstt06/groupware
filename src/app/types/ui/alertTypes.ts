@@ -12,6 +12,7 @@ export type ConfirmProps = {
 }
 
 export type BoardWriteAlertProps = {
+  boardCategoryNumber: number
   handleModalState: () => void
   alertState: {
     headDescription: string
@@ -20,6 +21,7 @@ export type BoardWriteAlertProps = {
       positive: string
       negative: string
     }
+    isFetch: boolean
   }
   fetchPost: () => Promise<void>
 }

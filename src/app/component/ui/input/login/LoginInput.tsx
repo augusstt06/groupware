@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-import { IoMdEye } from 'react-icons/io'
+import { IoMdEye, IoMdEyeOff } from 'react-icons/io'
 
 import { InputIconlabel } from '../../label/InputIconlabel'
 import { InputLabel } from '../../label/Inputlabel'
@@ -37,19 +37,23 @@ export default function LoginInput(props: LoginInputProps) {
           value={useInput.value}
           onChange={useInput.onChange}
           id={props.title}
-          className="rounded-none rounded-r-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          className="rounded-none rounded-r-lg bg-gray-50 border text-gray-900 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:outline-none"
           placeholder={props.placeholder}
         />
         {props.title === REGISTER_PWD ? (
           <>
             <button
               type="submit"
-              className="absolute top-0 end-0 p-2.5 text-sm font-medium h-full text-white bg-gray-50 rounded-e-lg border darK:border-gray-300 hover:bg-indigo-800 dark:bg-gray-700 dark:hover:bg-indigo-700 "
+              className="absolute top-0 end-0 p-2.5 text-sm font-medium h-full text-white bg-gray-50 rounded-e-lg border dark:border-gray-600 hover:bg-indigo-200  dark:bg-gray-700 dark:hover:bg-indigo-400 "
               onClick={() => {
                 props.setIsPwdView(!props.isPwdView)
               }}
             >
-              <IoMdEye className="w-4 h-4 text-black dark:text-white" />
+              {!props.isPwdView ? (
+                <IoMdEye className="w-4 h-4 text-black dark:text-white" />
+              ) : (
+                <IoMdEyeOff className="w-4 h-4 text-black hover:text-white dark:text-white" />
+              )}
             </button>
           </>
         ) : (

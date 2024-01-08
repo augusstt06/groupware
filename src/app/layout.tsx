@@ -1,7 +1,7 @@
 'use client'
 import './globals.css'
 
-import Header from './component/ui/header/Header'
+import GlobalNavigationbar from './component/ui/Navigationbar/GlobalNavigationbar'
 import { ReduxProvider } from './providers/reduxProvider'
 import CustomThemeProvider from './providers/themeProvider'
 import { type ReactProps } from './types/pageTypes'
@@ -12,7 +12,7 @@ export default function RootLayout({ children }: ReactProps) {
       <body className="font-mono">
         <ReduxProvider>
           <CustomThemeProvider>
-            <Header />
+            <GlobalNavigationbar />
             {children}
           </CustomThemeProvider>
         </ReduxProvider>
