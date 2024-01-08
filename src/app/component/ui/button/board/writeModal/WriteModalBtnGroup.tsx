@@ -23,7 +23,8 @@ export default function WriteModalBtnGroup(props: WriteModalBtnGroupProps) {
           className="mt-3 mb-3 w-2/5 md:text-sm text-xs text-indigo-500 hover:text-white dark:text-white dark:bg-indigo-500 dark:border-white border-indigo-500 hover:bg-indigo-500 rounded-lg text-center items-center dark:hover:bg-white dark:hover:text-indigo-500 border-2 dark:hover:border-indigo-500/75"
           onClick={props.handleClickPostPending}
         >
-          임시저장
+          <span>임시저장 | </span>
+          <span className="text-center items-center">{props.saveList.length}</span>
         </button>
         <button
           className="mt-3 mb-3 w-2/5 md:text-sm text-xs text-indigo-500 hover:text-white dark:text-white dark:bg-indigo-500 dark:border-white border-indigo-500 hover:bg-indigo-500 rounded-lg text-center items-center dark:hover:bg-white dark:hover:text-indigo-500 border-2 dark:hover:border-indigo-500/75"

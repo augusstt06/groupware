@@ -32,7 +32,7 @@ import {
   type SuccessResponseType,
 } from '@/app/types/moduleTypes'
 import { type PageParam } from '@/app/types/pageTypes'
-import { type boardListResponsetype } from '@/app/types/variableTypes'
+import { type boardListResponsetype, type resType } from '@/app/types/variableTypes'
 
 export default function BoardCategory({ params }: { params: PageParam }) {
   const router = useRouter()
@@ -49,11 +49,6 @@ export default function BoardCategory({ params }: { params: PageParam }) {
   const [pageSize, setPageSize] = useState<number>(1)
   const [pageNumber, setPageNumber] = useState<number>(0)
 
-  type resType = {
-    postings: [boardListResponsetype]
-    total: number
-    size: number
-  }
   const isCurrentPost = (targetDate: string): boolean => {
     const targetDateTime = new Date(targetDate).getTime()
     const currentTime = new Date().getTime()

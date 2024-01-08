@@ -32,6 +32,7 @@ import {
   type SuccessResponseType,
 } from '@/app/types/moduleTypes'
 import { type BoardWriteModalprops } from '@/app/types/ui/modalTypes'
+import { type boardListResponsetype, type resType } from '@/app/types/variableTypes'
 
 const Editor = dynamic(async () => import('../editor/TextEditor'), {
   ssr: false,
@@ -50,6 +51,7 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
   const [isSave, setIsSave] = useState<boolean>(false)
   const [isAnnounce, setIsAnnounce] = useState(FALSE)
   const [editorContent, setEditorContent] = useState('')
+  const [saveList, setSaveList] = useState<boardListResponsetype[]>([])
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [imgCount, setImgCount] = useState<number>(0)
   const [select, setSelect] = useState('')
@@ -102,9 +104,10 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
           [KEY_X_ORGANIZATION_CODE]: userInfo[KEY_X_ORGANIZATION_CODE],
         },
       }
-      const res = await moduleGetFetch<FetchResponseType<ApiRes[]>>(fetchProps)
+      const res = await moduleGetFetch<FetchResponseType<resType>>(fetchProps)
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
-      // console.log(res)
+      const postingList = (res as SuccessResponseType<resType>).result.postings
+      setSaveList(postingList)
     } catch (err) {}
   }
 
@@ -225,6 +228,7 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
               handleClickPostPending={handleClickPostPending}
               handleClickClose={props.onClick}
               handleClickPosting={handleClickPosting}
+              saveList={saveList}
             />
             <div className="p-2 flex flex-row w-full">
               <BoardModalInputGroup
