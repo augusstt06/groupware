@@ -20,13 +20,14 @@ import useInput from '@/app/module/hooks/reactHooks/useInput'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleCheckContentIsEmpty } from '@/app/module/utils/moduleCheckContent'
 import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
-import { modulePostFetch } from '@/app/module/utils/moduleFetch'
+import { moduleGetFetch, modulePostFetch } from '@/app/module/utils/moduleFetch'
 import { openBoardWriteModalReducer } from '@/app/store/reducers/board/openBoardWriteModalReducer'
 import {
   type ApiRes,
   type FailResponseType,
   type FetchResponseType,
   type ModuleCheckContentIsEmptyProps,
+  type ModuleGetFetchProps,
   type ModulePostFetchProps,
   type SuccessResponseType,
 } from '@/app/types/moduleTypes'
@@ -86,6 +87,25 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
       default:
         return 0
     }
+  }
+  const fetchGetPostPending = async () => {
+    try {
+      const fetchProps: ModuleGetFetchProps = {
+        params: {
+          limit: 10,
+          offset: 0,
+          writerId: userId,
+        },
+        fetchUrl: API_URL_POSTINGS_PENDING,
+        header: {
+          Authorization: `Bearer ${accessToken}`,
+          [KEY_X_ORGANIZATION_CODE]: userInfo[KEY_X_ORGANIZATION_CODE],
+        },
+      }
+      const res = await moduleGetFetch<FetchResponseType<ApiRes[]>>(fetchProps)
+      if (res.status !== 200) throw new Error((res as FailResponseType).message)
+      // console.log(res)
+    } catch (err) {}
   }
 
   const fetchPostPending = async () => {
@@ -187,6 +207,7 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
     } else {
       setBoardCategoryNumber(convertBoardCategory(params))
     }
+    void fetchGetPostPending()
   }, [select, params])
 
   return (
