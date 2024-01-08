@@ -8,11 +8,7 @@ import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleDeleteCookies, moduleGetCookie } from '@/app/module/utils/moduleCookie'
 import { modulePostFetch } from '@/app/module/utils/moduleFetch'
 import { updateLoginCompleteReducer } from '@/app/store/reducers/maintain/maintainReducer'
-import {
-  type FailResponseType,
-  type FetchResponseType,
-  type ModulePostFetchProps,
-} from '@/app/types/moduleTypes'
+import { type FailResponseType, type ModulePostFetchProps } from '@/app/types/moduleTypes'
 import { type LogoutBtnProps } from '@/app/types/ui/btnTypes'
 
 export default function LogoutBtn(props: LogoutBtnProps) {
@@ -29,7 +25,7 @@ export default function LogoutBtn(props: LogoutBtnProps) {
   }
   const fetchLogout = async () => {
     try {
-      const res = await modulePostFetch<FetchResponseType<string>>(fetchLogoutProps)
+      const res = await modulePostFetch<string>(fetchLogoutProps)
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
       props.setConfirmValue(false)
       moduleDeleteCookies(KEY_ACCESS_TOKEN)

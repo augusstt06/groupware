@@ -11,7 +11,7 @@ export default function NotFoundPostingDetail() {
   }
   return (
     <div className="grid h-screen px-4 place-content-center">
-      <h1 className="tracking-widest text-gray-400 font-bold uppercase">
+      <h1 className="tracking-widest text-gray-600 dark:text-gray-400 font-bold uppercase">
         게시글을 불러오는데 실패했습니다. 게시판으로 돌아갑니다.
       </h1>
       <button

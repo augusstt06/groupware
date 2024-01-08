@@ -10,7 +10,7 @@ export default function NotFoundOrg() {
   }
   return (
     <div className="grid h-screen px-4 place-content-center">
-      <h1 className="tracking-widest text-gray-400 font-bold uppercase">
+      <h1 className="tracking-widest text-gray-600 dark:text-gray-400 font-bold uppercase">
         아직 조직에 생성/가입하지 않은 유저입니다.
       </h1>
       <button

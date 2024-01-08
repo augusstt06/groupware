@@ -1,4 +1,4 @@
-import { type SetStateAction } from 'react'
+import { type Dispatch, type SetStateAction } from 'react'
 
 import { type JwtPayload } from 'jwt-decode'
 import { type AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime'
@@ -57,4 +57,22 @@ export type ModuleCheckUserStateProps = {
   isCheckInterval: boolean
   completeState: string
   fetchFunc?: () => Promise<void>
+}
+
+export type ModuleCheckContentIsEmptyProps = {
+  success: { headDescription: string; additianoalDescription: string }
+  editorContents: string
+  inputValue: string
+  setIsModalOpenFunction: Dispatch<SetStateAction<boolean>>
+  setAlertStateFunction: Dispatch<
+    SetStateAction<{
+      headDescription: string
+      additianoalDescription: string
+      option: {
+        positive: string
+        negative: string
+      }
+      isFetch: boolean
+    }>
+  >
 }

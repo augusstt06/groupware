@@ -23,11 +23,7 @@ import { moduleDeleteCookies, moduleGetCookie } from '@/app/module/utils/moduleC
 import { modulePostFetch } from '@/app/module/utils/moduleFetch'
 import { moduleDeleteStorage } from '@/app/module/utils/moduleStorage'
 import { updateLoginCompleteReducer } from '@/app/store/reducers/maintain/maintainReducer'
-import {
-  type FailResponseType,
-  type FetchResponseType,
-  type ModulePostFetchProps,
-} from '@/app/types/moduleTypes'
+import { type FailResponseType, type ModulePostFetchProps } from '@/app/types/moduleTypes'
 import { type RegisterOrgLoginBtnProps } from '@/app/types/ui/btnTypes'
 
 export default function RegisterOrgLoginBtn(props: RegisterOrgLoginBtnProps) {
@@ -88,7 +84,7 @@ export default function RegisterOrgLoginBtn(props: RegisterOrgLoginBtnProps) {
         return
       }
 
-      const orgRes = await modulePostFetch<FetchResponseType<string>>(fetchOrgProps)
+      const orgRes = await modulePostFetch<string>(fetchOrgProps)
       if (orgRes.status !== 200) throw new Error((orgRes as FailResponseType).message)
 
       moduleDeleteStorage([REGISTER_ORG_DESCRIPTION, REGISTER_ORG_NAME, REGISTER_ORG_JOIN])
