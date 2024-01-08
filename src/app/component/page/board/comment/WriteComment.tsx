@@ -17,7 +17,6 @@ import { modulePostFetch, modulePostFileFetch } from '@/app/module/utils/moduleF
 import {
   type ApiRes,
   type FailResponseType,
-  type FetchResponseType,
   type ModulePostFetchProps,
   type ModulePostFileFetchProps,
   type SuccessResponseType,
@@ -86,7 +85,7 @@ export default function WriteComment(props: WriteCommentProps) {
 
   const fetchPostComment = async () => {
     try {
-      const res = await modulePostFetch<FetchResponseType<ApiRes>>(fetchPostCommentProps)
+      const res = await modulePostFetch<ApiRes>(fetchPostCommentProps)
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
       commentInput.resetValue()
       setInputCount(0)

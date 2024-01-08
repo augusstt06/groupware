@@ -25,7 +25,6 @@ import { openBoardWriteModalReducer } from '@/app/store/reducers/board/openBoard
 import {
   type ApiRes,
   type FailResponseType,
-  type FetchResponseType,
   type ModuleCheckContentIsEmptyProps,
   type ModuleGetFetchProps,
   type ModulePostFetchProps,
@@ -104,7 +103,7 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
           [KEY_X_ORGANIZATION_CODE]: userInfo[KEY_X_ORGANIZATION_CODE],
         },
       }
-      const res = await moduleGetFetch<FetchResponseType<resType>>(fetchProps)
+      const res = await moduleGetFetch<resType>(fetchProps)
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
       const postingList = (res as SuccessResponseType<resType>).result.postings
       setSaveList(postingList)
@@ -125,7 +124,7 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
           [KEY_X_ORGANIZATION_CODE]: userInfo[KEY_X_ORGANIZATION_CODE],
         },
       }
-      const res = await modulePostFetch<FetchResponseType<ApiRes>>(fetchProps)
+      const res = await modulePostFetch<ApiRes>(fetchProps)
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
       dispatch(openBoardWriteModalReducer())
       setIsSave(false)
@@ -158,7 +157,7 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
         },
       }
 
-      const res = await modulePostFetch<FetchResponseType<ApiRes>>(fetchProps)
+      const res = await modulePostFetch<ApiRes>(fetchProps)
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
       const detailUrl = (res as SuccessResponseType<ApiRes>).result.id
       dispatch(openBoardWriteModalReducer())

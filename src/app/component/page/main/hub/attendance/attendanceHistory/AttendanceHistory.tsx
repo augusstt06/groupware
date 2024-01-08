@@ -17,7 +17,6 @@ import { moduleConvertTime } from '@/app/module/utils/moduleTime'
 import {
   type ApiRes,
   type FailResponseType,
-  type FetchResponseType,
   type ModuleGetFetchProps,
   type SuccessResponseType,
 } from '@/app/types/moduleTypes'
@@ -52,7 +51,7 @@ export default function AttendanceHistory() {
           [KEY_X_ORGANIZATION_CODE]: userInfo[KEY_X_ORGANIZATION_CODE],
         },
       }
-      const res = await moduleGetFetch<FetchResponseType<ApiRes[]>>(fetchHistoryProps)
+      const res = await moduleGetFetch<ApiRes[]>(fetchHistoryProps)
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
       const resArr = (res as SuccessResponseType<ApiRes[]>).result
       setAttendanceHistory(resArr)
