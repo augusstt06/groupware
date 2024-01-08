@@ -3,6 +3,7 @@ import { IoClose } from 'react-icons/io5'
 import { type BoardWriteAlertProps } from '@/app/types/ui/alertTypes'
 
 export default function BoardWriteAlert(props: BoardWriteAlertProps) {
+  // console.log(props.fetchPost)
   return (
     <>
       <div

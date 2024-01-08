@@ -66,3 +66,9 @@ export type LogoutBtnProps = {
   confirmValue: boolean
   setConfirmValue: Dispatch<SetStateAction<boolean>>
 }
+
+export type WriteModalBtnGroupProps = {
+  handleClickPostPending: () => void
+  handleClickClose: () => void
+  handleClickPosting: () => void
+}
