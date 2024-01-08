@@ -37,7 +37,6 @@ import {
   type ApiRes,
   type CustomDecodeTokenType,
   type FailResponseType,
-  type FetchResponseType,
   type ModuleCheckUserStateProps,
   type ModuleGetFetchProps,
   type SuccessResponseType,
@@ -69,7 +68,7 @@ export default function Main() {
 
   const fetchGetUsers = async () => {
     try {
-      const res = await moduleGetFetch<FetchResponseType<ApiRes>>(getFetchUserProps)
+      const res = await moduleGetFetch<ApiRes>(getFetchUserProps)
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
 
       const successRes = res as SuccessResponseType<ApiRes>

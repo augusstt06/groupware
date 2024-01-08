@@ -37,7 +37,6 @@ import {
 } from '@/app/store/reducers/board/boardLikeReducer'
 import {
   type FailResponseType,
-  type FetchResponseType,
   type ModuleCheckUserStateProps,
   type ModuleGetFetchProps,
   type ModulePostFetchProps,
@@ -61,6 +60,7 @@ export default function BoardDetail() {
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
   const loginCompleteState = useAppSelector((state) => state.maintain[KEY_LOGIN_COMPLETE])
   const [isRerender, setIsRerender] = useState<boolean>(false)
+  const [postingId, setPostingId] = useState<string>('')
   const [errorState, setErrorState] = useState({
     isError: false,
     description: '',
@@ -85,27 +85,21 @@ export default function BoardDetail() {
     return sum
   }
 
-  const fetchGetPostingDetailProps: ModuleGetFetchProps = {
-    params: {
-      id: param.id as string,
-    },
-    fetchUrl: API_URL_POSTINGS,
-    header: {
-      Authorization: `Bearer ${accessToken}`,
-      [KEY_X_ORGANIZATION_CODE]: orgCode,
-    },
-  }
-  const fetchGetPostingDetail = async () => {
+  const fetchGetPostingDetail = async (data: ModuleGetFetchProps) => {
     try {
-      const res = await moduleGetFetch<FetchResponseType<DetailResponseType>>(
-        fetchGetPostingDetailProps,
-      )
+      if (data.params.id === '') {
+        return
+      }
+
+      const res = await moduleGetFetch<DetailResponseType>(data)
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
 
       const contentRes = (res as SuccessResponseType<DetailResponseType>).result
       setContent(contentRes)
-      const commentsNum = countComments(contentRes.comments)
-      setCommentCount(commentsNum)
+      if (contentRes.comments !== undefined) {
+        const commentsNum = countComments(contentRes.comments)
+        setCommentCount(commentsNum)
+      }
     } catch (err) {
       setErrorState({ isError: true, description: errDefault('게시글') })
     }
@@ -181,11 +175,25 @@ export default function BoardDetail() {
   const clickDelete = () => {
     void fetchDeletePostings()
   }
+
   useEffect(() => {
-    void fetchGetPostingDetail()
+    setPostingId(param.id.toString())
+    const fetchGetPostingDetailProps: ModuleGetFetchProps = {
+      params: {
+        id: postingId,
+      },
+      fetchUrl: API_URL_POSTINGS,
+      header: {
+        Authorization: `Bearer ${accessToken}`,
+        [KEY_X_ORGANIZATION_CODE]: orgCode,
+      },
+    }
+    void fetchGetPostingDetail(fetchGetPostingDetailProps)
+
     if (errorState.isError) {
       router.push(ROUTE_ERR_NOT_FOUND_POSTING_DETAIL)
     }
+
     const moduleProps: ModuleCheckUserStateProps = {
       useRouter: router,
       token: accessToken,
@@ -194,7 +202,7 @@ export default function BoardDetail() {
       isCheckInterval: true,
     }
     moduleCheckUserState(moduleProps)
-  }, [isRerender])
+  }, [isRerender, postingId, accessToken, orgCode, setPostingId])
 
   return (
     <>

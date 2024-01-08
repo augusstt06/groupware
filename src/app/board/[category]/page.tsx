@@ -26,7 +26,6 @@ import { openBoardWriteModalReducer } from '@/app/store/reducers/board/openBoard
 import {
   type ApiRes,
   type FailResponseType,
-  type FetchResponseType,
   type ModuleCheckUserStateProps,
   type ModuleGetFetchProps,
   type SuccessResponseType,
@@ -84,8 +83,7 @@ export default function BoardCategory({ params }: { params: PageParam }) {
           [KEY_X_ORGANIZATION_CODE]: orgCode,
         },
       }
-      const res =
-        await moduleGetFetch<FetchResponseType<ApiRes[] | resType>>(fetchGetBoardListProps)
+      const res = await moduleGetFetch<ApiRes[] | resType>(fetchGetBoardListProps)
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
       const resBoardList = (res as SuccessResponseType<resType>).result.postings
       if (pageSize === 1) {
@@ -112,8 +110,7 @@ export default function BoardCategory({ params }: { params: PageParam }) {
           [KEY_X_ORGANIZATION_CODE]: orgCode,
         },
       }
-      const res =
-        await moduleGetFetch<FetchResponseType<ApiRes[] | resType>>(fetchSeachPostingsProps)
+      const res = await moduleGetFetch<ApiRes[] | resType>(fetchSeachPostingsProps)
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
       const resSearchBoardList = (res as SuccessResponseType<resType>).result.postings
       setBoardList(resSearchBoardList)
