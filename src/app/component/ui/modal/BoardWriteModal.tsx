@@ -66,6 +66,7 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
     },
     isFetch: false,
   })
+
   const countImgFiles = () => {
     const parser = new DOMParser()
     const doc = parser.parseFromString(editorContent, 'text/html')
@@ -181,6 +182,12 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
   const handleClickOpenSaveList = () => {
     setIsOpenSaveList(!isOpenSaveList)
   }
+  const loadSaveData = (data: boardListResponsetype) => {
+    // FIXME: 에디터만 이떄 리렌더링 시켜주면 되는데...
+    setEditorContent(data.content)
+    titleInput.setString(data.title)
+    setIsOpenSaveList(false)
+  }
 
   const handleClickPosting = () => {
     if (boardCategoryNumber === 0) {
@@ -218,7 +225,6 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
     }
     void fetchGetPostPending()
   }, [select, params])
-
   return (
     <>
       <div
@@ -252,7 +258,11 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
                   countImgFiles={countImgFiles}
                 />
               </div>
-              {isOpenSaveList ? <BoardModalSaveListTab saveList={saveList} /> : <></>}
+              {isOpenSaveList ? (
+                <BoardModalSaveListTab saveList={saveList} loadSaveData={loadSaveData} />
+              ) : (
+                <></>
+              )}
             </div>
             <BoardWriteModalCheckBox isAnnounce={isAnnounce} handleClick={handleClick} />
             {isModalOpen ? (

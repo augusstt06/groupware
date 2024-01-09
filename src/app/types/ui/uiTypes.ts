@@ -48,5 +48,6 @@ export type EditorProps = {
 }
 
 export type BoardModalSaveListTabProps = {
+  loadSaveData: (data: boardListResponsetype) => void
   saveList: boardListResponsetype[]
 }

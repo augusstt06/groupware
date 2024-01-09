@@ -17,6 +17,9 @@ export default function BoardModalSaveListTab(props: BoardModalSaveListTabProps)
       {props.saveList.map((data) => (
         <div
           className="flex flex-row text-left mt-3 mb-3 p-3 border-b border-gray-300"
+          onClick={() => {
+            props.loadSaveData(data)
+          }}
           key={data.id}
         >
           <div className="bg-gray-300 flex items-center pl-4 pr-4 rounded-lg justify-center mr-2">

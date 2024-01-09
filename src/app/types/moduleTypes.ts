@@ -24,6 +24,7 @@ export type UseInputProps = {
   value: string
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   resetValue: () => void
+  setString: (data: string) => void
 }
 
 export type ModuleGetFetchProps = {
