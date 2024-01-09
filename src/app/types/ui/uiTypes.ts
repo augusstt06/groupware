@@ -2,6 +2,8 @@ import { type Dispatch, type SetStateAction } from 'react'
 
 import { type Editor } from '@toast-ui/react-editor'
 
+import { type boardListResponsetype } from '../variableTypes'
+
 export type InputIconLabelProps = {
   icon: React.ReactNode
 }
@@ -43,4 +45,8 @@ export type EditorProps = {
   setEditorContent: Dispatch<SetStateAction<string>>
   editorRef: React.MutableRefObject<Editor | null>
   countImgFiles: () => number
+}
+
+export type BoardModalSaveListTabProps = {
+  saveList: boardListResponsetype[]
 }

@@ -8,9 +8,33 @@ export const moduleCheckContentIsEmpty = (props: ModuleCheckContentIsEmptyProps)
     .map((node) => node.textContent != null || '')
     .join('')
   const isContentEmpty = textContent.trim() === '' && !isImageInclude
-  if (props.inputValue === '' || isContentEmpty) {
+  if (props.inputValue === '') {
     props.setAlertStateFunction({
-      headDescription: '제목과 내용은 필수 입력 항목입니다.',
+      headDescription: '제목은 최소 1자 이상 작성 후 임시저장이 가능합니다.',
+      additianoalDescription: '',
+      option: {
+        positive: '확인',
+        negative: '',
+      },
+      isFetch: false,
+    })
+    props.setIsModalOpenFunction(true)
+    return
+  } else if (isContentEmpty) {
+    props.setAlertStateFunction({
+      headDescription: '게시글 내용은 최소 1자 이상 작성 후 임시저장이 가능합니다.',
+      additianoalDescription: '',
+      option: {
+        positive: '확인',
+        negative: '',
+      },
+      isFetch: false,
+    })
+    props.setIsModalOpenFunction(true)
+    return
+  } else if (props.boardId === 0) {
+    props.setAlertStateFunction({
+      headDescription: '게시판 카테고리를 선택해주세요',
       additianoalDescription: '',
       option: {
         positive: '확인',

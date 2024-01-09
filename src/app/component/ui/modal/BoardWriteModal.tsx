@@ -8,6 +8,7 @@ import BoardWriteAlert from '../alert/BoardWriteAlert'
 import WriteModalBtnGroup from '../button/board/writeModal/WriteModalBtnGroup'
 import BoardWriteModalCheckBox from '../checkbox/BoardWriteModalCheckBox'
 import BoardModalInputGroup from '../input/board/BoardModalInputGroup'
+import BoardModalSaveListTab from '../tab/BoardModalSaveListTab'
 
 import { FALSE, KEY_ACCESS_TOKEN, KEY_X_ORGANIZATION_CODE, TRUE } from '@/app/constant/constant'
 import { ERR_EMPTRY_POSTING_FIELD, errNotEntered } from '@/app/constant/errorMsg'
@@ -51,6 +52,7 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
   const [isAnnounce, setIsAnnounce] = useState(FALSE)
   const [editorContent, setEditorContent] = useState('')
   const [saveList, setSaveList] = useState<boardListResponsetype[]>([])
+  const [isOpenSaveList, setIsOpenSaveList] = useState<boolean>(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [imgCount, setImgCount] = useState<number>(0)
   const [select, setSelect] = useState('')
@@ -133,6 +135,7 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
 
   const handleClickPostPending = () => {
     const moduleProps: ModuleCheckContentIsEmptyProps = {
+      boardId: boardCategoryNumber,
       editorContents: editorContent,
       inputValue: titleInput.value,
       setAlertStateFunction: setAlertState,
@@ -175,6 +178,9 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
       }
     }
   }
+  const handleClickOpenSaveList = () => {
+    setIsOpenSaveList(!isOpenSaveList)
+  }
 
   const handleClickPosting = () => {
     if (boardCategoryNumber === 0) {
@@ -192,6 +198,7 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
     }
 
     const moduleProps: ModuleCheckContentIsEmptyProps = {
+      boardId: boardCategoryNumber,
       editorContents: editorContent,
       inputValue: titleInput.value,
       setAlertStateFunction: setAlertState,
@@ -219,11 +226,12 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
         data-modal-backdrop="static"
         tabIndex={-1}
         aria-hidden="true"
-        className="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
+        className="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 justify-center items-center w-full h-full"
       >
         <div className="absolute top-20 left-20 right-20 p-4 w-5/6">
           <div className="relative rounded-lg shadow dark:bg-gray-700 border-solid border-2 border-indigo-300 bg-white">
             <WriteModalBtnGroup
+              handleClickOpenSaveList={handleClickOpenSaveList}
               handleClickPostPending={handleClickPostPending}
               handleClickClose={props.onClick}
               handleClickPosting={handleClickPosting}
@@ -244,6 +252,7 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
                   countImgFiles={countImgFiles}
                 />
               </div>
+              {isOpenSaveList ? <BoardModalSaveListTab saveList={saveList} /> : <></>}
             </div>
             <BoardWriteModalCheckBox isAnnounce={isAnnounce} handleClick={handleClick} />
             {isModalOpen ? (

@@ -60,6 +60,7 @@ export type ModuleCheckUserStateProps = {
 }
 
 export type ModuleCheckContentIsEmptyProps = {
+  boardId: number
   success: { headDescription: string; additianoalDescription: string }
   editorContents: string
   inputValue: string
