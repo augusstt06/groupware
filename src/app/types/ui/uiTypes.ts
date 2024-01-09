@@ -41,6 +41,7 @@ export type BoardWriteModalCheckBoxProps = {
 }
 
 export type EditorProps = {
+  saveContent: string
   editorContent: string
   setEditorContent: Dispatch<SetStateAction<string>>
   editorRef: React.MutableRefObject<Editor | null>

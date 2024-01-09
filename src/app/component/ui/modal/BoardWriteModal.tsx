@@ -51,9 +51,11 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
   const [isSave, setIsSave] = useState<boolean>(false)
   const [isAnnounce, setIsAnnounce] = useState(FALSE)
   const [editorContent, setEditorContent] = useState('')
+  const [saveContent, setSaveContent] = useState('')
   const [saveList, setSaveList] = useState<boardListResponsetype[]>([])
+
   const [isOpenSaveList, setIsOpenSaveList] = useState<boolean>(false)
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const [imgCount, setImgCount] = useState<number>(0)
   const [select, setSelect] = useState('')
   const selectList = [{ title: '공지사항' }, { title: '프로젝트' }]
@@ -183,8 +185,7 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
     setIsOpenSaveList(!isOpenSaveList)
   }
   const loadSaveData = (data: boardListResponsetype) => {
-    // FIXME: 에디터만 이떄 리렌더링 시켜주면 되는데...
-    setEditorContent(data.content)
+    setSaveContent(data.content)
     titleInput.setString(data.title)
     setIsOpenSaveList(false)
   }
@@ -252,6 +253,7 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
               />
               <div className="w-2/3 bg-gray-100 dark:bg-gray-300 dark:text-black">
                 <Editor
+                  saveContent={saveContent}
                   editorContent={editorContent}
                   setEditorContent={setEditorContent}
                   editorRef={editorRef}
