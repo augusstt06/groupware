@@ -70,6 +70,7 @@ export type LogoutBtnProps = {
 }
 
 export type WriteModalBtnGroupProps = {
+  handleClickOpenSaveList: () => void
   handleClickPostPending: () => void
   handleClickClose: () => void
   handleClickPosting: () => void

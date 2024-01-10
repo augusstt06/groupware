@@ -24,6 +24,7 @@ export type UseInputProps = {
   value: string
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   resetValue: () => void
+  setString: (data: string) => void
 }
 
 export type ModuleGetFetchProps = {
@@ -60,6 +61,7 @@ export type ModuleCheckUserStateProps = {
 }
 
 export type ModuleCheckContentIsEmptyProps = {
+  boardId: number
   success: { headDescription: string; additianoalDescription: string }
   editorContents: string
   inputValue: string
