@@ -74,7 +74,7 @@ export default function TextEditor(props: EditorProps) {
 
   useEffect(() => {
     if (props.saveContent !== '') {
-      props.editorRef.current?.getInstance().setMarkdown(props.saveContent)
+      props.editorRef.current?.getInstance().setHTML(props.saveContent)
       props.setEditorContent(props.saveContent)
     }
   }, [props.saveContent])

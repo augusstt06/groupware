@@ -122,6 +122,7 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
           writerId: userId,
           content: editorContent,
           title: titleInput.value,
+          boardId: boardCategoryNumber,
         },
         fetchUrl: API_URL_POSTINGS_PENDING,
         header: {
@@ -129,6 +130,7 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
           [KEY_X_ORGANIZATION_CODE]: userInfo[KEY_X_ORGANIZATION_CODE],
         },
       }
+
       const res = await modulePostFetch<ApiRes>(fetchProps)
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
       dispatch(openBoardWriteModalReducer())
@@ -206,6 +208,7 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
     }
 
     const moduleProps: ModuleCheckContentIsEmptyProps = {
+      // FIXME:
       boardId: boardCategoryNumber,
       editorContents: editorContent,
       inputValue: titleInput.value,
