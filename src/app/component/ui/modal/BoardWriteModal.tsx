@@ -139,6 +139,19 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
   }
 
   const handleClickPostPending = () => {
+    if (saveList.length >= 10) {
+      setAlertState({
+        headDescription: '게시글의 임시저장은 10개까지 가능합니다.',
+        additianoalDescription: '',
+        option: {
+          positive: '확인',
+          negative: '',
+        },
+        isFetch: false,
+      })
+      handleModalState()
+      return
+    }
     const moduleProps: ModuleCheckContentIsEmptyProps = {
       boardId: boardCategoryNumber,
       editorContents: editorContent,
