@@ -9,6 +9,7 @@ export type boardListResponsetype = {
   updatedAt: string
   writerId: number
   name: string
+  like: number
 }
 
 export type DetailResponseType = {

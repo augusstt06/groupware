@@ -4,7 +4,9 @@ import { LuCircle } from 'react-icons/lu'
 
 import TodoIndicator from '../../indicator/TodoIndicator'
 
-export default function TodoCard() {
+import { type TodoCardType } from '@/app/types/ui/cardTypes'
+
+export default function TodoCard(props: TodoCardType) {
   return (
     <div className="w-full flex flex-row p-4 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mb-5">
       <div className="inline-flex items-center mr-2">

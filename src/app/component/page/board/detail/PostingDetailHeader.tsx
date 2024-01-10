@@ -1,4 +1,4 @@
-import { FaComment, FaHeart } from 'react-icons/fa'
+import { FaHeart, FaRegComment } from 'react-icons/fa'
 import { IoIosArrowBack } from 'react-icons/io'
 import { MdRemoveRedEye } from 'react-icons/md'
 
@@ -46,7 +46,7 @@ export default function PostingDetailHeader(props: PostingDetailHeaderProps) {
             </div>
             {/* 댓글 수 */}
             <div className="flex flex-row text-xs justify-around items-center w-6">
-              <FaComment />
+              <FaRegComment />
               <span>{props.commentCount}</span>
             </div>
           </div>
