@@ -23,7 +23,7 @@ export default function BoardWriteAlert(props: BoardWriteAlertProps) {
               <span className="sr-only">Close modal</span>
             </button>
             <div className="p-4 md:p-5 text-center">
-              <h3 className="text-lg  text-gray-700 dark:text-gray-400 font-bold">
+              <h3 className="text-lg text-gray-700 dark:text-gray-400 font-bold  mt-5">
                 {props.alertState.headDescription}
               </h3>
               {props.alertState.additianoalDescription !== '' ? (

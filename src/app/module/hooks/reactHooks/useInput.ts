@@ -22,8 +22,11 @@ export default function useInput(state: string, title?: string, limit?: number):
   const resetValue = () => {
     setValue('')
   }
+  const setString = (data: string) => {
+    setValue(data)
+  }
 
-  return { value, onChange, resetValue }
+  return { value, onChange, resetValue, setString }
 }
 
 const formatPhoneNumber = (value: string): string => {

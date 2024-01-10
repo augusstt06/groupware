@@ -1,4 +1,5 @@
 'use client'
+import { useEffect } from 'react'
 
 import codeSyntaxHighlightPlugin from '@toast-ui/editor-plugin-code-syntax-highlight'
 import colorSyntax from '@toast-ui/editor-plugin-color-syntax'
@@ -65,23 +66,33 @@ export default function TextEditor(props: EditorProps) {
     ['scrollSync'],
   ]
   const onEditorChange = () => {
-    const editorHtml = props.editorRef.current?.getInstance().getHTML()
+    const editorHtml = props.editorRef.current?.getInstance().getMarkdown()
+
     props.setEditorContent(editorHtml)
     checkImgCount()
   }
 
+  useEffect(() => {
+    if (props.saveContent !== '') {
+      props.editorRef.current?.getInstance().setHTML(props.saveContent)
+      props.setEditorContent(props.saveContent)
+    }
+  }, [props.saveContent])
+
   return (
-    <Editor
-      ref={props.editorRef}
-      placeholder="게시글을 작성해주세요"
-      initialValue={props.editorContent}
-      initialEditType="markdown"
-      toolbarItems={toolbarItems}
-      height={'100%'}
-      previewStyle="vertical"
-      plugins={[colorSyntax, [codeSyntaxHighlightPlugin, { highlighter: Prism }]]}
-      onChange={onEditorChange}
-      hooks={{ addImageBlobHook: onUploadImage }}
-    />
+    <>
+      <Editor
+        ref={props.editorRef}
+        placeholder="게시글을 작성해주세요"
+        initialValue={props.editorContent}
+        initialEditType="markdown"
+        toolbarItems={toolbarItems}
+        height={'100%'}
+        previewStyle="vertical"
+        plugins={[colorSyntax, [codeSyntaxHighlightPlugin, { highlighter: Prism }]]}
+        onChange={onEditorChange}
+        hooks={{ addImageBlobHook: onUploadImage }}
+      />
+    </>
   )
 }
