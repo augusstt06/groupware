@@ -8,9 +8,9 @@ import Progressbar from '../../progressbar/Progressbar'
 
 import { KEY_ATTENDANCE } from '@/app/constant/constant'
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
-import { type UserCardProps } from '@/app/types/ui/cardTypes'
+import { type HistoryCardProps } from '@/app/types/ui/cardTypes'
 
-export default function HistoryCard(props: UserCardProps) {
+export default function HistoryCard(props: HistoryCardProps) {
   const [elapsed, setElapsed] = useState('0')
   const [convertTime, setConvertTime] = useState('0')
   const attendanceState = useAppSelector((state) => state.userInfo[KEY_ATTENDANCE])

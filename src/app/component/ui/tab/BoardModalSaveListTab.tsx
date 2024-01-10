@@ -1,4 +1,5 @@
 import { HiOutlinePencilAlt } from 'react-icons/hi'
+import { IoClose } from 'react-icons/io5'
 
 import { moduleConvertDate } from '@/app/module/utils/moduleTime'
 import { type BoardModalSaveListTabProps } from '@/app/types/ui/uiTypes'
@@ -25,7 +26,7 @@ export default function BoardModalSaveListTab(props: BoardModalSaveListTabProps)
           <div className="bg-gray-300 flex items-center pl-4 pr-4 rounded-lg justify-center mr-2">
             <HiOutlinePencilAlt className="w-5 h-5 text-white" />
           </div>
-          <div>
+          <div className="w-5/6">
             <div className="flex flex-row items-center">
               <span className="md:text-base md:font-bold text-base p-1 mb-2">{data.title}</span>
               <span className="text-base p-1 mb-2">{extractFirstTag(data.content)}</span>
@@ -33,6 +34,10 @@ export default function BoardModalSaveListTab(props: BoardModalSaveListTabProps)
             <div className="md:text-sm text-xs">
               <span className="p-1 mr-2">{moduleConvertDate(data.createdAt)}</span>
             </div>
+          </div>
+          {/* FIXME: 삭제 api 연결하기 */}
+          <div className="flex items-center rounded-lg">
+            <IoClose className="bg-gray-300 w-5 h-5 rounded-lg text-white hover:text-black cursor-pointer " />
           </div>
         </div>
       ))}

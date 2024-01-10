@@ -52,3 +52,13 @@ export type BoardModalSaveListTabProps = {
   loadSaveData: (data: boardListResponsetype) => void
   saveList: boardListResponsetype[]
 }
+export type MainHubProps = {
+  title: string
+}
+export type BoardHubProps = {
+  title: string
+  boardList: boardListResponsetype[] | undefined
+}
+export type MainTabProps = {
+  title: string
+}

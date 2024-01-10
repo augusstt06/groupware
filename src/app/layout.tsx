@@ -9,7 +9,7 @@ import { type ReactProps } from './types/pageTypes'
 export default function RootLayout({ children }: ReactProps) {
   return (
     <html lang="en" suppressHydrationWarning={true}>
-      <body className="font-mono">
+      <body className="font-mono dark:bg-[#121212] bg-[#fbfbfd]">
         <ReduxProvider>
           <CustomThemeProvider>
             <GlobalNavigationbar />
