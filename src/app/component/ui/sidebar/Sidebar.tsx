@@ -37,7 +37,12 @@ export default function Sidebar(props: SidebarProps) {
             : 'hidden'
         }`}
       >
-        <MainSidebarCardGroup title={props.title} reRender={reRender} setRerender={setRerender} />
+        <MainSidebarCardGroup
+          title={props.title}
+          reRender={reRender}
+          setRerender={setRerender}
+          boardCategoryList={props.boardCategoryList}
+        />
       </div>
     </>
   )

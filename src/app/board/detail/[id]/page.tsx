@@ -19,6 +19,7 @@ import {
 } from '@/app/constant/constant'
 import { errDefault } from '@/app/constant/errorMsg'
 import {
+  API_URL_BOARD_ORG_CATEGORY_LIST,
   API_URL_POSTINGS,
   API_URL_POSTINGS_LIKE,
   API_URL_POSTINGS_UNLIKE,
@@ -42,7 +43,11 @@ import {
   type ModulePostFetchProps,
   type SuccessResponseType,
 } from '@/app/types/moduleTypes'
-import { type CommentType, type DetailResponseType } from '@/app/types/variableTypes'
+import {
+  type boardResType,
+  type CommentType,
+  type DetailResponseType,
+} from '@/app/types/variableTypes'
 
 const Viewbox = dynamic(async () => import('../../../component/ui/editor/TextViewer'), {
   ssr: false,
@@ -59,6 +64,10 @@ export default function BoardDetail() {
   const [accessToken, setAccessToken] = useState(moduleGetCookie(KEY_ACCESS_TOKEN))
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
   const loginCompleteState = useAppSelector((state) => state.maintain[KEY_LOGIN_COMPLETE])
+  const [boardCategoryList, setBoardCategoryList] = useState<{
+    boardName: string
+    menuList: boardResType[]
+  }>()
   const [isRerender, setIsRerender] = useState<boolean>(false)
   const [postingId, setPostingId] = useState<string>('')
   const [errorState, setErrorState] = useState({
@@ -175,6 +184,28 @@ export default function BoardDetail() {
   const clickDelete = () => {
     void fetchDeletePostings()
   }
+  const fetchGetBoardOrgCategoryList = async () => {
+    try {
+      const fetchProps: ModuleGetFetchProps = {
+        params: {
+          organizationId: userInfo.organizationId,
+        },
+        fetchUrl: API_URL_BOARD_ORG_CATEGORY_LIST,
+        header: {
+          Authorization: `Bearer ${accessToken}`,
+          [KEY_X_ORGANIZATION_CODE]: orgCode,
+        },
+      }
+      const res = await moduleGetFetch<boardResType[]>(fetchProps)
+      if (res.status !== 200) throw new Error((res as FailResponseType).message)
+      const boardMenu = (res as SuccessResponseType<boardResType[]>).result
+      const reducerProps = {
+        boardName: '게시판',
+        menuList: boardMenu,
+      }
+      setBoardCategoryList(reducerProps)
+    } catch (err) {}
+  }
 
   useEffect(() => {
     setPostingId(param.id.toString())
@@ -189,6 +220,7 @@ export default function BoardDetail() {
       },
     }
     void fetchGetPostingDetail(fetchGetPostingDetailProps)
+    void fetchGetBoardOrgCategoryList()
 
     if (errorState.isError) {
       router.push(ROUTE_ERR_NOT_FOUND_POSTING_DETAIL)
@@ -208,7 +240,7 @@ export default function BoardDetail() {
     <>
       {content != null ? (
         <main className="w-full grid gap-4 grid-cols-4 h-4/5 pt-24 pb-10 md:ml-10 md:mr-10 ml-5 z-1">
-          <Sidebar title={BOARD} />
+          <Sidebar title={BOARD} boardCategoryList={boardCategoryList} />
           <div className="w-4/5 rounded md:col-span-3 mr-10 col-span-4 bg-white dark:bg-gray-700 dark:text-white p-5 border-2">
             <PostingDetailHeader
               moveBoardListPage={moveBoardListPage}

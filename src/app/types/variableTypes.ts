@@ -42,3 +42,11 @@ export type resType = {
   total: number
   size: number
 }
+
+export type boardResType = {
+  createdAt: string
+  id: number
+  name: string
+  organizationId: number
+  updatedAt: string
+}
