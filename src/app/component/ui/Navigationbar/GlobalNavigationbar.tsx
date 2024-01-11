@@ -91,12 +91,14 @@ export default function GlobalNavigationbar() {
                   setIsConfirmOpen={setIsConfirmOpen}
                   confirmValue={confirmValue}
                   setConfirmValue={setConfirmValue}
+                  setIsUserStateOpen={setIsUserStateOpen}
                 />
               </div>
             </div>
             <GnbNormalMenu
               clickUserStateMenu={clickUserStateMenu}
               isUserStateOpen={isUserStateOpen}
+              setIsUserStateOpen={setIsUserStateOpen}
               isConfirmOpen={isConfirmOpen}
               setIsConfirmOpen={setIsConfirmOpen}
               confirmValue={confirmValue}

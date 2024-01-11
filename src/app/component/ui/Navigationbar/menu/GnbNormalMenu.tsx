@@ -48,6 +48,7 @@ export default function GnbNormalMenu(props: GnbNormalMenuProps) {
               setIsConfirmOpen={props.setIsConfirmOpen}
               confirmValue={props.confirmValue}
               setConfirmValue={props.setConfirmValue}
+              setIsUserStateOpen={props.setIsUserStateOpen}
             />
           ) : (
             <></>

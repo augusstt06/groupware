@@ -28,6 +28,7 @@ export default function UserStateModal(props: LogoutBtnProps) {
           setIsConfirmOpen={props.setIsConfirmOpen}
           confirmValue={props.confirmValue}
           setConfirmValue={props.setConfirmValue}
+          setIsUserStateOpen={props.setIsUserStateOpen}
         />
         <span className="ml-3">로그아웃</span>
       </div>

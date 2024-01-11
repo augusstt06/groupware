@@ -30,6 +30,7 @@ export default function LogoutBtn(props: LogoutBtnProps) {
       props.setConfirmValue(false)
       moduleDeleteCookies(KEY_ACCESS_TOKEN)
       dispatch(updateLoginCompleteReducer(FALSE))
+      props.setIsUserStateOpen(false)
     } catch (err) {
       alert('로그아웃이 실패했습니다.')
     }

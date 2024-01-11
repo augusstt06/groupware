@@ -68,6 +68,7 @@ export type GnbHamburgerMenuProps = {
   setIsConfirmOpen: Dispatch<SetStateAction<boolean>>
   confirmValue: boolean
   setConfirmValue: Dispatch<SetStateAction<boolean>>
+  setIsUserStateOpen: Dispatch<SetStateAction<boolean>>
 }
 
 export type GnbNormalMenuProps = GnbHamburgerMenuProps & {
