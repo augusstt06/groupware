@@ -27,7 +27,6 @@ import {
   moduleRefreshToken,
 } from '../module/utils/moduleCookie'
 import { moduleGetFetch } from '../module/utils/moduleFetch'
-import { addBoardCategoryListReducer } from '../store/reducers/board/boardCategoryListReducer'
 import { categoryReduer } from '../store/reducers/board/boardCategoryReducer'
 import { openBoardWriteModalReducer } from '../store/reducers/board/openBoardWriteModalReducer'
 import {
@@ -38,7 +37,7 @@ import {
   type ModuleGetFetchProps,
   type SuccessResponseType,
 } from '../types/moduleTypes'
-import { type boardListResponsetype, type resType } from '../types/variableTypes'
+import { type boardListResponsetype, type boardResType, type resType } from '../types/variableTypes'
 
 export default function Board() {
   const router = useRouter()
@@ -51,6 +50,10 @@ export default function Board() {
   const loginCompleteState = useAppSelector((state) => state.maintain[KEY_LOGIN_COMPLETE])
   const boardCategory = useAppSelector((state) => state.boardCategory.category)
 
+  const [boardCategoryList, setBoardCategoryList] = useState<{
+    boardName: string
+    menuList: boardResType[]
+  }>()
   const [boardList, setBoardList] = useState<boardListResponsetype[]>()
   const [pageSize, setPageSize] = useState<number>(1)
   const [pageNumber, setPageNumber] = useState<number>(0)
@@ -69,13 +72,7 @@ export default function Board() {
       [KEY_X_ORGANIZATION_CODE]: orgCode,
     },
   }
-  type boardResType = {
-    createdAt: string
-    id: number
-    name: string
-    organizationId: number
-    updatedAt: string
-  }
+
   const fetchGetBoardOrgCategoryList = async () => {
     try {
       const res = await moduleGetFetch<boardResType[]>(fetchProps)
@@ -85,8 +82,7 @@ export default function Board() {
         boardName: '게시판',
         menuList: boardMenu,
       }
-
-      dispatch(addBoardCategoryListReducer(reducerProps))
+      setBoardCategoryList(reducerProps)
     } catch (err) {}
   }
   const convertBoardId = () => {
@@ -140,11 +136,12 @@ export default function Board() {
     }
     moduleCheckUserState(moduleProps)
   }, [boardCategory])
+
   return (
     <main className="w-full grid gap-4 grid-cols-4 h-4/5 pt-24 md:ml-10 md:mr-10 ml-5 z-1 ">
-      <Sidebar title={BOARD} />
+      <Sidebar title={BOARD} boardCategoryList={boardCategoryList} />
       <div className="md:col-span-3 mr-10 col-span-4">
-        <BoardHub title="게시판" boardList={boardList} />
+        <BoardHub title="게시판" boardList={boardList} boardCategoryList={boardCategoryList} />
 
         {isModalOpen ? <BoardWriteModal onClick={handleModal} /> : <></>}
         <div className="md:w-4/5 w-full flex flex-col items-center">

@@ -4,9 +4,9 @@ import NameCard from '../main/NameCard'
 import VacationCard from '../main/VacationCard'
 
 import { MAIN } from '@/app/constant/constant'
-import { type UserCardProps } from '@/app/types/ui/cardTypes'
+import { type MainSidebarCardGroupProps } from '@/app/types/ui/cardTypes'
 
-export default function MainSidebarCardGroup(props: UserCardProps) {
+export default function MainSidebarCardGroup(props: MainSidebarCardGroupProps) {
   return (
     <>
       {props.title === MAIN ? (
@@ -21,7 +21,7 @@ export default function MainSidebarCardGroup(props: UserCardProps) {
         </>
       ) : (
         <>
-          <BoardSideCard />
+          <BoardSideCard boardCategoryList={props.boardCategoryList} />
         </>
       )}
     </>

@@ -1,26 +1,9 @@
-import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
+import { useAppDispatch } from '@/app/module/hooks/reduxHooks'
 import { categoryReduer } from '@/app/store/reducers/board/boardCategoryReducer'
 import { type MainTabProps } from '@/app/types/ui/uiTypes'
 
 export default function BoardTab(props: MainTabProps) {
   const dispatch = useAppDispatch()
-  const categoryList = useAppSelector((state) => state.boardCategoryList.categoryList)
-  type CategoryItem = {
-    boardName: string
-    menuList: Array<{
-      createdAt: string
-      id: number
-      name: string
-      organizationId: number
-      updatedAt: string
-    }>
-  }
-  type CategoryList = CategoryItem[]
-
-  const filterCategoryByBoardName = (): CategoryList => {
-    return categoryList.filter((category) => category.boardName === '게시판')
-  }
-  const boardList = filterCategoryByBoardName()[0].menuList
   const clickBoardCategory = (name: string) => {
     switch (name) {
       case '공지사항':
@@ -47,8 +30,8 @@ export default function BoardTab(props: MainTabProps) {
             전체
           </a>
         </li>
-        {boardList !== undefined ? (
-          boardList.map((data) => (
+        {props.boardCategoryList !== undefined ? (
+          props.boardCategoryList.menuList.map((data) => (
             <li className="me-2" key={data.id}>
               <a
                 className="text-xs md:text-medium inline-block md:p-4 p-3 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
