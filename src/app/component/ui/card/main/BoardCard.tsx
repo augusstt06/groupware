@@ -18,7 +18,7 @@ export default function BoardCard(props: BoardCardType) {
           img
         </div>
       </div>
-      <div className="w-full p-2 cursor-pointer" onClick={goPostingPage}>
+      <div className="w-full p-2 cursor-pointer truncate" onClick={goPostingPage}>
         <div className="inline-block text-sm md:text-medium">
           <span className="font-bold">{props.content.title}</span>
         </div>
