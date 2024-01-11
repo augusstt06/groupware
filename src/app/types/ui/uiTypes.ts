@@ -62,3 +62,17 @@ export type BoardHubProps = {
 export type MainTabProps = {
   title: string
 }
+
+export type GnbHamburgerMenuProps = {
+  isConfirmOpen: boolean
+  setIsConfirmOpen: Dispatch<SetStateAction<boolean>>
+  confirmValue: boolean
+  setConfirmValue: Dispatch<SetStateAction<boolean>>
+}
+
+export type GnbNormalMenuProps = GnbHamburgerMenuProps & {
+  clickUserStateMenu: () => void
+  isUserStateOpen: boolean
+  isDropOpen: boolean
+  clickDropdownMenu: () => void
+}
