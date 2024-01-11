@@ -12,13 +12,13 @@ export default function BoardCard(props: BoardCardType) {
     router.push(`${ROUTE_POSTING_DETAIL}/${props.content.id}`)
   }
   return (
-    <div className="w-full flex flex-row p-4 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mb-5">
+    <div className="w-full flex flex-row p-4 border border-gray-200 rounded-lg shadow dark:bg-[#1a202c] dark:border-gray-700 mb-5">
       <div className="flex justify-center items-center">
         <div className="inline-flex items-center mr-2 bg-gray-300 rounded-lg h-10 pr-4 pl-4">
           img
         </div>
       </div>
-      <div className="w-full p-2 cursor-pointer" onClick={goPostingPage}>
+      <div className="w-full p-2 cursor-pointer truncate" onClick={goPostingPage}>
         <div className="inline-block text-sm md:text-medium">
           <span className="font-bold">{props.content.title}</span>
         </div>
