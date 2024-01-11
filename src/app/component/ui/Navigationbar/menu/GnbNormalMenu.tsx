@@ -17,27 +17,27 @@ export default function GnbNormalMenu(props: GnbNormalMenuProps) {
   const iconList = [
     { title: 'search', icon: <FaSearch className="w-4 h-4" /> },
     { title: 'phone', icon: <FaPhoneAlt className="w-4 h-4" /> },
-    { title: 'alert', icon: <HiBellAlert className="w-4 h-4" /> },
-    { title: 'pereson', icon: <IoPersonCircleOutline className="w-4 h-4" /> },
+    { title: 'alert', icon: <HiBellAlert className="w-5 h-5" /> },
+    { title: 'pereson', icon: <IoPersonCircleOutline className="w-5 h-5" /> },
   ]
   return (
     <div className="flex flex-row items-center">
       {iconList.map((data) => (
         <a
-          className="cursor-pointer hidden md:inline text-gray-800 dark:border-gray-900 hover:text-indigo-500 dark:hover:text-indigo-500 dark:text-white border-solid border-white border-2 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5   focus:outline-none dark:focus:ring-gray-800"
+          className="cursor-pointer hidden md:inline text-gray-800 dark:border-gray-900 transition ease-in-out duration-200 hover:scale-125 hover:text-indigo-400 dark:hover:text-indigo-500 dark:text-white font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5"
           key={data.title}
         >
           {data.icon}
         </a>
       ))}
-      <a className="cursor-pointer hidden md:inline text-gray-800 dark:border-gray-900 hover:text-yellow-500 dark:hover:text-yellow-500 dark:text-white border-solid border-white border-2 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5   focus:outline-none dark:focus:ring-gray-800">
+      <a className="cursor-pointer hidden md:inline text-gray-800 dark:border-gray-900 transition ease-in-out duration-200 hover:scale-125 hover:text-yellow-500 dark:hover:text-yellow-500 dark:text-white font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5">
         <DarkmodeBtn />
       </a>
       {accessToken !== ERR_COOKIE_NOT_FOUND ? (
         <a className="hidden md:inline ">
           <button
             type="button"
-            className="text-gray-800 dark:border-gray-900 hover:text-indigo-500 dark:hover:text-indigo-500 dark:text-white border-solid border-white border-2 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5   focus:outline-none dark:focus:ring-gray-800"
+            className="text-gray-800 dark:border-gray-900 transition ease-in-out duration-200 hover:scale-125 hover:text-indigo-500 dark:hover:text-indigo-500 dark:text-white font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5"
             onClick={props.clickUserStateMenu}
           >
             <IoIosArrowDown className="md:w-5 md:h-5 w-4 h-4" />

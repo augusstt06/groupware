@@ -33,7 +33,7 @@ export default function Sidebar(props: SidebarProps) {
       <div
         className={`md:static col-span-1 w-40 md:w-5/6 md:block ${
           isSideOpen
-            ? 'absolute md:bg-none bg-white dark:bg-gray-900 top-14 p-2 left-0 z-10'
+            ? 'absolute md:bg-none bg-white dark:bg-[#1a202c] top-14 p-2 left-0 z-10'
             : 'hidden'
         }`}
       >

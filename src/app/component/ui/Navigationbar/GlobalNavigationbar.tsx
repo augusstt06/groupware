@@ -59,7 +59,7 @@ export default function GlobalNavigationbar() {
   return (
     <>
       {mount && loginCompleteState === TRUE && accessToken !== ERR_COOKIE_NOT_FOUND && isRender ? (
-        <nav className="relative bg-white border-gray-200 dark:bg-gray-900 z-999">
+        <nav className="fixed bg-white border-gray-200 dark:bg-[#1a202c] z-999 w-full">
           <div className="flex items-center justify-between max-w-screen-xl mx-auto p-4">
             <Link href="/main" className="flex items-center space-x-3 rtl:space-x-reverse ml-3">
               <span className="self-center md:text-2xl text-medium font-semibold whitespace-nowrap dark:text-white">
@@ -78,7 +78,7 @@ export default function GlobalNavigationbar() {
             <div
               className={`${
                 isDropOpen ? '' : 'hidden'
-              } md:flex md:flex-row justify-center md:w-4/5 md:static bg-white md:border-none dark:bg-gray-900 border-b border-1 dark:border-indigo-300 z-999 absolute top-14 left-0 right-0 flex flex-col`}
+              } md:flex md:flex-row justify-center md:w-4/5 md:static md:border-none border-b border-1 dark:border-indigo-300 z-999 absolute top-14 left-0 right-0 flex flex-col`}
             >
               <div
                 id="mega-menu-icons"

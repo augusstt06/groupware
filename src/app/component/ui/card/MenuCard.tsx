@@ -18,7 +18,7 @@ export default function MenuCard() {
     }
   }
   return (
-    <div className="w-full mt-5 max-w-sm border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+    <div className="w-full mt-5 max-w-sm border border-gray-200 rounded-lg shadow dark:bg-[#1a202c] dark:border-gray-700">
       {menuList.map((data) => (
         <div
           className="flex flex-col items-center pb-4 w-full justify-center mt-3 border-b-1"

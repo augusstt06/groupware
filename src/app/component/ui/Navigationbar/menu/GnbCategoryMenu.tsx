@@ -13,7 +13,7 @@ export default function GnbCategoryMenu() {
       {menuList.map((data) => (
         <li
           key={data.title}
-          className="w-full flex justify-center hover:bg-indigo-300 hover:rounded dark:hover:bg-indigo-300 dark:hover:rounded"
+          className="w-full flex justify-center transition ease-in-out duration-300 hover:scale-110 hover:border-b-2 hover:border-indigo-400"
         >
           <Link href={data.link}>
             <button
