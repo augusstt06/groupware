@@ -15,7 +15,10 @@ import {
   KEY_LOGIN_COMPLETE,
   KEY_X_ORGANIZATION_CODE,
 } from '@/app/constant/constant'
-import { API_URL_BOARD_ORG_LIST } from '@/app/constant/route/api-route-constant'
+import {
+  API_URL_BOARD_ORG_CATEGORY_LIST,
+  API_URL_BOARD_ORG_LIST,
+} from '@/app/constant/route/api-route-constant'
 import useInput from '@/app/module/hooks/reactHooks/useInput'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleCheckUserState } from '@/app/module/utils/moduleCheckUserState'
@@ -31,7 +34,11 @@ import {
   type SuccessResponseType,
 } from '@/app/types/moduleTypes'
 import { type PageParam } from '@/app/types/pageTypes'
-import { type boardListResponsetype, type resType } from '@/app/types/variableTypes'
+import {
+  type boardListResponsetype,
+  type boardResType,
+  type resType,
+} from '@/app/types/variableTypes'
 
 export default function BoardCategory({ params }: { params: PageParam }) {
   const router = useRouter()
@@ -39,11 +46,16 @@ export default function BoardCategory({ params }: { params: PageParam }) {
   const searchInput = useInput('')
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
   const loginCompleteState = useAppSelector((state) => state.maintain[KEY_LOGIN_COMPLETE])
+  const userInfo = useAppSelector((state) => state.userInfo.extraInfo)
   const isModalOpen = useAppSelector((state) => state.openBoardWriteModal.isOpen)
   const boardCategory = useAppSelector((state) => state.boardCategory.category)
 
   const [accessToken, setAccessToken] = useState(moduleGetCookie(KEY_ACCESS_TOKEN))
 
+  const [boardCategoryList, setBoardCategoryList] = useState<{
+    boardName: string
+    menuList: boardResType[]
+  }>()
   const [boardList, setBoardList] = useState<boardListResponsetype[]>()
   const [pageSize, setPageSize] = useState<number>(1)
   const [pageNumber, setPageNumber] = useState<number>(0)
@@ -120,10 +132,32 @@ export default function BoardCategory({ params }: { params: PageParam }) {
     void fetchGetSearchPostings()
   }
 
+  const fetchGetBoardOrgCategoryList = async () => {
+    try {
+      const fetchProps: ModuleGetFetchProps = {
+        params: {
+          organizationId: userInfo.organizationId,
+        },
+        fetchUrl: API_URL_BOARD_ORG_CATEGORY_LIST,
+        header: {
+          Authorization: `Bearer ${accessToken}`,
+          [KEY_X_ORGANIZATION_CODE]: orgCode,
+        },
+      }
+      const res = await moduleGetFetch<boardResType[]>(fetchProps)
+      if (res.status !== 200) throw new Error((res as FailResponseType).message)
+      const boardMenu = (res as SuccessResponseType<boardResType[]>).result
+      const reducerProps = {
+        boardName: '게시판',
+        menuList: boardMenu,
+      }
+      setBoardCategoryList(reducerProps)
+    } catch (err) {}
+  }
   useEffect(() => {
     dispatch(categoryReduer(params.category))
     void fetchGetBoardList()
-
+    void fetchGetBoardOrgCategoryList()
     const moduleProps: ModuleCheckUserStateProps = {
       useRouter: router,
       token: accessToken,
@@ -136,7 +170,7 @@ export default function BoardCategory({ params }: { params: PageParam }) {
 
   return (
     <main className="w-full grid gap-4 grid-cols-4 h-4/5 pt-24 md:ml-10 md:mr-10 ml-5 z-1">
-      <Sidebar title={BOARD} />
+      <Sidebar title={BOARD} boardCategoryList={boardCategoryList} />
       <div className="md:col-span-3 mr-10 col-span-4">
         <div className="md:w-4/5 w-full flex flex-col items-center">
           <div className="w-full p-2 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mb-5">

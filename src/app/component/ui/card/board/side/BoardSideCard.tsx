@@ -2,8 +2,9 @@ import CreateBoardBtn from '../../../button/board/CreateBoardBtn'
 import MenuCard from '../../MenuCard'
 
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
+import { type BoardSideCardProps } from '@/app/types/ui/cardTypes'
 
-export default function BoardSideCard() {
+export default function BoardSideCard(props: BoardSideCardProps) {
   const userInfo = useAppSelector((state) => state.userInfo)
   return (
     <>
@@ -34,7 +35,7 @@ export default function BoardSideCard() {
         <CreateBoardBtn />
       </div>
 
-      <MenuCard />
+      <MenuCard boardCategoryList={props.boardCategoryList} />
     </>
   )
 }

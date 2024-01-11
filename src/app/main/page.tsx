@@ -124,7 +124,7 @@ export default function Main() {
   return (
     <>
       <main className="w-full grid gap-4 grid-cols-4 h-4/5 pt-24 md:ml-10 md:mr-10 ml-5 z-1">
-        <Sidebar title={MAIN} />
+        <Sidebar title={MAIN} boardCategoryList={undefined} />
         <div className="md:col-span-3 mr-10 col-span-4">
           <MainHub title={TODO} />
         </div>

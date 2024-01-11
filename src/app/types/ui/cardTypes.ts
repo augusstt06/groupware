@@ -1,8 +1,6 @@
-import { type SetStateAction } from 'react'
+import { type Dispatch, type SetStateAction } from 'react'
 
-import { type boardListResponsetype } from '../variableTypes'
-
-// import { type boardListResponsetype } from '../variableTypes'
+import { type boardListResponsetype, type boardResType } from '../variableTypes'
 
 export type TaskCardProps = {
   title: string
@@ -22,13 +20,12 @@ export type UserCardProps = {
 }
 
 export type BoardSideCardProps = {
-  menuList: Array<{
-    createdAt: string
-    id: number
-    name: string
-    organizationId: number
-    updatedAt: string
-  }>
+  boardCategoryList:
+    | {
+        boardName: string
+        menuList: boardResType[]
+      }
+    | undefined
 }
 
 export type TodoCardType = {
@@ -36,4 +33,16 @@ export type TodoCardType = {
 }
 export type BoardCardType = {
   content: boardListResponsetype
+}
+
+export type MainSidebarCardGroupProps = {
+  title: string
+  reRender: boolean
+  setRerender: Dispatch<SetStateAction<boolean>>
+  boardCategoryList:
+    | {
+        boardName: string
+        menuList: boardResType[]
+      }
+    | undefined
 }
