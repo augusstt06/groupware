@@ -2,13 +2,13 @@ import Link from 'next/link'
 
 import { ROUTE_BOARD, ROUTE_BOARD_ANNOUNCE } from '@/app/constant/route/route-constant'
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
-// import { type BoardSideCardProps } from '@/app/types/ui/cardTypes'
 
 export default function MenuCard() {
   const extraUserInfo = useAppSelector((state) => state.userInfo.extraInfo)
-  const menuList = useAppSelector((state) => state.boardCategoryList.categoryList).filter(
-    (category) => category.boardName === '게시판',
-  )[0].menuList
+  const menuState = useAppSelector((state) => state.boardCategoryList.categoryList)
+
+  const menuList = menuState[0].menuList
+
   const setUrlLinkHref = (category: string) => {
     switch (category) {
       case '공지사항':
@@ -17,6 +17,7 @@ export default function MenuCard() {
         return ROUTE_BOARD
     }
   }
+
   return (
     <div className="w-full mt-5 max-w-sm border border-gray-200 rounded-lg shadow dark:bg-[#1a202c] dark:border-gray-700">
       {menuList !== undefined ? (
