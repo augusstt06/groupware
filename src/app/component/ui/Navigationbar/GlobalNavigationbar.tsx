@@ -23,7 +23,7 @@ export default function GlobalNavigationbar() {
 
   const [isConfirmOpen, setIsConfirmOpen] = useState(false)
   const [confirmValue, setConfirmValue] = useState(false)
-  const [isDropOpen, setDropOpen] = useState(false)
+  const [isDropOpen, setIsDropOpen] = useState(false)
   const [isUserStateOpen, setIsUserStateOpen] = useState(false)
   const clickUserStateMenu = () => {
     if (isUserStateOpen) {
@@ -34,9 +34,9 @@ export default function GlobalNavigationbar() {
   }
   const clickDropdownMenu = () => {
     if (isDropOpen) {
-      setDropOpen(false)
+      setIsDropOpen(false)
     } else {
-      setDropOpen(true)
+      setIsDropOpen(true)
     }
   }
 
@@ -47,12 +47,13 @@ export default function GlobalNavigationbar() {
   const dropRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+    setIsDropOpen(false)
     setIsUserStateOpen(false)
     setMount(true)
     setConfirmValue(false)
   }, [dropRef])
   useEffect(() => {
-    setDropOpen(false)
+    setIsDropOpen(false)
   }, [])
 
   return (

@@ -14,11 +14,15 @@ export default function UserStateModal(props: LogoutBtnProps) {
           <span className="text-xs">소개글</span>
         </div>
       </div>
-      <div className="flex flex-row items-center justify-start w-full font-bold mb-2 mt-2">
-        <IoSettingsOutline className="w-5 h-5" />
+      <div className="flex flex-row items-center justify-start w-full font-bold text-sm mb-2 mt-4">
+        <IoSettingsOutline className="w-4 h-4" />
         <span className="ml-3">마이페이지</span>
       </div>
-      <div className="flex flex-row items-center justify-start w-full font-bold hover:text-red-500">
+      {/* <div className="flex flex-row items-center justify-start w-full font-bold text-sm mb-2">
+        <IoSettingsOutline className="w-4 h-4" />
+        <span className="ml-3">관리자페이지</span>
+      </div> */}
+      <div className="flex flex-row items-center justify-start w-full font-bold hover:text-red-500 text-sm">
         <LogoutBtn
           isConfirmOpen={props.isConfirmOpen}
           setIsConfirmOpen={props.setIsConfirmOpen}

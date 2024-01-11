@@ -1,7 +1,8 @@
-import { BsPeopleFill } from 'react-icons/bs'
 import { FaPhoneAlt, FaSearch } from 'react-icons/fa'
 import { GiHamburgerMenu } from 'react-icons/gi'
+import { HiBellAlert } from 'react-icons/hi2'
 import { IoIosArrowDown, IoMdClose } from 'react-icons/io'
+import { IoPersonCircleOutline } from 'react-icons/io5'
 
 import DarkmodeBtn from '../../button/DarkmodeBtn'
 import UserStateModal from '../../modal/UserStateModal'
@@ -13,20 +14,23 @@ import { type GnbNormalMenuProps } from '@/app/types/ui/uiTypes'
 
 export default function GnbNormalMenu(props: GnbNormalMenuProps) {
   const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
+  const iconList = [
+    { title: 'search', icon: <FaSearch className="w-4 h-4" /> },
+    { title: 'phone', icon: <FaPhoneAlt className="w-4 h-4" /> },
+    { title: 'alert', icon: <HiBellAlert className="w-4 h-4" /> },
+    { title: 'pereson', icon: <IoPersonCircleOutline className="w-4 h-4" /> },
+  ]
   return (
     <div className="flex flex-row items-center">
-      <a className="hidden md:inline text-gray-800 dark:border-gray-900 hover:text-indigo-500 dark:hover:text-indigo-500 dark:text-white border-solid border-white border-2 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5   focus:outline-none dark:focus:ring-gray-800">
-        <FaSearch className="md:w-5 md:h-5 w-4 h-4" />
-      </a>
-      <a className="hidden md:inline text-gray-800 dark:border-gray-900 hover:text-indigo-500 dark:hover:text-indigo-500 dark:text-white border-solid border-white border-2 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5   focus:outline-none dark:focus:ring-gray-800">
-        <FaPhoneAlt className="md:w-5 md:h-5 w-4 h-4" />
-      </a>
-      <a className="hidden md:inline text-gray-800 dark:border-gray-900 hover:text-indigo-500 dark:hover:text-indigo-500 dark:text-white border-solid border-white border-2 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5   focus:outline-none dark:focus:ring-gray-800">
-        <button type="button">
-          <BsPeopleFill className="md:w-5 md:h-5 w-4 h-4" />
-        </button>
-      </a>
-      <a className="hidden md:inline text-gray-800 dark:border-gray-900 dark:hover:text-yellow-400 hover:text-yellow-400 dark:text-white border-solid border-white border-2 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5   focus:outline-none dark:focus:ring-gray-800">
+      {iconList.map((data) => (
+        <a
+          className="cursor-pointer hidden md:inline text-gray-800 dark:border-gray-900 hover:text-indigo-500 dark:hover:text-indigo-500 dark:text-white border-solid border-white border-2 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5   focus:outline-none dark:focus:ring-gray-800"
+          key={data.title}
+        >
+          {data.icon}
+        </a>
+      ))}
+      <a className="cursor-pointer hidden md:inline text-gray-800 dark:border-gray-900 hover:text-yellow-500 dark:hover:text-yellow-500 dark:text-white border-solid border-white border-2 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5   focus:outline-none dark:focus:ring-gray-800">
         <DarkmodeBtn />
       </a>
       {accessToken !== ERR_COOKIE_NOT_FOUND ? (
