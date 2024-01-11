@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-import { FaPowerOff } from 'react-icons/fa'
+import { CiLogout } from 'react-icons/ci'
 
 import { FALSE, KEY_ACCESS_TOKEN } from '@/app/constant/constant'
 import { API_URL_LOGOUT } from '@/app/constant/route/api-route-constant'
@@ -30,6 +30,7 @@ export default function LogoutBtn(props: LogoutBtnProps) {
       props.setConfirmValue(false)
       moduleDeleteCookies(KEY_ACCESS_TOKEN)
       dispatch(updateLoginCompleteReducer(FALSE))
+      props.setIsUserStateOpen(false)
     } catch (err) {
       alert('로그아웃이 실패했습니다.')
     }
@@ -50,7 +51,7 @@ export default function LogoutBtn(props: LogoutBtnProps) {
   return (
     <>
       <button type="button" onClick={handleClick}>
-        <FaPowerOff className="md:w-5 md:h-5 w-4 h-4" />
+        <CiLogout className="md:w-5 md:h-5 w-4 h-4" />
       </button>
     </>
   )

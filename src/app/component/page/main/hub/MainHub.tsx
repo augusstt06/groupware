@@ -6,7 +6,7 @@ export default function MainHub(props: MainHubProps) {
   // FIXME: response되는 게시글을  아래 TodoCard 이용하여 mapping
   return (
     <div className="md:w-4/5 w-full flex flex-col items-center">
-      <MainTab title={props.title} />
+      <MainTab />
 
       <TodoCard />
     </div>

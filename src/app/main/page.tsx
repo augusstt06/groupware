@@ -123,7 +123,7 @@ export default function Main() {
 
   return (
     <>
-      <main className="w-full grid gap-4 grid-cols-4 h-4/5 pt-10 md:ml-10 md:mr-10 ml-5 z-1">
+      <main className="w-full grid gap-4 grid-cols-4 h-4/5 pt-24 md:ml-10 md:mr-10 ml-5 z-1">
         <Sidebar title={MAIN} />
         <div className="md:col-span-3 mr-10 col-span-4">
           <MainHub title={TODO} />

@@ -1,14 +1,11 @@
 import BoardCard from '@/app/component/ui/card/main/BoardCard'
-import MainTab from '@/app/component/ui/tab/MainTab'
+import BoardTab from '@/app/component/ui/tab/BoardTab'
 import { type BoardHubProps } from '@/app/types/ui/uiTypes'
 
 export default function BoardHub(props: BoardHubProps) {
-  // FIXME: response되는 게시글을  아래 TodoCard 이용하여 mapping
-
-  //   console.log(props, '이걸로 매핑')
   return (
     <div className="md:w-4/5 w-full flex flex-col items-center">
-      <MainTab title={props.title} />
+      <BoardTab title={props.title} />
       {props.boardList !== undefined ? (
         <>
           {props.boardList.map((data) => (
