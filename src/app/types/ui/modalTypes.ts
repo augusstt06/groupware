@@ -1,3 +1,3 @@
 export type BoardWriteModalprops = {
-  onClick: () => void
+  // doRerender: () => void
 }

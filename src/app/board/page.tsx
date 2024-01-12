@@ -28,7 +28,6 @@ import {
 } from '../module/utils/moduleCookie'
 import { moduleGetFetch } from '../module/utils/moduleFetch'
 import { categoryReduer } from '../store/reducers/board/boardCategoryReducer'
-import { openBoardWriteModalReducer } from '../store/reducers/board/openBoardWriteModalReducer'
 import {
   type ApiRes,
   type CustomDecodeTokenType,
@@ -39,6 +38,7 @@ import {
 } from '../types/moduleTypes'
 import { type boardListResponsetype, type boardResType, type resType } from '../types/variableTypes'
 
+import { openBoardWriteModalReducer } from '@/app/store/reducers/board/openBoardWriteModalReducer'
 export default function Board() {
   const router = useRouter()
   const dispatch = useAppDispatch()
@@ -49,7 +49,10 @@ export default function Board() {
   const accessTokenTime = Number((decodeToken as CustomDecodeTokenType).exp)
   const loginCompleteState = useAppSelector((state) => state.maintain[KEY_LOGIN_COMPLETE])
   const boardCategory = useAppSelector((state) => state.boardCategory.category)
-
+  // const [rerender, setRerender] = useState<boolean>(false)
+  // const doRerender = () => {
+  //   setRerender(!rerender)
+  // }
   const [boardCategoryList, setBoardCategoryList] = useState<{
     boardName: string
     menuList: boardResType[]
@@ -59,9 +62,7 @@ export default function Board() {
   const [pageNumber, setPageNumber] = useState<number>(0)
 
   const isModalOpen = useAppSelector((state) => state.openBoardWriteModal.isOpen)
-  const handleModal = () => {
-    dispatch(openBoardWriteModalReducer())
-  }
+
   const fetchProps: ModuleGetFetchProps = {
     params: {
       organizationId: userInfo.organizationId,
@@ -121,6 +122,9 @@ export default function Board() {
     } catch (err) {}
   }
   useEffect(() => {
+    if (isModalOpen) {
+      dispatch(openBoardWriteModalReducer())
+    }
     dispatch(categoryReduer(''))
     if (checkTokenExpired(accessTokenTime)) {
       void moduleRefreshToken(accessToken)
@@ -143,7 +147,7 @@ export default function Board() {
       <div className="md:col-span-3 mr-10 col-span-4">
         <BoardHub title="게시판" boardList={boardList} boardCategoryList={boardCategoryList} />
 
-        {isModalOpen ? <BoardWriteModal onClick={handleModal} /> : <></>}
+        {isModalOpen ? <BoardWriteModal /> : <></>}
         <div className="md:w-4/5 w-full flex flex-col items-center">
           {boardList !== undefined ? (
             <Pagination size={pageSize} pageNumber={pageNumber} setPageNumber={setPageNumber} />

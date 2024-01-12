@@ -25,7 +25,6 @@ import { moduleCheckUserState } from '@/app/module/utils/moduleCheckUserState'
 import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
 import { moduleGetFetch } from '@/app/module/utils/moduleFetch'
 import { categoryReduer } from '@/app/store/reducers/board/boardCategoryReducer'
-import { openBoardWriteModalReducer } from '@/app/store/reducers/board/openBoardWriteModalReducer'
 import {
   type ApiRes,
   type FailResponseType,
@@ -66,9 +65,6 @@ export default function BoardCategory({ params }: { params: PageParam }) {
     const threeDaysInMilliseconds = 3 * 24 * 60 * 60 * 1000
 
     return currentTime - targetDateTime <= threeDaysInMilliseconds
-  }
-  const handleModal = () => {
-    dispatch(openBoardWriteModalReducer())
   }
 
   const convertBoardId = () => {
@@ -203,7 +199,7 @@ export default function BoardCategory({ params }: { params: PageParam }) {
           )}
         </div>
 
-        {isModalOpen ? <BoardWriteModal onClick={handleModal} /> : <></>}
+        {isModalOpen ? <BoardWriteModal /> : <></>}
       </div>
     </main>
   )

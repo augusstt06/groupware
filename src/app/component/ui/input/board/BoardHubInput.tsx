@@ -19,14 +19,14 @@ export default function BoardHubInput(props: BoardHubInputProps) {
   }
   return (
     <div className="flex flex-row justify-around">
-      {isModalOpen ? <BoardWriteModal onClick={handleClickWrite} /> : <></>}
+      {isModalOpen ? <BoardWriteModal /> : <></>}
       <div className="flex mt-3 mb-3 mr-2 w-4/6">
         <InputIconlabel icon={<IoSearchSharp className="w-4 h-4" />} />
         <input
           type="text"
           value={props.searchInput.value}
           onChange={props.searchInput.onChange}
-          className="rounded-none bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          className="rounded-none bg-gray-50 border text-gray-900 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:outline-none"
           placeholder="제목, 내용, 작성자 입력"
         />
         <span

@@ -11,13 +11,13 @@ export default function BoardModalSaveListTab(props: BoardModalSaveListTabProps)
   }
 
   return (
-    <div className="absolute w-1/2 h-5/6 top-24 left-1/2 bg-white border-2 border-gray-300 overflow-y-scroll">
+    <div className="absolute w-1/2 h-5/6 top-24 left-1/2 bg-white dark:bg-gray-700 border-2 border-gray-300 overflow-y-scroll">
       <div className="p-3">
         <span className="font-bold">임시저장</span>
       </div>
       {props.saveList.map((data) => (
         <div
-          className="flex flex-row text-left mt-3 mb-3 p-3 border-b border-gray-300"
+          className="flex flex-row text-left mt-3 mb-3 p-3 border-b border-gray-300 cursor-pointer"
           onClick={() => {
             props.loadSaveData(data)
           }}

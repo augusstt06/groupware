@@ -86,3 +86,12 @@ export type BoardModalInputGruopProps = {
   setThumbNailUrl: Dispatch<SetStateAction<string | null>>
   selectList: Array<{ title: string }>
 }
+
+export type BoardCategoryInputProps = {
+  params: string
+  handleSelectChange: (e: React.ChangeEvent<HTMLSelectElement>) => void
+  select: string
+  selectList: Array<{
+    title: string
+  }>
+}

@@ -1,5 +1,7 @@
 import { type SetStateAction } from 'react'
 
+import { type AlertStateType } from '../variableTypes'
+
 export type ErrorAlertType = {
   description: string
   handleClickError: () => void
@@ -13,15 +15,6 @@ export type ConfirmProps = {
 
 export type BoardWriteAlertProps = {
   boardCategoryNumber: number
-  handleModalState: () => void
-  alertState: {
-    headDescription: string
-    additianoalDescription: string
-    option: {
-      positive: string
-      negative: string
-    }
-    isFetch: boolean
-  }
-  fetchPost: () => Promise<void>
+  handleCloseAlertModal: () => void
+  alertState: AlertStateType
 }

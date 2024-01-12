@@ -32,7 +32,11 @@ import {
   type SuccessResponseType,
 } from '@/app/types/moduleTypes'
 import { type BoardWriteModalprops } from '@/app/types/ui/modalTypes'
-import { type boardListResponsetype, type resType } from '@/app/types/variableTypes'
+import {
+  type AlertStateType,
+  type boardListResponsetype,
+  type resType,
+} from '@/app/types/variableTypes'
 
 const Editor = dynamic(async () => import('../editor/TextEditor'), {
   ssr: false,
@@ -48,7 +52,6 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
   const userId = useAppSelector((state) => state.userInfo.extraInfo.userId)
   const userInfo = useAppSelector((state) => state.userInfo)
   const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
-  const [isSave, setIsSave] = useState<boolean>(false)
   const [isAnnounce, setIsAnnounce] = useState(FALSE)
   const [editorContent, setEditorContent] = useState('')
   const [thumbNailUrl, setThumbNailUrl] = useState<string | null>(null)
@@ -56,18 +59,20 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
   const [saveList, setSaveList] = useState<boardListResponsetype[]>([])
 
   const [isOpenSaveList, setIsOpenSaveList] = useState<boolean>(false)
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+  const [isAlertModalOpen, setIsAlertModalOpen] = useState<boolean>(false)
   const [imgCount, setImgCount] = useState<number>(0)
   const [select, setSelect] = useState('')
   const selectList = [{ title: '공지사항' }, { title: '프로젝트' }]
-  const [alertState, setAlertState] = useState({
+
+  const [alertState, setAlertState] = useState<AlertStateType>({
     headDescription: '',
     additianoalDescription: '',
     option: {
       positive: '',
       negative: '',
     },
-    isFetch: false,
+    onClick: () => {},
+    isPromise: false,
   })
 
   const countImgFiles = () => {
@@ -78,8 +83,11 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
     return imgCount
   }
 
-  const handleModalState = () => {
-    setIsModalOpen(!isModalOpen)
+  const openAlertModal = () => {
+    setIsAlertModalOpen(true)
+  }
+  const closeAlertModal = () => {
+    setIsAlertModalOpen(false)
   }
 
   const handleClick = () => {
@@ -135,7 +143,6 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
       const res = await modulePostFetch<ApiRes>(fetchProps)
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
       dispatch(openBoardWriteModalReducer())
-      setIsSave(false)
     } catch (err) {}
   }
 
@@ -148,25 +155,28 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
           positive: '확인',
           negative: '',
         },
-        isFetch: false,
+        onClick: closeAlertModal,
+        isPromise: false,
       })
-      handleModalState()
+      openAlertModal()
       return
     }
     const moduleProps: ModuleCheckContentIsEmptyProps = {
+      fetchFunction: fetchPostPending,
       boardId: boardCategoryNumber,
       editorContents: editorContent,
       inputValue: titleInput.value,
       setAlertStateFunction: setAlertState,
-      setIsModalOpenFunction: setIsModalOpen,
+      handleOpenAlertModal: openAlertModal,
+      handleCloseAlertModal: closeAlertModal,
       success: {
         headDescription: '게시글을 임시저장하시겠습니까?',
         additianoalDescription: '확인버튼을 누르면 게시글이 저장됩니다.',
       },
     }
     moduleCheckContentIsEmpty(moduleProps)
-    setIsSave(true)
-    handleModalState()
+    // setIsSave(true)
+    openAlertModal()
   }
   const fetchPostContent = async () => {
     try {
@@ -216,25 +226,51 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
           positive: '확인',
           negative: '',
         },
-        isFetch: false,
+        onClick: closeAlertModal,
+        isPromise: false,
       })
-      handleModalState()
+      openAlertModal()
       return
     }
 
     const moduleProps: ModuleCheckContentIsEmptyProps = {
       // FIXME:
+      fetchFunction: fetchPostContent,
       boardId: boardCategoryNumber,
       editorContents: editorContent,
       inputValue: titleInput.value,
       setAlertStateFunction: setAlertState,
-      setIsModalOpenFunction: setIsModalOpen,
+      handleOpenAlertModal: openAlertModal,
+      handleCloseAlertModal: closeAlertModal,
       success: {
         headDescription: '게시글을 등록하시겠습니까?',
         additianoalDescription: '확인버튼을 누르면 게시글이 등록됩니다.',
       },
     }
     moduleCheckContentIsEmpty(moduleProps)
+  }
+
+  const allModalClose = () => {
+    closeAlertModal()
+    dispatch(openBoardWriteModalReducer())
+  }
+  const handleClickClose = () => {
+    if (editorContent !== '' || titleInput.value !== '') {
+      setAlertState({
+        headDescription: '작성중인 내용이 있습니다. 나가시겠습니까?',
+        additianoalDescription:
+          '임시저장 혹은 등록하지 않고 페이지를 벗어날경우 지금까지 작성한 내용이 사라집니다.',
+        option: {
+          positive: '저장하지 않고 나가기',
+          negative: '취소',
+        },
+        onClick: allModalClose,
+        isPromise: false,
+      })
+      openAlertModal()
+      return
+    }
+    dispatch(openBoardWriteModalReducer())
   }
   useEffect(() => {
     if (params === '') {
@@ -259,7 +295,7 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
             <WriteModalBtnGroup
               handleClickOpenSaveList={handleClickOpenSaveList}
               handleClickPostPending={handleClickPostPending}
-              handleClickClose={props.onClick}
+              handleClickClose={handleClickClose}
               handleClickPosting={handleClickPosting}
               saveList={saveList}
             />
@@ -288,11 +324,10 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
               )}
             </div>
             <BoardWriteModalCheckBox isAnnounce={isAnnounce} handleClick={handleClick} />
-            {isModalOpen ? (
+            {isAlertModalOpen ? (
               <BoardWriteAlert
-                handleModalState={handleModalState}
+                handleCloseAlertModal={closeAlertModal}
                 alertState={alertState}
-                fetchPost={isSave ? fetchPostPending : fetchPostContent}
                 boardCategoryNumber={boardCategoryNumber}
               />
             ) : (

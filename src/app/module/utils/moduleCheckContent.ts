@@ -16,9 +16,10 @@ export const moduleCheckContentIsEmpty = (props: ModuleCheckContentIsEmptyProps)
         positive: '확인',
         negative: '',
       },
-      isFetch: false,
+      onClick: props.handleCloseAlertModal,
+      isPromise: false,
     })
-    props.setIsModalOpenFunction(true)
+    props.handleOpenAlertModal()
     return
   } else if (isContentEmpty) {
     props.setAlertStateFunction({
@@ -28,9 +29,10 @@ export const moduleCheckContentIsEmpty = (props: ModuleCheckContentIsEmptyProps)
         positive: '확인',
         negative: '',
       },
-      isFetch: false,
+      onClick: props.handleCloseAlertModal,
+      isPromise: false,
     })
-    props.setIsModalOpenFunction(true)
+    props.handleOpenAlertModal()
     return
   } else if (props.boardId === 0) {
     props.setAlertStateFunction({
@@ -40,9 +42,10 @@ export const moduleCheckContentIsEmpty = (props: ModuleCheckContentIsEmptyProps)
         positive: '확인',
         negative: '',
       },
-      isFetch: false,
+      onClick: props.handleCloseAlertModal,
+      isPromise: false,
     })
-    props.setIsModalOpenFunction(true)
+    props.handleOpenAlertModal()
     return
   }
   props.setAlertStateFunction({
@@ -52,7 +55,8 @@ export const moduleCheckContentIsEmpty = (props: ModuleCheckContentIsEmptyProps)
       positive: '확인',
       negative: '취소',
     },
-    isFetch: true,
+    onClick: props.fetchFunction,
+    isPromise: true,
   })
-  props.setIsModalOpenFunction(true)
+  props.handleOpenAlertModal()
 }

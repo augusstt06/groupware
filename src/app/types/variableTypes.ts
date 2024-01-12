@@ -1,3 +1,5 @@
+// import { Dispatch, SetStateAction } from 'react'
+
 export type DecodeType = { uuid: string; iss: string; iat: number; exp: number }
 
 export type boardListResponsetype = {
@@ -49,4 +51,15 @@ export type boardResType = {
   name: string
   organizationId: number
   updatedAt: string
+}
+
+export type AlertStateType = {
+  headDescription: string
+  additianoalDescription: string
+  option: {
+    positive: string
+    negative: string
+  }
+  onClick: (() => Promise<void>) | (() => void)
+  isPromise: boolean
 }
