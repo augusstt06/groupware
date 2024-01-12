@@ -51,6 +51,7 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
   const [isSave, setIsSave] = useState<boolean>(false)
   const [isAnnounce, setIsAnnounce] = useState(FALSE)
   const [editorContent, setEditorContent] = useState('')
+  const [thumbNailUrl, setThumbNailUrl] = useState<string | null>(null)
   const [saveContent, setSaveContent] = useState('')
   const [saveList, setSaveList] = useState<boardListResponsetype[]>([])
 
@@ -170,6 +171,7 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
   const fetchPostContent = async () => {
     try {
       const fetchProps: ModulePostFetchProps = {
+        // FIXME: 썸네일 들어오면 thumbNailUrl 추가하기
         data: { boardId: boardCategoryNumber, content: editorContent, title: titleInput.value },
         fetchUrl: API_URL_POSTINGS_ORG,
         header: {
@@ -242,6 +244,7 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
     }
     void fetchGetPostPending()
   }, [select, params])
+
   return (
     <>
       <div
@@ -266,6 +269,8 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
                 select={select}
                 setSelect={setSelect}
                 selectList={selectList}
+                thumbNailUrl={thumbNailUrl}
+                setThumbNailUrl={setThumbNailUrl}
               />
               <div className="w-2/3 bg-gray-100 dark:bg-gray-300 dark:text-black">
                 <Editor

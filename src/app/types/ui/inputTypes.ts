@@ -82,5 +82,7 @@ export type BoardModalInputGruopProps = {
   titleInput: UseInputProps
   select: string
   setSelect: Dispatch<SetStateAction<string>>
+  thumbNailUrl: string | null
+  setThumbNailUrl: Dispatch<SetStateAction<string | null>>
   selectList: Array<{ title: string }>
 }

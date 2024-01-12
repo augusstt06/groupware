@@ -11,6 +11,7 @@ export default function BoardCard(props: BoardCardType) {
   const goPostingPage = () => {
     router.push(`${ROUTE_POSTING_DETAIL}/${props.content.id}`)
   }
+
   return (
     <div className="w-full flex flex-row p-4 border border-gray-200 rounded-lg shadow dark:bg-[#1a202c] dark:border-gray-700 mb-5">
       <div className="flex justify-center items-center">
