@@ -10,6 +10,7 @@ import { FaHeart, FaRegHeart } from 'react-icons/fa'
 import Comment from '@/app/component/page/board/comment/Comment'
 import WriteComment from '@/app/component/page/board/comment/WriteComment'
 import PostingDetailHeader from '@/app/component/page/board/detail/PostingDetailHeader'
+import BoardWriteModal from '@/app/component/ui/modal/BoardWriteModal'
 import Sidebar from '@/app/component/ui/sidebar/Sidebar'
 import {
   BOARD,
@@ -19,7 +20,7 @@ import {
 } from '@/app/constant/constant'
 import { errDefault } from '@/app/constant/errorMsg'
 import {
-  API_URL_BOARD_ORG_CATEGORY_LIST,
+  API_URL_GET_MY_BOARD,
   API_URL_POSTINGS,
   API_URL_POSTINGS_LIKE,
   API_URL_POSTINGS_UNLIKE,
@@ -44,9 +45,9 @@ import {
   type SuccessResponseType,
 } from '@/app/types/moduleTypes'
 import {
-  type boardResType,
   type CommentType,
   type DetailResponseType,
+  type MyBoardType,
 } from '@/app/types/variableTypes'
 
 const Viewbox = dynamic(async () => import('../../../component/ui/editor/TextViewer'), {
@@ -64,12 +65,10 @@ export default function BoardDetail() {
   const [accessToken, setAccessToken] = useState(moduleGetCookie(KEY_ACCESS_TOKEN))
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
   const loginCompleteState = useAppSelector((state) => state.maintain[KEY_LOGIN_COMPLETE])
-  const [boardCategoryList, setBoardCategoryList] = useState<{
-    boardName: string
-    menuList: boardResType[]
-  }>()
+  const [myBoardList, setMyBoardList] = useState<MyBoardType[]>([])
   const [isRerender, setIsRerender] = useState<boolean>(false)
-  const [postingId, setPostingId] = useState<string>('')
+  const [postId, setPostId] = useState<string>('')
+  const isModalOpen = useAppSelector((state) => state.openBoardWriteModal.isOpen)
   const [errorState, setErrorState] = useState({
     isError: false,
     description: '',
@@ -96,10 +95,6 @@ export default function BoardDetail() {
 
   const fetchGetPostingDetail = async (data: ModuleGetFetchProps) => {
     try {
-      if (data.params.id === '') {
-        return
-      }
-
       const res = await moduleGetFetch<DetailResponseType>(data)
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
 
@@ -190,28 +185,24 @@ export default function BoardDetail() {
         params: {
           organizationId: userInfo.organizationId,
         },
-        fetchUrl: API_URL_BOARD_ORG_CATEGORY_LIST,
+        fetchUrl: API_URL_GET_MY_BOARD,
         header: {
           Authorization: `Bearer ${accessToken}`,
           [KEY_X_ORGANIZATION_CODE]: orgCode,
         },
       }
-      const res = await moduleGetFetch<boardResType[]>(fetchProps)
+      const res = await moduleGetFetch<MyBoardType[]>(fetchProps)
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
-      const boardMenu = (res as SuccessResponseType<boardResType[]>).result
-      const reducerProps = {
-        boardName: '게시판',
-        menuList: boardMenu,
-      }
-      setBoardCategoryList(reducerProps)
+      const boardMenu = (res as SuccessResponseType<MyBoardType[]>).result
+      setMyBoardList(boardMenu)
     } catch (err) {}
   }
 
   useEffect(() => {
-    setPostingId(param.id.toString())
+    setPostId(param.id.toString())
     const fetchGetPostingDetailProps: ModuleGetFetchProps = {
       params: {
-        id: postingId,
+        postingId: postId,
       },
       fetchUrl: API_URL_POSTINGS,
       header: {
@@ -219,7 +210,11 @@ export default function BoardDetail() {
         [KEY_X_ORGANIZATION_CODE]: orgCode,
       },
     }
-    void fetchGetPostingDetail(fetchGetPostingDetailProps)
+
+    if (postId !== '') {
+      void fetchGetPostingDetail(fetchGetPostingDetailProps)
+    }
+
     void fetchGetBoardOrgCategoryList()
 
     if (errorState.isError) {
@@ -234,13 +229,13 @@ export default function BoardDetail() {
       isCheckInterval: true,
     }
     moduleCheckUserState(moduleProps)
-  }, [isRerender, postingId, accessToken, orgCode, setPostingId])
+  }, [isRerender, postId, accessToken])
 
   return (
     <>
       {content != null ? (
         <main className="w-full grid gap-4 grid-cols-4 h-4/5 pt-24 pb-10 md:ml-10 md:mr-10 ml-5 z-1">
-          <Sidebar title={BOARD} boardCategoryList={boardCategoryList} />
+          <Sidebar title={BOARD} myBoardList={myBoardList} />
           <div className="w-4/5 rounded md:col-span-3 mr-10 col-span-4 bg-white dark:bg-gray-700 dark:text-white p-5 border-2">
             <PostingDetailHeader
               moveBoardListPage={moveBoardListPage}
@@ -270,6 +265,7 @@ export default function BoardDetail() {
             <div>
               <WriteComment postingID={content.id} parentID={null} doRerender={doRerender} />
             </div>
+            {isModalOpen ? <BoardWriteModal currentBoard={null} /> : <></>}
           </div>
         </main>
       ) : (

@@ -1,3 +1,5 @@
+import { type MyBoardType } from '../variableTypes'
+
 export type BoardWriteModalprops = {
-  // doRerender: () => void
+  currentBoard: MyBoardType | null
 }

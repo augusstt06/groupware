@@ -2,6 +2,7 @@ import type React from 'react'
 import { type Dispatch, type SetStateAction } from 'react'
 
 import { type UseInputProps } from '../moduleTypes'
+import { type MyBoardType, type SelectListType } from '../variableTypes'
 
 export type InfoInputProps = {
   title: string
@@ -79,19 +80,18 @@ export type BoardHubInputProps = {
 }
 
 export type BoardModalInputGruopProps = {
+  currentBoard: MyBoardType | null
   titleInput: UseInputProps
   select: string
   setSelect: Dispatch<SetStateAction<string>>
   thumbNailUrl: string | null
   setThumbNailUrl: Dispatch<SetStateAction<string | null>>
-  selectList: Array<{ title: string }>
+  selectList: SelectListType[]
 }
 
 export type BoardCategoryInputProps = {
-  params: string
+  currentBoard: MyBoardType | null
   handleSelectChange: (e: React.ChangeEvent<HTMLSelectElement>) => void
   select: string
-  selectList: Array<{
-    title: string
-  }>
+  selectList: SelectListType[]
 }

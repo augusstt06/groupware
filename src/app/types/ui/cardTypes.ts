@@ -1,6 +1,6 @@
 import { type Dispatch, type SetStateAction } from 'react'
 
-import { type boardListResponsetype, type boardResType } from '../variableTypes'
+import { type boardListResponsetype, type MyBoardType } from '../variableTypes'
 
 export type TaskCardProps = {
   title: string
@@ -20,12 +20,7 @@ export type UserCardProps = {
 }
 
 export type BoardSideCardProps = {
-  boardCategoryList:
-    | {
-        boardName: string
-        menuList: boardResType[]
-      }
-    | undefined
+  myBoardList: MyBoardType[]
 }
 
 export type TodoCardType = {
@@ -39,10 +34,5 @@ export type MainSidebarCardGroupProps = {
   title: string
   reRender: boolean
   setRerender: Dispatch<SetStateAction<boolean>>
-  boardCategoryList:
-    | {
-        boardName: string
-        menuList: boardResType[]
-      }
-    | undefined
+  myBoardList: MyBoardType[]
 }

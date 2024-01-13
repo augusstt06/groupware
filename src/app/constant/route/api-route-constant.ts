@@ -27,15 +27,12 @@ export const API_URL_GET_USERS = process.env.NEXT_PUBLIC_USERS_SOURCE as string
 export const API_URL_PROJECTS = process.env.NEXT_PUBLIC_CREATE_PROJECTS_SOURCE as string
 
 // board
-export const API_URL_POSTINGS_ORG = process.env.NEXT_PUBLIC_POSTING_ORG_SOURCE as string
 export const API_URL_UPLOAD_IMG = process.env.NEXT_PUBLIC_UPLOAD_IMAGE_SOURCE as string
-
-export const API_URL_BOARD_ORG_LIST = process.env.NEXT_PUBLIC_GET_BOARD_ORG_LIST_SOURCE as string
-export const API_URL_BOARD_ORG_CATEGORY_LIST = process.env
-  .NEXT_PUBLIC_GET_BOARD_ORG_CATEGORY_LIST_SOURCE as string
+export const API_URL_GET_MY_BOARD = process.env.NEXT_PUBLIC_GET_MY_BOARD_SOURCE as string
 
 // postings
 export const API_URL_POSTINGS = process.env.NEXT_PUBLIC_POSTINGS_SOURCE as string
+export const API_URL_POSTINGS_MY = process.env.NEXT_PUBLIC_POSTINGS_MY_SOURCE as string
 export const API_URL_POSTINGS_LIKE = process.env.NEXT_PUBLIC_POSTINGS_LIKE_SOURCE as string
 export const API_URL_POSTINGS_UNLIKE = process.env.NEXT_PUBLIC_POSTINGS_UNLIKE_SOURCE as string
 export const API_URL_POSTINGS_PENDING = process.env.NEXT_PUBLIC_POSTINGS_PENDING_SOURCE as string

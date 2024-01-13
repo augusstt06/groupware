@@ -14,7 +14,6 @@ export type ConfirmProps = {
 }
 
 export type BoardWriteAlertProps = {
-  boardCategoryNumber: number
   handleCloseAlertModal: () => void
   alertState: AlertStateType
 }

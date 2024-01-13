@@ -19,16 +19,16 @@ const nextConfig = {
         destination: process.env.NEXT_PUBLIC_COMMENT_DESTINATION,
       },
       {
-        source: process.env.NEXT_PUBLIC_GET_BOARD_ORG_CATEGORY_LIST_SOURCE,
-        destination: process.env.NEXT_PUBLIC_GET_BOARD_ORG_CATEGORY_LIST_DESTINATION,
+        source: process.env.NEXT_PUBLIC_GET_MY_BOARD_SOURCE,
+        destination: process.env.NEXT_PUBLIC_GET_MY_BOARD_DESTINATION,
       },
       {
         source: process.env.NEXT_PUBLIC_COMMENT_POSTING_SOURCE,
         destination: process.env.NEXT_PUBLIC_COMMENT_POSTING_DESTINATION,
       },
       {
-        source: process.env.NEXT_PUBLIC_GET_BOARD_ORG_LIST_SOURCE,
-        destination: process.env.NEXT_PUBLIC_GET_BOARD_ORG_LIST_DESTINATION,
+        source: process.env.NEXT_PUBLIC_POSTINGS_MY_SOURCE,
+        destination: process.env.NEXT_PUBLIC_POSTINGS_MY_DESTINATION,
       },
       {
         source: process.env.NEXT_PUBLIC_UPLOAD_IMAGE_SOURCE,
@@ -49,10 +49,6 @@ const nextConfig = {
       {
         source: process.env.NEXT_PUBLIC_POSTINGS_SOURCE,
         destination: process.env.NEXT_PUBLIC_POSTINGS_DESTINATION,
-      },
-      {
-        source: process.env.NEXT_PUBLIC_POSTING_ORG_SOURCE,
-        destination: process.env.NEXT_PUBLIC_POSTING_ORG_DESTINATION,
       },
       {
         source: process.env.NEXT_PUBLIC_USERS_SOURCE,

@@ -34,7 +34,7 @@ export const moduleCheckContentIsEmpty = (props: ModuleCheckContentIsEmptyProps)
     })
     props.handleOpenAlertModal()
     return
-  } else if (props.boardId === 0) {
+  } else if (props.boardId === 0 || Number.isNaN(props.boardId)) {
     props.setAlertStateFunction({
       headDescription: '게시판 카테고리를 선택해주세요',
       additianoalDescription: '',

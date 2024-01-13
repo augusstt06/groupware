@@ -42,7 +42,7 @@ export default function Sidebar(props: SidebarProps) {
           title={props.title}
           reRender={reRender}
           setRerender={setRerender}
-          boardCategoryList={props.boardCategoryList}
+          myBoardList={props.myBoardList}
         />
       </div>
     </>

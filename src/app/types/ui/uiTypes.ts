@@ -2,7 +2,7 @@ import { type Dispatch, type SetStateAction } from 'react'
 
 import { type Editor } from '@toast-ui/react-editor'
 
-import { type boardListResponsetype, type boardResType } from '../variableTypes'
+import { type boardListResponsetype, type MyBoardType } from '../variableTypes'
 
 export type InputIconLabelProps = {
   icon: React.ReactNode
@@ -15,12 +15,7 @@ export type ProgressbarProps = {
 
 export type SidebarProps = {
   title: string
-  boardCategoryList:
-    | {
-        boardName: string
-        menuList: boardResType[]
-      }
-    | undefined
+  myBoardList: MyBoardType[]
 }
 
 export type SelectboxProps = {
@@ -63,22 +58,12 @@ export type MainHubProps = {
 }
 export type BoardHubProps = {
   title: string
-  boardList: boardListResponsetype[] | undefined
-  boardCategoryList:
-    | {
-        boardName: string
-        menuList: boardResType[]
-      }
-    | undefined
+  boardList: boardListResponsetype[]
+  myBoardList: MyBoardType[]
 }
 export type MainTabProps = {
   title: string
-  boardCategoryList:
-    | {
-        boardName: string
-        menuList: boardResType[]
-      }
-    | undefined
+  myBoardList: MyBoardType[]
 }
 
 export type GnbHamburgerMenuProps = {

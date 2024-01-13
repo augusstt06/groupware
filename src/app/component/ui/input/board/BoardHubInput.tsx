@@ -19,7 +19,7 @@ export default function BoardHubInput(props: BoardHubInputProps) {
   }
   return (
     <div className="flex flex-row justify-around">
-      {isModalOpen ? <BoardWriteModal /> : <></>}
+      {isModalOpen ? <BoardWriteModal currentBoard={null} /> : <></>}
       <div className="flex mt-3 mb-3 mr-2 w-4/6">
         <InputIconlabel icon={<IoSearchSharp className="w-4 h-4" />} />
         <input
