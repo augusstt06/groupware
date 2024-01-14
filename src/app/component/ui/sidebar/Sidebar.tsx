@@ -30,6 +30,7 @@ export default function Sidebar(props: SidebarProps) {
         />
       )}
 
+      {/* FIXME: sidebar도 fixed로 바꾸기 */}
       <div
         className={`md:static col-span-1 w-40 md:w-5/6 md:block ${
           isSideOpen
@@ -41,7 +42,7 @@ export default function Sidebar(props: SidebarProps) {
           title={props.title}
           reRender={reRender}
           setRerender={setRerender}
-          boardCategoryList={props.boardCategoryList}
+          myBoardList={props.myBoardList}
         />
       </div>
     </>
