@@ -174,7 +174,7 @@ export default function BoardCategory({ params }: { params: PageParam }) {
       isCheckInterval: true,
     }
     moduleCheckUserState(moduleProps)
-  }, [currentBoard, pageNumber])
+  }, [currentBoard, pageNumber, pageSize])
 
   return (
     <main className="w-full grid gap-4 grid-cols-4 h-4/5 pt-24 md:ml-10 md:mr-10 ml-5 z-1">

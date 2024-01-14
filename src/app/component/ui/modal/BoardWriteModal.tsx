@@ -190,11 +190,16 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
     moduleCheckContentIsEmpty(moduleProps)
     openAlertModal()
   }
+
   const fetchPostContent = async () => {
     try {
       const fetchProps: ModulePostFetchProps = {
         // FIXME: 썸네일 들어오면 thumbNailUrl 추가하기
-        data: { boardId: Number(select), content: editorContent, title: titleInput.value },
+        data: {
+          boardId: props.currentBoard === null ? Number(select) : props.currentBoard.id,
+          content: editorContent,
+          title: titleInput.value,
+        },
         fetchUrl: API_URL_POSTINGS,
         header: {
           Authorization: `Bearer ${accessToken}`,
@@ -231,35 +236,51 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
   }
 
   const handleClickPosting = () => {
-    if (select === '') {
-      setAlertState({
-        headDescription: '게시판 카테고리를 선택해 주세요',
-        additianoalDescription: '',
-        option: {
-          positive: '확인',
-          negative: '',
+    if (props.currentBoard === null) {
+      if (select === '') {
+        setAlertState({
+          headDescription: '게시판 카테고리를 선택해 주세요',
+          additianoalDescription: '',
+          option: {
+            positive: '확인',
+            negative: '',
+          },
+          onClick: closeAlertModal,
+          isPromise: false,
+        })
+        openAlertModal()
+        return
+      }
+      const moduleProps: ModuleCheckContentIsEmptyProps = {
+        fetchFunction: fetchPostContent,
+        boardId: Number(select),
+        editorContents: editorContent,
+        inputValue: titleInput.value,
+        setAlertStateFunction: setAlertState,
+        handleOpenAlertModal: openAlertModal,
+        handleCloseAlertModal: closeAlertModal,
+        success: {
+          headDescription: '게시글을 등록하시겠습니까?',
+          additianoalDescription: '확인버튼을 누르면 게시글이 등록됩니다.',
         },
-        onClick: closeAlertModal,
-        isPromise: false,
-      })
-      openAlertModal()
-      return
+      }
+      moduleCheckContentIsEmpty(moduleProps)
+    } else {
+      const moduleProps: ModuleCheckContentIsEmptyProps = {
+        fetchFunction: fetchPostContent,
+        boardId: Number(props.currentBoard.id),
+        editorContents: editorContent,
+        inputValue: titleInput.value,
+        setAlertStateFunction: setAlertState,
+        handleOpenAlertModal: openAlertModal,
+        handleCloseAlertModal: closeAlertModal,
+        success: {
+          headDescription: '게시글을 등록하시겠습니까?',
+          additianoalDescription: '확인버튼을 누르면 게시글이 등록됩니다.',
+        },
+      }
+      moduleCheckContentIsEmpty(moduleProps)
     }
-
-    const moduleProps: ModuleCheckContentIsEmptyProps = {
-      fetchFunction: fetchPostContent,
-      boardId: Number(select),
-      editorContents: editorContent,
-      inputValue: titleInput.value,
-      setAlertStateFunction: setAlertState,
-      handleOpenAlertModal: openAlertModal,
-      handleCloseAlertModal: closeAlertModal,
-      success: {
-        headDescription: '게시글을 등록하시겠습니까?',
-        additianoalDescription: '확인버튼을 누르면 게시글이 등록됩니다.',
-      },
-    }
-    moduleCheckContentIsEmpty(moduleProps)
   }
 
   const allModalClose = () => {

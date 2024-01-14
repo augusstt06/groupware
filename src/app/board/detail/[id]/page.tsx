@@ -159,7 +159,7 @@ export default function BoardDetail() {
 
   const fetchDeletePostingsProps: ModuleGetFetchProps = {
     params: {
-      id: content?.id as number,
+      postingId: content?.id as number,
     },
     fetchUrl: API_URL_POSTINGS,
     header: {
