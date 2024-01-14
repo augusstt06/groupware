@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 
 import dynamic from 'next/dynamic'
-import { useRouter } from 'next/navigation'
+// import { useRouter } from 'next/navigation'
 
 import BoardWriteAlert from '../alert/BoardWriteAlert'
 import WriteModalBtnGroup from '../button/board/writeModal/WriteModalBtnGroup'
@@ -12,16 +12,13 @@ import BoardModalSaveListTab from '../tab/BoardModalSaveListTab'
 
 import { FALSE, KEY_ACCESS_TOKEN, KEY_X_ORGANIZATION_CODE, TRUE } from '@/app/constant/constant'
 import { ERR_EMPTRY_POSTING_FIELD, errNotEntered } from '@/app/constant/errorMsg'
-import {
-  API_URL_POSTINGS_ORG,
-  API_URL_POSTINGS_PENDING,
-} from '@/app/constant/route/api-route-constant'
-import { ROUTE_POSTING_DETAIL } from '@/app/constant/route/route-constant'
+import { API_URL_POSTINGS, API_URL_POSTINGS_PENDING } from '@/app/constant/route/api-route-constant'
+// import { ROUTE_POSTING_DETAIL } from '@/app/constant/route/route-constant'
 import useInput from '@/app/module/hooks/reactHooks/useInput'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleCheckContentIsEmpty } from '@/app/module/utils/moduleCheckContent'
 import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
-import { moduleGetFetch, modulePostFetch } from '@/app/module/utils/moduleFetch'
+import { moduleDeleteFetch, moduleGetFetch, modulePostFetch } from '@/app/module/utils/moduleFetch'
 import { openBoardWriteModalReducer } from '@/app/store/reducers/board/openBoardWriteModalReducer'
 import {
   type ApiRes,
@@ -43,10 +40,10 @@ const Editor = dynamic(async () => import('../editor/TextEditor'), {
 })
 
 export default function BoardWriteModal(props: BoardWriteModalprops) {
-  const [boardCategoryNumber, setBoardCategoryNumber] = useState<number>(0)
   const dispatch = useAppDispatch()
-  const params = useAppSelector((state) => state.boardCategory.category)
-  const router = useRouter()
+  // const params = useAppSelector((state) => state.boardCategory.category)
+  const myBoardState = useAppSelector((state) => state.boardCategory.myBoard)
+  // const router = useRouter()
   const editorRef = useRef(null)
   const titleInput = useInput('')
   const userId = useAppSelector((state) => state.userInfo.extraInfo.userId)
@@ -57,12 +54,13 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
   const [thumbNailUrl, setThumbNailUrl] = useState<string | null>(null)
   const [saveContent, setSaveContent] = useState('')
   const [saveList, setSaveList] = useState<boardListResponsetype[]>([])
+  const [rerender, setRerender] = useState<boolean>(false)
 
   const [isOpenSaveList, setIsOpenSaveList] = useState<boolean>(false)
   const [isAlertModalOpen, setIsAlertModalOpen] = useState<boolean>(false)
   const [imgCount, setImgCount] = useState<number>(0)
-  const [select, setSelect] = useState('')
-  const selectList = [{ title: '공지사항' }, { title: '프로젝트' }]
+  const [select, setSelect] = useState('0')
+  const selectList = myBoardState.map((data) => ({ id: data.id, name: data.name }))
 
   const [alertState, setAlertState] = useState<AlertStateType>({
     headDescription: '',
@@ -95,14 +93,6 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
     else setIsAnnounce(FALSE)
   }
 
-  const convertBoardCategory = (title: string): number => {
-    switch (title) {
-      case '공지사항':
-        return 1
-      default:
-        return 0
-    }
-  }
   const fetchGetPostPending = async () => {
     try {
       const fetchProps: ModuleGetFetchProps = {
@@ -119,19 +109,41 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
       }
       const res = await moduleGetFetch<resType>(fetchProps)
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
-      const postingList = (res as SuccessResponseType<resType>).result.postings
+      const postingList = (res as SuccessResponseType<resType>).result.data
       setSaveList(postingList)
     } catch (err) {}
   }
-
+  const fetchDeletePostPending = async (id: number) => {
+    try {
+      const fetchProps: ModuleGetFetchProps = {
+        params: {
+          postingId: id,
+        },
+        fetchUrl: API_URL_POSTINGS_PENDING,
+        header: {
+          Authorization: `Bearer ${accessToken}`,
+          [KEY_X_ORGANIZATION_CODE]: userInfo[KEY_X_ORGANIZATION_CODE],
+        },
+      }
+      const res = await moduleDeleteFetch<string>(fetchProps)
+      if (res.status !== 200) throw new Error((res as FailResponseType).message)
+      setRerender(!rerender)
+    } catch (err) {
+      alert('삭제에 실패했습니다.')
+    }
+  }
+  const handleClickDeletePending = (id: number) => {
+    void fetchDeletePostPending(id)
+    setIsOpenSaveList(false)
+  }
   const fetchPostPending = async () => {
     try {
       const fetchProps: ModulePostFetchProps = {
         data: {
-          writerId: userId,
+          // writerId: userId,
           content: editorContent,
           title: titleInput.value,
-          boardId: boardCategoryNumber,
+          boardId: Number(select),
         },
         fetchUrl: API_URL_POSTINGS_PENDING,
         header: {
@@ -142,7 +154,8 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
 
       const res = await modulePostFetch<ApiRes>(fetchProps)
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
-      dispatch(openBoardWriteModalReducer())
+      setIsAlertModalOpen(false)
+      setRerender(!rerender)
     } catch (err) {}
   }
 
@@ -163,7 +176,7 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
     }
     const moduleProps: ModuleCheckContentIsEmptyProps = {
       fetchFunction: fetchPostPending,
-      boardId: boardCategoryNumber,
+      boardId: Number(select),
       editorContents: editorContent,
       inputValue: titleInput.value,
       setAlertStateFunction: setAlertState,
@@ -175,29 +188,33 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
       },
     }
     moduleCheckContentIsEmpty(moduleProps)
-    // setIsSave(true)
     openAlertModal()
   }
+
   const fetchPostContent = async () => {
     try {
       const fetchProps: ModulePostFetchProps = {
         // FIXME: 썸네일 들어오면 thumbNailUrl 추가하기
-        data: { boardId: boardCategoryNumber, content: editorContent, title: titleInput.value },
-        fetchUrl: API_URL_POSTINGS_ORG,
+        data: {
+          boardId: props.currentBoard === null ? Number(select) : props.currentBoard.id,
+          content: editorContent,
+          title: titleInput.value,
+        },
+        fetchUrl: API_URL_POSTINGS,
         header: {
           Authorization: `Bearer ${accessToken}`,
           [KEY_X_ORGANIZATION_CODE]: userInfo[KEY_X_ORGANIZATION_CODE],
         },
       }
-
       const res = await modulePostFetch<ApiRes>(fetchProps)
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
-      const detailUrl = (res as SuccessResponseType<ApiRes>).result.id
+      // const detailUrl = (res as SuccessResponseType<ApiRes>).result.id
       dispatch(openBoardWriteModalReducer())
       alert('글이 정상적으로 등록되었습니다.')
+      setRerender(!rerender)
       // TODO:  FIXME: checkList - 10
 
-      router.push(`${ROUTE_POSTING_DETAIL}/${detailUrl}`)
+      // router.push(`${ROUTE_POSTING_DETAIL}/${detailUrl}`)
     } catch (err) {
       if (err instanceof Error) {
         switch (err.message) {
@@ -212,42 +229,58 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
     setIsOpenSaveList(!isOpenSaveList)
   }
   const loadSaveData = (data: boardListResponsetype) => {
+    setSelect(data.boardId.toString())
     setSaveContent(data.content)
     titleInput.setString(data.title)
     setIsOpenSaveList(false)
   }
 
   const handleClickPosting = () => {
-    if (boardCategoryNumber === 0) {
-      setAlertState({
-        headDescription: '게시판 카테고리를 선택해 주세요',
-        additianoalDescription: '',
-        option: {
-          positive: '확인',
-          negative: '',
+    if (props.currentBoard === null) {
+      if (select === '') {
+        setAlertState({
+          headDescription: '게시판 카테고리를 선택해 주세요',
+          additianoalDescription: '',
+          option: {
+            positive: '확인',
+            negative: '',
+          },
+          onClick: closeAlertModal,
+          isPromise: false,
+        })
+        openAlertModal()
+        return
+      }
+      const moduleProps: ModuleCheckContentIsEmptyProps = {
+        fetchFunction: fetchPostContent,
+        boardId: Number(select),
+        editorContents: editorContent,
+        inputValue: titleInput.value,
+        setAlertStateFunction: setAlertState,
+        handleOpenAlertModal: openAlertModal,
+        handleCloseAlertModal: closeAlertModal,
+        success: {
+          headDescription: '게시글을 등록하시겠습니까?',
+          additianoalDescription: '확인버튼을 누르면 게시글이 등록됩니다.',
         },
-        onClick: closeAlertModal,
-        isPromise: false,
-      })
-      openAlertModal()
-      return
+      }
+      moduleCheckContentIsEmpty(moduleProps)
+    } else {
+      const moduleProps: ModuleCheckContentIsEmptyProps = {
+        fetchFunction: fetchPostContent,
+        boardId: Number(props.currentBoard.id),
+        editorContents: editorContent,
+        inputValue: titleInput.value,
+        setAlertStateFunction: setAlertState,
+        handleOpenAlertModal: openAlertModal,
+        handleCloseAlertModal: closeAlertModal,
+        success: {
+          headDescription: '게시글을 등록하시겠습니까?',
+          additianoalDescription: '확인버튼을 누르면 게시글이 등록됩니다.',
+        },
+      }
+      moduleCheckContentIsEmpty(moduleProps)
     }
-
-    const moduleProps: ModuleCheckContentIsEmptyProps = {
-      // FIXME:
-      fetchFunction: fetchPostContent,
-      boardId: boardCategoryNumber,
-      editorContents: editorContent,
-      inputValue: titleInput.value,
-      setAlertStateFunction: setAlertState,
-      handleOpenAlertModal: openAlertModal,
-      handleCloseAlertModal: closeAlertModal,
-      success: {
-        headDescription: '게시글을 등록하시겠습니까?',
-        additianoalDescription: '확인버튼을 누르면 게시글이 등록됩니다.',
-      },
-    }
-    moduleCheckContentIsEmpty(moduleProps)
   }
 
   const allModalClose = () => {
@@ -272,14 +305,10 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
     }
     dispatch(openBoardWriteModalReducer())
   }
+
   useEffect(() => {
-    if (params === '') {
-      setBoardCategoryNumber(convertBoardCategory(select))
-    } else {
-      setBoardCategoryNumber(convertBoardCategory(params))
-    }
     void fetchGetPostPending()
-  }, [select, params])
+  }, [rerender, select])
 
   return (
     <>
@@ -305,6 +334,7 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
                 select={select}
                 setSelect={setSelect}
                 selectList={selectList}
+                currentBoard={props.currentBoard}
                 thumbNailUrl={thumbNailUrl}
                 setThumbNailUrl={setThumbNailUrl}
               />
@@ -318,18 +348,18 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
                 />
               </div>
               {isOpenSaveList ? (
-                <BoardModalSaveListTab saveList={saveList} loadSaveData={loadSaveData} />
+                <BoardModalSaveListTab
+                  saveList={saveList}
+                  loadSaveData={loadSaveData}
+                  handleClickDeletePending={handleClickDeletePending}
+                />
               ) : (
                 <></>
               )}
             </div>
             <BoardWriteModalCheckBox isAnnounce={isAnnounce} handleClick={handleClick} />
             {isAlertModalOpen ? (
-              <BoardWriteAlert
-                handleCloseAlertModal={closeAlertModal}
-                alertState={alertState}
-                boardCategoryNumber={boardCategoryNumber}
-              />
+              <BoardWriteAlert handleCloseAlertModal={closeAlertModal} alertState={alertState} />
             ) : (
               <></>
             )}

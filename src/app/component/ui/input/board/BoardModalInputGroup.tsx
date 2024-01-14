@@ -21,7 +21,7 @@ import {
 
 export default function BoardModalInputGroup(props: BoardModalInputGruopProps) {
   const userInfo = useAppSelector((state) => state.userInfo)
-  const params = useAppSelector((state) => state.boardCategory.category)
+  // const params = useAppSelector((state) => state.boardCategory.category)
   const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
   const [imgTag, setImgTag] = useState<JSX.Element | null>(null)
@@ -89,7 +89,7 @@ export default function BoardModalInputGroup(props: BoardModalInputGruopProps) {
   return (
     <div className="w-1/3 h-full p-2 mb-5">
       <BoardCategoryInput
-        params={params}
+        currentBoard={props.currentBoard}
         handleSelectChange={handleSelectChange}
         select={props.select}
         selectList={props.selectList}
@@ -143,10 +143,10 @@ function BoardCategoryInput(props: BoardCategoryInputProps) {
   return (
     <div className="p-2">
       <InputLabel title="게시판" />
-      {props.params !== '' ? (
+      {props.currentBoard !== null ? (
         <input
           type="text"
-          value={props.params}
+          value={props.currentBoard.name}
           className="rounded rounded bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  bg-gray-400 dark:bg-gray-600 dark:border-white-600 dark:placeholder-gray-400 dark:text-gray-700 dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder="게시글 제목을 입력해주세요"
           readOnly
@@ -160,8 +160,8 @@ function BoardCategoryInput(props: BoardCategoryInputProps) {
         >
           <option value="none">글 카테고리를 골라주세요</option>
           {props.selectList.map((data) => (
-            <option value={data.title} key={data.title}>
-              {data.title}
+            <option value={data.id} key={data.name}>
+              {data.name}
             </option>
           ))}
         </select>
