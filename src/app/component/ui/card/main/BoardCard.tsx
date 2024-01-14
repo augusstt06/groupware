@@ -1,9 +1,13 @@
+import dynamic from 'next/dynamic'
 import { useRouter } from 'next/navigation'
 import { FaRegComment, FaRegHeart } from 'react-icons/fa'
 
 import { ROUTE_POSTING_DETAIL } from '@/app/constant/route/route-constant'
 import { type BoardCardType } from '@/app/types/ui/cardTypes'
 
+const Viewbox = dynamic(async () => import('../../../ui/editor/TextViewer'), {
+  ssr: false,
+})
 export default function BoardCard(props: BoardCardType) {
   const router = useRouter()
   const savedText = props.content.content
@@ -11,7 +15,6 @@ export default function BoardCard(props: BoardCardType) {
   const goPostingPage = () => {
     router.push(`${ROUTE_POSTING_DETAIL}/${props.content.id}`)
   }
-
   return (
     <div className="w-full flex flex-row p-4 border border-gray-200 rounded-lg shadow dark:bg-[#1a202c] dark:border-gray-700 mb-5">
       <div className="flex justify-center items-center">
@@ -23,7 +26,8 @@ export default function BoardCard(props: BoardCardType) {
         <div className="inline-block text-sm md:text-medium">
           <span className="font-bold">{props.content.title}</span>
         </div>
-        <div dangerouslySetInnerHTML={{ __html: savedText }} />
+        <Viewbox content={savedText} />
+
         <div className="flex flex-row md:text-sm text-xs w-1/6 mt-2 items-center justify-around">
           <div className="flex flex-row items-center">
             <FaRegHeart className="w-3 h-3 text-red-400 mr-1" />
