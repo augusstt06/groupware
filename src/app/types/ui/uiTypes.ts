@@ -52,6 +52,7 @@ export type EditorProps = {
 export type BoardModalSaveListTabProps = {
   loadSaveData: (data: boardListResponsetype) => void
   saveList: boardListResponsetype[]
+  handleClickDeletePending: (id: number) => void
 }
 export type MainHubProps = {
   title: string

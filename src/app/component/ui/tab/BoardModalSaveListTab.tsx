@@ -25,15 +25,22 @@ export default function BoardModalSaveListTab(props: BoardModalSaveListTabProps)
       {props.saveList.map((data) => (
         <div
           className="flex flex-row text-left mt-3 mb-3 p-3 border-b border-gray-300 cursor-pointer"
-          onClick={() => {
-            props.loadSaveData(data)
-          }}
           key={data.id}
         >
-          <div className="bg-gray-300 flex items-center pl-4 pr-4 rounded-lg justify-center mr-2">
+          <div
+            className="bg-gray-300 flex items-center pl-4 pr-4 rounded-lg justify-center mr-2"
+            onClick={() => {
+              props.loadSaveData(data)
+            }}
+          >
             <HiOutlinePencilAlt className="w-5 h-5 text-white" />
           </div>
-          <div className="w-5/6">
+          <div
+            className="w-5/6"
+            onClick={() => {
+              props.loadSaveData(data)
+            }}
+          >
             <div className="flex flex-row items-center">
               <span className="md:text-base md:font-bold text-base p-1 mb-2">
                 {findCategory(data.boardId).name}
@@ -46,7 +53,12 @@ export default function BoardModalSaveListTab(props: BoardModalSaveListTabProps)
             </div>
           </div>
           {/* FIXME: 삭제 api 연결하기 */}
-          <div className="flex items-center rounded-lg">
+          <div
+            className="flex items-center rounded-lg"
+            onClick={() => {
+              props.handleClickDeletePending(data.id)
+            }}
+          >
             <IoClose className="bg-gray-300 w-5 h-5 rounded-lg text-white hover:text-black cursor-pointer " />
           </div>
         </div>

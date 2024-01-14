@@ -18,7 +18,7 @@ import useInput from '@/app/module/hooks/reactHooks/useInput'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleCheckContentIsEmpty } from '@/app/module/utils/moduleCheckContent'
 import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
-import { moduleGetFetch, modulePostFetch } from '@/app/module/utils/moduleFetch'
+import { moduleDeleteFetch, moduleGetFetch, modulePostFetch } from '@/app/module/utils/moduleFetch'
 import { openBoardWriteModalReducer } from '@/app/store/reducers/board/openBoardWriteModalReducer'
 import {
   type ApiRes,
@@ -54,6 +54,7 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
   const [thumbNailUrl, setThumbNailUrl] = useState<string | null>(null)
   const [saveContent, setSaveContent] = useState('')
   const [saveList, setSaveList] = useState<boardListResponsetype[]>([])
+  const [rerender, setRerender] = useState<boolean>(false)
 
   const [isOpenSaveList, setIsOpenSaveList] = useState<boolean>(false)
   const [isAlertModalOpen, setIsAlertModalOpen] = useState<boolean>(false)
@@ -112,6 +113,29 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
       setSaveList(postingList)
     } catch (err) {}
   }
+  const fetchDeletePostPending = async (id: number) => {
+    try {
+      const fetchProps: ModuleGetFetchProps = {
+        params: {
+          postingId: id,
+        },
+        fetchUrl: API_URL_POSTINGS_PENDING,
+        header: {
+          Authorization: `Bearer ${accessToken}`,
+          [KEY_X_ORGANIZATION_CODE]: userInfo[KEY_X_ORGANIZATION_CODE],
+        },
+      }
+      const res = await moduleDeleteFetch<string>(fetchProps)
+      if (res.status !== 200) throw new Error((res as FailResponseType).message)
+      setRerender(!rerender)
+    } catch (err) {
+      alert('삭제에 실패했습니다.')
+    }
+  }
+  const handleClickDeletePending = (id: number) => {
+    void fetchDeletePostPending(id)
+    setIsOpenSaveList(false)
+  }
   const fetchPostPending = async () => {
     try {
       const fetchProps: ModulePostFetchProps = {
@@ -130,7 +154,8 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
 
       const res = await modulePostFetch<ApiRes>(fetchProps)
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
-      dispatch(openBoardWriteModalReducer())
+      setIsAlertModalOpen(false)
+      setRerender(!rerender)
     } catch (err) {}
   }
 
@@ -163,7 +188,6 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
       },
     }
     moduleCheckContentIsEmpty(moduleProps)
-    // setIsSave(true)
     openAlertModal()
   }
   const fetchPostContent = async () => {
@@ -180,10 +204,9 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
       const res = await modulePostFetch<ApiRes>(fetchProps)
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
       // const detailUrl = (res as SuccessResponseType<ApiRes>).result.id
-      // console.log(res, '?')
-      // console.log(detailUrl, 'detail')
       dispatch(openBoardWriteModalReducer())
       alert('글이 정상적으로 등록되었습니다.')
+      setRerender(!rerender)
       // TODO:  FIXME: checkList - 10
 
       // router.push(`${ROUTE_POSTING_DETAIL}/${detailUrl}`)
@@ -224,7 +247,6 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
     }
 
     const moduleProps: ModuleCheckContentIsEmptyProps = {
-      // FIXME:
       fetchFunction: fetchPostContent,
       boardId: Number(select),
       editorContents: editorContent,
@@ -263,15 +285,9 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
     dispatch(openBoardWriteModalReducer())
   }
 
-  // const setSelectbox = () => {}
   useEffect(() => {
-    // if (params === '') {
-    //   setBoardCategoryNumber(convertBoardCategory(select))
-    // } else {
-    //   setBoardCategoryNumber(convertBoardCategory(params))
-    // }
     void fetchGetPostPending()
-  }, [select])
+  }, [rerender, select])
 
   return (
     <>
@@ -311,7 +327,11 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
                 />
               </div>
               {isOpenSaveList ? (
-                <BoardModalSaveListTab saveList={saveList} loadSaveData={loadSaveData} />
+                <BoardModalSaveListTab
+                  saveList={saveList}
+                  loadSaveData={loadSaveData}
+                  handleClickDeletePending={handleClickDeletePending}
+                />
               ) : (
                 <></>
               )}
