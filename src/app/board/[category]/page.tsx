@@ -17,10 +17,11 @@ import {
 } from '@/app/constant/constant'
 import { API_URL_GET_MY_BOARD, API_URL_POSTINGS_MY } from '@/app/constant/route/api-route-constant'
 // import useInput from '@/app/module/hooks/reactHooks/useInput'
-import { useAppSelector } from '@/app/module/hooks/reduxHooks'
+import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleCheckUserState } from '@/app/module/utils/moduleCheckUserState'
 import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
 import { moduleGetFetch } from '@/app/module/utils/moduleFetch'
+import { openBoardWriteModalReducer } from '@/app/store/reducers/board/openBoardWriteModalReducer'
 import {
   type FailResponseType,
   type ModuleCheckUserStateProps,
@@ -35,6 +36,7 @@ import {
 } from '@/app/types/variableTypes'
 
 export default function BoardCategory({ params }: { params: PageParam }) {
+  const dispatch = useAppDispatch()
   const router = useRouter()
   const pathname = usePathname()
   // const searchInput = useInput('')
@@ -54,7 +56,7 @@ export default function BoardCategory({ params }: { params: PageParam }) {
   const [accessToken, setAccessToken] = useState(moduleGetCookie(KEY_ACCESS_TOKEN))
 
   const [myBoardList, setMyBoardList] = useState<MyBoardType[]>([])
-  const [boardList, setBoardList] = useState<boardListResponsetype[]>()
+  const [boardList, setBoardList] = useState<boardListResponsetype[]>([])
   const [pageSize, setPageSize] = useState<number>(1)
   const [pageNumber, setPageNumber] = useState<number>(0)
 
@@ -85,12 +87,10 @@ export default function BoardCategory({ params }: { params: PageParam }) {
     setCurrentBoard(currentBoard)
   }
 
-  const fetchGetBoardList = async () => {
+  const fetchGetBoardPostings = async () => {
     try {
-      if (currentBoard.id === '') return
       const fetchGetBoardListProps: ModuleGetFetchProps = {
         params: {
-          organizationBoardId: currentBoard.id,
           limit: 10,
           offset: 10 * pageNumber,
         },
@@ -103,11 +103,13 @@ export default function BoardCategory({ params }: { params: PageParam }) {
       const res = await moduleGetFetch<resType>(fetchGetBoardListProps)
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
       const resBoardList = (res as SuccessResponseType<resType>).result.data
+
+      const filterList = resBoardList.filter((data) => data.boardId === Number(currentBoard.id))
       if (pageSize === 1) {
         const pageSize = Math.ceil((res as SuccessResponseType<resType>).result.total / 10)
         setPageSize(pageSize)
       }
-      setBoardList(resBoardList)
+      setBoardList(filterList)
     } catch (err) {}
   }
 
@@ -137,7 +139,7 @@ export default function BoardCategory({ params }: { params: PageParam }) {
   //   void fetchGetSearchPostings()
   // }
 
-  const fetchGetBoardOrgCategoryList = async () => {
+  const fetchGetMyBoard = async () => {
     try {
       const fetchProps: ModuleGetFetchProps = {
         params: {
@@ -158,9 +160,12 @@ export default function BoardCategory({ params }: { params: PageParam }) {
   }
 
   useEffect(() => {
+    if (isModalOpen) {
+      dispatch(openBoardWriteModalReducer())
+    }
     convertBoardId()
-    void fetchGetBoardList()
-    void fetchGetBoardOrgCategoryList()
+    void fetchGetMyBoard()
+    void fetchGetBoardPostings()
     const moduleProps: ModuleCheckUserStateProps = {
       useRouter: router,
       token: accessToken,
@@ -169,7 +174,7 @@ export default function BoardCategory({ params }: { params: PageParam }) {
       isCheckInterval: true,
     }
     moduleCheckUserState(moduleProps)
-  }, [pageNumber])
+  }, [currentBoard, pageNumber])
 
   return (
     <main className="w-full grid gap-4 grid-cols-4 h-4/5 pt-24 md:ml-10 md:mr-10 ml-5 z-1">
@@ -183,20 +188,16 @@ export default function BoardCategory({ params }: { params: PageParam }) {
 
             {/* <BoardHubInput searchInput={searchInput} clickSearchPostings={clickSearchPostings} /> */}
 
-            {boardList !== undefined ? (
-              boardList.length !== 0 ? (
-                boardList.map((data) => (
-                  <BoardItem
-                    key={data.id}
-                    boardListItem={data}
-                    isCurrent={isCurrentPost(data.createdAt)}
-                  />
-                ))
-              ) : (
-                <div className="p-10 text-center">게시글이 없습니다.</div>
-              )
+            {boardList.length !== 0 ? (
+              boardList.map((data) => (
+                <BoardItem
+                  key={data.id}
+                  boardListItem={data}
+                  isCurrent={isCurrentPost(data.createdAt)}
+                />
+              ))
             ) : (
-              <></>
+              <div className="p-10 text-center">게시글이 없습니다.</div>
             )}
           </div>
           {boardList !== undefined ? (

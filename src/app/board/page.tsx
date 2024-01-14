@@ -26,7 +26,6 @@ import {
 import { moduleGetFetch } from '../module/utils/moduleFetch'
 import { categoryReduer } from '../store/reducers/board/boardCategoryReducer'
 import {
-  type ApiRes,
   type CustomDecodeTokenType,
   type FailResponseType,
   type ModuleCheckUserStateProps,
@@ -88,7 +87,7 @@ export default function Board() {
           [KEY_X_ORGANIZATION_CODE]: orgCode,
         },
       }
-      const res = await moduleGetFetch<ApiRes[] | resType>(fetchGetBoardListProps)
+      const res = await moduleGetFetch<resType>(fetchGetBoardListProps)
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
       const resBoardList = (res as SuccessResponseType<resType>).result.data
       if (pageSize === 1) {
@@ -117,7 +116,6 @@ export default function Board() {
     }
     moduleCheckUserState(moduleProps)
   }, [])
-
   return (
     <main className="w-full grid gap-4 grid-cols-4 h-4/5 pt-24 md:ml-10 md:mr-10 ml-5 z-1 ">
       <Sidebar title={BOARD} myBoardList={myBoardList} />

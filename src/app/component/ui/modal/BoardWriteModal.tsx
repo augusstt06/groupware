@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 
 import dynamic from 'next/dynamic'
-import { useRouter } from 'next/navigation'
+// import { useRouter } from 'next/navigation'
 
 import BoardWriteAlert from '../alert/BoardWriteAlert'
 import WriteModalBtnGroup from '../button/board/writeModal/WriteModalBtnGroup'
@@ -13,7 +13,7 @@ import BoardModalSaveListTab from '../tab/BoardModalSaveListTab'
 import { FALSE, KEY_ACCESS_TOKEN, KEY_X_ORGANIZATION_CODE, TRUE } from '@/app/constant/constant'
 import { ERR_EMPTRY_POSTING_FIELD, errNotEntered } from '@/app/constant/errorMsg'
 import { API_URL_POSTINGS, API_URL_POSTINGS_PENDING } from '@/app/constant/route/api-route-constant'
-import { ROUTE_POSTING_DETAIL } from '@/app/constant/route/route-constant'
+// import { ROUTE_POSTING_DETAIL } from '@/app/constant/route/route-constant'
 import useInput from '@/app/module/hooks/reactHooks/useInput'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleCheckContentIsEmpty } from '@/app/module/utils/moduleCheckContent'
@@ -43,7 +43,7 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
   const dispatch = useAppDispatch()
   // const params = useAppSelector((state) => state.boardCategory.category)
   const myBoardState = useAppSelector((state) => state.boardCategory.myBoard)
-  const router = useRouter()
+  // const router = useRouter()
   const editorRef = useRef(null)
   const titleInput = useInput('')
   const userId = useAppSelector((state) => state.userInfo.extraInfo.userId)
@@ -180,12 +180,14 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
       }
       const res = await modulePostFetch<ApiRes>(fetchProps)
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
-      const detailUrl = (res as SuccessResponseType<ApiRes>).result.id
+      // const detailUrl = (res as SuccessResponseType<ApiRes>).result.id
+      // console.log(res, '?')
+      // console.log(detailUrl, 'detail')
       dispatch(openBoardWriteModalReducer())
       alert('글이 정상적으로 등록되었습니다.')
       // TODO:  FIXME: checkList - 10
 
-      router.push(`${ROUTE_POSTING_DETAIL}/${detailUrl}`)
+      // router.push(`${ROUTE_POSTING_DETAIL}/${detailUrl}`)
     } catch (err) {
       if (err instanceof Error) {
         switch (err.message) {
