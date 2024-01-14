@@ -21,7 +21,7 @@ export default function MainSidebarCardGroup(props: MainSidebarCardGroupProps) {
         </>
       ) : (
         <>
-          <BoardSideCard boardCategoryList={props.boardCategoryList} />
+          <BoardSideCard myBoardList={props.myBoardList} />
         </>
       )}
     </>

@@ -1,6 +1,9 @@
+// import { Dispatch, SetStateAction } from 'react'
+
 export type DecodeType = { uuid: string; iss: string; iat: number; exp: number }
 
 export type boardListResponsetype = {
+  boardId: number
   content: string
   createdAt: string
   position: string
@@ -38,7 +41,7 @@ export type CommentType = {
 }
 
 export type resType = {
-  postings: [boardListResponsetype]
+  data: [boardListResponsetype]
   total: number
   size: number
 }
@@ -49,4 +52,28 @@ export type boardResType = {
   name: string
   organizationId: number
   updatedAt: string
+}
+
+export type AlertStateType = {
+  headDescription: string
+  additianoalDescription: string
+  option: {
+    positive: string
+    negative: string
+  }
+  onClick: (() => Promise<void>) | (() => void)
+  isPromise: boolean
+}
+
+export type MyBoardType = {
+  id: string
+  groupUUID: string
+  name: string
+  createdAt: string
+  updatedAt: string
+}
+
+export type SelectListType = {
+  name: string
+  id: string
 }

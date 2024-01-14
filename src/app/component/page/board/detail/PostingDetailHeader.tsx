@@ -24,7 +24,7 @@ export default function PostingDetailHeader(props: PostingDetailHeaderProps) {
         <span className="text-xs">목록보기</span>
       </div>
 
-      <div className="flex flex-col border-b-2 border-gray-300 pb-2">
+      <div className="flex flex-col border-b-2 border-gray-300 pb-2 truncate">
         <span className="text-xl font-bold mb-2">{props.content.title}</span>
         <span className="text-xs">
           {props.content.name}({props.content.position})
