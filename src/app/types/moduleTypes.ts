@@ -5,6 +5,8 @@ import { type AppRouterInstance } from 'next/dist/shared/lib/app-router-context.
 
 import { type KEY_UUID, type KEY_X_ORGANIZATION_CODE } from '../constant/constant'
 
+import { type AlertStateType } from './variableTypes'
+
 export type UnionStrNumber = string | number
 
 export type ApiRes = Record<string, UnionStrNumber>
@@ -65,16 +67,8 @@ export type ModuleCheckContentIsEmptyProps = {
   success: { headDescription: string; additianoalDescription: string }
   editorContents: string
   inputValue: string
-  setIsModalOpenFunction: Dispatch<SetStateAction<boolean>>
-  setAlertStateFunction: Dispatch<
-    SetStateAction<{
-      headDescription: string
-      additianoalDescription: string
-      option: {
-        positive: string
-        negative: string
-      }
-      isFetch: boolean
-    }>
-  >
+  handleOpenAlertModal: () => void
+  handleCloseAlertModal: () => void
+  setAlertStateFunction: Dispatch<SetStateAction<AlertStateType>>
+  fetchFunction: () => Promise<void>
 }

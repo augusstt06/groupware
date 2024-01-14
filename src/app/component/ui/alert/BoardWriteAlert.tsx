@@ -3,7 +3,6 @@ import { IoClose } from 'react-icons/io5'
 import { type BoardWriteAlertProps } from '@/app/types/ui/alertTypes'
 
 export default function BoardWriteAlert(props: BoardWriteAlertProps) {
-  // console.log(props.fetchPost)
   return (
     <>
       <div
@@ -17,7 +16,7 @@ export default function BoardWriteAlert(props: BoardWriteAlertProps) {
               type="button"
               className="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
               data-modal-hide="popup-modal"
-              onClick={props.handleModalState}
+              onClick={props.handleCloseAlertModal}
             >
               <IoClose className="w-4 h-4" />
               <span className="sr-only">Close modal</span>
@@ -40,34 +39,27 @@ export default function BoardWriteAlert(props: BoardWriteAlertProps) {
                     data-modal-hide="popup-modal"
                     type="button"
                     className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center me-2"
-                    onClick={props.handleModalState}
+                    onClick={props.handleCloseAlertModal}
                   >
                     {props.alertState.option.negative}
                   </button>
                 ) : (
                   <></>
                 )}
-                {props.alertState.isFetch ? (
-                  <button
-                    data-modal-hide="popup-modal"
-                    type="button"
-                    className="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600"
-                    onClick={() => {
-                      void props.fetchPost()
-                    }}
-                  >
-                    {props.alertState.option.positive}
-                  </button>
-                ) : (
-                  <button
-                    data-modal-hide="popup-modal"
-                    type="button"
-                    className="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600"
-                    onClick={props.handleModalState}
-                  >
-                    {props.alertState.option.positive}
-                  </button>
-                )}
+                <button
+                  data-modal-hide="popup-modal"
+                  type="button"
+                  className="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600"
+                  onClick={
+                    props.alertState.isPromise
+                      ? () => {
+                          void props.alertState.onClick()
+                        }
+                      : (props.alertState.onClick as () => void)
+                  }
+                >
+                  {props.alertState.option.positive}
+                </button>
               </div>
             </div>
           </div>
