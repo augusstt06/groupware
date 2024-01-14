@@ -57,13 +57,19 @@ export type MainHubProps = {
   title: string
 }
 export type BoardHubProps = {
+  changeBoard: (name: string) => void
   title: string
   boardList: boardListResponsetype[]
+  selectBoard: string
   myBoardList: MyBoardType[]
 }
 export type MainTabProps = {
   title: string
   myBoardList: MyBoardType[]
+}
+export type BoardTabProps = MainTabProps & {
+  changeBoard: (name: string) => void
+  selectBoard: string
 }
 
 export type GnbHamburgerMenuProps = {

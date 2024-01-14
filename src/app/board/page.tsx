@@ -44,13 +44,16 @@ export default function Board() {
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
   const accessTokenTime = Number((decodeToken as CustomDecodeTokenType).exp)
   const loginCompleteState = useAppSelector((state) => state.maintain[KEY_LOGIN_COMPLETE])
-  // const boardCategory = useAppSelector((state) => state.boardCategory.myBoard)
-
+  const myBoardState = useAppSelector((state) => state.boardCategory.myBoard)
+  const [selectBoard, setSelectBoard] = useState<string>('')
   const [myBoardList, setMyBoardList] = useState<MyBoardType[]>([])
   const [boardList, setBoardList] = useState<boardListResponsetype[]>([])
   const [pageSize, setPageSize] = useState<number>(1)
   const [pageNumber, setPageNumber] = useState<number>(0)
 
+  const changeBoard = (name: string) => {
+    setSelectBoard(name)
+  }
   const isModalOpen = useAppSelector((state) => state.openBoardWriteModal.isOpen)
 
   const fetchProps: ModuleGetFetchProps = {
@@ -94,14 +97,21 @@ export default function Board() {
         const pageSize = Math.ceil((res as SuccessResponseType<resType>).result.total / 10)
         setPageSize(pageSize)
       }
-      setBoardList(resBoardList)
+      if (selectBoard === '') {
+        setBoardList(resBoardList)
+      } else {
+        const selectBoardId = myBoardState.filter((data) => data.name === selectBoard)[0].id
+
+        const filterList = resBoardList.filter((data) => data.boardId === Number(selectBoardId))
+
+        setBoardList(filterList)
+      }
     } catch (err) {}
   }
   useEffect(() => {
     if (isModalOpen) {
       dispatch(openBoardWriteModalReducer())
     }
-    // dispatch(categoryReduer(''))
     if (checkTokenExpired(accessTokenTime)) {
       void moduleRefreshToken(accessToken)
     }
@@ -115,12 +125,18 @@ export default function Board() {
       isCheckInterval: true,
     }
     moduleCheckUserState(moduleProps)
-  }, [])
+  }, [selectBoard])
   return (
     <main className="w-full grid gap-4 grid-cols-4 h-4/5 pt-24 md:ml-10 md:mr-10 ml-5 z-1 ">
       <Sidebar title={BOARD} myBoardList={myBoardList} />
       <div className="md:col-span-3 mr-10 col-span-4">
-        <BoardHub title="게시판" boardList={boardList} myBoardList={myBoardList} />
+        <BoardHub
+          title="게시판"
+          boardList={boardList}
+          myBoardList={myBoardList}
+          selectBoard={selectBoard}
+          changeBoard={changeBoard}
+        />
 
         {isModalOpen ? <BoardWriteModal currentBoard={null} /> : <></>}
         <div className="md:w-4/5 w-full flex flex-col items-center">

@@ -1,30 +1,28 @@
-// import { useAppDispatch } from '@/app/module/hooks/reduxHooks'
-// import { categoryReduer } from '@/app/store/reducers/board/boardCategoryReducer'
-import { type MainTabProps } from '@/app/types/ui/uiTypes'
+import { type BoardTabProps } from '@/app/types/ui/uiTypes'
 
-export default function BoardTab(props: MainTabProps) {
-  // const dispatch = useAppDispatch()
-  // const clickBoardCategory = (name: string) => {
-  //   switch (name) {
-  //     case '공지사항':
-  //       dispatch(categoryReduer('announce'))
-  //       return
-  //     default:
-  //       dispatch(categoryReduer('whole'))
-  //   }
-  // }
+export default function BoardTab(props: BoardTabProps) {
+  const entireBoardClassName =
+    props.selectBoard === ''
+      ? 'me-2 scale-110 border-b-2 border-indigo-400'
+      : 'me-2 transition ease-in-out duration-300 hover:scale-110 '
+  const otherBoardClassName = (name: string) => {
+    const className =
+      props.selectBoard === name
+        ? 'me-2 scale-110 border-b-2 border-indigo-400'
+        : 'me-2 transition ease-in-out duration-300 hover:scale-110 '
+    return className
+  }
   return (
     <div className="w-full md:text-sm text-xs md:p-2 md:font-bold text-center border border-gray-200 rounded-lg shadow dark:bg-[#1a202c] dark:border-gray-700 mb-5">
       <div className="mt-2 mb-2">
         <span className="md:text-lg text-base">{props.title}</span>
       </div>
       <ul className="flex flex-row justify-around -mb-px">
-        <li className="me-2">
+        <li className={entireBoardClassName}>
           <a
-            className="text-xs md:text-medium inline-block md:p-4 p-3 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
-            // FIXME: 추후 수정예정
+            className="text-xs md:text-medium inline-block md:p-4 p-3 rounded-t-lg"
             onClick={() => {
-              // clickBoardCategory('공지사항')
+              props.changeBoard('')
             }}
           >
             전체
@@ -32,11 +30,11 @@ export default function BoardTab(props: MainTabProps) {
         </li>
         {props.myBoardList !== undefined ? (
           props.myBoardList.map((data) => (
-            <li className="me-2" key={data.id}>
+            <li className={otherBoardClassName(data.name)} key={data.id}>
               <a
-                className="text-xs md:text-medium inline-block md:p-4 p-3 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
+                className="text-xs md:text-medium inline-block md:p-4 p-3 rounded-t-lg"
                 onClick={() => {
-                  // clickBoardCategory(data.name)
+                  props.changeBoard(data.name)
                 }}
               >
                 {data.name}
