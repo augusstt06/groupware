@@ -1,13 +1,20 @@
 import { HiOutlinePencilAlt } from 'react-icons/hi'
 import { IoClose } from 'react-icons/io5'
 
+import { useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleConvertDate } from '@/app/module/utils/moduleTime'
 import { type BoardModalSaveListTabProps } from '@/app/types/ui/uiTypes'
 
 export default function BoardModalSaveListTab(props: BoardModalSaveListTabProps) {
+  const categoryState = useAppSelector((state) => state.boardCategory.myBoard)
   const extractFirstTag = (data: string): string | null => {
     const match = data.match(/<([^>]+)>(.*?)<\/\1>/)
     return match != null ? match[2] : null
+  }
+
+  const findCategory = (postingBoardId: number) => {
+    const currentCategory = categoryState.filter((data) => Number(data.id) === postingBoardId)
+    return currentCategory[0]
   }
 
   return (
@@ -28,7 +35,10 @@ export default function BoardModalSaveListTab(props: BoardModalSaveListTabProps)
           </div>
           <div className="w-5/6">
             <div className="flex flex-row items-center">
-              <span className="md:text-base md:font-bold text-base p-1 mb-2">{data.title}</span>
+              <span className="md:text-base md:font-bold text-base p-1 mb-2">
+                {findCategory(data.boardId).name}
+              </span>
+              <span className="md:text-base text-base p-1 mb-2">{data.title}</span>
               <span className="text-base p-1 mb-2">{extractFirstTag(data.content)}</span>
             </div>
             <div className="md:text-sm text-xs">

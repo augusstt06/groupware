@@ -112,15 +112,14 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
       setSaveList(postingList)
     } catch (err) {}
   }
-
   const fetchPostPending = async () => {
     try {
       const fetchProps: ModulePostFetchProps = {
         data: {
-          writerId: userId,
+          // writerId: userId,
           content: editorContent,
           title: titleInput.value,
-          boardId: select,
+          boardId: Number(select),
         },
         fetchUrl: API_URL_POSTINGS_PENDING,
         header: {
@@ -202,6 +201,7 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
     setIsOpenSaveList(!isOpenSaveList)
   }
   const loadSaveData = (data: boardListResponsetype) => {
+    setSelect(data.boardId.toString())
     setSaveContent(data.content)
     titleInput.setString(data.title)
     setIsOpenSaveList(false)
