@@ -13,11 +13,6 @@ export type ProgressbarProps = {
   completedItems: number
 }
 
-export type SidebarProps = {
-  // title: string
-  myBoardList: MyBoardType[]
-}
-
 export type SelectboxProps = {
   compoenetType: string
   title: string

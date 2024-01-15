@@ -17,10 +17,9 @@ import {
   type ModuleGetFetchProps,
   type SuccessResponseType,
 } from '@/app/types/moduleTypes'
-import { type SidebarProps } from '@/app/types/ui/uiTypes'
 import { type MyBoardType } from '@/app/types/variableTypes'
 
-export default function Sidebar(props: SidebarProps) {
+export default function Sidebar() {
   const pathname = usePathname()
   const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
