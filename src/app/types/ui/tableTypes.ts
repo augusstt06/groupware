@@ -1,5 +1,5 @@
-import { type ApiRes } from '../moduleTypes'
+import { type ApiResponseType } from '../moduleTypes'
 
 export type AttendanceHistoryTableProps = {
-  history: ApiRes[]
+  history: ApiResponseType[]
 }

@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 
 import { usePathname, useRouter } from 'next/navigation'
 
-import BoardItem from '@/app/component/page/main/hub/board/BoardItem'
+import BoardItemHub from '@/app/component/page/main/hub/board/item/BoardItemHub'
 import BoardHubInput from '@/app/component/ui/input/board/BoardHubInput'
 import BoardWriteModal from '@/app/component/ui/modal/BoardWriteModal'
 import Pagination from '@/app/component/ui/pagination/Pagination'
@@ -28,9 +28,9 @@ import {
 } from '@/app/types/moduleTypes'
 import { type PageParam } from '@/app/types/pageTypes'
 import {
-  type boardListResponsetype,
+  type BoardListResponsetype,
+  type BoardResponseType,
   type MyBoardType,
-  type resType,
 } from '@/app/types/variableTypes'
 
 export default function BoardCategory({ params }: { params: PageParam }) {
@@ -52,17 +52,9 @@ export default function BoardCategory({ params }: { params: PageParam }) {
   })
   const [accessToken, setAccessToken] = useState(moduleGetCookie(KEY_ACCESS_TOKEN))
 
-  const [boardList, setBoardList] = useState<boardListResponsetype[]>([])
+  const [boardList, setBoardList] = useState<BoardListResponsetype[]>([])
   const [pageSize, setPageSize] = useState<number>(1)
   const [pageNumber, setPageNumber] = useState<number>(0)
-
-  const isCurrentPost = (targetDate: string): boolean => {
-    const targetDateTime = new Date(targetDate).getTime()
-    const currentTime = new Date().getTime()
-    const threeDaysInMilliseconds = 3 * 24 * 60 * 60 * 1000
-
-    return currentTime - targetDateTime <= threeDaysInMilliseconds
-  }
 
   const convertBoardId = () => {
     let boardName: string
@@ -96,13 +88,15 @@ export default function BoardCategory({ params }: { params: PageParam }) {
           [KEY_X_ORGANIZATION_CODE]: orgCode,
         },
       }
-      const res = await moduleGetFetch<resType>(fetchGetBoardListProps)
+      const res = await moduleGetFetch<BoardResponseType>(fetchGetBoardListProps)
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
-      const resBoardList = (res as SuccessResponseType<resType>).result.data
+      const resBoardList = (res as SuccessResponseType<BoardResponseType>).result.data
 
       const filterList = resBoardList.filter((data) => data.boardId === Number(currentBoard.id))
       if (pageSize === 1) {
-        const pageSize = Math.ceil((res as SuccessResponseType<resType>).result.total / 10)
+        const pageSize = Math.ceil(
+          (res as SuccessResponseType<BoardResponseType>).result.total / 10,
+        )
         setPageSize(pageSize)
       }
       setBoardList(filterList)
@@ -124,9 +118,9 @@ export default function BoardCategory({ params }: { params: PageParam }) {
           [KEY_X_ORGANIZATION_CODE]: orgCode,
         },
       }
-      const res = await moduleGetFetch<resType>(fetchSeachPostingsProps)
+      const res = await moduleGetFetch<BoardResponseType>(fetchSeachPostingsProps)
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
-      const resSearchBoardList = (res as SuccessResponseType<resType>).result.data
+      const resSearchBoardList = (res as SuccessResponseType<BoardResponseType>).result.data
       setBoardList(resSearchBoardList)
     } catch (err) {}
   }
@@ -160,17 +154,7 @@ export default function BoardCategory({ params }: { params: PageParam }) {
 
           <BoardHubInput searchInput={searchInput} clickSearchPostings={clickSearchPostings} />
 
-          {boardList.length !== 0 ? (
-            boardList.map((data) => (
-              <BoardItem
-                key={data.id}
-                boardListItem={data}
-                isCurrent={isCurrentPost(data.createdAt)}
-              />
-            ))
-          ) : (
-            <div className="p-10 text-center">게시글이 없습니다.</div>
-          )}
+          <BoardItemHub boardList={boardList} />
         </div>
         {boardList !== undefined ? (
           <Pagination size={pageSize} pageNumber={pageNumber} setPageNumber={setPageNumber} />

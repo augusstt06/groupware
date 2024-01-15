@@ -12,7 +12,7 @@ import { type ReactProps } from './types/pageTypes'
 
 export default function RootLayout({ children }: ReactProps) {
   const pathname = usePathname()
-  const isSidebarView = () => {
+  const shouldSidebarVisible = () => {
     let extractedString: string
     const currentUrl = pathname.split('/')
     if (currentUrl.length >= 2) {
@@ -23,14 +23,14 @@ export default function RootLayout({ children }: ReactProps) {
       return false
     }
   }
-  const bodyClassName = isSidebarView() === true ? 'pt-24 md:ml-60 ml-16' : ''
+  const bodyClassName = shouldSidebarVisible() === true ? 'pt-24 md:ml-60 ml-16' : ''
   return (
     <html lang="en" suppressHydrationWarning={true}>
       <body className="font-mono dark:bg-[#121212] bg-[#fbfbfd]">
         <ReduxProvider>
           <CustomThemeProvider>
             <GlobalNavigationbar />
-            {isSidebarView() ?? false ? <Sidebar /> : <></>}
+            {shouldSidebarVisible() ?? false ? <Sidebar /> : <></>}
             <div className={bodyClassName}>{children}</div>
           </CustomThemeProvider>
         </ReduxProvider>

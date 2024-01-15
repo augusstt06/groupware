@@ -26,7 +26,11 @@ import {
   type ModuleGetFetchProps,
   type SuccessResponseType,
 } from '../types/moduleTypes'
-import { type boardListResponsetype, type MyBoardType, type resType } from '../types/variableTypes'
+import {
+  type BoardListResponsetype,
+  type BoardResponseType,
+  type MyBoardType,
+} from '../types/variableTypes'
 
 import { openBoardWriteModalReducer } from '@/app/store/reducers/board/openBoardWriteModalReducer'
 
@@ -42,7 +46,7 @@ export default function Board() {
   const myBoardState = useAppSelector((state) => state.boardCategory.myBoard)
   const [selectBoard, setSelectBoard] = useState<string>('')
   const [myBoardList, setMyBoardList] = useState<MyBoardType[]>([])
-  const [boardList, setBoardList] = useState<boardListResponsetype[]>([])
+  const [boardList, setBoardList] = useState<BoardListResponsetype[]>([])
   const [pageSize, setPageSize] = useState<number>(1)
   const [pageNumber, setPageNumber] = useState<number>(0)
 
@@ -85,11 +89,13 @@ export default function Board() {
           [KEY_X_ORGANIZATION_CODE]: orgCode,
         },
       }
-      const res = await moduleGetFetch<resType>(fetchGetBoardListProps)
+      const res = await moduleGetFetch<BoardResponseType>(fetchGetBoardListProps)
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
-      const resBoardList = (res as SuccessResponseType<resType>).result.data
+      const resBoardList = (res as SuccessResponseType<BoardResponseType>).result.data
       if (pageSize === 1) {
-        const pageSize = Math.ceil((res as SuccessResponseType<resType>).result.total / 10)
+        const pageSize = Math.ceil(
+          (res as SuccessResponseType<BoardResponseType>).result.total / 10,
+        )
         setPageSize(pageSize)
       }
       if (selectBoard === '') {
@@ -102,6 +108,11 @@ export default function Board() {
         setBoardList(filterList)
       }
     } catch (err) {}
+  }
+
+  const isListEmpty = () => {
+    if (boardList.length !== 0) return true
+    return false
   }
   useEffect(() => {
     if (isModalOpen) {
@@ -133,7 +144,7 @@ export default function Board() {
 
       {isModalOpen ? <BoardWriteModal currentBoard={null} /> : <></>}
       <div className="md:w-4/5 w-full flex flex-col items-center">
-        {boardList.length !== 0 ? (
+        {isListEmpty() ? (
           <Pagination size={pageSize} pageNumber={pageNumber} setPageNumber={setPageNumber} />
         ) : (
           <></>

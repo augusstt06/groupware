@@ -32,7 +32,7 @@ import {
 } from '../store/reducers/main/userInfoReducer'
 import { updateLoginCompleteReducer } from '../store/reducers/maintain/maintainReducer'
 import {
-  type ApiRes,
+  type ApiResponseType,
   type CustomDecodeTokenType,
   type FailResponseType,
   type ModuleCheckUserStateProps,
@@ -66,10 +66,10 @@ export default function Main() {
 
   const fetchGetUsers = async () => {
     try {
-      const res = await moduleGetFetch<ApiRes>(getFetchUserProps)
+      const res = await moduleGetFetch<ApiResponseType>(getFetchUserProps)
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
 
-      const successRes = res as SuccessResponseType<ApiRes>
+      const successRes = res as SuccessResponseType<ApiResponseType>
       const extraUserInfoReducerProps = {
         name: successRes.result.name,
         email: successRes.result.email,

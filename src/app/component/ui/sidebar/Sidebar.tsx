@@ -30,6 +30,7 @@ export default function Sidebar() {
   const setSidebarTitle = () => {
     let extractedString: string
     const currentUrl = pathname.split('/')
+    // url의 depth가 2개이상일 경우 첫번째 string만 확인하기 위함ex) /board/detail/..., /board/announce => board
     if (currentUrl.length >= 2) {
       extractedString = currentUrl.slice(0, 2).join('/')
       switch (extractedString) {
