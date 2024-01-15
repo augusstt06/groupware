@@ -8,14 +8,12 @@ import BoardItem from '@/app/component/page/main/hub/board/BoardItem'
 // import BoardHubInput from '@/app/component/ui/input/board/BoardHubInput'
 import BoardWriteModal from '@/app/component/ui/modal/BoardWriteModal'
 import Pagination from '@/app/component/ui/pagination/Pagination'
-import Sidebar from '@/app/component/ui/sidebar/Sidebar'
 import {
-  BOARD,
   KEY_ACCESS_TOKEN,
   KEY_LOGIN_COMPLETE,
   KEY_X_ORGANIZATION_CODE,
 } from '@/app/constant/constant'
-import { API_URL_GET_MY_BOARD, API_URL_POSTINGS_MY } from '@/app/constant/route/api-route-constant'
+import { API_URL_POSTINGS_MY } from '@/app/constant/route/api-route-constant'
 // import useInput from '@/app/module/hooks/reactHooks/useInput'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleCheckUserState } from '@/app/module/utils/moduleCheckUserState'
@@ -42,7 +40,6 @@ export default function BoardCategory({ params }: { params: PageParam }) {
   // const searchInput = useInput('')
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
   const loginCompleteState = useAppSelector((state) => state.maintain[KEY_LOGIN_COMPLETE])
-  const userInfo = useAppSelector((state) => state.userInfo.extraInfo)
   const isModalOpen = useAppSelector((state) => state.openBoardWriteModal.isOpen)
   const myBoardState = useAppSelector((state) => state.boardCategory.myBoard)
 
@@ -55,7 +52,7 @@ export default function BoardCategory({ params }: { params: PageParam }) {
   })
   const [accessToken, setAccessToken] = useState(moduleGetCookie(KEY_ACCESS_TOKEN))
 
-  const [myBoardList, setMyBoardList] = useState<MyBoardType[]>([])
+  // const [myBoardList, setMyBoardList] = useState<MyBoardType[]>([])
   const [boardList, setBoardList] = useState<boardListResponsetype[]>([])
   const [pageSize, setPageSize] = useState<number>(1)
   const [pageNumber, setPageNumber] = useState<number>(0)
@@ -139,32 +136,11 @@ export default function BoardCategory({ params }: { params: PageParam }) {
   //   void fetchGetSearchPostings()
   // }
 
-  const fetchGetMyBoard = async () => {
-    try {
-      const fetchProps: ModuleGetFetchProps = {
-        params: {
-          organizationId: userInfo.organizationId,
-        },
-        fetchUrl: API_URL_GET_MY_BOARD,
-        header: {
-          Authorization: `Bearer ${accessToken}`,
-          [KEY_X_ORGANIZATION_CODE]: orgCode,
-        },
-      }
-      const res = await moduleGetFetch<MyBoardType[]>(fetchProps)
-      if (res.status !== 200) throw new Error((res as FailResponseType).message)
-      const boardMenu = (res as SuccessResponseType<MyBoardType[]>).result
-
-      setMyBoardList(boardMenu)
-    } catch (err) {}
-  }
-
   useEffect(() => {
     if (isModalOpen) {
       dispatch(openBoardWriteModalReducer())
     }
     convertBoardId()
-    void fetchGetMyBoard()
     void fetchGetBoardPostings()
     const moduleProps: ModuleCheckUserStateProps = {
       useRouter: router,
@@ -177,38 +153,35 @@ export default function BoardCategory({ params }: { params: PageParam }) {
   }, [currentBoard, pageNumber, pageSize])
 
   return (
-    <main className="w-full grid gap-4 grid-cols-4 h-4/5 pt-24 md:ml-10 md:mr-10 ml-5 z-1">
-      <Sidebar title={BOARD} myBoardList={myBoardList} />
-      <div className="md:col-span-3 mr-10 col-span-4">
-        <div className="md:w-4/5 w-full flex flex-col items-center">
-          <div className="w-full p-2 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mb-5">
-            <div className="p-2 font-bold md:text-lg text-base">
-              <span>{currentBoard.name}</span>
-            </div>
-
-            {/* <BoardHubInput searchInput={searchInput} clickSearchPostings={clickSearchPostings} /> */}
-
-            {boardList.length !== 0 ? (
-              boardList.map((data) => (
-                <BoardItem
-                  key={data.id}
-                  boardListItem={data}
-                  isCurrent={isCurrentPost(data.createdAt)}
-                />
-              ))
-            ) : (
-              <div className="p-10 text-center">게시글이 없습니다.</div>
-            )}
+    <main className="md:w-[50rem] w-[35rem] h-4/5 flex flex-col z-1 items-center">
+      <div className="md:w-4/5 w-full flex flex-col items-center">
+        <div className="w-full p-2 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mb-5">
+          <div className="p-2 font-bold md:text-lg text-base">
+            <span>{currentBoard.name}</span>
           </div>
-          {boardList !== undefined ? (
-            <Pagination size={pageSize} pageNumber={pageNumber} setPageNumber={setPageNumber} />
+
+          {/* <BoardHubInput searchInput={searchInput} clickSearchPostings={clickSearchPostings} /> */}
+
+          {boardList.length !== 0 ? (
+            boardList.map((data) => (
+              <BoardItem
+                key={data.id}
+                boardListItem={data}
+                isCurrent={isCurrentPost(data.createdAt)}
+              />
+            ))
           ) : (
-            <></>
+            <div className="p-10 text-center">게시글이 없습니다.</div>
           )}
         </div>
-
-        {isModalOpen ? <BoardWriteModal currentBoard={currentBoard} /> : <></>}
+        {boardList !== undefined ? (
+          <Pagination size={pageSize} pageNumber={pageNumber} setPageNumber={setPageNumber} />
+        ) : (
+          <></>
+        )}
       </div>
+
+      {isModalOpen ? <BoardWriteModal currentBoard={currentBoard} /> : <></>}
     </main>
   )
 }
