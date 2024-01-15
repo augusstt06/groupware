@@ -17,7 +17,7 @@ export default function BoardTab(props: BoardTabProps) {
       <div className="mt-2 mb-2">
         <span className="md:text-lg text-base">{props.title}</span>
       </div>
-      <ul className="flex flex-row justify-around -mb-px">
+      <ul className="flex flex-row justify-around">
         <li className={entireBoardClassName}>
           <a
             className="text-xs md:text-medium inline-block md:p-4 p-3 rounded-t-lg"

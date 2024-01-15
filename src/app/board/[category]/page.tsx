@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 
 import BoardItem from '@/app/component/page/main/hub/board/BoardItem'
-// import BoardHubInput from '@/app/component/ui/input/board/BoardHubInput'
+import BoardHubInput from '@/app/component/ui/input/board/BoardHubInput'
 import BoardWriteModal from '@/app/component/ui/modal/BoardWriteModal'
 import Pagination from '@/app/component/ui/pagination/Pagination'
 import {
@@ -13,8 +13,8 @@ import {
   KEY_LOGIN_COMPLETE,
   KEY_X_ORGANIZATION_CODE,
 } from '@/app/constant/constant'
-import { API_URL_POSTINGS_MY } from '@/app/constant/route/api-route-constant'
-// import useInput from '@/app/module/hooks/reactHooks/useInput'
+import { API_URL_POSTINGS_LIST, API_URL_POSTINGS_MY } from '@/app/constant/route/api-route-constant'
+import useInput from '@/app/module/hooks/reactHooks/useInput'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleCheckUserState } from '@/app/module/utils/moduleCheckUserState'
 import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
@@ -37,7 +37,7 @@ export default function BoardCategory({ params }: { params: PageParam }) {
   const dispatch = useAppDispatch()
   const router = useRouter()
   const pathname = usePathname()
-  // const searchInput = useInput('')
+  const searchInput = useInput('')
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
   const loginCompleteState = useAppSelector((state) => state.maintain[KEY_LOGIN_COMPLETE])
   const isModalOpen = useAppSelector((state) => state.openBoardWriteModal.isOpen)
@@ -52,7 +52,6 @@ export default function BoardCategory({ params }: { params: PageParam }) {
   })
   const [accessToken, setAccessToken] = useState(moduleGetCookie(KEY_ACCESS_TOKEN))
 
-  // const [myBoardList, setMyBoardList] = useState<MyBoardType[]>([])
   const [boardList, setBoardList] = useState<boardListResponsetype[]>([])
   const [pageSize, setPageSize] = useState<number>(1)
   const [pageNumber, setPageNumber] = useState<number>(0)
@@ -110,31 +109,30 @@ export default function BoardCategory({ params }: { params: PageParam }) {
     } catch (err) {}
   }
 
-  // const fetchGetSearchPostings = async () => {
-  //   try {
-  //     const boardId = convertBoardId()
-  //     const fetchSeachPostingsProps: ModuleGetFetchProps = {
-  //       params: {
-  //         organizationBoardId: boardId,
-  //         limit: 10,
-  //         offset: 10 * pageNumber,
-  //         keyword: searchInput.value,
-  //       },
-  //       fetchUrl: API_URL_BOARD_ORG_LIST,
-  //       header: {
-  //         Authorization: `Bearer ${accessToken}`,
-  //         [KEY_X_ORGANIZATION_CODE]: orgCode,
-  //       },
-  //     }
-  //     const res = await moduleGetFetch<ApiRes[] | resType>(fetchSeachPostingsProps)
-  //     if (res.status !== 200) throw new Error((res as FailResponseType).message)
-  //     const resSearchBoardList = (res as SuccessResponseType<resType>).result.data
-  //     setBoardList(resSearchBoardList)
-  //   } catch (err) {}
-  // }
-  // const clickSearchPostings = () => {
-  //   void fetchGetSearchPostings()
-  // }
+  const fetchGetSearchPostings = async () => {
+    try {
+      const fetchSeachPostingsProps: ModuleGetFetchProps = {
+        params: {
+          boardId: currentBoard.id,
+          limit: 10,
+          offset: 10 * pageNumber,
+          keyword: searchInput.value,
+        },
+        fetchUrl: API_URL_POSTINGS_LIST,
+        header: {
+          Authorization: `Bearer ${accessToken}`,
+          [KEY_X_ORGANIZATION_CODE]: orgCode,
+        },
+      }
+      const res = await moduleGetFetch<resType>(fetchSeachPostingsProps)
+      if (res.status !== 200) throw new Error((res as FailResponseType).message)
+      const resSearchBoardList = (res as SuccessResponseType<resType>).result.data
+      setBoardList(resSearchBoardList)
+    } catch (err) {}
+  }
+  const clickSearchPostings = () => {
+    void fetchGetSearchPostings()
+  }
 
   useEffect(() => {
     if (isModalOpen) {
@@ -160,7 +158,7 @@ export default function BoardCategory({ params }: { params: PageParam }) {
             <span>{currentBoard.name}</span>
           </div>
 
-          {/* <BoardHubInput searchInput={searchInput} clickSearchPostings={clickSearchPostings} /> */}
+          <BoardHubInput searchInput={searchInput} clickSearchPostings={clickSearchPostings} />
 
           {boardList.length !== 0 ? (
             boardList.map((data) => (

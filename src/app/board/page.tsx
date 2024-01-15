@@ -29,6 +29,7 @@ import {
 import { type boardListResponsetype, type MyBoardType, type resType } from '../types/variableTypes'
 
 import { openBoardWriteModalReducer } from '@/app/store/reducers/board/openBoardWriteModalReducer'
+
 export default function Board() {
   const router = useRouter()
   const dispatch = useAppDispatch()
