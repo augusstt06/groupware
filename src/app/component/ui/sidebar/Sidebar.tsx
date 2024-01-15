@@ -2,7 +2,6 @@
 import { useEffect, useState } from 'react'
 
 import { usePathname } from 'next/navigation'
-import { GoSidebarCollapse, GoSidebarExpand } from 'react-icons/go'
 
 import MainSidebarCardGroup from '../card/sidebar/MainSidebarCardGroup'
 
@@ -27,12 +26,7 @@ export default function Sidebar() {
   const [myBoardList, setMyBoardList] = useState<MyBoardType[]>([])
   const [reRender, setRerender] = useState(false)
   const [isSideOpen, setIsSideOpen] = useState(false)
-  const clickSideOpen = () => {
-    if (isSideOpen) setIsSideOpen(false)
-    else {
-      setIsSideOpen(true)
-    }
-  }
+
   const setSidebarTitle = () => {
     let extractedString: string
     const currentUrl = pathname.split('/')
@@ -72,12 +66,17 @@ export default function Sidebar() {
   }, [])
   return (
     <>
-      <div className="md:hidden fixed top-16 ml-5 transition ease-in-out duration-600 hover:scale-125 z-2">
-        {!isSideOpen ? (
-          <GoSidebarCollapse className="w-6 h-6  hover:text-indigo-400" onClick={clickSideOpen} />
-        ) : (
-          <GoSidebarExpand className="w-6 h-6 hover:text-indigo-400 " onClick={clickSideOpen} />
-        )}
+      <div className="md:hidden fixed top-16 ml-5 z-2">
+        <label className="relative inline-flex items-center cursor-pointer">
+          <input
+            type="checkbox"
+            className="sr-only peer"
+            onClick={() => {
+              setIsSideOpen(!isSideOpen)
+            }}
+          />
+          <div className="w-11 h-6 bg-gray-400 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-indigo-400"></div>
+        </label>
       </div>
 
       <div
