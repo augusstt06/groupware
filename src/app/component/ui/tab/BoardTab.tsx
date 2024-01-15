@@ -3,12 +3,12 @@ import { type BoardTabProps } from '@/app/types/ui/uiTypes'
 export default function BoardTab(props: BoardTabProps) {
   const entireBoardClassName =
     props.selectBoard === ''
-      ? 'me-2 scale-110 border-b-2 border-indigo-400'
-      : 'me-2 transition ease-in-out duration-300 hover:scale-110 '
+      ? 'me-2  border-b-2 border-indigo-400'
+      : 'me-2 transition ease-in-out duration-300 hover:scale-110'
   const otherBoardClassName = (name: string) => {
     const className =
       props.selectBoard === name
-        ? 'me-2 scale-110 border-b-2 border-indigo-400'
+        ? 'me-2  border-b-2 border-indigo-400'
         : 'me-2 transition ease-in-out duration-300 hover:scale-110 '
     return className
   }

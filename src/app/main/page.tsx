@@ -4,14 +4,12 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 
 import MainHub from '../component/page/main/hub/MainHub'
-import Sidebar from '../component/ui/sidebar/Sidebar'
 import {
   FALSE,
   KEY_ACCESS_TOKEN,
   KEY_LOGIN_COMPLETE,
   KEY_UUID,
   KEY_X_ORGANIZATION_CODE,
-  MAIN,
   TODO,
 } from '../constant/constant'
 import { ERR_COOKIE_NOT_FOUND, ERR_ORG_NOT_FOUND } from '../constant/errorMsg'
@@ -122,13 +120,8 @@ export default function Main() {
   }, [accessToken])
 
   return (
-    <>
-      <main className="w-full grid gap-4 grid-cols-4 h-4/5 pt-24 md:ml-10 md:mr-10 ml-5 z-1">
-        <Sidebar title={MAIN} myBoardList={[]} />
-        <div className="md:col-span-3 mr-10 col-span-4">
-          <MainHub title={TODO} />
-        </div>
-      </main>
-    </>
+    <main className="md:w-[50rem] w-[35rem] h-4/5 flex flex-col z-1 items-center">
+      <MainHub title={TODO} />
+    </main>
   )
 }

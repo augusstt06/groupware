@@ -14,7 +14,7 @@ export type ProgressbarProps = {
 }
 
 export type SidebarProps = {
-  title: string
+  // title: string
   myBoardList: MyBoardType[]
 }
 

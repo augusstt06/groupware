@@ -7,13 +7,7 @@ import { useRouter } from 'next/navigation'
 import BoardHub from '../component/page/main/hub/board/BoardHub'
 import BoardWriteModal from '../component/ui/modal/BoardWriteModal'
 import Pagination from '../component/ui/pagination/Pagination'
-import Sidebar from '../component/ui/sidebar/Sidebar'
-import {
-  BOARD,
-  KEY_ACCESS_TOKEN,
-  KEY_LOGIN_COMPLETE,
-  KEY_X_ORGANIZATION_CODE,
-} from '../constant/constant'
+import { KEY_ACCESS_TOKEN, KEY_LOGIN_COMPLETE, KEY_X_ORGANIZATION_CODE } from '../constant/constant'
 import { API_URL_GET_MY_BOARD, API_URL_POSTINGS_MY } from '../constant/route/api-route-constant'
 import { useAppDispatch, useAppSelector } from '../module/hooks/reduxHooks'
 import { moduleCheckUserState } from '../module/utils/moduleCheckUserState'
@@ -127,25 +121,22 @@ export default function Board() {
     moduleCheckUserState(moduleProps)
   }, [selectBoard])
   return (
-    <main className="w-full grid gap-4 grid-cols-4 h-4/5 pt-24 md:ml-10 md:mr-10 ml-5 z-1 ">
-      <Sidebar title={BOARD} myBoardList={myBoardList} />
-      <div className="md:col-span-3 mr-10 col-span-4">
-        <BoardHub
-          title="게시판"
-          boardList={boardList}
-          myBoardList={myBoardList}
-          selectBoard={selectBoard}
-          changeBoard={changeBoard}
-        />
+    <main className="md:w-[50rem] w-[35rem] h-4/5 flex flex-col items-center">
+      <BoardHub
+        title="게시판"
+        boardList={boardList}
+        myBoardList={myBoardList}
+        selectBoard={selectBoard}
+        changeBoard={changeBoard}
+      />
 
-        {isModalOpen ? <BoardWriteModal currentBoard={null} /> : <></>}
-        <div className="md:w-4/5 w-full flex flex-col items-center">
-          {boardList.length !== 0 ? (
-            <Pagination size={pageSize} pageNumber={pageNumber} setPageNumber={setPageNumber} />
-          ) : (
-            <></>
-          )}
-        </div>
+      {isModalOpen ? <BoardWriteModal currentBoard={null} /> : <></>}
+      <div className="md:w-4/5 w-full flex flex-col items-center">
+        {boardList.length !== 0 ? (
+          <Pagination size={pageSize} pageNumber={pageNumber} setPageNumber={setPageNumber} />
+        ) : (
+          <></>
+        )}
       </div>
     </main>
   )
