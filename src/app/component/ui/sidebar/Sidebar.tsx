@@ -3,11 +3,17 @@ import { useEffect, useState } from 'react'
 
 import { usePathname } from 'next/navigation'
 
-import MainSidebarCardGroup from '../card/sidebar/MainSidebarCardGroup'
+import SidebarCardGroup from '../card/sidebar/SidebarCardGroup'
 
-import { BOARD, KEY_ACCESS_TOKEN, KEY_X_ORGANIZATION_CODE, MAIN } from '@/app/constant/constant'
+import {
+  BOARD,
+  KEY_ACCESS_TOKEN,
+  KEY_X_ORGANIZATION_CODE,
+  MAIN,
+  PROJECT,
+} from '@/app/constant/constant'
 import { API_URL_GET_MY_BOARD } from '@/app/constant/route/api-route-constant'
-import { ROUTE_BOARD, ROUTE_MAIN } from '@/app/constant/route/route-constant'
+import { ROUTE_BOARD, ROUTE_MAIN, ROUTE_PROJECT } from '@/app/constant/route/route-constant'
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
 import { moduleGetFetch } from '@/app/module/utils/moduleFetch'
@@ -38,6 +44,8 @@ export default function Sidebar() {
           return MAIN
         case ROUTE_BOARD:
           return BOARD
+        case ROUTE_PROJECT:
+          return PROJECT
         default:
           return MAIN
       }
@@ -85,7 +93,7 @@ export default function Sidebar() {
           isSideOpen ? 'md:bg-none bg-white dark:bg-[#121212] rounded-lg z-999' : 'hidden'
         }`}
       >
-        <MainSidebarCardGroup
+        <SidebarCardGroup
           title={setSidebarTitle()}
           reRender={reRender}
           setRerender={setRerender}
