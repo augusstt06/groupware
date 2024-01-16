@@ -15,14 +15,14 @@ import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
 import { moduleGetFetch } from '@/app/module/utils/moduleFetch'
 import { moduleConvertTime } from '@/app/module/utils/moduleTime'
 import {
-  type ApiRes,
+  type ApiResponseType,
   type FailResponseType,
   type ModuleGetFetchProps,
   type SuccessResponseType,
 } from '@/app/types/moduleTypes'
 
 export default function AttendanceHistory() {
-  const [attendanceHistory, setAttendanceHistory] = useState<ApiRes[]>([])
+  const [attendanceHistory, setAttendanceHistory] = useState<ApiResponseType[]>([])
   const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
   const userInfo = useAppSelector((state) => state.userInfo)
 
@@ -51,9 +51,9 @@ export default function AttendanceHistory() {
           [KEY_X_ORGANIZATION_CODE]: userInfo[KEY_X_ORGANIZATION_CODE],
         },
       }
-      const res = await moduleGetFetch<ApiRes[]>(fetchHistoryProps)
+      const res = await moduleGetFetch<ApiResponseType[]>(fetchHistoryProps)
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
-      const resArr = (res as SuccessResponseType<ApiRes[]>).result
+      const resArr = (res as SuccessResponseType<ApiResponseType[]>).result
       setAttendanceHistory(resArr)
     } catch (err) {}
   }

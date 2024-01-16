@@ -1,6 +1,6 @@
 import { type Dispatch, type SetStateAction } from 'react'
 
-import { type boardListResponsetype, type MyBoardType } from '../variableTypes'
+import { type BoardListResponsetype, type MyBoardType } from '../variableTypes'
 
 export type TaskCardProps = {
   title: string
@@ -27,7 +27,7 @@ export type TodoCardType = {
   // content: boardListResponsetype
 }
 export type BoardCardType = {
-  content: boardListResponsetype
+  content: BoardListResponsetype
 }
 
 export type MainSidebarCardGroupProps = {

@@ -15,7 +15,7 @@ import { useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
 import { modulePostFetch, modulePostFileFetch } from '@/app/module/utils/moduleFetch'
 import {
-  type ApiRes,
+  type ApiResponseType,
   type FailResponseType,
   type ModulePostFetchProps,
   type ModulePostFileFetchProps,
@@ -85,7 +85,7 @@ export default function WriteComment(props: WriteCommentProps) {
 
   const fetchPostComment = async () => {
     try {
-      const res = await modulePostFetch<ApiRes>(fetchPostCommentProps)
+      const res = await modulePostFetch<ApiResponseType>(fetchPostCommentProps)
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
       commentInput.resetValue()
       setInputCount(0)

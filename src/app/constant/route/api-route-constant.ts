@@ -36,6 +36,7 @@ export const API_URL_POSTINGS_MY = process.env.NEXT_PUBLIC_POSTINGS_MY_SOURCE as
 export const API_URL_POSTINGS_LIKE = process.env.NEXT_PUBLIC_POSTINGS_LIKE_SOURCE as string
 export const API_URL_POSTINGS_UNLIKE = process.env.NEXT_PUBLIC_POSTINGS_UNLIKE_SOURCE as string
 export const API_URL_POSTINGS_PENDING = process.env.NEXT_PUBLIC_POSTINGS_PENDING_SOURCE as string
+export const API_URL_POSTINGS_LIST = process.env.NEXT_PUBLIC_POSTINGS_LIST_SOURCE as string
 
 // Comment
 export const API_URL_COMMENT = process.env.NEXT_PUBLIC_COMMENT_SOURCE as string

@@ -38,6 +38,7 @@ export const KEY_ORGANIZATION_COMPLETE = 'organization-complete'
 export const KEY_ATTENDANCE = 'attendance'
 export const KEY_LOGIN_COMPLETE = 'login-complete'
 
+export const DEFAULT = '/'
 export const MAIN = 'main'
 export const BOARD = 'board'
 export const TODO = 'TODO'
