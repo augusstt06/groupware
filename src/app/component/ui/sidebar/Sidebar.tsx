@@ -1,48 +1,95 @@
 'use client'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
-import { TbSquareArrowLeftFilled, TbSquareArrowRightFilled } from 'react-icons/tb'
+import { usePathname } from 'next/navigation'
 
 import MainSidebarCardGroup from '../card/sidebar/MainSidebarCardGroup'
 
-import { type SidebarProps } from '@/app/types/ui/uiTypes'
+import { BOARD, KEY_ACCESS_TOKEN, KEY_X_ORGANIZATION_CODE, MAIN } from '@/app/constant/constant'
+import { API_URL_GET_MY_BOARD } from '@/app/constant/route/api-route-constant'
+import { ROUTE_BOARD, ROUTE_MAIN } from '@/app/constant/route/route-constant'
+import { useAppSelector } from '@/app/module/hooks/reduxHooks'
+import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
+import { moduleGetFetch } from '@/app/module/utils/moduleFetch'
+import {
+  type FailResponseType,
+  type ModuleGetFetchProps,
+  type SuccessResponseType,
+} from '@/app/types/moduleTypes'
+import { type MyBoardType } from '@/app/types/variableTypes'
 
-export default function Sidebar(props: SidebarProps) {
+export default function Sidebar() {
+  const pathname = usePathname()
+  const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
+  const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
+  const userInfo = useAppSelector((state) => state.userInfo.extraInfo)
+  const [myBoardList, setMyBoardList] = useState<MyBoardType[]>([])
   const [reRender, setRerender] = useState(false)
   const [isSideOpen, setIsSideOpen] = useState(false)
-  const clickSideOpen = () => {
-    if (isSideOpen) setIsSideOpen(false)
-    else {
-      setIsSideOpen(true)
+
+  const setSidebarTitle = () => {
+    let extractedString: string
+    const currentUrl = pathname.split('/')
+    // url의 depth가 2개이상일 경우 첫번째 string만 확인하기 위함ex) /board/detail/..., /board/announce => board
+    if (currentUrl.length >= 2) {
+      extractedString = currentUrl.slice(0, 2).join('/')
+      switch (extractedString) {
+        case ROUTE_MAIN:
+          return MAIN
+        case ROUTE_BOARD:
+          return BOARD
+        default:
+          return MAIN
+      }
     }
+    return MAIN
   }
+  const fetchGetMyBoardList = async () => {
+    try {
+      const fetchProps: ModuleGetFetchProps = {
+        params: {
+          organizationId: userInfo.organizationId,
+        },
+        fetchUrl: API_URL_GET_MY_BOARD,
+        header: {
+          Authorization: `Bearer ${accessToken}`,
+          [KEY_X_ORGANIZATION_CODE]: orgCode,
+        },
+      }
+      const res = await moduleGetFetch<MyBoardType[]>(fetchProps)
+      if (res.status !== 200) throw new Error((res as FailResponseType).message)
+      const boardMenu = (res as SuccessResponseType<MyBoardType[]>).result
+      setMyBoardList(boardMenu)
+    } catch (err) {}
+  }
+  useEffect(() => {
+    void fetchGetMyBoardList()
+  }, [])
   return (
     <>
-      {!isSideOpen ? (
-        <TbSquareArrowRightFilled
-          className="md:hidden w-8 h-8 absolute top-1/2 dark:text-gray-300 left-0"
-          onClick={clickSideOpen}
-        />
-      ) : (
-        <TbSquareArrowLeftFilled
-          className="md:hidden w-8 h-8 absolute top-1/2 dark:text-gray-300 left-40"
-          onClick={clickSideOpen}
-        />
-      )}
+      <div className="md:hidden fixed top-16 ml-5 z-2">
+        <label className="relative inline-flex items-center cursor-pointer">
+          <input
+            type="checkbox"
+            className="sr-only peer"
+            onClick={() => {
+              setIsSideOpen(!isSideOpen)
+            }}
+          />
+          <div className="w-11 h-6 bg-gray-400 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-indigo-400"></div>
+        </label>
+      </div>
 
-      {/* FIXME: sidebar도 fixed로 바꾸기 */}
       <div
-        className={`md:static col-span-1 w-40 md:w-5/6 md:block ${
-          isSideOpen
-            ? 'absolute md:bg-none bg-white dark:bg-[#1a202c] top-14 p-2 left-0 z-10'
-            : 'hidden'
+        className={`fixed md:block md:top-24 top-28 md:w-56 w-40 md:ml-10 ml-5 mr-14 ${
+          isSideOpen ? 'md:bg-none bg-white dark:bg-[#121212] rounded-lg z-999' : 'hidden'
         }`}
       >
         <MainSidebarCardGroup
-          title={props.title}
+          title={setSidebarTitle()}
           reRender={reRender}
           setRerender={setRerender}
-          myBoardList={props.myBoardList}
+          myBoardList={myBoardList}
         />
       </div>
     </>

@@ -11,16 +11,13 @@ import Comment from '@/app/component/page/board/comment/Comment'
 import WriteComment from '@/app/component/page/board/comment/WriteComment'
 import PostingDetailHeader from '@/app/component/page/board/detail/PostingDetailHeader'
 import BoardWriteModal from '@/app/component/ui/modal/BoardWriteModal'
-import Sidebar from '@/app/component/ui/sidebar/Sidebar'
 import {
-  BOARD,
   KEY_ACCESS_TOKEN,
   KEY_LOGIN_COMPLETE,
   KEY_X_ORGANIZATION_CODE,
 } from '@/app/constant/constant'
 import { errDefault } from '@/app/constant/errorMsg'
 import {
-  API_URL_GET_MY_BOARD,
   API_URL_POSTINGS,
   API_URL_POSTINGS_LIKE,
   API_URL_POSTINGS_UNLIKE,
@@ -44,11 +41,7 @@ import {
   type ModulePostFetchProps,
   type SuccessResponseType,
 } from '@/app/types/moduleTypes'
-import {
-  type CommentType,
-  type DetailResponseType,
-  type MyBoardType,
-} from '@/app/types/variableTypes'
+import { type CommentType, type DetailResponseType } from '@/app/types/variableTypes'
 
 const Viewbox = dynamic(async () => import('../../../component/ui/editor/TextViewer'), {
   ssr: false,
@@ -65,7 +58,6 @@ export default function BoardDetail() {
   const [accessToken, setAccessToken] = useState(moduleGetCookie(KEY_ACCESS_TOKEN))
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
   const loginCompleteState = useAppSelector((state) => state.maintain[KEY_LOGIN_COMPLETE])
-  const [myBoardList, setMyBoardList] = useState<MyBoardType[]>([])
   const [isRerender, setIsRerender] = useState<boolean>(false)
   const [postId, setPostId] = useState<string>('')
   const isModalOpen = useAppSelector((state) => state.openBoardWriteModal.isOpen)
@@ -179,24 +171,6 @@ export default function BoardDetail() {
   const clickDelete = () => {
     void fetchDeletePostings()
   }
-  const fetchGetBoardOrgCategoryList = async () => {
-    try {
-      const fetchProps: ModuleGetFetchProps = {
-        params: {
-          organizationId: userInfo.organizationId,
-        },
-        fetchUrl: API_URL_GET_MY_BOARD,
-        header: {
-          Authorization: `Bearer ${accessToken}`,
-          [KEY_X_ORGANIZATION_CODE]: orgCode,
-        },
-      }
-      const res = await moduleGetFetch<MyBoardType[]>(fetchProps)
-      if (res.status !== 200) throw new Error((res as FailResponseType).message)
-      const boardMenu = (res as SuccessResponseType<MyBoardType[]>).result
-      setMyBoardList(boardMenu)
-    } catch (err) {}
-  }
 
   useEffect(() => {
     setPostId(param.id.toString())
@@ -215,8 +189,6 @@ export default function BoardDetail() {
       void fetchGetPostingDetail(fetchGetPostingDetailProps)
     }
 
-    void fetchGetBoardOrgCategoryList()
-
     if (errorState.isError) {
       router.push(ROUTE_ERR_NOT_FOUND_POSTING_DETAIL)
     }
@@ -234,8 +206,7 @@ export default function BoardDetail() {
   return (
     <>
       {content != null ? (
-        <main className="w-full grid gap-4 grid-cols-4 h-4/5 pt-24 pb-10 md:ml-10 md:mr-10 ml-5 z-1">
-          <Sidebar title={BOARD} myBoardList={myBoardList} />
+        <main className="md:w-[50rem] w-[35rem] h-4/5 flex flex-col z-1 items-center">
           <div className="w-4/5 rounded md:col-span-3 mr-10 col-span-4 bg-white dark:bg-gray-700 dark:text-white p-5 border-2">
             <PostingDetailHeader
               moveBoardListPage={moveBoardListPage}

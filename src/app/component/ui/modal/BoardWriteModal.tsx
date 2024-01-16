@@ -21,7 +21,7 @@ import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
 import { moduleDeleteFetch, moduleGetFetch, modulePostFetch } from '@/app/module/utils/moduleFetch'
 import { openBoardWriteModalReducer } from '@/app/store/reducers/board/openBoardWriteModalReducer'
 import {
-  type ApiRes,
+  type ApiResponseType,
   type FailResponseType,
   type ModuleCheckContentIsEmptyProps,
   type ModuleGetFetchProps,
@@ -31,8 +31,8 @@ import {
 import { type BoardWriteModalprops } from '@/app/types/ui/modalTypes'
 import {
   type AlertStateType,
-  type boardListResponsetype,
-  type resType,
+  type BoardListResponsetype,
+  type BoardResponseType,
 } from '@/app/types/variableTypes'
 
 const Editor = dynamic(async () => import('../editor/TextEditor'), {
@@ -53,7 +53,7 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
   const [editorContent, setEditorContent] = useState('')
   const [thumbNailUrl, setThumbNailUrl] = useState<string | null>(null)
   const [saveContent, setSaveContent] = useState('')
-  const [saveList, setSaveList] = useState<boardListResponsetype[]>([])
+  const [saveList, setSaveList] = useState<BoardListResponsetype[]>([])
   const [rerender, setRerender] = useState<boolean>(false)
 
   const [isOpenSaveList, setIsOpenSaveList] = useState<boolean>(false)
@@ -107,9 +107,9 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
           [KEY_X_ORGANIZATION_CODE]: userInfo[KEY_X_ORGANIZATION_CODE],
         },
       }
-      const res = await moduleGetFetch<resType>(fetchProps)
+      const res = await moduleGetFetch<BoardResponseType>(fetchProps)
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
-      const postingList = (res as SuccessResponseType<resType>).result.data
+      const postingList = (res as SuccessResponseType<BoardResponseType>).result.data
       setSaveList(postingList)
     } catch (err) {}
   }
@@ -152,7 +152,7 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
         },
       }
 
-      const res = await modulePostFetch<ApiRes>(fetchProps)
+      const res = await modulePostFetch<ApiResponseType>(fetchProps)
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
       setIsAlertModalOpen(false)
       setRerender(!rerender)
@@ -206,7 +206,7 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
           [KEY_X_ORGANIZATION_CODE]: userInfo[KEY_X_ORGANIZATION_CODE],
         },
       }
-      const res = await modulePostFetch<ApiRes>(fetchProps)
+      const res = await modulePostFetch<ApiResponseType>(fetchProps)
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
       // const detailUrl = (res as SuccessResponseType<ApiRes>).result.id
       dispatch(openBoardWriteModalReducer())
@@ -228,7 +228,7 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
   const handleClickOpenSaveList = () => {
     setIsOpenSaveList(!isOpenSaveList)
   }
-  const loadSaveData = (data: boardListResponsetype) => {
+  const loadSaveData = (data: BoardListResponsetype) => {
     setSelect(data.boardId.toString())
     setSaveContent(data.content)
     titleInput.setString(data.title)

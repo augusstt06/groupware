@@ -2,7 +2,7 @@
 
 export type DecodeType = { uuid: string; iss: string; iat: number; exp: number }
 
-export type boardListResponsetype = {
+export type BoardListResponsetype = {
   boardId: number
   content: string
   createdAt: string
@@ -40,18 +40,10 @@ export type CommentType = {
   writerId: number
 }
 
-export type resType = {
-  data: [boardListResponsetype]
+export type BoardResponseType = {
+  data: [BoardListResponsetype]
   total: number
   size: number
-}
-
-export type boardResType = {
-  createdAt: string
-  id: number
-  name: string
-  organizationId: number
-  updatedAt: string
 }
 
 export type AlertStateType = {

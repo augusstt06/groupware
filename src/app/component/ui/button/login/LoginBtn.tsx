@@ -15,7 +15,7 @@ import inputValidate from '@/app/module/utils/moduleInputValidate'
 import { resetLoginReducer } from '@/app/store/reducers/login/loginInfoReducer'
 import { updateLoginCompleteReducer } from '@/app/store/reducers/maintain/maintainReducer'
 import {
-  type ApiRes,
+  type ApiResponseType,
   type FailResponseType,
   type ModulePostFetchProps,
   type SuccessResponseType,
@@ -46,10 +46,10 @@ export default function LoginBtn(props: LoginBtnProps) {
         props.setErrMsg('이메일 형식이 잘못되었습니다. xxx@xxx.xxx 의 형태로 입력해주세요')
         return
       }
-      const loginRes = await modulePostFetch<ApiRes>(fetchLoginProps)
+      const loginRes = await modulePostFetch<ApiResponseType>(fetchLoginProps)
       if (loginRes.status !== 200) throw new Error((loginRes as FailResponseType).message)
       moduleSetCookies({
-        [KEY_ACCESS_TOKEN]: (loginRes as SuccessResponseType<ApiRes>).result.accessToken,
+        [KEY_ACCESS_TOKEN]: (loginRes as SuccessResponseType<ApiResponseType>).result.accessToken,
       })
 
       dispatch(updateLoginCompleteReducer(TRUE))

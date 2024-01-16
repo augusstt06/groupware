@@ -82,7 +82,7 @@ export default function GlobalNavigationbar() {
             >
               <div
                 id="mega-menu-icons"
-                className="flex md:flex-row flex-col justify-center items-center w-full "
+                className="flex md:flex-row flex-col justify-center items-center w-full dark:bg-[#1a202c] bg-white"
                 ref={dropRef}
               >
                 <GnbCategoryMenu />

@@ -9,7 +9,7 @@ import { type AlertStateType } from './variableTypes'
 
 export type UnionStrNumber = string | number
 
-export type ApiRes = Record<string, UnionStrNumber>
+export type ApiResponseType = Record<string, UnionStrNumber>
 
 export type SuccessResponseType<T> = {
   status: number

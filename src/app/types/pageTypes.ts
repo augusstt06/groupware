@@ -1,6 +1,6 @@
 import { type Dispatch, type SetStateAction } from 'react'
 
-import { type boardListResponsetype, type CommentType } from './variableTypes'
+import { type BoardListResponsetype, type CommentType } from './variableTypes'
 
 export type ReactProps = {
   children: React.ReactNode
@@ -29,8 +29,11 @@ export type PageParam = {
   category: string
 }
 
+export type BoardItemHubProps = {
+  boardList: BoardListResponsetype[]
+}
 export type BoardItemProps = {
-  boardListItem: boardListResponsetype
+  boardListItem: BoardListResponsetype
   isCurrent: boolean
 }
 

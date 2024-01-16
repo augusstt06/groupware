@@ -7,7 +7,7 @@ import { KEY_ACCESS_TOKEN } from '@/app/constant/constant'
 import { ERR_COOKIE_NOT_FOUND } from '@/app/constant/errorMsg'
 import { API_URL_REFRESH } from '@/app/constant/route/api-route-constant'
 import {
-  type ApiRes,
+  type ApiResponseType,
   type CustomDecodeTokenType,
   type FailResponseType,
   type ModulePostFetchProps,
@@ -48,7 +48,7 @@ export const moduleRefreshToken = async (accessToken: string) => {
         Authorization: `Bearer ${accessToken}`,
       },
     }
-    const res = await modulePostFetch<ApiRes>(refreshProps)
+    const res = await modulePostFetch<ApiResponseType>(refreshProps)
     if (res.status !== 200) throw new Error((res as FailResponseType).message)
   } catch (err) {
     moduleDeleteCookies(KEY_ACCESS_TOKEN)

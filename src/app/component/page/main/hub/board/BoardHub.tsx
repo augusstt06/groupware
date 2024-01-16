@@ -3,6 +3,7 @@ import BoardTab from '@/app/component/ui/tab/BoardTab'
 import { type BoardHubProps } from '@/app/types/ui/uiTypes'
 
 export default function BoardHub(props: BoardHubProps) {
+  // FIXME: 카테고리 많아질 경우 처리해놓기
   return (
     <div className="md:w-4/5 w-full flex flex-col items-center">
       <BoardTab

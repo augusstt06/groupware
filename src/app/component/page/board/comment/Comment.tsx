@@ -17,7 +17,7 @@ import {
   deleteCommentLikeReducer,
 } from '@/app/store/reducers/board/boardLikeReducer'
 import {
-  type ApiRes,
+  type ApiResponseType,
   type FailResponseType,
   type ModuleGetFetchProps,
   type ModulePostFetchProps,
@@ -48,7 +48,7 @@ export default function Comment(props: CommentProps) {
   }
   const fetchCommentLike = async () => {
     try {
-      const res = await modulePostFetch<ApiRes>(fetchPostLikeProps)
+      const res = await modulePostFetch<ApiResponseType>(fetchPostLikeProps)
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
       dispatch(addCommentLikeReducer(props.comments.id))
       props.doRerender()
@@ -66,7 +66,7 @@ export default function Comment(props: CommentProps) {
   }
   const fetchDeleteLike = async () => {
     try {
-      const res = await moduleDeleteFetch<ApiRes>(fetchDeleteLikeProps)
+      const res = await moduleDeleteFetch<ApiResponseType>(fetchDeleteLikeProps)
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
       dispatch(deleteCommentLikeReducer(props.comments.id))
       props.doRerender()
@@ -90,7 +90,7 @@ export default function Comment(props: CommentProps) {
   }
   const fetchDeleteComment = async () => {
     try {
-      const res = await moduleDeleteFetch<ApiRes>(fetchDeleteCommentProps)
+      const res = await moduleDeleteFetch<ApiResponseType>(fetchDeleteCommentProps)
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
       props.doRerender()
     } catch (err) {}
