@@ -31,6 +31,18 @@ const nextConfig = {
         destination: process.env.NEXT_PUBLIC_COMMENT_POSTING_DESTINATION,
       },
       {
+        source: process.env.NEXT_PUBLIC_POSTINGS_MY_TEAM_SOURCE,
+        destination: process.env.NEXT_PUBLIC_POSTINGS_MY_TEAM_DESTINATION,
+      },
+      {
+        source: process.env.NEXT_PUBLIC_POSTINGS_MY_PROJECT_SOURCE,
+        destination: process.env.NEXT_PUBLIC_POSTINGS_MY_PROJECT_DESTINATION,
+      },
+      {
+        source: process.env.NEXT_PUBLIC_POSTINGS_MY_ALL_SOURCE,
+        destination: process.env.NEXT_PUBLIC_POSTINGS_MY_ALL_DESTINATION,
+      },
+      {
         source: process.env.NEXT_PUBLIC_POSTINGS_MY_SOURCE,
         destination: process.env.NEXT_PUBLIC_POSTINGS_MY_DESTINATION,
       },
