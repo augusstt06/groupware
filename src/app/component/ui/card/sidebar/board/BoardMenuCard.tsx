@@ -4,7 +4,7 @@ import { ROUTE_BOARD } from '@/app/constant/route/route-constant'
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { type BoardSideCardProps } from '@/app/types/ui/cardTypes'
 
-export default function MenuCard(props: BoardSideCardProps) {
+export default function BoardMenuCard(props: BoardSideCardProps) {
   const extraUserInfo = useAppSelector((state) => state.userInfo.extraInfo)
 
   // FIXME: TypeError: Cannot read properties of undefined (reading 'menuList')

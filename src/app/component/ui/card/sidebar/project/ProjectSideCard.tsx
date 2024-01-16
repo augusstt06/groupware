@@ -1,12 +1,11 @@
-import CreateBoardBtn from '../../../button/board/CreateBoardBtn'
-import MenuCard from '../../MenuCard'
+import CreateProjectBtn from '../../../button/project/CreateProjectBtn'
+
+import ProjectMenuCard from './ProjectMenuCard'
 
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
-import { type BoardSideCardProps } from '@/app/types/ui/cardTypes'
 
-export default function BoardSideCard(props: BoardSideCardProps) {
+export default function ProjectSideCard() {
   const userInfo = useAppSelector((state) => state.userInfo)
-
   return (
     <>
       <div className="w-full max-w-sm border border-gray-200 rounded-lg shadow dark:bg-[#1a202c] dark:border-gray-700 mb-5">
@@ -23,9 +22,9 @@ export default function BoardSideCard(props: BoardSideCardProps) {
           </div>
         </div>
       </div>
-      <CreateBoardBtn />
+      <CreateProjectBtn />
 
-      <MenuCard myBoardList={props.myBoardList} />
+      <ProjectMenuCard />
     </>
   )
 }
