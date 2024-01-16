@@ -1,11 +1,11 @@
 import Link from 'next/link'
 
-import { ROUTE_BOARD, ROUTE_MAIN } from '@/app/constant/route/route-constant'
+import { ROUTE_BOARD, ROUTE_MAIN, ROUTE_PROJECT } from '@/app/constant/route/route-constant'
 
 export default function GnbCategoryMenu() {
   const menuList = [
     { title: '게시판', link: ROUTE_BOARD },
-    { title: '프로젝트', link: ROUTE_MAIN },
+    { title: '프로젝트', link: ROUTE_PROJECT },
     { title: '팀', link: ROUTE_MAIN },
   ]
   return (

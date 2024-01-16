@@ -15,7 +15,7 @@ export default function ProjectMenuCard() {
     <div className="w-full max-w-sm border border-gray-200 rounded-lg shadow dark:bg-[#1a202c] dark:border-gray-700 mb-5">
       {menuList.map((data) => (
         <div
-          className=" p-5 flex flex-row ransition ease-in-out duration-300  hover:bg-indigo-400 hover:text-white hover:dark:bg-indigo-400 "
+          className=" p-5 flex flex-row ransition ease-in-out duration-300  hover:bg-indigo-400 hover:text-white hover:dark:bg-indigo-400 rounded-lg"
           key={data.title}
         >
           {data.icon}
