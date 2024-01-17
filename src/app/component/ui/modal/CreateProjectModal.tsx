@@ -1,8 +1,10 @@
-import { useAppDispatch } from '@/app/module/hooks/reduxHooks'
-import { createProjectModalReducer } from '@/app/store/reducers/project/projectModalReducer'
+import CreateProjectModalBtn from '../button/project/modal/CreateProjectModalBtn'
+import {
+  CreateProjectModalColorSelect,
+  CreateProjectModalInput,
+} from '../input/project/modal/CreateProjectModalInputs'
 
 export default function CreateProjectModal() {
-  const dispatch = useAppDispatch()
   const colorList = [
     'bg-[rgb(240,185,185)]',
     'bg-[rgb(240,210,190)]',
@@ -11,47 +13,21 @@ export default function CreateProjectModal() {
     'bg-[rgb(207,183,242)]',
     'bg-[rgb(228,177,227)]',
   ]
-  const handleCreateProjectModal = () => {
-    dispatch(createProjectModalReducer())
-  }
+
   return (
     <div
       id="static-modal"
       data-modal-backdrop="static"
       tabIndex={-1}
       aria-hidden="true"
-      className="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 justify-center items-center w-full h-full"
+      className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-opacity-50 bg-gray-500 backdrop-blur-xs"
     >
-      <div className="absolute top-20 left-20 right-20 p-4 w-3/6">
+      <div className="relative p-4 w-3/6">
         <div className="relative rounded-lg shadow dark:bg-gray-700 border-solid border-2 border-indigo-300 bg-white p-5">
           <span className="font-bold">새 프로젝트 만들기</span>
-          <div className="mt-2 mb-2">
-            <span className="text-sm">프로젝트명</span>
-            <input
-              type="text"
-              placeholder="프로젝트명을 입력해주세요."
-              className="rounded rounded mt-2 bg-gray-50 border text-gray-900 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5 dark:bg-gray-700 dark:border-white-600 dark:placeholder-gray-400 dark:text-white focus:outline-none"
-            />
-          </div>
-          <div className="mb-2">
-            <span className="text-sm">프로젝트 색상</span>
-            <div className="flex flex-row items-center justify-start">
-              {colorList.map((data) => (
-                <div className={`${data} w-16 h-8 rounded-lg mr-5 mt-2`} key={data}></div>
-              ))}
-            </div>
-          </div>
-          <div className=" flex flex-row items-center justify-center mt-5">
-            <button
-              className="transition ease-in-out duration-300 border-gray-400 border-2 bg-white-600 hover:bg-gray-500 hover:text-white focus:outline-none font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center me-2er mr-5"
-              onClick={handleCreateProjectModal}
-            >
-              취소
-            </button>
-            <button className="transition ease-in-out duration-300 border-gray-400 border-2 bg-white-600 hover:bg-gray-500 hover:text-white focus:outline-none font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center me-2er">
-              생성
-            </button>
-          </div>
+          <CreateProjectModalInput />
+          <CreateProjectModalColorSelect colorList={colorList} />
+          <CreateProjectModalBtn />
         </div>
       </div>
     </div>
