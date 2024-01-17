@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 
 import dynamic from 'next/dynamic'
-// import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 
 import BoardWriteAlert from '../alert/BoardWriteAlert'
 import WriteModalBtnGroup from '../button/board/writeModal/WriteModalBtnGroup'
@@ -13,7 +13,7 @@ import BoardModalSaveListTab from '../tab/BoardModalSaveListTab'
 import { FALSE, KEY_ACCESS_TOKEN, KEY_X_ORGANIZATION_CODE, TRUE } from '@/app/constant/constant'
 import { ERR_EMPTRY_POSTING_FIELD, errNotEntered } from '@/app/constant/errorMsg'
 import { API_URL_POSTINGS, API_URL_POSTINGS_PENDING } from '@/app/constant/route/api-route-constant'
-// import { ROUTE_POSTING_DETAIL } from '@/app/constant/route/route-constant'
+import { ROUTE_POSTING_DETAIL } from '@/app/constant/route/route-constant'
 import useInput from '@/app/module/hooks/reactHooks/useInput'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleCheckContentIsEmpty } from '@/app/module/utils/moduleCheckContent'
@@ -41,9 +41,8 @@ const Editor = dynamic(async () => import('../editor/TextEditor'), {
 
 export default function BoardWriteModal(props: BoardWriteModalprops) {
   const dispatch = useAppDispatch()
-  // const params = useAppSelector((state) => state.boardCategory.category)
   const myBoardState = useAppSelector((state) => state.boardCategory.myBoard)
-  // const router = useRouter()
+  const router = useRouter()
   const editorRef = useRef(null)
   const titleInput = useInput('')
   const userId = useAppSelector((state) => state.userInfo.extraInfo.userId)
@@ -194,7 +193,6 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
   const fetchPostContent = async () => {
     try {
       const fetchProps: ModulePostFetchProps = {
-        // FIXME: 썸네일 들어오면 thumbNailUrl 추가하기
         data: {
           thumbnail: thumbNailUrl,
           boardId: props.currentBoard === null ? Number(select) : props.currentBoard.id,
@@ -207,15 +205,14 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
           [KEY_X_ORGANIZATION_CODE]: userInfo[KEY_X_ORGANIZATION_CODE],
         },
       }
-      const res = await modulePostFetch<ApiResponseType>(fetchProps)
+      const res = await modulePostFetch<number>(fetchProps)
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
-      // const detailUrl = (res as SuccessResponseType<ApiRes>).result.id
+      const postingId = (res as SuccessResponseType<number>).result
+
       dispatch(openBoardWriteModalReducer())
       alert('글이 정상적으로 등록되었습니다.')
       setRerender(!rerender)
-      // TODO:  FIXME: checkList - 10
-
-      // router.push(`${ROUTE_POSTING_DETAIL}/${detailUrl}`)
+      router.push(`${ROUTE_POSTING_DETAIL}/${postingId.toString()}`)
     } catch (err) {
       if (err instanceof Error) {
         switch (err.message) {
