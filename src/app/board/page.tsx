@@ -39,6 +39,8 @@ import {
 import { openBoardWriteModalReducer } from '@/app/store/reducers/board/openBoardWriteModalReducer'
 
 export default function Board() {
+  // const test = useAppSelector((state) => state.projectModal)
+  // console.log(test)
   const router = useRouter()
   const dispatch = useAppDispatch()
   const userInfo = useAppSelector((state) => state.userInfo.extraInfo)
