@@ -1,7 +1,7 @@
 import { useAppDispatch } from '@/app/module/hooks/reduxHooks'
 import { createProjectModalReducer } from '@/app/store/reducers/project/projectModalReducer'
 
-export default function CreateProjectModalBtn() {
+export default function CreateProjectModalConfirmBtn() {
   const dispatch = useAppDispatch()
   const handleCreateProjectModal = () => {
     dispatch(createProjectModalReducer())

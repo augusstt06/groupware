@@ -1,6 +1,6 @@
 'use client'
 
-import ProjectHub from '../component/page/main/hub/project/ProjectHub'
+import ProjectMainHub from '../component/page/main/hub/project/ProjectMainHub'
 import CreateProjectModal from '../component/ui/modal/CreateProjectModal'
 import { useAppSelector } from '../module/hooks/reduxHooks'
 
@@ -9,7 +9,7 @@ export default function Project() {
 
   return (
     <main className="md:w-[65rem] w-[35rem] h-4/5 flex flex-col items-center">
-      <ProjectHub />
+      <ProjectMainHub />
       {isCreateProjectModalOpen ? <CreateProjectModal /> : <></>}
     </main>
   )

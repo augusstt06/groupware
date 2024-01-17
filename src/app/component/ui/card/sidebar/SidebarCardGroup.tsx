@@ -3,9 +3,10 @@ import NameCard from '../main/NameCard'
 import VacationCard from '../main/VacationCard'
 
 import BoardSideCard from './board/BoardSideCard'
-import ProjectSideCard from './project/ProjectSideCard'
+import ProjectDetailSideCard from './project/detail/ProjectDetailSideCard'
+import ProjectMainSideCard from './project/main/ProjectMainSideCard'
 
-import { MAIN, PROJECT } from '@/app/constant/constant'
+import { MAIN, PROJECT, PROJECT_DETAIL } from '@/app/constant/constant'
 import { type MainSidebarCardGroupProps } from '@/app/types/ui/cardTypes'
 
 export default function SidebarCardGroup(props: MainSidebarCardGroupProps) {
@@ -24,9 +25,10 @@ export default function SidebarCardGroup(props: MainSidebarCardGroupProps) {
           </>
         )
       case PROJECT:
-        return <ProjectSideCard />
+        return <ProjectMainSideCard />
 
-        break
+      case PROJECT_DETAIL:
+        return <ProjectDetailSideCard />
       default:
         return <BoardSideCard myBoardList={props.myBoardList} />
     }

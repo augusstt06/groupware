@@ -1,6 +1,6 @@
 import ProjectCard from '@/app/component/ui/card/project/ProjectCard'
 
-export default function ProjectHub() {
+export default function ProjectMainHub() {
   return (
     <div className="md:w-4/5 w-full flex flex-col items-center dark:bg-[#1a202c] dark:border-gray-700 border border-gray-200 rounded-lg shadow-lg p-2">
       <div className="w-full p-3">

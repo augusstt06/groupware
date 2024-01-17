@@ -11,6 +11,7 @@ import {
   KEY_X_ORGANIZATION_CODE,
   MAIN,
   PROJECT,
+  PROJECT_DETAIL,
 } from '@/app/constant/constant'
 import { API_URL_GET_MY_BOARD } from '@/app/constant/route/api-route-constant'
 import { ROUTE_BOARD, ROUTE_MAIN, ROUTE_PROJECT } from '@/app/constant/route/route-constant'
@@ -45,6 +46,7 @@ export default function Sidebar() {
         case ROUTE_BOARD:
           return BOARD
         case ROUTE_PROJECT:
+          if (currentUrl.slice(2, 3).join('/') === 'detail') return PROJECT_DETAIL
           return PROJECT
         default:
           return MAIN
@@ -52,6 +54,7 @@ export default function Sidebar() {
     }
     return MAIN
   }
+
   const fetchGetMyBoardList = async () => {
     try {
       const fetchProps: ModuleGetFetchProps = {

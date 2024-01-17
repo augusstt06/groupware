@@ -1,4 +1,4 @@
-import CreateProjectModalBtn from '../button/project/modal/CreateProjectModalBtn'
+import CreateProjectModalConfirmBtn from '../button/project/modal/CreateProjectModalConfirmBtn'
 import {
   CreateProjectModalColorSelect,
   CreateProjectModalInput,
@@ -27,7 +27,7 @@ export default function CreateProjectModal() {
           <span className="font-bold">새 프로젝트 만들기</span>
           <CreateProjectModalInput />
           <CreateProjectModalColorSelect colorList={colorList} />
-          <CreateProjectModalBtn />
+          <CreateProjectModalConfirmBtn />
         </div>
       </div>
     </div>
