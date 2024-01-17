@@ -6,7 +6,6 @@ import { type BoardSideCardProps } from '@/app/types/ui/cardTypes'
 
 export default function BoardMenuCard(props: BoardSideCardProps) {
   const extraUserInfo = useAppSelector((state) => state.userInfo.extraInfo)
-
   return (
     <>
       {props.myBoardList.length !== 0 ? (
