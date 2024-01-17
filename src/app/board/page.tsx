@@ -107,6 +107,7 @@ export default function Board() {
 
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
       const resBoardList = (res as SuccessResponseType<BoardResponseType>).result.data
+
       if (pageSize === 1) {
         const pageSize = Math.ceil(
           (res as SuccessResponseType<BoardResponseType>).result.total / 10,

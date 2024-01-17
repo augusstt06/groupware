@@ -13,7 +13,10 @@ import {
   KEY_LOGIN_COMPLETE,
   KEY_X_ORGANIZATION_CODE,
 } from '@/app/constant/constant'
-import { API_URL_POSTINGS_LIST, API_URL_POSTINGS_MY } from '@/app/constant/route/api-route-constant'
+import {
+  API_URL_POSTINGS_LIST,
+  API_URL_POSTINGS_MY_ALL,
+} from '@/app/constant/route/api-route-constant'
 import useInput from '@/app/module/hooks/reactHooks/useInput'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleCheckUserState } from '@/app/module/utils/moduleCheckUserState'
@@ -67,7 +70,7 @@ export default function BoardCategory() {
           limit: 10,
           offset: 10 * pageNumber,
         },
-        fetchUrl: API_URL_POSTINGS_MY,
+        fetchUrl: API_URL_POSTINGS_MY_ALL,
         header: {
           Authorization: `Bearer ${accessToken}`,
           [KEY_X_ORGANIZATION_CODE]: orgCode,

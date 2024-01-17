@@ -17,10 +17,10 @@ export default function BoardCard(props: BoardCardType) {
   }
   return (
     <div className="w-full flex flex-row p-4 border border-gray-200 rounded-lg shadow dark:bg-[#1a202c] dark:border-gray-700 mb-5">
-      <div className="flex justify-center items-center">
-        <div className="inline-flex items-center mr-2 bg-gray-300 rounded-lg h-10 pr-4 pl-4">
-          img
-        </div>
+      <div className="flex justify-center items-center w-1/3 truncate rounded-lg">
+        {/* <div className="inline-flex items-center mr-2 bg-gray-300 rounded-lg h-10 pr-4 pl-4"> */}
+        <img src={props.content.thumbnail} className="rounded-lg" />
+        {/* </div> */}
       </div>
       <div className="w-full p-2 cursor-pointer truncate" onClick={goPostingPage}>
         <div className="inline-block text-sm md:text-medium">

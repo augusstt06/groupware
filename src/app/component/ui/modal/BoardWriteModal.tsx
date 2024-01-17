@@ -51,7 +51,7 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
   const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
   const [isAnnounce, setIsAnnounce] = useState(FALSE)
   const [editorContent, setEditorContent] = useState('')
-  const [thumbNailUrl, setThumbNailUrl] = useState<string | null>(null)
+  const [thumbNailUrl, setThumbNailUrl] = useState<string>('')
   const [saveContent, setSaveContent] = useState('')
   const [saveList, setSaveList] = useState<BoardListResponsetype[]>([])
   const [rerender, setRerender] = useState<boolean>(false)
@@ -196,6 +196,7 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
       const fetchProps: ModulePostFetchProps = {
         // FIXME: 썸네일 들어오면 thumbNailUrl 추가하기
         data: {
+          thumbnail: thumbNailUrl,
           boardId: props.currentBoard === null ? Number(select) : props.currentBoard.id,
           content: editorContent,
           title: titleInput.value,
