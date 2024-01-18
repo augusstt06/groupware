@@ -11,7 +11,7 @@ export default function CreateProjectIssueModalHub(props: CreateProjectIssueModa
       case 'calendar':
         return <ProjectIssueCalendar />
       case 'todo':
-        return 'Todd'
+        return 'Todo'
       default:
         return <ProjectTaskIssue />
     }
