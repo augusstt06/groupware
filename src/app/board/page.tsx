@@ -6,9 +6,13 @@ import { useRouter } from 'next/navigation'
 
 import BoardHub from '../component/page/main/hub/board/BoardHub'
 import BoardWriteModal from '../component/ui/modal/BoardWriteModal'
-import Pagination from '../component/ui/pagination/Pagination'
 import { KEY_ACCESS_TOKEN, KEY_LOGIN_COMPLETE, KEY_X_ORGANIZATION_CODE } from '../constant/constant'
-import { API_URL_GET_MY_BOARD, API_URL_POSTINGS_MY } from '../constant/route/api-route-constant'
+import {
+  API_URL_GET_MY_BOARD,
+  API_URL_POSTINGS_MY_ALL,
+  API_URL_POSTINGS_MY_PROJECT,
+  API_URL_POSTINGS_MY_TEAM,
+} from '../constant/route/api-route-constant'
 import { useAppDispatch, useAppSelector } from '../module/hooks/reduxHooks'
 import { moduleCheckUserState } from '../module/utils/moduleCheckUserState'
 import {
@@ -35,6 +39,8 @@ import {
 import { openBoardWriteModalReducer } from '@/app/store/reducers/board/openBoardWriteModalReducer'
 
 export default function Board() {
+  // const test = useAppSelector((state) => state.projectModal)
+  // console.log(test)
   const router = useRouter()
   const dispatch = useAppDispatch()
   const userInfo = useAppSelector((state) => state.userInfo.extraInfo)
@@ -48,7 +54,6 @@ export default function Board() {
   const [myBoardList, setMyBoardList] = useState<MyBoardType[]>([])
   const [boardList, setBoardList] = useState<BoardListResponsetype[]>([])
   const [pageSize, setPageSize] = useState<number>(1)
-  const [pageNumber, setPageNumber] = useState<number>(0)
 
   const changeBoard = (name: string) => {
     setSelectBoard(name)
@@ -76,22 +81,35 @@ export default function Board() {
     } catch (err) {}
   }
 
+  const decideFetchUrl = () => {
+    switch (selectBoard) {
+      case '팀':
+        return API_URL_POSTINGS_MY_TEAM
+      case '프로젝트':
+        return API_URL_POSTINGS_MY_PROJECT
+      default:
+        return API_URL_POSTINGS_MY_ALL
+    }
+  }
   const fetchGetBoardPostings = async () => {
     try {
       const fetchGetBoardListProps: ModuleGetFetchProps = {
         params: {
           limit: 10,
-          offset: 10 * pageNumber,
+          offset: 0,
         },
-        fetchUrl: API_URL_POSTINGS_MY,
+        fetchUrl: decideFetchUrl(),
         header: {
           Authorization: `Bearer ${accessToken}`,
           [KEY_X_ORGANIZATION_CODE]: orgCode,
         },
       }
+
       const res = await moduleGetFetch<BoardResponseType>(fetchGetBoardListProps)
+
       if (res.status !== 200) throw new Error((res as FailResponseType).message)
       const resBoardList = (res as SuccessResponseType<BoardResponseType>).result.data
+
       if (pageSize === 1) {
         const pageSize = Math.ceil(
           (res as SuccessResponseType<BoardResponseType>).result.total / 10,
@@ -102,18 +120,12 @@ export default function Board() {
         setBoardList(resBoardList)
       } else {
         const selectBoardId = myBoardState.filter((data) => data.name === selectBoard)[0].id
-
         const filterList = resBoardList.filter((data) => data.boardId === Number(selectBoardId))
-
         setBoardList(filterList)
       }
     } catch (err) {}
   }
 
-  const isListEmpty = () => {
-    if (boardList.length !== 0) return true
-    return false
-  }
   useEffect(() => {
     if (isModalOpen) {
       dispatch(openBoardWriteModalReducer())
@@ -143,13 +155,6 @@ export default function Board() {
       />
 
       {isModalOpen ? <BoardWriteModal currentBoard={null} /> : <></>}
-      <div className="md:w-4/5 w-full flex flex-col items-center">
-        {isListEmpty() ? (
-          <Pagination size={pageSize} pageNumber={pageNumber} setPageNumber={setPageNumber} />
-        ) : (
-          <></>
-        )}
-      </div>
     </main>
   )
 }

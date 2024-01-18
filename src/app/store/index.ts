@@ -12,6 +12,7 @@ import { orgInfoSlice } from './reducers/login/orgInfoReducer'
 import { signupInfoSlice } from './reducers/login/signupInfoReducer'
 import { userInfoSlice } from './reducers/main/userInfoReducer'
 import { maintainSlice } from './reducers/maintain/maintainReducer'
+import { projectModalSlice } from './reducers/project/projectModalReducer'
 
 const createNoopStorage = () => {
   return {
@@ -38,11 +39,19 @@ const rootReducer = combineReducers({
   boardCategory: boardCategorySlice.reducer,
   openBoardWriteModal: openBoardWriteModalSlice.reducer,
   boardLike: boardLikeSlice.reducer,
+  projectModal: projectModalSlice.reducer,
 })
 const persistConfig = {
   key: 'root',
   storage,
-  whiteList: ['userInfo', 'maintain', 'boardCategory', 'openBoardWriteModal', 'boardLike'],
+  whiteList: [
+    'userInfo',
+    'maintain',
+    'boardCategory',
+    'openBoardWriteModal',
+    'boardLike',
+    'projectModal',
+  ],
   blacklist: ['signupInfo', 'loginInfo', 'orgInfo'],
 }
 const persistedReducer = persistReducer(persistConfig, rootReducer)

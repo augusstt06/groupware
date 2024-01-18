@@ -13,6 +13,7 @@ export type BoardListResponsetype = {
   writerId: number
   name: string
   like: number
+  thumbnail: string
 }
 
 export type DetailResponseType = {

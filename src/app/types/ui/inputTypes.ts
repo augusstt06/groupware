@@ -85,7 +85,7 @@ export type BoardModalInputGruopProps = {
   select: string
   setSelect: Dispatch<SetStateAction<string>>
   thumbNailUrl: string | null
-  setThumbNailUrl: Dispatch<SetStateAction<string | null>>
+  setThumbNailUrl: Dispatch<SetStateAction<string>>
   selectList: SelectListType[]
 }
 
