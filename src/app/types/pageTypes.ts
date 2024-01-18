@@ -1,4 +1,4 @@
-import { type Dispatch, type SetStateAction } from 'react'
+import { type ChangeEvent, type Dispatch, type SetStateAction } from 'react'
 
 import { type BoardListResponsetype, type CommentType } from './variableTypes'
 
@@ -65,4 +65,43 @@ export type WriteCommentProps = {
   doRerender: () => void
   postingID: number
   parentID: number | null
+}
+export type IssueInputProps = {
+  title: string
+  placeholder: string
+}
+export type IssueProgressProps = {
+  progressStatusList: Array<{
+    title: string
+    color: string
+    hoverColor: string
+  }>
+  handleProgress: (status: string) => void
+  progress: string
+}
+
+export type IssueSelecProps = {
+  title: string
+  selectList: string[]
+}
+
+export type ValuePiece = Date | null
+export type CalendarValue = ValuePiece | [ValuePiece, ValuePiece]
+export type IssueCalendarProps = {
+  title: string
+  state: boolean
+  openModal: () => void
+  dateValue: CalendarValue
+  onDateChange: (date: CalendarValue) => void
+}
+
+export type IssueCalendarWithTimeProps = IssueCalendarProps & {
+  hours: string[]
+  handleSelectHour: (e: ChangeEvent<HTMLSelectElement>) => void
+  handleSelectMinute: (e: ChangeEvent<HTMLSelectElement>) => void
+}
+export type IssueTimeProps = {
+  hours: string[]
+  unit: string
+  onChange: (e: ChangeEvent<HTMLSelectElement>) => void
 }

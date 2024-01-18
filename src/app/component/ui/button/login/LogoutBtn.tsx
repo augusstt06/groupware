@@ -7,6 +7,7 @@ import { API_URL_LOGOUT } from '@/app/constant/route/api-route-constant'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleDeleteCookies, moduleGetCookie } from '@/app/module/utils/moduleCookie'
 import { modulePostFetch } from '@/app/module/utils/moduleFetch'
+import { resetUserInfoReducer } from '@/app/store/reducers/main/userInfoReducer'
 import { updateLoginCompleteReducer } from '@/app/store/reducers/maintain/maintainReducer'
 import { type FailResponseType, type ModulePostFetchProps } from '@/app/types/moduleTypes'
 import { type LogoutBtnProps } from '@/app/types/ui/btnTypes'
@@ -30,6 +31,7 @@ export default function LogoutBtn(props: LogoutBtnProps) {
       props.setConfirmValue(false)
       moduleDeleteCookies(KEY_ACCESS_TOKEN)
       dispatch(updateLoginCompleteReducer(FALSE))
+      dispatch(resetUserInfoReducer())
       props.setIsUserStateOpen(false)
     } catch (err) {
       alert('로그아웃이 실패했습니다.')

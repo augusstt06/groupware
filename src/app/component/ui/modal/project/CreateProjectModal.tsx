@@ -1,8 +1,8 @@
-import CreateProjectModalConfirmBtn from '../button/project/modal/CreateProjectModalConfirmBtn'
+import CreateProjectModalConfirmBtn from '../../button/project/modal/CreateProjectModalConfirmBtn'
 import {
   CreateProjectModalColorSelect,
   CreateProjectModalInput,
-} from '../input/project/modal/CreateProjectModalInputs'
+} from '../../input/project/modal/CreateProjectModalInputs'
 
 export default function CreateProjectModal() {
   const colorList = [
@@ -22,13 +22,11 @@ export default function CreateProjectModal() {
       aria-hidden="true"
       className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-opacity-50 bg-gray-500 backdrop-blur-xs"
     >
-      <div className="relative p-4 w-3/6">
-        <div className="relative rounded-lg shadow dark:bg-gray-700 border-solid border-2 border-indigo-300 bg-white p-5">
-          <span className="font-bold">새 프로젝트 만들기</span>
-          <CreateProjectModalInput />
-          <CreateProjectModalColorSelect colorList={colorList} />
-          <CreateProjectModalConfirmBtn />
-        </div>
+      <div className="relative rounded-lg shadow dark:bg-gray-700 border-solid border-2 border-indigo-300 bg-white p-5 w-3/6">
+        <span className="font-bold">새 프로젝트 만들기</span>
+        <CreateProjectModalInput />
+        <CreateProjectModalColorSelect colorList={colorList} />
+        <CreateProjectModalConfirmBtn />
       </div>
     </div>
   )

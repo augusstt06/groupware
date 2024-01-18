@@ -2,7 +2,7 @@ import { IoMdCloseCircle } from 'react-icons/io'
 import { IoSearchSharp } from 'react-icons/io5'
 
 import { InputIconlabel } from '../../label/InputIconlabel'
-import BoardWriteModal from '../../modal/BoardWriteModal'
+import BoardWriteModal from '../../modal/board/BoardWriteModal'
 
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { openBoardWriteModalReducer } from '@/app/store/reducers/board/openBoardWriteModalReducer'

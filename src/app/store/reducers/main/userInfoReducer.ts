@@ -47,9 +47,24 @@ export const userInfoSlice = createSlice({
     updateExtraUserInfoReducer(state, action: PayloadAction<Record<string, string | number>>) {
       state.extraInfo = { ...action.payload }
     },
+    resetUserInfoReducer(state) {
+      state[KEY_X_ORGANIZATION_CODE] = ''
+      state[KEY_UUID] = ''
+      state.extraInfo = {
+        name: '',
+        position: '',
+        userId: 0,
+        organizationId: 0,
+        organizationName: '',
+      }
+    },
   },
 })
 
-export const { updateUserInfoReducer, updateAttendanceStatusReducer, updateExtraUserInfoReducer } =
-  userInfoSlice.actions
+export const {
+  updateUserInfoReducer,
+  updateAttendanceStatusReducer,
+  updateExtraUserInfoReducer,
+  resetUserInfoReducer,
+} = userInfoSlice.actions
 export default userInfoSlice.reducer
