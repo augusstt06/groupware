@@ -1,4 +1,4 @@
-import { type Dispatch, type SetStateAction } from 'react'
+import { type ChangeEvent, type Dispatch, type SetStateAction } from 'react'
 
 import { type BoardListResponsetype, type CommentType } from './variableTypes'
 
@@ -66,19 +66,38 @@ export type WriteCommentProps = {
   postingID: number
   parentID: number | null
 }
-export type TaskProgressProps = {
+export type IssueInputProps = {
+  title: string
+  placeholder: string
+}
+export type IssueProgressProps = {
   progressStatusList: Array<{
     title: string
     color: string
+    hoverColor: string
   }>
+  handleProgress: (status: string) => void
+  progress: string
 }
 
-export type TaskSelectManagerProps = {
-  managerList: string[]
+export type IssueSelecProps = {
+  title: string
+  selectList: string[]
 }
 
-export type TaskCalendarProps = {
+export type IssueCalendarProps = {
   title: string
   state: boolean
-  onClick: () => void
+  openModal: () => void
+}
+
+export type IssueCalendarWithTimeProps = IssueCalendarProps & {
+  hours: string[]
+  handleSelectHour: (e: ChangeEvent<HTMLSelectElement>) => void
+  handleSelectMinute: (e: ChangeEvent<HTMLSelectElement>) => void
+}
+export type IssueTimeProps = {
+  hours: string[]
+  unit: string
+  onChange: (e: ChangeEvent<HTMLSelectElement>) => void
 }

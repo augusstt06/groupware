@@ -7,7 +7,7 @@ export default function CreateProjectIssueModalTab(props: CreateProjectIssueModa
     { title: '✅ 할일', id: 'todo' },
   ]
   const divClassName = (select: string, id: string) => {
-    if (select === id)
+    if (select === id || (select === '' && id === 'task'))
       return 'border-b-2 transition ease-in-out duration-300 border-b-2 border-indigo-300 w-1/4 text-center p-2'
     else
       return 'border-b-2 border-transparent transition ease-in-out duration-300 hover:border-indigo-300 w-1/4 text-center p-2'
