@@ -1,6 +1,7 @@
 import Calendar from 'react-calendar'
 
 import 'react-calendar/dist/Calendar.css'
+import moment from 'moment'
 import { FaRegCalendarAlt } from 'react-icons/fa'
 
 import {
@@ -10,6 +11,7 @@ import {
   type IssueProgressProps,
   type IssueSelecProps,
   type IssueTimeProps,
+  type ValuePiece,
 } from '@/app/types/pageTypes'
 
 export function IssueInput(props: IssueInputProps) {
@@ -77,11 +79,14 @@ export function IssueCalendar(props: IssueCalendarProps) {
         <div className="w-1/6">
           <span>{props.title}</span>
         </div>
-        <div className="rounded rounded mt-2 bg-gray-50 border text-gray-900 w-1/3 text-sm border-gray-300 p-2.5 dark:bg-gray-700 dark:border-white-600 dark:placeholder-gray-400 dark:text-white">
+        <div className="flex flex-row items-center rounded rounded mt-2 bg-gray-50 border text-gray-900 w-1/3 text-sm border-gray-300 p-2.5 dark:bg-gray-700 dark:border-white-600 dark:placeholder-gray-400 dark:text-white">
           <FaRegCalendarAlt onClick={props.openModal} />
+          <span className="ml-2">{moment(props.dateValue as ValuePiece).format('YYYY-MM-DD')}</span>
         </div>
       </div>
-      <div className="ml-2">{props.state ? <Calendar /> : <></>}</div>
+      <div className="ml-2">
+        {props.state ? <Calendar value={props.dateValue} onChange={props.onDateChange} /> : <></>}
+      </div>
     </>
   )
 }
@@ -93,14 +98,17 @@ export function IssueCalendarWithTime(props: IssueCalendarWithTimeProps) {
         <div className="w-1/6">
           <span>{props.title}</span>
         </div>
-        <div className="rounded-lg mt-2 bg-gray-50 border text-gray-900 w-1/3 text-sm border-gray-300 p-2.5 dark:bg-gray-700 dark:border-white-600 dark:placeholder-gray-400 dark:text-white">
+        <div className="flex flex-row items-center rounded rounded mt-2 bg-gray-50 border text-gray-900 w-1/3 text-sm border-gray-300 p-2.5 dark:bg-gray-700 dark:border-white-600 dark:placeholder-gray-400 dark:text-white">
           <FaRegCalendarAlt onClick={props.openModal} />
+          <span className="ml-2">{moment(props.dateValue as ValuePiece).format('YYYY-MM-DD')}</span>
         </div>
 
         <IssueTime hours={props.hours} unit="시" onChange={props.handleSelectHour} />
         <IssueTime hours={props.hours} unit="분" onChange={props.handleSelectMinute} />
       </div>
-      <div className="ml-2">{props.state ? <Calendar /> : <></>}</div>
+      <div className="ml-2">
+        {props.state ? <Calendar value={props.dateValue} onChange={props.onDateChange} /> : <></>}
+      </div>
     </>
   )
 }

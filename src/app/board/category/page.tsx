@@ -81,6 +81,7 @@ export default function BoardCategory() {
       const resBoardList = (res as SuccessResponseType<BoardResponseType>).result.data
 
       const filterList = resBoardList.filter((data) => data.boardId === Number(currentBoard.id))
+
       if (pageSize === 1) {
         const pageSize = Math.ceil(
           (res as SuccessResponseType<BoardResponseType>).result.total / 10,

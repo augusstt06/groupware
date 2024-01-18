@@ -85,10 +85,14 @@ export type IssueSelecProps = {
   selectList: string[]
 }
 
+export type ValuePiece = Date | null
+export type CalendarValue = ValuePiece | [ValuePiece, ValuePiece]
 export type IssueCalendarProps = {
   title: string
   state: boolean
   openModal: () => void
+  dateValue: CalendarValue
+  onDateChange: (date: CalendarValue) => void
 }
 
 export type IssueCalendarWithTimeProps = IssueCalendarProps & {

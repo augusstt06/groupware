@@ -9,9 +9,14 @@ import {
   IssueSelect,
 } from '../components/ProjectIssueComponent'
 
+import { type CalendarValue } from '@/app/types/pageTypes'
+
 export default function ProjectIssueCalendar() {
   const [selectTime, setSelectTime] = useState({ hour: '', minute: '' })
   const attendanceList = ['김충연', '김민규', '남아현', '오준석']
+  const [startDate, setStartDate] = useState<CalendarValue>(new Date())
+  const [endDate, setEndDate] = useState<CalendarValue>(new Date())
+
   const [isStartCalendarOpen, setIsStartCalendarOpen] = useState<boolean>(false)
   const handleOpenStartCalendar = () => {
     setIsStartCalendarOpen(!isStartCalendarOpen)
@@ -20,14 +25,35 @@ export default function ProjectIssueCalendar() {
   const handleOpenEndCalendar = () => {
     setIsEndCalendarOpen(!isEndCaledarOpen)
   }
+  const handleStartDate = (date: CalendarValue) => {
+    setStartDate(date)
+    setIsStartCalendarOpen(false)
+  }
+
+  const handleEndDate = (date: CalendarValue) => {
+    setEndDate(date)
+    setIsEndCalendarOpen(false)
+  }
 
   const calendarList = [
-    { title: '시작일', state: isStartCalendarOpen, openModal: handleOpenStartCalendar },
-    { title: '마감일', state: isEndCaledarOpen, openModal: handleOpenEndCalendar },
+    {
+      title: '시작일',
+      state: isStartCalendarOpen,
+      openModal: handleOpenStartCalendar,
+      dateValue: startDate,
+      onDateChange: handleStartDate,
+    },
+    {
+      title: '마감일',
+      state: isEndCaledarOpen,
+      openModal: handleOpenEndCalendar,
+      dateValue: endDate,
+      onDateChange: handleEndDate,
+    },
   ]
 
   const hours = Array.from({ length: 24 }, (_, index) => {
-    const hour = index.toString().padStart(2, '0') // 0시부터 9시까지는 앞에 0을 붙임
+    const hour = index.toString().padStart(2, '0')
     return hour
   })
   const handleSelectHour = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -60,6 +86,8 @@ export default function ProjectIssueCalendar() {
             hours={hours}
             handleSelectHour={handleSelectHour}
             handleSelectMinute={handleSelectMinute}
+            dateValue={data.dateValue}
+            onDateChange={data.onDateChange}
           />
         ))}
         <IssueInput title="장소" placeholder="장소를 입력해 주세요." />

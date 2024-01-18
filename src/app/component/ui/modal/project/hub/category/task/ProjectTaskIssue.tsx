@@ -12,8 +12,13 @@ import {
   IssueSelect,
 } from '../components/ProjectIssueComponent'
 
+import { type CalendarValue } from '@/app/types/pageTypes'
+
 export default function ProjectTaskIssue() {
   const [progress, setProgress] = useState<string>('')
+  const [startDate, setStartDate] = useState<CalendarValue>(new Date())
+  const [endDate, setEndDate] = useState<CalendarValue>(new Date())
+
   const handleProgress = (status: string) => {
     setProgress(status)
   }
@@ -49,9 +54,31 @@ export default function ProjectTaskIssue() {
     setIsEndCalendarOpen(!isEndCaledarOpen)
   }
 
+  const handleStartDate = (date: CalendarValue) => {
+    setStartDate(date)
+    setIsStartCalendarOpen(false)
+  }
+
+  const handleEndDate = (date: CalendarValue) => {
+    setEndDate(date)
+    setIsEndCalendarOpen(false)
+  }
+
   const calendarList = [
-    { title: '시작일', state: isStartCalendarOpen, openModal: handleOpenStartCalendar },
-    { title: '종료일', state: isEndCaledarOpen, openModal: handleOpenEndCalendar },
+    {
+      title: '시작일',
+      state: isStartCalendarOpen,
+      openModal: handleOpenStartCalendar,
+      dateValue: startDate,
+      onDateChange: handleStartDate,
+    },
+    {
+      title: '종료일',
+      state: isEndCaledarOpen,
+      openModal: handleOpenEndCalendar,
+      dateValue: endDate,
+      onDateChange: handleEndDate,
+    },
   ]
   return (
     <>
@@ -72,6 +99,8 @@ export default function ProjectTaskIssue() {
             title={data.title}
             state={data.state}
             openModal={data.openModal}
+            dateValue={data.dateValue}
+            onDateChange={data.onDateChange}
           />
         ))}
         <IssueFile />
