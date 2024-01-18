@@ -82,3 +82,7 @@ export type GnbNormalMenuProps = GnbHamburgerMenuProps & {
   isDropOpen: boolean
   clickDropdownMenu: () => void
 }
+
+export type ProjectDetailTableProps = {
+  title: string
+}

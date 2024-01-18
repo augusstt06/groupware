@@ -1,5 +1,5 @@
 import BoardCard from '@/app/component/ui/card/main/BoardCard'
-import BoardTab from '@/app/component/ui/tab/BoardTab'
+import BoardTab from '@/app/component/ui/tab/board/BoardTab'
 import { type BoardHubProps } from '@/app/types/ui/uiTypes'
 
 export default function BoardHub(props: BoardHubProps) {

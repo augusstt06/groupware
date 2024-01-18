@@ -8,7 +8,7 @@ import BoardWriteAlert from '../alert/BoardWriteAlert'
 import WriteModalBtnGroup from '../button/board/writeModal/WriteModalBtnGroup'
 import BoardWriteModalCheckBox from '../checkbox/BoardWriteModalCheckBox'
 import BoardModalInputGroup from '../input/board/BoardModalInputGroup'
-import BoardModalSaveListTab from '../tab/BoardModalSaveListTab'
+import BoardModalSaveListTab from '../tab/board/BoardModalSaveListTab'
 
 import { FALSE, KEY_ACCESS_TOKEN, KEY_X_ORGANIZATION_CODE, TRUE } from '@/app/constant/constant'
 import { ERR_EMPTRY_POSTING_FIELD, errNotEntered } from '@/app/constant/errorMsg'
