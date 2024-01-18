@@ -6,7 +6,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 
 import BoardItemHub from '@/app/component/page/main/hub/board/item/BoardItemHub'
 import BoardHubInput from '@/app/component/ui/input/board/BoardHubInput'
-import BoardWriteModal from '@/app/component/ui/modal/BoardWriteModal'
+import BoardWriteModal from '@/app/component/ui/modal/board/BoardWriteModal'
 import Pagination from '@/app/component/ui/pagination/Pagination'
 import {
   KEY_ACCESS_TOKEN,
@@ -81,6 +81,7 @@ export default function BoardCategory() {
       const resBoardList = (res as SuccessResponseType<BoardResponseType>).result.data
 
       const filterList = resBoardList.filter((data) => data.boardId === Number(currentBoard.id))
+
       if (pageSize === 1) {
         const pageSize = Math.ceil(
           (res as SuccessResponseType<BoardResponseType>).result.total / 10,

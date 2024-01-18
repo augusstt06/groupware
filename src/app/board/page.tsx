@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 
 import BoardHub from '../component/page/main/hub/board/BoardHub'
-import BoardWriteModal from '../component/ui/modal/BoardWriteModal'
+import BoardWriteModal from '../component/ui/modal/board/BoardWriteModal'
 import { KEY_ACCESS_TOKEN, KEY_LOGIN_COMPLETE, KEY_X_ORGANIZATION_CODE } from '../constant/constant'
 import {
   API_URL_GET_MY_BOARD,
@@ -39,8 +39,6 @@ import {
 import { openBoardWriteModalReducer } from '@/app/store/reducers/board/openBoardWriteModalReducer'
 
 export default function Board() {
-  // const test = useAppSelector((state) => state.projectModal)
-  // console.log(test)
   const router = useRouter()
   const dispatch = useAppDispatch()
   const userInfo = useAppSelector((state) => state.userInfo.extraInfo)

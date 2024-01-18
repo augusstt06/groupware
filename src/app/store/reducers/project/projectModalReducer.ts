@@ -1,10 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 type State = {
-  createModal: boolean
+  isCreateProjectModalOpen: boolean
+  isCreateProjectIssueModalOpen: boolean
 }
 const initialState: State = {
-  createModal: false,
+  isCreateProjectModalOpen: false,
+  isCreateProjectIssueModalOpen: false,
 }
 
 export const projectModalSlice = createSlice({
@@ -12,11 +14,16 @@ export const projectModalSlice = createSlice({
   initialState,
   reducers: {
     createProjectModalReducer(state) {
-      if (state.createModal) state.createModal = false
-      else state.createModal = true
+      if (state.isCreateProjectModalOpen) state.isCreateProjectModalOpen = false
+      else state.isCreateProjectModalOpen = true
+    },
+    createProjectIssueModalOpenReducer(state) {
+      if (state.isCreateProjectIssueModalOpen) state.isCreateProjectIssueModalOpen = false
+      else state.isCreateProjectIssueModalOpen = true
     },
   },
 })
 
-export const { createProjectModalReducer } = projectModalSlice.actions
+export const { createProjectModalReducer, createProjectIssueModalOpenReducer } =
+  projectModalSlice.actions
 export default projectModalSlice.reducer

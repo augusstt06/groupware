@@ -73,9 +73,12 @@ export default function Sidebar() {
       setMyBoardList(boardMenu)
     } catch (err) {}
   }
+
   useEffect(() => {
-    void fetchGetMyBoardList()
-  }, [])
+    if (userInfo.organizationId !== 0) {
+      void fetchGetMyBoardList()
+    }
+  }, [userInfo])
   return (
     <>
       <div className="md:hidden fixed top-16 ml-5 z-2">
