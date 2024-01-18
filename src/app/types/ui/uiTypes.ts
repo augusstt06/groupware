@@ -86,3 +86,12 @@ export type GnbNormalMenuProps = GnbHamburgerMenuProps & {
 export type ProjectDetailTableProps = {
   title: string
 }
+
+export type CreateProjectIssueModalTabProps = {
+  selectCategory: string
+  changeSelectCategory: (id: string) => void
+}
+
+export type CreateProjectIssueModalHubProps = {
+  selectCategory: string
+}

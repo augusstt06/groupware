@@ -66,3 +66,19 @@ export type WriteCommentProps = {
   postingID: number
   parentID: number | null
 }
+export type TaskProgressProps = {
+  progressStatusList: Array<{
+    title: string
+    color: string
+  }>
+}
+
+export type TaskSelectManagerProps = {
+  managerList: string[]
+}
+
+export type TaskCalendarProps = {
+  title: string
+  state: boolean
+  onClick: () => void
+}
