@@ -2,6 +2,8 @@
 
 import { type ChangeEvent, useState } from 'react'
 
+import { AiOutlinePicture } from 'react-icons/ai'
+
 import { InputLabel } from '../../label/Inputlabel'
 
 import { KEY_ACCESS_TOKEN, KEY_X_ORGANIZATION_CODE } from '@/app/constant/constant'
@@ -21,7 +23,6 @@ import {
 
 export default function BoardModalInputGroup(props: BoardModalInputGruopProps) {
   const userInfo = useAppSelector((state) => state.userInfo)
-  // const params = useAppSelector((state) => state.boardCategory.category)
   const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
   const [imgTag, setImgTag] = useState<JSX.Element | null>(null)
@@ -50,7 +51,6 @@ export default function BoardModalInputGroup(props: BoardModalInputGruopProps) {
       const img = (
         <>
           <img src={imgUrl} alt="thumbnail" contentEditable="false" />
-          <input type="file" id="imginput" onChange={handleUploadThumbmnail} className="hidden" />
         </>
       )
 
@@ -118,21 +118,35 @@ export default function BoardModalInputGroup(props: BoardModalInputGruopProps) {
         </div>
       ))}
       <div className="p-2 h-40 ">
-        <InputLabel title="썸네일" />
+        <div className="flex flex-row items-center">
+          <InputLabel title="썸네일" />
+
+          {imgTag !== null ? (
+            <label htmlFor="imginput" className="mb-2 ml-3 flex flex-row items-center">
+              <AiOutlinePicture className="w-4 h-4" />
+              <input
+                type="file"
+                id="imginput"
+                onChange={handleUploadThumbmnail}
+                className="hidden"
+              />
+            </label>
+          ) : (
+            <></>
+          )}
+        </div>
         <div className="h-full flex border-2 dark:border-white-500 justify-center items-center truncate">
-          <label htmlFor="imginput">
-            {imgTag ?? (
-              <>
-                <span>+ 이미지 업로드</span>
-                <input
-                  type="file"
-                  id="imginput"
-                  onChange={handleUploadThumbmnail}
-                  className="hidden"
-                />
-              </>
-            )}
-          </label>
+          {imgTag ?? (
+            <label htmlFor="imginput">
+              <span>+ 이미지업로드</span>
+              <input
+                type="file"
+                id="imginput"
+                onChange={handleUploadThumbmnail}
+                className="hidden"
+              />
+            </label>
+          )}
         </div>
       </div>
     </div>

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 
-import { usePathname, useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 import BoardItemHub from '@/app/component/page/main/hub/board/item/BoardItemHub'
 import BoardHubInput from '@/app/component/ui/input/board/BoardHubInput'
@@ -13,7 +13,10 @@ import {
   KEY_LOGIN_COMPLETE,
   KEY_X_ORGANIZATION_CODE,
 } from '@/app/constant/constant'
-import { API_URL_POSTINGS_LIST, API_URL_POSTINGS_MY } from '@/app/constant/route/api-route-constant'
+import {
+  API_URL_POSTINGS_LIST,
+  API_URL_POSTINGS_MY_ALL,
+} from '@/app/constant/route/api-route-constant'
 import useInput from '@/app/module/hooks/reactHooks/useInput'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleCheckUserState } from '@/app/module/utils/moduleCheckUserState'
@@ -26,17 +29,16 @@ import {
   type ModuleGetFetchProps,
   type SuccessResponseType,
 } from '@/app/types/moduleTypes'
-import { type PageParam } from '@/app/types/pageTypes'
 import {
   type BoardListResponsetype,
   type BoardResponseType,
   type MyBoardType,
 } from '@/app/types/variableTypes'
 
-export default function BoardCategory({ params }: { params: PageParam }) {
+export default function BoardCategory() {
   const dispatch = useAppDispatch()
   const router = useRouter()
-  const pathname = usePathname()
+  const query = useSearchParams().get('name')
   const searchInput = useInput('')
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
   const loginCompleteState = useAppSelector((state) => state.maintain[KEY_LOGIN_COMPLETE])
@@ -57,21 +59,7 @@ export default function BoardCategory({ params }: { params: PageParam }) {
   const [pageNumber, setPageNumber] = useState<number>(0)
 
   const convertBoardId = () => {
-    let boardName: string
-    const regex = /^\/board\/(.*)$/
-    const match = (pathname.match(regex) as RegExpMatchArray)[1]
-    switch (match) {
-      case 'announce':
-        boardName = '공지사항'
-        break
-      case 'free':
-        boardName = '자유게시판'
-        break
-      default:
-        return
-    }
-
-    const currentBoard = myBoardState.filter((data) => data.name === boardName)[0]
+    const currentBoard = myBoardState.filter((data) => data.name === query)[0]
     setCurrentBoard(currentBoard)
   }
 
@@ -82,7 +70,7 @@ export default function BoardCategory({ params }: { params: PageParam }) {
           limit: 10,
           offset: 10 * pageNumber,
         },
-        fetchUrl: API_URL_POSTINGS_MY,
+        fetchUrl: API_URL_POSTINGS_MY_ALL,
         header: {
           Authorization: `Bearer ${accessToken}`,
           [KEY_X_ORGANIZATION_CODE]: orgCode,
@@ -142,7 +130,7 @@ export default function BoardCategory({ params }: { params: PageParam }) {
       isCheckInterval: true,
     }
     moduleCheckUserState(moduleProps)
-  }, [currentBoard, pageNumber, pageSize])
+  }, [currentBoard, pageNumber, pageSize, query])
 
   return (
     <main className="md:w-[50rem] w-[35rem] h-4/5 flex flex-col z-1 items-center">
