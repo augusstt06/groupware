@@ -6,7 +6,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 
 import BoardItemHub from '@/app/component/page/main/hub/board/item/BoardItemHub'
 import BoardHubInput from '@/app/component/ui/input/board/BoardHubInput'
-import BoardWriteModal from '@/app/component/ui/modal/BoardWriteModal'
+import BoardWriteModal from '@/app/component/ui/modal/board/BoardWriteModal'
 import Pagination from '@/app/component/ui/pagination/Pagination'
 import {
   KEY_ACCESS_TOKEN,

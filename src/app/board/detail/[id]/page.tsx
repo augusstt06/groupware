@@ -10,7 +10,7 @@ import { FaHeart, FaRegHeart } from 'react-icons/fa'
 import Comment from '@/app/component/page/board/comment/Comment'
 import WriteComment from '@/app/component/page/board/comment/WriteComment'
 import PostingDetailHeader from '@/app/component/page/board/detail/PostingDetailHeader'
-import BoardWriteModal from '@/app/component/ui/modal/BoardWriteModal'
+import BoardWriteModal from '@/app/component/ui/modal/board/BoardWriteModal'
 import {
   KEY_ACCESS_TOKEN,
   KEY_LOGIN_COMPLETE,
