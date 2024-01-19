@@ -83,5 +83,5 @@ export const PROJECT_SIDEBAR_MENU_IMPORTANT = '중요 프로젝트'
 // export const PROJECT_MAIN_CATEGORY_IMPORTANT = 'important'
 
 export const PROJECT_MAIN_CATEGORY_ALL = '전체'
-export const PROJECT_MAIN_CATEGORY_PARTICIPATING = '참여중인 프로젝트'
-export const PROJECT_MAIN_CATEGORY_IMPORTANT = '중요 프로젝트'
+export const PROJECT_MAIN_CATEGORY_INCLUDED = '참여중인 프로젝트'
+export const PROJECT_MAIN_CATEGORY_STARRED = '중요 프로젝트'

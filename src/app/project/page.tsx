@@ -6,8 +6,19 @@ import { useRouter } from 'next/navigation'
 
 import ProjectMainHub from '../component/page/project/hub/ProjectMainHub'
 import CreateProjectModal from '../component/ui/modal/project/CreateProjectModal'
-import { KEY_ACCESS_TOKEN, KEY_LOGIN_COMPLETE, KEY_X_ORGANIZATION_CODE } from '../constant/constant'
-import { API_URL_PROJECTS_LIST } from '../constant/route/api-route-constant'
+import {
+  KEY_ACCESS_TOKEN,
+  KEY_LOGIN_COMPLETE,
+  KEY_X_ORGANIZATION_CODE,
+  PROJECT_MAIN_CATEGORY_ALL,
+  PROJECT_MAIN_CATEGORY_INCLUDED,
+  PROJECT_MAIN_CATEGORY_STARRED,
+} from '../constant/constant'
+import {
+  API_URL_PROJECTS_LIST,
+  API_URL_PROJECTS_LIST_INCLUDED,
+  API_URL_PROJECTS_LIST_STARRED,
+} from '../constant/route/api-route-constant'
 import { useAppDispatch, useAppSelector } from '../module/hooks/reduxHooks'
 import { moduleCheckUserState } from '../module/utils/moduleCheckUserState'
 import { moduleGetCookie } from '../module/utils/moduleCookie'
@@ -30,6 +41,7 @@ export default function Project() {
   const [rerender, setRerender] = useState(false)
   const [accessToken, setAccessToken] = useState(moduleGetCookie(KEY_ACCESS_TOKEN))
   const loginCompleteState = useAppSelector((state) => state.maintain[KEY_LOGIN_COMPLETE])
+  const projectCategory = useAppSelector((state) => state.projectMainCategory.selectProjectMenu)
 
   const [projectList, setProjectList] = useState<ProjectResponseType[]>([])
 
@@ -37,6 +49,18 @@ export default function Project() {
     (state) => state.projectModal.isCreateProjectModalOpen,
   )
 
+  const decideFetchUrl = () => {
+    switch (projectCategory) {
+      case PROJECT_MAIN_CATEGORY_ALL:
+        return API_URL_PROJECTS_LIST
+      case PROJECT_MAIN_CATEGORY_INCLUDED:
+        return API_URL_PROJECTS_LIST_INCLUDED
+      case PROJECT_MAIN_CATEGORY_STARRED:
+        return API_URL_PROJECTS_LIST_STARRED
+      default:
+        return API_URL_PROJECTS_LIST
+    }
+  }
   // FIXME: teamID를 얻어올 곳이 없음
   const fetchGetProjectList = async () => {
     const fetchProps: ModuleGetFetchProps = {
@@ -45,14 +69,14 @@ export default function Project() {
         offset: 0,
         teamId: 1,
       },
-      fetchUrl: API_URL_PROJECTS_LIST,
+      fetchUrl: decideFetchUrl(),
       header: {
         Authorization: `Bearer ${accessToken}`,
         [KEY_X_ORGANIZATION_CODE]: orgCode,
       },
     }
-    // FIXME: 리덕스의 state.projectMainCategory 필터링하기 (중요/참여중)
     const res = await moduleGetFetch<ProjectListResponseType>(fetchProps)
+
     const resList = (res as SuccessResponseType<ProjectListResponseType>).result.data
 
     setProjectList(resList)
@@ -69,7 +93,7 @@ export default function Project() {
       isCheckInterval: true,
     }
     moduleCheckUserState(moduleProps)
-  }, [rerender])
+  }, [rerender, projectCategory])
   return (
     <main className="w-full 2xl:w-2/3 h-4/5 flex flex-col items-center">
       <ProjectMainHub projectList={projectList} />

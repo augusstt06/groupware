@@ -13,13 +13,19 @@ export default function ProjectMainHub(props: ProjectMainHubProps) {
       <div className="w-full p-3">
         <span className="font-bold">{projectCategory}</span>
       </div>
-      <div className="grid xl:grid-cols-4 xl:gap-x-8 lg:grid-cols-3 lg:gap-x-10 grid-cols-2 gap-x-8 gap-y-6 p-3 ">
-        {props.projectList.map((data) => (
-          <Link key={data.id} href={`${ROUTE_PROJECT_DETAIL}/${data.id}`}>
-            <ProjectCard projectInfo={data} />
-          </Link>
-        ))}
-      </div>
+      {props.projectList.length !== 0 ? (
+        <div className="grid xl:grid-cols-4 xl:gap-x-8 lg:grid-cols-3 lg:gap-x-10 grid-cols-2 gap-x-8 gap-y-6 p-3 ">
+          {props.projectList.map((data) => (
+            <Link key={data.id} href={`${ROUTE_PROJECT_DETAIL}/${data.id}`}>
+              <ProjectCard projectInfo={data} />
+            </Link>
+          ))}
+        </div>
+      ) : (
+        <div className="p-5">
+          <span className="font-bold">프로젝트가 없습니다.</span>
+        </div>
+      )}
     </div>
   )
 }

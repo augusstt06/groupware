@@ -46,3 +46,7 @@ export const API_URL_COMMENT_LIKE = process.env.NEXT_PUBLIC_COMMENT_LIKE_SOURCE 
 //  Project
 export const API_URL_PROJECTS = process.env.NEXT_PUBLIC_PROJECT_SOURCE as string
 export const API_URL_PROJECTS_LIST = process.env.NEXT_PUBLIC_PROJECT_LIST_SOURCE as string
+export const API_URL_PROJECTS_LIST_INCLUDED = process.env
+  .NEXT_PUBLIC_PROJECT_LIST_INCLUDED_SOURCE as string
+export const API_URL_PROJECTS_LIST_STARRED = process.env
+  .NEXT_PUBLIC_PROJECT_LIST_STARRED_SOURCE as string
