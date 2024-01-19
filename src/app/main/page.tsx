@@ -121,7 +121,7 @@ export default function Main() {
   }, [accessToken])
 
   return (
-    <main className="md:w-[50rem] w-[35rem] h-4/5 flex flex-col z-1 items-center">
+    <main className="w-full 2xl:w-2/3 h-4/5 flex flex-col items-center">
       <MainHub title={MAIN_CARD_TODO} />
     </main>
   )
