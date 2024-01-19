@@ -7,7 +7,7 @@ import dynamic from 'next/dynamic'
 import { useParams, useRouter } from 'next/navigation'
 import { FaHeart, FaRegHeart } from 'react-icons/fa'
 
-import Comment from '@/app/component/page/board/comment/Comment.1'
+import Comment from '@/app/component/page/board/comment/Comment'
 import WriteComment from '@/app/component/page/board/comment/WriteComment'
 import PostingDetailHeader from '@/app/component/page/board/detail/PostingDetailHeader'
 import BoardWriteModal from '@/app/component/ui/modal/board/BoardWriteModal'
