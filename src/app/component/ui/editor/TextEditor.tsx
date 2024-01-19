@@ -11,7 +11,11 @@ import '@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin
 import 'prismjs/themes/prism.css'
 import Prism from 'prismjs'
 
-import { KEY_ACCESS_TOKEN, KEY_X_ORGANIZATION_CODE } from '@/app/constant/constant'
+import {
+  API_SUCCESS_CODE,
+  KEY_ACCESS_TOKEN,
+  KEY_X_ORGANIZATION_CODE,
+} from '@/app/constant/constant'
 import { API_URL_UPLOAD_IMG } from '@/app/constant/route/api-route-constant'
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
@@ -49,7 +53,7 @@ export default function TextEditor(props: EditorProps) {
         },
       }
       const res = await modulePostFileFetch<string>(fetchImgProps)
-      if (res.status !== 200) throw new Error((res as FailResponseType).message)
+      if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)
       const imgUrl = (res as SuccessResponseType<string>).result
       imgList.push(imgUrl)
       callback(imgUrl, 'image')

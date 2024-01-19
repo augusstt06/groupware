@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 
 import { CiLogout } from 'react-icons/ci'
 
-import { FALSE, KEY_ACCESS_TOKEN } from '@/app/constant/constant'
+import { API_SUCCESS_CODE, FALSE, KEY_ACCESS_TOKEN } from '@/app/constant/constant'
 import { API_URL_LOGOUT } from '@/app/constant/route/api-route-constant'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleDeleteCookies, moduleGetCookie } from '@/app/module/utils/moduleCookie'
@@ -27,7 +27,7 @@ export default function LogoutBtn(props: LogoutBtnProps) {
   const fetchLogout = async () => {
     try {
       const res = await modulePostFetch<string>(fetchLogoutProps)
-      if (res.status !== 200) throw new Error((res as FailResponseType).message)
+      if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)
       props.setConfirmValue(false)
       moduleDeleteCookies(KEY_ACCESS_TOKEN)
       dispatch(updateLoginCompleteReducer(FALSE))

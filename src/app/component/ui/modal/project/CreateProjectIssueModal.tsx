@@ -19,7 +19,7 @@ export default function CreateProjectIssueModal() {
       aria-hidden="true"
       className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-opacity-50 bg-gray-500 backdrop-blur-xs"
     >
-      <div className="relative rounded-lg shadow dark:bg-gray-700 border-solid border-2 border-indigo-300 bg-white p-5 w-3/6">
+      <div className="relative rounded-lg shadow dark:bg-gray-700 border-solid border-2 border-indigo-300 bg-white p-5 w-3/6 ">
         <CreateProjectIssueModalTab
           selectCategory={selectCategory}
           changeSelectCategory={changeSelectCategory}

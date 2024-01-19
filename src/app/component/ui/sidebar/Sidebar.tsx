@@ -6,12 +6,13 @@ import { usePathname } from 'next/navigation'
 import SidebarCardGroup from '../card/sidebar/SidebarCardGroup'
 
 import {
-  BOARD,
+  API_SUCCESS_CODE,
   KEY_ACCESS_TOKEN,
   KEY_X_ORGANIZATION_CODE,
-  MAIN,
-  PROJECT,
-  PROJECT_DETAIL,
+  SIDEBAR_URL_PATH_BOARD,
+  SIDEBAR_URL_PATH_MAIN,
+  SIDEBAR_URL_PATH_PROJECT,
+  SIDEBAR_URL_PATH_PROJECT_DETAIL,
 } from '@/app/constant/constant'
 import { API_URL_GET_MY_BOARD } from '@/app/constant/route/api-route-constant'
 import { ROUTE_BOARD, ROUTE_MAIN, ROUTE_PROJECT } from '@/app/constant/route/route-constant'
@@ -42,36 +43,34 @@ export default function Sidebar() {
       extractedString = currentUrl.slice(0, 2).join('/')
       switch (extractedString) {
         case ROUTE_MAIN:
-          return MAIN
+          return SIDEBAR_URL_PATH_MAIN
         case ROUTE_BOARD:
-          return BOARD
+          return SIDEBAR_URL_PATH_BOARD
         case ROUTE_PROJECT:
-          if (currentUrl.slice(2, 3).join('/') === 'detail') return PROJECT_DETAIL
-          return PROJECT
+          if (currentUrl.slice(2, 3).join('/') === 'detail') return SIDEBAR_URL_PATH_PROJECT_DETAIL
+          return SIDEBAR_URL_PATH_PROJECT
         default:
-          return MAIN
+          return SIDEBAR_URL_PATH_MAIN
       }
     }
-    return MAIN
+    return SIDEBAR_URL_PATH_MAIN
   }
 
   const fetchGetMyBoardList = async () => {
-    try {
-      const fetchProps: ModuleGetFetchProps = {
-        params: {
-          organizationId: userInfo.organizationId,
-        },
-        fetchUrl: API_URL_GET_MY_BOARD,
-        header: {
-          Authorization: `Bearer ${accessToken}`,
-          [KEY_X_ORGANIZATION_CODE]: orgCode,
-        },
-      }
-      const res = await moduleGetFetch<MyBoardType[]>(fetchProps)
-      if (res.status !== 200) throw new Error((res as FailResponseType).message)
-      const boardMenu = (res as SuccessResponseType<MyBoardType[]>).result
-      setMyBoardList(boardMenu)
-    } catch (err) {}
+    const fetchProps: ModuleGetFetchProps = {
+      params: {
+        organizationId: userInfo.organizationId,
+      },
+      fetchUrl: API_URL_GET_MY_BOARD,
+      header: {
+        Authorization: `Bearer ${accessToken}`,
+        [KEY_X_ORGANIZATION_CODE]: orgCode,
+      },
+    }
+    const res = await moduleGetFetch<MyBoardType[]>(fetchProps)
+    if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)
+    const boardMenu = (res as SuccessResponseType<MyBoardType[]>).result
+    setMyBoardList(boardMenu)
   }
 
   useEffect(() => {
@@ -95,7 +94,7 @@ export default function Sidebar() {
       </div>
 
       <div
-        className={`fixed md:block md:top-24 top-28 md:w-56 w-40 md:ml-10 ml-5 mr-14 ${
+        className={`fixed md:block 2xl:top-44 md:top-24 top-28 2xl:w-1/3 lg:w-56 w-40 md:ml-10 2xl:left-60 ml-5 mr-14 ${
           isSideOpen ? 'md:bg-none bg-white dark:bg-[#121212] rounded-lg z-999' : 'hidden'
         }`}
       >

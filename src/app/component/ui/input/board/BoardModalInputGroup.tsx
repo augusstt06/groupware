@@ -6,7 +6,11 @@ import { AiOutlinePicture } from 'react-icons/ai'
 
 import { InputLabel } from '../../label/Inputlabel'
 
-import { KEY_ACCESS_TOKEN, KEY_X_ORGANIZATION_CODE } from '@/app/constant/constant'
+import {
+  API_SUCCESS_CODE,
+  KEY_ACCESS_TOKEN,
+  KEY_X_ORGANIZATION_CODE,
+} from '@/app/constant/constant'
 import { API_URL_UPLOAD_IMG } from '@/app/constant/route/api-route-constant'
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
@@ -45,7 +49,7 @@ export default function BoardModalInputGroup(props: BoardModalInputGruopProps) {
         },
       }
       const res = await modulePostFileFetch<string>(fetchImgProps)
-      if (res.status !== 200) throw new Error((res as FailResponseType).message)
+      if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)
       props.setThumbNailUrl((res as SuccessResponseType<string>).result)
       const imgUrl = (res as SuccessResponseType<string>).result
       const img = (

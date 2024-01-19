@@ -1,6 +1,10 @@
 import { type Dispatch, type SetStateAction } from 'react'
 
-import { type BoardListResponsetype, type MyBoardType } from '../variableTypes'
+import {
+  type BoardListResponseType,
+  type MyBoardType,
+  type ProjectResponseType,
+} from '../variableTypes'
 
 export type TaskCardProps = {
   title: string
@@ -27,7 +31,7 @@ export type TodoCardType = {
   // content: boardListResponsetype
 }
 export type BoardCardType = {
-  content: BoardListResponsetype
+  content: BoardListResponseType
 }
 
 export type MainSidebarCardGroupProps = {
@@ -35,4 +39,10 @@ export type MainSidebarCardGroupProps = {
   reRender: boolean
   setRerender: Dispatch<SetStateAction<boolean>>
   myBoardList: MyBoardType[]
+}
+
+// Project
+
+export type ProjectCardProps = {
+  projectInfo: ProjectResponseType
 }

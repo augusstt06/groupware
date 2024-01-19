@@ -8,7 +8,6 @@ export default function BoardHub(props: BoardHubProps) {
       <BoardTab
         title={props.title}
         selectBoard={props.selectBoard}
-        myBoardList={props.myBoardList}
         changeBoard={props.changeBoard}
       />
       {props.boardList.length !== 0 ? (

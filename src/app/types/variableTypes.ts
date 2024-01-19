@@ -2,7 +2,7 @@
 
 export type DecodeType = { uuid: string; iss: string; iat: number; exp: number }
 
-export type BoardListResponsetype = {
+export type BoardListResponseType = {
   boardId: number
   content: string
   createdAt: string
@@ -42,7 +42,7 @@ export type CommentType = {
 }
 
 export type BoardResponseType = {
-  data: [BoardListResponsetype]
+  data: [BoardListResponseType]
   total: number
   size: number
 }
@@ -69,4 +69,34 @@ export type MyBoardType = {
 export type SelectListType = {
   name: string
   id: string
+}
+
+export type ProjectListResponseType = {
+  data: ProjectResponseType[]
+  page: number
+  size: number
+  total: number
+}
+
+export type ProjectResponseType = {
+  color: string
+  createdAt: string
+  id: number
+  issues: []
+  name: string
+  ownerId: number
+  teamId: number
+  updatedAt: string
+}
+
+export type FetchPostProjectResponseType = {
+  color: string
+  name: string
+  teamId: number
+}
+
+export type ProjectAlertStateType = {
+  mainDescription: string
+  subDescription: string
+  isCreateModalClose: boolean
 }

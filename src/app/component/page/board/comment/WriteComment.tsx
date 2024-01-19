@@ -5,7 +5,11 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { IoCameraOutline } from 'react-icons/io5'
 
-import { KEY_ACCESS_TOKEN, KEY_X_ORGANIZATION_CODE } from '@/app/constant/constant'
+import {
+  API_SUCCESS_CODE,
+  KEY_ACCESS_TOKEN,
+  KEY_X_ORGANIZATION_CODE,
+} from '@/app/constant/constant'
 import {
   API_URL_COMMENT_POSTING,
   API_URL_UPLOAD_IMG,
@@ -51,7 +55,7 @@ export default function WriteComment(props: WriteCommentProps) {
         },
       }
       const res = await modulePostFileFetch<string>(fetchImgProps)
-      if (res.status !== 200) throw new Error((res as FailResponseType).message)
+      if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)
       const imgUrl = (res as SuccessResponseType<string>).result
       setImg(imgUrl)
     } catch (err) {}
@@ -86,7 +90,7 @@ export default function WriteComment(props: WriteCommentProps) {
   const fetchPostComment = async () => {
     try {
       const res = await modulePostFetch<ApiResponseType>(fetchPostCommentProps)
-      if (res.status !== 200) throw new Error((res as FailResponseType).message)
+      if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)
       commentInput.resetValue()
       setInputCount(0)
       props.doRerender()
