@@ -1,9 +1,9 @@
 'use client'
-
 import { useState } from 'react'
 
 import { FaHeart, FaRegHeart } from 'react-icons/fa'
 
+import Recomment from './Recomment'
 import WriteComment from './WriteComment'
 
 import {
@@ -27,39 +27,18 @@ import {
 } from '@/app/types/moduleTypes'
 import { type CommentProps } from '@/app/types/pageTypes'
 
-export default function Recomment(props: CommentProps) {
+export default function Comment(props: CommentProps) {
   const dispatch = useAppDispatch()
+  const userInfo = useAppSelector((state) => state.userInfo.extraInfo)
   const likeState = useAppSelector((state) => state.boardLike.commentLikeList)
   const isCommentLike = likeState.includes(props.comments.id)
   const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
-  const userInfo = useAppSelector((state) => state.userInfo.extraInfo)
   const [isWriteComment, setIsWriteComment] = useState(false)
 
   const clickWriteComment = () => {
     setIsWriteComment(!isWriteComment)
   }
-  const fetchDeleteCommentProps: ModuleGetFetchProps = {
-    params: {
-      commentId: props.comments.id,
-    },
-    fetchUrl: API_URL_COMMENT,
-    header: {
-      Authorization: `Bearer ${accessToken}`,
-      [KEY_X_ORGANIZATION_CODE]: orgCode,
-    },
-  }
-  const fetchDeleteComment = async () => {
-    try {
-      const res = await moduleDeleteFetch<ApiResponseType>(fetchDeleteCommentProps)
-      if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)
-      props.doRerender()
-    } catch (err) {}
-  }
-  const clickDeleteComment = () => {
-    void fetchDeleteComment()
-  }
-
   const fetchPostLikeProps: ModulePostFetchProps = {
     data: {
       commentId: props.comments.id,
@@ -102,8 +81,29 @@ export default function Recomment(props: CommentProps) {
     else void fetchCommentLike()
   }
 
+  const fetchDeleteCommentProps: ModuleGetFetchProps = {
+    params: {
+      commentId: props.comments.id,
+    },
+    fetchUrl: API_URL_COMMENT,
+    header: {
+      Authorization: `Bearer ${accessToken}`,
+      [KEY_X_ORGANIZATION_CODE]: orgCode,
+    },
+  }
+  const fetchDeleteComment = async () => {
+    try {
+      const res = await moduleDeleteFetch<ApiResponseType>(fetchDeleteCommentProps)
+      if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)
+      props.doRerender()
+    } catch (err) {}
+  }
+  const clickDeleteComment = () => {
+    void fetchDeleteComment()
+  }
+
   return (
-    <>
+    <div className="border-b-1 border-gray-300">
       <div className="flex flex-row items-center justify-around p-2">
         <div className="border-gray-500 dark:border-gray-300 border-2 rounded-full p-1">img</div>
         <div className="w-5/6 p-1 flex flex-col ">
@@ -122,16 +122,10 @@ export default function Recomment(props: CommentProps) {
               <></>
             )}
           </div>
-          <span className="text-sm mb-2">
-            {props.mention?.isMention ?? false ? (
-              <span className="font-bold mr-2">@{props.mention?.parentName}</span>
-            ) : (
-              <></>
-            )}
-            {props.comments.content}
-          </span>
+          <span className="text-sm mb-2">{props.comments.content}</span>
           <div className="text-xs text-gray-400 flex flex-row justify-start items-center">
             <span className="mr-4">2024.01.01</span>
+
             <span className="mr-1 cursor-pointer">
               {isCommentLike ? (
                 <FaHeart className="text-red-400" onClick={clickPostCommentLike} />
@@ -149,29 +143,22 @@ export default function Recomment(props: CommentProps) {
           </div>
         </div>
       </div>
-      {isWriteComment ? (
-        <WriteComment
-          postingID={props.postingID}
-          parentID={props.comments.id}
-          doRerender={props.doRerender}
-        />
-      ) : (
-        <></>
-      )}
-      {props.comments.childComments.length !== 0 ? (
-        props.comments.childComments.map((data) => (
-          <div className="" key={data.content}>
-            <Recomment
-              comments={data}
-              postingID={props.postingID}
-              doRerender={props.doRerender}
-              mention={{ isMention: true, parentName: props.comments.name }}
-            />
+      <div className="pl-7 border-b-2 border-gray-300">
+        {isWriteComment ? (
+          <WriteComment
+            postingID={props.postingID}
+            parentID={props.comments.id}
+            doRerender={props.doRerender}
+          />
+        ) : (
+          <></>
+        )}
+        {props.comments.childComments.map((data) => (
+          <div className="pl-7 " key={data.content}>
+            <Recomment comments={data} postingID={props.postingID} doRerender={props.doRerender} />
           </div>
-        ))
-      ) : (
-        <></>
-      )}
-    </>
+        ))}
+      </div>
+    </div>
   )
 }

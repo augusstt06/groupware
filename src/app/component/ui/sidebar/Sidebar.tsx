@@ -6,12 +6,13 @@ import { usePathname } from 'next/navigation'
 import SidebarCardGroup from '../card/sidebar/SidebarCardGroup'
 
 import {
-  BOARD,
+  API_SUCCESS_CODE,
   KEY_ACCESS_TOKEN,
   KEY_X_ORGANIZATION_CODE,
-  MAIN,
-  PROJECT,
-  PROJECT_DETAIL,
+  SIDEBAR_URL_PATH_BOARD,
+  SIDEBAR_URL_PATH_MAIN,
+  SIDEBAR_URL_PATH_PROJECT,
+  SIDEBAR_URL_PATH_PROJECT_DETAIL,
 } from '@/app/constant/constant'
 import { API_URL_GET_MY_BOARD } from '@/app/constant/route/api-route-constant'
 import { ROUTE_BOARD, ROUTE_MAIN, ROUTE_PROJECT } from '@/app/constant/route/route-constant'
@@ -42,17 +43,17 @@ export default function Sidebar() {
       extractedString = currentUrl.slice(0, 2).join('/')
       switch (extractedString) {
         case ROUTE_MAIN:
-          return MAIN
+          return SIDEBAR_URL_PATH_MAIN
         case ROUTE_BOARD:
-          return BOARD
+          return SIDEBAR_URL_PATH_BOARD
         case ROUTE_PROJECT:
-          if (currentUrl.slice(2, 3).join('/') === 'detail') return PROJECT_DETAIL
-          return PROJECT
+          if (currentUrl.slice(2, 3).join('/') === 'detail') return SIDEBAR_URL_PATH_PROJECT_DETAIL
+          return SIDEBAR_URL_PATH_PROJECT
         default:
-          return MAIN
+          return SIDEBAR_URL_PATH_MAIN
       }
     }
-    return MAIN
+    return SIDEBAR_URL_PATH_MAIN
   }
 
   const fetchGetMyBoardList = async () => {
@@ -68,7 +69,7 @@ export default function Sidebar() {
         },
       }
       const res = await moduleGetFetch<MyBoardType[]>(fetchProps)
-      if (res.status !== 200) throw new Error((res as FailResponseType).message)
+      if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)
       const boardMenu = (res as SuccessResponseType<MyBoardType[]>).result
       setMyBoardList(boardMenu)
     } catch (err) {}

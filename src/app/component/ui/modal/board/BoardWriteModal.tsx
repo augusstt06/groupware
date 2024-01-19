@@ -10,7 +10,13 @@ import BoardWriteModalCheckBox from '../../checkbox/BoardWriteModalCheckBox'
 import BoardModalInputGroup from '../../input/board/BoardModalInputGroup'
 import BoardModalSaveListTab from '../../tab/board/BoardModalSaveListTab'
 
-import { FALSE, KEY_ACCESS_TOKEN, KEY_X_ORGANIZATION_CODE, TRUE } from '@/app/constant/constant'
+import {
+  API_SUCCESS_CODE,
+  FALSE,
+  KEY_ACCESS_TOKEN,
+  KEY_X_ORGANIZATION_CODE,
+  TRUE,
+} from '@/app/constant/constant'
 import { ERR_EMPTRY_POSTING_FIELD, errNotEntered } from '@/app/constant/errorMsg'
 import { API_URL_POSTINGS, API_URL_POSTINGS_PENDING } from '@/app/constant/route/api-route-constant'
 import { ROUTE_POSTING_DETAIL } from '@/app/constant/route/route-constant'
@@ -107,7 +113,7 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
         },
       }
       const res = await moduleGetFetch<BoardResponseType>(fetchProps)
-      if (res.status !== 200) throw new Error((res as FailResponseType).message)
+      if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)
       const postingList = (res as SuccessResponseType<BoardResponseType>).result.data
       setSaveList(postingList)
     } catch (err) {}
@@ -125,7 +131,7 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
         },
       }
       const res = await moduleDeleteFetch<string>(fetchProps)
-      if (res.status !== 200) throw new Error((res as FailResponseType).message)
+      if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)
       setRerender(!rerender)
     } catch (err) {
       alert('삭제에 실패했습니다.')
@@ -152,7 +158,7 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
       }
 
       const res = await modulePostFetch<ApiResponseType>(fetchProps)
-      if (res.status !== 200) throw new Error((res as FailResponseType).message)
+      if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)
       setIsAlertModalOpen(false)
       setRerender(!rerender)
     } catch (err) {}
@@ -206,7 +212,7 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
         },
       }
       const res = await modulePostFetch<number>(fetchProps)
-      if (res.status !== 200) throw new Error((res as FailResponseType).message)
+      if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)
       const postingId = (res as SuccessResponseType<number>).result
 
       dispatch(openBoardWriteModalReducer())

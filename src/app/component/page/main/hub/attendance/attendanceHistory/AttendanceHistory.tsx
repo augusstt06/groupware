@@ -4,7 +4,11 @@ import AttendanceHistoryBtn from '@/app/component/ui/button/main/attendance/Atte
 import MainInput from '@/app/component/ui/input/main/MainInput'
 import { InputLabel } from '@/app/component/ui/label/Inputlabel'
 import AttendanceHistoryTable from '@/app/component/ui/table/main/AttendanceHistoryTable'
-import { KEY_ACCESS_TOKEN, KEY_X_ORGANIZATION_CODE } from '@/app/constant/constant'
+import {
+  API_SUCCESS_CODE,
+  KEY_ACCESS_TOKEN,
+  KEY_X_ORGANIZATION_CODE,
+} from '@/app/constant/constant'
 import {
   API_URL_GET_ATTENDANCE_HISTORY,
   API_URL_VACATION,
@@ -52,7 +56,7 @@ export default function AttendanceHistory() {
         },
       }
       const res = await moduleGetFetch<ApiResponseType[]>(fetchHistoryProps)
-      if (res.status !== 200) throw new Error((res as FailResponseType).message)
+      if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)
       const resArr = (res as SuccessResponseType<ApiResponseType[]>).result
       setAttendanceHistory(resArr)
     } catch (err) {}

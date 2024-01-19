@@ -1,3 +1,6 @@
+// API resposne code
+export const API_SUCCESS_CODE = 200
+
 export const GET = 'GET'
 export const POST = 'POST'
 export const PATCH = 'PATCH'
@@ -38,11 +41,20 @@ export const KEY_ORGANIZATION_COMPLETE = 'organization-complete'
 export const KEY_ATTENDANCE = 'attendance'
 export const KEY_LOGIN_COMPLETE = 'login-complete'
 
-export const DEFAULT = '/'
-export const MAIN = 'main'
-export const BOARD = 'board'
-export const PROJECT = 'project'
-export const PROJECT_DETAIL = 'project/detail'
-export const TODO = 'TODO'
-export const ANNOUNCE = 'announce'
-export const FREE = 'free'
+// Sidebar
+export const SIDEBAR_URL_PATH_DEFAULT = '/'
+export const SIDEBAR_URL_PATH_MAIN = 'main'
+export const SIDEBAR_URL_PATH_BOARD = 'board'
+export const SIDEBAR_URL_PATH_PROJECT = 'project'
+export const SIDEBAR_URL_PATH_PROJECT_DETAIL = 'project/detail'
+
+export const MAIN_CARD_TODO = 'TODO'
+
+// Board
+export const BOARD_CATEGORY_TEAM = '팀'
+export const BOARD_CATEGORY_PROJECT = '프로젝트'
+
+// Project
+export const PROJECT_ISSUE_TASK = 'task'
+export const PROJECT_ISSUE_CALENDAR = 'calendar'
+export const PROJECT_ISSUE_TODO = 'todo'

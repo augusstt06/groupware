@@ -63,7 +63,8 @@ export type MainTabProps = {
   title: string
   myBoardList: MyBoardType[]
 }
-export type BoardTabProps = MainTabProps & {
+export type BoardTabProps = {
+  title: string
   changeBoard: (name: string) => void
   selectBoard: string
 }

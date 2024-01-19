@@ -7,11 +7,12 @@ import dynamic from 'next/dynamic'
 import { useParams, useRouter } from 'next/navigation'
 import { FaHeart, FaRegHeart } from 'react-icons/fa'
 
-import Comment from '@/app/component/page/board/comment/Comment'
+import Comment from '@/app/component/page/board/comment/Comment.1'
 import WriteComment from '@/app/component/page/board/comment/WriteComment'
 import PostingDetailHeader from '@/app/component/page/board/detail/PostingDetailHeader'
 import BoardWriteModal from '@/app/component/ui/modal/board/BoardWriteModal'
 import {
+  API_SUCCESS_CODE,
   KEY_ACCESS_TOKEN,
   KEY_LOGIN_COMPLETE,
   KEY_X_ORGANIZATION_CODE,
@@ -88,7 +89,7 @@ export default function BoardDetail() {
   const fetchGetPostingDetail = async (data: ModuleGetFetchProps) => {
     try {
       const res = await moduleGetFetch<DetailResponseType>(data)
-      if (res.status !== 200) throw new Error((res as FailResponseType).message)
+      if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)
 
       const contentRes = (res as SuccessResponseType<DetailResponseType>).result
       setContent(contentRes)
@@ -162,7 +163,7 @@ export default function BoardDetail() {
   const fetchDeletePostings = async () => {
     try {
       const res = await moduleDeleteFetch<string>(fetchDeletePostingsProps)
-      if (res.status !== 200) throw new Error((res as FailResponseType).message)
+      if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)
       router.back()
     } catch (err) {
       alert(errDefault('게시글 삭제'))

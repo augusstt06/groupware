@@ -7,7 +7,11 @@ import { FaHeart, FaRegHeart } from 'react-icons/fa'
 import Recomment from './Recomment'
 import WriteComment from './WriteComment'
 
-import { KEY_ACCESS_TOKEN, KEY_X_ORGANIZATION_CODE } from '@/app/constant/constant'
+import {
+  API_SUCCESS_CODE,
+  KEY_ACCESS_TOKEN,
+  KEY_X_ORGANIZATION_CODE,
+} from '@/app/constant/constant'
 import { API_URL_COMMENT, API_URL_COMMENT_LIKE } from '@/app/constant/route/api-route-constant'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
@@ -49,7 +53,7 @@ export default function Comment(props: CommentProps) {
   const fetchCommentLike = async () => {
     try {
       const res = await modulePostFetch<ApiResponseType>(fetchPostLikeProps)
-      if (res.status !== 200) throw new Error((res as FailResponseType).message)
+      if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)
       dispatch(addCommentLikeReducer(props.comments.id))
       props.doRerender()
     } catch (err) {}
@@ -67,7 +71,7 @@ export default function Comment(props: CommentProps) {
   const fetchDeleteLike = async () => {
     try {
       const res = await moduleDeleteFetch<ApiResponseType>(fetchDeleteLikeProps)
-      if (res.status !== 200) throw new Error((res as FailResponseType).message)
+      if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)
       dispatch(deleteCommentLikeReducer(props.comments.id))
       props.doRerender()
     } catch (err) {}
@@ -91,7 +95,7 @@ export default function Comment(props: CommentProps) {
   const fetchDeleteComment = async () => {
     try {
       const res = await moduleDeleteFetch<ApiResponseType>(fetchDeleteCommentProps)
-      if (res.status !== 200) throw new Error((res as FailResponseType).message)
+      if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)
       props.doRerender()
     } catch (err) {}
   }
