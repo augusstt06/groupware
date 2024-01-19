@@ -1,5 +1,7 @@
+import { type Dispatch, type SetStateAction } from 'react'
+
 import { type UseInputProps } from '../moduleTypes'
-import { type MyBoardType } from '../variableTypes'
+import { type MyBoardType, type ProjectAlertStateType } from '../variableTypes'
 
 export type BoardWriteModalprops = {
   currentBoard: MyBoardType | null
@@ -19,4 +21,13 @@ export type CreateProjectModalInputProps = {
 
 export type CreateProjectModalConfirmBtnProps = {
   handleClickCreateProject: () => void
+}
+
+export type CreateProjectModalProps = {
+  rerender: boolean
+  setRerender: Dispatch<SetStateAction<boolean>>
+}
+
+export type ProjectAlertModalProps = CreateProjectModalProps & {
+  alertState: ProjectAlertStateType
 }

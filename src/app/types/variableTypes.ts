@@ -88,3 +88,15 @@ export type ProjectResponseType = {
   teamId: number
   updatedAt: string
 }
+
+export type FetchPostProjectResponseType = {
+  color: string
+  name: string
+  teamId: number
+}
+
+export type ProjectAlertStateType = {
+  mainDescription: string
+  subDescription: string
+  isCreateModalClose: boolean
+}

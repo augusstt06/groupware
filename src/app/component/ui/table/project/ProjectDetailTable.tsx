@@ -16,7 +16,7 @@ export default function ProjectDetailTable(props: ProjectDetailTableProps) {
 
 export function ProjectDetailTableCard() {
   return (
-    <div className="flex flex-row items-center justify-between border-b-2 border-gray-200 overflow-x-auto">
+    <div className="flex flex-row items-center justify-between border-b-2 border-gray-200 overflow-x-auto dark:bg-[#576072ae] dark:text-gray-200 text-black">
       <div className="bg-gray-300 flex justify-center text-black w-1/5 h-12 text-center items-center">
         <span className="text-sm">업무</span>
       </div>

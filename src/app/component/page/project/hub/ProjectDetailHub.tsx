@@ -2,7 +2,7 @@ import InviteProjectMemberTable from '@/app/component/ui/table/project/InvitePro
 import ProjectDetailTable from '@/app/component/ui/table/project/ProjectDetailTable'
 import { type ProjectDetailHubProps } from '@/app/types/ui/uiTypes'
 
-export default function ProjectDetailHub(propss: ProjectDetailHubProps) {
+export default function ProjectDetailHub(props: ProjectDetailHubProps) {
   return (
     <div className="md:w-4/5 w-full flex flex-row items-left ">
       <div className="w-2/3 p-2 flex flex-row justify-center items-center dark:border-gray-700 border border-gray-200 rounded-lg mr-4 dark:bg-[#1a202c] dark:border-gray-700 border rounded-lg shadow-lg">
