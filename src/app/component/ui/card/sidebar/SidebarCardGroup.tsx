@@ -14,7 +14,14 @@ import {
 import { type MainSidebarCardGroupProps } from '@/app/types/ui/cardTypes'
 
 export default function SidebarCardGroup(props: MainSidebarCardGroupProps) {
+  const isMyboardListEmpty = () => {
+    if (props.myBoardList.length === 0) return true
+    return false
+  }
   const renderSidebarContent = () => {
+    if (isMyboardListEmpty()) {
+      return <NameCard />
+    }
     switch (props.title) {
       case SIDEBAR_URL_PATH_MAIN:
         return (

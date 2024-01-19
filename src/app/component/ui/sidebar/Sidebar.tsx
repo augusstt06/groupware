@@ -57,22 +57,20 @@ export default function Sidebar() {
   }
 
   const fetchGetMyBoardList = async () => {
-    try {
-      const fetchProps: ModuleGetFetchProps = {
-        params: {
-          organizationId: userInfo.organizationId,
-        },
-        fetchUrl: API_URL_GET_MY_BOARD,
-        header: {
-          Authorization: `Bearer ${accessToken}`,
-          [KEY_X_ORGANIZATION_CODE]: orgCode,
-        },
-      }
-      const res = await moduleGetFetch<MyBoardType[]>(fetchProps)
-      if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)
-      const boardMenu = (res as SuccessResponseType<MyBoardType[]>).result
-      setMyBoardList(boardMenu)
-    } catch (err) {}
+    const fetchProps: ModuleGetFetchProps = {
+      params: {
+        organizationId: userInfo.organizationId,
+      },
+      fetchUrl: API_URL_GET_MY_BOARD,
+      header: {
+        Authorization: `Bearer ${accessToken}`,
+        [KEY_X_ORGANIZATION_CODE]: orgCode,
+      },
+    }
+    const res = await moduleGetFetch<MyBoardType[]>(fetchProps)
+    if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)
+    const boardMenu = (res as SuccessResponseType<MyBoardType[]>).result
+    setMyBoardList(boardMenu)
   }
 
   useEffect(() => {
