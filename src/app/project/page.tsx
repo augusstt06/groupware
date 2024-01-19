@@ -49,6 +49,10 @@ export default function Project() {
     (state) => state.projectModal.isCreateProjectModalOpen,
   )
 
+  const isProjectListEmpty = () => {
+    if (projectList.length === 0) return true
+    return false
+  }
   const decideFetchUrl = () => {
     switch (projectCategory) {
       case PROJECT_MAIN_CATEGORY_ALL:
@@ -96,7 +100,14 @@ export default function Project() {
   }, [rerender, projectCategory])
   return (
     <main className="w-full 2xl:w-2/3 h-4/5 flex flex-col items-center">
-      <ProjectMainHub projectList={projectList} />
+      {isProjectListEmpty() ? (
+        <div className="p-5">
+          <span className="font-bold">프로젝트가 없습니다.</span>
+        </div>
+      ) : (
+        <ProjectMainHub projectList={projectList} />
+      )}
+
       {isCreateProjectModalOpen ? (
         <CreateProjectModal rerender={rerender} setRerender={setRerender} />
       ) : (

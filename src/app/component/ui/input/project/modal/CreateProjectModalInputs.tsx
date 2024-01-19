@@ -21,13 +21,20 @@ export function CreateProjectModalInput(props: CreateProjectModalInputProps) {
 }
 
 export function CreateProjectModalColorSelect(props: CreateProjectModalColorSelectProps) {
+  const divClassName = (name: string, value: string) => {
+    if (props.selectColor === name) {
+      return `${value} lg:w-20 md:w-12 w-8 h-8 rounded-lg mt-2 transition ease-in-out duration-600 scale-110 flex items-center justify-center`
+    } else {
+      return `${value} lg:w-20 md:w-12 w-8 h-8 rounded-lg mt-2 transition ease-in-out duration-500 hover:scale-110 flex items-center justify-center`
+    }
+  }
   return (
     <div className="mb-2">
       <span className="text-sm">프로젝트 색상</span>
       <div className="flex flex-row items-center justify-around w-full">
         {props.colorList.map((data) => (
           <div
-            className={`${data.value} lg:w-20 md:w-12 w-8 h-8 rounded-lg mt-2 transition ease-in-out duration-500 hover:scale-110 flex items-center justify-center`}
+            className={divClassName(data.name, data.value)}
             key={data.name}
             onClick={() => {
               props.handleSelectColor(data.name)

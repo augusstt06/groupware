@@ -85,3 +85,8 @@ export const PROJECT_SIDEBAR_MENU_IMPORTANT = '중요 프로젝트'
 export const PROJECT_MAIN_CATEGORY_ALL = '전체'
 export const PROJECT_MAIN_CATEGORY_INCLUDED = '참여중인 프로젝트'
 export const PROJECT_MAIN_CATEGORY_STARRED = '중요 프로젝트'
+
+export const PROJECT_DETAIL_CATEGORY_HOME = '홈'
+export const PROJECT_DETAIL_CATEGORY_TASK = '업무'
+export const PROJECT_DETAIL_CATEGORY_CALENDAR = '일정'
+export const PROJECT_DETAIL_CATEGORY_TODO = '할일'

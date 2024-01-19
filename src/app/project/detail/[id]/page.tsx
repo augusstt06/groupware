@@ -8,6 +8,7 @@ import ProjectDetailHub from '@/app/component/page/project/hub/ProjectDetailHub'
 import CreateProjectIssueModal from '@/app/component/ui/modal/project/CreateProjectIssueModal'
 import ProjectDetailTab from '@/app/component/ui/tab/project/ProjectDetailTab'
 import {
+  API_SUCCESS_CODE,
   KEY_ACCESS_TOKEN,
   KEY_LOGIN_COMPLETE,
   KEY_X_ORGANIZATION_CODE,
@@ -18,6 +19,7 @@ import { moduleCheckUserState } from '@/app/module/utils/moduleCheckUserState'
 import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
 import { moduleGetFetch } from '@/app/module/utils/moduleFetch'
 import {
+  type FailResponseType,
   type ModuleCheckUserStateProps,
   type ModuleGetFetchProps,
   type SuccessResponseType,
@@ -36,20 +38,34 @@ export default function ProjectDetail() {
   )
 
   const fetchGetProjectDetail = async () => {
-    const fetchProps: ModuleGetFetchProps = {
-      params: {
-        projectId: Number(query.id),
-      },
-      fetchUrl: API_URL_PROJECTS,
-      header: {
-        Authorization: `Bearer ${accessToken}`,
-        [KEY_X_ORGANIZATION_CODE]: orgCode,
-      },
-    }
+    try {
+      const fetchProps: ModuleGetFetchProps = {
+        params: {
+          projectId: Number(query.id),
+        },
+        fetchUrl: API_URL_PROJECTS,
+        header: {
+          Authorization: `Bearer ${accessToken}`,
+          [KEY_X_ORGANIZATION_CODE]: orgCode,
+        },
+      }
 
-    const res = await moduleGetFetch<ProjectResponseType>(fetchProps)
-    const projectDetail = (res as SuccessResponseType<ProjectResponseType>).result
-    setProjectinfo(projectDetail)
+      const res = await moduleGetFetch<ProjectResponseType>(fetchProps)
+      if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)
+      const projectDetail = (res as SuccessResponseType<ProjectResponseType>).result
+      setProjectinfo(projectDetail)
+    } catch (err) {
+      setProjectinfo({
+        color: '',
+        createdAt: '',
+        id: 0,
+        issues: [],
+        name: '프로젝트를 불러오는데 실패했습니다.',
+        ownerId: 0,
+        teamId: 0,
+        updatedAt: '',
+      })
+    }
   }
   useEffect(() => {
     void fetchGetProjectDetail()
@@ -65,8 +81,17 @@ export default function ProjectDetail() {
 
   return (
     <main className="w-full 2xl:w-2/3 h-4/5 flex flex-col items-center">
-      <ProjectDetailTab projectInfo={projectInfo} />
-      <ProjectDetailHub projectInfo={projectInfo} />
+      {projectInfo !== null ? (
+        <>
+          <ProjectDetailTab projectInfo={projectInfo} />
+          <ProjectDetailHub projectInfo={projectInfo} />
+        </>
+      ) : (
+        <div className="p-5">
+          <span className="font-bold">프로젝트를 불러오는데 실패했습니다.</span>
+        </div>
+      )}
+
       {isCreateProjectIssueModalOpen ? <CreateProjectIssueModal /> : <></>}
     </main>
   )
