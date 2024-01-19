@@ -94,7 +94,7 @@ export default function Sidebar() {
       </div>
 
       <div
-        className={`fixed md:block 2xl:top-44 md:top-24 top-28 2xl:w-1/3 lg:w-56 w-40 md:ml-10 2xl:left-60 ml-5 mr-14 ${
+        className={`fixed md:block 2xl:top-44 md:top-24 top-28 2xl:w-1/3 lg:w-56 w-40 md:ml-10 2xl:left-24 xl:left-8 lg:left-2 ml-5 mr-14 ${
           isSideOpen ? 'md:bg-none bg-white dark:bg-[#121212] rounded-lg z-999' : 'hidden'
         }`}
       >

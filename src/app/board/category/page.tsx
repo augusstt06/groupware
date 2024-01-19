@@ -135,7 +135,7 @@ export default function BoardCategory() {
   }, [currentBoard, pageNumber, pageSize, query])
 
   return (
-    <main className="md:w-[50rem] w-[35rem] h-4/5 flex flex-col z-1 items-center">
+    <main className="w-full 2xl:w-2/3 h-4/5 flex flex-col items-center">
       <div className="md:w-4/5 w-full flex flex-col items-center">
         <div className="w-full p-2 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mb-5">
           <div className="p-2 font-bold md:text-lg text-base">

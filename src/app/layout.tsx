@@ -30,7 +30,9 @@ export default function RootLayout({ children }: ReactProps) {
   }
 
   const bodyClassName =
-    shouldSidebarVisible() === true ? '2xl:pt-44 pt-24 md:ml-52 p-2 flex justify-center' : ''
+    shouldSidebarVisible() === true
+      ? '2xl:pt-44 pt-24 md:ml-52 2xl:ml-30 p-2 flex justify-center'
+      : ''
   return (
     <html lang="en" suppressHydrationWarning={true}>
       <body className="font-mono dark:bg-[#121212] bg-[#fbfbfd]">

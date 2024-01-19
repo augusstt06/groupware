@@ -207,7 +207,7 @@ export default function BoardDetail() {
   return (
     <>
       {content != null ? (
-        <main className="md:w-[50rem] w-[35rem] h-4/5 flex flex-col z-1 items-center">
+        <main className="w-full 2xl:w-2/3 h-4/5 flex flex-col items-center">
           <div className="w-4/5 rounded md:col-span-3 mr-10 col-span-4 bg-white dark:bg-gray-700 dark:text-white p-5 border-2">
             <PostingDetailHeader
               moveBoardListPage={moveBoardListPage}
