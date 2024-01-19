@@ -31,7 +31,7 @@ import {
   type SuccessResponseType,
 } from '@/app/types/moduleTypes'
 import {
-  type BoardListResponsetype,
+  type BoardListResponseType,
   type BoardResponseType,
   type MyBoardType,
 } from '@/app/types/variableTypes'
@@ -55,7 +55,7 @@ export default function BoardCategory() {
   })
   const [accessToken, setAccessToken] = useState(moduleGetCookie(KEY_ACCESS_TOKEN))
 
-  const [boardList, setBoardList] = useState<BoardListResponsetype[]>([])
+  const [boardList, setBoardList] = useState<BoardListResponseType[]>([])
   const [pageSize, setPageSize] = useState<number>(1)
   const [pageNumber, setPageNumber] = useState<number>(0)
 

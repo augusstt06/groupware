@@ -23,9 +23,6 @@ export const API_URL_VACATION = process.env.NEXT_PUBLIC_ATTENDANCES_VACATION_SOU
 // user
 export const API_URL_GET_USERS = process.env.NEXT_PUBLIC_USERS_SOURCE as string
 
-// projects
-export const API_URL_PROJECTS = process.env.NEXT_PUBLIC_CREATE_PROJECTS_SOURCE as string
-
 // board
 export const API_URL_UPLOAD_IMG = process.env.NEXT_PUBLIC_UPLOAD_IMAGE_SOURCE as string
 export const API_URL_GET_MY_BOARD = process.env.NEXT_PUBLIC_GET_MY_BOARD_SOURCE as string
@@ -45,3 +42,7 @@ export const API_URL_POSTINGS_LIST = process.env.NEXT_PUBLIC_POSTINGS_LIST_SOURC
 export const API_URL_COMMENT = process.env.NEXT_PUBLIC_COMMENT_SOURCE as string
 export const API_URL_COMMENT_POSTING = process.env.NEXT_PUBLIC_COMMENT_POSTING_SOURCE as string
 export const API_URL_COMMENT_LIKE = process.env.NEXT_PUBLIC_COMMENT_LIKE_SOURCE as string
+
+//  Project
+export const API_URL_PROJECTS = process.env.NEXT_PUBLIC_PROJECT_SOURCE as string
+export const API_URL_PROJECTS_LIST = process.env.NEXT_PUBLIC_PROJECT_LIST_SOURCE as string

@@ -1,7 +1,7 @@
 import type React from 'react'
 import { type Dispatch, type SetStateAction } from 'react'
 
-import { type BoardListResponsetype } from '../variableTypes'
+import { type BoardListResponseType } from '../variableTypes'
 
 export type HamburgerProps = {
   nav: boolean
@@ -75,5 +75,5 @@ export type WriteModalBtnGroupProps = {
   handleClickPostPending: () => void
   handleClickClose: () => void
   handleClickPosting: () => void
-  saveList: BoardListResponsetype[]
+  saveList: BoardListResponseType[]
 }

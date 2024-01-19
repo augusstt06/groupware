@@ -37,7 +37,7 @@ import {
 import { type BoardWriteModalprops } from '@/app/types/ui/modalTypes'
 import {
   type AlertStateType,
-  type BoardListResponsetype,
+  type BoardListResponseType,
   type BoardResponseType,
 } from '@/app/types/variableTypes'
 
@@ -58,7 +58,7 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
   const [editorContent, setEditorContent] = useState('')
   const [thumbNailUrl, setThumbNailUrl] = useState<string>('')
   const [saveContent, setSaveContent] = useState('')
-  const [saveList, setSaveList] = useState<BoardListResponsetype[]>([])
+  const [saveList, setSaveList] = useState<BoardListResponseType[]>([])
   const [rerender, setRerender] = useState<boolean>(false)
 
   const [isOpenSaveList, setIsOpenSaveList] = useState<boolean>(false)
@@ -232,7 +232,7 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
   const handleClickOpenSaveList = () => {
     setIsOpenSaveList(!isOpenSaveList)
   }
-  const loadSaveData = (data: BoardListResponsetype) => {
+  const loadSaveData = (data: BoardListResponseType) => {
     setSelect(data.boardId.toString())
     setSaveContent(data.content)
     titleInput.setString(data.title)

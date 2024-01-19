@@ -38,7 +38,7 @@ import {
   type SuccessResponseType,
 } from '../types/moduleTypes'
 import {
-  type BoardListResponsetype,
+  type BoardListResponseType,
   type BoardResponseType,
   type MyBoardType,
 } from '../types/variableTypes'
@@ -57,7 +57,7 @@ export default function Board() {
   const myBoardState = useAppSelector((state) => state.boardCategory.myBoard)
   const [selectBoard, setSelectBoard] = useState<string>('')
   const [myBoardList, setMyBoardList] = useState<MyBoardType[]>([])
-  const [boardList, setBoardList] = useState<BoardListResponsetype[]>([])
+  const [boardList, setBoardList] = useState<BoardListResponseType[]>([])
   const [pageSize, setPageSize] = useState<number>(1)
 
   const changeBoard = (name: string) => {

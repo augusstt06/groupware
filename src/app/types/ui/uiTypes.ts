@@ -2,7 +2,11 @@ import { type Dispatch, type SetStateAction } from 'react'
 
 import { type Editor } from '@toast-ui/react-editor'
 
-import { type BoardListResponsetype, type MyBoardType } from '../variableTypes'
+import {
+  type BoardListResponseType,
+  type MyBoardType,
+  type ProjectResponseType,
+} from '../variableTypes'
 
 export type InputIconLabelProps = {
   icon: React.ReactNode
@@ -45,8 +49,8 @@ export type EditorProps = {
 }
 
 export type BoardModalSaveListTabProps = {
-  loadSaveData: (data: BoardListResponsetype) => void
-  saveList: BoardListResponsetype[]
+  loadSaveData: (data: BoardListResponseType) => void
+  saveList: BoardListResponseType[]
   handleClickDeletePending: (id: number) => void
 }
 export type MainHubProps = {
@@ -55,7 +59,7 @@ export type MainHubProps = {
 export type BoardHubProps = {
   changeBoard: (name: string) => void
   title: string
-  boardList: BoardListResponsetype[]
+  boardList: BoardListResponseType[]
   selectBoard: string
   myBoardList: MyBoardType[]
 }
@@ -95,4 +99,15 @@ export type CreateProjectIssueModalTabProps = {
 
 export type CreateProjectIssueModalHubProps = {
   selectCategory: string
+}
+
+export type ProjectMainHubProps = {
+  projectList: ProjectResponseType[]
+}
+
+export type ProjectDetailTabProps = {
+  projectInfo: ProjectResponseType | null
+}
+export type ProjectDetailHubProps = {
+  projectInfo: ProjectResponseType | null
 }

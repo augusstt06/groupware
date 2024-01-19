@@ -12,6 +12,7 @@ import { orgInfoSlice } from './reducers/login/orgInfoReducer'
 import { signupInfoSlice } from './reducers/login/signupInfoReducer'
 import { userInfoSlice } from './reducers/main/userInfoReducer'
 import { maintainSlice } from './reducers/maintain/maintainReducer'
+import { projectMainCategorySlice } from './reducers/project/projectMainCategoryReducer'
 import { projectModalSlice } from './reducers/project/projectModalReducer'
 
 const createNoopStorage = () => {
@@ -40,6 +41,7 @@ const rootReducer = combineReducers({
   openBoardWriteModal: openBoardWriteModalSlice.reducer,
   boardLike: boardLikeSlice.reducer,
   projectModal: projectModalSlice.reducer,
+  projectMainCategory: projectMainCategorySlice.reducer,
 })
 const persistConfig = {
   key: 'root',
@@ -51,6 +53,7 @@ const persistConfig = {
     'openBoardWriteModal',
     'boardLike',
     'projectModal',
+    'projectMainCategory',
   ],
   blacklist: ['signupInfo', 'loginInfo', 'orgInfo'],
 }
