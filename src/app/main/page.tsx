@@ -5,12 +5,13 @@ import { useRouter } from 'next/navigation'
 
 import MainHub from '../component/page/main/hub/MainHub'
 import {
+  API_SUCCESS_CODE,
   FALSE,
   KEY_ACCESS_TOKEN,
   KEY_LOGIN_COMPLETE,
   KEY_UUID,
   KEY_X_ORGANIZATION_CODE,
-  TODO,
+  MAIN_CARD_TODO,
 } from '../constant/constant'
 import { ERR_COOKIE_NOT_FOUND, ERR_ORG_NOT_FOUND } from '../constant/errorMsg'
 import { API_URL_GET_USERS } from '../constant/route/api-route-constant'
@@ -67,7 +68,7 @@ export default function Main() {
   const fetchGetUsers = async () => {
     try {
       const res = await moduleGetFetch<ApiResponseType>(getFetchUserProps)
-      if (res.status !== 200) throw new Error((res as FailResponseType).message)
+      if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)
 
       const successRes = res as SuccessResponseType<ApiResponseType>
       const extraUserInfoReducerProps = {
@@ -121,7 +122,7 @@ export default function Main() {
 
   return (
     <main className="md:w-[50rem] w-[35rem] h-4/5 flex flex-col z-1 items-center">
-      <MainHub title={TODO} />
+      <MainHub title={MAIN_CARD_TODO} />
     </main>
   )
 }

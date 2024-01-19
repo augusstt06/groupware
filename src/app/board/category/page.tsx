@@ -9,6 +9,7 @@ import BoardHubInput from '@/app/component/ui/input/board/BoardHubInput'
 import BoardWriteModal from '@/app/component/ui/modal/board/BoardWriteModal'
 import Pagination from '@/app/component/ui/pagination/Pagination'
 import {
+  API_SUCCESS_CODE,
   KEY_ACCESS_TOKEN,
   KEY_LOGIN_COMPLETE,
   KEY_X_ORGANIZATION_CODE,
@@ -30,7 +31,7 @@ import {
   type SuccessResponseType,
 } from '@/app/types/moduleTypes'
 import {
-  type BoardListResponsetype,
+  type BoardListResponseType,
   type BoardResponseType,
   type MyBoardType,
 } from '@/app/types/variableTypes'
@@ -54,7 +55,7 @@ export default function BoardCategory() {
   })
   const [accessToken, setAccessToken] = useState(moduleGetCookie(KEY_ACCESS_TOKEN))
 
-  const [boardList, setBoardList] = useState<BoardListResponsetype[]>([])
+  const [boardList, setBoardList] = useState<BoardListResponseType[]>([])
   const [pageSize, setPageSize] = useState<number>(1)
   const [pageNumber, setPageNumber] = useState<number>(0)
 
@@ -77,7 +78,7 @@ export default function BoardCategory() {
         },
       }
       const res = await moduleGetFetch<BoardResponseType>(fetchGetBoardListProps)
-      if (res.status !== 200) throw new Error((res as FailResponseType).message)
+      if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)
       const resBoardList = (res as SuccessResponseType<BoardResponseType>).result.data
 
       const filterList = resBoardList.filter((data) => data.boardId === Number(currentBoard.id))
@@ -108,7 +109,7 @@ export default function BoardCategory() {
         },
       }
       const res = await moduleGetFetch<BoardResponseType>(fetchSeachPostingsProps)
-      if (res.status !== 200) throw new Error((res as FailResponseType).message)
+      if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)
       const resSearchBoardList = (res as SuccessResponseType<BoardResponseType>).result.data
       setBoardList(resSearchBoardList)
     } catch (err) {}

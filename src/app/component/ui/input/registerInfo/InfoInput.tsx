@@ -5,6 +5,7 @@ import { InputIconlabel } from '../../label/InputIconlabel'
 import { InputLabel } from '../../label/Inputlabel'
 
 import {
+  API_SUCCESS_CODE,
   REGISTER_EMAIL,
   REGISTER_NAME,
   REGISTER_PHONENUMBER,
@@ -54,7 +55,7 @@ export default function InfoInput(props: InfoInputProps) {
   const fetchEmailAvaiable = async (getFetchEmailProps: ModuleGetFetchProps): Promise<void> => {
     try {
       const res = await moduleGetFetch<string>(getFetchEmailProps)
-      if (res.status !== 200) {
+      if (res.status !== API_SUCCESS_CODE) {
         dispatch(emailReducer({ isCheck: false, value: useInput.value }))
         throw new Error((res as FailResponseType).message)
       }

@@ -3,7 +3,7 @@ import { jwtDecode } from 'jwt-decode'
 
 import { modulePostFetch } from './moduleFetch'
 
-import { KEY_ACCESS_TOKEN } from '@/app/constant/constant'
+import { API_SUCCESS_CODE, KEY_ACCESS_TOKEN } from '@/app/constant/constant'
 import { ERR_COOKIE_NOT_FOUND } from '@/app/constant/errorMsg'
 import { API_URL_REFRESH } from '@/app/constant/route/api-route-constant'
 import {
@@ -49,7 +49,7 @@ export const moduleRefreshToken = async (accessToken: string) => {
       },
     }
     const res = await modulePostFetch<ApiResponseType>(refreshProps)
-    if (res.status !== 200) throw new Error((res as FailResponseType).message)
+    if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)
   } catch (err) {
     moduleDeleteCookies(KEY_ACCESS_TOKEN)
   }

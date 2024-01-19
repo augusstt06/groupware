@@ -1,6 +1,10 @@
 import { HttpStatusCode } from 'axios'
 
-import { KEY_ACCESS_TOKEN, KEY_X_ORGANIZATION_CODE } from '@/app/constant/constant'
+import {
+  API_SUCCESS_CODE,
+  KEY_ACCESS_TOKEN,
+  KEY_X_ORGANIZATION_CODE,
+} from '@/app/constant/constant'
 import {
   ERR_COOKIE_NOT_FOUND,
   ERR_INTERNAL_SERVER,
@@ -46,7 +50,7 @@ export default function AttendanceBtn(props: AttendanceBtnProps) {
         },
       }
       const res = await modulePostFetch<string>(fetchAttendanceProps)
-      if (res.status !== 200) throw new Error((res as FailResponseType).message)
+      if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)
 
       const currentTime = Math.floor(new Date().getTime() / 1000)
       dispatch(
@@ -91,7 +95,7 @@ export default function AttendanceBtn(props: AttendanceBtnProps) {
       }
 
       const res = await modulePatchFetch<string>(fetchLeaveAttendanceProps)
-      if (res.status !== 200) throw new Error((res as FailResponseType).message)
+      if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)
       dispatch(
         updateAttendanceStatusReducer({
           status: 'out',

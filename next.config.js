@@ -11,6 +11,22 @@ const nextConfig = {
   async rewrites() {
     return [
       {
+        source: process.env.NEXT_PUBLIC_PROJECT_LIST_STARRED_SOURCE,
+        destination: process.env.NEXT_PUBLIC_PROJECT_LIST_STARRED_DESTINATION,
+      },
+      {
+        source: process.env.NEXT_PUBLIC_PROJECT_LIST_INCLUDED_SOURCE,
+        destination: process.env.NEXT_PUBLIC_PROJECT_LIST_INCLUDED_DESTINATION,
+      },
+      {
+        source: process.env.NEXT_PUBLIC_PROJECT_LIST_SOURCE,
+        destination: process.env.NEXT_PUBLIC_PROJECT_LIST_DESTINATION,
+      },
+      {
+        source: process.env.NEXT_PUBLIC_PROJECT_SOURCE,
+        destination: process.env.NEXT_PUBLIC_PROJECT_DESTINATION,
+      },
+      {
         source: process.env.NEXT_PUBLIC_COMMENT_LIKE_SOURCE,
         destination: process.env.NEXT_PUBLIC_COMMENT_LIKE_DESTINATION,
       },
@@ -69,10 +85,6 @@ const nextConfig = {
       {
         source: process.env.NEXT_PUBLIC_USERS_SOURCE,
         destination: process.env.NEXT_PUBLIC_USERS_DESTINATION,
-      },
-      {
-        source: process.env.NEXT_PUBLIC_CREATE_PROJECTS_SOURCE,
-        destination: process.env.NEXT_PUBLIC_CREATE_PROJECTS_DESTINATION,
       },
       {
         source: process.env.NEXT_PUBLIC_ATTENDANCES_VACATION_SOURCE,
