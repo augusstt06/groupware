@@ -8,12 +8,12 @@ export default function CreateProjectIssueModalTab(props: CreateProjectIssueModa
   ]
   const divClassName = (select: string, id: string) => {
     if (select === id || (select === '' && id === 'task'))
-      return 'border-b-2 transition ease-in-out duration-300 border-b-2 border-indigo-300 w-1/4 text-center p-2'
+      return 'border-b-2 transition ease-in-out duration-300 border-b-2 border-indigo-300 w-1/4 text-center p-2 md:text-base text-sm'
     else
-      return 'border-b-2 border-transparent transition ease-in-out duration-300 hover:border-indigo-300 w-1/4 text-center p-2'
+      return 'border-b-2 border-transparent transition ease-in-out duration-300 hover:border-indigo-300 w-1/4 text-center p-2 md:text-base text-sm'
   }
   return (
-    <div className="flex flex-row justify-around items-center p-2 ">
+    <div className="flex flex-row justify-around items-center md: p-2">
       {tabList.map((data) => (
         <div
           key={data.title}

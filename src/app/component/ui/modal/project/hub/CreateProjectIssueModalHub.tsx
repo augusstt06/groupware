@@ -1,5 +1,6 @@
 import ProjectIssueCalendar from './category/calendar/ProjectIssueCalendar'
 import ProjectTaskIssue from './category/task/ProjectTaskIssue'
+import ProjectIssueTodo from './category/todo/ProjectIssueTodo'
 
 import {
   PROJECT_ISSUE_CALENDAR,
@@ -16,7 +17,7 @@ export default function CreateProjectIssueModalHub(props: CreateProjectIssueModa
       case PROJECT_ISSUE_CALENDAR:
         return <ProjectIssueCalendar />
       case PROJECT_ISSUE_TODO:
-        return 'Todo'
+        return <ProjectIssueTodo />
       default:
         return <ProjectTaskIssue />
     }

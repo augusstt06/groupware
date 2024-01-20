@@ -6,6 +6,7 @@ import { useParams, useRouter } from 'next/navigation'
 
 import ProjectDetailHub from '@/app/component/page/project/hub/ProjectDetailHub'
 import CreateProjectIssueModal from '@/app/component/ui/modal/project/CreateProjectIssueModal'
+import InviteProjectMemberModal from '@/app/component/ui/modal/project/InviteProjectMemberModal'
 import ProjectDetailTab from '@/app/component/ui/tab/project/ProjectDetailTab'
 import {
   API_SUCCESS_CODE,
@@ -36,6 +37,7 @@ export default function ProjectDetail() {
   const isCreateProjectIssueModalOpen = useAppSelector(
     (state) => state.projectModal.isCreateProjectIssueModalOpen,
   )
+  const isInviteModalOpen = useAppSelector((state) => state.projectModal.isProjectInviteModalOpen)
 
   const fetchGetProjectDetail = async () => {
     try {
@@ -93,6 +95,7 @@ export default function ProjectDetail() {
       )}
 
       {isCreateProjectIssueModalOpen ? <CreateProjectIssueModal /> : <></>}
+      {isInviteModalOpen ? <InviteProjectMemberModal /> : <></>}
     </main>
   )
 }
