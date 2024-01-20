@@ -1,4 +1,4 @@
-import { type Dispatch, type SetStateAction } from 'react'
+import { type Dispatch, type ReactEventHandler, type ReactNode, type SetStateAction } from 'react'
 
 import { type JwtPayload } from 'jwt-decode'
 import { type AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime'
@@ -71,4 +71,22 @@ export type ModuleCheckContentIsEmptyProps = {
   handleCloseAlertModal: () => void
   setAlertStateFunction: Dispatch<SetStateAction<AlertStateType>>
   fetchFunction: () => Promise<void>
+}
+
+export type ModalUsePortalProps = {
+  isModalOpen: boolean
+  children: ReactNode
+  onClose: ReactEventHandler
+  name: string
+  btnValue: string
+}
+
+export type ModalHubProps = {
+  modals: Array<{
+    onClose: () => void
+    isModalOpen: boolean
+    childComponent: JSX.Element
+    name: string
+    btnValue: string
+  }>
 }

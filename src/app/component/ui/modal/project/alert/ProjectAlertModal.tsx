@@ -10,7 +10,7 @@ export default function ProjectAlertModal(props: ProjectAlertModalProps) {
   const handleClickConfirm = () => {
     dispatch(projectAlertModalReducer(false))
     if (props.alertState.isCreateModalClose) {
-      dispatch(createProjectModalReducer())
+      dispatch(createProjectModalReducer(false))
       props.setRerender(!props.rerender)
     }
   }

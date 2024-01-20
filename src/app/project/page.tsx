@@ -5,11 +5,14 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 
 import ProjectMainHub from '../component/page/project/hub/ProjectMainHub'
+import ModalHub from '../component/ui/modal/Modal'
 import CreateProjectModal from '../component/ui/modal/project/CreateProjectModal'
 import {
   KEY_ACCESS_TOKEN,
   KEY_LOGIN_COMPLETE,
   KEY_X_ORGANIZATION_CODE,
+  MODAL_BTN_CREATE,
+  MODAL_CRAETE_PROJECT,
   PROJECT_MAIN_CATEGORY_ALL,
   PROJECT_MAIN_CATEGORY_INCLUDED,
   PROJECT_MAIN_CATEGORY_STARRED,
@@ -48,6 +51,9 @@ export default function Project() {
   const isCreateProjectModalOpen = useAppSelector(
     (state) => state.projectModal.isCreateProjectModalOpen,
   )
+  const handleCloseCreateProjectModal = () => {
+    dispatch(createProjectModalReducer(false))
+  }
 
   const isProjectListEmpty = () => {
     if (projectList.length === 0) return true
@@ -86,8 +92,17 @@ export default function Project() {
     setProjectList(resList)
   }
 
+  const modalList = [
+    {
+      onClose: handleCloseCreateProjectModal,
+      isModalOpen: isCreateProjectModalOpen,
+      childComponent: <CreateProjectModal rerender={rerender} setRerender={setRerender} />,
+      name: MODAL_CRAETE_PROJECT,
+      btnValue: MODAL_BTN_CREATE,
+    },
+  ]
   useEffect(() => {
-    if (createProjectModalState) dispatch(createProjectModalReducer())
+    if (createProjectModalState) dispatch(createProjectModalReducer(false))
     void fetchGetProjectList()
     const moduleProps: ModuleCheckUserStateProps = {
       useRouter: router,
@@ -108,11 +123,12 @@ export default function Project() {
         <ProjectMainHub projectList={projectList} />
       )}
 
-      {isCreateProjectModalOpen ? (
+      {/* {isCreateProjectModalOpen ? (
         <CreateProjectModal rerender={rerender} setRerender={setRerender} />
       ) : (
         <></>
-      )}
+      )} */}
+      <ModalHub modals={modalList} />
     </main>
   )
 }

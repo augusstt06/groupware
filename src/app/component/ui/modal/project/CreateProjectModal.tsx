@@ -107,23 +107,16 @@ export default function CreateProjectModal(props: CreateProjectModalProps) {
     void fetchPostProject()
   }
   return (
-    <div
-      id="static-modal"
-      data-modal-backdrop="static"
-      tabIndex={-1}
-      aria-hidden="true"
-      className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-opacity-50 bg-gray-500 backdrop-blur-xs"
-    >
-      <div className="relative rounded-lg shadow dark:bg-gray-700 border-solid border-2 border-indigo-300 bg-white p-5 w-5/6 md:w-1/2 xl:w-2/5 2xl:w-3/12">
-        <span className="font-bold">새 프로젝트 만들기</span>
-        <CreateProjectModalInput projectName={projectName} />
-        <CreateProjectModalColorSelect
-          colorList={colorList}
-          handleSelectColor={handleSelectColor}
-          selectColor={selectColor}
-        />
-        <CreateProjectModalConfirmBtn handleClickCreateProject={handleClickCreateProject} />
-      </div>
+    <>
+      <span className="font-bold">새 프로젝트 만들기</span>
+      <CreateProjectModalInput projectName={projectName} />
+      <CreateProjectModalColorSelect
+        colorList={colorList}
+        handleSelectColor={handleSelectColor}
+        selectColor={selectColor}
+      />
+      <CreateProjectModalConfirmBtn handleClickCreateProject={handleClickCreateProject} />
+      {/* dialog으로 변경 */}
       {isProjectAlertOpen ? (
         <ProjectAlertModal
           alertState={alertState}
@@ -133,6 +126,6 @@ export default function CreateProjectModal(props: CreateProjectModalProps) {
       ) : (
         <></>
       )}
-    </div>
+    </>
   )
 }

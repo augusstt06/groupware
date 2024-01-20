@@ -5,7 +5,8 @@ import { type CreateProjectModalConfirmBtnProps } from '@/app/types/ui/modalType
 export default function CreateProjectModalConfirmBtn(props: CreateProjectModalConfirmBtnProps) {
   const dispatch = useAppDispatch()
   const handleCreateProjectModal = () => {
-    dispatch(createProjectModalReducer())
+    // FIXME:
+    dispatch(createProjectModalReducer(false))
   }
   return (
     <div className=" flex flex-row items-center justify-center mt-5">

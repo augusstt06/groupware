@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 
 import ProjectDetailHub from '@/app/component/page/project/hub/ProjectDetailHub'
+import ModalHub from '@/app/component/ui/modal/Modal'
 import CreateProjectIssueModal from '@/app/component/ui/modal/project/CreateProjectIssueModal'
 import InviteProjectMemberModal from '@/app/component/ui/modal/project/InviteProjectMemberModal'
 import ProjectDetailTab from '@/app/component/ui/tab/project/ProjectDetailTab'
@@ -13,12 +14,19 @@ import {
   KEY_ACCESS_TOKEN,
   KEY_LOGIN_COMPLETE,
   KEY_X_ORGANIZATION_CODE,
+  MODAL_BTN_SAVE,
+  MODAL_CREATE_PROJECT_ISSUE,
+  MODAL_INVITE_MEMBER_IN_PROJECT,
 } from '@/app/constant/constant'
 import { API_URL_PROJECTS } from '@/app/constant/route/api-route-constant'
-import { useAppSelector } from '@/app/module/hooks/reduxHooks'
+import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleCheckUserState } from '@/app/module/utils/moduleCheckUserState'
 import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
 import { moduleGetFetch } from '@/app/module/utils/moduleFetch'
+import {
+  createProjectIssueModalOpenReducer,
+  projectInviteModalReducer,
+} from '@/app/store/reducers/project/projectModalReducer'
 import {
   type FailResponseType,
   type ModuleCheckUserStateProps,
@@ -28,6 +36,7 @@ import {
 import { type ProjectResponseType } from '@/app/types/variableTypes'
 
 export default function ProjectDetail() {
+  const dispatch = useAppDispatch()
   const router = useRouter()
   const query = useParams()
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
@@ -39,6 +48,12 @@ export default function ProjectDetail() {
   )
   const isInviteModalOpen = useAppSelector((state) => state.projectModal.isProjectInviteModalOpen)
 
+  const handleCloseInviteModal = () => {
+    dispatch(projectInviteModalReducer(false))
+  }
+  const handleCloseCreateIssueModal = () => {
+    dispatch(createProjectIssueModalOpenReducer(false))
+  }
   const fetchGetProjectDetail = async () => {
     try {
       const fetchProps: ModuleGetFetchProps = {
@@ -69,6 +84,22 @@ export default function ProjectDetail() {
       })
     }
   }
+  const modalList = [
+    {
+      onClose: handleCloseCreateIssueModal,
+      isModalOpen: isCreateProjectIssueModalOpen,
+      childComponent: <CreateProjectIssueModal />,
+      name: MODAL_CREATE_PROJECT_ISSUE,
+      btnValue: MODAL_BTN_SAVE,
+    },
+    {
+      onClose: handleCloseInviteModal,
+      isModalOpen: isInviteModalOpen,
+      childComponent: <InviteProjectMemberModal />,
+      name: MODAL_INVITE_MEMBER_IN_PROJECT,
+      btnValue: MODAL_BTN_SAVE,
+    },
+  ]
   useEffect(() => {
     void fetchGetProjectDetail()
     const moduleProps: ModuleCheckUserStateProps = {
@@ -94,8 +125,7 @@ export default function ProjectDetail() {
         </div>
       )}
 
-      {isCreateProjectIssueModalOpen ? <CreateProjectIssueModal /> : <></>}
-      {isInviteModalOpen ? <InviteProjectMemberModal /> : <></>}
+      <ModalHub modals={modalList} />
     </main>
   )
 }
