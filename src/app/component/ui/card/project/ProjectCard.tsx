@@ -37,7 +37,7 @@ export default function ProjectCard(props: ProjectCardProps) {
   }
   return (
     <div
-      className="flex flex-row items-center dark:bg-gray-100 dark:text-black h-24 xl:w-56 md:w-48 w-32 border-gray-300 border-1 shadow-2xl"
+      className="flex flex-row items-center dark:bg-gray-100 dark:text-black h-24 xl:w-56 md:w-48 w-32 border-gray-300 border-1 shadow-2xl transition duration-500 ease-in-out hover:scale-110 hover:shadow-2xl"
       style={{ boxShadow: '5px 0px 10px rgba(0, 0, 0, 0.1)' }}
     >
       <div className={`${cardColor(props.projectInfo.color)} w-8 h-full`}></div>
