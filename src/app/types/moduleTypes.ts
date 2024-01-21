@@ -1,11 +1,14 @@
-import { type Dispatch, type SetStateAction } from 'react'
+import {
+  type MutableRefObject,
+  type ReactEventHandler,
+  type ReactNode,
+  type SetStateAction,
+} from 'react'
 
 import { type JwtPayload } from 'jwt-decode'
 import { type AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime'
 
 import { type KEY_UUID, type KEY_X_ORGANIZATION_CODE } from '../constant/constant'
-
-import { type AlertStateType } from './variableTypes'
 
 export type UnionStrNumber = string | number
 
@@ -63,12 +66,59 @@ export type ModuleCheckUserStateProps = {
 }
 
 export type ModuleCheckContentIsEmptyProps = {
+  successText: string
+  dialog: MutableRefObject<HTMLDialogElement | null>
+  setDialogAlertState: React.Dispatch<
+    React.SetStateAction<{
+      main: string
+      sub: string
+    }>
+  >
   boardId: number
-  success: { headDescription: string; additianoalDescription: string }
   editorContents: string
   inputValue: string
-  handleOpenAlertModal: () => void
-  handleCloseAlertModal: () => void
-  setAlertStateFunction: Dispatch<SetStateAction<AlertStateType>>
   fetchFunction: () => Promise<void>
+}
+
+export type ModalUsePortalProps = {
+  isModalOpen: boolean
+  children: ReactNode
+  onClose: ReactEventHandler
+  name: string
+  btnValue: string
+  confirmFunc: () => void
+}
+
+export type ModalHubProps = {
+  modals: Array<{
+    onClose: () => void
+    isModalOpen: boolean
+    childComponent: JSX.Element
+    name: string
+    btnValue: string
+    confirmFunc: () => void
+    dialog?: MutableRefObject<HTMLDialogElement | null>
+    dialogAlertText?: {
+      main: string
+      sub: string
+    }
+    dialogBtnValue?: DialogBtnValueType
+  }>
+}
+
+export type DialogModalProps = {
+  dialog?: MutableRefObject<HTMLDialogElement | null>
+  dialogAlertText?: {
+    main: string
+    sub: string
+  }
+  dialogBtnValue?: DialogBtnValueType
+}
+
+export type DialogBtnValueType = {
+  isCancel: boolean
+  cancleFunc: () => void
+  cancelText: string
+  confirmFunc: () => void
+  confirmText: string
 }

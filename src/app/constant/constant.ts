@@ -90,3 +90,11 @@ export const PROJECT_DETAIL_CATEGORY_HOME = '홈'
 export const PROJECT_DETAIL_CATEGORY_TASK = '업무'
 export const PROJECT_DETAIL_CATEGORY_CALENDAR = '일정'
 export const PROJECT_DETAIL_CATEGORY_TODO = '할일'
+
+// modal
+export const MODAL_BTN_CREATE = '생성'
+export const MODAL_BTN_SAVE = '저장'
+
+export const MODAL_CREATE_PROJECT_ISSUE = 'project-issue'
+export const MODAL_INVITE_MEMBER_IN_PROJECT = 'invite-member'
+export const MODAL_CRAETE_PROJECT = 'create-project'

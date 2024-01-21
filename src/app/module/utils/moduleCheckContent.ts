@@ -9,54 +9,30 @@ export const moduleCheckContentIsEmpty = (props: ModuleCheckContentIsEmptyProps)
     .join('')
   const isContentEmpty = textContent.trim() === '' && !isImageInclude
   if (props.inputValue === '') {
-    props.setAlertStateFunction({
-      headDescription: '제목은 최소 1자 이상 작성 후 임시저장이 가능합니다.',
-      additianoalDescription: '',
-      option: {
-        positive: '확인',
-        negative: '',
-      },
-      onClick: props.handleCloseAlertModal,
-      isPromise: false,
+    props.setDialogAlertState({
+      main: '제목은 최소 1자 이상 작성 후 임시저장이 가능합니다.',
+      sub: '',
     })
-    props.handleOpenAlertModal()
+    props.dialog.current?.showModal()
     return
   } else if (isContentEmpty) {
-    props.setAlertStateFunction({
-      headDescription: '게시글 내용은 최소 1자 이상 작성 후 임시저장이 가능합니다.',
-      additianoalDescription: '',
-      option: {
-        positive: '확인',
-        negative: '',
-      },
-      onClick: props.handleCloseAlertModal,
-      isPromise: false,
+    props.setDialogAlertState({
+      main: '게시글 내용은 최소 1자 이상 작성 후 임시저장이 가능합니다.',
+      sub: '',
     })
-    props.handleOpenAlertModal()
+    props.dialog.current?.showModal()
     return
   } else if (props.boardId === 0 || Number.isNaN(props.boardId)) {
-    props.setAlertStateFunction({
-      headDescription: '게시판 카테고리를 선택해주세요',
-      additianoalDescription: '',
-      option: {
-        positive: '확인',
-        negative: '',
-      },
-      onClick: props.handleCloseAlertModal,
-      isPromise: false,
+    props.setDialogAlertState({
+      main: '게시판 카테고리를 선택해주세요.',
+      sub: '',
     })
-    props.handleOpenAlertModal()
+    props.dialog.current?.showModal()
     return
   }
-  props.setAlertStateFunction({
-    headDescription: props.success.headDescription,
-    additianoalDescription: props.success.additianoalDescription,
-    option: {
-      positive: '확인',
-      negative: '취소',
-    },
-    onClick: props.fetchFunction,
-    isPromise: true,
+  props.setDialogAlertState({
+    main: props.successText,
+    sub: '',
   })
-  props.handleOpenAlertModal()
+  props.dialog.current?.showModal()
 }

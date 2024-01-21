@@ -17,13 +17,11 @@ export const projectModalSlice = createSlice({
   name: 'projectModalSlice',
   initialState,
   reducers: {
-    createProjectModalReducer(state) {
-      if (state.isCreateProjectModalOpen) state.isCreateProjectModalOpen = false
-      else state.isCreateProjectModalOpen = true
+    createProjectModalReducer(state, action: PayloadAction<boolean>) {
+      state.isCreateProjectModalOpen = action.payload
     },
-    createProjectIssueModalOpenReducer(state) {
-      if (state.isCreateProjectIssueModalOpen) state.isCreateProjectIssueModalOpen = false
-      else state.isCreateProjectIssueModalOpen = true
+    createProjectIssueModalOpenReducer(state, action: PayloadAction<boolean>) {
+      state.isCreateProjectIssueModalOpen = action.payload
     },
     projectAlertModalReducer(state, action: PayloadAction<boolean>) {
       state.isProjectAlertModalOpen = action.payload
