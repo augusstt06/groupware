@@ -1,4 +1,10 @@
-import { type Dispatch, type ReactEventHandler, type ReactNode, type SetStateAction } from 'react'
+import {
+  type Dispatch,
+  type MutableRefObject,
+  type ReactEventHandler,
+  type ReactNode,
+  type SetStateAction,
+} from 'react'
 
 import { type JwtPayload } from 'jwt-decode'
 import { type AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime'
@@ -79,6 +85,7 @@ export type ModalUsePortalProps = {
   onClose: ReactEventHandler
   name: string
   btnValue: string
+  confirmFunc: () => void
 }
 
 export type ModalHubProps = {
@@ -88,5 +95,19 @@ export type ModalHubProps = {
     childComponent: JSX.Element
     name: string
     btnValue: string
+    confirmFunc: () => void
+    dialog?: MutableRefObject<HTMLDialogElement | null>
+    dialogAlertText?: {
+      main: string
+      sub: string
+    }
   }>
+}
+
+export type DialogModalProps = {
+  dialog?: MutableRefObject<HTMLDialogElement | null>
+  dialogAlertText?: {
+    main: string
+    sub: string
+  }
 }

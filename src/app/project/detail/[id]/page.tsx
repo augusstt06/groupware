@@ -91,6 +91,7 @@ export default function ProjectDetail() {
       childComponent: <CreateProjectIssueModal />,
       name: MODAL_CREATE_PROJECT_ISSUE,
       btnValue: MODAL_BTN_SAVE,
+      confirmFunc: () => {},
     },
     {
       onClose: handleCloseInviteModal,
@@ -98,6 +99,7 @@ export default function ProjectDetail() {
       childComponent: <InviteProjectMemberModal />,
       name: MODAL_INVITE_MEMBER_IN_PROJECT,
       btnValue: MODAL_BTN_SAVE,
+      confirmFunc: () => {},
     },
   ]
   useEffect(() => {

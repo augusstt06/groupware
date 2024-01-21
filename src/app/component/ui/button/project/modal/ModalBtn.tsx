@@ -3,6 +3,7 @@ import { type ReactEventHandler } from 'react'
 type ModalBtnProps = {
   onClose: ReactEventHandler
   btnValue: string
+  confirmFunc: () => void
 }
 export default function ModalBtn(props: ModalBtnProps) {
   return (
@@ -13,7 +14,10 @@ export default function ModalBtn(props: ModalBtnProps) {
       >
         취소
       </button>
-      <button className="transition ease-in-out duration-300 border-gray-400 border-2 bg-white-600 hover:bg-gray-500 hover:dark:bg-gray-200 hover:dark:text-black hover:text-white focus:outline-none font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center me-2er">
+      <button
+        className="transition ease-in-out duration-300 border-gray-400 border-2 bg-white-600 hover:bg-gray-500 hover:dark:bg-gray-200 hover:dark:text-black hover:text-white focus:outline-none font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center me-2er"
+        onClick={props.confirmFunc}
+      >
         {props.btnValue}
       </button>
     </div>
