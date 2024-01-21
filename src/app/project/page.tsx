@@ -42,6 +42,7 @@ import { moduleGetCookie } from '../module/utils/moduleCookie'
 import { moduleGetFetch, modulePostFetch } from '../module/utils/moduleFetch'
 import { createProjectModalReducer } from '../store/reducers/project/projectModalReducer'
 import {
+  type DialogBtnValueType,
   type ModuleCheckUserStateProps,
   type ModuleGetFetchProps,
   type ModulePostFetchProps,
@@ -57,6 +58,9 @@ export default function Project() {
   const router = useRouter()
   const dispatch = useAppDispatch()
   const dialogRef = useRef<HTMLDialogElement | null>(null)
+  const handleDialogClose = () => {
+    dialogRef.current?.close()
+  }
   const createProjectModalState = useAppSelector(
     (state) => state.projectModal.isCreateProjectModalOpen,
   )
@@ -67,6 +71,13 @@ export default function Project() {
   const projectCategory = useAppSelector((state) => state.projectMainCategory.selectProjectMenu)
 
   const [projectList, setProjectList] = useState<ProjectResponseType[]>([])
+  const [projectDialogBtnValue, setProjectDialogBtnValue] = useState<DialogBtnValueType>({
+    isCancel: false,
+    cancleFunc: () => {},
+    cancelText: '',
+    confirmFunc: handleDialogClose,
+    confirmText: '확인',
+  })
   const [dialogText, setDialogText] = useState<{
     main: string
     sub: string
@@ -113,10 +124,19 @@ export default function Project() {
       main: '프로젝트가 성공적으로 생성되었습니다.',
       sub: '생성된 프로젝트에서 멤버초대를 진행해주세요.',
     })
+    setProjectDialogBtnValue({
+      isCancel: false,
+      cancleFunc: () => {},
+      cancelText: '',
+      confirmFunc: handleDialogClose,
+      confirmText: '확인',
+    })
     dialogRef.current?.showModal()
   }
 
   const handleCloseCreateProjectModal = () => {
+    projectName.resetValue()
+    setSelectColor('')
     dispatch(createProjectModalReducer(false))
   }
 
@@ -197,6 +217,7 @@ export default function Project() {
       confirmFunc: handleClickCreateProject,
       dialog: dialogRef,
       dialogAlertText: dialogText,
+      dialogBtnValue: projectDialogBtnValue,
     },
   ]
   useEffect(() => {

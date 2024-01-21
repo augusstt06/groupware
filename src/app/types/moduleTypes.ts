@@ -1,5 +1,4 @@
 import {
-  type Dispatch,
   type MutableRefObject,
   type ReactEventHandler,
   type ReactNode,
@@ -10,8 +9,6 @@ import { type JwtPayload } from 'jwt-decode'
 import { type AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime'
 
 import { type KEY_UUID, type KEY_X_ORGANIZATION_CODE } from '../constant/constant'
-
-import { type AlertStateType } from './variableTypes'
 
 export type UnionStrNumber = string | number
 
@@ -69,13 +66,17 @@ export type ModuleCheckUserStateProps = {
 }
 
 export type ModuleCheckContentIsEmptyProps = {
+  successText: string
+  dialog: MutableRefObject<HTMLDialogElement | null>
+  setDialogAlertState: React.Dispatch<
+    React.SetStateAction<{
+      main: string
+      sub: string
+    }>
+  >
   boardId: number
-  success: { headDescription: string; additianoalDescription: string }
   editorContents: string
   inputValue: string
-  handleOpenAlertModal: () => void
-  handleCloseAlertModal: () => void
-  setAlertStateFunction: Dispatch<SetStateAction<AlertStateType>>
   fetchFunction: () => Promise<void>
 }
 
@@ -101,6 +102,7 @@ export type ModalHubProps = {
       main: string
       sub: string
     }
+    dialogBtnValue?: DialogBtnValueType
   }>
 }
 
@@ -110,4 +112,13 @@ export type DialogModalProps = {
     main: string
     sub: string
   }
+  dialogBtnValue?: DialogBtnValueType
+}
+
+export type DialogBtnValueType = {
+  isCancel: boolean
+  cancleFunc: () => void
+  cancelText: string
+  confirmFunc: () => void
+  confirmText: string
 }
