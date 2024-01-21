@@ -81,12 +81,18 @@ export type ProjectListResponseType = {
 export type ProjectResponseType = {
   color: string
   createdAt: string
+  membersCnt: number
   id: number
   issues: []
   name: string
   ownerId: number
   teamId: number
   updatedAt: string
+  members: Array<{
+    id: number
+    uuid: string
+    email: string
+  }>
 }
 
 export type FetchPostProjectResponseType = {

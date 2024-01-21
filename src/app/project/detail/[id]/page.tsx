@@ -81,6 +81,8 @@ export default function ProjectDetail() {
         ownerId: 0,
         teamId: 0,
         updatedAt: '',
+        membersCnt: 0,
+        members: [],
       })
     }
   }

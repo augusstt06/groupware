@@ -11,6 +11,10 @@ const nextConfig = {
   async rewrites() {
     return [
       {
+        source: process.env.NEXT_PUBLIC_PROJECT_STAR_SOURCE,
+        destination: process.env.NEXT_PUBLIC_PROJECT_STAR_DESTINATION,
+      },
+      {
         source: process.env.NEXT_PUBLIC_PROJECT_LIST_STARRED_SOURCE,
         destination: process.env.NEXT_PUBLIC_PROJECT_LIST_STARRED_DESTINATION,
       },

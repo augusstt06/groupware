@@ -1,7 +1,4 @@
-import Link from 'next/link'
-
 import ProjectCard from '@/app/component/ui/card/project/ProjectCard'
-import { ROUTE_PROJECT_DETAIL } from '@/app/constant/route/route-constant'
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { type ProjectMainHubProps } from '@/app/types/ui/uiTypes'
 
@@ -16,9 +13,7 @@ export default function ProjectMainHub(props: ProjectMainHubProps) {
 
       <div className="grid xl:grid-cols-4 xl:gap-x-8 lg:grid-cols-3 lg:gap-x-10 grid-cols-2 gap-x-8 gap-y-6 p-3 ">
         {props.projectList.map((data) => (
-          <Link key={data.id} href={`${ROUTE_PROJECT_DETAIL}/${data.id}`}>
-            <ProjectCard projectInfo={data} />
-          </Link>
+          <ProjectCard key={data.id} projectInfo={data} />
         ))}
       </div>
     </div>

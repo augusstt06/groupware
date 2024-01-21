@@ -69,7 +69,6 @@ export default function Project() {
   const [accessToken, setAccessToken] = useState(moduleGetCookie(KEY_ACCESS_TOKEN))
   const loginCompleteState = useAppSelector((state) => state.maintain[KEY_LOGIN_COMPLETE])
   const projectCategory = useAppSelector((state) => state.projectMainCategory.selectProjectMenu)
-
   const [projectList, setProjectList] = useState<ProjectResponseType[]>([])
   const [projectDialogBtnValue, setProjectDialogBtnValue] = useState<DialogBtnValueType>({
     isCancel: false,
