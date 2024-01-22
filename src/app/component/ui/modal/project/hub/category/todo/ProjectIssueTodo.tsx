@@ -16,6 +16,7 @@ import {
   changeIssueCategoryReducer,
   changeIssueDescriptionReducer,
   changeIssueTitleReducer,
+  resetIssueReducer,
 } from '@/app/store/reducers/project/projectIssueReducer'
 import { type CalendarValue } from '@/app/types/pageTypes'
 
@@ -43,6 +44,7 @@ export default function ProjectIssueTodo() {
     setIsCalendarOpen(false)
   }
   useEffect(() => {
+    dispatch(resetIssueReducer())
     dispatch(changeIssueCategoryReducer(PROJECT_ISSUE_TODO_VALUE.toUpperCase()))
   })
   return (

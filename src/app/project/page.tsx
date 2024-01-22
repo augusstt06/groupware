@@ -49,6 +49,7 @@ import {
   type SuccessResponseType,
 } from '../types/moduleTypes'
 import {
+  type DialogTextType,
   type FetchPostProjectResponseType,
   type ProjectListResponseType,
   type ProjectResponseType,
@@ -77,10 +78,7 @@ export default function Project() {
     confirmFunc: handleDialogClose,
     confirmText: '확인',
   })
-  const [dialogText, setDialogText] = useState<{
-    main: string
-    sub: string
-  }>({
+  const [dialogText, setDialogText] = useState<DialogTextType>({
     main: '',
     sub: '',
   })

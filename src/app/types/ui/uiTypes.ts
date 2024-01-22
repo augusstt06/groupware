@@ -91,7 +91,7 @@ export type GnbNormalMenuProps = GnbHamburgerMenuProps & {
 
 export type ProjectDetailTableProps = {
   title: string
-  list: ProjectIssueType[] | null
+  issue: ProjectIssueType
 }
 
 export type CreateProjectIssueModalTabProps = {

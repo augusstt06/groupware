@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { useParams, useRouter } from 'next/navigation'
 
@@ -19,6 +19,7 @@ import {
   MODAL_INVITE_MEMBER_IN_PROJECT,
 } from '@/app/constant/constant'
 import {
+  API_URL_PROJECT_ISSUE,
   API_URL_PROJECT_ISSUE_LIST,
   API_URL_PROJECT_ISSUE_LIST_PINNED,
   API_URL_PROJECTS,
@@ -26,19 +27,23 @@ import {
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleCheckUserState } from '@/app/module/utils/moduleCheckUserState'
 import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
-import { moduleGetFetch } from '@/app/module/utils/moduleFetch'
+import { moduleGetFetch, modulePostFetch } from '@/app/module/utils/moduleFetch'
 import { changeIssueProjectIdReducer } from '@/app/store/reducers/project/projectIssueReducer'
 import {
   createProjectIssueModalOpenReducer,
   projectInviteModalReducer,
 } from '@/app/store/reducers/project/projectModalReducer'
 import {
+  type DialogBtnValueType,
   type FailResponseType,
   type ModuleCheckUserStateProps,
   type ModuleGetFetchProps,
+  type ModulePostFetchProps,
   type SuccessResponseType,
 } from '@/app/types/moduleTypes'
 import {
+  type DialogTextType,
+  type ProjectCreateIssueResponseType,
   type ProjectIssueResponseType,
   type ProjectIssueType,
   type ProjectResponseType,
@@ -48,9 +53,26 @@ export default function ProjectDetail() {
   const dispatch = useAppDispatch()
   const router = useRouter()
   const query = useParams()
+  const dialogRef = useRef<HTMLDialogElement | null>(null)
+  const handleDialogClose = () => {
+    dialogRef.current?.close()
+  }
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
+  const issueState = useAppSelector((state) => state.projectIssue)
   const [accessToken, setAccessToken] = useState(moduleGetCookie(KEY_ACCESS_TOKEN))
   const [rerender, setRerender] = useState<boolean>(false)
+  //  setProjectDialogBtnValue 추가하기
+  const [projectDialogBtnValue] = useState<DialogBtnValueType>({
+    isCancel: false,
+    cancleFunc: () => {},
+    cancelText: '',
+    confirmFunc: handleDialogClose,
+    confirmText: '확인',
+  })
+  const [dialogText, setDialogText] = useState<DialogTextType>({
+    main: '',
+    sub: '',
+  })
   const loginCompleteState = useAppSelector((state) => state.maintain[KEY_LOGIN_COMPLETE])
   const [projectInfo, setProjectinfo] = useState<ProjectResponseType | null>(null)
   const [issueList, setIssueList] = useState<ProjectIssueType[] | null>(null)
@@ -65,6 +87,62 @@ export default function ProjectDetail() {
   }
   const handleCloseCreateIssueModal = () => {
     dispatch(createProjectIssueModalOpenReducer(false))
+  }
+  const convertDate = (date: string) => {
+    return new Date(`${date}T00:00:00Z`).toISOString()
+  }
+  const fetchPostIssue = async () => {
+    const fetchProps: ModulePostFetchProps = {
+      data: {
+        category: issueState.category,
+        description: issueState.description,
+        endAt: convertDate(issueState.endAt),
+        processState: issueState.processState,
+        projectId: issueState.projectId,
+        startAt: convertDate(issueState.startAt),
+        title: issueState.title,
+      },
+      fetchUrl: API_URL_PROJECT_ISSUE,
+      header: {
+        Authorization: `Bearer ${accessToken}`,
+        [KEY_X_ORGANIZATION_CODE]: orgCode,
+      },
+    }
+    await modulePostFetch<ProjectCreateIssueResponseType>(fetchProps)
+
+    setDialogText({
+      main: '성공적으로 이슈를 생성했습니다.',
+      sub: '',
+    })
+    dialogRef.current?.showModal()
+    dispatch(createProjectIssueModalOpenReducer(false))
+    setRerender(!rerender)
+  }
+  const isIssueInputEmpty = () => {
+    const { category, description, endAt, processState, projectId, startAt, title } = issueState
+
+    return (
+      category === '' ||
+      description === '' ||
+      endAt === '' ||
+      processState === '' ||
+      projectId === 0 ||
+      startAt === '' ||
+      title === ''
+    )
+  }
+
+  const handleClickPostIssue = () => {
+    if (isIssueInputEmpty()) {
+      setDialogText({
+        main: '필수 항목을 입력하지 않았습니다.',
+        sub: '',
+      })
+      dialogRef.current?.showModal()
+      return
+    }
+
+    void fetchPostIssue()
   }
   const fetchGetProjectDetail = async () => {
     try {
@@ -99,6 +177,7 @@ export default function ProjectDetail() {
       })
     }
   }
+
   const modalList = [
     {
       onClose: handleCloseCreateIssueModal,
@@ -106,7 +185,10 @@ export default function ProjectDetail() {
       childComponent: <CreateProjectIssueModal />,
       name: MODAL_CREATE_PROJECT_ISSUE,
       btnValue: MODAL_BTN_SAVE,
-      confirmFunc: () => {},
+      confirmFunc: handleClickPostIssue,
+      dialog: dialogRef,
+      dialogAlertText: dialogText,
+      dialogBtnValue: projectDialogBtnValue,
     },
     {
       onClose: handleCloseInviteModal,
@@ -115,6 +197,9 @@ export default function ProjectDetail() {
       name: MODAL_INVITE_MEMBER_IN_PROJECT,
       btnValue: MODAL_BTN_SAVE,
       confirmFunc: () => {},
+      dialog: dialogRef,
+      dialogAlertText: dialogText,
+      dialogBtnValue: projectDialogBtnValue,
     },
   ]
   const fetchGetIssueList = async () => {

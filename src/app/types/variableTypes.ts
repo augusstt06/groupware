@@ -147,3 +147,17 @@ export type ProjectIssueType = {
   title: 'string'
   updatedAt: 'string'
 }
+
+export type ProjectCreateIssueResponseType = {
+  category: string
+  description: string
+  endAt: string
+  processState: string
+  projectId: number
+  startAt: string
+  title: string
+}
+export type DialogTextType = {
+  main: string
+  sub: string
+}
