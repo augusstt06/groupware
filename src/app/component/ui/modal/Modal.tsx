@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import ReactDOM from 'react-dom'
 
 import ModalBtn from '../button/project/modal/ModalBtn'
@@ -36,6 +37,7 @@ export default function ModalHub(props: ModalHubProps) {
   )
 }
 export function Modal(props: ModalUsePortalProps) {
+  const [render, setRender] = useState<HTMLDivElement | null>(null)
   const btnClassName = () => {
     switch (props.name) {
       case MODAL_CREATE_PROJECT_ISSUE:
@@ -44,8 +46,10 @@ export function Modal(props: ModalUsePortalProps) {
         return 'border-t-2 border-gray-300'
     }
   }
-  return props.isModalOpen ? (
-    ReactDOM.createPortal(
+  const viewModal = () => {
+    if (render === null) return null
+
+    return ReactDOM.createPortal(
       <div
         id="static-modal"
         data-modal-backdrop="static"
@@ -66,6 +70,17 @@ export function Modal(props: ModalUsePortalProps) {
       </div>,
       document.getElementById('modal') as HTMLElement,
     )
+  }
+  return props.isModalOpen ? (
+    <>
+      <div
+        id="render"
+        ref={(el) => {
+          setRender(el)
+        }}
+      ></div>
+      {viewModal()}
+    </>
   ) : (
     <></>
   )

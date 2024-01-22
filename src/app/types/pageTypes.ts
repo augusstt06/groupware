@@ -69,12 +69,15 @@ export type WriteCommentProps = {
 export type IssueInputProps = {
   title: string
   placeholder: string
+  value: string
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void
 }
 export type IssueProgressProps = {
   progressStatusList: Array<{
     title: string
     color: string
     hoverColor: string
+    value: string
   }>
   handleProgress: (status: string) => void
   progress: string
@@ -104,4 +107,9 @@ export type IssueTimeProps = {
   hours: string[]
   unit: string
   onChange: (e: ChangeEvent<HTMLSelectElement>) => void
+}
+
+export type IssueDescriptionProps = {
+  value: string
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void
 }

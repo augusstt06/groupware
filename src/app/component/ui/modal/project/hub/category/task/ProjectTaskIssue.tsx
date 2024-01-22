@@ -1,47 +1,94 @@
 'use client'
 
-import { useState } from 'react'
+import { type ChangeEvent, useEffect, useState } from 'react'
 
 import 'react-calendar/dist/Calendar.css'
+import moment from 'moment'
+
 import {
   IssueCalendar,
-  IssueComment,
+  IssueDescription,
   IssueFile,
   IssueInput,
   IssueProgress,
   IssueSelect,
 } from '../components/ProjectIssueComponent'
 
-import { type CalendarValue } from '@/app/types/pageTypes'
+import {
+  _PROJECT_ISSUE_TASK_PROGRESS_COMPLETED_HOVER_COLOR,
+  PROJECT_ISSUE_TASK_PROGRESS_COMPLETED_COLOR,
+  PROJECT_ISSUE_TASK_PROGRESS_COMPLETED_TITLE,
+  PROJECT_ISSUE_TASK_PROGRESS_COMPLETED_VALUE,
+  PROJECT_ISSUE_TASK_PROGRESS_INIT_COLOR,
+  PROJECT_ISSUE_TASK_PROGRESS_INIT_HOVER_COLOR,
+  PROJECT_ISSUE_TASK_PROGRESS_INIT_TITLE,
+  PROJECT_ISSUE_TASK_PROGRESS_INIT_VALUE,
+  PROJECT_ISSUE_TASK_PROGRESS_PROCESSING_COLOR,
+  PROJECT_ISSUE_TASK_PROGRESS_PROCESSING_HOVER_COLOR,
+  PROJECT_ISSUE_TASK_PROGRESS_PROCESSING_TITLE,
+  PROJECT_ISSUE_TASK_PROGRESS_PROCESSING_VALUE,
+  PROJECT_ISSUE_TASK_PROGRESS_REQUESTED_COLOR,
+  PROJECT_ISSUE_TASK_PROGRESS_REQUESTED_HOVER_COLOR,
+  PROJECT_ISSUE_TASK_PROGRESS_REQUESTED_TITLE,
+  PROJECT_ISSUE_TASK_PROGRESS_REQUESTED_VALUE,
+  PROJECT_ISSUE_TASK_VALUE,
+} from '@/app/constant/constant'
+import useInput from '@/app/module/hooks/reactHooks/useInput'
+import { useAppDispatch } from '@/app/module/hooks/reduxHooks'
+import {
+  changeIssueCategoryReducer,
+  changeIssueDescriptionReducer,
+  changeIssueEndAtReducer,
+  changeIssueProcessStateReducer,
+  changeIssueStartAtReducer,
+  changeIssueTitleReducer,
+  resetIssueReducer,
+} from '@/app/store/reducers/project/projectIssueReducer'
+import { type CalendarValue, type ValuePiece } from '@/app/types/pageTypes'
 
 export default function ProjectTaskIssue() {
+  const dispatch = useAppDispatch()
+  const taskTitleInput = useInput('')
+  const handleChangeTitle = (e: ChangeEvent<HTMLInputElement>) => {
+    dispatch(changeIssueTitleReducer(e.target.value))
+    taskTitleInput.onChange(e)
+  }
+  const taskDescriptionInput = useInput('')
+  const handleChangeDescription = (e: ChangeEvent<HTMLInputElement>) => {
+    dispatch(changeIssueDescriptionReducer(e.target.value))
+    taskDescriptionInput.onChange(e)
+  }
   const [progress, setProgress] = useState<string>('')
   const [startDate, setStartDate] = useState<CalendarValue>(new Date())
   const [endDate, setEndDate] = useState<CalendarValue>(new Date())
-
   const handleProgress = (status: string) => {
     setProgress(status)
+    dispatch(changeIssueProcessStateReducer(status))
   }
   const progressStatusList = [
     {
-      title: '요청',
-      color: 'bg-[rgb(248,216,73)]',
-      hoverColor: 'hover:bg-[rgb(248,216,73)] dark:hover:bg-[rgb(248,216,73)]',
+      title: PROJECT_ISSUE_TASK_PROGRESS_REQUESTED_TITLE,
+      color: PROJECT_ISSUE_TASK_PROGRESS_REQUESTED_COLOR,
+      hoverColor: PROJECT_ISSUE_TASK_PROGRESS_REQUESTED_HOVER_COLOR,
+      value: PROJECT_ISSUE_TASK_PROGRESS_REQUESTED_VALUE,
     },
     {
-      title: '진행',
-      color: 'bg-[rgb(98,214,124)]',
-      hoverColor: 'hover:bg-[rgb(98,214,124)] dark:hover:bg-[rgb(98,214,124)]',
+      title: PROJECT_ISSUE_TASK_PROGRESS_PROCESSING_TITLE,
+      color: PROJECT_ISSUE_TASK_PROGRESS_PROCESSING_COLOR,
+      hoverColor: PROJECT_ISSUE_TASK_PROGRESS_PROCESSING_HOVER_COLOR,
+      value: PROJECT_ISSUE_TASK_PROGRESS_PROCESSING_VALUE,
     },
     {
-      title: '완료',
-      color: 'bg-[rgb(72,162,248)]',
-      hoverColor: 'hover:bg-[rgb(72,162,248)] dark:hover:bg-[rgb(72,162,248)]',
+      title: PROJECT_ISSUE_TASK_PROGRESS_COMPLETED_TITLE,
+      color: PROJECT_ISSUE_TASK_PROGRESS_COMPLETED_COLOR,
+      hoverColor: _PROJECT_ISSUE_TASK_PROGRESS_COMPLETED_HOVER_COLOR,
+      value: PROJECT_ISSUE_TASK_PROGRESS_COMPLETED_VALUE,
     },
     {
-      title: '보류',
-      color: 'bg-[rgb(221,109,96)]',
-      hoverColor: 'hover:bg-[rgb(221,109,96)] dark:hover:bg-[rgb(221,109,96)]',
+      title: PROJECT_ISSUE_TASK_PROGRESS_INIT_TITLE,
+      color: PROJECT_ISSUE_TASK_PROGRESS_INIT_COLOR,
+      hoverColor: PROJECT_ISSUE_TASK_PROGRESS_INIT_HOVER_COLOR,
+      value: PROJECT_ISSUE_TASK_PROGRESS_INIT_VALUE,
     },
   ]
   const managerList = ['김충연', '김민규', '남아현', '오준석']
@@ -56,11 +103,15 @@ export default function ProjectTaskIssue() {
 
   const handleStartDate = (date: CalendarValue) => {
     setStartDate(date)
+    const stringDate = moment(startDate as ValuePiece).format('YYYY-MM-DD')
+    dispatch(changeIssueStartAtReducer(stringDate))
     setIsStartCalendarOpen(false)
   }
 
   const handleEndDate = (date: CalendarValue) => {
     setEndDate(date)
+    const stringDate = moment(startDate as ValuePiece).format('YYYY-MM-DD')
+    dispatch(changeIssueEndAtReducer(stringDate))
     setIsEndCalendarOpen(false)
   }
 
@@ -80,13 +131,22 @@ export default function ProjectTaskIssue() {
       onDateChange: handleEndDate,
     },
   ]
+  useEffect(() => {
+    dispatch(resetIssueReducer())
+    dispatch(changeIssueCategoryReducer(PROJECT_ISSUE_TASK_VALUE.toUpperCase()))
+  }, [])
   return (
     <>
       <div className="mt-2 p-2 mb-2">
         <span className="font-bold">업무 생성하기</span>
       </div>
       <div>
-        <IssueInput title="제목" placeholder="제목을 입력해 주세요." />
+        <IssueInput
+          title="제목"
+          placeholder="제목을 입력해 주세요."
+          value={taskTitleInput.value}
+          onChange={handleChangeTitle}
+        />
         <IssueProgress
           progressStatusList={progressStatusList}
           handleProgress={handleProgress}
@@ -104,7 +164,7 @@ export default function ProjectTaskIssue() {
           />
         ))}
         <IssueFile />
-        <IssueComment />
+        <IssueDescription value={taskDescriptionInput.value} onChange={handleChangeDescription} />
       </div>
     </>
   )

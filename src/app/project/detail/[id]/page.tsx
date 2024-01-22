@@ -18,11 +18,16 @@ import {
   MODAL_CREATE_PROJECT_ISSUE,
   MODAL_INVITE_MEMBER_IN_PROJECT,
 } from '@/app/constant/constant'
-import { API_URL_PROJECTS } from '@/app/constant/route/api-route-constant'
+import {
+  API_URL_PROJECT_ISSUE_LIST,
+  API_URL_PROJECT_ISSUE_LIST_PINNED,
+  API_URL_PROJECTS,
+} from '@/app/constant/route/api-route-constant'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleCheckUserState } from '@/app/module/utils/moduleCheckUserState'
 import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
 import { moduleGetFetch } from '@/app/module/utils/moduleFetch'
+import { changeIssueProjectIdReducer } from '@/app/store/reducers/project/projectIssueReducer'
 import {
   createProjectIssueModalOpenReducer,
   projectInviteModalReducer,
@@ -33,7 +38,11 @@ import {
   type ModuleGetFetchProps,
   type SuccessResponseType,
 } from '@/app/types/moduleTypes'
-import { type ProjectResponseType } from '@/app/types/variableTypes'
+import {
+  type ProjectIssueResponseType,
+  type ProjectIssueType,
+  type ProjectResponseType,
+} from '@/app/types/variableTypes'
 
 export default function ProjectDetail() {
   const dispatch = useAppDispatch()
@@ -41,8 +50,11 @@ export default function ProjectDetail() {
   const query = useParams()
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
   const [accessToken, setAccessToken] = useState(moduleGetCookie(KEY_ACCESS_TOKEN))
+  const [rerender, setRerender] = useState<boolean>(false)
   const loginCompleteState = useAppSelector((state) => state.maintain[KEY_LOGIN_COMPLETE])
   const [projectInfo, setProjectinfo] = useState<ProjectResponseType | null>(null)
+  const [issueList, setIssueList] = useState<ProjectIssueType[] | null>(null)
+  const [pinnedList, setPinnedList] = useState<ProjectIssueType[] | null>(null)
   const isCreateProjectIssueModalOpen = useAppSelector(
     (state) => state.projectModal.isCreateProjectIssueModalOpen,
   )
@@ -71,6 +83,7 @@ export default function ProjectDetail() {
       if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)
       const projectDetail = (res as SuccessResponseType<ProjectResponseType>).result
       setProjectinfo(projectDetail)
+      setRerender(!rerender)
     } catch (err) {
       setProjectinfo({
         color: '',
@@ -104,8 +117,48 @@ export default function ProjectDetail() {
       confirmFunc: () => {},
     },
   ]
+  const fetchGetIssueList = async () => {
+    const fetchProps: ModuleGetFetchProps = {
+      params: {
+        projectId: Number(projectInfo?.id),
+        limit: 10,
+        offset: 0,
+      },
+      fetchUrl: API_URL_PROJECT_ISSUE_LIST,
+      header: {
+        Authorization: `Bearer ${accessToken}`,
+        [KEY_X_ORGANIZATION_CODE]: orgCode,
+      },
+    }
+    const res = await moduleGetFetch<ProjectIssueResponseType>(fetchProps)
+    const issues = (res as SuccessResponseType<ProjectIssueResponseType>).result.data
+    setIssueList(issues)
+  }
+  const fetchGetIssuePinnedList = async () => {
+    const fetchProps: ModuleGetFetchProps = {
+      params: {
+        projectId: Number(projectInfo?.id),
+      },
+      fetchUrl: API_URL_PROJECT_ISSUE_LIST_PINNED,
+      header: {
+        Authorization: `Bearer ${accessToken}`,
+        [KEY_X_ORGANIZATION_CODE]: orgCode,
+      },
+    }
+    const res = await moduleGetFetch<ProjectIssueType[]>(fetchProps)
+    const pinned = (res as SuccessResponseType<ProjectIssueType[]>).result
+    setPinnedList(pinned)
+  }
+
   useEffect(() => {
-    void fetchGetProjectDetail()
+    dispatch(changeIssueProjectIdReducer(Number(query.id)))
+    if (projectInfo === null) {
+      void fetchGetProjectDetail()
+    }
+    if (projectInfo !== null) {
+      void fetchGetIssueList()
+      void fetchGetIssuePinnedList()
+    }
     const moduleProps: ModuleCheckUserStateProps = {
       useRouter: router,
       token: accessToken,
@@ -114,14 +167,18 @@ export default function ProjectDetail() {
       isCheckInterval: true,
     }
     moduleCheckUserState(moduleProps)
-  }, [])
+  }, [rerender])
 
   return (
     <main className="w-full 2xl:w-2/3 h-4/5 flex flex-col items-center">
       {projectInfo !== null ? (
         <>
           <ProjectDetailTab projectInfo={projectInfo} />
-          <ProjectDetailHub projectInfo={projectInfo} />
+          <ProjectDetailHub
+            projectInfo={projectInfo}
+            issueList={issueList}
+            pinnedList={pinnedList}
+          />
         </>
       ) : (
         <div className="p-5">

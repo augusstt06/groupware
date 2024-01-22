@@ -1,10 +1,18 @@
+import {
+  PROJECT_ISSUE_SCHEDULE_TITLE,
+  PROJECT_ISSUE_SCHEDULE_VALUE,
+  PROJECT_ISSUE_TASK_TITLE,
+  PROJECT_ISSUE_TASK_VALUE,
+  PROJECT_ISSUE_TODO_TITLE,
+  PROJECT_ISSUE_TODO_VALUE,
+} from '@/app/constant/constant'
 import { type CreateProjectIssueModalTabProps } from '@/app/types/ui/uiTypes'
 
 export default function CreateProjectIssueModalTab(props: CreateProjectIssueModalTabProps) {
   const tabList = [
-    { title: '📑 업무', id: 'task' },
-    { title: '🗓️ 일정', id: 'calendar' },
-    { title: '✅ 할일', id: 'todo' },
+    { title: PROJECT_ISSUE_TASK_TITLE, value: PROJECT_ISSUE_TASK_VALUE },
+    { title: PROJECT_ISSUE_SCHEDULE_TITLE, value: PROJECT_ISSUE_SCHEDULE_VALUE },
+    { title: PROJECT_ISSUE_TODO_TITLE, value: PROJECT_ISSUE_TODO_VALUE },
   ]
   const divClassName = (select: string, id: string) => {
     if (select === id || (select === '' && id === 'task'))
@@ -17,9 +25,9 @@ export default function CreateProjectIssueModalTab(props: CreateProjectIssueModa
       {tabList.map((data) => (
         <div
           key={data.title}
-          className={divClassName(props.selectCategory, data.id)}
+          className={divClassName(props.selectCategory, data.value)}
           onClick={() => {
-            props.changeSelectCategory(data.id)
+            props.changeSelectCategory(data.value)
           }}
         >
           {data.title}

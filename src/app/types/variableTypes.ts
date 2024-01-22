@@ -106,3 +106,44 @@ export type ProjectAlertStateType = {
   subDescription: string
   isCreateModalClose: boolean
 }
+
+export type ProjectIssueResponseType = {
+  data: ProjectIssueType[]
+  page: number
+  size: number
+  total: number
+}
+export type ProjectIssueType = {
+  assignee: [
+    {
+      email: 'string'
+      id: 0
+      uuid: 'string'
+    },
+  ]
+  category: 'string'
+  comments: [
+    {
+      childComments: ['string']
+      content: 'string'
+      createdAt: 'string'
+      id: 0
+      like: 0
+      name: 'string'
+      position: 'string'
+      updatedAt: 'string'
+      writerId: 0
+    },
+  ]
+  createdAt: 'string'
+  description: 'string'
+  endAt: 'string'
+  files: ['string']
+  id: 0
+  issuerId: 0
+  processState: 'string'
+  projectId: 0
+  startAt: 'string'
+  title: 'string'
+  updatedAt: 'string'
+}

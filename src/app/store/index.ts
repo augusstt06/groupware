@@ -12,6 +12,7 @@ import { orgInfoSlice } from './reducers/login/orgInfoReducer'
 import { signupInfoSlice } from './reducers/login/signupInfoReducer'
 import { userInfoSlice } from './reducers/main/userInfoReducer'
 import { maintainSlice } from './reducers/maintain/maintainReducer'
+import { projectIssueSlice } from './reducers/project/projectIssueReducer'
 import { projectMainCategorySlice } from './reducers/project/projectMainCategoryReducer'
 import { projectModalSlice } from './reducers/project/projectModalReducer'
 
@@ -42,6 +43,7 @@ const rootReducer = combineReducers({
   boardLike: boardLikeSlice.reducer,
   projectModal: projectModalSlice.reducer,
   projectMainCategory: projectMainCategorySlice.reducer,
+  projectIssue: projectIssueSlice.reducer,
 })
 const persistConfig = {
   key: 'root',
@@ -54,6 +56,7 @@ const persistConfig = {
     'boardLike',
     'projectModal',
     'projectMainCategory',
+    'projectIssue',
   ],
   blacklist: ['signupInfo', 'loginInfo', 'orgInfo'],
 }

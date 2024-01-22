@@ -1,17 +1,41 @@
 'use client'
 
-import { type ChangeEvent, useState } from 'react'
+import { type ChangeEvent, useEffect, useState } from 'react'
 
 import {
   IssueCalendarWithTime,
-  IssueComment,
+  IssueDescription,
   IssueInput,
   IssueSelect,
 } from '../components/ProjectIssueComponent'
 
+import { PROJECT_ISSUE_SCHEDULE_VALUE } from '@/app/constant/constant'
+import useInput from '@/app/module/hooks/reactHooks/useInput'
+import { useAppDispatch } from '@/app/module/hooks/reduxHooks'
+import {
+  changeIssueCategoryReducer,
+  changeIssueDescriptionReducer,
+  changeIssueTitleReducer,
+  resetIssueReducer,
+} from '@/app/store/reducers/project/projectIssueReducer'
 import { type CalendarValue } from '@/app/types/pageTypes'
 
-export default function ProjectIssueCalendar() {
+export default function ProjectIssueSchedule() {
+  const dispatch = useAppDispatch()
+  const scheduleTitleInput = useInput('')
+  const handleChangeTitle = (e: ChangeEvent<HTMLInputElement>) => {
+    dispatch(changeIssueTitleReducer(e.target.value))
+    scheduleTitleInput.onChange(e)
+  }
+  const schedulePlaceInput = useInput('')
+  const handleChangePlace = (e: ChangeEvent<HTMLInputElement>) => {
+    schedulePlaceInput.onChange(e)
+  }
+  const scheduleDescriptionInput = useInput('')
+  const handleChangeDescription = (e: ChangeEvent<HTMLInputElement>) => {
+    dispatch(changeIssueDescriptionReducer(e.target.value))
+    scheduleDescriptionInput.onChange(e)
+  }
   const [selectTime, setSelectTime] = useState({ hour: '', minute: '' })
   const attendanceList = ['김충연', '김민규', '남아현', '오준석']
   const [startDate, setStartDate] = useState<CalendarValue>(new Date())
@@ -35,7 +59,7 @@ export default function ProjectIssueCalendar() {
     setIsEndCalendarOpen(false)
   }
 
-  const calendarList = [
+  const scheduleList = [
     {
       title: '시작일',
       state: isStartCalendarOpen,
@@ -68,16 +92,24 @@ export default function ProjectIssueCalendar() {
       minute: e.target.value,
     })
   }
-
+  useEffect(() => {
+    dispatch(resetIssueReducer())
+    dispatch(changeIssueCategoryReducer(PROJECT_ISSUE_SCHEDULE_VALUE.toUpperCase()))
+  })
   return (
     <>
       <div className="mt-2 p-2 mb-2">
         <span className="font-bold">일정 생성하기</span>
       </div>
       <div>
-        <IssueInput title="제목" placeholder="제목을 입력해 주세요." />
+        <IssueInput
+          title="제목"
+          placeholder="제목을 입력해 주세요."
+          value={scheduleTitleInput.value}
+          onChange={handleChangeTitle}
+        />
         <IssueSelect title="참석자" selectList={attendanceList} />
-        {calendarList.map((data) => (
+        {scheduleList.map((data) => (
           <IssueCalendarWithTime
             key={data.title}
             title={data.title}
@@ -90,8 +122,16 @@ export default function ProjectIssueCalendar() {
             onDateChange={data.onDateChange}
           />
         ))}
-        <IssueInput title="장소" placeholder="장소를 입력해 주세요." />
-        <IssueComment />
+        <IssueInput
+          title="장소"
+          placeholder="장소를 입력해 주세요."
+          value={schedulePlaceInput.value}
+          onChange={handleChangePlace}
+        />
+        <IssueDescription
+          value={scheduleDescriptionInput.value}
+          onChange={handleChangeDescription}
+        />
       </div>
     </>
   )

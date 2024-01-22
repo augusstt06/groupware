@@ -55,9 +55,13 @@ export const BOARD_CATEGORY_TEAM = '팀'
 export const BOARD_CATEGORY_PROJECT = '프로젝트'
 
 // Project
-export const PROJECT_ISSUE_TASK = 'task'
-export const PROJECT_ISSUE_CALENDAR = 'calendar'
-export const PROJECT_ISSUE_TODO = 'todo'
+export const PROJECT_ISSUE_TASK_TITLE = '📑 업무'
+export const PROJECT_ISSUE_SCHEDULE_TITLE = '🗓️ 일정'
+export const PROJECT_ISSUE_TODO_TITLE = '✅ 할일'
+
+export const PROJECT_ISSUE_TASK_VALUE = 'task'
+export const PROJECT_ISSUE_SCHEDULE_VALUE = 'schedule'
+export const PROJECT_ISSUE_TODO_VALUE = 'todo'
 
 // RED, PINK, GREEN, BLUE, PURPLE, YELLOW
 export const PROJECT_CARD_RES_COLOR_RED = 'RED'
@@ -90,6 +94,30 @@ export const PROJECT_DETAIL_CATEGORY_HOME = '홈'
 export const PROJECT_DETAIL_CATEGORY_TASK = '업무'
 export const PROJECT_DETAIL_CATEGORY_CALENDAR = '일정'
 export const PROJECT_DETAIL_CATEGORY_TODO = '할일'
+
+export const PROJECT_ISSUE_TASK_PROGRESS_REQUESTED_TITLE = '요청'
+export const PROJECT_ISSUE_TASK_PROGRESS_REQUESTED_VALUE = 'REQUESTED'
+export const PROJECT_ISSUE_TASK_PROGRESS_REQUESTED_COLOR = 'bg-[rgb(248,216,73)]'
+export const PROJECT_ISSUE_TASK_PROGRESS_REQUESTED_HOVER_COLOR =
+  'hover:bg-[rgb(248,216,73)] dark:hover:bg-[rgb(248,216,73)]'
+
+export const PROJECT_ISSUE_TASK_PROGRESS_PROCESSING_TITLE = '진행'
+export const PROJECT_ISSUE_TASK_PROGRESS_PROCESSING_VALUE = 'PROCESSING'
+export const PROJECT_ISSUE_TASK_PROGRESS_PROCESSING_COLOR = 'bg-[rgb(98,214,124)]'
+export const PROJECT_ISSUE_TASK_PROGRESS_PROCESSING_HOVER_COLOR =
+  'hover:bg-[rgb(98,214,124)] dark:hover:bg-[rgb(98,214,124)]'
+
+export const PROJECT_ISSUE_TASK_PROGRESS_COMPLETED_TITLE = '완료'
+export const PROJECT_ISSUE_TASK_PROGRESS_COMPLETED_VALUE = 'COMPLETED'
+export const PROJECT_ISSUE_TASK_PROGRESS_COMPLETED_COLOR = 'bg-[rgb(72,162,248)]'
+export const _PROJECT_ISSUE_TASK_PROGRESS_COMPLETED_HOVER_COLOR =
+  'hover:bg-[rgb(72,162,248)] dark:hover:bg-[rgb(72,162,248)]'
+
+export const PROJECT_ISSUE_TASK_PROGRESS_INIT_TITLE = '보류'
+export const PROJECT_ISSUE_TASK_PROGRESS_INIT_VALUE = 'INIT'
+export const PROJECT_ISSUE_TASK_PROGRESS_INIT_COLOR = 'bg-[rgb(221,109,96)]'
+export const PROJECT_ISSUE_TASK_PROGRESS_INIT_HOVER_COLOR =
+  'hover:bg-[rgb(221,109,96)] dark:hover:bg-[rgb(221,109,96)]'
 
 // modal
 export const MODAL_BTN_CREATE = '생성'

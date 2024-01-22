@@ -7,6 +7,7 @@ import { FaRegCalendarAlt } from 'react-icons/fa'
 import {
   type IssueCalendarProps,
   type IssueCalendarWithTimeProps,
+  type IssueDescriptionProps,
   type IssueInputProps,
   type IssueProgressProps,
   type IssueSelecProps,
@@ -23,6 +24,8 @@ export function IssueInput(props: IssueInputProps) {
       <input
         placeholder={props.placeholder}
         className="ml-4 w-full xl:w-3/5 rounded rounded mt-2 bg-gray-80 border text-gray-900 block text-sm border-gray-300 p-2.5 dark:bg-gray-700 dark:border-white-600 dark:placeholder-gray-400 dark:text-white focus:outline-none"
+        value={props.value}
+        onChange={props.onChange}
       />
     </div>
   )
@@ -35,6 +38,7 @@ export function IssueProgress(props: IssueProgressProps) {
     } else
       return `cursor-pointer bg-gray-200 dark:bg-gray-400 hover:text-white ${hoverColor} transition ease-in-out duration-300 w-1/5 p-2 rounded-full text-center`
   }
+
   return (
     <div className="flex flex-row items-center p-2">
       <div className="w-1/6">
@@ -44,9 +48,9 @@ export function IssueProgress(props: IssueProgressProps) {
         {props.progressStatusList.map((data) => (
           <div
             key={data.title}
-            className={divClassName(data.title, data.hoverColor, data.color)}
+            className={divClassName(data.value, data.hoverColor, data.color)}
             onClick={() => {
-              props.handleProgress(data.title)
+              props.handleProgress(data.value)
             }}
           >
             <span className="text-sm md:text-base">{data.title}</span>
@@ -149,12 +153,14 @@ export function IssueFile() {
   )
 }
 
-export function IssueComment() {
+export function IssueDescription(props: IssueDescriptionProps) {
   return (
     <div className="border-b-2 border-t-2 border-gray-200 w-full p-2 mt-2">
-      <textarea
+      <input
         placeholder="내용을 입력해주세요"
-        className="w-full resize-none focus:outline-none text-sm bg-transparent"
+        className="w-full p-5 text-sm focus:outline-none text-sm bg-transparent"
+        value={props.value}
+        onChange={props.onChange}
       />
     </div>
   )
