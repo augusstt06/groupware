@@ -17,6 +17,9 @@ import {
   MODAL_BTN_SAVE,
   MODAL_CREATE_PROJECT_ISSUE,
   MODAL_INVITE_MEMBER_IN_PROJECT,
+  PROJECT_ISSUE_SCHEDULE_TITLE,
+  PROJECT_ISSUE_SCHEDULE_VALUE,
+  PROJECT_ISSUE_TASK_VALUE,
 } from '@/app/constant/constant'
 import {
   API_URL_PROJECT_ISSUE,
@@ -91,23 +94,78 @@ export default function ProjectDetail() {
   const convertDate = (date: string) => {
     return new Date(`${date}T00:00:00Z`).toISOString()
   }
-  const fetchPostIssue = async () => {
-    const fetchProps: ModulePostFetchProps = {
-      data: {
-        category: issueState.category,
-        description: issueState.description,
-        endAt: convertDate(issueState.endAt),
-        processState: issueState.processState,
-        projectId: issueState.projectId,
-        startAt: convertDate(issueState.startAt),
-        title: issueState.title,
-      },
-      fetchUrl: API_URL_PROJECT_ISSUE,
-      header: {
-        Authorization: `Bearer ${accessToken}`,
-        [KEY_X_ORGANIZATION_CODE]: orgCode,
-      },
+  const convertDateWithTIme = (date: string, hour: string, minute: string) => {
+    return new Date(`${date}T${hour}:${minute}:00Z`).toISOString()
+  }
+  const fetchPropsByCategory = () => {
+    let fetchProps: ModulePostFetchProps
+    switch (issueState.category) {
+      case PROJECT_ISSUE_TASK_VALUE.toUpperCase():
+        fetchProps = {
+          data: {
+            category: issueState.category,
+            description: issueState.description,
+            endAt: convertDate(issueState.endAt),
+            processState: issueState.processState,
+            projectId: issueState.projectId,
+            startAt: convertDate(issueState.startAt),
+            title: issueState.title,
+          },
+          fetchUrl: API_URL_PROJECT_ISSUE,
+          header: {
+            Authorization: `Bearer ${accessToken}`,
+            [KEY_X_ORGANIZATION_CODE]: orgCode,
+          },
+        }
+        return fetchProps
+      case PROJECT_ISSUE_SCHEDULE_TITLE.toUpperCase():
+        fetchProps = {
+          data: {
+            category: issueState.category,
+            description: issueState.description,
+            endAt: convertDateWithTIme(
+              issueState.endAt,
+              issueState.endAtTime.hour,
+              issueState.endAtTime.minute,
+            ),
+            projectId: issueState.projectId,
+            startAt: convertDateWithTIme(
+              issueState.startAt,
+              issueState.startAtTime.hour,
+              issueState.startAtTime.minute,
+            ),
+            title: issueState.title,
+          },
+          fetchUrl: API_URL_PROJECT_ISSUE,
+          header: {
+            Authorization: `Bearer ${accessToken}`,
+            [KEY_X_ORGANIZATION_CODE]: orgCode,
+          },
+        }
+        return fetchProps
+      // FIXME: TODO도 추가하기
+      default:
+        fetchProps = {
+          data: {
+            category: issueState.category,
+            description: issueState.description,
+            endAt: convertDate(issueState.endAt),
+            processState: issueState.processState,
+            projectId: issueState.projectId,
+            startAt: convertDate(issueState.startAt),
+            title: issueState.title,
+          },
+          fetchUrl: API_URL_PROJECT_ISSUE,
+          header: {
+            Authorization: `Bearer ${accessToken}`,
+            [KEY_X_ORGANIZATION_CODE]: orgCode,
+          },
+        }
+        return fetchProps
     }
+  }
+  const fetchPostIssue = async () => {
+    const fetchProps = fetchPropsByCategory()
     await modulePostFetch<ProjectCreateIssueResponseType>(fetchProps)
 
     setDialogText({
@@ -120,16 +178,37 @@ export default function ProjectDetail() {
   }
   const isIssueInputEmpty = () => {
     const { category, description, endAt, processState, projectId, startAt, title } = issueState
-
-    return (
-      category === '' ||
-      description === '' ||
-      endAt === '' ||
-      processState === '' ||
-      projectId === 0 ||
-      startAt === '' ||
-      title === ''
-    )
+    switch (issueState.category) {
+      case PROJECT_ISSUE_TASK_VALUE.toUpperCase():
+        return (
+          category === '' ||
+          description === '' ||
+          endAt === '' ||
+          processState === '' ||
+          projectId === 0 ||
+          startAt === '' ||
+          title === ''
+        )
+      case PROJECT_ISSUE_SCHEDULE_VALUE.toUpperCase():
+        return (
+          category === '' ||
+          description === '' ||
+          endAt === '' ||
+          projectId === 0 ||
+          startAt === '' ||
+          title === ''
+        )
+      default:
+        return (
+          category === '' ||
+          description === '' ||
+          endAt === '' ||
+          processState === '' ||
+          projectId === 0 ||
+          startAt === '' ||
+          title === ''
+        )
+    }
   }
 
   const handleClickPostIssue = () => {

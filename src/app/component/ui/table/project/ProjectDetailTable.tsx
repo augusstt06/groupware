@@ -29,9 +29,9 @@ export default function ProjectDetailTable(props: ProjectDetailTableProps) {
 
   return (
     <>
-      <div className=" border-t-2 border-b-2 border-gray-400 ">
-        <div className="flex flex-row items-center justify-between border-b-2 border-gray-200 overflow-x-auto dark:bg-[#576072ae] dark:text-gray-200 text-black">
-          <div className="bg-gray-200 flex justify-center text-black w-1/5 h-12 text-center items-center">
+      <div className="  ">
+        <div className="flex flex-row items-center justify-between border-b-2 border-gray-300 overflow-x-auto dark:bg-[#576072ae] dark:text-gray-200 text-black">
+          <div className="bg-gray-200 flex justify-center text-black w-1/5 h-12 text-center items-center  ">
             <span className="text-sm font-bold">{convertCategory()}</span>
           </div>
           <div className="w-4/5 flex justify-between flex-col lg:flex-row h-12 overflow-y-auto">

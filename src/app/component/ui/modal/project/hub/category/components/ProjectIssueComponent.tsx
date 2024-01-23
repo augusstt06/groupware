@@ -204,6 +204,7 @@ export function IssueTime(props: IssueTimeProps) {
     }
     return 'border-2 border-gray-300 p-2 rounded-lg text-sm bg-transparent'
   }
+
   return (
     <div className="mt-2 mr-2 ml-2 w-full flex flex-row items-center justify-between">
       <select

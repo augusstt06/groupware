@@ -13,7 +13,11 @@ export default function ProjectDetailHub(props: ProjectDetailHubProps) {
 
   const renderingIssues = (list: ProjectIssueType[] | null, title: string) => {
     if (!isIssueListNull(list)) {
-      return list?.map((data) => <ProjectDetailTable key={data.id} title={title} issue={data} />)
+      return (
+        <div className="border-2 border-gray-300">
+          {list?.map((data) => <ProjectDetailTable key={data.id} title={title} issue={data} />)}
+        </div>
+      )
     }
     return (
       <div className=" w-full flex flex-row justify-around">

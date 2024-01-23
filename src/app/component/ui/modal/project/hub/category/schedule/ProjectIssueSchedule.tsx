@@ -2,6 +2,8 @@
 
 import { type ChangeEvent, useEffect, useState } from 'react'
 
+import moment from 'moment'
+
 import {
   IssueCalendarWithTime,
   IssueDescription,
@@ -21,9 +23,13 @@ import { useAppDispatch } from '@/app/module/hooks/reduxHooks'
 import {
   changeIssueCategoryReducer,
   changeIssueDescriptionReducer,
+  changeIssueEndAtReducer,
+  changeIssueEndAtTimeReducer,
+  changeIssueStartAtReducer,
+  changeIssueStartAtTimeReducer,
   changeIssueTitleReducer,
 } from '@/app/store/reducers/project/projectIssueReducer'
-import { type CalendarValue } from '@/app/types/pageTypes'
+import { type CalendarValue, type ValuePiece } from '@/app/types/pageTypes'
 import { type ScheduleListType } from '@/app/types/variableTypes'
 
 export default function ProjectIssueSchedule() {
@@ -64,11 +70,16 @@ export default function ProjectIssueSchedule() {
   }
   const handleStartDate = (date: CalendarValue) => {
     setStartDate(date)
+    const stringDate = moment(startDate as ValuePiece).format('YYYY-MM-DD')
+    dispatch(changeIssueStartAtReducer(stringDate))
+
     setIsStartCalendarOpen(false)
   }
 
   const handleEndDate = (date: CalendarValue) => {
     setEndDate(date)
+    const stringDate = moment(startDate as ValuePiece).format('YYYY-MM-DD')
+    dispatch(changeIssueEndAtReducer(stringDate))
     setIsEndCalendarOpen(false)
   }
 
@@ -85,6 +96,22 @@ export default function ProjectIssueSchedule() {
         [unit]: value,
       },
     }))
+
+    if (type === 'start') {
+      dispatch(
+        changeIssueStartAtTimeReducer({
+          units: unit,
+          timeValue: value,
+        }),
+      )
+    } else {
+      dispatch(
+        changeIssueEndAtTimeReducer({
+          units: unit,
+          timeValue: value,
+        }),
+      )
+    }
   }
   const scheduleList: ScheduleListType[] = [
     {
@@ -119,10 +146,38 @@ export default function ProjectIssueSchedule() {
   useEffect(() => {
     if (isAllday) {
       setEndDate(startDate)
+      const stringEndDate = moment(endDate as ValuePiece).format('YYYY-MM-DD')
+      const stringStartDate = moment(startDate as ValuePiece).format('YYYY-MM-DD')
+      dispatch(changeIssueStartAtReducer(stringStartDate))
+      dispatch(changeIssueEndAtReducer(stringEndDate))
       setSelectTime({
         start: { hour: '00', minute: '00' },
         end: { hour: '23', minute: '59' },
       })
+      dispatch(
+        changeIssueStartAtTimeReducer({
+          units: 'hour',
+          timeValue: '00',
+        }),
+      )
+      dispatch(
+        changeIssueStartAtTimeReducer({
+          units: 'minute',
+          timeValue: '00',
+        }),
+      )
+      dispatch(
+        changeIssueEndAtTimeReducer({
+          units: 'hour',
+          timeValue: '23',
+        }),
+      )
+      dispatch(
+        changeIssueEndAtTimeReducer({
+          units: 'hour',
+          timeValue: '59',
+        }),
+      )
     }
     dispatch(changeIssueCategoryReducer(PROJECT_ISSUE_SCHEDULE_VALUE.toUpperCase()))
   }, [isAllday])
