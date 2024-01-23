@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import ReactDOM from 'react-dom'
 
 import ModalBtn from '../button/project/modal/ModalBtn'
@@ -71,17 +71,14 @@ export function Modal(props: ModalUsePortalProps) {
       document.getElementById('modal') as HTMLElement,
     )
   }
-  return props.isModalOpen ? (
-    <>
-      <div
-        id="render"
-        ref={(el) => {
-          setRender(el)
-        }}
-      ></div>
-      {viewModal()}
-    </>
-  ) : (
-    <></>
-  )
+  useEffect(() => {
+    const modalElement = document.createElement('div')
+    modalElement.id = 'render'
+    setRender(modalElement)
+
+    return () => {
+      modalElement.remove()
+    }
+  }, [])
+  return props.isModalOpen ? <>{viewModal()}</> : <></>
 }
