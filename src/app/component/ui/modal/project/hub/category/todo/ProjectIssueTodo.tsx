@@ -46,7 +46,7 @@ export default function ProjectIssueTodo() {
   useEffect(() => {
     dispatch(resetIssueReducer())
     dispatch(changeIssueCategoryReducer(PROJECT_ISSUE_TODO_VALUE.toUpperCase()))
-  })
+  }, [])
   return (
     <>
       <div className="mt-2 p-2 mb-2">

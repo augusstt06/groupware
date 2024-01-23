@@ -1,9 +1,16 @@
+import { type ChangeEvent } from 'react'
 import Calendar from 'react-calendar'
 
 import 'react-calendar/dist/Calendar.css'
 import moment from 'moment'
 import { FaRegCalendarAlt } from 'react-icons/fa'
 
+import {
+  PROJECT_ISSUE_SCHEDULE_UNIT_HOUR_EN,
+  PROJECT_ISSUE_SCHEDULE_UNIT_HOUR_KO,
+  PROJECT_ISSUE_SCHEDULE_UNIT_MINUTE_EN,
+  PROJECT_ISSUE_SCHEDULE_UNIT_MINUTE_KO,
+} from '@/app/constant/constant'
 import {
   type IssueCalendarProps,
   type IssueCalendarWithTimeProps,
@@ -98,40 +105,116 @@ export function IssueCalendar(props: IssueCalendarProps) {
 }
 
 export function IssueCalendarWithTime(props: IssueCalendarWithTimeProps) {
+  const issueTimeList = [
+    {
+      viewCheckAllDate: props.scheduleData.viewCheckAllDay,
+      timeState: props.scheduleData.timeState,
+      hoursList: props.scheduleData.hoursList,
+      unit: PROJECT_ISSUE_SCHEDULE_UNIT_HOUR_KO,
+      isCheckAllday: props.scheduleData.isCheckAllday,
+      onChange: (e: ChangeEvent<HTMLSelectElement>) => {
+        props.scheduleData.handleSelectTime(
+          props.scheduleData.timeCategory,
+          PROJECT_ISSUE_SCHEDULE_UNIT_HOUR_EN,
+          e.target.value,
+        )
+      },
+    },
+    {
+      viewCheckAllDate: props.scheduleData.viewCheckAllDay,
+      timeState: props.scheduleData.timeState,
+      hoursList: props.scheduleData.hoursList,
+      unit: PROJECT_ISSUE_SCHEDULE_UNIT_MINUTE_KO,
+      isCheckAllday: props.scheduleData.isCheckAllday,
+      onChange: (e: ChangeEvent<HTMLSelectElement>) => {
+        props.scheduleData.handleSelectTime(
+          props.scheduleData.timeCategory,
+          PROJECT_ISSUE_SCHEDULE_UNIT_MINUTE_EN,
+          e.target.value,
+        )
+      },
+    },
+  ]
   return (
     <>
-      <div className="flex flex-row items-center p-2" key={props.title}>
+      <div className="flex flex-row items-center p-2" key={props.scheduleData.title}>
         <div className="w-1/6">
-          <span className="text-sm md:text-base">{props.title}</span>
+          <span className="text-sm md:text-base">{props.scheduleData.title}</span>
         </div>
-        <div className="ml-4 flex flex-col lg:flex-row items-center items-center rounded rounded mt-2 bg-gray-50 border text-gray-900 w-3/5 text-sm border-gray-300 p-2.5 dark:bg-gray-700 dark:border-white-600 dark:placeholder-gray-400 dark:text-white truncate">
-          <FaRegCalendarAlt onClick={props.openModal} className="mb-2 lg:mb-0" />
+        <div className="ml-4 flex flex-col lg:flex-row items-center items-center rounded rounded mt-2 bg-gray-50 border text-gray-900 w-6/2 text-sm border-gray-300 p-2.5 dark:bg-gray-700 dark:border-white-600 dark:placeholder-gray-400 dark:text-white truncate">
+          <FaRegCalendarAlt onClick={props.scheduleData.openCalendar} className="mb-2 lg:mb-0" />
           <span className="ml-2 lg:text-base text-xs">
-            {moment(props.dateValue as ValuePiece).format('YYYY/MM/DD')}
+            {moment(props.scheduleData.calendarDateValue as ValuePiece).format('YYYY/MM/DD')}
           </span>
         </div>
         <div className="flex flex-row items-center justify-center">
-          <IssueTime hours={props.hours} unit="시" onChange={props.handleSelectHour} />
-          <IssueTime hours={props.hours} unit="분" onChange={props.handleSelectMinute} />
+          {issueTimeList.map((data) => (
+            <IssueTime
+              key={data.unit}
+              viewCheckAllDay={data.viewCheckAllDate}
+              timeState={data.timeState}
+              hoursList={data.hoursList}
+              unit={data.unit}
+              onChange={data.onChange}
+              isCheckAllday={data.isCheckAllday}
+            />
+          ))}
         </div>
+        {props.scheduleData.viewCheckAllDay ? (
+          <div className="mt-2 mr-2 ml-2 p-2 w-1/6 flex flex-row items-center justify-around">
+            <input type="checkbox" onClick={props.scheduleData.handleAllday} />
+            <span className="text-sm">하루종일</span>
+          </div>
+        ) : (
+          <></>
+        )}
       </div>
 
       <div className="ml-2">
-        {props.state ? <Calendar value={props.dateValue} onChange={props.onDateChange} /> : <></>}
+        {props.scheduleData.isCalendarOpen ? (
+          <Calendar
+            value={props.scheduleData.calendarDateValue}
+            onChange={props.scheduleData.onDateChange}
+          />
+        ) : (
+          <></>
+        )}
       </div>
     </>
   )
 }
 
 export function IssueTime(props: IssueTimeProps) {
+  const setDefaultValue = () => {
+    if (props.isCheckAllday) {
+      switch (props.unit) {
+        case '시':
+          return props.timeState.hour
+        case '분':
+          return props.timeState.minute
+        default:
+          return ''
+      }
+    }
+  }
+
+  const selectClassName = () => {
+    if (props.isCheckAllday) {
+      return 'border-2 border-gray-300 p-2 rounded-lg text-sm bg-gray-300'
+    }
+    return 'border-2 border-gray-300 p-2 rounded-lg text-sm bg-transparent'
+  }
   return (
     <div className="mt-2 mr-2 ml-2 w-full flex flex-row items-center justify-between">
       <select
-        className="border-2 border-gray-300 p-2 rounded-lg text-sm bg-transparent"
+        className={selectClassName()}
         onChange={props.onChange}
+        disabled={props.isCheckAllday}
       >
-        {props.hours.map((data) => (
-          <option key={data}>{data}</option>
+        {props.hoursList.map((data) => (
+          <option key={data} value={data}>
+            {props.isCheckAllday ? setDefaultValue() : data}
+          </option>
         ))}
       </select>
       <span className="sm:ml-2 text-gray-400 text-sm">{props.unit}</span>

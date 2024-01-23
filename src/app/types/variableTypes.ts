@@ -1,5 +1,7 @@
 // import { Dispatch, SetStateAction } from 'react'
 
+import { type CalendarValue } from './pageTypes'
+
 export type DecodeType = { uuid: string; iss: string; iat: number; exp: number }
 
 export type BoardListResponseType = {
@@ -160,4 +162,19 @@ export type ProjectCreateIssueResponseType = {
 export type DialogTextType = {
   main: string
   sub: string
+}
+
+export type ScheduleListType = {
+  title: string
+  timeCategory: 'start' | 'end'
+  isCalendarOpen: boolean
+  openCalendar: () => void
+  calendarDateValue: CalendarValue
+  onDateChange: (date: CalendarValue) => void
+  hoursList: string[]
+  handleSelectTime: (type: 'start' | 'end', unit: 'hour' | 'minute', value: string) => void
+  viewCheckAllDay: boolean
+  handleAllday: () => void
+  timeState: { hour: string; minute: string }
+  isCheckAllday: boolean
 }

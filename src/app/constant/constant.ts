@@ -119,6 +119,14 @@ export const PROJECT_ISSUE_TASK_PROGRESS_INIT_COLOR = 'bg-[rgb(221,109,96)]'
 export const PROJECT_ISSUE_TASK_PROGRESS_INIT_HOVER_COLOR =
   'hover:bg-[rgb(221,109,96)] dark:hover:bg-[rgb(221,109,96)]'
 
+export const PROJECT_ISSUE_SCEDULE_START = 'start'
+export const PROJECT_ISSUE_SCEDULE_START_TITLE = '시작일'
+export const PROJECT_ISSUE_SCEDULE_END = 'end'
+export const PROJECT_ISSUE_SCEDULE_END_TITLE = '마감일'
+export const PROJECT_ISSUE_SCHEDULE_UNIT_HOUR_KO = '시'
+export const PROJECT_ISSUE_SCHEDULE_UNIT_MINUTE_KO = '분'
+export const PROJECT_ISSUE_SCHEDULE_UNIT_HOUR_EN = 'hour'
+export const PROJECT_ISSUE_SCHEDULE_UNIT_MINUTE_EN = 'minute'
 // modal
 export const MODAL_BTN_CREATE = '생성'
 export const MODAL_BTN_SAVE = '저장'

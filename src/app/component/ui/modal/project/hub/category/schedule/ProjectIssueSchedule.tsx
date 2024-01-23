@@ -9,16 +9,22 @@ import {
   IssueSelect,
 } from '../components/ProjectIssueComponent'
 
-import { PROJECT_ISSUE_SCHEDULE_VALUE } from '@/app/constant/constant'
+import {
+  PROJECT_ISSUE_SCEDULE_END,
+  PROJECT_ISSUE_SCEDULE_END_TITLE,
+  PROJECT_ISSUE_SCEDULE_START,
+  PROJECT_ISSUE_SCEDULE_START_TITLE,
+  PROJECT_ISSUE_SCHEDULE_VALUE,
+} from '@/app/constant/constant'
 import useInput from '@/app/module/hooks/reactHooks/useInput'
 import { useAppDispatch } from '@/app/module/hooks/reduxHooks'
 import {
   changeIssueCategoryReducer,
   changeIssueDescriptionReducer,
   changeIssueTitleReducer,
-  resetIssueReducer,
 } from '@/app/store/reducers/project/projectIssueReducer'
 import { type CalendarValue } from '@/app/types/pageTypes'
+import { type ScheduleListType } from '@/app/types/variableTypes'
 
 export default function ProjectIssueSchedule() {
   const dispatch = useAppDispatch()
@@ -36,10 +42,17 @@ export default function ProjectIssueSchedule() {
     dispatch(changeIssueDescriptionReducer(e.target.value))
     scheduleDescriptionInput.onChange(e)
   }
-  const [selectTime, setSelectTime] = useState({ hour: '', minute: '' })
+  const [selectTime, setSelectTime] = useState({
+    start: { hour: '00', minute: '00' },
+    end: { hour: '00', minute: '00' },
+  })
   const attendanceList = ['김충연', '김민규', '남아현', '오준석']
   const [startDate, setStartDate] = useState<CalendarValue>(new Date())
   const [endDate, setEndDate] = useState<CalendarValue>(new Date())
+  const [isAllday, setIsAllDay] = useState<boolean>(false)
+  const handleChangeAllday = () => {
+    setIsAllDay(!isAllday)
+  }
 
   const [isStartCalendarOpen, setIsStartCalendarOpen] = useState<boolean>(false)
   const handleOpenStartCalendar = () => {
@@ -59,43 +72,61 @@ export default function ProjectIssueSchedule() {
     setIsEndCalendarOpen(false)
   }
 
-  const scheduleList = [
-    {
-      title: '시작일',
-      state: isStartCalendarOpen,
-      openModal: handleOpenStartCalendar,
-      dateValue: startDate,
-      onDateChange: handleStartDate,
-    },
-    {
-      title: '마감일',
-      state: isEndCaledarOpen,
-      openModal: handleOpenEndCalendar,
-      dateValue: endDate,
-      onDateChange: handleEndDate,
-    },
-  ]
-
-  const hours = Array.from({ length: 24 }, (_, index) => {
+  const hourList = Array.from({ length: 24 }, (_, index) => {
     const hour = index.toString().padStart(2, '0')
     return hour
   })
-  const handleSelectHour = (e: ChangeEvent<HTMLSelectElement>) => {
-    setSelectTime({
-      hour: e.target.value,
-      minute: selectTime.minute,
-    })
+
+  const handleSelectTimes = (type: 'start' | 'end', unit: 'hour' | 'minute', value: string) => {
+    setSelectTime((prev) => ({
+      ...prev,
+      [type]: {
+        ...prev[type],
+        [unit]: value,
+      },
+    }))
   }
-  const handleSelectMinute = (e: ChangeEvent<HTMLSelectElement>) => {
-    setSelectTime({
-      hour: selectTime.hour,
-      minute: e.target.value,
-    })
-  }
+  const scheduleList: ScheduleListType[] = [
+    {
+      title: PROJECT_ISSUE_SCEDULE_START_TITLE,
+      timeCategory: PROJECT_ISSUE_SCEDULE_START,
+      isCalendarOpen: isStartCalendarOpen,
+      openCalendar: handleOpenStartCalendar,
+      calendarDateValue: startDate,
+      onDateChange: handleStartDate,
+      hoursList: hourList,
+      handleSelectTime: handleSelectTimes,
+      viewCheckAllDay: true,
+      isCheckAllday: isAllday,
+      handleAllday: handleChangeAllday,
+      timeState: selectTime.start,
+    },
+    {
+      title: PROJECT_ISSUE_SCEDULE_END_TITLE,
+      timeCategory: PROJECT_ISSUE_SCEDULE_END,
+      isCalendarOpen: isEndCaledarOpen,
+      openCalendar: handleOpenEndCalendar,
+      calendarDateValue: endDate,
+      onDateChange: handleEndDate,
+      hoursList: hourList,
+      handleSelectTime: handleSelectTimes,
+      viewCheckAllDay: false,
+      handleAllday: handleChangeAllday,
+      timeState: selectTime.end,
+      isCheckAllday: isAllday,
+    },
+  ]
   useEffect(() => {
-    dispatch(resetIssueReducer())
+    if (isAllday) {
+      setEndDate(startDate)
+      setSelectTime({
+        start: { hour: '00', minute: '00' },
+        end: { hour: '23', minute: '59' },
+      })
+    }
     dispatch(changeIssueCategoryReducer(PROJECT_ISSUE_SCHEDULE_VALUE.toUpperCase()))
-  })
+  }, [isAllday])
+
   return (
     <>
       <div className="mt-2 p-2 mb-2">
@@ -110,17 +141,7 @@ export default function ProjectIssueSchedule() {
         />
         <IssueSelect title="참석자" selectList={attendanceList} />
         {scheduleList.map((data) => (
-          <IssueCalendarWithTime
-            key={data.title}
-            title={data.title}
-            state={data.state}
-            openModal={data.openModal}
-            hours={hours}
-            handleSelectHour={handleSelectHour}
-            handleSelectMinute={handleSelectMinute}
-            dateValue={data.dateValue}
-            onDateChange={data.onDateChange}
-          />
+          <IssueCalendarWithTime key={data.title} scheduleData={data} />
         ))}
         <IssueInput
           title="장소"
