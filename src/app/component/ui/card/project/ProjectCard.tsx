@@ -1,11 +1,14 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import Link from 'next/link'
 import { FaRegStar, FaStar } from 'react-icons/fa'
 
+import Dialog from '../../modal/dialog/Dialog'
+
 import {
+  API_SUCCESS_CODE,
   KEY_ACCESS_TOKEN,
   KEY_X_ORGANIZATION_CODE,
   PROJECT_CARD_REAL_COLOR_BLUE,
@@ -35,67 +38,113 @@ import {
   modulePostFetch,
 } from '@/app/module/utils/moduleFetch'
 import {
+  type DialogBtnValueType,
+  type FailResponseType,
   type ModuleGetFetchProps,
   type ModulePostFetchProps,
   type SuccessResponseType,
 } from '@/app/types/moduleTypes'
 import { type ProjectCardProps } from '@/app/types/ui/cardTypes'
-import { type ProjectListResponseType } from '@/app/types/variableTypes'
+import { type DialogTextType, type ProjectListResponseType } from '@/app/types/variableTypes'
 
 export default function ProjectCard(props: ProjectCardProps) {
+  const dialogRef = useRef<HTMLDialogElement | null>(null)
+  const handleDialogClose = () => {
+    dialogRef.current?.close()
+  }
+  const [projectDialogBtnValue] = useState<DialogBtnValueType>({
+    isCancel: false,
+    cancleFunc: () => {},
+    cancelText: '',
+    confirmFunc: handleDialogClose,
+    confirmText: '확인',
+  })
+  const [dialogText, setDialogText] = useState<DialogTextType>({
+    main: '',
+    sub: '',
+  })
   // FIXME: response에 star 들어오면 별모양 바꾸기
   const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
   const [isStar, setIsStar] = useState<boolean>(false)
 
   const fetchGetStarList = async () => {
-    const fetchGetStarProps: ModuleGetFetchProps = {
-      params: {
-        limit: 10,
-        offset: 0,
-        teamId: 1,
-      },
-      fetchUrl: API_URL_PROJECTS_LIST_STARRED,
-      header: {
-        Authorization: `Bearer ${accessToken}`,
-        [KEY_X_ORGANIZATION_CODE]: orgCode,
-      },
-    }
-    const res = await moduleGetFetch<ProjectListResponseType>(fetchGetStarProps)
-    const startList = (res as SuccessResponseType<ProjectListResponseType>).result.data
-    if (startList.filter((data) => data.id === props.projectInfo.id).length === 0) {
-      setIsStar(false)
-    } else {
-      setIsStar(true)
+    try {
+      const fetchGetStarProps: ModuleGetFetchProps = {
+        params: {
+          limit: 10,
+          offset: 0,
+          teamId: 1,
+        },
+        fetchUrl: API_URL_PROJECTS_LIST_STARRED,
+        header: {
+          Authorization: `Bearer ${accessToken}`,
+          [KEY_X_ORGANIZATION_CODE]: orgCode,
+        },
+      }
+      const res = await moduleGetFetch<ProjectListResponseType>(fetchGetStarProps)
+
+      if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)
+      const startList = (res as SuccessResponseType<ProjectListResponseType>).result.data
+      if (startList.filter((data) => data.id === props.projectInfo.id).length === 0) {
+        setIsStar(false)
+      } else {
+        setIsStar(true)
+      }
+    } catch (err) {
+      setDialogText({
+        main: '프로젝트를 불러오는데 실패했습니다.',
+        sub: '',
+      })
+      dialogRef.current?.showModal()
     }
   }
   const fetchStarred = async () => {
-    const fetchProps: ModulePostFetchProps = {
-      data: {
-        projectId: props.projectInfo.id,
-      },
-      fetchUrl: API_URL_PROJECT_STAR,
-      header: {
-        Authorization: `Bearer ${accessToken}`,
-        [KEY_X_ORGANIZATION_CODE]: orgCode,
-      },
+    try {
+      const fetchProps: ModulePostFetchProps = {
+        data: {
+          projectId: props.projectInfo.id,
+        },
+        fetchUrl: API_URL_PROJECT_STAR,
+        header: {
+          Authorization: `Bearer ${accessToken}`,
+          [KEY_X_ORGANIZATION_CODE]: orgCode,
+        },
+      }
+      const res = await modulePostFetch<string>(fetchProps)
+      if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)
+      setIsStar(true)
+    } catch (err) {
+      setDialogText({
+        main: '중요 프로젝트 전환에 실패했습니다.',
+        sub: ' 다시 시도해 주세요.',
+      })
+      dialogRef.current?.showModal()
     }
-    await modulePostFetch<string>(fetchProps)
-    setIsStar(true)
   }
+
   const fetchUnstar = async () => {
-    const fetchProps: ModulePostFetchProps = {
-      data: {
-        projectId: props.projectInfo.id,
-      },
-      fetchUrl: API_URL_PROJECT_UNSTAR,
-      header: {
-        Authorization: `Bearer ${accessToken}`,
-        [KEY_X_ORGANIZATION_CODE]: orgCode,
-      },
+    try {
+      const fetchProps: ModulePostFetchProps = {
+        data: {
+          projectId: props.projectInfo.id,
+        },
+        fetchUrl: API_URL_PROJECT_UNSTAR,
+        header: {
+          Authorization: `Bearer ${accessToken}`,
+          [KEY_X_ORGANIZATION_CODE]: orgCode,
+        },
+      }
+      const res = await moduleDeleteFetchWithBody<string>(fetchProps)
+      if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)
+      setIsStar(false)
+    } catch (err) {
+      setDialogText({
+        main: '일반 프로젝트 전환에 실패했습니다.',
+        sub: ' 다시 시도해 주세요.',
+      })
+      dialogRef.current?.showModal()
     }
-    await moduleDeleteFetchWithBody<string>(fetchProps)
-    setIsStar(false)
   }
 
   const handleClickStar = () => {
@@ -158,6 +207,11 @@ export default function ProjectCard(props: ProjectCardProps) {
           />
         )}
       </div>
+      <Dialog
+        dialog={dialogRef}
+        dialogAlertText={dialogText}
+        dialogBtnValue={projectDialogBtnValue}
+      />
     </div>
   )
 }
