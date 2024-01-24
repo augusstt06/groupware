@@ -1,6 +1,9 @@
 // import { Dispatch, SetStateAction } from 'react'
 
+import { type Dispatch, type SetStateAction } from 'react'
+
 import { type CalendarValue } from './pageTypes'
+import { type ProjectDetailCardType } from './ui/cardTypes'
 
 export type DecodeType = { uuid: string; iss: string; iat: number; exp: number }
 
@@ -177,4 +180,13 @@ export type ScheduleListType = {
   handleAllday: () => void
   timeState: { hour: string; minute: string }
   isCheckAllday: boolean
+}
+
+export type KanbanBoardColumnType = {
+  columnTitle: string
+  columnCardNumber: number
+  columnColor: string
+  cardColor: string
+  cardList: ProjectDetailCardType[]
+  setCardList: Dispatch<SetStateAction<ProjectDetailCardType[]>>
 }
