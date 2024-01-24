@@ -1,5 +1,6 @@
 import { type ChangeEvent, type Dispatch, type SetStateAction } from 'react'
 
+import { type ProjectDetailCardType } from './ui/cardTypes'
 import {
   type BoardListResponseType,
   type CommentType,
@@ -117,4 +118,11 @@ export type IssueTimeProps = {
 export type IssueDescriptionProps = {
   value: string
   onChange: (e: ChangeEvent<HTMLInputElement>) => void
+}
+
+export type ProjectDetailTaskColumnProps = {
+  columnTitle: string
+  columnCardNumber: number
+  columnColor: string
+  cardList: ProjectDetailCardType[]
 }

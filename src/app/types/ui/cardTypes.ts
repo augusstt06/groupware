@@ -46,3 +46,12 @@ export type MainSidebarCardGroupProps = {
 export type ProjectCardProps = {
   projectInfo: ProjectResponseType
 }
+export type ProjectDetailCardType = {
+  title: string
+  time: string
+}
+export type ProjectDetailTaskCardProps = {
+  title: string
+  time: string
+  cardColor: string
+}
