@@ -40,7 +40,7 @@ export default function ProjectDetailTable(props: ProjectDetailTableProps) {
             </div>
             <div className="w-full flex items-center justify-around">
               {/* FIXME: 이건 이름으로 바꾸기 */}
-              <span className="text-xs">{props.issue.issuerId}</span>
+              <span className="text-xs">{props.issue.issuer.name}</span>
               <span className="text-xs">{sliceTime()}</span>
             </div>
           </div>

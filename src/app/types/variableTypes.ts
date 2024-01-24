@@ -145,7 +145,12 @@ export type ProjectIssueType = {
   endAt: 'string'
   files: ['string']
   id: 0
-  issuerId: 0
+  issuer: {
+    email: string
+    id: number
+    name: string
+    uuid: string
+  }
   processState: 'string'
   projectId: 0
   startAt: 'string'

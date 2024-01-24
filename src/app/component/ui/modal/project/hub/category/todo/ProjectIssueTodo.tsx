@@ -2,6 +2,8 @@
 
 import { type ChangeEvent, useEffect, useState } from 'react'
 
+import moment from 'moment'
+
 import {
   IssueCalendar,
   IssueDescription,
@@ -15,10 +17,11 @@ import { useAppDispatch } from '@/app/module/hooks/reduxHooks'
 import {
   changeIssueCategoryReducer,
   changeIssueDescriptionReducer,
+  changeIssueEndAtReducer,
   changeIssueTitleReducer,
   resetIssueReducer,
 } from '@/app/store/reducers/project/projectIssueReducer'
-import { type CalendarValue } from '@/app/types/pageTypes'
+import { type CalendarValue, type ValuePiece } from '@/app/types/pageTypes'
 
 export default function ProjectIssueTodo() {
   const dispatch = useAppDispatch()
@@ -41,6 +44,8 @@ export default function ProjectIssueTodo() {
   }
   const handleEndDate = (date: CalendarValue) => {
     setEndDate(date)
+    const stringDate = moment(endDate as ValuePiece).format('YYYY-MM-DD')
+    dispatch(changeIssueEndAtReducer(stringDate))
     setIsCalendarOpen(false)
   }
   useEffect(() => {
@@ -50,7 +55,7 @@ export default function ProjectIssueTodo() {
   return (
     <>
       <div className="mt-2 p-2 mb-2">
-        <span className="font-bold">워딩</span>
+        <span className="font-bold">할일 생성하기</span>
       </div>
       <div>
         <IssueInput

@@ -18,9 +18,9 @@ import {
   MODAL_CREATE_PROJECT_ISSUE,
   MODAL_INVITE_MEMBER_IN_PROJECT,
   PROJECT_DETAIL_CATEGORY_HOME,
-  PROJECT_ISSUE_SCHEDULE_TITLE,
   PROJECT_ISSUE_SCHEDULE_VALUE,
   PROJECT_ISSUE_TASK_VALUE,
+  PROJECT_ISSUE_TODO_VALUE,
 } from '@/app/constant/constant'
 import {
   API_URL_PROJECT_ISSUE,
@@ -123,7 +123,7 @@ export default function ProjectDetail() {
           },
         }
         return fetchProps
-      case PROJECT_ISSUE_SCHEDULE_TITLE.toUpperCase():
+      case PROJECT_ISSUE_SCHEDULE_VALUE.toUpperCase():
         fetchProps = {
           data: {
             category: issueState.category,
@@ -148,7 +148,23 @@ export default function ProjectDetail() {
           },
         }
         return fetchProps
-      // FIXME: TODO도 추가하기
+
+      case PROJECT_ISSUE_TODO_VALUE.toUpperCase():
+        fetchProps = {
+          data: {
+            category: issueState.category,
+            description: issueState.description,
+            endAt: convertDate(issueState.endAt),
+            projectId: issueState.projectId,
+            title: issueState.title,
+          },
+          fetchUrl: API_URL_PROJECT_ISSUE,
+          header: {
+            Authorization: `Bearer ${accessToken}`,
+            [KEY_X_ORGANIZATION_CODE]: orgCode,
+          },
+        }
+        return fetchProps
       default:
         fetchProps = {
           data: {
@@ -202,6 +218,10 @@ export default function ProjectDetail() {
           projectId === 0 ||
           startAt === '' ||
           title === ''
+        )
+      case PROJECT_ISSUE_TODO_VALUE.toUpperCase():
+        return (
+          category === '' || description === '' || endAt === '' || projectId === 0 || title === ''
         )
       default:
         return (
@@ -300,7 +320,6 @@ export default function ProjectDetail() {
       },
     }
     const res = await moduleGetFetch<ProjectIssueResponseType>(fetchProps)
-    // console.log(res)
     const issues = (res as SuccessResponseType<ProjectIssueResponseType>).result.data
     setIssueList(issues)
   }

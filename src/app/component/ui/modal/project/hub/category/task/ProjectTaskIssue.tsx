@@ -110,7 +110,7 @@ export default function ProjectTaskIssue() {
 
   const handleEndDate = (date: CalendarValue) => {
     setEndDate(date)
-    const stringDate = moment(startDate as ValuePiece).format('YYYY-MM-DD')
+    const stringDate = moment(endDate as ValuePiece).format('YYYY-MM-DD')
     dispatch(changeIssueEndAtReducer(stringDate))
     setIsEndCalendarOpen(false)
   }
