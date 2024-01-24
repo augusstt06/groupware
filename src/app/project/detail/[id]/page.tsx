@@ -188,7 +188,6 @@ export default function ProjectDetail() {
   const fetchPostIssue = async () => {
     const fetchProps = fetchPropsByCategory()
     await modulePostFetch<ProjectCreateIssueResponseType>(fetchProps)
-    // console.log(res)
     setDialogText({
       main: '성공적으로 이슈를 생성했습니다.',
       sub: '',
@@ -197,6 +196,7 @@ export default function ProjectDetail() {
     dispatch(createProjectIssueModalOpenReducer(false))
     setRerender(!rerender)
   }
+
   const isIssueInputEmpty = () => {
     const { category, description, endAt, processState, projectId, startAt, title } = issueState
     switch (issueState.category) {

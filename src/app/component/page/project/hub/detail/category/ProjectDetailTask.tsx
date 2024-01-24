@@ -61,6 +61,7 @@ export default function ProjectDetailTask() {
     },
   ])
 
+  // 드래그를 놓았을때 실행되는 함수
   const onDragEnd = (
     result: DropResult,
     columns: KanbanBoardColumnType[],
@@ -70,20 +71,24 @@ export default function ProjectDetailTask() {
 
     const { source, destination } = result
 
+    // 같은 컬럼 내에서만 드래그 드롭하는것이 아니라 다른 컬럼으로 이동이 가능
+    // 카드를 꺼낸 컬럽
     const sourceColumn: KanbanBoardColumnType | undefined = columns.find(
       (column) => `column-${column.columnTitle}` === source.droppableId,
     )
-
+    // 카드를 넣은 컬럼
     const destinationColumn: KanbanBoardColumnType | undefined = columns.find(
       (column) => `column-${column.columnTitle}` === destination.droppableId,
     )
 
     if (sourceColumn == null || destinationColumn == null) return
 
+    // 드래그한 카드를 cardList에서 찾아서 순서를 맞추어 정렬
     const draggedCard = sourceColumn.cardList[source.index]
     sourceColumn.cardList.splice(source.index, 1)
     destinationColumn.cardList.splice(destination.index, 0, draggedCard)
 
+    // 변화된 리스트를 columns에 적용
     setColumns([...columns])
   }
 
