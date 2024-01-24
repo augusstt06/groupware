@@ -4,7 +4,6 @@ import { type ProjectDetailCardType } from './ui/cardTypes'
 import {
   type BoardListResponseType,
   type CommentType,
-  // type KanbanBoardColumnType,
   type ScheduleListType,
 } from './variableTypes'
 
@@ -125,9 +124,5 @@ export type ProjectDetailTaskColumnProps = {
   columnTitle: string
   columnCardNumber: number
   columnColor: string
-  cardColor: string
   cardList: ProjectDetailCardType[]
-  setCardList: Dispatch<SetStateAction<ProjectDetailCardType[]>>
-  // columnList: KanbanBoardColumnType[]
-  // setColumnList: Dispatch<SetStateAction<KanbanBoardColumnType[]>>
 }

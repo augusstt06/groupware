@@ -1,6 +1,7 @@
 'use client'
 
-import { useState } from 'react'
+import { type Dispatch, useState } from 'react'
+import { DragDropContext, type DropResult } from 'react-beautiful-dnd'
 
 import ProjectDetailTaskColumn from './ProjectDetailTaskColumn'
 
@@ -11,6 +12,7 @@ import {
   PROJECT_ISSUE_TASK_PROGRESS_REQUESTED_TITLE,
 } from '@/app/constant/constant'
 import { type ProjectDetailCardType } from '@/app/types/ui/cardTypes'
+import { type KanbanBoardColumnType } from '@/app/types/variableTypes'
 
 export default function ProjectDetailTask() {
   const [reqCardList, setReqCardList] = useState<ProjectDetailCardType[]>([
@@ -28,12 +30,11 @@ export default function ProjectDetailTask() {
   const [initCardlist, setInitCardList] = useState<ProjectDetailCardType[]>([
     { title: 'test', time: '2024.10.11-2025.1.1' },
   ])
-  const columnList = [
+  const [columnList, setColumnList] = useState([
     {
       columnTitle: PROJECT_ISSUE_TASK_PROGRESS_REQUESTED_TITLE,
       columnCardNumber: reqCardList.length,
       columnColor: 'bg-[rgb(254,251,231)]',
-      cardColor: '[rgb(237,206,72)]',
       cardList: reqCardList,
       setCardList: setReqCardList,
     },
@@ -41,7 +42,6 @@ export default function ProjectDetailTask() {
       columnTitle: PROJECT_ISSUE_TASK_PROGRESS_PROCESSING_TITLE,
       columnCardNumber: progressCardlist.length,
       columnColor: 'bg-[rgb(234,250,242)]',
-      cardColor: '[rgb(98,214,124)]',
       cardList: progressCardlist,
       setCardList: setProgressCardList,
     },
@@ -49,7 +49,6 @@ export default function ProjectDetailTask() {
       columnTitle: PROJECT_ISSUE_TASK_PROGRESS_COMPLETED_TITLE,
       columnCardNumber: completeCardlist.length,
       columnColor: 'bg-[rgb(232,246,254)]',
-      cardColor: '[rgb(72,160,240)]',
       cardList: completeCardlist,
       setCardList: setCompleteCardList,
     },
@@ -57,25 +56,54 @@ export default function ProjectDetailTask() {
       columnTitle: PROJECT_ISSUE_TASK_PROGRESS_INIT_TITLE,
       columnCardNumber: initCardlist.length,
       columnColor: 'bg-[rgb(251,241,239)]',
-      cardColor: '[rgb(221,109,96)]',
       cardList: initCardlist,
       setCardList: setInitCardList,
     },
-  ]
+  ])
+
+  const onDragEnd = (
+    result: DropResult,
+    columns: KanbanBoardColumnType[],
+    setColumns: Dispatch<React.SetStateAction<KanbanBoardColumnType[]>>,
+  ) => {
+    if (result.destination == null) return
+
+    const { source, destination } = result
+
+    const sourceColumn: KanbanBoardColumnType | undefined = columns.find(
+      (column) => `column-${column.columnTitle}` === source.droppableId,
+    )
+
+    const destinationColumn: KanbanBoardColumnType | undefined = columns.find(
+      (column) => `column-${column.columnTitle}` === destination.droppableId,
+    )
+
+    if (sourceColumn == null || destinationColumn == null) return
+
+    const draggedCard = sourceColumn.cardList[source.index]
+    sourceColumn.cardList.splice(source.index, 1)
+    destinationColumn.cardList.splice(destination.index, 0, draggedCard)
+
+    setColumns([...columns])
+  }
 
   return (
-    <div className="md:w-4/5 w-full grid-cols-4 grid gap-2 justify-center dark:border-gray-700 border border-gray-200 rounded-lg  dark:bg-[#1a202c] shadow-lg p-3  ">
-      {columnList.map((data) => (
-        <ProjectDetailTaskColumn
-          key={data.cardColor}
-          columnTitle={data.columnTitle}
-          columnCardNumber={data.columnCardNumber}
-          columnColor={data.columnColor}
-          cardColor={data.cardColor}
-          cardList={data.cardList}
-          setCardList={data.setCardList}
-        />
-      ))}
-    </div>
+    <DragDropContext
+      onDragEnd={(result) => {
+        onDragEnd(result, columnList, setColumnList)
+      }}
+    >
+      <div className="md:w-4/5 w-full grid-cols-4 grid gap-2 justify-center dark:border-gray-700 border border-gray-200 rounded-lg dark:bg-[#1a202c] shadow-lg p-3">
+        {columnList.map((data, columnIndex) => (
+          <ProjectDetailTaskColumn
+            key={data.columnTitle}
+            columnTitle={data.columnTitle}
+            columnCardNumber={data.columnCardNumber}
+            columnColor={data.columnColor}
+            cardList={data.cardList}
+          />
+        ))}
+      </div>
+    </DragDropContext>
   )
 }

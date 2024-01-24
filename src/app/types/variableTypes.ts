@@ -186,7 +186,6 @@ export type KanbanBoardColumnType = {
   columnTitle: string
   columnCardNumber: number
   columnColor: string
-  cardColor: string
   cardList: ProjectDetailCardType[]
   setCardList: Dispatch<SetStateAction<ProjectDetailCardType[]>>
 }

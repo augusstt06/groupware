@@ -9,7 +9,7 @@ export default function ProjectDetailTaskCard(props: ProjectDetailTaskCardProps)
         <div className="flex flex-col">
           <div className=" flex flex-row justify-around items-center w-full p-1">
             <div className="w-1/5 flex justify-center items-center">
-              <div className={`bg-${props.cardColor} inline-block p-1 rounded-full items-center`}>
+              <div className={`${props.cardColor} inline-block p-1 rounded-full items-center`}>
                 <FaCheck className="text-white w-3 h-3" />
               </div>
             </div>
@@ -32,7 +32,7 @@ export default function ProjectDetailTaskCard(props: ProjectDetailTaskCardProps)
             <div className="w-7 bg-gray-300 h-7 rounded-full"></div>
           </div>
         </div>
-        <div className={`bg-${props.cardColor} h-2`}></div>
+        <div className={`${props.cardColor} h-2`}></div>
       </div>
     </>
   )
