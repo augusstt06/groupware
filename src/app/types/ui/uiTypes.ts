@@ -105,6 +105,8 @@ export type CreateProjectIssueModalHubProps = {
 
 export type ProjectMainHubProps = {
   projectList: ProjectResponseType[]
+  rerender: boolean
+  setRerender: Dispatch<SetStateAction<boolean>>
 }
 
 export type ProjectDetailTabProps = {

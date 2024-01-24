@@ -23,6 +23,10 @@ const nextConfig = {
         destination: process.env.NEXT_PUBLIC_PROJECT_ISSUE_LIST_DESTINATION,
       },
       {
+        source: process.env.NEXT_PUBLIC_PROJECT_UNSTAR_SOURCE,
+        destination: process.env.NEXT_PUBLIC_PROJECT_UNSTAR_DESTINATION,
+      },
+      {
         source: process.env.NEXT_PUBLIC_PROJECT_STAR_SOURCE,
         destination: process.env.NEXT_PUBLIC_PROJECT_STAR_DESTINATION,
       },

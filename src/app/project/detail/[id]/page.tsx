@@ -300,6 +300,7 @@ export default function ProjectDetail() {
       },
     }
     const res = await moduleGetFetch<ProjectIssueResponseType>(fetchProps)
+    // console.log(res)
     const issues = (res as SuccessResponseType<ProjectIssueResponseType>).result.data
     setIssueList(issues)
   }
@@ -321,9 +322,11 @@ export default function ProjectDetail() {
 
   useEffect(() => {
     dispatch(changeIssueProjectIdReducer(Number(query.id)))
+
     if (projectInfo === null) {
       void fetchGetProjectDetail()
     }
+
     if (projectInfo !== null) {
       void fetchGetIssueList()
       void fetchGetIssuePinnedList()

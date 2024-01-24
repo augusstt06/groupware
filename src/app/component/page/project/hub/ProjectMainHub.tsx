@@ -13,7 +13,12 @@ export default function ProjectMainHub(props: ProjectMainHubProps) {
 
       <div className="grid xl:grid-cols-4 xl:gap-x-8 lg:grid-cols-3 lg:gap-x-10 grid-cols-2 gap-x-8 gap-y-6 p-3 ">
         {props.projectList.map((data) => (
-          <ProjectCard key={data.id} projectInfo={data} />
+          <ProjectCard
+            key={data.id}
+            projectInfo={data}
+            rerender={props.rerender}
+            setRerender={props.setRerender}
+          />
         ))}
       </div>
     </div>

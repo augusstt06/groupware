@@ -51,6 +51,7 @@ export const API_URL_PROJECTS_LIST_INCLUDED = process.env
 export const API_URL_PROJECTS_LIST_STARRED = process.env
   .NEXT_PUBLIC_PROJECT_LIST_STARRED_SOURCE as string
 export const API_URL_PROJECT_STAR = process.env.NEXT_PUBLIC_PROJECT_STAR_SOURCE as string
+export const API_URL_PROJECT_UNSTAR = process.env.NEXT_PUBLIC_PROJECT_UNSTAR_SOURCE as string
 
 export const API_URL_PROJECT_ISSUE = process.env.NEXT_PUBLIC_PROJECT_ISSUE_SOURCE as string
 export const API_URL_PROJECT_ISSUE_LIST = process.env

@@ -229,6 +229,7 @@ export default function Project() {
     }
     moduleCheckUserState(moduleProps)
   }, [rerender, projectCategory])
+
   return (
     <main className="w-full 2xl:w-2/3 h-4/5 flex flex-col items-center">
       {isProjectListEmpty() ? (
@@ -236,7 +237,7 @@ export default function Project() {
           <span className="font-bold">프로젝트가 없습니다.</span>
         </div>
       ) : (
-        <ProjectMainHub projectList={projectList} />
+        <ProjectMainHub projectList={projectList} rerender={rerender} setRerender={setRerender} />
       )}
       <ModalHub modals={modalList} />
     </main>
