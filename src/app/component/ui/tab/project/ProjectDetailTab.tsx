@@ -26,6 +26,9 @@ export default function ProjectDetailTab(props: ProjectDetailTabProps) {
           <div
             key={data.title}
             className="w-1/3 mr-2 lg:text-base text-sm text-center transition ease-in-out duration-300 hover:scale-110 hover:border-b-2 hover:border-indigo-400 p-2 border-transparent border-b-2"
+            onClick={() => {
+              props.handleChangeDetailCategory(data.title)
+            }}
           >
             <span>{data.title}</span>
           </div>

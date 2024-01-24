@@ -188,9 +188,9 @@ export function IssueTime(props: IssueTimeProps) {
   const setDefaultValue = () => {
     if (props.isCheckAllday) {
       switch (props.unit) {
-        case '시':
+        case PROJECT_ISSUE_SCHEDULE_UNIT_HOUR_KO:
           return props.timeState.hour
-        case '분':
+        case PROJECT_ISSUE_SCHEDULE_UNIT_MINUTE_KO:
           return props.timeState.minute
         default:
           return ''

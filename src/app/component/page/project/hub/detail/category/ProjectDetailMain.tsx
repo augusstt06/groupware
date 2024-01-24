@@ -1,11 +1,9 @@
 import InviteProjectMemberTable from '@/app/component/ui/table/project/InviteProjectMemberTable'
 import ProjectDetailTable from '@/app/component/ui/table/project/ProjectDetailTable'
-import { type ProjectDetailHubProps } from '@/app/types/ui/uiTypes'
+import { type ProjectDetailMainProps } from '@/app/types/ui/uiTypes'
 import { type ProjectIssueType } from '@/app/types/variableTypes'
 
-export default function ProjectDetailHub(props: ProjectDetailHubProps) {
-  // FIXME:
-
+export default function ProjectDetailMain(props: ProjectDetailMainProps) {
   const isIssueListNull = (list: ProjectIssueType[] | null) => {
     if (list === null || list?.length === 0) return true
     return false

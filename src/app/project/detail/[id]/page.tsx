@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 
 import { useParams, useRouter } from 'next/navigation'
 
-import ProjectDetailHub from '@/app/component/page/project/hub/ProjectDetailHub'
+import ProjectDetailHub from '@/app/component/page/project/hub/detail/ProjectDetailHub'
 import ModalHub from '@/app/component/ui/modal/Modal'
 import CreateProjectIssueModal from '@/app/component/ui/modal/project/CreateProjectIssueModal'
 import InviteProjectMemberModal from '@/app/component/ui/modal/project/InviteProjectMemberModal'
@@ -17,6 +17,7 @@ import {
   MODAL_BTN_SAVE,
   MODAL_CREATE_PROJECT_ISSUE,
   MODAL_INVITE_MEMBER_IN_PROJECT,
+  PROJECT_DETAIL_CATEGORY_HOME,
   PROJECT_ISSUE_SCHEDULE_TITLE,
   PROJECT_ISSUE_SCHEDULE_VALUE,
   PROJECT_ISSUE_TASK_VALUE,
@@ -64,6 +65,10 @@ export default function ProjectDetail() {
   const issueState = useAppSelector((state) => state.projectIssue)
   const [accessToken, setAccessToken] = useState(moduleGetCookie(KEY_ACCESS_TOKEN))
   const [rerender, setRerender] = useState<boolean>(false)
+  const [detailCategory, setDetailCategory] = useState<string>(PROJECT_DETAIL_CATEGORY_HOME)
+  const handleChangeDetailCategory = (category: string) => {
+    setDetailCategory(category)
+  }
   //  setProjectDialogBtnValue 추가하기
   const [projectDialogBtnValue] = useState<DialogBtnValueType>({
     isCancel: false,
@@ -167,7 +172,7 @@ export default function ProjectDetail() {
   const fetchPostIssue = async () => {
     const fetchProps = fetchPropsByCategory()
     await modulePostFetch<ProjectCreateIssueResponseType>(fetchProps)
-
+    // console.log(res)
     setDialogText({
       main: '성공적으로 이슈를 생성했습니다.',
       sub: '',
@@ -337,11 +342,15 @@ export default function ProjectDetail() {
     <main className="w-full 2xl:w-2/3 h-4/5 flex flex-col items-center">
       {projectInfo !== null ? (
         <>
-          <ProjectDetailTab projectInfo={projectInfo} />
+          <ProjectDetailTab
+            projectInfo={projectInfo}
+            handleChangeDetailCategory={handleChangeDetailCategory}
+          />
           <ProjectDetailHub
             projectInfo={projectInfo}
             issueList={issueList}
             pinnedList={pinnedList}
+            detailCategory={detailCategory}
           />
         </>
       ) : (

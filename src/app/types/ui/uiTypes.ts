@@ -109,8 +109,16 @@ export type ProjectMainHubProps = {
 
 export type ProjectDetailTabProps = {
   projectInfo: ProjectResponseType | null
+  handleChangeDetailCategory: (category: string) => void
 }
 export type ProjectDetailHubProps = {
+  projectInfo: ProjectResponseType | null
+  issueList: ProjectIssueType[] | null
+  pinnedList: ProjectIssueType[] | null
+  detailCategory: string
+}
+
+export type ProjectDetailMainProps = {
   projectInfo: ProjectResponseType | null
   issueList: ProjectIssueType[] | null
   pinnedList: ProjectIssueType[] | null
