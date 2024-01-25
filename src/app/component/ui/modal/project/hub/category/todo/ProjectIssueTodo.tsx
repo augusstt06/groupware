@@ -1,9 +1,10 @@
 'use client'
 
-import { type ChangeEvent, useEffect, useState } from 'react'
+import { type ChangeEvent, useEffect, useRef, useState } from 'react'
 
 import moment from 'moment'
 
+import { DialogCalendar } from '../../../../dialog/Dialog'
 import {
   IssueCalendar,
   IssueDescription,
@@ -11,7 +12,11 @@ import {
   IssueSelect,
 } from '../components/ProjectIssueComponent'
 
-import { PROJECT_ISSUE_TODO_VALUE } from '@/app/constant/constant'
+import {
+  PROJECT_DATE_FORMAT,
+  PROJECT_DETAIL_CATEGORY_TODO,
+  PROJECT_ISSUE_TODO_VALUE,
+} from '@/app/constant/constant'
 import useInput from '@/app/module/hooks/reactHooks/useInput'
 import { useAppDispatch } from '@/app/module/hooks/reduxHooks'
 import {
@@ -22,8 +27,10 @@ import {
   resetIssueReducer,
 } from '@/app/store/reducers/project/projectIssueReducer'
 import { type CalendarValue, type ValuePiece } from '@/app/types/pageTypes'
+import { type TaskListType } from '@/app/types/variableTypes'
 
 export default function ProjectIssueTodo() {
+  const dialogRef = useRef<HTMLDialogElement | null>(null)
   const dispatch = useAppDispatch()
   const todoTitleInput = useInput('')
   const handleChangeTitle = (e: ChangeEvent<HTMLInputElement>) => {
@@ -38,20 +45,26 @@ export default function ProjectIssueTodo() {
   const managerList = ['김충연', '김민규', '남아현', '오준석']
   const [endDate, setEndDate] = useState<CalendarValue>(new Date())
 
-  const [isCalendarOpen, setIsCalendarOpen] = useState<boolean>(false)
   const handleOpenCalendar = () => {
-    setIsCalendarOpen(!isCalendarOpen)
+    dialogRef.current?.showModal()
   }
   const handleEndDate = (date: CalendarValue) => {
     setEndDate(date)
-    const stringDate = moment(endDate as ValuePiece).format('YYYY-MM-DD')
+    const stringDate = moment(endDate as ValuePiece).format(PROJECT_DATE_FORMAT)
     dispatch(changeIssueEndAtReducer(stringDate))
-    setIsCalendarOpen(false)
+    dialogRef.current?.close()
   }
   useEffect(() => {
     dispatch(resetIssueReducer())
     dispatch(changeIssueCategoryReducer(PROJECT_ISSUE_TODO_VALUE.toUpperCase()))
   }, [])
+  const calendarData: TaskListType = {
+    title: PROJECT_DETAIL_CATEGORY_TODO,
+    openModal: handleOpenCalendar,
+    dateValue: endDate,
+    onDateChange: handleEndDate,
+    dialog: dialogRef,
+  }
   return (
     <>
       <div className="mt-2 p-2 mb-2">
@@ -67,13 +80,13 @@ export default function ProjectIssueTodo() {
         <IssueSelect title="담당자" selectList={managerList} />
         <IssueCalendar
           title="마감일"
-          state={isCalendarOpen}
           openModal={handleOpenCalendar}
           dateValue={endDate}
           onDateChange={handleEndDate}
         />
         <IssueDescription value={todoDescriptionInput.value} onChange={handleChangeDescription} />
       </div>
+      <DialogCalendar dialog={dialogRef} calendarData={calendarData} isWithtime={false} />
     </>
   )
 }

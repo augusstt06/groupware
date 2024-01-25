@@ -128,6 +128,7 @@ export const PROJECT_ISSUE_SCHEDULE_UNIT_MINUTE_KO = '분'
 export const PROJECT_ISSUE_SCHEDULE_UNIT_HOUR_EN = 'hour'
 export const PROJECT_ISSUE_SCHEDULE_UNIT_MINUTE_EN = 'minute'
 
+export const PROJECT_DATE_FORMAT = 'YYYY-MM-DD'
 // modal
 export const MODAL_BTN_CREATE = '생성'
 export const MODAL_BTN_SAVE = '저장'

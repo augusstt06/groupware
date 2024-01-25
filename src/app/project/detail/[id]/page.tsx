@@ -185,16 +185,27 @@ export default function ProjectDetail() {
         return fetchProps
     }
   }
+
   const fetchPostIssue = async () => {
-    const fetchProps = fetchPropsByCategory()
-    await modulePostFetch<ProjectCreateIssueResponseType>(fetchProps)
-    setDialogText({
-      main: '성공적으로 이슈를 생성했습니다.',
-      sub: '',
-    })
-    dialogRef.current?.showModal()
-    dispatch(createProjectIssueModalOpenReducer(false))
-    setRerender(!rerender)
+    try {
+      const fetchProps = fetchPropsByCategory()
+
+      await modulePostFetch<ProjectCreateIssueResponseType>(fetchProps)
+
+      setDialogText({
+        main: '성공적으로 이슈를 생성했습니다.',
+        sub: '',
+      })
+      dialogRef.current?.showModal()
+      dispatch(createProjectIssueModalOpenReducer(false))
+      setRerender(!rerender)
+    } catch (err) {
+      setDialogText({
+        main: '이슈를 생성하는데 실패했습니다.',
+        sub: '다시 시도해 주세요.',
+      })
+      dialogRef.current?.showModal()
+    }
   }
 
   const isIssueInputEmpty = () => {

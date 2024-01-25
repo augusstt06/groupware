@@ -1,6 +1,4 @@
-// import { Dispatch, SetStateAction } from 'react'
-
-import { type Dispatch, type SetStateAction } from 'react'
+import { type Dispatch, type MutableRefObject, type SetStateAction } from 'react'
 
 import { type CalendarValue } from './pageTypes'
 import { type ProjectDetailCardType } from './ui/cardTypes'
@@ -175,7 +173,6 @@ export type DialogTextType = {
 export type ScheduleListType = {
   title: string
   timeCategory: 'start' | 'end'
-  isCalendarOpen: boolean
   openCalendar: () => void
   calendarDateValue: CalendarValue
   onDateChange: (date: CalendarValue) => void
@@ -185,6 +182,15 @@ export type ScheduleListType = {
   handleAllday: () => void
   timeState: { hour: string; minute: string }
   isCheckAllday: boolean
+  dialog: MutableRefObject<HTMLDialogElement | null>
+}
+
+export type TaskListType = {
+  title: string
+  openModal: () => void
+  dateValue: CalendarValue
+  onDateChange: (date: CalendarValue) => void
+  dialog: MutableRefObject<HTMLDialogElement | null>
 }
 
 export type KanbanBoardColumnType = {
