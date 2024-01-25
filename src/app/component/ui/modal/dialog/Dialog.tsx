@@ -1,4 +1,6 @@
-import { type DialogModalProps } from '@/app/types/moduleTypes'
+import Calendar from 'react-calendar'
+
+import { type DialogCalenderProps, type DialogModalProps } from '@/app/types/moduleTypes'
 
 export default function Dialog(props: DialogModalProps) {
   return (
@@ -36,6 +38,37 @@ export default function Dialog(props: DialogModalProps) {
               </button>
             </div>
           </div>
+        </div>
+      </div>
+    </dialog>
+  )
+}
+
+export function DialogCalendar(props: DialogCalenderProps) {
+  const renderCalendar = () => {
+    if (props.isWithtime) {
+      return (
+        <Calendar
+          value={props.calendarWithTimeData?.calendarDateValue}
+          onChange={props.calendarWithTimeData?.onDateChange}
+        />
+      )
+    }
+    return (
+      <Calendar value={props.calendarData?.dateValue} onChange={props.calendarData?.onDateChange} />
+    )
+  }
+  return (
+    <dialog ref={props.dialog}>
+      <div
+        id="static-modal"
+        data-modal-backdrop="static"
+        tabIndex={-1}
+        aria-hidden="true"
+        className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-opacity-50 bg-gray-500 backdrop-blur-xs"
+      >
+        <div className="rounded-lg shadow dark:bg-gray-700 border-solid border-2 border-indigo-300 bg-white w-full sm:w-auto p-5 flex items-center justify-center">
+          {renderCalendar()}
         </div>
       </div>
     </dialog>

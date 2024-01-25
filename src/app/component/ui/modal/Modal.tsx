@@ -46,6 +46,19 @@ export function Modal(props: ModalUsePortalProps) {
         return 'border-t-2 border-gray-300'
     }
   }
+
+  // const modalHeight = () => {
+  //   switch (props.name) {
+  //     case MODAL_CRAETE_PROJECT:
+  //       return 'h-76'
+  //     case MODAL_CREATE_PROJECT_ISSUE:
+  //       return 'h-5/6 pt-8'
+  //     case MODAL_INVITE_MEMBER_IN_PROJECT:
+  //       return 'h-76'
+  //     default:
+  //       return 'h-24'
+  //   }
+  // }
   const viewModal = () => {
     if (render === null) return null
 
@@ -57,7 +70,9 @@ export function Modal(props: ModalUsePortalProps) {
         aria-hidden="true"
         className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-opacity-50 bg-gray-500 backdrop-blur-xs"
       >
-        <div className="relative rounded-lg shadow dark:bg-gray-700 border-solid border-2 border-indigo-300 bg-white w-5/6 md:w-1/2 xl:w-2/5 2xl:w-3/12">
+        <div
+          className={`relative rounded-lg shadow dark:bg-gray-700 border-solid border-2 border-indigo-300 bg-white w-5/6 md:w-1/2 xl:w-2/5 2xl:w-3/12`}
+        >
           {props.children}
           <div className={btnClassName()}>
             <ModalBtn

@@ -41,7 +41,7 @@ export default function ProjectDetailTaskColumn(props: ProjectDetailTaskColumnPr
   }
   return (
     <div className={`${props.columnColor} p-2 rounded-lg col-span-1`}>
-      <div className="w-2/5 flex flex-row justify-around">
+      <div className="w-full lg:w-2/5 flex flex-row justify-around">
         <span className="font-bold">{props.columnTitle}</span>
         <span className={`font-bold ${mainColor().textColor}`}>{props.cardList.length}</span>
       </div>

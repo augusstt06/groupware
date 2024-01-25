@@ -1,10 +1,11 @@
 'use client'
 
-import { type ChangeEvent, useEffect, useState } from 'react'
+import { type ChangeEvent, useEffect, useRef, useState } from 'react'
 
 import 'react-calendar/dist/Calendar.css'
 import moment from 'moment'
 
+import { DialogCalendar } from '../../../../dialog/Dialog'
 import {
   IssueCalendar,
   IssueDescription,
@@ -16,6 +17,7 @@ import {
 
 import {
   _PROJECT_ISSUE_TASK_PROGRESS_COMPLETED_HOVER_COLOR,
+  PROJECT_DATE_FORMAT,
   PROJECT_ISSUE_TASK_PROGRESS_COMPLETED_COLOR,
   PROJECT_ISSUE_TASK_PROGRESS_COMPLETED_TITLE,
   PROJECT_ISSUE_TASK_PROGRESS_COMPLETED_VALUE,
@@ -45,8 +47,11 @@ import {
   resetIssueReducer,
 } from '@/app/store/reducers/project/projectIssueReducer'
 import { type CalendarValue, type ValuePiece } from '@/app/types/pageTypes'
+import { type TaskListType } from '@/app/types/variableTypes'
 
-export default function ProjectTaskIssue() {
+export default function ProjectIssueTask() {
+  const startDialogRef = useRef<HTMLDialogElement | null>(null)
+  const endDialogRef = useRef<HTMLDialogElement | null>(null)
   const dispatch = useAppDispatch()
   const taskTitleInput = useInput('')
   const handleChangeTitle = (e: ChangeEvent<HTMLInputElement>) => {
@@ -92,43 +97,42 @@ export default function ProjectTaskIssue() {
     },
   ]
   const managerList = ['김충연', '김민규', '남아현', '오준석']
-  const [isStartCalendarOpen, setIsStartCalendarOpen] = useState<boolean>(false)
+
   const handleOpenStartCalendar = () => {
-    setIsStartCalendarOpen(!isStartCalendarOpen)
+    startDialogRef.current?.showModal()
   }
-  const [isEndCaledarOpen, setIsEndCalendarOpen] = useState<boolean>(false)
   const handleOpenEndCalendar = () => {
-    setIsEndCalendarOpen(!isEndCaledarOpen)
+    endDialogRef.current?.showModal()
   }
 
   const handleStartDate = (date: CalendarValue) => {
     setStartDate(date)
-    const stringDate = moment(startDate as ValuePiece).format('YYYY-MM-DD')
+    const stringDate = moment(startDate as ValuePiece).format(PROJECT_DATE_FORMAT)
     dispatch(changeIssueStartAtReducer(stringDate))
-    setIsStartCalendarOpen(false)
+    startDialogRef.current?.close()
   }
 
   const handleEndDate = (date: CalendarValue) => {
     setEndDate(date)
-    const stringDate = moment(endDate as ValuePiece).format('YYYY-MM-DD')
+    const stringDate = moment(endDate as ValuePiece).format(PROJECT_DATE_FORMAT)
     dispatch(changeIssueEndAtReducer(stringDate))
-    setIsEndCalendarOpen(false)
+    endDialogRef.current?.close()
   }
 
-  const calendarList = [
+  const calendarList: TaskListType[] = [
     {
       title: '시작일',
-      state: isStartCalendarOpen,
       openModal: handleOpenStartCalendar,
       dateValue: startDate,
       onDateChange: handleStartDate,
+      dialog: startDialogRef,
     },
     {
       title: '종료일',
-      state: isEndCaledarOpen,
       openModal: handleOpenEndCalendar,
       dateValue: endDate,
       onDateChange: handleEndDate,
+      dialog: endDialogRef,
     },
   ]
   useEffect(() => {
@@ -154,14 +158,15 @@ export default function ProjectTaskIssue() {
         />
         <IssueSelect selectList={managerList} title="담당자" />
         {calendarList.map((data) => (
-          <IssueCalendar
-            key={data.title}
-            title={data.title}
-            state={data.state}
-            openModal={data.openModal}
-            dateValue={data.dateValue}
-            onDateChange={data.onDateChange}
-          />
+          <div key={data.title}>
+            <IssueCalendar
+              title={data.title}
+              openModal={data.openModal}
+              dateValue={data.dateValue}
+              onDateChange={data.onDateChange}
+            />
+            <DialogCalendar dialog={data.dialog} calendarData={data} isWithtime={false} />
+          </div>
         ))}
         <IssueFile />
         <IssueDescription value={taskDescriptionInput.value} onChange={handleChangeDescription} />

@@ -1,5 +1,5 @@
 import ProjectIssueSchedule from './category/schedule/ProjectIssueSchedule'
-import ProjectTaskIssue from './category/task/ProjectTaskIssue'
+import ProjectIssueTask from './category/task/ProjectIssueTask'
 import ProjectIssueTodo from './category/todo/ProjectIssueTodo'
 
 import {
@@ -13,13 +13,13 @@ export default function CreateProjectIssueModalHub(props: CreateProjectIssueModa
   const selectComponent = () => {
     switch (props.selectCategory) {
       case PROJECT_ISSUE_TASK_VALUE:
-        return <ProjectTaskIssue />
+        return <ProjectIssueTask />
       case PROJECT_ISSUE_SCHEDULE_VALUE:
         return <ProjectIssueSchedule />
       case PROJECT_ISSUE_TODO_VALUE:
         return <ProjectIssueTodo />
       default:
-        return <ProjectTaskIssue />
+        return <ProjectIssueTask />
     }
   }
   return <div className="flex flex-col items-left">{selectComponent()}</div>

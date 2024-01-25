@@ -97,7 +97,6 @@ export type ValuePiece = Date | null
 export type CalendarValue = ValuePiece | [ValuePiece, ValuePiece]
 export type IssueCalendarProps = {
   title: string
-  state: boolean
   openModal: () => void
   dateValue: CalendarValue
   onDateChange: (date: CalendarValue) => void
