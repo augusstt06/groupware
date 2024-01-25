@@ -1,6 +1,6 @@
 import { IoSettingsOutline } from 'react-icons/io5'
 
-import LogoutBtn from '../button/login/LogoutBtn'
+import LogoutBtn from '../../button/login/LogoutBtn'
 
 import { type LogoutBtnProps } from '@/app/types/ui/btnTypes'
 

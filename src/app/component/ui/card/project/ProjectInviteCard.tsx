@@ -1,0 +1,20 @@
+import { MdOutlineCheckBox } from 'react-icons/md'
+// MdCheckBoxOutlineBlank
+
+export default function ProjectInviteCard() {
+  return (
+    <div className="flex flex-row truncate items-center justify-start w-full sm:pl-5 mt-3 border-b-2 dark:border-gray-200 border-gray-200 p-2 dark:border-gray-700 bg-indigo-100">
+      <div className="sm:p-2">
+        <MdOutlineCheckBox className="w-6 h-6 sm:w-8 sm:h-8" />
+      </div>
+      <div className="bg-gray-300 p-2 rounded-full sm:inline hidden">img</div>
+      <div className="flex flex-col items-start lg:ml-3 w-full pl-3 lg:pl-0">
+        <span className="sm:text-lg text-sm w-4/5 mb-1 text-left  ">김충연</span>
+        <div className="truncate lg:inline flex flex-col items-start ">
+          <span className="2xl:text-sm text-xs lg:w-4/5 lg:mr-1">개발팀</span>
+          <span className="2xl:text-sm text-xs lg:w-4/5">프론트엔드 개발</span>
+        </div>
+      </div>
+    </div>
+  )
+}

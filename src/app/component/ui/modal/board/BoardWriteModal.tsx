@@ -4,11 +4,11 @@ import React, { useEffect, useRef, useState } from 'react'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/navigation'
 
-import BoardWriteAlert from '../../alert/BoardWriteAlert'
 import WriteModalBtnGroup from '../../button/board/writeModal/WriteModalBtnGroup'
 import BoardWriteModalCheckBox from '../../checkbox/BoardWriteModalCheckBox'
 import BoardModalInputGroup from '../../input/board/BoardModalInputGroup'
 import BoardModalSaveListTab from '../../tab/board/BoardModalSaveListTab'
+import Dialog from '../dialog/Dialog'
 
 import {
   API_SUCCESS_CODE,
@@ -28,6 +28,7 @@ import { moduleDeleteFetch, moduleGetFetch, modulePostFetch } from '@/app/module
 import { openBoardWriteModalReducer } from '@/app/store/reducers/board/openBoardWriteModalReducer'
 import {
   type ApiResponseType,
+  type DialogBtnValueType,
   type FailResponseType,
   type ModuleCheckContentIsEmptyProps,
   type ModuleGetFetchProps,
@@ -35,17 +36,24 @@ import {
   type SuccessResponseType,
 } from '@/app/types/moduleTypes'
 import { type BoardWriteModalprops } from '@/app/types/ui/modalTypes'
-import {
-  type AlertStateType,
-  type BoardListResponseType,
-  type BoardResponseType,
-} from '@/app/types/variableTypes'
+import { type BoardListResponseType, type BoardResponseType } from '@/app/types/variableTypes'
 
 const Editor = dynamic(async () => import('../../editor/TextEditor'), {
   ssr: false,
 })
 
 export default function BoardWriteModal(props: BoardWriteModalprops) {
+  const dialogRef = useRef<HTMLDialogElement | null>(null)
+  const handleDialogClose = () => {
+    dialogRef.current?.close()
+  }
+  const [dialogText, setDialogText] = useState<{
+    main: string
+    sub: string
+  }>({
+    main: '',
+    sub: '',
+  })
   const dispatch = useAppDispatch()
   const myBoardState = useAppSelector((state) => state.boardCategory.myBoard)
   const router = useRouter()
@@ -62,20 +70,15 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
   const [rerender, setRerender] = useState<boolean>(false)
 
   const [isOpenSaveList, setIsOpenSaveList] = useState<boolean>(false)
-  const [isAlertModalOpen, setIsAlertModalOpen] = useState<boolean>(false)
   const [imgCount, setImgCount] = useState<number>(0)
   const [select, setSelect] = useState('0')
   const selectList = myBoardState.map((data) => ({ id: data.id, name: data.name }))
-
-  const [alertState, setAlertState] = useState<AlertStateType>({
-    headDescription: '',
-    additianoalDescription: '',
-    option: {
-      positive: '',
-      negative: '',
-    },
-    onClick: () => {},
-    isPromise: false,
+  const [dialogBtnValue, setDialogBtnValue] = useState<DialogBtnValueType>({
+    isCancel: false,
+    cancleFunc: () => {},
+    cancelText: '',
+    confirmFunc: handleDialogClose,
+    confirmText: '확인',
   })
 
   const countImgFiles = () => {
@@ -84,13 +87,6 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
     const imgTags = doc.querySelectorAll('img')
     setImgCount(imgTags.length)
     return imgCount
-  }
-
-  const openAlertModal = () => {
-    setIsAlertModalOpen(true)
-  }
-  const closeAlertModal = () => {
-    setIsAlertModalOpen(false)
   }
 
   const handleClick = () => {
@@ -134,7 +130,11 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
       if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)
       setRerender(!rerender)
     } catch (err) {
-      alert('삭제에 실패했습니다.')
+      setDialogText({
+        main: '삭제에 실패했습니다.',
+        sub: '',
+      })
+      dialogRef.current?.showModal()
     }
   }
   const handleClickDeletePending = (id: number) => {
@@ -159,41 +159,36 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
 
       const res = await modulePostFetch<ApiResponseType>(fetchProps)
       if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)
-      setIsAlertModalOpen(false)
       setRerender(!rerender)
     } catch (err) {}
   }
 
   const handleClickPostPending = () => {
     if (saveList.length >= 10) {
-      setAlertState({
-        headDescription: '게시글의 임시저장은 10개까지 가능합니다.',
-        additianoalDescription: '',
-        option: {
-          positive: '확인',
-          negative: '',
-        },
-        onClick: closeAlertModal,
-        isPromise: false,
+      dialogRef.current?.showModal()
+      setDialogText({
+        main: '게시글의 임시저장은 10개까지 가능합니다.',
+        sub: '',
       })
-      openAlertModal()
       return
     }
+    setDialogBtnValue({
+      isCancel: false,
+      cancelText: '',
+      cancleFunc: () => {},
+      confirmText: '확인',
+      confirmFunc: handleDialogClose,
+    })
     const moduleProps: ModuleCheckContentIsEmptyProps = {
+      successText: '게시글이 임시저장되었습니다.',
+      dialog: dialogRef,
+      setDialogAlertState: setDialogText,
       fetchFunction: fetchPostPending,
       boardId: Number(select),
       editorContents: editorContent,
       inputValue: titleInput.value,
-      setAlertStateFunction: setAlertState,
-      handleOpenAlertModal: openAlertModal,
-      handleCloseAlertModal: closeAlertModal,
-      success: {
-        headDescription: '게시글을 임시저장하시겠습니까?',
-        additianoalDescription: '확인버튼을 누르면 게시글이 저장됩니다.',
-      },
     }
     moduleCheckContentIsEmpty(moduleProps)
-    openAlertModal()
   }
 
   const fetchPostContent = async () => {
@@ -216,7 +211,6 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
       const postingId = (res as SuccessResponseType<number>).result
 
       dispatch(openBoardWriteModalReducer())
-      alert('글이 정상적으로 등록되었습니다.')
       setRerender(!rerender)
       router.push(`${ROUTE_POSTING_DETAIL}/${postingId.toString()}`)
     } catch (err) {
@@ -241,70 +235,80 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
 
   const handleClickPosting = () => {
     if (props.currentBoard === null) {
-      if (select === '') {
-        setAlertState({
-          headDescription: '게시판 카테고리를 선택해 주세요',
-          additianoalDescription: '',
-          option: {
-            positive: '확인',
-            negative: '',
-          },
-          onClick: closeAlertModal,
-          isPromise: false,
+      if (select === '0') {
+        setDialogText({
+          main: '게시판 카테고리를 선택해 주세요.',
+          sub: '',
         })
-        openAlertModal()
+        setDialogBtnValue({
+          isCancel: false,
+          cancleFunc: () => {},
+          cancelText: '',
+          confirmFunc: handleDialogClose,
+          confirmText: '확인',
+        })
+        dialogRef.current?.showModal()
         return
       }
       const moduleProps: ModuleCheckContentIsEmptyProps = {
+        successText: '게시글이 등록되었습니다.',
+        dialog: dialogRef,
+        setDialogAlertState: setDialogText,
         fetchFunction: fetchPostContent,
         boardId: Number(select),
         editorContents: editorContent,
         inputValue: titleInput.value,
-        setAlertStateFunction: setAlertState,
-        handleOpenAlertModal: openAlertModal,
-        handleCloseAlertModal: closeAlertModal,
-        success: {
-          headDescription: '게시글을 등록하시겠습니까?',
-          additianoalDescription: '확인버튼을 누르면 게시글이 등록됩니다.',
-        },
       }
       moduleCheckContentIsEmpty(moduleProps)
+      setDialogBtnValue({
+        isCancel: true,
+        cancleFunc: handleDialogClose,
+        cancelText: '취소',
+        confirmFunc: () => {
+          void fetchPostContent()
+        },
+        confirmText: '확인',
+      })
     } else {
       const moduleProps: ModuleCheckContentIsEmptyProps = {
+        successText: '게시글이 등록되었습니다.',
+        dialog: dialogRef,
+        setDialogAlertState: setDialogText,
         fetchFunction: fetchPostContent,
         boardId: Number(props.currentBoard.id),
         editorContents: editorContent,
         inputValue: titleInput.value,
-        setAlertStateFunction: setAlertState,
-        handleOpenAlertModal: openAlertModal,
-        handleCloseAlertModal: closeAlertModal,
-        success: {
-          headDescription: '게시글을 등록하시겠습니까?',
-          additianoalDescription: '확인버튼을 누르면 게시글이 등록됩니다.',
-        },
       }
-      moduleCheckContentIsEmpty(moduleProps)
+      setDialogBtnValue({
+        isCancel: true,
+        cancleFunc: handleDialogClose,
+        cancelText: '취소',
+        confirmFunc: () => {
+          moduleCheckContentIsEmpty(moduleProps)
+        },
+        confirmText: '확인',
+      })
     }
   }
 
   const allModalClose = () => {
-    closeAlertModal()
+    dialogRef.current?.close()
     dispatch(openBoardWriteModalReducer())
   }
   const handleClickClose = () => {
     if (editorContent !== '' || titleInput.value !== '') {
-      setAlertState({
-        headDescription: '작성중인 내용이 있습니다. 나가시겠습니까?',
-        additianoalDescription:
-          '임시저장 혹은 등록하지 않고 페이지를 벗어날경우 지금까지 작성한 내용이 사라집니다.',
-        option: {
-          positive: '저장하지 않고 나가기',
-          negative: '취소',
-        },
-        onClick: allModalClose,
-        isPromise: false,
+      setDialogText({
+        main: '작성중인 내용이 있습니다. 나가시겠습니까?',
+        sub: '임시저장 혹은 등록하지 않고 페이지를 벗어날경우 지금까지 작성한 내용이 사라집니다.',
       })
-      openAlertModal()
+      setDialogBtnValue({
+        isCancel: true,
+        cancleFunc: handleDialogClose,
+        cancelText: '취소',
+        confirmFunc: allModalClose,
+        confirmText: '저장하지 않고 나가기',
+      })
+      dialogRef.current?.showModal()
       return
     }
     dispatch(openBoardWriteModalReducer())
@@ -362,13 +366,9 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
               )}
             </div>
             <BoardWriteModalCheckBox isAnnounce={isAnnounce} handleClick={handleClick} />
-            {isAlertModalOpen ? (
-              <BoardWriteAlert handleCloseAlertModal={closeAlertModal} alertState={alertState} />
-            ) : (
-              <></>
-            )}
           </div>
         </div>
+        <Dialog dialog={dialogRef} dialogAlertText={dialogText} dialogBtnValue={dialogBtnValue} />
       </div>
     </>
   )

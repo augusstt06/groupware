@@ -81,3 +81,16 @@ export const moduleDeleteFetch = async <T>(
   })
   return res.json()
 }
+export const moduleDeleteFetchWithBody = async <T>(
+  props: ModulePostFetchProps,
+): Promise<FetchResponseType<T>> => {
+  const res = await fetch(props.fetchUrl as string, {
+    method: DELETE,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      ...props.header,
+    },
+    body: JSON.stringify(props.data),
+  })
+  return res.json()
+}

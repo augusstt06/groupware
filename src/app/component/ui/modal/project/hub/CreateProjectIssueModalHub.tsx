@@ -1,22 +1,23 @@
-import ProjectIssueCalendar from './category/calendar/ProjectIssueCalendar'
+import ProjectIssueSchedule from './category/schedule/ProjectIssueSchedule'
 import ProjectTaskIssue from './category/task/ProjectTaskIssue'
+import ProjectIssueTodo from './category/todo/ProjectIssueTodo'
 
 import {
-  PROJECT_ISSUE_CALENDAR,
-  PROJECT_ISSUE_TASK,
-  PROJECT_ISSUE_TODO,
+  PROJECT_ISSUE_SCHEDULE_VALUE,
+  PROJECT_ISSUE_TASK_VALUE,
+  PROJECT_ISSUE_TODO_VALUE,
 } from '@/app/constant/constant'
 import { type CreateProjectIssueModalHubProps } from '@/app/types/ui/uiTypes'
 
 export default function CreateProjectIssueModalHub(props: CreateProjectIssueModalHubProps) {
   const selectComponent = () => {
     switch (props.selectCategory) {
-      case PROJECT_ISSUE_TASK:
+      case PROJECT_ISSUE_TASK_VALUE:
         return <ProjectTaskIssue />
-      case PROJECT_ISSUE_CALENDAR:
-        return <ProjectIssueCalendar />
-      case PROJECT_ISSUE_TODO:
-        return 'Todo'
+      case PROJECT_ISSUE_SCHEDULE_VALUE:
+        return <ProjectIssueSchedule />
+      case PROJECT_ISSUE_TODO_VALUE:
+        return <ProjectIssueTodo />
       default:
         return <ProjectTaskIssue />
     }
