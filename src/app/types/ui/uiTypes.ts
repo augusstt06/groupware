@@ -5,6 +5,7 @@ import { type Editor } from '@toast-ui/react-editor'
 import {
   type BoardListResponseType,
   type MyBoardType,
+  type ProjectIssueType,
   type ProjectResponseType,
 } from '../variableTypes'
 
@@ -90,6 +91,7 @@ export type GnbNormalMenuProps = GnbHamburgerMenuProps & {
 
 export type ProjectDetailTableProps = {
   title: string
+  issue: ProjectIssueType
 }
 
 export type CreateProjectIssueModalTabProps = {
@@ -103,11 +105,23 @@ export type CreateProjectIssueModalHubProps = {
 
 export type ProjectMainHubProps = {
   projectList: ProjectResponseType[]
+  rerender: boolean
+  setRerender: Dispatch<SetStateAction<boolean>>
 }
 
 export type ProjectDetailTabProps = {
   projectInfo: ProjectResponseType | null
+  handleChangeDetailCategory: (category: string) => void
 }
 export type ProjectDetailHubProps = {
   projectInfo: ProjectResponseType | null
+  issueList: ProjectIssueType[] | null
+  pinnedList: ProjectIssueType[] | null
+  detailCategory: string
+}
+
+export type ProjectDetailMainProps = {
+  projectInfo: ProjectResponseType | null
+  issueList: ProjectIssueType[] | null
+  pinnedList: ProjectIssueType[] | null
 }

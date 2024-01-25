@@ -5,7 +5,7 @@ import { IoIosArrowDown, IoMdClose } from 'react-icons/io'
 import { IoPersonCircleOutline } from 'react-icons/io5'
 
 import DarkmodeBtn from '../../button/DarkmodeBtn'
-import UserStateModal from '../../modal/UserStateModal'
+import UserStateModal from '../../modal/gnb/UserStateModal'
 
 import { KEY_ACCESS_TOKEN } from '@/app/constant/constant'
 import { ERR_COOKIE_NOT_FOUND } from '@/app/constant/errorMsg'

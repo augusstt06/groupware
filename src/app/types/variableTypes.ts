@@ -1,5 +1,10 @@
 // import { Dispatch, SetStateAction } from 'react'
 
+import { type Dispatch, type SetStateAction } from 'react'
+
+import { type CalendarValue } from './pageTypes'
+import { type ProjectDetailCardType } from './ui/cardTypes'
+
 export type DecodeType = { uuid: string; iss: string; iat: number; exp: number }
 
 export type BoardListResponseType = {
@@ -81,12 +86,18 @@ export type ProjectListResponseType = {
 export type ProjectResponseType = {
   color: string
   createdAt: string
+  membersCnt: number
   id: number
   issues: []
   name: string
   ownerId: number
   teamId: number
   updatedAt: string
+  members: Array<{
+    id: number
+    uuid: string
+    email: string
+  }>
 }
 
 export type FetchPostProjectResponseType = {
@@ -99,4 +110,87 @@ export type ProjectAlertStateType = {
   mainDescription: string
   subDescription: string
   isCreateModalClose: boolean
+}
+
+export type ProjectIssueResponseType = {
+  data: ProjectIssueType[]
+  page: number
+  size: number
+  total: number
+}
+export type ProjectIssueType = {
+  assignee: [
+    {
+      email: 'string'
+      id: 0
+      uuid: 'string'
+    },
+  ]
+  category: 'string'
+  comments: [
+    {
+      childComments: ['string']
+      content: 'string'
+      createdAt: 'string'
+      id: 0
+      like: 0
+      name: 'string'
+      position: 'string'
+      updatedAt: 'string'
+      writerId: 0
+    },
+  ]
+  createdAt: 'string'
+  description: 'string'
+  endAt: 'string'
+  files: ['string']
+  id: 0
+  issuer: {
+    email: string
+    id: number
+    name: string
+    uuid: string
+  }
+  processState: 'string'
+  projectId: 0
+  startAt: 'string'
+  title: 'string'
+  updatedAt: 'string'
+}
+
+export type ProjectCreateIssueResponseType = {
+  category: string
+  description: string
+  endAt: string
+  processState: string
+  projectId: number
+  startAt: string
+  title: string
+}
+export type DialogTextType = {
+  main: string
+  sub: string
+}
+
+export type ScheduleListType = {
+  title: string
+  timeCategory: 'start' | 'end'
+  isCalendarOpen: boolean
+  openCalendar: () => void
+  calendarDateValue: CalendarValue
+  onDateChange: (date: CalendarValue) => void
+  hoursList: string[]
+  handleSelectTime: (type: 'start' | 'end', unit: 'hour' | 'minute', value: string) => void
+  viewCheckAllDay: boolean
+  handleAllday: () => void
+  timeState: { hour: string; minute: string }
+  isCheckAllday: boolean
+}
+
+export type KanbanBoardColumnType = {
+  columnTitle: string
+  columnCardNumber: number
+  columnColor: string
+  cardList: ProjectDetailCardType[]
+  setCardList: Dispatch<SetStateAction<ProjectDetailCardType[]>>
 }

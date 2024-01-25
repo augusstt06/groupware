@@ -41,6 +41,7 @@ export default function RootLayout({ children }: ReactProps) {
             <GlobalNavigationbar />
             {shouldSidebarVisible() ?? false ? <Sidebar /> : <></>}
             <div className={bodyClassName}>{children}</div>
+            <div id="modal"></div>
           </CustomThemeProvider>
         </ReduxProvider>
       </body>

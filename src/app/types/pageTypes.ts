@@ -1,6 +1,11 @@
 import { type ChangeEvent, type Dispatch, type SetStateAction } from 'react'
 
-import { type BoardListResponseType, type CommentType } from './variableTypes'
+import { type ProjectDetailCardType } from './ui/cardTypes'
+import {
+  type BoardListResponseType,
+  type CommentType,
+  type ScheduleListType,
+} from './variableTypes'
 
 export type ReactProps = {
   children: React.ReactNode
@@ -69,12 +74,15 @@ export type WriteCommentProps = {
 export type IssueInputProps = {
   title: string
   placeholder: string
+  value: string
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void
 }
 export type IssueProgressProps = {
   progressStatusList: Array<{
     title: string
     color: string
     hoverColor: string
+    value: string
   }>
   handleProgress: (status: string) => void
   progress: string
@@ -95,13 +103,26 @@ export type IssueCalendarProps = {
   onDateChange: (date: CalendarValue) => void
 }
 
-export type IssueCalendarWithTimeProps = IssueCalendarProps & {
-  hours: string[]
-  handleSelectHour: (e: ChangeEvent<HTMLSelectElement>) => void
-  handleSelectMinute: (e: ChangeEvent<HTMLSelectElement>) => void
+export type IssueCalendarWithTimeProps = {
+  scheduleData: ScheduleListType
 }
 export type IssueTimeProps = {
-  hours: string[]
+  isCheckAllday: boolean
+  hoursList: string[]
+  timeState: { hour: string; minute: string }
   unit: string
   onChange: (e: ChangeEvent<HTMLSelectElement>) => void
+  viewCheckAllDay: boolean
+}
+
+export type IssueDescriptionProps = {
+  value: string
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void
+}
+
+export type ProjectDetailTaskColumnProps = {
+  columnTitle: string
+  columnCardNumber: number
+  columnColor: string
+  cardList: ProjectDetailCardType[]
 }

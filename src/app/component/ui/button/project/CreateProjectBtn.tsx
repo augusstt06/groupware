@@ -6,7 +6,7 @@ import { createProjectModalReducer } from '@/app/store/reducers/project/projectM
 export default function CreateProjectBtn() {
   const dispatch = useAppDispatch()
   const openCreateModal = () => {
-    dispatch(createProjectModalReducer())
+    dispatch(createProjectModalReducer(true))
   }
   return (
     <div className="w-full max-w-sm border border-gray-200 transition ease-in-out duration-300 rounded-lg shadow bg-indigo-400 dark:bg-indigo-400 hover:bg-indigo-600 hover:dark:bg-indigo-500 dark:border-gray-700 mb-5 text-center justify-center">

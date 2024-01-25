@@ -11,6 +11,26 @@ const nextConfig = {
   async rewrites() {
     return [
       {
+        source: process.env.NEXT_PUBLIC_PROJECT_ISSUE_SOURCE,
+        destination: process.env.NEXT_PUBLIC_PROJECT_ISSUE_DESTINATION,
+      },
+      {
+        source: process.env.NEXT_PUBLIC_PROJECT_ISSUE_LIST_PINNED_SOURCE,
+        destination: process.env.NEXT_PUBLIC_PROJECT_ISSUE_LIST_PINNED_DESTINATION,
+      },
+      {
+        source: process.env.NEXT_PUBLIC_PROJECT_ISSUE_LIST_SOURCE,
+        destination: process.env.NEXT_PUBLIC_PROJECT_ISSUE_LIST_DESTINATION,
+      },
+      {
+        source: process.env.NEXT_PUBLIC_PROJECT_UNSTAR_SOURCE,
+        destination: process.env.NEXT_PUBLIC_PROJECT_UNSTAR_DESTINATION,
+      },
+      {
+        source: process.env.NEXT_PUBLIC_PROJECT_STAR_SOURCE,
+        destination: process.env.NEXT_PUBLIC_PROJECT_STAR_DESTINATION,
+      },
+      {
         source: process.env.NEXT_PUBLIC_PROJECT_LIST_STARRED_SOURCE,
         destination: process.env.NEXT_PUBLIC_PROJECT_LIST_STARRED_DESTINATION,
       },
