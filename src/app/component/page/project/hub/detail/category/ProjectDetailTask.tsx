@@ -1,20 +1,24 @@
 'use client'
 
-import { type Dispatch, useState } from 'react'
+import { type Dispatch, useEffect, useState } from 'react'
 import { DragDropContext, type DropResult } from 'react-beautiful-dnd'
 
 import ProjectDetailTaskColumn from './ProjectDetailTaskColumn'
 
 import {
+  PROJECT_DETAIL_CATEGORY_TASK,
   PROJECT_ISSUE_TASK_PROGRESS_COMPLETED_TITLE,
   PROJECT_ISSUE_TASK_PROGRESS_INIT_TITLE,
   PROJECT_ISSUE_TASK_PROGRESS_PROCESSING_TITLE,
   PROJECT_ISSUE_TASK_PROGRESS_REQUESTED_TITLE,
 } from '@/app/constant/constant'
+import { useAppDispatch } from '@/app/module/hooks/reduxHooks'
+import { changeProjectDetailCategoryReducer } from '@/app/store/reducers/project/projectDetailCategoryReducer'
 import { type ProjectDetailCardType } from '@/app/types/ui/cardTypes'
 import { type KanbanBoardColumnType } from '@/app/types/variableTypes'
 
 export default function ProjectDetailTask() {
+  const dispatch = useAppDispatch()
   const [reqCardList, setReqCardList] = useState<ProjectDetailCardType[]>([
     { title: '업무명', time: '2024.1.1-2025.1.1' },
     { title: '2번째', time: '2024.12.1-2025.12.23' },
@@ -91,7 +95,9 @@ export default function ProjectDetailTask() {
     // 변화된 리스트를 columns에 적용
     setColumns([...columns])
   }
-
+  useEffect(() => {
+    dispatch(changeProjectDetailCategoryReducer(PROJECT_DETAIL_CATEGORY_TASK))
+  }, [])
   return (
     <DragDropContext
       onDragEnd={(result) => {

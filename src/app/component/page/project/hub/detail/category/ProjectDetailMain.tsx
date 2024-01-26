@@ -1,9 +1,16 @@
+'use client'
+import { useEffect } from 'react'
+
 import InviteProjectMemberTable from '@/app/component/ui/table/project/InviteProjectMemberTable'
 import ProjectDetailTable from '@/app/component/ui/table/project/ProjectDetailTable'
+import { PROJECT_DETAIL_CATEGORY_HOME } from '@/app/constant/constant'
+import { useAppDispatch } from '@/app/module/hooks/reduxHooks'
+import { changeProjectDetailCategoryReducer } from '@/app/store/reducers/project/projectDetailCategoryReducer'
 import { type ProjectDetailMainProps } from '@/app/types/ui/uiTypes'
 import { type ProjectIssueType } from '@/app/types/variableTypes'
 
 export default function ProjectDetailMain(props: ProjectDetailMainProps) {
+  const dispatch = useAppDispatch()
   const isIssueListNull = (list: ProjectIssueType[] | null) => {
     if (list === null || list?.length === 0) return true
     return false
@@ -23,6 +30,9 @@ export default function ProjectDetailMain(props: ProjectDetailMainProps) {
       </div>
     )
   }
+  useEffect(() => {
+    dispatch(changeProjectDetailCategoryReducer(PROJECT_DETAIL_CATEGORY_HOME))
+  }, [])
   return (
     <div className="md:w-4/5 w-full flex flex-row items-left ">
       <div className="w-2/3 p-2 flex flex-row justify-center items-center dark:border-gray-700 border border-gray-200 rounded-lg mr-4 dark:bg-[#1a202c] dark:border-gray-700 border rounded-lg shadow-lg">

@@ -2,11 +2,13 @@ import ProjectDetailMain from './category/ProjectDetailMain'
 import ProjectDetailTask from './category/ProjectDetailTask'
 
 import { PROJECT_DETAIL_CATEGORY_HOME, PROJECT_DETAIL_CATEGORY_TASK } from '@/app/constant/constant'
+import { useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { type ProjectDetailHubProps } from '@/app/types/ui/uiTypes'
 
 export default function ProjectDetailHub(props: ProjectDetailHubProps) {
+  const detailCategory = useAppSelector((state) => state.projectDetailCategory.detailCategory)
   const renderingCategory = () => {
-    switch (props.detailCategory) {
+    switch (detailCategory) {
       case PROJECT_DETAIL_CATEGORY_HOME:
         return (
           <ProjectDetailMain

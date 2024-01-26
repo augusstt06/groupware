@@ -17,7 +17,6 @@ import {
   MODAL_BTN_SAVE,
   MODAL_CREATE_PROJECT_ISSUE,
   MODAL_INVITE_MEMBER_IN_PROJECT,
-  PROJECT_DETAIL_CATEGORY_HOME,
   PROJECT_ISSUE_SCHEDULE_VALUE,
   PROJECT_ISSUE_TASK_VALUE,
   PROJECT_ISSUE_TODO_VALUE,
@@ -66,10 +65,6 @@ export default function ProjectDetail() {
 
   const [accessToken, setAccessToken] = useState(moduleGetCookie(KEY_ACCESS_TOKEN))
   const [rerender, setRerender] = useState<boolean>(false)
-  const [detailCategory, setDetailCategory] = useState<string>(PROJECT_DETAIL_CATEGORY_HOME)
-  const handleChangeDetailCategory = (category: string) => {
-    setDetailCategory(category)
-  }
   const [projectDialogBtnValue] = useState<DialogBtnValueType>({
     isCancel: false,
     cancleFunc: () => {},
@@ -341,7 +336,6 @@ export default function ProjectDetail() {
 
   useEffect(() => {
     dispatch(changeIssueProjectIdReducer(Number(query.id)))
-
     if (projectInfo === null) {
       void fetchGetProjectDetail()
     }
@@ -364,15 +358,11 @@ export default function ProjectDetail() {
     <main className="w-full 2xl:w-2/3 h-4/5 flex flex-col items-center">
       {projectInfo !== null ? (
         <>
-          <ProjectDetailTab
-            projectInfo={projectInfo}
-            handleChangeDetailCategory={handleChangeDetailCategory}
-          />
+          <ProjectDetailTab projectInfo={projectInfo} />
           <ProjectDetailHub
             projectInfo={projectInfo}
             issueList={issueList}
             pinnedList={pinnedList}
-            detailCategory={detailCategory}
           />
         </>
       ) : (
