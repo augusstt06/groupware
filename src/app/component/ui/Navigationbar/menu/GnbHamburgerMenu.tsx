@@ -11,6 +11,7 @@ import { type GnbHamburgerMenuProps } from '@/app/types/ui/uiTypes'
 
 export default function GnbHamburgerMenu(props: GnbHamburgerMenuProps) {
   const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
+
   return (
     <div className="flex flex-row items-center">
       <a className="md:hidden text-gray-800 border-none hover:text-indigo-500 dark:hover:text-indigo-300 dark:text-white border-solid border-white border-2 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5   focus:outline-none dark:focus:ring-gray-800">
