@@ -177,7 +177,7 @@ export default function ProjectCard(props: ProjectCardProps) {
   }, [isStar])
   return (
     <div
-      className="flex flex-row items-center dark:bg-gray-100 dark:text-black h-24 xl:w-56 md:w-48 w-32 border-gray-300 border-1 shadow-2xl transition duration-500 ease-in-out hover:scale-110 hover:shadow-2xl"
+      className="flex flex-row items-center dark:bg-gray-100 dark:text-black h-24 2xl:w-44 xl:w-48 md:w-48 w-32 border-gray-300 border-1 shadow-2xl transition duration-400 ease-in-out hover:scale-125 hover:shadow-2xl"
       style={{ boxShadow: '5px 0px 10px rgba(0, 0, 0, 0.1)' }}
     >
       <div className={`${cardColor(props.projectInfo.color)} w-8 md:w-10 h-full`}></div>
@@ -197,12 +197,12 @@ export default function ProjectCard(props: ProjectCardProps) {
       <div className="h-full p-2 cursor-pointer">
         {isStar ? (
           <FaStar
-            className="text-yellow-400 transition ease-in-out duration-500 hover:scale-125"
+            className="text-yellow-400 transition ease-in-out duration-500 hover:scale-150"
             onClick={handleClickStar}
           />
         ) : (
           <FaRegStar
-            className="text-yellow-400 transition ease-in-out duration-500 hover:scale-125"
+            className="text-yellow-400 transition ease-in-out duration-500 hover:scale-150"
             onClick={handleClickStar}
           />
         )}
