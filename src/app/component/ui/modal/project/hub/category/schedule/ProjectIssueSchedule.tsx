@@ -85,42 +85,12 @@ export default function ProjectIssueSchedule() {
     dispatch(changeIssueEndAtReducer(stringDate))
     endDialogRef.current?.close()
   }
-  const setInitialTime = () => {
-    const times = [
-      {
-        reducer: changeIssueStartAtTimeReducer,
-        units: PROJECT_ISSUE_SCHEDULE_UNIT_HOUR_EN as 'hour',
-        timeValue: '00',
-      },
-      {
-        reducer: changeIssueStartAtTimeReducer,
-        units: PROJECT_ISSUE_SCHEDULE_UNIT_MINUTE_EN as 'minute',
-        timeValue: '00',
-      },
-      {
-        reducer: changeIssueEndAtTimeReducer,
-        units: PROJECT_ISSUE_SCHEDULE_UNIT_HOUR_EN as 'hour',
-        timeValue: '00',
-      },
-      {
-        reducer: changeIssueEndAtTimeReducer,
-        units: PROJECT_ISSUE_SCHEDULE_UNIT_MINUTE_EN as 'minute',
-        timeValue: '00',
-      },
-    ]
-    times.map((data) =>
-      data.reducer({
-        units: data.units,
-        timeValue: data.timeValue,
-      }),
-    )
-  }
+
   const setInitialDate = () => {
     const startStringDate = moment(startDate as ValuePiece).format(PROJECT_DATE_FORMAT)
     dispatch(changeIssueStartAtReducer(startStringDate))
     const endStringDate = moment(endDate as ValuePiece).format(PROJECT_DATE_FORMAT)
     dispatch(changeIssueEndAtReducer(endStringDate))
-    setInitialTime()
   }
 
   const hourList = Array.from({ length: 24 }, (_, index) => {
@@ -183,14 +153,17 @@ export default function ProjectIssueSchedule() {
       dialog: endDialogRef,
     },
   ]
+
   useEffect(() => {
+    dispatch(changeIssueCategoryReducer(PROJECT_ISSUE_SCHEDULE_VALUE.toUpperCase()))
     setInitialDate()
+
     if (isAllday) {
       setEndDate(startDate)
-      const stringEndDate = moment(endDate as ValuePiece).format(PROJECT_DATE_FORMAT)
       const stringStartDate = moment(startDate as ValuePiece).format(PROJECT_DATE_FORMAT)
       dispatch(changeIssueStartAtReducer(stringStartDate))
-      dispatch(changeIssueEndAtReducer(stringEndDate))
+      dispatch(changeIssueEndAtReducer(stringStartDate))
+
       setSelectTime({
         start: { hour: '00', minute: '00' },
         end: { hour: '23', minute: '59' },
@@ -217,40 +190,16 @@ export default function ProjectIssueSchedule() {
           timeValue: '59',
         },
       ]
-      times.map((data) =>
-        data.reducer({
-          units: data.units,
-          timeValue: data.timeValue,
-        }),
+      times.forEach((data) =>
+        dispatch(
+          data.reducer({
+            units: data.units,
+            timeValue: data.timeValue,
+          }),
+        ),
       )
-      // dispatch(
-      //   changeIssueStartAtTimeReducer({
-      //     units: PROJECT_ISSUE_SCHEDULE_UNIT_HOUR_EN,
-      //     timeValue: '00',
-      //   }),
-      // )
-      // dispatch(
-      //   changeIssueStartAtTimeReducer({
-      //     units: PROJECT_ISSUE_SCHEDULE_UNIT_MINUTE_EN,
-      //     timeValue: '00',
-      //   }),
-      // )
-      // dispatch(
-      //   changeIssueEndAtTimeReducer({
-      //     units: PROJECT_ISSUE_SCHEDULE_UNIT_HOUR_EN,
-      //     timeValue: '23',
-      //   }),
-      // )
-      // dispatch(
-      //   changeIssueEndAtTimeReducer({
-      //     units: PROJECT_ISSUE_SCHEDULE_UNIT_MINUTE_EN,
-      //     timeValue: '59',
-      //   }),
-      // )
     }
-    dispatch(changeIssueCategoryReducer(PROJECT_ISSUE_SCHEDULE_VALUE.toUpperCase()))
   }, [isAllday])
-
   return (
     <>
       <div className="mt-2 p-2 mb-2">

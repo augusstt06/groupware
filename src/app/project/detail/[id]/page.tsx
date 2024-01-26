@@ -209,12 +209,11 @@ export default function ProjectDetail() {
   }
 
   const isIssueInputEmpty = () => {
-    const { category, description, endAt, processState, projectId, startAt, title } = issueState
+    const { category, endAt, processState, projectId, startAt, title } = issueState
     switch (issueState.category) {
       case PROJECT_ISSUE_TASK_VALUE.toUpperCase():
         return (
           category === '' ||
-          description === '' ||
           endAt === '' ||
           processState === '' ||
           projectId === 0 ||
@@ -222,22 +221,12 @@ export default function ProjectDetail() {
           title === ''
         )
       case PROJECT_ISSUE_SCHEDULE_VALUE.toUpperCase():
-        return (
-          category === '' ||
-          description === '' ||
-          endAt === '' ||
-          projectId === 0 ||
-          startAt === '' ||
-          title === ''
-        )
+        return category === '' || endAt === '' || projectId === 0 || startAt === '' || title === ''
       case PROJECT_ISSUE_TODO_VALUE.toUpperCase():
-        return (
-          category === '' || description === '' || endAt === '' || projectId === 0 || title === ''
-        )
+        return category === '' || endAt === '' || projectId === 0 || title === ''
       default:
         return (
           category === '' ||
-          description === '' ||
           endAt === '' ||
           processState === '' ||
           projectId === 0 ||
