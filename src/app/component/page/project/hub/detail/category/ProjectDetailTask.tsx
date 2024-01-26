@@ -11,9 +11,13 @@ import {
   PROJECT_ISSUE_TASK_PROGRESS_INIT_TITLE,
   PROJECT_ISSUE_TASK_PROGRESS_PROCESSING_TITLE,
   PROJECT_ISSUE_TASK_PROGRESS_REQUESTED_TITLE,
+  PROJECT_SIDEBAR_TASK_ALL,
 } from '@/app/constant/constant'
 import { useAppDispatch } from '@/app/module/hooks/reduxHooks'
-import { changeProjectDetailCategoryReducer } from '@/app/store/reducers/project/projectDetailCategoryReducer'
+import {
+  changeProjectDetailCategoryReducer,
+  changeProjectDetailTaskCategoryReducer,
+} from '@/app/store/reducers/project/projectDetailCategoryReducer'
 import { type ProjectDetailCardType } from '@/app/types/ui/cardTypes'
 import { type KanbanBoardColumnType } from '@/app/types/variableTypes'
 
@@ -97,6 +101,7 @@ export default function ProjectDetailTask() {
   }
   useEffect(() => {
     dispatch(changeProjectDetailCategoryReducer(PROJECT_DETAIL_CATEGORY_TASK))
+    dispatch(changeProjectDetailTaskCategoryReducer(PROJECT_SIDEBAR_TASK_ALL))
   }, [])
   return (
     <DragDropContext

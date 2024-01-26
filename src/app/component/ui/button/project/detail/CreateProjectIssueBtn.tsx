@@ -1,7 +1,7 @@
 import { FaPlus } from 'react-icons/fa'
 
 import {
-  PROJECT_DETAIL_CATEGORY_CALENDAR,
+  PROJECT_DETAIL_CATEGORY_SCHEDULE,
   PROJECT_DETAIL_CATEGORY_TASK,
   PROJECT_ISSUE_TODO_VALUE,
 } from '@/app/constant/constant'
@@ -19,7 +19,7 @@ export default function CreateProjectIssueBtn() {
     switch (detailCategory) {
       case PROJECT_DETAIL_CATEGORY_TASK:
         return <span>업무 생성</span>
-      case PROJECT_DETAIL_CATEGORY_CALENDAR:
+      case PROJECT_DETAIL_CATEGORY_SCHEDULE:
         return <span>일정 생성</span>
       case PROJECT_ISSUE_TODO_VALUE:
         return <span>할일 생성</span>

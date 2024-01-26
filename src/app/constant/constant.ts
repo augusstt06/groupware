@@ -84,7 +84,11 @@ export const PROJECT_SIDEBAR_MENU_IMPORTANT = '중요 프로젝트'
 
 export const PROJECT_SIDEBAR_TASK_ALL = '전체 업무'
 export const PROJECT_SIDEBAR_TASK_MY = '내가 작성한 업무'
-export const PROJECT_SIDEBAR_TASK_INVITE = '초대 받은 업무'
+export const PROJECT_SIDEBAR_TASK_INVITE = '초대받은 업무'
+
+export const PROJECT_SIDEBAR_SCHEDULE_ALL = '전체 일정'
+export const PROJECT_SIDEBAR_SCHEDULE_MY = '내가 작성한 일정'
+export const PROJECT_SIDEBAR_SCHEDULE_INVITE = '초대받은 일정'
 // export const PROJECT_MAIN_CATEGORY_ALL = 'all'
 // export const PROJECT_MAIN_CATEGORY_PARTICIPATING = 'participating'
 // export const PROJECT_MAIN_CATEGORY_IMPORTANT = 'important'
@@ -95,7 +99,7 @@ export const PROJECT_MAIN_CATEGORY_STARRED = '중요 프로젝트'
 
 export const PROJECT_DETAIL_CATEGORY_HOME = '홈'
 export const PROJECT_DETAIL_CATEGORY_TASK = '업무'
-export const PROJECT_DETAIL_CATEGORY_CALENDAR = '일정'
+export const PROJECT_DETAIL_CATEGORY_SCHEDULE = '일정'
 export const PROJECT_DETAIL_CATEGORY_TODO = '할일'
 
 export const PROJECT_ISSUE_TASK_PROGRESS_REQUESTED_TITLE = '요청'

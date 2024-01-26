@@ -1,7 +1,7 @@
 import InviteMemberBtn from '@/app/component/ui/button/project/detail/InviteMemberBtn'
 import {
-  PROJECT_DETAIL_CATEGORY_CALENDAR,
   PROJECT_DETAIL_CATEGORY_HOME,
+  PROJECT_DETAIL_CATEGORY_SCHEDULE,
   PROJECT_DETAIL_CATEGORY_TASK,
   PROJECT_DETAIL_CATEGORY_TODO,
 } from '@/app/constant/constant'
@@ -15,7 +15,7 @@ export default function ProjectDetailTab(props: ProjectDetailTabProps) {
   const issueCategoryList = [
     { title: PROJECT_DETAIL_CATEGORY_HOME },
     { title: PROJECT_DETAIL_CATEGORY_TASK },
-    { title: PROJECT_DETAIL_CATEGORY_CALENDAR },
+    { title: PROJECT_DETAIL_CATEGORY_SCHEDULE },
     { title: PROJECT_DETAIL_CATEGORY_TODO },
   ]
   const categoryClassName = (selectTitle: string) => {

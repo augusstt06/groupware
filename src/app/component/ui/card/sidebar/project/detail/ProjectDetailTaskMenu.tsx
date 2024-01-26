@@ -9,7 +9,7 @@ import {
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { changeProjectDetailTaskCategoryReducer } from '@/app/store/reducers/project/projectDetailCategoryReducer'
 
-export default function ProjectDetailTaskMenuCard() {
+export default function ProjectDetailTaskMenu() {
   const dispatch = useAppDispatch()
   const taskCategory = useAppSelector((state) => state.projectDetailCategory.task)
   const menuList = [
@@ -32,9 +32,9 @@ export default function ProjectDetailTaskMenuCard() {
   }
   const renderIcon = (selectTitle: string) => {
     if (selectTitle === taskCategory) {
-      return <BsRecordCircle className="w-5 h-5 mr-5" />
+      return <BsRecordCircle className="w-5 h-5" />
     }
-    return <FaRegCircle className="w-5 h-5 mr-5" />
+    return <FaRegCircle className="w-5 h-5" />
   }
   const handleTaskCategory = (selectTitle: string) => {
     dispatch(changeProjectDetailTaskCategoryReducer(selectTitle))
@@ -49,7 +49,9 @@ export default function ProjectDetailTaskMenuCard() {
             handleTaskCategory(data.title)
           }}
         >
-          {renderIcon(data.title)}
+          <div className="w-1/5 flex justify-center items-center mr-3">
+            {renderIcon(data.title)}
+          </div>
           <span>{data.title}</span>
         </div>
       ))}
