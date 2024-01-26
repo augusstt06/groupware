@@ -70,6 +70,13 @@ export default function ProjectIssueTask() {
     setProgress(status)
     dispatch(changeIssueProcessStateReducer(status))
   }
+
+  const setInitialDate = () => {
+    const startStringDate = moment(startDate as ValuePiece).format(PROJECT_DATE_FORMAT)
+    dispatch(changeIssueStartAtReducer(startStringDate))
+    const endStringDate = moment(endDate as ValuePiece).format(PROJECT_DATE_FORMAT)
+    dispatch(changeIssueEndAtReducer(endStringDate))
+  }
   const progressStatusList = [
     {
       title: PROJECT_ISSUE_TASK_PROGRESS_REQUESTED_TITLE,
@@ -135,8 +142,10 @@ export default function ProjectIssueTask() {
       dialog: endDialogRef,
     },
   ]
+
   useEffect(() => {
     dispatch(resetIssueReducer())
+    setInitialDate()
     dispatch(changeIssueCategoryReducer(PROJECT_ISSUE_TASK_VALUE.toUpperCase()))
   }, [])
   return (

@@ -63,13 +63,13 @@ export default function ProjectDetail() {
   }
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
   const issueState = useAppSelector((state) => state.projectIssue)
+
   const [accessToken, setAccessToken] = useState(moduleGetCookie(KEY_ACCESS_TOKEN))
   const [rerender, setRerender] = useState<boolean>(false)
   const [detailCategory, setDetailCategory] = useState<string>(PROJECT_DETAIL_CATEGORY_HOME)
   const handleChangeDetailCategory = (category: string) => {
     setDetailCategory(category)
   }
-  //  setProjectDialogBtnValue 추가하기
   const [projectDialogBtnValue] = useState<DialogBtnValueType>({
     isCancel: false,
     cancleFunc: () => {},

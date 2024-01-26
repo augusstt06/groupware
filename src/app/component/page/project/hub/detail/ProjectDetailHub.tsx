@@ -5,8 +5,6 @@ import { PROJECT_DETAIL_CATEGORY_HOME, PROJECT_DETAIL_CATEGORY_TASK } from '@/ap
 import { type ProjectDetailHubProps } from '@/app/types/ui/uiTypes'
 
 export default function ProjectDetailHub(props: ProjectDetailHubProps) {
-  // FIXME:
-
   const renderingCategory = () => {
     switch (props.detailCategory) {
       case PROJECT_DETAIL_CATEGORY_HOME:

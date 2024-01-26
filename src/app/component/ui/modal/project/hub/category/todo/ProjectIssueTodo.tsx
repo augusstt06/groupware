@@ -54,8 +54,13 @@ export default function ProjectIssueTodo() {
     dispatch(changeIssueEndAtReducer(stringDate))
     dialogRef.current?.close()
   }
+  const setInitialDate = () => {
+    const stringDate = moment(endDate as ValuePiece).format(PROJECT_DATE_FORMAT)
+    dispatch(changeIssueEndAtReducer(stringDate))
+  }
   useEffect(() => {
     dispatch(resetIssueReducer())
+    setInitialDate()
     dispatch(changeIssueCategoryReducer(PROJECT_ISSUE_TODO_VALUE.toUpperCase()))
   }, [])
   const calendarData: TaskListType = {
