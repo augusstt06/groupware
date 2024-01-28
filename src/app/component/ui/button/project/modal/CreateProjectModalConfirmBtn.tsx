@@ -5,7 +5,6 @@ import { type CreateProjectModalConfirmBtnProps } from '@/app/types/ui/modalType
 export default function CreateProjectModalConfirmBtn(props: CreateProjectModalConfirmBtnProps) {
   const dispatch = useAppDispatch()
   const handleCreateProjectModal = () => {
-    // FIXME:
     dispatch(createProjectModalReducer(false))
   }
   return (

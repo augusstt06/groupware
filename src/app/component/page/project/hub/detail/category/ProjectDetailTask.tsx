@@ -123,7 +123,6 @@ export default function ProjectDetailTask() {
         [KEY_X_ORGANIZATION_CODE]: orgCode,
       },
     }
-
     await modulePatchFetch<string>(fetchProps)
   }
   // 드래그를 놓았을때 실행되는 함수
@@ -149,8 +148,24 @@ export default function ProjectDetailTask() {
     if (sourceColumn == null || destinationColumn == null) return
 
     // 드래그한 카드를 cardList에서 찾아서 순서를 맞추어 정렬
+    // 드래그시, 카드 상태를 바꿔주어야함
     const draggedCard = sourceColumn.cardList[source.index]
+    switch (destinationColumn.columnTitle) {
+      case PROJECT_ISSUE_TASK_PROGRESS_REQUESTED_TITLE:
+        draggedCard.processState = PROJECT_ISSUE_TASK_PROGRESS_REQUESTED_VALUE
+        break
+      case PROJECT_ISSUE_TASK_PROGRESS_PROCESSING_TITLE:
+        draggedCard.processState = PROJECT_ISSUE_TASK_PROGRESS_PROCESSING_VALUE
+        break
+      case PROJECT_ISSUE_TASK_PROGRESS_COMPLETED_TITLE:
+        draggedCard.processState = PROJECT_ISSUE_TASK_PROGRESS_COMPLETED_VALUE
+        break
+      case PROJECT_ISSUE_TASK_PROGRESS_INIT_TITLE:
+        draggedCard.processState = PROJECT_ISSUE_TASK_PROGRESS_INIT_VALUE
+        break
+    }
 
+    // 이후 드래그 카드가 업데이트된 카드 목록에 없다면 추가
     if (!isDataInList(updatedCardList, draggedCard)) {
       setUpdatedCardList((prev) => [...prev, draggedCard])
     }
@@ -160,10 +175,11 @@ export default function ProjectDetailTask() {
 
     // 변화된 리스트를 columns에 적용
     setColumns([...columns])
-
-    void fetchRearrangeColumn()
   }
 
+  useEffect(() => {
+    void fetchRearrangeColumn()
+  }, [updatedCardList])
   useEffect(() => {
     dispatch(changeProjectDetailCategoryReducer(PROJECT_DETAIL_CATEGORY_TASK))
     dispatch(changeProjectDetailTaskCategoryReducer(PROJECT_SIDEBAR_TASK_ALL))
