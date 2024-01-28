@@ -34,6 +34,26 @@ export default function ProjectDetailScheduleMenu() {
   const handleScheduleCategory = (selectTitle: string) => {
     dispatch(changeProjectDetailScheduleCategoryReducer(selectTitle))
   }
+  const menuSpan = (title: string) => {
+    switch (title) {
+      case PROJECT_SIDEBAR_SCHEDULE_MY:
+        return (
+          <div className="flex flex-col justify-center items-center">
+            <span className="text-sm">내가 작성한</span>
+            <span className="text-sm">일정</span>
+          </div>
+        )
+      case PROJECT_SIDEBAR_SCHEDULE_INVITE:
+        return (
+          <div className="flex flex-col justify-center items-center">
+            <span className="text-sm">초대받은</span>
+            <span className="text-sm">일정</span>
+          </div>
+        )
+      default:
+        return <span className="text-sm">{title}</span>
+    }
+  }
   return (
     <div className="cursor-pointer w-full max-w-sm border border-gray-200 rounded-lg shadow dark:bg-[#1a202c] dark:border-gray-700 mb-5">
       {menuList.map((data) => (
@@ -47,7 +67,7 @@ export default function ProjectDetailScheduleMenu() {
           <div className="w-1/5 flex justify-center items-center mr-3">
             {renderIcon(data.title)}
           </div>
-          <span>{data.title}</span>
+          {menuSpan(data.title)}
         </div>
       ))}
     </div>

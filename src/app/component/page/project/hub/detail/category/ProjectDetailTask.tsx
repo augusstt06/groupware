@@ -21,7 +21,6 @@ import {
   PROJECT_ISSUE_TASK_PROGRESS_REQUESTED_TITLE,
   PROJECT_ISSUE_TASK_PROGRESS_REQUESTED_VALUE,
   PROJECT_ISSUE_TASK_VALUE,
-  PROJECT_SIDEBAR_TASK_ALL,
 } from '@/app/constant/constant'
 import {
   API_URL_PROJECT_ISSUE_LIST,
@@ -30,10 +29,7 @@ import {
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
 import { moduleGetFetch, modulePatchFetch } from '@/app/module/utils/moduleFetch'
-import {
-  changeProjectDetailCategoryReducer,
-  changeProjectDetailTaskCategoryReducer,
-} from '@/app/store/reducers/project/projectDetailCategoryReducer'
+import { changeProjectDetailCategoryReducer } from '@/app/store/reducers/project/projectDetailCategoryReducer'
 import {
   type FailResponseType,
   type ModuleGetFetchProps,
@@ -182,7 +178,6 @@ export default function ProjectDetailTask() {
   }, [updatedCardList])
   useEffect(() => {
     dispatch(changeProjectDetailCategoryReducer(PROJECT_DETAIL_CATEGORY_TASK))
-    dispatch(changeProjectDetailTaskCategoryReducer(PROJECT_SIDEBAR_TASK_ALL))
     void fetchTaskList()
   }, [])
 
@@ -225,7 +220,7 @@ export default function ProjectDetailTask() {
           onDragEnd(result, columnList, setColumnList)
         }}
       >
-        <div className="md:w-4/5 w-full grid-cols-4 grid gap-2 justify-center dark:border-gray-700 border border-gray-200 rounded-lg dark:bg-[#1a202c] shadow-lg p-3">
+        <div className=" w-full grid-cols-4 grid gap-2 justify-center dark:border-gray-700 border border-gray-200 rounded-lg dark:bg-[#1a202c] shadow-lg p-3">
           {columnList.map((data, columnIndex) => (
             <ProjectDetailTaskColumn
               key={data.columnTitle}

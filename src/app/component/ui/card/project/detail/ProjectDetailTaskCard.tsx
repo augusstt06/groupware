@@ -8,7 +8,7 @@ export default function ProjectDetailTaskCard(props: ProjectDetailTaskCardProps)
       <div className="bg-[rgb(255,255,255)] rounded-lg mt-5 truncate">
         <div className="flex flex-col">
           <div className=" flex flex-row justify-around items-center w-full">
-            <div className="w-1/5 flex justify-center items-center hidden md:inline-block p-1">
+            <div className="w-1/5 flex justify-center items-center hidden lg:inline-block p-1">
               <div
                 className={`${props.cardColor} p-1 rounded-full items-center flex justify-center w-4 lg:w-5`}
               >
