@@ -17,6 +17,7 @@ import {
   MODAL_BTN_SAVE,
   MODAL_CREATE_PROJECT_ISSUE,
   MODAL_INVITE_MEMBER_IN_PROJECT,
+  PROJECT_ISSUE_ALL_VALUE,
   PROJECT_ISSUE_SCHEDULE_VALUE,
   PROJECT_ISSUE_TASK_VALUE,
   PROJECT_ISSUE_TODO_VALUE,
@@ -307,6 +308,7 @@ export default function ProjectDetail() {
         projectId: Number(projectInfo?.id),
         limit: 10,
         offset: 0,
+        category: PROJECT_ISSUE_ALL_VALUE.toUpperCase(),
       },
       fetchUrl: API_URL_PROJECT_ISSUE_LIST,
       header: {

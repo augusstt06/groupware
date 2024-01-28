@@ -1,8 +1,8 @@
 import { type ChangeEvent, type Dispatch, type SetStateAction } from 'react'
 
-import { type ProjectDetailCardType } from './ui/cardTypes'
 import {
   type BoardListResponseType,
+  type ColumnType,
   type CommentType,
   type ScheduleListType,
 } from './variableTypes'
@@ -123,5 +123,5 @@ export type ProjectDetailTaskColumnProps = {
   columnTitle: string
   columnCardNumber: number
   columnColor: string
-  cardList: ProjectDetailCardType[]
+  cardList: ColumnType[]
 }

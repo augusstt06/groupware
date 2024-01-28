@@ -59,6 +59,7 @@ export const PROJECT_ISSUE_TASK_TITLE = '📑 업무'
 export const PROJECT_ISSUE_SCHEDULE_TITLE = '🗓️ 일정'
 export const PROJECT_ISSUE_TODO_TITLE = '✅ 할일'
 
+export const PROJECT_ISSUE_ALL_VALUE = 'all'
 export const PROJECT_ISSUE_TASK_VALUE = 'task'
 export const PROJECT_ISSUE_SCHEDULE_VALUE = 'schedule'
 export const PROJECT_ISSUE_TODO_VALUE = 'todo'
