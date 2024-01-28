@@ -274,6 +274,7 @@ export default function ProjectDetail() {
         updatedAt: '',
         membersCnt: 0,
         members: [],
+        starred: false,
       })
     }
   }

@@ -84,6 +84,7 @@ export type ProjectResponseType = {
   color: string
   createdAt: string
   membersCnt: number
+  starred: boolean
   id: number
   issues: []
   name: string
