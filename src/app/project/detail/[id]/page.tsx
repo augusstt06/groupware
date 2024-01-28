@@ -21,6 +21,8 @@ import {
   PROJECT_ISSUE_SCHEDULE_VALUE,
   PROJECT_ISSUE_TASK_VALUE,
   PROJECT_ISSUE_TODO_VALUE,
+  PROJECT_SIDEBAR_TASK_ALL,
+  PROJECT_SIDEBAR_TASK_MY,
 } from '@/app/constant/constant'
 import {
   API_URL_PROJECT_ISSUE,
@@ -62,7 +64,9 @@ export default function ProjectDetail() {
     dialogRef.current?.close()
   }
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
+  const myState = useAppSelector((state) => state.userInfo.extraInfo)
   const issueState = useAppSelector((state) => state.projectIssue)
+  const taskCategory = useAppSelector((state) => state.projectDetailCategory.task)
 
   const [accessToken, setAccessToken] = useState(moduleGetCookie(KEY_ACCESS_TOKEN))
   const [rerender, setRerender] = useState<boolean>(false)
@@ -81,6 +85,7 @@ export default function ProjectDetail() {
   const [projectInfo, setProjectinfo] = useState<ProjectResponseType | null>(null)
   const [issueList, setIssueList] = useState<ProjectIssueType[] | null>(null)
   const [pinnedList, setPinnedList] = useState<ProjectIssueType[] | null>(null)
+  const [keyForProjectDetailHub, setKeyForProjectDetailHub] = useState(0)
   const isCreateProjectIssueModalOpen = useAppSelector(
     (state) => state.projectModal.isCreateProjectIssueModalOpen,
   )
@@ -303,6 +308,7 @@ export default function ProjectDetail() {
       dialogBtnValue: projectDialogBtnValue,
     },
   ]
+
   const fetchGetIssueList = async () => {
     const fetchProps: ModuleGetFetchProps = {
       params: {
@@ -319,8 +325,9 @@ export default function ProjectDetail() {
     }
     const res = await moduleGetFetch<ProjectIssueResponseType>(fetchProps)
     const issues = (res as SuccessResponseType<ProjectIssueResponseType>).result.data
-    setIssueList(issues)
+    setIssueList([...issues])
   }
+
   const fetchGetIssuePinnedList = async () => {
     const fetchProps: ModuleGetFetchProps = {
       params: {
@@ -335,6 +342,16 @@ export default function ProjectDetail() {
     const res = await moduleGetFetch<ProjectIssueType[]>(fetchProps)
     const pinned = (res as SuccessResponseType<ProjectIssueType[]>).result
     setPinnedList(pinned)
+  }
+  const filterIssueList = () => {
+    switch (taskCategory) {
+      case PROJECT_SIDEBAR_TASK_ALL:
+        return issueList
+      case PROJECT_SIDEBAR_TASK_MY:
+        return issueList?.filter((data) => data.issuer.name === myState.name)
+      default:
+        return issueList
+    }
   }
 
   useEffect(() => {
@@ -355,14 +372,16 @@ export default function ProjectDetail() {
       isCheckInterval: true,
     }
     moduleCheckUserState(moduleProps)
-  }, [rerender])
-
+    setKeyForProjectDetailHub((prevKey) => prevKey + 1)
+    filterIssueList()
+  }, [rerender, issueList?.length, taskCategory])
   return (
     <main className="w-full 2xl:w-2/3 h-4/5 flex flex-col items-center">
       {projectInfo !== null ? (
         <>
           <ProjectDetailTab projectInfo={projectInfo} />
           <ProjectDetailHub
+            key={keyForProjectDetailHub}
             projectInfo={projectInfo}
             issueList={issueList}
             pinnedList={pinnedList}

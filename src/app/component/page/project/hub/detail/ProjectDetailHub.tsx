@@ -36,5 +36,6 @@ export default function ProjectDetailHub(props: ProjectDetailHubProps) {
         )
     }
   }
+
   return <>{renderingCategory()}</>
 }
