@@ -1,5 +1,9 @@
 import { useEffect } from 'react'
 
+import dayGridPlugin from '@fullcalendar/daygrid'
+import FullCalendar from '@fullcalendar/react'
+import timeGridPlugin from '@fullcalendar/timegrid'
+
 import {
   PROJECT_DETAIL_CATEGORY_SCHEDULE,
   PROJECT_SIDEBAR_SCHEDULE_ALL,
@@ -16,5 +20,17 @@ export default function ProjectDetailSchedule() {
     dispatch(changeProjectDetailCategoryReducer(PROJECT_DETAIL_CATEGORY_SCHEDULE))
     dispatch(changeProjectDetailScheduleCategoryReducer(PROJECT_SIDEBAR_SCHEDULE_ALL))
   })
-  return <div></div>
+  return (
+    <div className=" w-full justify-center dark:border-gray-700 border border-gray-200 rounded-lg dark:bg-[#1a202c] shadow-lg p-3 z-1">
+      <FullCalendar
+        initialView="dayGridMonth"
+        plugins={[dayGridPlugin, timeGridPlugin]}
+        headerToolbar={{
+          left: 'prev,next',
+          center: 'title',
+          right: 'dayGridMonth,timeGridWeek,timeGridDay',
+        }}
+      />
+    </div>
+  )
 }
