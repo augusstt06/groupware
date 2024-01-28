@@ -376,7 +376,7 @@ export default function ProjectDetail() {
     filterIssueList()
   }, [rerender, issueList?.length, taskCategory])
   return (
-    <main className="w-full 2xl:w-2/3 h-4/5 flex flex-col items-center ">
+    <main className="w-full max-w-7xl 2xl:w-2/3 h-4/5 flex flex-col items-center ">
       {projectInfo !== null ? (
         <>
           <ProjectDetailTab projectInfo={projectInfo} />
