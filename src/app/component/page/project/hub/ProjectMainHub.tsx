@@ -6,12 +6,12 @@ export default function ProjectMainHub(props: ProjectMainHubProps) {
   const projectCategory = useAppSelector((state) => state.projectMainCategory.selectProjectMenu)
 
   return (
-    <div className=" md:w-5/6 w-full flex flex-col items-center dark:bg-[#1a202c] dark:border-gray-700 border border-gray-200 rounded-lg shadow-lg p-2 truncate">
+    <div className=" w-full max-w-7xl flex flex-col items-center dark:bg-[#1a202c] dark:border-gray-700 border border-gray-200 rounded-lg shadow-lg p-2 truncate">
       <div className="w-full p-3">
         <span className="font-bold">{projectCategory}</span>
       </div>
 
-      <div className="grid xl:grid-cols-4 xl:gap-x-8 lg:grid-cols-3 lg:gap-x-10 grid-cols-2 gap-x-8 gap-y-6 p-3 ">
+      <div className="grid xl:grid-cols-4 xl:gap-x-10 lg:grid-cols-3 lg:gap-x-10 grid-cols-2 gap-x-8 gap-y-6 p-3 ">
         {props.projectList.map((data) => (
           <ProjectCard
             key={data.id}

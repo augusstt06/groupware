@@ -1,3 +1,5 @@
+import { useEffect, useRef } from 'react'
+
 import { useRouter } from 'next/navigation'
 
 import { KEY_ACCESS_TOKEN, TRUE } from '@/app/constant/constant'
@@ -23,6 +25,7 @@ import {
 import { type LoginBtnProps } from '@/app/types/ui/btnTypes'
 
 export default function LoginBtn(props: LoginBtnProps) {
+  const btnRef = useRef<HTMLButtonElement>(null)
   const dispatch = useAppDispatch()
   const router = useRouter()
   const loginState = useAppSelector((state) => state.loginInfo)
@@ -74,8 +77,21 @@ export default function LoginBtn(props: LoginBtnProps) {
   const handleLogin = async () => {
     void fetchLogin()
   }
+  useEffect(() => {
+    const handleKeyPress = (event: KeyboardEvent) => {
+      if (event.key === 'Enter' && btnRef.current !== null) {
+        btnRef.current.click()
+      }
+    }
+    document.addEventListener('keypress', handleKeyPress)
+    return () => {
+      document.removeEventListener('keypress', handleKeyPress)
+    }
+  }, [])
+
   return (
     <button
+      ref={btnRef}
       type="button"
       className="w-full text-white justify-center bg-indigo-500 hover:bg-indigo-600 focus:ring-4 focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 dark:hover:bg-white dark:hover:text-indigo-500 mb-2 border-2 dark:hover:border-indigo-500/75"
       onClick={(event) => {

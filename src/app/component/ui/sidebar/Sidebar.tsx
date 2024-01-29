@@ -34,6 +34,9 @@ export default function Sidebar() {
   const [myBoardList, setMyBoardList] = useState<MyBoardType[]>([])
   const [reRender, setRerender] = useState(false)
   const [isSideOpen, setIsSideOpen] = useState(false)
+  const [overXl, setOverXl] = useState(false)
+
+  const [leftValue, setLeftValue] = useState(0)
 
   const setSidebarTitle = () => {
     let extractedString: string
@@ -77,6 +80,28 @@ export default function Sidebar() {
     if (userInfo.organizationId !== 0) {
       void fetchGetMyBoardList()
     }
+
+    const size = () => {
+      const width = window.innerWidth
+
+      let newLeftValue = 0
+
+      if (width >= 1536 && width <= 1720) {
+        setOverXl(true)
+        if (width > 1690) {
+          newLeftValue = 16
+        } else if (width > 1630) {
+          newLeftValue = 12
+        }
+      } else {
+        setOverXl(false)
+      }
+
+      setLeftValue(newLeftValue)
+    }
+
+    window.addEventListener('resize', size)
+    size()
   }, [userInfo])
   return (
     <>
@@ -94,8 +119,10 @@ export default function Sidebar() {
       </div>
 
       <div
-        className={`fixed md:block 2xl:top-44 md:top-24 top-28 2xl:w-1/3 lg:w-56 w-40 md:ml-10 2xl:left-24 xl:left-8 lg:left-2 ml-5 mr-14 ${
-          isSideOpen ? 'md:bg-none bg-white dark:bg-[#121212] rounded-lg z-999' : 'hidden'
+        className={`fixed md:block 2xl:top-44 md:top-24 top-28 2xl:w-64 ${
+          overXl ? `left-${leftValue}` : ' 2xl:left-32 xl:left-4 lg:left-2 '
+        } lg:w-36 w-40 md:ml-10 ml-5 mr-14 ${
+          isSideOpen ? 'md:bg-none bg-white dark:bg-[#121212]  rounded-lg z-999' : 'hidden'
         }`}
       >
         <SidebarCardGroup

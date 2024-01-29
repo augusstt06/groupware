@@ -1,11 +1,11 @@
 import { type ChangeEvent } from 'react'
-import Calendar from 'react-calendar'
 
 import 'react-calendar/dist/Calendar.css'
 import moment from 'moment'
 import { FaRegCalendarAlt } from 'react-icons/fa'
 
 import {
+  PROJECT_DATE_FORMAT,
   PROJECT_ISSUE_SCHEDULE_UNIT_HOUR_EN,
   PROJECT_ISSUE_SCHEDULE_UNIT_HOUR_KO,
   PROJECT_ISSUE_SCHEDULE_UNIT_MINUTE_EN,
@@ -93,12 +93,9 @@ export function IssueCalendar(props: IssueCalendarProps) {
         <div className="flex flex-row items-center rounded rounded mt-2 bg-gray-50 border text-gray-900 w-7/12 lg:w-5/12 sm:w-8/12 text-sm border-gray-300 p-2.5 dark:bg-gray-700 dark:border-white-600 dark:placeholder-gray-400 dark:text-white">
           <FaRegCalendarAlt onClick={props.openModal} />
           <span className="ml-2 lg:text-base text-xs">
-            {moment(props.dateValue as ValuePiece).format('YYYY-MM-DD')}
+            {moment(props.dateValue as ValuePiece).format(PROJECT_DATE_FORMAT)}
           </span>
         </div>
-      </div>
-      <div className="ml-2">
-        {props.state ? <Calendar value={props.dateValue} onChange={props.onDateChange} /> : <></>}
       </div>
     </>
   )
@@ -135,50 +132,57 @@ export function IssueCalendarWithTime(props: IssueCalendarWithTimeProps) {
       },
     },
   ]
+  const divClassName = () => {
+    if (props.scheduleData.viewCheckAllDay) {
+      return 'col-span-5 grid grid-cols-6 gap-2'
+    }
+    return 'col-span-5 grid grid-cols-6 gap-2'
+  }
   return (
     <>
-      <div className="flex flex-row items-center p-2" key={props.scheduleData.title}>
-        <div className="w-1/6">
+      <div className="items-center p-2 grid grid-cols-6 gap-2" key={props.scheduleData.title}>
+        <div className="min-w-40 block col-span-1">
           <span className="text-sm md:text-base">{props.scheduleData.title}</span>
         </div>
-        <div className="ml-4 flex flex-col lg:flex-row items-center items-center rounded rounded mt-2 bg-gray-50 border text-gray-900 w-6/2 text-sm border-gray-300 p-2.5 dark:bg-gray-700 dark:border-white-600 dark:placeholder-gray-400 dark:text-white truncate">
-          <FaRegCalendarAlt onClick={props.scheduleData.openCalendar} className="mb-2 lg:mb-0" />
-          <span className="ml-2 lg:text-base text-xs">
-            {moment(props.scheduleData.calendarDateValue as ValuePiece).format('YYYY/MM/DD')}
-          </span>
-        </div>
-        <div className="flex flex-row items-center justify-center">
-          {issueTimeList.map((data) => (
-            <IssueTime
-              key={data.unit}
-              viewCheckAllDay={data.viewCheckAllDate}
-              timeState={data.timeState}
-              hoursList={data.hoursList}
-              unit={data.unit}
-              onChange={data.onChange}
-              isCheckAllday={data.isCheckAllday}
-            />
-          ))}
-        </div>
-        {props.scheduleData.viewCheckAllDay ? (
-          <div className="mt-2 mr-2 ml-2 p-2 w-1/6 flex flex-row items-center justify-around">
-            <input type="checkbox" onClick={props.scheduleData.handleAllday} />
-            <span className="text-sm">하루종일</span>
+        <div className={divClassName()}>
+          <div className="col-span-3 lg:ml-0 ml-4 flex flex-col lg:flex-row items-center items-center rounded rounded mt-2 bg-gray-50 border text-gray-900 w-26 text-sm border-gray-300 p-2 dark:bg-gray-700 dark:border-white-600 dark:placeholder-gray-400 dark:text-white truncate">
+            <FaRegCalendarAlt onClick={props.scheduleData.openCalendar} className="mb-2 lg:mb-0" />
+            <span className="ml-2 lg:text-base text-xs">
+              {moment(props.scheduleData.calendarDateValue as ValuePiece).format('YYYY/MM/DD')}
+            </span>
           </div>
-        ) : (
-          <></>
-        )}
-      </div>
-
-      <div className="ml-2">
-        {props.scheduleData.isCalendarOpen ? (
-          <Calendar
-            value={props.scheduleData.calendarDateValue}
-            onChange={props.scheduleData.onDateChange}
-          />
-        ) : (
-          <></>
-        )}
+          <div className="col-span-2 grid lg:grid-cols-2 grid-row-2 gap-2">
+            {issueTimeList.map((data) => (
+              <IssueTime
+                key={data.unit}
+                viewCheckAllDay={data.viewCheckAllDate}
+                timeState={data.timeState}
+                hoursList={data.hoursList}
+                unit={data.unit}
+                onChange={data.onChange}
+                isCheckAllday={data.isCheckAllday}
+              />
+            ))}
+          </div>
+          {props.scheduleData.viewCheckAllDay ? (
+            <div className="col-span-1 grid sm:grid-cols-3 grid-row-3 items-center">
+              <input
+                type="checkbox"
+                onClick={props.scheduleData.handleAllday}
+                className="w-4 h-4 col-span-1 text-purple-600 bg-gray-100 border-gray-300 rounded dark:bg-gray-700 dark:border-gray-600"
+              />
+              <div className="col-span-2 xl:inline hidden">
+                <span className="text-sm">하루종일</span>
+              </div>
+              <div className="col-span-2 grid grid-row-2 inline xl:hidden ">
+                <span className="text-sm">하루</span>
+                <span className="text-sm">종일</span>
+              </div>
+            </div>
+          ) : (
+            <></>
+          )}
+        </div>
       </div>
     </>
   )
@@ -200,13 +204,13 @@ export function IssueTime(props: IssueTimeProps) {
 
   const selectClassName = () => {
     if (props.isCheckAllday) {
-      return 'border-2 border-gray-300 p-2 rounded-lg text-sm bg-gray-300'
+      return 'border-2 border-gray-300 p-1 rounded-lg text-sm bg-gray-300'
     }
-    return 'border-2 border-gray-300 p-2 rounded-lg text-sm bg-transparent'
+    return 'border-2 border-gray-300 p-1 rounded-lg text-sm bg-transparent'
   }
 
   return (
-    <div className="mt-2 mr-2 ml-2 w-full flex flex-row items-center justify-between">
+    <div className="mt-2  w-full flex flex-row items-center justify-around lg:justify-between">
       <select
         className={selectClassName()}
         onChange={props.onChange}
@@ -218,7 +222,7 @@ export function IssueTime(props: IssueTimeProps) {
           </option>
         ))}
       </select>
-      <span className="sm:ml-2 text-gray-400 text-sm">{props.unit}</span>
+      <span className="hidden sm:inline ml-1 text-gray-400 text-sm">{props.unit}</span>
     </div>
   )
 }

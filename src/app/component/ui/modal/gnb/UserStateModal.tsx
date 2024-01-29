@@ -1,3 +1,5 @@
+import { useEffect, useRef } from 'react'
+
 import { IoSettingsOutline } from 'react-icons/io5'
 
 import LogoutBtn from '../../button/login/LogoutBtn'
@@ -5,8 +7,23 @@ import LogoutBtn from '../../button/login/LogoutBtn'
 import { type LogoutBtnProps } from '@/app/types/ui/btnTypes'
 
 export default function UserStateModal(props: LogoutBtnProps) {
+  const menuRef = useRef<HTMLDivElement>(null)
+  const handleClickOutside = (e: MouseEvent) => {
+    if (menuRef.current !== null && !menuRef.current.contains(e.target as Node)) {
+      props.setIsUserStateOpen(false)
+    }
+  }
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [])
   return (
-    <div className="absolute right-4 flex flex-col items-center dark:bg-gray-700 bg-white border-2 border-gray-400 p-3 w-1/6 rounded-lg">
+    <div
+      ref={menuRef}
+      className="absolute right-4 flex flex-col items-center dark:bg-gray-700 bg-white border-2 border-gray-400 p-3 w-1/6 rounded-lg"
+    >
       <div className="flex flex-row items-center justify-start w-full">
         <div className="bg-gray-300 p-2 rounded-full">img</div>
         <div className="flex flex-col items-center ml-3">
