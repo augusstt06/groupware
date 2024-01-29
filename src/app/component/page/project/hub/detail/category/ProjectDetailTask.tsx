@@ -39,8 +39,8 @@ import {
 import {
   type ColumnListType,
   type ColumnType,
+  type IssueResponseType,
   type KanbanBoardColumnType,
-  type TaskIssueResponseType,
 } from '@/app/types/variableTypes'
 
 export default function ProjectDetailTask() {
@@ -66,9 +66,9 @@ export default function ProjectDetailTask() {
         [KEY_X_ORGANIZATION_CODE]: orgCode,
       },
     }
-    const res = await moduleGetFetch<TaskIssueResponseType>(fetchProps)
+    const res = await moduleGetFetch<IssueResponseType<ColumnType>>(fetchProps)
     if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)
-    const resList = (res as SuccessResponseType<TaskIssueResponseType>).result.data
+    const resList = (res as SuccessResponseType<IssueResponseType<ColumnType>>).result.data
     resList.forEach((data) => {
       switch (data.processState) {
         case PROJECT_ISSUE_TASK_PROGRESS_REQUESTED_VALUE:

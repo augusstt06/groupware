@@ -22,7 +22,7 @@ import { API_URL_POSTINGS, API_URL_POSTINGS_PENDING } from '@/app/constant/route
 import { ROUTE_POSTING_DETAIL } from '@/app/constant/route/route-constant'
 import useInput from '@/app/module/hooks/reactHooks/useInput'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
-import { moduleCheckContentIsEmpty } from '@/app/module/utils/moduleCheckContent'
+import { moduleCheckContentIsEmpty } from '@/app/module/utils/check/moduleCheckContent'
 import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
 import { moduleDeleteFetch, moduleGetFetch, modulePostFetch } from '@/app/module/utils/moduleFetch'
 import { openBoardWriteModalReducer } from '@/app/store/reducers/board/openBoardWriteModalReducer'

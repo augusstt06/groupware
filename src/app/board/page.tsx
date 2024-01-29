@@ -21,7 +21,7 @@ import {
   API_URL_POSTINGS_MY_TEAM,
 } from '../constant/route/api-route-constant'
 import { useAppDispatch, useAppSelector } from '../module/hooks/reduxHooks'
-import { moduleCheckUserState } from '../module/utils/moduleCheckUserState'
+import { moduleCheckUserState } from '../module/utils/check/moduleCheckUserState'
 import {
   checkTokenExpired,
   moduleDecodeToken,

@@ -1,4 +1,4 @@
-import { moduleDeleteCookies, moduleGetCookie } from './moduleCookie'
+import { moduleDeleteCookies, moduleGetCookie } from '../moduleCookie'
 
 import { KEY_ACCESS_TOKEN, KEY_LOGIN_COMPLETE, TRUE } from '@/app/constant/constant'
 import { ERR_COOKIE_NOT_FOUND } from '@/app/constant/errorMsg'

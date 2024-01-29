@@ -17,7 +17,7 @@ import { ERR_COOKIE_NOT_FOUND, ERR_ORG_NOT_FOUND } from '../constant/errorMsg'
 import { API_URL_GET_USERS } from '../constant/route/api-route-constant'
 import { ROUTE_ERR_NOT_FOUND_ORG_TOKEN } from '../constant/route/route-constant'
 import { useAppDispatch, useAppSelector } from '../module/hooks/reduxHooks'
-import { moduleCheckUserState } from '../module/utils/moduleCheckUserState'
+import { moduleCheckUserState } from '../module/utils/check/moduleCheckUserState'
 import {
   checkTokenExpired,
   moduleDecodeToken,
