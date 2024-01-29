@@ -26,6 +26,7 @@ export default function ProjectDetailTodoMenu() {
   const handleScheduleCategory = (selectTitle: string) => {
     dispatch(changeProjectDetailTodoCategoryReducer(selectTitle))
   }
+
   return (
     <div className="cursor-pointer w-full max-w-sm border border-gray-200 rounded-lg shadow dark:bg-[#1a202c] dark:border-gray-700 mb-5">
       {menuList.map((data) => (
