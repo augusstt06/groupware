@@ -262,7 +262,7 @@ export type ColumnListType = {
   setCardList: Dispatch<SetStateAction<ColumnType[]>>
 }
 
-export type SchduleType = {
+export type ScheduleType = {
   category: string
   createdAt: string
   description: string

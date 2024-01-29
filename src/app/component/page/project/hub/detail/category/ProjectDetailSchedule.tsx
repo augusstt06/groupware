@@ -29,7 +29,7 @@ import {
 import {
   type FullCalendarEventType,
   type IssueResponseType,
-  type SchduleType,
+  type ScheduleType,
 } from '@/app/types/variableTypes'
 
 export default function ProjectDetailSchedule() {
@@ -69,9 +69,9 @@ export default function ProjectDetailSchedule() {
         [KEY_X_ORGANIZATION_CODE]: orgCode,
       },
     }
-    const res = await moduleGetFetch<IssueResponseType<SchduleType>>(fetchProps)
+    const res = await moduleGetFetch<IssueResponseType<ScheduleType>>(fetchProps)
     if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)
-    const resList = (res as SuccessResponseType<IssueResponseType<SchduleType>>).result.data
+    const resList = (res as SuccessResponseType<IssueResponseType<ScheduleType>>).result.data
     resList.forEach((data) => {
       const scheduleEventProps: FullCalendarEventType = {
         title: data.title,
@@ -91,7 +91,7 @@ export default function ProjectDetailSchedule() {
   }, [])
 
   return (
-    <div className=" w-full justify-center dark:border-gray-700 border border-gray-200 rounded-lg dark:bg-[#1a202c] shadow-lg p-3 z-1">
+    <div className="w-full justify-center dark:border-gray-700 border border-gray-200 rounded-lg dark:bg-[#1a202c] shadow-lg p-3 z-1">
       <FullCalendar
         timeZone="UTC"
         initialView="dayGridMonth"
