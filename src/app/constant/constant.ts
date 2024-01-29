@@ -59,6 +59,7 @@ export const PROJECT_ISSUE_TASK_TITLE = '📑 업무'
 export const PROJECT_ISSUE_SCHEDULE_TITLE = '🗓️ 일정'
 export const PROJECT_ISSUE_TODO_TITLE = '✅ 할일'
 
+export const PROJECT_ISSUE_ALL_VALUE = 'all'
 export const PROJECT_ISSUE_TASK_VALUE = 'task'
 export const PROJECT_ISSUE_SCHEDULE_VALUE = 'schedule'
 export const PROJECT_ISSUE_TODO_VALUE = 'todo'
@@ -82,6 +83,13 @@ export const PROJECT_SIDEBAR_MENU_ALL = '전체'
 export const PROJECT_SIDEBAR_MENU_PARTICIPATING = '참여중인 프로젝트'
 export const PROJECT_SIDEBAR_MENU_IMPORTANT = '중요 프로젝트'
 
+export const PROJECT_SIDEBAR_TASK_ALL = '전체 업무'
+export const PROJECT_SIDEBAR_TASK_MY = '내가 작성한 업무'
+export const PROJECT_SIDEBAR_TASK_INVITE = '초대받은 업무'
+
+export const PROJECT_SIDEBAR_SCHEDULE_ALL = '전체 일정'
+export const PROJECT_SIDEBAR_SCHEDULE_MY = '내가 작성한 일정'
+export const PROJECT_SIDEBAR_SCHEDULE_INVITE = '초대받은 일정'
 // export const PROJECT_MAIN_CATEGORY_ALL = 'all'
 // export const PROJECT_MAIN_CATEGORY_PARTICIPATING = 'participating'
 // export const PROJECT_MAIN_CATEGORY_IMPORTANT = 'important'
@@ -92,7 +100,7 @@ export const PROJECT_MAIN_CATEGORY_STARRED = '중요 프로젝트'
 
 export const PROJECT_DETAIL_CATEGORY_HOME = '홈'
 export const PROJECT_DETAIL_CATEGORY_TASK = '업무'
-export const PROJECT_DETAIL_CATEGORY_CALENDAR = '일정'
+export const PROJECT_DETAIL_CATEGORY_SCHEDULE = '일정'
 export const PROJECT_DETAIL_CATEGORY_TODO = '할일'
 
 export const PROJECT_ISSUE_TASK_PROGRESS_REQUESTED_TITLE = '요청'
@@ -128,6 +136,7 @@ export const PROJECT_ISSUE_SCHEDULE_UNIT_MINUTE_KO = '분'
 export const PROJECT_ISSUE_SCHEDULE_UNIT_HOUR_EN = 'hour'
 export const PROJECT_ISSUE_SCHEDULE_UNIT_MINUTE_EN = 'minute'
 
+export const PROJECT_DATE_FORMAT = 'YYYY-MM-DD'
 // modal
 export const MODAL_BTN_CREATE = '생성'
 export const MODAL_BTN_SAVE = '저장'

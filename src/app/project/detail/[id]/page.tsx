@@ -17,10 +17,12 @@ import {
   MODAL_BTN_SAVE,
   MODAL_CREATE_PROJECT_ISSUE,
   MODAL_INVITE_MEMBER_IN_PROJECT,
-  PROJECT_DETAIL_CATEGORY_HOME,
+  PROJECT_ISSUE_ALL_VALUE,
   PROJECT_ISSUE_SCHEDULE_VALUE,
   PROJECT_ISSUE_TASK_VALUE,
   PROJECT_ISSUE_TODO_VALUE,
+  PROJECT_SIDEBAR_TASK_ALL,
+  PROJECT_SIDEBAR_TASK_MY,
 } from '@/app/constant/constant'
 import {
   API_URL_PROJECT_ISSUE,
@@ -62,14 +64,12 @@ export default function ProjectDetail() {
     dialogRef.current?.close()
   }
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
+  const myState = useAppSelector((state) => state.userInfo.extraInfo)
   const issueState = useAppSelector((state) => state.projectIssue)
+  const taskCategory = useAppSelector((state) => state.projectDetailCategory.task)
+
   const [accessToken, setAccessToken] = useState(moduleGetCookie(KEY_ACCESS_TOKEN))
   const [rerender, setRerender] = useState<boolean>(false)
-  const [detailCategory, setDetailCategory] = useState<string>(PROJECT_DETAIL_CATEGORY_HOME)
-  const handleChangeDetailCategory = (category: string) => {
-    setDetailCategory(category)
-  }
-  //  setProjectDialogBtnValue 추가하기
   const [projectDialogBtnValue] = useState<DialogBtnValueType>({
     isCancel: false,
     cancleFunc: () => {},
@@ -85,6 +85,7 @@ export default function ProjectDetail() {
   const [projectInfo, setProjectinfo] = useState<ProjectResponseType | null>(null)
   const [issueList, setIssueList] = useState<ProjectIssueType[] | null>(null)
   const [pinnedList, setPinnedList] = useState<ProjectIssueType[] | null>(null)
+  const [keyForProjectDetailHub, setKeyForProjectDetailHub] = useState(0)
   const isCreateProjectIssueModalOpen = useAppSelector(
     (state) => state.projectModal.isCreateProjectIssueModalOpen,
   )
@@ -185,25 +186,35 @@ export default function ProjectDetail() {
         return fetchProps
     }
   }
+
   const fetchPostIssue = async () => {
-    const fetchProps = fetchPropsByCategory()
-    await modulePostFetch<ProjectCreateIssueResponseType>(fetchProps)
-    setDialogText({
-      main: '성공적으로 이슈를 생성했습니다.',
-      sub: '',
-    })
-    dialogRef.current?.showModal()
-    dispatch(createProjectIssueModalOpenReducer(false))
-    setRerender(!rerender)
+    try {
+      const fetchProps = fetchPropsByCategory()
+
+      await modulePostFetch<ProjectCreateIssueResponseType>(fetchProps)
+
+      setDialogText({
+        main: '성공적으로 이슈를 생성했습니다.',
+        sub: '',
+      })
+      dialogRef.current?.showModal()
+      dispatch(createProjectIssueModalOpenReducer(false))
+      setRerender(!rerender)
+    } catch (err) {
+      setDialogText({
+        main: '이슈를 생성하는데 실패했습니다.',
+        sub: '다시 시도해 주세요.',
+      })
+      dialogRef.current?.showModal()
+    }
   }
 
   const isIssueInputEmpty = () => {
-    const { category, description, endAt, processState, projectId, startAt, title } = issueState
+    const { category, endAt, processState, projectId, startAt, title } = issueState
     switch (issueState.category) {
       case PROJECT_ISSUE_TASK_VALUE.toUpperCase():
         return (
           category === '' ||
-          description === '' ||
           endAt === '' ||
           processState === '' ||
           projectId === 0 ||
@@ -211,22 +222,12 @@ export default function ProjectDetail() {
           title === ''
         )
       case PROJECT_ISSUE_SCHEDULE_VALUE.toUpperCase():
-        return (
-          category === '' ||
-          description === '' ||
-          endAt === '' ||
-          projectId === 0 ||
-          startAt === '' ||
-          title === ''
-        )
+        return category === '' || endAt === '' || projectId === 0 || startAt === '' || title === ''
       case PROJECT_ISSUE_TODO_VALUE.toUpperCase():
-        return (
-          category === '' || description === '' || endAt === '' || projectId === 0 || title === ''
-        )
+        return category === '' || endAt === '' || projectId === 0 || title === ''
       default:
         return (
           category === '' ||
-          description === '' ||
           endAt === '' ||
           processState === '' ||
           projectId === 0 ||
@@ -278,6 +279,7 @@ export default function ProjectDetail() {
         updatedAt: '',
         membersCnt: 0,
         members: [],
+        starred: false,
       })
     }
   }
@@ -306,12 +308,14 @@ export default function ProjectDetail() {
       dialogBtnValue: projectDialogBtnValue,
     },
   ]
+
   const fetchGetIssueList = async () => {
     const fetchProps: ModuleGetFetchProps = {
       params: {
         projectId: Number(projectInfo?.id),
         limit: 10,
         offset: 0,
+        category: PROJECT_ISSUE_ALL_VALUE.toUpperCase(),
       },
       fetchUrl: API_URL_PROJECT_ISSUE_LIST,
       header: {
@@ -321,8 +325,9 @@ export default function ProjectDetail() {
     }
     const res = await moduleGetFetch<ProjectIssueResponseType>(fetchProps)
     const issues = (res as SuccessResponseType<ProjectIssueResponseType>).result.data
-    setIssueList(issues)
+    setIssueList([...issues])
   }
+
   const fetchGetIssuePinnedList = async () => {
     const fetchProps: ModuleGetFetchProps = {
       params: {
@@ -338,10 +343,19 @@ export default function ProjectDetail() {
     const pinned = (res as SuccessResponseType<ProjectIssueType[]>).result
     setPinnedList(pinned)
   }
+  const filterIssueList = () => {
+    switch (taskCategory) {
+      case PROJECT_SIDEBAR_TASK_ALL:
+        return issueList
+      case PROJECT_SIDEBAR_TASK_MY:
+        return issueList?.filter((data) => data.issuer.name === myState.name)
+      default:
+        return issueList
+    }
+  }
 
   useEffect(() => {
     dispatch(changeIssueProjectIdReducer(Number(query.id)))
-
     if (projectInfo === null) {
       void fetchGetProjectDetail()
     }
@@ -358,21 +372,19 @@ export default function ProjectDetail() {
       isCheckInterval: true,
     }
     moduleCheckUserState(moduleProps)
-  }, [rerender])
-
+    setKeyForProjectDetailHub((prevKey) => prevKey + 1)
+    filterIssueList()
+  }, [rerender, issueList?.length, taskCategory])
   return (
-    <main className="w-full 2xl:w-2/3 h-4/5 flex flex-col items-center">
+    <main className="w-full max-w-7xl 2xl:w-2/3 h-4/5 flex flex-col items-center ">
       {projectInfo !== null ? (
         <>
-          <ProjectDetailTab
-            projectInfo={projectInfo}
-            handleChangeDetailCategory={handleChangeDetailCategory}
-          />
+          <ProjectDetailTab projectInfo={projectInfo} />
           <ProjectDetailHub
+            key={keyForProjectDetailHub}
             projectInfo={projectInfo}
             issueList={issueList}
             pinnedList={pinnedList}
-            detailCategory={detailCategory}
           />
         </>
       ) : (

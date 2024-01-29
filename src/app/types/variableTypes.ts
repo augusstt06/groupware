@@ -1,9 +1,6 @@
-// import { Dispatch, SetStateAction } from 'react'
-
-import { type Dispatch, type SetStateAction } from 'react'
+import { type Dispatch, type MutableRefObject, type SetStateAction } from 'react'
 
 import { type CalendarValue } from './pageTypes'
-import { type ProjectDetailCardType } from './ui/cardTypes'
 
 export type DecodeType = { uuid: string; iss: string; iat: number; exp: number }
 
@@ -87,6 +84,7 @@ export type ProjectResponseType = {
   color: string
   createdAt: string
   membersCnt: number
+  starred: boolean
   id: number
   issues: []
   name: string
@@ -98,6 +96,32 @@ export type ProjectResponseType = {
     uuid: string
     email: string
   }>
+}
+
+export type IssueResponeType = {
+  category: string
+  createdAt: string
+  description: string
+  endAt: string
+  id: number
+  issuer: {
+    id: number
+    name: string
+    uuid: string
+    email: string
+  }
+  issuerId: number
+  processState: string
+  projectId: number
+  startAt: string
+  title: string
+  updatedAt: string
+}
+export type TaskIssueResponseType = {
+  data: ColumnType[]
+  page: number
+  size: number
+  total: number
 }
 
 export type FetchPostProjectResponseType = {
@@ -175,7 +199,6 @@ export type DialogTextType = {
 export type ScheduleListType = {
   title: string
   timeCategory: 'start' | 'end'
-  isCalendarOpen: boolean
   openCalendar: () => void
   calendarDateValue: CalendarValue
   onDateChange: (date: CalendarValue) => void
@@ -185,12 +208,75 @@ export type ScheduleListType = {
   handleAllday: () => void
   timeState: { hour: string; minute: string }
   isCheckAllday: boolean
+  dialog: MutableRefObject<HTMLDialogElement | null>
+}
+
+export type TaskListType = {
+  title: string
+  openModal: () => void
+  dateValue: CalendarValue
+  onDateChange: (date: CalendarValue) => void
+  dialog: MutableRefObject<HTMLDialogElement | null>
 }
 
 export type KanbanBoardColumnType = {
   columnTitle: string
   columnCardNumber: number
   columnColor: string
-  cardList: ProjectDetailCardType[]
-  setCardList: Dispatch<SetStateAction<ProjectDetailCardType[]>>
+  cardList: ColumnType[]
+  setCardList: Dispatch<SetStateAction<ColumnType[]>>
+}
+
+export type ColumnType = {
+  assignee: [
+    {
+      email: string
+      id: number
+      name: string
+      uuid: string
+    },
+  ]
+  category: string
+  comments: [
+    {
+      childComments: string[]
+      content: string
+      createdAt: string
+      id: number
+      like: number
+      name: string
+      position: string
+      updatedAt: string
+      writerId: number
+    },
+  ]
+  createdAt: string
+  description: string
+  endAt: string
+  files: [
+    {
+      name: string
+      url: string
+    },
+  ]
+  id: number
+  issuer: {
+    email: string
+    id: number
+    name: string
+    uuid: string
+  }
+  issuerId: number
+  processState: string
+  projectId: number
+  startAt: string
+  title: string
+  updatedAt: string
+}
+export type ColumnListType = {
+  columnTitle: string
+  columnCardNumber: number
+  columnColor: string
+  cardList: ColumnType[]
+  setCardList: Dispatch<SetStateAction<ColumnType[]>>
 }

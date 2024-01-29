@@ -1,5 +1,4 @@
 export default function MainTab() {
-  // FIXME: t
   return (
     <div className="w-full md:text-sm text-xs md:p-2 md:font-bold text-center border border-gray-200 rounded-lg shadow dark:bg-[#1a202c] dark:border-gray-700 mb-5">
       <div className="mt-2 mb-2">

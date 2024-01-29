@@ -1,9 +1,10 @@
 'use client'
 
-import { type ChangeEvent, useEffect, useState } from 'react'
+import { type ChangeEvent, useEffect, useRef, useState } from 'react'
 
 import moment from 'moment'
 
+import { DialogCalendar } from '../../../../dialog/Dialog'
 import {
   IssueCalendarWithTime,
   IssueDescription,
@@ -12,10 +13,13 @@ import {
 } from '../components/ProjectIssueComponent'
 
 import {
+  PROJECT_DATE_FORMAT,
   PROJECT_ISSUE_SCEDULE_END,
   PROJECT_ISSUE_SCEDULE_END_TITLE,
   PROJECT_ISSUE_SCEDULE_START,
   PROJECT_ISSUE_SCEDULE_START_TITLE,
+  PROJECT_ISSUE_SCHEDULE_UNIT_HOUR_EN,
+  PROJECT_ISSUE_SCHEDULE_UNIT_MINUTE_EN,
   PROJECT_ISSUE_SCHEDULE_VALUE,
 } from '@/app/constant/constant'
 import useInput from '@/app/module/hooks/reactHooks/useInput'
@@ -33,6 +37,8 @@ import { type CalendarValue, type ValuePiece } from '@/app/types/pageTypes'
 import { type ScheduleListType } from '@/app/types/variableTypes'
 
 export default function ProjectIssueSchedule() {
+  const startDialogRef = useRef<HTMLDialogElement | null>(null)
+  const endDialogRef = useRef<HTMLDialogElement | null>(null)
   const dispatch = useAppDispatch()
   const scheduleTitleInput = useInput('')
   const handleChangeTitle = (e: ChangeEvent<HTMLInputElement>) => {
@@ -60,27 +66,31 @@ export default function ProjectIssueSchedule() {
     setIsAllDay(!isAllday)
   }
 
-  const [isStartCalendarOpen, setIsStartCalendarOpen] = useState<boolean>(false)
   const handleOpenStartCalendar = () => {
-    setIsStartCalendarOpen(!isStartCalendarOpen)
+    startDialogRef.current?.showModal()
   }
-  const [isEndCaledarOpen, setIsEndCalendarOpen] = useState<boolean>(false)
   const handleOpenEndCalendar = () => {
-    setIsEndCalendarOpen(!isEndCaledarOpen)
+    endDialogRef.current?.showModal()
   }
   const handleStartDate = (date: CalendarValue) => {
     setStartDate(date)
-    const stringDate = moment(startDate as ValuePiece).format('YYYY-MM-DD')
+    const stringDate = moment(startDate as ValuePiece).format(PROJECT_DATE_FORMAT)
     dispatch(changeIssueStartAtReducer(stringDate))
-
-    setIsStartCalendarOpen(false)
+    startDialogRef.current?.close()
   }
 
   const handleEndDate = (date: CalendarValue) => {
     setEndDate(date)
-    const stringDate = moment(startDate as ValuePiece).format('YYYY-MM-DD')
+    const stringDate = moment(startDate as ValuePiece).format(PROJECT_DATE_FORMAT)
     dispatch(changeIssueEndAtReducer(stringDate))
-    setIsEndCalendarOpen(false)
+    endDialogRef.current?.close()
+  }
+
+  const setInitialDate = () => {
+    const startStringDate = moment(startDate as ValuePiece).format(PROJECT_DATE_FORMAT)
+    dispatch(changeIssueStartAtReducer(startStringDate))
+    const endStringDate = moment(endDate as ValuePiece).format(PROJECT_DATE_FORMAT)
+    dispatch(changeIssueEndAtReducer(endStringDate))
   }
 
   const hourList = Array.from({ length: 24 }, (_, index) => {
@@ -117,7 +127,6 @@ export default function ProjectIssueSchedule() {
     {
       title: PROJECT_ISSUE_SCEDULE_START_TITLE,
       timeCategory: PROJECT_ISSUE_SCEDULE_START,
-      isCalendarOpen: isStartCalendarOpen,
       openCalendar: handleOpenStartCalendar,
       calendarDateValue: startDate,
       onDateChange: handleStartDate,
@@ -127,11 +136,11 @@ export default function ProjectIssueSchedule() {
       isCheckAllday: isAllday,
       handleAllday: handleChangeAllday,
       timeState: selectTime.start,
+      dialog: startDialogRef,
     },
     {
       title: PROJECT_ISSUE_SCEDULE_END_TITLE,
       timeCategory: PROJECT_ISSUE_SCEDULE_END,
-      isCalendarOpen: isEndCaledarOpen,
       openCalendar: handleOpenEndCalendar,
       calendarDateValue: endDate,
       onDateChange: handleEndDate,
@@ -141,47 +150,56 @@ export default function ProjectIssueSchedule() {
       handleAllday: handleChangeAllday,
       timeState: selectTime.end,
       isCheckAllday: isAllday,
+      dialog: endDialogRef,
     },
   ]
+
   useEffect(() => {
+    dispatch(changeIssueCategoryReducer(PROJECT_ISSUE_SCHEDULE_VALUE.toUpperCase()))
+    setInitialDate()
+
     if (isAllday) {
       setEndDate(startDate)
-      const stringEndDate = moment(endDate as ValuePiece).format('YYYY-MM-DD')
-      const stringStartDate = moment(startDate as ValuePiece).format('YYYY-MM-DD')
+      const stringStartDate = moment(startDate as ValuePiece).format(PROJECT_DATE_FORMAT)
       dispatch(changeIssueStartAtReducer(stringStartDate))
-      dispatch(changeIssueEndAtReducer(stringEndDate))
+      dispatch(changeIssueEndAtReducer(stringStartDate))
+
       setSelectTime({
         start: { hour: '00', minute: '00' },
         end: { hour: '23', minute: '59' },
       })
-      dispatch(
-        changeIssueStartAtTimeReducer({
-          units: 'hour',
+      const times = [
+        {
+          reducer: changeIssueStartAtTimeReducer,
+          units: PROJECT_ISSUE_SCHEDULE_UNIT_HOUR_EN as 'hour',
           timeValue: '00',
-        }),
-      )
-      dispatch(
-        changeIssueStartAtTimeReducer({
-          units: 'minute',
+        },
+        {
+          reducer: changeIssueStartAtTimeReducer,
+          units: PROJECT_ISSUE_SCHEDULE_UNIT_MINUTE_EN as 'minute',
           timeValue: '00',
-        }),
-      )
-      dispatch(
-        changeIssueEndAtTimeReducer({
-          units: 'hour',
+        },
+        {
+          reducer: changeIssueEndAtTimeReducer,
+          units: PROJECT_ISSUE_SCHEDULE_UNIT_HOUR_EN as 'hour',
           timeValue: '23',
-        }),
-      )
-      dispatch(
-        changeIssueEndAtTimeReducer({
-          units: 'hour',
+        },
+        {
+          reducer: changeIssueEndAtTimeReducer,
+          units: PROJECT_ISSUE_SCHEDULE_UNIT_MINUTE_EN as 'minute',
           timeValue: '59',
-        }),
+        },
+      ]
+      times.forEach((data) =>
+        dispatch(
+          data.reducer({
+            units: data.units,
+            timeValue: data.timeValue,
+          }),
+        ),
       )
     }
-    dispatch(changeIssueCategoryReducer(PROJECT_ISSUE_SCHEDULE_VALUE.toUpperCase()))
   }, [isAllday])
-
   return (
     <>
       <div className="mt-2 p-2 mb-2">
@@ -196,7 +214,10 @@ export default function ProjectIssueSchedule() {
         />
         <IssueSelect title="참석자" selectList={attendanceList} />
         {scheduleList.map((data) => (
-          <IssueCalendarWithTime key={data.title} scheduleData={data} />
+          <div key={data.title}>
+            <IssueCalendarWithTime scheduleData={data} />
+            <DialogCalendar dialog={data.dialog} calendarWithTimeData={data} isWithtime={true} />
+          </div>
         ))}
         <IssueInput
           title="장소"

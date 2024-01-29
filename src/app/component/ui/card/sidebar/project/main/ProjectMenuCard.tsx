@@ -29,9 +29,29 @@ export default function ProjectMenuCard() {
   }
   const divClassName = (selectTitle: string) => {
     if (selectTitle === projectCategory) {
-      return 'p-5 flex flex-row bg-indigo-400 text-white rounded-lg'
+      return 'p-4 flex flex-row bg-indigo-400 text-white rounded-lg'
     } else {
-      return 'p-5 flex flex-row transition ease-in-out duration-500 hover:bg-indigo-400 hover:text-white hover:dark:bg-indigo-400 rounded-lg'
+      return 'p-4 flex flex-row transition ease-in-out duration-500 hover:bg-indigo-400 hover:text-white hover:dark:bg-indigo-400 rounded-lg'
+    }
+  }
+  const menuSpan = (title: string) => {
+    switch (title) {
+      case PROJECT_SIDEBAR_MENU_PARTICIPATING:
+        return (
+          <div className="flex flex-col justify-center items-center">
+            <span className="text-sm">참여중인</span>
+            <span className="text-sm">프로젝트</span>
+          </div>
+        )
+      case PROJECT_SIDEBAR_MENU_IMPORTANT:
+        return (
+          <div className="flex flex-col justify-center items-center">
+            <span className="text-sm">중요</span>
+            <span className="text-sm">프로젝트</span>
+          </div>
+        )
+      default:
+        return <span className="text-sm">{title}</span>
     }
   }
   return (
@@ -44,8 +64,8 @@ export default function ProjectMenuCard() {
             handleProjectMainCategory(data.title)
           }}
         >
-          {data.icon}
-          <span>{data.title}</span>
+          <div className="flex items-center">{data.icon}</div>
+          {menuSpan(data.title)}
         </div>
       ))}
     </div>

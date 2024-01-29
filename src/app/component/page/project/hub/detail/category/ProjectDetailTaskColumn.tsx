@@ -39,10 +39,17 @@ export default function ProjectDetailTaskColumn(props: ProjectDetailTaskColumnPr
         }
     }
   }
+  const convertDate = (inputDate: string) => {
+    const date = new Date(inputDate)
+    const year = date.getFullYear()
+    const month = ('0' + (date.getMonth() + 1)).slice(-2)
+    const day = ('0' + date.getDate()).slice(-2)
+    return `${year}.${month}.${day}`
+  }
   return (
     <div className={`${props.columnColor} p-2 rounded-lg col-span-1`}>
-      <div className="w-2/5 flex flex-row justify-around">
-        <span className="font-bold">{props.columnTitle}</span>
+      <div className="w-full lg:w-2/5 flex flex-row justify-around">
+        <span className="font-bold text-black">{props.columnTitle}</span>
         <span className={`font-bold ${mainColor().textColor}`}>{props.cardList.length}</span>
       </div>
 
@@ -67,7 +74,7 @@ export default function ProjectDetailTaskColumn(props: ProjectDetailTaskColumnPr
                   >
                     <ProjectDetailTaskCard
                       title={data.title}
-                      time={data.time}
+                      time={`${convertDate(data.startAt)}-${convertDate(data.endAt)}`}
                       cardColor={mainColor().bgColor}
                     />
                   </div>

@@ -1,8 +1,8 @@
 import { type ChangeEvent, type Dispatch, type SetStateAction } from 'react'
 
-import { type ProjectDetailCardType } from './ui/cardTypes'
 import {
   type BoardListResponseType,
+  type ColumnType,
   type CommentType,
   type ScheduleListType,
 } from './variableTypes'
@@ -97,7 +97,6 @@ export type ValuePiece = Date | null
 export type CalendarValue = ValuePiece | [ValuePiece, ValuePiece]
 export type IssueCalendarProps = {
   title: string
-  state: boolean
   openModal: () => void
   dateValue: CalendarValue
   onDateChange: (date: CalendarValue) => void
@@ -124,5 +123,5 @@ export type ProjectDetailTaskColumnProps = {
   columnTitle: string
   columnCardNumber: number
   columnColor: string
-  cardList: ProjectDetailCardType[]
+  cardList: ColumnType[]
 }

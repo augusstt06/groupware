@@ -10,6 +10,8 @@ import { type AppRouterInstance } from 'next/dist/shared/lib/app-router-context.
 
 import { type KEY_UUID, type KEY_X_ORGANIZATION_CODE } from '../constant/constant'
 
+import { type ScheduleListType, type TaskListType } from './variableTypes'
+
 export type UnionStrNumber = string | number
 
 export type ApiResponseType = Record<string, UnionStrNumber>
@@ -121,4 +123,11 @@ export type DialogBtnValueType = {
   cancelText: string
   confirmFunc: () => void
   confirmText: string
+}
+
+export type DialogCalenderProps = {
+  dialog?: MutableRefObject<HTMLDialogElement | null>
+  isWithtime: boolean
+  calendarWithTimeData?: ScheduleListType
+  calendarData?: TaskListType
 }

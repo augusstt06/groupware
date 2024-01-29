@@ -27,25 +27,18 @@ import {
 import {
   API_URL_PROJECT_STAR,
   API_URL_PROJECT_UNSTAR,
-  API_URL_PROJECTS_LIST_STARRED,
 } from '@/app/constant/route/api-route-constant'
 import { ROUTE_PROJECT_DETAIL } from '@/app/constant/route/route-constant'
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
-import {
-  moduleDeleteFetchWithBody,
-  moduleGetFetch,
-  modulePostFetch,
-} from '@/app/module/utils/moduleFetch'
+import { moduleDeleteFetchWithBody, modulePostFetch } from '@/app/module/utils/moduleFetch'
 import {
   type DialogBtnValueType,
   type FailResponseType,
-  type ModuleGetFetchProps,
   type ModulePostFetchProps,
-  type SuccessResponseType,
 } from '@/app/types/moduleTypes'
 import { type ProjectCardProps } from '@/app/types/ui/cardTypes'
-import { type DialogTextType, type ProjectListResponseType } from '@/app/types/variableTypes'
+import { type DialogTextType } from '@/app/types/variableTypes'
 
 export default function ProjectCard(props: ProjectCardProps) {
   const dialogRef = useRef<HTMLDialogElement | null>(null)
@@ -66,39 +59,7 @@ export default function ProjectCard(props: ProjectCardProps) {
   // FIXME: response에 star 들어오면 별모양 바꾸기
   const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
-  const [isStar, setIsStar] = useState<boolean>(false)
 
-  const fetchGetStarList = async () => {
-    try {
-      const fetchGetStarProps: ModuleGetFetchProps = {
-        params: {
-          limit: 10,
-          offset: 0,
-          teamId: 1,
-        },
-        fetchUrl: API_URL_PROJECTS_LIST_STARRED,
-        header: {
-          Authorization: `Bearer ${accessToken}`,
-          [KEY_X_ORGANIZATION_CODE]: orgCode,
-        },
-      }
-      const res = await moduleGetFetch<ProjectListResponseType>(fetchGetStarProps)
-
-      if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)
-      const startList = (res as SuccessResponseType<ProjectListResponseType>).result.data
-      if (startList.filter((data) => data.id === props.projectInfo.id).length === 0) {
-        setIsStar(false)
-      } else {
-        setIsStar(true)
-      }
-    } catch (err) {
-      setDialogText({
-        main: '프로젝트를 불러오는데 실패했습니다.',
-        sub: '',
-      })
-      dialogRef.current?.showModal()
-    }
-  }
   const fetchStarred = async () => {
     try {
       const fetchProps: ModulePostFetchProps = {
@@ -113,7 +74,7 @@ export default function ProjectCard(props: ProjectCardProps) {
       }
       const res = await modulePostFetch<string>(fetchProps)
       if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)
-      setIsStar(true)
+      props.setRerender(!props.rerender)
     } catch (err) {
       setDialogText({
         main: '중요 프로젝트 전환에 실패했습니다.',
@@ -137,7 +98,7 @@ export default function ProjectCard(props: ProjectCardProps) {
       }
       const res = await moduleDeleteFetchWithBody<string>(fetchProps)
       if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)
-      setIsStar(false)
+      props.setRerender(!props.rerender)
     } catch (err) {
       setDialogText({
         main: '일반 프로젝트 전환에 실패했습니다.',
@@ -148,7 +109,7 @@ export default function ProjectCard(props: ProjectCardProps) {
   }
 
   const handleClickStar = () => {
-    if (isStar) {
+    if (props.projectInfo.starred) {
       void fetchUnstar()
     } else void fetchStarred()
     props.setRerender(!props.rerender)
@@ -172,12 +133,11 @@ export default function ProjectCard(props: ProjectCardProps) {
     }
   }
 
-  useEffect(() => {
-    void fetchGetStarList()
-  }, [isStar])
+  useEffect(() => {}, [props.projectInfo.starred])
+
   return (
     <div
-      className="flex flex-row items-center dark:bg-gray-100 dark:text-black h-24 xl:w-56 md:w-48 w-32 border-gray-300 border-1 shadow-2xl transition duration-500 ease-in-out hover:scale-110 hover:shadow-2xl"
+      className="flex flex-row items-center dark:bg-gray-100 dark:text-black h-24 2xl:w-44 xl:w-48 md:w-48 w-32 border-gray-300 border-1 shadow-2xl transition duration-400 ease-in-out hover:scale-110 hover:shadow-2xl bg-white"
       style={{ boxShadow: '5px 0px 10px rgba(0, 0, 0, 0.1)' }}
     >
       <div className={`${cardColor(props.projectInfo.color)} w-8 md:w-10 h-full`}></div>
@@ -195,14 +155,14 @@ export default function ProjectCard(props: ProjectCardProps) {
       </div>
 
       <div className="h-full p-2 cursor-pointer">
-        {isStar ? (
+        {props.projectInfo.starred ? (
           <FaStar
-            className="text-yellow-400 transition ease-in-out duration-500 hover:scale-125"
+            className="text-yellow-400 transition ease-in-out duration-500 hover:scale-150"
             onClick={handleClickStar}
           />
         ) : (
           <FaRegStar
-            className="text-yellow-400 transition ease-in-out duration-500 hover:scale-125"
+            className="text-yellow-400 transition ease-in-out duration-500 hover:scale-150"
             onClick={handleClickStar}
           />
         )}
