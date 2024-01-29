@@ -96,6 +96,7 @@ export default function ProjectIssueSchedule() {
         sub: '',
       })
       dialogRef.current?.showModal()
+      return
     }
     const stringDate = moment(date as ValuePiece).format(PROJECT_DATE_FORMAT)
     dispatch(changeIssueStartAtReducer(stringDate))
@@ -123,6 +124,24 @@ export default function ProjectIssueSchedule() {
     dispatch(changeIssueStartAtReducer(startStringDate))
     const endStringDate = moment(endDate as ValuePiece).format(PROJECT_DATE_FORMAT)
     dispatch(changeIssueEndAtReducer(endStringDate))
+    const times = [
+      { units: 'hour', timeValue: '00' },
+      { units: 'minute', timeValue: '00' },
+    ]
+    times.forEach((data) => {
+      dispatch(
+        changeIssueStartAtTimeReducer({
+          units: data.units as 'hour' | 'minute',
+          timeValue: data.timeValue,
+        }),
+      )
+      dispatch(
+        changeIssueEndAtTimeReducer({
+          units: data.units as 'hour' | 'minute',
+          timeValue: data.timeValue,
+        }),
+      )
+    })
   }
 
   const hourList = Array.from({ length: 24 }, (_, index) => {
@@ -188,6 +207,7 @@ export default function ProjectIssueSchedule() {
 
   useEffect(() => {
     dispatch(changeIssueCategoryReducer(PROJECT_ISSUE_SCHEDULE_VALUE.toUpperCase()))
+    dispatch(changeIssueTitleReducer(''))
     setInitialDate()
 
     if (isAllday) {

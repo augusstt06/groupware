@@ -17,7 +17,6 @@ import { API_URL_PROJECT_ISSUE_LIST } from '@/app/constant/route/api-route-const
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
 import { moduleGetFetch } from '@/app/module/utils/moduleFetch'
-import { moduleConvertDate } from '@/app/module/utils/moduleTime'
 import {
   changeProjectDetailCategoryReducer,
   changeProjectDetailScheduleCategoryReducer,
@@ -76,8 +75,8 @@ export default function ProjectDetailSchedule() {
     resList.forEach((data) => {
       const scheduleEventProps: FullCalendarEventType = {
         title: data.title,
-        start: moduleConvertDate(data.startAt, '-', false),
-        end: moduleConvertDate(data.endAt, '-', false),
+        start: data.startAt,
+        end: data.endAt,
         backgroundColor: randomColor(),
       }
       if (!isDataInList(scheduleEvent, scheduleEventProps)) {
@@ -94,6 +93,7 @@ export default function ProjectDetailSchedule() {
   return (
     <div className=" w-full justify-center dark:border-gray-700 border border-gray-200 rounded-lg dark:bg-[#1a202c] shadow-lg p-3 z-1">
       <FullCalendar
+        timeZone="UTC"
         initialView="dayGridMonth"
         plugins={[dayGridPlugin, timeGridPlugin]}
         headerToolbar={{

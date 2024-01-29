@@ -209,6 +209,7 @@ export default function ProjectDetail() {
 
   const isIssueInputEmpty = () => {
     const { category, endAt, processState, projectId, startAt, title } = issueState
+
     switch (issueState.category) {
       case PROJECT_ISSUE_TASK_VALUE.toUpperCase():
         return (

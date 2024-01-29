@@ -67,6 +67,7 @@ export default function Project() {
   )
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
   const [rerender, setRerender] = useState(false)
+
   const [accessToken, setAccessToken] = useState(moduleGetCookie(KEY_ACCESS_TOKEN))
   const loginCompleteState = useAppSelector((state) => state.maintain[KEY_LOGIN_COMPLETE])
   const projectCategory = useAppSelector((state) => state.projectMainCategory.selectProjectMenu)
