@@ -58,14 +58,15 @@ export default function ProjectDetailTodo() {
 
   return (
     <div className="w-full justify-center dark:border-gray-700 border border-gray-200 rounded-lg dark:bg-[#1a202c] shadow-lg p-3 z-1">
-      <div className="w-full p-3">
+      <div className="w-full p-3 ">
         <span className="font-bold">전체 할일 </span>
         <span className="font-bold text-indigo-400">{todoList.length}</span>
       </div>
-
-      {todoList.map((data) => (
-        <ProjectDetailTodoCard todo={data} key={data.id} />
-      ))}
+      <div className="flex items-center justify-center">
+        {todoList.map((data) => (
+          <ProjectDetailTodoCard todo={data} key={data.id} />
+        ))}
+      </div>
     </div>
   )
 }
