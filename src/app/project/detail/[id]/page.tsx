@@ -31,7 +31,7 @@ import {
   API_URL_PROJECTS,
 } from '@/app/constant/route/api-route-constant'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
-import { moduleCheckUserState } from '@/app/module/utils/moduleCheckUserState'
+import { moduleCheckUserState } from '@/app/module/utils/check/moduleCheckUserState'
 import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
 import { moduleGetFetch, modulePostFetch } from '@/app/module/utils/moduleFetch'
 import { changeIssueProjectIdReducer } from '@/app/store/reducers/project/projectIssueReducer'
@@ -190,9 +190,7 @@ export default function ProjectDetail() {
   const fetchPostIssue = async () => {
     try {
       const fetchProps = fetchPropsByCategory()
-
       await modulePostFetch<ProjectCreateIssueResponseType>(fetchProps)
-
       setDialogText({
         main: '성공적으로 이슈를 생성했습니다.',
         sub: '',
@@ -211,6 +209,7 @@ export default function ProjectDetail() {
 
   const isIssueInputEmpty = () => {
     const { category, endAt, processState, projectId, startAt, title } = issueState
+
     switch (issueState.category) {
       case PROJECT_ISSUE_TASK_VALUE.toUpperCase():
         return (

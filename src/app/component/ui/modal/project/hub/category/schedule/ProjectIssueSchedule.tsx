@@ -4,7 +4,7 @@ import { type ChangeEvent, useEffect, useRef, useState } from 'react'
 
 import moment from 'moment'
 
-import { DialogCalendar } from '../../../../dialog/Dialog'
+import Dialog, { DialogCalendar } from '../../../../dialog/Dialog'
 import {
   IssueCalendarWithTime,
   IssueDescription,
@@ -33,12 +33,28 @@ import {
   changeIssueStartAtTimeReducer,
   changeIssueTitleReducer,
 } from '@/app/store/reducers/project/projectIssueReducer'
+import { type DialogBtnValueType } from '@/app/types/moduleTypes'
 import { type CalendarValue, type ValuePiece } from '@/app/types/pageTypes'
-import { type ScheduleListType } from '@/app/types/variableTypes'
+import { type DialogTextType, type ScheduleListType } from '@/app/types/variableTypes'
 
 export default function ProjectIssueSchedule() {
+  const dialogRef = useRef<HTMLDialogElement | null>(null)
   const startDialogRef = useRef<HTMLDialogElement | null>(null)
   const endDialogRef = useRef<HTMLDialogElement | null>(null)
+  const [dialogText, setDialogText] = useState<DialogTextType>({
+    main: '',
+    sub: '',
+  })
+  const handleDialogClose = () => {
+    dialogRef.current?.close()
+  }
+  const [projectDialogBtnValue] = useState<DialogBtnValueType>({
+    isCancel: false,
+    cancleFunc: () => {},
+    cancelText: '',
+    confirmFunc: handleDialogClose,
+    confirmText: '확인',
+  })
   const dispatch = useAppDispatch()
   const scheduleTitleInput = useInput('')
   const handleChangeTitle = (e: ChangeEvent<HTMLInputElement>) => {
@@ -72,17 +88,34 @@ export default function ProjectIssueSchedule() {
   const handleOpenEndCalendar = () => {
     endDialogRef.current?.showModal()
   }
+
   const handleStartDate = (date: CalendarValue) => {
-    setStartDate(date)
-    const stringDate = moment(startDate as ValuePiece).format(PROJECT_DATE_FORMAT)
+    if (moment(endDate as ValuePiece).isBefore(date as ValuePiece)) {
+      setDialogText({
+        main: '시작일은 마감일보다 늦을수 없습니다.',
+        sub: '',
+      })
+      dialogRef.current?.showModal()
+      return
+    }
+    const stringDate = moment(date as ValuePiece).format(PROJECT_DATE_FORMAT)
     dispatch(changeIssueStartAtReducer(stringDate))
+    setStartDate(date)
     startDialogRef.current?.close()
   }
 
   const handleEndDate = (date: CalendarValue) => {
-    setEndDate(date)
-    const stringDate = moment(startDate as ValuePiece).format(PROJECT_DATE_FORMAT)
+    if (moment(startDate as ValuePiece).isAfter(date as ValuePiece)) {
+      setDialogText({
+        main: '시작일은 마감일보다 늦을수 없습니다.',
+        sub: '',
+      })
+      dialogRef.current?.showModal()
+      return
+    }
+    const stringDate = moment(date as ValuePiece).format(PROJECT_DATE_FORMAT)
     dispatch(changeIssueEndAtReducer(stringDate))
+    setEndDate(date)
     endDialogRef.current?.close()
   }
 
@@ -91,6 +124,24 @@ export default function ProjectIssueSchedule() {
     dispatch(changeIssueStartAtReducer(startStringDate))
     const endStringDate = moment(endDate as ValuePiece).format(PROJECT_DATE_FORMAT)
     dispatch(changeIssueEndAtReducer(endStringDate))
+    const times = [
+      { units: 'hour', timeValue: '00' },
+      { units: 'minute', timeValue: '00' },
+    ]
+    times.forEach((data) => {
+      dispatch(
+        changeIssueStartAtTimeReducer({
+          units: data.units as 'hour' | 'minute',
+          timeValue: data.timeValue,
+        }),
+      )
+      dispatch(
+        changeIssueEndAtTimeReducer({
+          units: data.units as 'hour' | 'minute',
+          timeValue: data.timeValue,
+        }),
+      )
+    })
   }
 
   const hourList = Array.from({ length: 24 }, (_, index) => {
@@ -156,6 +207,7 @@ export default function ProjectIssueSchedule() {
 
   useEffect(() => {
     dispatch(changeIssueCategoryReducer(PROJECT_ISSUE_SCHEDULE_VALUE.toUpperCase()))
+    dispatch(changeIssueTitleReducer(''))
     setInitialDate()
 
     if (isAllday) {
@@ -230,6 +282,11 @@ export default function ProjectIssueSchedule() {
           onChange={handleChangeDescription}
         />
       </div>
+      <Dialog
+        dialog={dialogRef}
+        dialogAlertText={dialogText}
+        dialogBtnValue={projectDialogBtnValue}
+      />
     </>
   )
 }

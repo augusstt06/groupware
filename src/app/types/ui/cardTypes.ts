@@ -4,6 +4,7 @@ import {
   type BoardListResponseType,
   type MyBoardType,
   type ProjectResponseType,
+  type ScheduleType,
 } from '../variableTypes'
 
 export type TaskCardProps = {
@@ -56,4 +57,7 @@ export type ProjectDetailTaskCardProps = {
   title: string
   time: string
   cardColor: string
+}
+export type ProjectDetailTodoCardPRops = {
+  todo: ScheduleType
 }

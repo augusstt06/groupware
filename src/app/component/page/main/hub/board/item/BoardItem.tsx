@@ -27,7 +27,9 @@ export default function BoardItem(props: BoardItemProps) {
       <div className="md:text-sm text-xs">
         <span className="p-1 mr-2">{props.boardListItem.position}</span>
         <span className="p-1 mr-2">{props.boardListItem.name}</span>
-        <span className="p-1 mr-2">{moduleConvertDate(props.boardListItem.createdAt)}</span>
+        <span className="p-1 mr-2">
+          {moduleConvertDate(props.boardListItem.createdAt, '.', false)}
+        </span>
       </div>
     </div>
   )

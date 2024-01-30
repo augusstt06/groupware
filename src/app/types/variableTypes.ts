@@ -98,27 +98,8 @@ export type ProjectResponseType = {
   }>
 }
 
-export type IssueResponeType = {
-  category: string
-  createdAt: string
-  description: string
-  endAt: string
-  id: number
-  issuer: {
-    id: number
-    name: string
-    uuid: string
-    email: string
-  }
-  issuerId: number
-  processState: string
-  projectId: number
-  startAt: string
-  title: string
-  updatedAt: string
-}
-export type TaskIssueResponseType = {
-  data: ColumnType[]
+export type IssueResponseType<T> = {
+  data: T[]
   page: number
   size: number
   total: number
@@ -145,41 +126,41 @@ export type ProjectIssueResponseType = {
 export type ProjectIssueType = {
   assignee: [
     {
-      email: 'string'
-      id: 0
-      uuid: 'string'
+      email: string
+      id: number
+      uuid: string
     },
   ]
-  category: 'string'
+  category: string
   comments: [
     {
-      childComments: ['string']
-      content: 'string'
-      createdAt: 'string'
-      id: 0
-      like: 0
-      name: 'string'
-      position: 'string'
-      updatedAt: 'string'
-      writerId: 0
+      childComments: string[]
+      content: string
+      createdAt: string
+      id: number
+      like: number
+      name: string
+      position: string
+      updatedAt: string
+      writerId: number
     },
   ]
-  createdAt: 'string'
-  description: 'string'
-  endAt: 'string'
-  files: ['string']
-  id: 0
+  createdAt: string
+  description: string
+  endAt: string
+  files: [string]
+  id: number
   issuer: {
     email: string
     id: number
     name: string
     uuid: string
   }
-  processState: 'string'
-  projectId: 0
-  startAt: 'string'
-  title: 'string'
-  updatedAt: 'string'
+  processState: string
+  projectId: number
+  startAt: string
+  title: string
+  updatedAt: string
 }
 
 export type ProjectCreateIssueResponseType = {
@@ -279,4 +260,26 @@ export type ColumnListType = {
   columnColor: string
   cardList: ColumnType[]
   setCardList: Dispatch<SetStateAction<ColumnType[]>>
+}
+
+export type ScheduleType = {
+  category: string
+  createdAt: string
+  description: string
+  endAt: string
+  id: number
+  issuer: { id: number; name: string; uuid: string; email: string }
+  issuerId: number
+  projectId: number
+  startAt: string
+  title: string
+  updatedAt: string
+}
+
+export type FullCalendarEventType = {
+  title: string
+  start: string
+  end: string
+  backgroundColor: string
+  textColor: string
 }

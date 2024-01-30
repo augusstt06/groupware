@@ -28,7 +28,7 @@ import {
   ROUTE_ERR_NOT_FOUND_POSTING_DETAIL,
 } from '@/app/constant/route/route-constant'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
-import { moduleCheckUserState } from '@/app/module/utils/moduleCheckUserState'
+import { moduleCheckUserState } from '@/app/module/utils/check/moduleCheckUserState'
 import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
 import { moduleDeleteFetch, moduleGetFetch, modulePostFetch } from '@/app/module/utils/moduleFetch'
 import {

@@ -37,7 +37,7 @@ import {
 } from '../constant/route/api-route-constant'
 import useInput from '../module/hooks/reactHooks/useInput'
 import { useAppDispatch, useAppSelector } from '../module/hooks/reduxHooks'
-import { moduleCheckUserState } from '../module/utils/moduleCheckUserState'
+import { moduleCheckUserState } from '../module/utils/check/moduleCheckUserState'
 import { moduleGetCookie } from '../module/utils/moduleCookie'
 import { moduleGetFetch, modulePostFetch } from '../module/utils/moduleFetch'
 import { createProjectModalReducer } from '../store/reducers/project/projectModalReducer'
@@ -67,6 +67,7 @@ export default function Project() {
   )
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
   const [rerender, setRerender] = useState(false)
+
   const [accessToken, setAccessToken] = useState(moduleGetCookie(KEY_ACCESS_TOKEN))
   const loginCompleteState = useAppSelector((state) => state.maintain[KEY_LOGIN_COMPLETE])
   const projectCategory = useAppSelector((state) => state.projectMainCategory.selectProjectMenu)
