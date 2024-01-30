@@ -32,7 +32,7 @@ export default function PostingDetailHeader(props: PostingDetailHeaderProps) {
         <div className="flex flex-row justify-between">
           <div className="flex flex-row w-2/5 justify-start items-center text-gray-400">
             <span className="text-xs justify-around items-center mr-3">
-              {moduleConvertDate(props.content?.createdAt).split(' ')[0]}
+              {moduleConvertDate(props.content?.createdAt, '.', false).split(' ')[0]}
             </span>
             {/* 조회수 */}
             <div className="flex flex-row text-xs justify-around items-center w-6 mr-2">

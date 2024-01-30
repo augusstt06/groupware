@@ -49,7 +49,7 @@ export default function BoardModalSaveListTab(props: BoardModalSaveListTabProps)
               <span className="text-base p-1 mb-2">{extractFirstTag(data.content)}</span>
             </div>
             <div className="md:text-sm text-xs">
-              <span className="p-1 mr-2">{moduleConvertDate(data.createdAt)}</span>
+              <span className="p-1 mr-2">{moduleConvertDate(data.createdAt, '.', false)}</span>
             </div>
           </div>
           {/* FIXME: 삭제 api 연결하기 */}

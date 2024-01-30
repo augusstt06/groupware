@@ -24,7 +24,7 @@ export const moduleGetCurrentTime = (): string => {
   return formattedTime
 }
 
-export const moduleConvertDate = (date: string) => {
+export const moduleConvertDate = (date: string, division: string, isTime: boolean) => {
   const dateObj = new Date(date)
   const year = dateObj.getFullYear()
   const month = String(dateObj.getMonth() + 1).padStart(2, '0')
@@ -32,5 +32,8 @@ export const moduleConvertDate = (date: string) => {
   const hours = String(dateObj.getHours()).padStart(2, '0')
   const minutes = String(dateObj.getMinutes()).padStart(2, '0')
 
-  return `${year}/${month}/${day} ${hours}:${minutes}`
+  if (isTime) {
+    return `${year}${division}${month}${division}${day} ${hours}:${minutes}`
+  }
+  return `${year}${division}${month}${division}${day}`
 }

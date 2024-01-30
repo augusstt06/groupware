@@ -46,7 +46,9 @@ export default function BoardCard(props: BoardCardType) {
       </div>
       <div className="w-1/3 flex flex-col justify-end p-2">
         <span className="text-sm mb-2">{props.content.name}</span>
-        <span className="text-xs">{moduleConvertDate(props.content.updatedAt).split(' ')[0]}</span>
+        <span className="text-xs">
+          {moduleConvertDate(props.content.updatedAt, '.', false).split(' ')[0]}
+        </span>
       </div>
     </div>
   )

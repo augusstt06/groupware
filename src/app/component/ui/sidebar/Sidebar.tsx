@@ -119,7 +119,7 @@ export default function Sidebar() {
       </div>
 
       <div
-        className={`fixed md:block 2xl:top-44 md:top-24 top-28 2xl:w-64 ${
+        className={`z-50 fixed md:block 2xl:top-44 md:top-24 top-28 2xl:w-64 ${
           overXl ? `left-${leftValue}` : ' 2xl:left-32 xl:left-4 lg:left-2 '
         } lg:w-36 w-40 md:ml-10 ml-5 mr-14 ${
           isSideOpen ? 'md:bg-none bg-white dark:bg-[#121212]  rounded-lg z-999' : 'hidden'

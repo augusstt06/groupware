@@ -21,7 +21,7 @@ export default function ProjectDetailTable(props: ProjectDetailTableProps) {
     }
   }
   const sliceTime = () => {
-    const time = moduleConvertDate(props.issue.updatedAt)
+    const time = moduleConvertDate(props.issue.updatedAt, '.', false)
     const [datePart] = time.split(' ')
 
     return datePart

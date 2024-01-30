@@ -3,7 +3,7 @@ import { FaPlus } from 'react-icons/fa'
 import {
   PROJECT_DETAIL_CATEGORY_SCHEDULE,
   PROJECT_DETAIL_CATEGORY_TASK,
-  PROJECT_ISSUE_TODO_VALUE,
+  PROJECT_DETAIL_CATEGORY_TODO,
 } from '@/app/constant/constant'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { createProjectIssueModalOpenReducer } from '@/app/store/reducers/project/projectModalReducer'
@@ -21,7 +21,7 @@ export default function CreateProjectIssueBtn() {
         return <span>업무 생성</span>
       case PROJECT_DETAIL_CATEGORY_SCHEDULE:
         return <span>일정 생성</span>
-      case PROJECT_ISSUE_TODO_VALUE:
+      case PROJECT_DETAIL_CATEGORY_TODO:
         return <span>할일 생성</span>
       default:
         return <span>업무/일정/할일 생성</span>
