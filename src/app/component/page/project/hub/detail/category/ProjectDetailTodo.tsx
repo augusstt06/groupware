@@ -62,7 +62,7 @@ export default function ProjectDetailTodo() {
         <span className="font-bold">전체 할일 </span>
         <span className="font-bold text-indigo-400">{todoList.length}</span>
       </div>
-      <div className="flex items-center justify-center">
+      <div className="flex-col flex items-center justify-center">
         {todoList.map((data) => (
           <ProjectDetailTodoCard todo={data} key={data.id} />
         ))}

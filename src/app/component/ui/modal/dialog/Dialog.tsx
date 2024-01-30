@@ -55,10 +55,7 @@ export function DialogCalendar(props: DialogCalenderProps) {
       )
     }
     return (
-      <Calendar
-        value={props.calendarData?.dateValue}
-        onClickDay={props.calendarData?.onDateChange}
-      />
+      <Calendar value={props.calendarData?.dateValue} onChange={props.calendarData?.onDateChange} />
     )
   }
   return (

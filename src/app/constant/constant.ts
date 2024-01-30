@@ -1,3 +1,7 @@
+// google calendar
+export const GOOGLE_CALENDAR_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_CALENDAR_API_KEY as string
+export const GOOGLE_CALENDAR_ID = process.env.NEXT_PUBLIC_GOOGLE_CALENDAR_ID as string
+
 // API resposne code
 export const API_SUCCESS_CODE = 200
 
@@ -140,6 +144,7 @@ export const PROJECT_ISSUE_SCHEDULE_UNIT_HOUR_EN = 'hour'
 export const PROJECT_ISSUE_SCHEDULE_UNIT_MINUTE_EN = 'minute'
 
 export const PROJECT_DATE_FORMAT = 'YYYY-MM-DD'
+
 // modal
 export const MODAL_BTN_CREATE = '생성'
 export const MODAL_BTN_SAVE = '저장'

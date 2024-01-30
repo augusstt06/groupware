@@ -281,4 +281,5 @@ export type FullCalendarEventType = {
   start: string
   end: string
   backgroundColor: string
+  textColor: string
 }

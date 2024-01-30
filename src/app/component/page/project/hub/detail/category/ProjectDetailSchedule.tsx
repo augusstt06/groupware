@@ -1,12 +1,15 @@
 import { useEffect, useState } from 'react'
 
 import dayGridPlugin from '@fullcalendar/daygrid'
+import googleCalendarPlugin from '@fullcalendar/google-calendar'
 import FullCalendar from '@fullcalendar/react'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import { useParams } from 'next/navigation'
 
 import {
   API_SUCCESS_CODE,
+  GOOGLE_CALENDAR_API_KEY,
+  GOOGLE_CALENDAR_ID,
   KEY_ACCESS_TOKEN,
   KEY_X_ORGANIZATION_CODE,
   PROJECT_DETAIL_CATEGORY_SCHEDULE,
@@ -40,17 +43,32 @@ export default function ProjectDetailSchedule() {
   const [scheduleEvent, setScheduleEvent] = useState<FullCalendarEventType[]>([])
 
   const randomColor = () => {
-    const colors = [
-      'rgb(240,185,185)',
-      'rgb(228,177,227)',
-      'rgb(170,230,200)',
-      'rgb(170,220,240)',
-      'rgb(207,183,242)',
-      'rgb(240,210,190)',
-    ]
+    const colors = ['rgb(254,247,208)', 'rgb(212,246,228)', 'rgb(210,236,253)', 'rgb(247,225,223)']
     const randomIndex = Math.floor(Math.random() * colors.length)
-    return colors[randomIndex]
+    switch (colors[randomIndex]) {
+      case 'rgb(254,247,208)':
+        return {
+          bg: 'rgb(254,247,208)',
+          text: 'rgb(248,216,73)',
+        }
+      case 'rgb(212,246,228)':
+        return {
+          bg: 'rgb(212,246,228)',
+          text: 'rgb(98,214,124)',
+        }
+      case 'rgb(210,236,253)':
+        return {
+          bg: 'rgb(210,236,253)',
+          text: 'rgb(72, 160, 248)',
+        }
+      default:
+        return {
+          bg: 'rgb(247,225,223)',
+          text: 'rgb(221, 109,96)',
+        }
+    }
   }
+
   // title 말고 다른 것으로 구분할지 생각
   const isDataInList = (list: FullCalendarEventType[], newData: FullCalendarEventType) => {
     return list.some((item) => item.title === newData.title)
@@ -69,6 +87,7 @@ export default function ProjectDetailSchedule() {
         [KEY_X_ORGANIZATION_CODE]: orgCode,
       },
     }
+
     const res = await moduleGetFetch<IssueResponseType<ScheduleType>>(fetchProps)
     if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)
     const resList = (res as SuccessResponseType<IssueResponseType<ScheduleType>>).result.data
@@ -77,13 +96,15 @@ export default function ProjectDetailSchedule() {
         title: data.title,
         start: data.startAt,
         end: data.endAt,
-        backgroundColor: randomColor(),
+        backgroundColor: randomColor().bg,
+        textColor: randomColor().text,
       }
       if (!isDataInList(scheduleEvent, scheduleEventProps)) {
         setScheduleEvent((prev) => [...prev, scheduleEventProps])
       }
     })
   }
+
   useEffect(() => {
     dispatch(changeProjectDetailCategoryReducer(PROJECT_DETAIL_CATEGORY_SCHEDULE))
     dispatch(changeProjectDetailScheduleCategoryReducer(PROJECT_SIDEBAR_SCHEDULE_ALL))
@@ -95,13 +116,21 @@ export default function ProjectDetailSchedule() {
       <FullCalendar
         timeZone="UTC"
         initialView="dayGridMonth"
-        plugins={[dayGridPlugin, timeGridPlugin]}
+        plugins={[dayGridPlugin, timeGridPlugin, googleCalendarPlugin]}
         headerToolbar={{
           left: 'prev,next',
           center: 'title',
           right: 'dayGridMonth,timeGridWeek,timeGridDay',
         }}
         events={scheduleEvent}
+        eventSources={[
+          {
+            googleCalendarId: GOOGLE_CALENDAR_ID,
+            backgroundColor: 'rgb(221, 109,96)',
+            color: 'white',
+          },
+        ]}
+        googleCalendarApiKey={GOOGLE_CALENDAR_API_KEY}
       />
     </div>
   )

@@ -113,16 +113,16 @@ export default function ProjectIssueTask() {
   }
 
   const handleStartDate = (date: CalendarValue) => {
-    setStartDate(date)
-    const stringDate = moment(startDate as ValuePiece).format(PROJECT_DATE_FORMAT)
+    const stringDate = moment(date as ValuePiece).format(PROJECT_DATE_FORMAT)
     dispatch(changeIssueStartAtReducer(stringDate))
+    setStartDate(date)
     startDialogRef.current?.close()
   }
 
   const handleEndDate = (date: CalendarValue) => {
-    setEndDate(date)
-    const stringDate = moment(endDate as ValuePiece).format(PROJECT_DATE_FORMAT)
+    const stringDate = moment(date as ValuePiece).format(PROJECT_DATE_FORMAT)
     dispatch(changeIssueEndAtReducer(stringDate))
+    setEndDate(date)
     endDialogRef.current?.close()
   }
 
@@ -148,6 +148,7 @@ export default function ProjectIssueTask() {
     setInitialDate()
     dispatch(changeIssueCategoryReducer(PROJECT_ISSUE_TASK_VALUE.toUpperCase()))
   }, [])
+
   return (
     <>
       <div className="mt-2 p-2 mb-2">
