@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react'
 import ReactDOM from 'react-dom'
 
-import ModalBtn from '../button/project/modal/ModalBtn'
+import Button from '../button/Button'
 
 import Dialog from './dialog/Dialog'
 
 import { MODAL_CREATE_PROJECT_ISSUE, MODAL_INVITE_MEMBER_IN_PROJECT } from '@/app/constant/constant'
 import { type ModalHubProps, type ModalUsePortalProps } from '@/app/types/moduleTypes'
+import { type ModalBtnProps } from '@/app/types/ui/modalTypes'
 
 export default function ModalHub(props: ModalHubProps) {
   return (
@@ -96,4 +97,21 @@ export function Modal(props: ModalUsePortalProps) {
     }
   }, [])
   return props.isModalOpen ? <>{viewModal()}</> : <></>
+}
+
+export function ModalBtn(props: ModalBtnProps) {
+  return (
+    <div className=" flex flex-row items-center justify-center p-3">
+      <Button
+        buttonContent="취소"
+        className="transition ease-in-out duration-300 border-gray-400 border-2 bg-white-600 hover:bg-gray-500 hover:dark:bg-gray-200 hover:dark:text-black hover:text-white focus:outline-none font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center me-2er mr-5"
+        onClick={props.onClose}
+      />
+      <Button
+        buttonContent={props.btnValue}
+        className="transition ease-in-out duration-300 border-gray-400 border-2 bg-white-600 hover:bg-gray-500 hover:dark:bg-gray-200 hover:dark:text-black hover:text-white focus:outline-none font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center me-2er"
+        onClick={props.confirmFunc}
+      />
+    </div>
+  )
 }

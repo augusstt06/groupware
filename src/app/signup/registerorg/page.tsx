@@ -1,31 +1,52 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { useRouter } from 'next/navigation'
 
 import RegisterOrg from '@/app/component/page/organization/RegisterOrg'
 import ErrorAlert from '@/app/component/ui/alert/ErrorAlert'
-import { NavigationBtn } from '@/app/component/ui/button/BtnGroups'
-import RegisterOrgLoginBtn from '@/app/component/ui/button/signup/RegisterOrgLoginBtn'
+import Button from '@/app/component/ui/button/Button'
 import {
+  API_SUCCESS_CODE,
+  FALSE,
   KEY_ACCESS_TOKEN,
   KEY_LOGIN_COMPLETE,
   ORG_CREATE,
   ORG_JOIN,
+  REGISTER_ORG_DESCRIPTION,
+  REGISTER_ORG_JOIN,
+  REGISTER_ORG_NAME,
   TRUE,
 } from '@/app/constant/constant'
-import { ERR_COOKIE_NOT_FOUND } from '@/app/constant/errorMsg'
-import { ROUTE_ERR_NOT_FOUND_ACCESS_TOKEN, ROUTE_MAIN } from '@/app/constant/route/route-constant'
-import { useAppSelector } from '@/app/module/hooks/reduxHooks'
+import {
+  ERR_COOKIE_NOT_FOUND,
+  ERR_MESSAGE_JOIN_ORG_FAIL_EXIST,
+  ERR_MESSAGE_ORG_ALREADY_EXIST,
+  ERR_MESSAGE_RECORD_NOT_FOUND,
+  errNotEntered,
+  errNotFound,
+} from '@/app/constant/errorMsg'
+import { API_URL_CREATE_ORG, API_URL_JOIN_ORG } from '@/app/constant/route/api-route-constant'
+import {
+  ROUTE_ERR_NOT_FOUND_ACCESS_TOKEN,
+  ROUTE_MAIN,
+  ROUTE_SIGNUP_COMPLETE,
+} from '@/app/constant/route/route-constant'
+import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleDeleteCookies, moduleGetCookie } from '@/app/module/utils/moduleCookie'
+import { modulePostFetch } from '@/app/module/utils/moduleFetch'
+import { moduleDeleteStorage } from '@/app/module/utils/moduleStorage'
+import { updateLoginCompleteReducer } from '@/app/store/reducers/maintain/maintainReducer'
+import { type FailResponseType, type ModulePostFetchProps } from '@/app/types/moduleTypes'
 
 export default function RegisterOrgLogin() {
   const router = useRouter()
-
+  const orgButtonRef = useRef<HTMLButtonElement>(null)
+  const dispatch = useAppDispatch()
   const [accessToken, setAccessToken] = useState(moduleGetCookie(KEY_ACCESS_TOKEN))
   const loginCompleteState = useAppSelector((state) => state.maintain['login-complete'])
-
+  const orgState = useAppSelector((state) => state.orgInfo)
   const [organization, setOrganization] = useState('')
   const [errorState, setErrorState] = useState({
     isError: false,
@@ -49,6 +70,83 @@ export default function RegisterOrgLogin() {
       isError: !errorState.isError,
       description: errorState.description,
     })
+  }
+  const isOrgComeplete = useAppSelector((state) => {
+    const { name, description } = state.orgInfo.createOrg
+    const { code } = state.orgInfo.joinOrg
+
+    switch (organization) {
+      case ORG_CREATE:
+        return name !== '' && description !== ''
+
+      case ORG_JOIN:
+        return code !== ''
+      default:
+        return false
+    }
+  })
+
+  const orgInputError = () => {
+    switch (organization) {
+      case ORG_CREATE:
+        setErrMsg(errNotEntered('필수 항목'))
+        break
+      case ORG_JOIN:
+        setErrMsg(errNotEntered('조직코드'))
+    }
+  }
+  const fetchOrg = async () => {
+    try {
+      const fetchProps: ModulePostFetchProps =
+        organization === ORG_CREATE
+          ? {
+              data: {
+                description: orgState.createOrg.description,
+                name: orgState.createOrg.name,
+              },
+              fetchUrl: API_URL_CREATE_ORG,
+              header: {
+                Authorization: `Bearer ${accessToken}`,
+              },
+            }
+          : {
+              data: {
+                code: orgState.joinOrg.code,
+              },
+              fetchUrl: API_URL_JOIN_ORG,
+              header: {
+                Authorization: `Bearer ${accessToken}`,
+              },
+            }
+      const res = await modulePostFetch<string>(fetchProps)
+      if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)
+
+      moduleDeleteStorage([REGISTER_ORG_DESCRIPTION, REGISTER_ORG_NAME, REGISTER_ORG_JOIN])
+      dispatch(updateLoginCompleteReducer(FALSE))
+      moduleDeleteCookies(KEY_ACCESS_TOKEN)
+      router.push(ROUTE_SIGNUP_COMPLETE)
+    } catch (err) {
+      if (err instanceof Error) {
+        switch (err.message) {
+          case ERR_MESSAGE_RECORD_NOT_FOUND:
+            setErrMsg(errNotFound('입력한 조직'))
+            break
+          case ERR_MESSAGE_JOIN_ORG_FAIL_EXIST:
+            setErrMsg('이미 해당 조직에 가입되어 있습니다.')
+            break
+          case ERR_MESSAGE_ORG_ALREADY_EXIST:
+            setErrMsg('이미 같은 이름의 조직이 존재합니다.')
+            break
+        }
+      }
+    }
+  }
+  const handleFetchOrg = () => {
+    if (!isOrgComeplete) {
+      orgInputError()
+      return
+    }
+    void fetchOrg()
   }
   useEffect(() => {
     if (accessToken !== ERR_COOKIE_NOT_FOUND && loginCompleteState === TRUE) {
@@ -74,6 +172,18 @@ export default function RegisterOrgLogin() {
     }
   }, [accessToken])
 
+  useEffect(() => {
+    const handleKeyPress = (e: KeyboardEvent) => {
+      if (e.key === 'Enter' && orgButtonRef.current !== null) {
+        orgButtonRef.current.click()
+      }
+    }
+    document.addEventListener('keypress', handleKeyPress)
+    return () => {
+      document.removeEventListener('keypress', handleKeyPress)
+    }
+  }, [])
+
   return (
     <div className="flex flex-col justify-center items-center h-screen px-4">
       {organization === '' ? (
@@ -88,14 +198,20 @@ export default function RegisterOrgLogin() {
                 setOrganization(ORG_CREATE)
               }}
             >
-              <NavigationBtn title="조직 생성" />
+              <Button
+                buttonContent="조직 생성"
+                className="transition ease-in-out duration-500 text-white bg-indigo-400 hover:bg-indigo-600 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:hover:bg-white dark:hover:text-indigo-500 mb-2 border-2 dark:hover:border-indigo-500/75"
+              />
             </div>
             <div
               onClick={() => {
                 setOrganization(ORG_JOIN)
               }}
             >
-              <NavigationBtn title="조직 가입" />
+              <Button
+                buttonContent="조직 가입"
+                className="transition ease-in-out duration-500 text-white bg-indigo-400 hover:bg-indigo-600 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:hover:bg-white dark:hover:text-indigo-500 mb-2 border-2 dark:hover:border-indigo-500/75"
+              />
             </div>
           </div>
         </>
@@ -130,7 +246,12 @@ export default function RegisterOrgLogin() {
             )}
           </div>
           <div className="flex flex-row justify-around items-center md:w-1/3 w-2/3 mt-2">
-            <RegisterOrgLoginBtn orgType={organization} setErrMsg={setErrMsg} />
+            <Button
+              ref={orgButtonRef}
+              buttonContent={organization === ORG_CREATE ? '조직 생성' : '조직 가입'}
+              className="transition ease-in-out duration-500 text-white bg-indigo-400 hover:bg-indigo-600 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:hover:bg-white dark:hover:text-indigo-500 mb-2 border-2 dark:hover:border-indigo-500/75"
+              onClick={handleFetchOrg}
+            />
           </div>
         </div>
       )}

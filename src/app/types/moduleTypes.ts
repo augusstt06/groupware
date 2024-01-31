@@ -14,6 +14,7 @@ import { type ScheduleListType, type TaskListType } from './variableTypes'
 
 export type UnionStrNumber = string | number
 
+// FIXME: 삭제
 export type ApiResponseType = Record<string, UnionStrNumber>
 
 export type SuccessResponseType<T> = {
@@ -26,6 +27,16 @@ export type FailResponseType = {
 }
 
 export type FetchResponseType<T> = SuccessResponseType<T> | FailResponseType
+
+export type LoginResponseType = {
+  accessToken: string
+  email: string
+  name: string
+  phone: string
+  position: string
+  userId: number
+  uuid: string
+}
 
 export type UseInputProps = {
   value: string

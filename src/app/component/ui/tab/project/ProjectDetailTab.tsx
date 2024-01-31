@@ -1,4 +1,7 @@
-import InviteMemberBtn from '@/app/component/ui/button/project/detail/InviteMemberBtn'
+import { TbUsersPlus } from 'react-icons/tb'
+
+import Button from '../../button/Button'
+
 import {
   PROJECT_DETAIL_CATEGORY_HOME,
   PROJECT_DETAIL_CATEGORY_SCHEDULE,
@@ -7,6 +10,7 @@ import {
 } from '@/app/constant/constant'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { changeProjectDetailCategoryReducer } from '@/app/store/reducers/project/projectDetailCategoryReducer'
+import { projectInviteModalReducer } from '@/app/store/reducers/project/projectModalReducer'
 import { type ProjectDetailTabProps } from '@/app/types/ui/uiTypes'
 
 export default function ProjectDetailTab(props: ProjectDetailTabProps) {
@@ -28,11 +32,24 @@ export default function ProjectDetailTab(props: ProjectDetailTabProps) {
   const handleChangeCategory = (title: string) => {
     dispatch(changeProjectDetailCategoryReducer(title))
   }
+  const inviteBtnContent = (
+    <>
+      <TbUsersPlus className="mr-2" />
+      <span>초대하기</span>
+    </>
+  )
+  const hancleClickInviteMemberBtn = () => {
+    dispatch(projectInviteModalReducer(true))
+  }
   return (
     <div className="md:5/6 w-full flex flex-col items-left dark:bg-[#1a202c] dark:border-gray-700 border border-gray-200 rounded-lg shadow-lg p-2 mb-5">
       <div className="w-full p-3 flex flex-row justify-between items-center">
         <span className="font-bold">{props.projectInfo?.name}</span>
-        <InviteMemberBtn />
+        <Button
+          buttonContent={inviteBtnContent}
+          className="w-1/7 text-center justify-center transition ease-in-out duration-300 rounded-lg shadow bg-indigo-400 dark:bg-indigo-400 hover:bg-indigo-600 hover:dark:bg-indigo-500 justify-center text-white dark:text-white focus:outline-none  font-medium  text-sm px-5 py-2.5 text-center inline-flex items-center"
+          onClick={hancleClickInviteMemberBtn}
+        />
       </div>
       <div className="flex flex-row 2xl:w-2/3 md:w-2/3 sm:w-full justify-around p-1">
         {issueCategoryList.map((data) => (
