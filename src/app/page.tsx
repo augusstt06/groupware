@@ -176,7 +176,7 @@ export default function Login() {
               ref={buttonRef}
               className="w-full text-white justify-center bg-indigo-400 transition duration-500 ease-in-out hover:bg-indigo-600 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:hover:bg-white dark:hover:text-indigo-500 mb-2 border-2 dark:hover:border-indigo-500/75"
               onClick={handleClickLogin}
-              content={'로그인'}
+              buttonContent={'로그인'}
             />
           </div>
           <div className="flex flex-row justify-around md:w-2/3 w-full mt-3">

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import AttendanceHistoryBtn from '@/app/component/ui/button/main/attendance/AttendanceHistoryBtn'
+import Button from '@/app/component/ui/button/Button'
 import MainInput from '@/app/component/ui/input/main/MainInput'
 import { InputLabel } from '@/app/component/ui/label/Inputlabel'
 import AttendanceHistoryTable from '@/app/component/ui/table/main/AttendanceHistoryTable'
@@ -97,7 +97,11 @@ export default function AttendanceHistory() {
               input={toInput}
               placeholder='"2023/01/12/23:02"'
             />
-            <AttendanceHistoryBtn onClick={handleClick} />
+            <Button
+              buttonContent="조회"
+              className="border border-indigo-700 border-2 p-1 mt-7 rounded-lg text-indigo-500 hover:text-white dark:text-white dark:bg-indigo-500 dark:border-white bg-white border-indigo-500 hover:bg-indigo-500 dark:focus:ring-gray-500 dark:hover:bg-white dark:hover:text-indigo-500 "
+              onClick={handleClick}
+            />
           </div>
           {attendanceHistory.length === 0 ? (
             <></>

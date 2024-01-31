@@ -1,20 +1,22 @@
 /**
  * 버튼에서 필요한것
- * 1. 버튼 내용
+ * 1. 버튼 내용 => string과 jsx 모두 가능해야한다.
  * 2. css
  * 3. 클릭시 작동할 기능
+ * 4. dom조작시 ref가 필요
+ * 을 토대로 재사용성 높은 컴포넌트 제작
  */
 
-import { type ForwardedRef, forwardRef, type ReactNode } from 'react'
+import { type ForwardedRef, forwardRef } from 'react'
 
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
-  content: string | ReactNode
+  buttonContent: React.ReactNode
 }
 const Button = forwardRef((props: ButtonProps, fowardRef: ForwardedRef<HTMLButtonElement>) => {
-  const { content } = props
+  const { buttonContent, className, onClick } = props
   return (
-    <button ref={fowardRef} className={props.className} onClick={props.onClick}>
-      {content}
+    <button ref={fowardRef} className={className} onClick={onClick}>
+      {buttonContent}
     </button>
   )
 })

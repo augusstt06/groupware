@@ -199,7 +199,7 @@ export default function RegisterOrgLogin() {
               }}
             >
               <Button
-                content="조직 생성"
+                buttonContent="조직 생성"
                 className="transition ease-in-out duration-500 text-white bg-indigo-400 hover:bg-indigo-600 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:hover:bg-white dark:hover:text-indigo-500 mb-2 border-2 dark:hover:border-indigo-500/75"
               />
             </div>
@@ -209,7 +209,7 @@ export default function RegisterOrgLogin() {
               }}
             >
               <Button
-                content="조직 가입"
+                buttonContent="조직 가입"
                 className="transition ease-in-out duration-500 text-white bg-indigo-400 hover:bg-indigo-600 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:hover:bg-white dark:hover:text-indigo-500 mb-2 border-2 dark:hover:border-indigo-500/75"
               />
             </div>
@@ -248,7 +248,7 @@ export default function RegisterOrgLogin() {
           <div className="flex flex-row justify-around items-center md:w-1/3 w-2/3 mt-2">
             <Button
               ref={orgButtonRef}
-              content={organization === ORG_CREATE ? '조직 생성' : '조직 가입'}
+              buttonContent={organization === ORG_CREATE ? '조직 생성' : '조직 가입'}
               className="transition ease-in-out duration-500 text-white bg-indigo-400 hover:bg-indigo-600 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:hover:bg-white dark:hover:text-indigo-500 mb-2 border-2 dark:hover:border-indigo-500/75"
               onClick={handleFetchOrg}
             />

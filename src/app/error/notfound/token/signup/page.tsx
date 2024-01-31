@@ -17,7 +17,7 @@ export default function NotfoundAccessTokenInSignup() {
         회원가입/로그인을 먼저 진행해 주세요.
       </h1>
       <Button
-        content="로그인 화면으로"
+        buttonContent="로그인 화면으로"
         className=" mt-5 font-bold bg-gray-500 text-white hover:text-white focus:outline-none rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 "
         onClick={handleClick}
       />

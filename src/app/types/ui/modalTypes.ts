@@ -1,3 +1,5 @@
+import { type ReactEventHandler } from 'react'
+
 import { type UseInputProps } from '../moduleTypes'
 import { type MyBoardType, type ProjectAlertStateType } from '../variableTypes'
 
@@ -33,4 +35,9 @@ export type CreateProjectModalProps = {
 
 export type ProjectAlertModalProps = CreateProjectModalProps & {
   alertState: ProjectAlertStateType
+}
+export type ModalBtnProps = {
+  onClose: ReactEventHandler
+  btnValue: string
+  confirmFunc: () => void
 }
