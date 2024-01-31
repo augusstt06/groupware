@@ -1,13 +1,12 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
 import RegisterInfo from '../component/page/userRegister/RegisterInfo'
 import ErrorAlert from '../component/ui/alert/ErrorAlert'
-import { NavigationBtn } from '../component/ui/button/BtnGroups'
-import { SignupBtn } from '../component/ui/button/signup/SignupBtn'
+import Button from '../component/ui/button/Button'
 import {
   KEY_ACCESS_TOKEN,
   REGISTER_EMAIL,
@@ -19,16 +18,32 @@ import {
   REGISTER_POSITION,
   TRUE,
 } from '../constant/constant'
-import { ERR_COOKIE_NOT_FOUND } from '../constant/errorMsg'
+import {
+  ERR_COOKIE_NOT_FOUND,
+  ERR_MESSAGE_SIGNUP_USER_EXIST,
+  errDefault,
+} from '../constant/errorMsg'
+import { API_URL_LOGIN, API_URL_REGISTER } from '../constant/route/api-route-constant'
 import { ROUTE_MAIN, ROUTE_SIGNUP_ORG } from '../constant/route/route-constant'
-import { useAppSelector } from '../module/hooks/reduxHooks/index'
-import { moduleGetCookie } from '../module/utils/moduleCookie'
+import { useAppDispatch, useAppSelector } from '../module/hooks/reduxHooks/index'
+import { moduleGetCookie, moduleSetCookies } from '../module/utils/moduleCookie'
+import { modulePostFetch } from '../module/utils/moduleFetch'
 import inputValidate from '../module/utils/moduleInputValidate'
+import { resetSignupInfoReducer } from '../store/reducers/login/signupInfoReducer'
+import {
+  type FailResponseType,
+  type LoginResponseType,
+  type ModulePostFetchProps,
+  type SuccessResponseType,
+} from '../types/moduleTypes'
 
 export default function Signup() {
+  const signupButtonRef = useRef<HTMLButtonElement>(null)
+  const dispatch = useAppDispatch()
   const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
   const loginCompleteState = useAppSelector((state) => state.maintain['login-complete'])
   const orgState = useAppSelector((state) => state.orgInfo)
+  const signupState = useAppSelector((state) => state.signupInfo)
   const router = useRouter()
   const [isPwdView, setIsPwdView] = useState(false)
   const [isPwdConfirmView, setisPwdConfirmView] = useState(false)
@@ -90,6 +105,58 @@ export default function Signup() {
     return true
   }
 
+  const fetchSignUp = async () => {
+    try {
+      if (!signupState.email.isCheck) {
+        setErrMsg('이메일이 중복됩니다. 다른 이메일을 사용해 주세요.')
+        return
+      }
+      const fetchSignupProps: ModulePostFetchProps = {
+        data: {
+          email: signupState.email.value,
+          name: signupState.name.value,
+          password: signupState.pwd.pwdValue,
+          passwordConfirm: signupState.pwd.pwdConfirmValue,
+          phoneNumber: signupState.phoneNumber.value,
+          position: signupState.position.value,
+        },
+        fetchUrl: API_URL_REGISTER,
+      }
+      const signupRes = await modulePostFetch<string>(fetchSignupProps)
+      if (signupRes.status !== 200) throw new Error((signupRes as FailResponseType).message)
+      const fetchLoginProps: ModulePostFetchProps = {
+        data: {
+          email: signupState.email.value,
+          password: signupState.pwd.pwdValue,
+        },
+        fetchUrl: API_URL_LOGIN,
+      }
+      const loginRes = await modulePostFetch<LoginResponseType>(fetchLoginProps)
+      if (loginRes.status !== 200) throw new Error((loginRes as FailResponseType).message)
+      const accessToken = (loginRes as SuccessResponseType<LoginResponseType>).result.accessToken
+      moduleSetCookies({
+        [KEY_ACCESS_TOKEN]: accessToken,
+      })
+      dispatch(resetSignupInfoReducer())
+      router.push(ROUTE_SIGNUP_ORG)
+    } catch (err) {
+      if (err instanceof Error) {
+        switch (err.message) {
+          case ERR_MESSAGE_SIGNUP_USER_EXIST:
+            setErrMsg('이미 유저가 존재합니다.')
+            break
+          default:
+            setErrMsg(errDefault('회원가입'))
+            break
+        }
+      }
+    }
+  }
+
+  const handleClickSignup = () => {
+    checkInfoComplete()
+    void fetchSignUp()
+  }
   useEffect(() => {
     if (accessToken !== ERR_COOKIE_NOT_FOUND) {
       if (loginCompleteState === TRUE) {
@@ -115,6 +182,15 @@ export default function Signup() {
       REGISTER_ORG_NAME,
       REGISTER_ORG_JOIN,
     ])
+    const handleKeyPress = (e: KeyboardEvent) => {
+      if (e.key === 'Enter' && signupButtonRef.current !== null) {
+        signupButtonRef.current.click()
+      }
+    }
+    document.addEventListener('keypress', handleKeyPress)
+    return () => {
+      document.removeEventListener('keypress', handleKeyPress)
+    }
   }, [])
 
   return (
@@ -139,10 +215,18 @@ export default function Signup() {
       </div>
       <div className="flex flex-row justify-around items-center md:w-1/3 w-2/3 mt-5">
         <Link href="/">
-          <NavigationBtn title="메인으로" />
+          <Button
+            content="메인으로"
+            className="transition ease-in-out duration-500 text-white bg-indigo-400 hover:bg-indigo-600 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:hover:bg-white dark:hover:text-indigo-500 mb-2 border-2 dark:hover:border-indigo-500/75"
+          />
         </Link>
         {isPrivateInfoComplete ? (
-          <SignupBtn title="회원가입" setErrMsg={setErrMsg} checkInfoComplete={checkInfoComplete} />
+          <Button
+            ref={signupButtonRef}
+            content="회원가입"
+            className="transition ease-in-out duration-500 text-white bg-indigo-400 hover:bg-indigo-600 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:hover:bg-white dark:hover:text-indigo-500 mb-2 border-2 dark:hover:border-indigo-500/75"
+            onClick={handleClickSignup}
+          />
         ) : null}
       </div>
     </div>
