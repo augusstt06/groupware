@@ -131,6 +131,10 @@ export default function ProjectDetailSchedule() {
           },
         ]}
         googleCalendarApiKey={GOOGLE_CALENDAR_API_KEY}
+        eventClick={(info) => {
+          // FIXME: 클릭 이벤트는 preventDefault()로 막아두었음
+          info.jsEvent.preventDefault()
+        }}
       />
     </div>
   )
