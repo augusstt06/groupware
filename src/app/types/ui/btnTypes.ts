@@ -14,22 +14,6 @@ export type BtnProps = {
 export type NextBtnProps = BtnProps & {
   onClick: () => void
 }
-export type RegisterUserBtnProps = {
-  setErrMsg: (errDecription: string) => void
-}
-export type SignupBtnProps = BtnProps & {
-  setErrMsg: (errDecription: string) => void
-  checkInfoComplete: () => void
-}
-
-export type RegisterOrgLoginBtnProps = {
-  orgType: string
-  setErrMsg: (errDecription: string) => void
-}
-export type OrgChooseBtnProps = {
-  organization: string
-  setOrganization: React.Dispatch<SetStateAction<string>>
-}
 
 export type RegisterOrgBtnProps = BtnProps & {
   setErrMsg: (errDescription: string) => void
@@ -49,20 +33,8 @@ export type LoginBtnProps = BtnProps & {
   setErrMsg: (errDescription: string) => void
 }
 // main
-export type AttendanceBtnProps = {
-  extraUserInfo: Record<string, string | number>
-  setErrMsg: (errDescripton: string) => void
-  reRender: boolean
-  setRerender: React.Dispatch<SetStateAction<boolean>>
-  elapsed: string
-  setElapsed: React.Dispatch<SetStateAction<string>>
-}
 
-export type AttendanceHistoryBtnProps = {
-  onClick: () => void
-}
-
-export type LogoutBtnProps = {
+export type UserStateModalProps = {
   isConfirmOpen: boolean
   setIsConfirmOpen: Dispatch<SetStateAction<boolean>>
   confirmValue: boolean
@@ -70,7 +42,7 @@ export type LogoutBtnProps = {
   setIsUserStateOpen: Dispatch<SetStateAction<boolean>>
 }
 
-export type WriteModalBtnGroupProps = {
+export type BoardWriteModalBtnTabProps = {
   handleClickOpenSaveList: () => void
   handleClickPostPending: () => void
   handleClickClose: () => void
