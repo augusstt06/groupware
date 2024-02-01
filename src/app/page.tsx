@@ -210,25 +210,9 @@ export default function Login() {
             type={data.type}
             isView={data.isView}
             viewContent={data.viewContent}
+            isLabel={true}
           />
         ))}
-        {/* <InputGroup
-          labelContent={<AiOutlineMail />}
-          title={REGISTER_EMAIL}
-          placeholder="abc12@sample.com"
-          useInput={emailInput}
-          type="text"
-          isView={false}
-        />
-        <InputGroup
-          labelContent={<RiLockPasswordFill />}
-          title={REGISTER_PWD}
-          placeholder="At least 8 characters"
-          useInput={pwdInput}
-          type={pwdViewType()}
-          isView={true}
-          viewContent={isPwdViewComponent()}
-        /> */}
         {errorState.isError ? (
           <ErrorAlert description={errorState.description} handleClickError={handleClickError} />
         ) : (

@@ -3,30 +3,39 @@ import Input from './Input'
 import { type UseInputProps } from '@/app/types/moduleTypes'
 type InputGroupProps = {
   title: string
-  labelContent: React.ReactNode
+  isLabel: boolean
   placeholder: string
   useInput: UseInputProps
   type: string
   isView: boolean
   viewContent?: React.ReactNode
+  labelContent?: React.ReactNode
 }
 
 const InputGroup = (props: InputGroupProps) => {
-  const { title, labelContent, placeholder, useInput, type, isView, viewContent } = props
+  const { isLabel, title, labelContent, placeholder, useInput, type, isView, viewContent } = props
 
   const renderingViewContent = () => {
     if (isView) {
       return viewContent
     }
   }
-  return (
-    <div className="w-full">
+  const renderingInputTitle = () => {
+    if (props.title === '') {
+      return <></>
+    }
+    return (
       <span className="block mb-2 md:text-sm text-xs md:font-bold text-gray-900 dark:text-white">
         {props.title}
       </span>
-      <div className="flex relative mt-2 mb-6">
+    )
+  }
+  return (
+    <div className="w-full">
+      {renderingInputTitle()}
+      <div className="flex relative mt-2 mb-2">
         <Input
-          isLabel={true}
+          isLabel={isLabel}
           labelClassName="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-r-0 border-gray-300 rounded-l-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600 "
           labelContent={labelContent}
           type={type}
