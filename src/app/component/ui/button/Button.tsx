@@ -13,9 +13,9 @@ type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   buttonContent: React.ReactNode
 }
 const Button = forwardRef((props: ButtonProps, fowardRef: ForwardedRef<HTMLButtonElement>) => {
-  const { buttonContent, className, onClick } = props
+  const { buttonContent, ...rest } = props
   return (
-    <button ref={fowardRef} className={className} onClick={onClick}>
+    <button ref={fowardRef} {...rest}>
       {buttonContent}
     </button>
   )
