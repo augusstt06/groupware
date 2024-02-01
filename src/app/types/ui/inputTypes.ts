@@ -51,14 +51,6 @@ export type OrgInputProps = {
   }
 }
 
-// main
-export type MainInputProps = {
-  type: string
-  title: string
-  input: UseInputProps
-  placeholder: string
-}
-
 // board
 export type BoardHubInputProps = {
   searchInput: UseInputProps
