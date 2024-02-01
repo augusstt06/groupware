@@ -33,7 +33,7 @@ export const REGISTER_NAME = '이름'
 export const REGISTER_PHONENUMBER = '전화번호'
 export const REGISTER_POSITION = '직무'
 export const REGISTER_ORG_NAME = '조직 이름'
-export const REGISTER_ORG_DESCRIPTION = '조직설명'
+export const REGISTER_ORG_DESCRIPTION = '조직 설명'
 export const REGISTER_ORG_JOIN = '조직 코드'
 
 export const KEY_ACCESS_TOKEN = 'access-token'

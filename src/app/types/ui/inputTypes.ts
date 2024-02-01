@@ -39,18 +39,6 @@ export type PwdConfirmInputProps = {
   }
 }
 
-export type OrgInputProps = {
-  componentType: string
-  title: string
-  placeholder: string
-  icon: React.ReactNode
-  useInput: {
-    value: string
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
-    resetValue: () => void
-  }
-}
-
 // board
 export type BoardHubInputProps = {
   searchInput: UseInputProps

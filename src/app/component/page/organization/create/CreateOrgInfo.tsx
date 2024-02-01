@@ -1,13 +1,18 @@
+import { useEffect } from 'react'
+
 import { MdOutlineDescription } from 'react-icons/md'
 import { SlOrganization } from 'react-icons/sl'
 
-import OrgInput from '../../../ui/input/organization/OrgInput'
-
-import { ORG_CREATE, REGISTER_ORG_DESCRIPTION, REGISTER_ORG_NAME } from '@/app/constant/constant'
+import InputGroup from '@/app/component/ui/input/InputGroup'
+import { REGISTER_ORG_DESCRIPTION, REGISTER_ORG_NAME } from '@/app/constant/constant'
 import useInput from '@/app/module/hooks/reactHooks/useInput'
-// import InputGroup from '@/app/component/ui/input/InputGroup'
+import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
+import { createOrgReducer } from '@/app/store/reducers/login/orgInfoReducer'
 
 export default function CreateOrgInfo() {
+  const dispatch = useAppDispatch()
+  const createOrgState = useAppSelector((state) => state.orgInfo.createOrg)
+
   const dynamicInput = (isPersist: boolean, title: string, limit?: number) => {
     let storedValue
     if (localStorage.getItem(title) === null) {
@@ -21,40 +26,69 @@ export default function CreateOrgInfo() {
   const orgNameInput = dynamicInput(true, REGISTER_ORG_NAME)
   const orgDescriptionInput = dynamicInput(true, REGISTER_ORG_DESCRIPTION, 100)
 
+  const handleBeforeunload = () => {
+    const payload = {
+      name: '',
+      description: '',
+    }
+    dispatch(createOrgReducer(payload))
+  }
+  useEffect(() => {
+    const payload = {
+      name: orgNameInput.value,
+      description: createOrgState.description,
+    }
+    dispatch(createOrgReducer(payload))
+    const handleNameInputFocusOut = () => {
+      localStorage.setItem(REGISTER_ORG_NAME, orgNameInput.value)
+    }
+    const orgNameInputElement = document.getElementById(REGISTER_ORG_NAME)
+    orgNameInputElement?.addEventListener('focusout', handleNameInputFocusOut)
+    window.addEventListener('beforeunload', handleBeforeunload)
+  }, [orgNameInput.value])
+
+  const inputGroupList = [
+    {
+      title: REGISTER_ORG_NAME,
+      labelContent: <SlOrganization />,
+      placeholder: '조직 이름을 입력해주세요.',
+      useInput: orgNameInput,
+    },
+    {
+      title: REGISTER_ORG_DESCRIPTION,
+      labelContent: <MdOutlineDescription />,
+      placeholder: '조직 설명을 입력해주세요.',
+      useInput: orgDescriptionInput,
+    },
+  ]
+  useEffect(() => {
+    const payload = {
+      name: createOrgState.name,
+      description: orgDescriptionInput.value,
+    }
+    dispatch(createOrgReducer(payload))
+
+    const handleDesInputFocusOut = () => {
+      localStorage.setItem(REGISTER_ORG_DESCRIPTION, orgDescriptionInput.value)
+    }
+    const orgDesInputElement = document.getElementById(REGISTER_ORG_DESCRIPTION)
+    orgDesInputElement?.addEventListener('focusout', handleDesInputFocusOut)
+    window.addEventListener('beforeunload', handleBeforeunload)
+  }, [orgDescriptionInput.value])
   return (
     <>
-      {/* <InputGroup
-        title={REGISTER_ORG_NAME}
-        isLabel={true}
-        labelContent={<SlOrganization />}
-        placeholder="조직 이름을 입력해주세요."
-        useInput={orgNameInput}
-        type="text"
-        isView={false}
-      /> */}
-      <OrgInput
-        useInput={orgNameInput}
-        componentType={ORG_CREATE}
-        title={REGISTER_ORG_NAME}
-        placeholder="조직 이름을 입력해주세요"
-        icon={<SlOrganization />}
-      />
-      {/* <InputGroup
-        title={REGISTER_ORG_DESCRIPTION}
-        isLabel={true}
-        labelContent={<MdOutlineDescription />}
-        placeholder="조직 설명을 입력해 주세요."
-        useInput={orgDescriptionInput}
-        type="text"
-        isView={false}
-      /> */}
-      <OrgInput
-        useInput={orgDescriptionInput}
-        componentType={ORG_CREATE}
-        title={REGISTER_ORG_DESCRIPTION}
-        placeholder="조직 설명을 입력해주세요"
-        icon={<MdOutlineDescription />}
-      />
+      {inputGroupList.map((data) => (
+        <InputGroup
+          key={data.title}
+          title={data.title}
+          isLabel={true}
+          labelContent={data.labelContent}
+          placeholder={data.placeholder}
+          useInput={data.useInput}
+          type="text"
+          isView={false}
+        />
+      ))}
     </>
   )
 }
