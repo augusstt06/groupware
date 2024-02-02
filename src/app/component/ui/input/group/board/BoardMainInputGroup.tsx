@@ -1,15 +1,15 @@
 import { IoMdCloseCircle } from 'react-icons/io'
 import { IoSearchSharp } from 'react-icons/io5'
 
-import Button from '../../button/Button'
-import BoardWriteModal from '../../modal/board/BoardWriteModal'
-import InputWithLabel from '../InputWithLabel'
+import Button from '../../../button/Button'
+import BoardWriteModal from '../../../modal/board/BoardWriteModal'
+import InputWithLabel from '../../InputWithLabel'
 
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { openBoardWriteModalReducer } from '@/app/store/reducers/board/openBoardWriteModalReducer'
-import { type BoardHubInputProps } from '@/app/types/ui/inputTypes'
+import { type BoardMainInputGroupProps } from '@/app/types/ui/inputTypes'
 
-export default function BoardHubInput(props: BoardHubInputProps) {
+export default function BoardMainInputGroup(props: BoardMainInputGroupProps) {
   const dispatch = useAppDispatch()
   const isModalOpen = useAppSelector((state) => state.openBoardWriteModal.isOpen)
   const handleClickWrite = () => {

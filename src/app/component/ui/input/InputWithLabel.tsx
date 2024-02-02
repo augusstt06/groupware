@@ -1,17 +1,6 @@
 import Input from './Input'
 
-import { type UseInputProps } from '@/app/types/moduleTypes'
-type InputGroupProps = {
-  title: string
-  isHeadLabel: boolean
-  placeholder: string
-  useInput: UseInputProps
-  type: string
-  isTailLabel: boolean
-  tailLabelContent?: React.ReactNode
-  headLabelContent?: React.ReactNode
-  className: string
-}
+import { type InputGroupProps } from '@/app/types/ui/inputTypes'
 
 const InputWithLabel = (props: InputGroupProps) => {
   const {

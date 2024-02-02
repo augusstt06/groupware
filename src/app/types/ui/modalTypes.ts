@@ -1,7 +1,11 @@
-import { type ReactEventHandler } from 'react'
+import { type Dispatch, type ReactEventHandler, type SetStateAction } from 'react'
 
 import { type UseInputProps } from '../moduleTypes'
-import { type MyBoardType, type ProjectAlertStateType } from '../variableTypes'
+import {
+  type BoardListResponseType,
+  type MyBoardType,
+  type ProjectAlertStateType,
+} from '../variableTypes'
 
 export type BoardWriteModalprops = {
   currentBoard: MyBoardType | null
@@ -40,4 +44,20 @@ export type ModalBtnProps = {
   onClose: ReactEventHandler
   btnValue: string
   confirmFunc: () => void
+}
+
+export type UserStateModalProps = {
+  isConfirmOpen: boolean
+  setIsConfirmOpen: Dispatch<SetStateAction<boolean>>
+  confirmValue: boolean
+  setConfirmValue: Dispatch<SetStateAction<boolean>>
+  setIsUserStateOpen: Dispatch<SetStateAction<boolean>>
+}
+
+export type BoardWriteModalBtnTabProps = {
+  handleClickOpenSaveList: () => void
+  handleClickPostPending: () => void
+  handleClickClose: () => void
+  handleClickPosting: () => void
+  saveList: BoardListResponseType[]
 }

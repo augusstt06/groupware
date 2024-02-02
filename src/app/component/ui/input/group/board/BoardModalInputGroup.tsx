@@ -4,8 +4,8 @@ import { type ChangeEvent, useState } from 'react'
 
 import { AiOutlinePicture } from 'react-icons/ai'
 
-import { Label } from '../../label/Label'
-import Input from '../Input'
+import { Label } from '../../../label/Label'
+import Input from '../../Input'
 
 import {
   API_SUCCESS_CODE,

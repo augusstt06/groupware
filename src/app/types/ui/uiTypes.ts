@@ -1,3 +1,5 @@
+// FIXME: 컴포넌트 리팩토링 끝나면 여기 파일에 atomic componet 타입넣기
+
 import { type Dispatch, type SetStateAction } from 'react'
 
 import { type Editor } from '@toast-ui/react-editor'
@@ -9,6 +11,9 @@ import {
   type ProjectResponseType,
 } from '../variableTypes'
 
+export type LabelProps = {
+  title: string
+}
 export type LabelIconProps = {
   icon: React.ReactNode
 }

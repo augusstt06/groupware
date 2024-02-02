@@ -1,11 +1,6 @@
 import { type ForwardedRef, forwardRef } from 'react'
 
-type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
-  isLabel: boolean
-  labelHtmlfor?: string
-  labelContent?: React.ReactNode
-  labelClassName?: string
-}
+import { type InputProps } from '@/app/types/ui/inputTypes'
 
 const Input = forwardRef((props: InputProps, fowardRef: ForwardedRef<HTMLInputElement>) => {
   const { isLabel, labelHtmlfor, labelContent, labelClassName, ...rest } = props

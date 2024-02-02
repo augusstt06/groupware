@@ -1,7 +1,6 @@
-import { type BtnProps } from '@/app/types/ui/btnTypes'
-import { type LabelIconProps } from '@/app/types/ui/uiTypes'
+import { type LabelIconProps, type LabelProps } from '@/app/types/ui/uiTypes'
 
-export function Label(props: BtnProps) {
+export function Label(props: LabelProps) {
   return (
     <label className="block mb-2 md:text-sm text-xs md:font-bold text-gray-900 dark:text-white">
       {props.title}
@@ -9,7 +8,7 @@ export function Label(props: BtnProps) {
   )
 }
 
-export function LabelAdd(props: BtnProps) {
+export function LabelAdd(props: LabelProps) {
   return (
     <label className="mb-2 text-sm font-medium text-gray-900 dark:text-white">{props.title}</label>
   )

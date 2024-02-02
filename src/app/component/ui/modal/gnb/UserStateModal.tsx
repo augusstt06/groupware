@@ -13,7 +13,7 @@ import { modulePostFetch } from '@/app/module/utils/moduleFetch'
 import { resetUserInfoReducer } from '@/app/store/reducers/main/userInfoReducer'
 import { updateLoginCompleteReducer } from '@/app/store/reducers/maintain/maintainReducer'
 import { type FailResponseType, type ModulePostFetchProps } from '@/app/types/moduleTypes'
-import { type UserStateModalProps } from '@/app/types/ui/btnTypes'
+import { type UserStateModalProps } from '@/app/types/ui/modalTypes'
 
 export default function UserStateModal(props: UserStateModalProps) {
   const dispatch = useAppDispatch()

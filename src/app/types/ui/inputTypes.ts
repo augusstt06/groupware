@@ -4,8 +4,27 @@ import { type Dispatch, type SetStateAction } from 'react'
 import { type UseInputProps } from '../moduleTypes'
 import { type MyBoardType, type SelectListType } from '../variableTypes'
 
-// board
-export type BoardHubInputProps = {
+// basic
+export type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
+  isLabel: boolean
+  labelHtmlfor?: string
+  labelContent?: React.ReactNode
+  labelClassName?: string
+}
+export type InputGroupProps = {
+  title: string
+  isHeadLabel: boolean
+  placeholder: string
+  useInput: UseInputProps
+  type: string
+  isTailLabel: boolean
+  tailLabelContent?: React.ReactNode
+  headLabelContent?: React.ReactNode
+  className: string
+}
+
+// group
+export type BoardMainInputGroupProps = {
   searchInput: UseInputProps
   clickSearchPostings: () => void
 }
