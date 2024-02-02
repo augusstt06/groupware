@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 import { MdOutlineDescription } from 'react-icons/md'
 import { SlOrganization } from 'react-icons/sl'
 
-import InputGroup from '@/app/component/ui/input/InputGroup'
+import InputWithLabel from '@/app/component/ui/input/InputWithLabel'
 import { REGISTER_ORG_DESCRIPTION, REGISTER_ORG_NAME } from '@/app/constant/constant'
 import useInput from '@/app/module/hooks/reactHooks/useInput'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
@@ -78,15 +78,16 @@ export default function CreateOrgInfo() {
   return (
     <>
       {inputGroupList.map((data) => (
-        <InputGroup
+        <InputWithLabel
           key={data.title}
           title={data.title}
-          isLabel={true}
-          labelContent={data.labelContent}
+          isHeadLabel={true}
+          headLabelContent={data.labelContent}
           placeholder={data.placeholder}
           useInput={data.useInput}
           type="text"
-          isView={false}
+          isTailLabel={false}
+          className=""
         />
       ))}
     </>

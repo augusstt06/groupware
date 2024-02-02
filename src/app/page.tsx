@@ -10,7 +10,7 @@ import { RiLockPasswordFill } from 'react-icons/ri'
 
 import ErrorAlert from './component/ui/alert/ErrorAlert'
 import Button from './component/ui/button/Button'
-import InputGroup from './component/ui/input/InputGroup'
+import InputWithLabel from './component/ui/input/InputWithLabel'
 import {
   API_SUCCESS_CODE,
   FALSE,
@@ -155,22 +155,22 @@ export default function Login() {
 
   const inputgroupList = [
     {
-      labelContent: <AiOutlineMail />,
+      headLabelContent: <AiOutlineMail />,
       title: REGISTER_EMAIL,
       placeholder: 'abc12@sample.com',
       useInput: emailInput,
       type: 'text',
-      isView: false,
-      viewContent: <></>,
+      isTailLabel: false,
+      tailLabelContent: <></>,
     },
     {
-      labelContent: <RiLockPasswordFill />,
+      headLabelContent: <RiLockPasswordFill />,
       title: REGISTER_PWD,
       placeholder: 'At least 8 characters',
       useInput: pwdInput,
       type: pwdViewType(),
-      isView: true,
-      viewContent: isPwdViewComponent(),
+      isTailLabel: true,
+      tailLabelContent: isPwdViewComponent(),
     },
   ]
   useEffect(() => {
@@ -201,16 +201,17 @@ export default function Login() {
       <div className="text-xl md:font-bold mb-6">로그인</div>
       <div className="w-4/5 md:w-2/5">
         {inputgroupList.map((data) => (
-          <InputGroup
+          <InputWithLabel
             key={data.title}
-            labelContent={data.labelContent}
+            isHeadLabel={true}
+            isTailLabel={data.isTailLabel}
+            headLabelContent={data.headLabelContent}
+            tailLabelContent={data.tailLabelContent}
             title={data.title}
             placeholder={data.placeholder}
             useInput={data.useInput}
             type={data.type}
-            isView={data.isView}
-            viewContent={data.viewContent}
-            isLabel={true}
+            className=""
           />
         ))}
         {errorState.isError ? (

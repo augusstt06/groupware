@@ -3,21 +3,32 @@ import Input from './Input'
 import { type UseInputProps } from '@/app/types/moduleTypes'
 type InputGroupProps = {
   title: string
-  isLabel: boolean
+  isHeadLabel: boolean
   placeholder: string
   useInput: UseInputProps
   type: string
-  isView: boolean
-  viewContent?: React.ReactNode
-  labelContent?: React.ReactNode
+  isTailLabel: boolean
+  tailLabelContent?: React.ReactNode
+  headLabelContent?: React.ReactNode
+  className: string
 }
 
-const InputGroup = (props: InputGroupProps) => {
-  const { isLabel, title, labelContent, placeholder, useInput, type, isView, viewContent } = props
+const InputWithLabel = (props: InputGroupProps) => {
+  const {
+    className,
+    isHeadLabel,
+    title,
+    headLabelContent,
+    placeholder,
+    useInput,
+    type,
+    isTailLabel,
+    tailLabelContent,
+  } = props
 
-  const renderingViewContent = () => {
-    if (isView) {
-      return viewContent
+  const renderingtailLabelContent = () => {
+    if (isTailLabel) {
+      return tailLabelContent
     }
   }
   const renderingInputTitle = () => {
@@ -30,24 +41,31 @@ const InputGroup = (props: InputGroupProps) => {
       </span>
     )
   }
+  const inputClassName = () => {
+    if (className === '') {
+      return 'rounded-none rounded-r-lg bg-gray-50 border text-gray-900 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:outline-none'
+    }
+    return className
+  }
+
   return (
     <div className="w-full">
       {renderingInputTitle()}
       <div className="flex relative mt-2 mb-2">
         <Input
-          isLabel={isLabel}
+          isLabel={isHeadLabel}
           labelClassName="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-r-0 border-gray-300 rounded-l-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600 "
-          labelContent={labelContent}
+          labelContent={headLabelContent}
           type={type}
           value={useInput.value}
           onChange={useInput.onChange}
           id={title}
-          className="rounded-none rounded-r-lg bg-gray-50 border text-gray-900 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:outline-none"
+          className={inputClassName()}
           placeholder={placeholder}
         />
-        {renderingViewContent()}
+        {renderingtailLabelContent()}
       </div>
     </div>
   )
 }
-export default InputGroup
+export default InputWithLabel

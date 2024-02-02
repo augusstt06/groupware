@@ -5,8 +5,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { AiOutlineMail } from 'react-icons/ai'
 
-import { InputIconlabel } from '@/app/component/ui/label/InputIconlabel'
-import { InputLabel } from '@/app/component/ui/label/Inputlabel'
+import { Label, LabelIcon } from '@/app/component/ui/label/Label'
 import { KEY_ACCESS_TOKEN, REGISTER_EMAIL } from '@/app/constant/constant'
 import { ERR_COOKIE_NOT_FOUND } from '@/app/constant/errorMsg'
 import { ROUTE_LOGIN, ROUTE_MAIN } from '@/app/constant/route/route-constant'
@@ -32,9 +31,9 @@ export default function FindPwd() {
       </div>
       <div className="md:w-2/5 w-4/5 mt-3">
         <div className="w-full">
-          <InputLabel title="이메일" />
+          <Label title="이메일" />
           <div className="flex relative mt-2 mb-6">
-            <InputIconlabel icon={<AiOutlineMail />} />
+            <LabelIcon icon={<AiOutlineMail />} />
             <input
               type="text"
               value={emailInput.value}

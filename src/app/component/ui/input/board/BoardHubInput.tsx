@@ -3,7 +3,7 @@ import { IoSearchSharp } from 'react-icons/io5'
 
 import Button from '../../button/Button'
 import BoardWriteModal from '../../modal/board/BoardWriteModal'
-import InputGroup from '../InputGroup'
+import InputWithLabel from '../InputWithLabel'
 
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { openBoardWriteModalReducer } from '@/app/store/reducers/board/openBoardWriteModalReducer'
@@ -22,15 +22,16 @@ export default function BoardHubInput(props: BoardHubInputProps) {
     <div className="flex flex-row justify-around">
       {isModalOpen ? <BoardWriteModal currentBoard={null} /> : <></>}
       <div className="flex mt-3 mb-3 mr-2 w-4/6">
-        <InputGroup
+        <InputWithLabel
           title=""
-          isLabel={true}
-          labelContent={<IoSearchSharp className="w-4 h-4" />}
+          className=""
+          isHeadLabel={true}
+          headLabelContent={<IoSearchSharp className="w-4 h-4" />}
           placeholder="제목, 내용, 작성자 입력"
           useInput={props.searchInput}
           type="text"
-          isView={true}
-          viewContent={
+          isTailLabel={true}
+          tailLabelContent={
             <Button
               buttonContent={<IoMdCloseCircle />}
               className="absolute top-0 end-0 p-2.5 text-sm font-medium h-full text-gray-900 bg-gray-200 rounded-e-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 ease-in-out transition duration-400"

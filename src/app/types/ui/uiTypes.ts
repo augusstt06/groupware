@@ -9,7 +9,7 @@ import {
   type ProjectResponseType,
 } from '../variableTypes'
 
-export type InputIconLabelProps = {
+export type LabelIconProps = {
   icon: React.ReactNode
 }
 

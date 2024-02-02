@@ -5,7 +5,7 @@ import dynamic from 'next/dynamic'
 import { useRouter } from 'next/navigation'
 
 import BoardWriteModalCheckBox from '../../checkbox/BoardWriteModalCheckBox'
-import BoardModalInputGroup from '../../input/board/BoardModalInputGroup'
+import BoardModalInputGroup from '../../input/group/BoardModalInputGroup'
 import BoardModalSaveListTab from '../../tab/board/BoardModalSaveListTab'
 import BoardWriteModalBtnTab from '../../tab/board/BoardWriteModalBtnTab'
 import Dialog from '../dialog/Dialog'

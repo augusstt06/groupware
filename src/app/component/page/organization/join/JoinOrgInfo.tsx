@@ -2,9 +2,7 @@ import { useEffect } from 'react'
 
 import { SlOrganization } from 'react-icons/sl'
 
-// import OrgInput from '../../../ui/input/organization/OrgInput'
-
-import InputGroup from '@/app/component/ui/input/InputGroup'
+import InputWithLabel from '@/app/component/ui/input/InputWithLabel'
 import { REGISTER_ORG_JOIN } from '@/app/constant/constant'
 import useInput from '@/app/module/hooks/reactHooks/useInput'
 import { useAppDispatch } from '@/app/module/hooks/reduxHooks'
@@ -42,14 +40,15 @@ export default function JoinOrgInfo() {
     window.addEventListener('beforeunload', handleBeforeunload)
   }, [joinInput.value])
   return (
-    <InputGroup
+    <InputWithLabel
       title={REGISTER_ORG_JOIN}
-      isLabel={true}
-      labelContent={<SlOrganization />}
+      isHeadLabel={true}
+      headLabelContent={<SlOrganization />}
       placeholder="조직 코드를 입력해주세요"
       useInput={joinInput}
       type="text"
-      isView={false}
+      isTailLabel={false}
+      className=""
     />
   )
 }

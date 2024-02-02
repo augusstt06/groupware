@@ -2,6 +2,11 @@
 export const GOOGLE_CALENDAR_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_CALENDAR_API_KEY as string
 export const GOOGLE_CALENDAR_ID = process.env.NEXT_PUBLIC_GOOGLE_CALENDAR_ID as string
 
+// valite in signup
+export const VALIDATE_EMAIL_TYPE = 'email'
+export const VALIDATE_PWD_TYPE = 'pwd'
+export const VALIDATE_PHONE_NUM_TYPE = 'phoneNumber'
+
 // API resposne code
 export const API_SUCCESS_CODE = 200
 
