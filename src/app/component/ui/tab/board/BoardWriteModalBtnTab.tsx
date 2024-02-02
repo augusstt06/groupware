@@ -2,7 +2,7 @@ import { IoClose } from 'react-icons/io5'
 
 import Button from '../../button/Button'
 
-import { type BoardWriteModalBtnTabProps } from '@/app/types/ui/btnTypes'
+import { type BoardWriteModalBtnTabProps } from '@/app/types/ui/modalTypes'
 
 export default function BoardWriteModalBtnTab(props: BoardWriteModalBtnTabProps) {
   const closeBtnContent = <IoClose className="w-4 h-4" />
