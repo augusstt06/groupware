@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 
 import BoardItemHub from '@/app/component/page/main/hub/board/item/BoardItemHub'
-import BoardHubInput from '@/app/component/ui/input/board/BoardHubInput'
+import BoardMainInputGroup from '@/app/component/ui/input/group/board/BoardMainInputGroup'
 import BoardWriteModal from '@/app/component/ui/modal/board/BoardWriteModal'
 import Pagination from '@/app/component/ui/pagination/Pagination'
 import {
@@ -142,7 +142,10 @@ export default function BoardCategory() {
             <span>{currentBoard.name}</span>
           </div>
 
-          <BoardHubInput searchInput={searchInput} clickSearchPostings={clickSearchPostings} />
+          <BoardMainInputGroup
+            searchInput={searchInput}
+            clickSearchPostings={clickSearchPostings}
+          />
 
           <BoardItemHub boardList={boardList} />
         </div>

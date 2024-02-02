@@ -1,11 +1,15 @@
+import { useEffect } from 'react'
+
 import { SlOrganization } from 'react-icons/sl'
 
-import OrgInput from '../../../ui/input/organization/OrgInput'
-
-import { ORG_JOIN, REGISTER_ORG_JOIN } from '@/app/constant/constant'
+import InputWithLabel from '@/app/component/ui/input/InputWithLabel'
+import { REGISTER_ORG_JOIN } from '@/app/constant/constant'
 import useInput from '@/app/module/hooks/reactHooks/useInput'
+import { useAppDispatch } from '@/app/module/hooks/reduxHooks'
+import { joinOrgReducer } from '@/app/store/reducers/login/orgInfoReducer'
 
 export default function JoinOrgInfo() {
+  const dispatch = useAppDispatch()
   const dynamicInput = (isPersist: boolean, title: string) => {
     let storedValue
     if (localStorage.getItem(title) === null) {
@@ -19,15 +23,32 @@ export default function JoinOrgInfo() {
 
   const joinInput = dynamicInput(true, REGISTER_ORG_JOIN)
 
+  const handleBeforeunload = () => {
+    dispatch(joinOrgReducer({ code: '' }))
+  }
+  useEffect(() => {
+    const payload = {
+      code: joinInput.value,
+    }
+    dispatch(joinOrgReducer(payload))
+
+    const handleJoinInputFocusOut = () => {
+      localStorage.setItem(REGISTER_ORG_JOIN, joinInput.value)
+    }
+    const joinInputElement = document.getElementById(REGISTER_ORG_JOIN)
+    joinInputElement?.addEventListener('focusout', handleJoinInputFocusOut)
+    window.addEventListener('beforeunload', handleBeforeunload)
+  }, [joinInput.value])
   return (
-    <>
-      <OrgInput
-        componentType={ORG_JOIN}
-        useInput={joinInput}
-        title={REGISTER_ORG_JOIN}
-        placeholder="조직 코드를 입력해주세요"
-        icon={<SlOrganization />}
-      />
-    </>
+    <InputWithLabel
+      title={REGISTER_ORG_JOIN}
+      isHeadLabel={true}
+      headLabelContent={<SlOrganization />}
+      placeholder="조직 코드를 입력해주세요"
+      useInput={joinInput}
+      type="text"
+      isTailLabel={false}
+      className=""
+    />
   )
 }

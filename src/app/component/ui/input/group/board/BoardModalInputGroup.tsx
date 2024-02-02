@@ -4,10 +4,14 @@ import { type ChangeEvent, useState } from 'react'
 
 import { AiOutlinePicture } from 'react-icons/ai'
 
-import { InputLabel } from '../../label/Inputlabel'
+import { Label } from '../../../label/Label'
+import Input from '../../Input'
 
 import {
   API_SUCCESS_CODE,
+  BOARD_MODAL_AUTHOR,
+  BOARD_MODAL_EMAIL,
+  BOARD_MODAL_TITLE,
   KEY_ACCESS_TOKEN,
   KEY_X_ORGANIZATION_CODE,
 } from '@/app/constant/constant'
@@ -68,21 +72,21 @@ export default function BoardModalInputGroup(props: BoardModalInputGruopProps) {
 
   const inputList = [
     {
-      title: '제목',
+      title: BOARD_MODAL_TITLE,
       value: props.titleInput.value,
       onchange: props.titleInput.onChange,
       placeholder: '게시글 제목을 입력해주세요',
       readonly: false,
     },
     {
-      title: '작성자',
+      title: BOARD_MODAL_AUTHOR,
       value: userInfo.extraInfo.name,
       onchange: () => {},
       placeholder: '이름을 입력해주세요',
       readonly: true,
     },
     {
-      title: '이메일',
+      title: BOARD_MODAL_EMAIL,
       value: userInfo.extraInfo.email,
       onchange: () => {},
       placeholder: '이메일을 입력해주세요',
@@ -100,9 +104,10 @@ export default function BoardModalInputGroup(props: BoardModalInputGruopProps) {
       />
       {inputList.map((data) => (
         <div className="p-2" key={data.title}>
-          <InputLabel title={data.title} />
+          <Label title={data.title} />
           {data.readonly ? (
-            <input
+            <Input
+              isLabel={false}
               type="text"
               value={data.value}
               onChange={data.onchange}
@@ -111,7 +116,8 @@ export default function BoardModalInputGroup(props: BoardModalInputGruopProps) {
               readOnly
             />
           ) : (
-            <input
+            <Input
+              isLabel={false}
               type="text"
               value={data.value}
               onChange={data.onchange}
@@ -123,7 +129,7 @@ export default function BoardModalInputGroup(props: BoardModalInputGruopProps) {
       ))}
       <div className="p-2 h-40 ">
         <div className="flex flex-row items-center">
-          <InputLabel title="썸네일" />
+          <Label title="썸네일" />
 
           {imgTag !== null ? (
             <label htmlFor="imginput" className="mb-2 ml-3 flex flex-row items-center">
@@ -143,9 +149,10 @@ export default function BoardModalInputGroup(props: BoardModalInputGruopProps) {
           {imgTag ?? (
             <label htmlFor="imginput">
               <span>+ 이미지업로드</span>
-              <input
+              <Input
+                isLabel={false}
                 type="file"
-                id="imginput"
+                id="imgInput"
                 onChange={handleUploadThumbmnail}
                 className="hidden"
               />
@@ -158,31 +165,37 @@ export default function BoardModalInputGroup(props: BoardModalInputGruopProps) {
 }
 
 function BoardCategoryInput(props: BoardCategoryInputProps) {
+  const { currentBoard } = props
   return (
     <div className="p-2">
-      <InputLabel title="게시판" />
       {props.currentBoard !== null ? (
-        <input
+        <Input
+          isLabel={true}
+          labelClassName="block mb-2 md:text-sm text-xs md:font-bold text-gray-900 dark:text-white"
+          labelContent="게시판"
           type="text"
-          value={props.currentBoard.name}
-          className="rounded rounded bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  bg-gray-400 dark:bg-gray-600 dark:border-white-600 dark:placeholder-gray-400 dark:text-gray-700 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          placeholder="게시글 제목을 입력해주세요"
+          value={currentBoard?.name}
+          className="rounded rounded bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:outline-none block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  bg-gray-400 dark:bg-gray-600 dark:border-white-600 dark:placeholder-gray-400 dark:text-gray-700 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          placeholder="게시글 제목을 입력해주세요."
           readOnly
         />
       ) : (
-        <select
-          id="boardCategory"
-          onChange={props.handleSelectChange}
-          value={props.select}
-          className="appearance-none rounded rounded bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-white-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-        >
-          <option value="none">글 카테고리를 골라주세요</option>
-          {props.selectList.map((data) => (
-            <option value={data.id} key={data.name}>
-              {data.name}
-            </option>
-          ))}
-        </select>
+        <>
+          <Label title="게시판" />
+          <select
+            id="boardCategory"
+            onChange={props.handleSelectChange}
+            value={props.select}
+            className="appearance-none rounded rounded bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-white-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          >
+            <option value="none">글 카테고리를 골라주세요</option>
+            {props.selectList.map((data) => (
+              <option value={data.id} key={data.name}>
+                {data.name}
+              </option>
+            ))}
+          </select>
+        </>
       )}
     </div>
   )
