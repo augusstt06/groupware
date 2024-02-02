@@ -31,7 +31,7 @@ export default function FindPwd() {
       </div>
       <div className="md:w-2/5 w-4/5 mt-3">
         <div className="w-full">
-          <Label title="이메일" />
+          <Label title={REGISTER_EMAIL} />
           <div className="flex relative mt-2 mb-6">
             <LabelIcon icon={<AiOutlineMail />} />
             <input

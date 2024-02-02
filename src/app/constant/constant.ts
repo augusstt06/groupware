@@ -63,6 +63,10 @@ export const MAIN_CARD_TODO = 'TODO'
 export const BOARD_CATEGORY_TEAM = '팀'
 export const BOARD_CATEGORY_PROJECT = '프로젝트'
 
+export const BOARD_MODAL_TITLE = '제목'
+export const BOARD_MODAL_AUTHOR = '작성자'
+export const BOARD_MODAL_EMAIL = '이메일'
+
 // Project
 export const PROJECT_ISSUE_TASK_TITLE = '📑 업무'
 export const PROJECT_ISSUE_SCHEDULE_TITLE = '🗓️ 일정'

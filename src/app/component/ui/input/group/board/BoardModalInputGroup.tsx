@@ -9,6 +9,9 @@ import Input from '../../Input'
 
 import {
   API_SUCCESS_CODE,
+  BOARD_MODAL_AUTHOR,
+  BOARD_MODAL_EMAIL,
+  BOARD_MODAL_TITLE,
   KEY_ACCESS_TOKEN,
   KEY_X_ORGANIZATION_CODE,
 } from '@/app/constant/constant'
@@ -69,21 +72,21 @@ export default function BoardModalInputGroup(props: BoardModalInputGruopProps) {
 
   const inputList = [
     {
-      title: '제목',
+      title: BOARD_MODAL_TITLE,
       value: props.titleInput.value,
       onchange: props.titleInput.onChange,
       placeholder: '게시글 제목을 입력해주세요',
       readonly: false,
     },
     {
-      title: '작성자',
+      title: BOARD_MODAL_AUTHOR,
       value: userInfo.extraInfo.name,
       onchange: () => {},
       placeholder: '이름을 입력해주세요',
       readonly: true,
     },
     {
-      title: '이메일',
+      title: BOARD_MODAL_EMAIL,
       value: userInfo.extraInfo.email,
       onchange: () => {},
       placeholder: '이메일을 입력해주세요',
