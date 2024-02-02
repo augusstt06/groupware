@@ -2,6 +2,11 @@
 export const GOOGLE_CALENDAR_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_CALENDAR_API_KEY as string
 export const GOOGLE_CALENDAR_ID = process.env.NEXT_PUBLIC_GOOGLE_CALENDAR_ID as string
 
+// valite in signup
+export const VALIDATE_EMAIL_TYPE = 'email'
+export const VALIDATE_PWD_TYPE = 'pwd'
+export const VALIDATE_PHONE_NUM_TYPE = 'phoneNumber'
+
 // API resposne code
 export const API_SUCCESS_CODE = 200
 
@@ -33,7 +38,7 @@ export const REGISTER_NAME = '이름'
 export const REGISTER_PHONENUMBER = '전화번호'
 export const REGISTER_POSITION = '직무'
 export const REGISTER_ORG_NAME = '조직 이름'
-export const REGISTER_ORG_DESCRIPTION = '조직설명'
+export const REGISTER_ORG_DESCRIPTION = '조직 설명'
 export const REGISTER_ORG_JOIN = '조직 코드'
 
 export const KEY_ACCESS_TOKEN = 'access-token'

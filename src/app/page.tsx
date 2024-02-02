@@ -5,11 +5,12 @@ import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { AiOutlineMail } from 'react-icons/ai'
+import { IoMdEye, IoMdEyeOff } from 'react-icons/io'
 import { RiLockPasswordFill } from 'react-icons/ri'
 
 import ErrorAlert from './component/ui/alert/ErrorAlert'
 import Button from './component/ui/button/Button'
-import LoginInput from './component/ui/input/login/LoginInput'
+import InputWithLabel from './component/ui/input/InputWithLabel'
 import {
   API_SUCCESS_CODE,
   FALSE,
@@ -56,7 +57,7 @@ export default function Login() {
   const dispatch = useAppDispatch()
   const router = useRouter()
   const loginCompleteState = useAppSelector((state) => state.maintain[KEY_LOGIN_COMPLETE])
-  const loginState = useAppSelector((state) => state.loginInfo)
+  // const loginState = useAppSelector((state) => state.loginInfo)
   const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
   const [isPwdView, setIsPwdView] = useState(false)
 
@@ -81,19 +82,10 @@ export default function Login() {
     try {
       const fetchProps: ModulePostFetchProps = {
         data: {
-          email: loginState.email.value,
-          password: loginState.pwd.value,
+          email: emailInput.value,
+          password: pwdInput.value,
         },
         fetchUrl: API_URL_LOGIN,
-      }
-      const inputValidateProps = {
-        inputData: loginState.email.value,
-        dataType: 'email',
-      }
-      const isEmailValid = inputValidate(inputValidateProps)
-      if (!isEmailValid) {
-        setErrMsg('이메일 형식이 잘못되었습니다. xxx@xxx.xxx 의 형태로 입력해주세요')
-        return
       }
       const res = await modulePostFetch<LoginResponseType>(fetchProps)
       if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)
@@ -120,8 +112,67 @@ export default function Login() {
     }
   }
   const handleClickLogin = () => {
+    const inputValidateProps = {
+      inputData: emailInput.value,
+      dataType: 'email',
+    }
+    const isEmailValid = inputValidate(inputValidateProps)
+    if (!isEmailValid) {
+      setErrMsg('이메일 형식이 잘못되었습니다. xxx@xxx.xxx 의 형태로 입력해주세요')
+      return
+    }
     void fetchLogin()
   }
+
+  const isPwdViewComponent = () => {
+    const handleClick = () => {
+      setIsPwdView(!isPwdView)
+    }
+    if (isPwdView) {
+      return (
+        <Button
+          buttonContent={
+            <IoMdEyeOff className="w-4 h-4 text-black hover:text-white dark:text-white" />
+          }
+          className="absolute top-0 end-0 p-2.5 text-sm font-medium h-full text-white bg-gray-50 rounded-e-lg border dark:border-gray-600 hover:bg-indigo-200  dark:bg-gray-700 dark:hover:bg-indigo-400 ease-in-out transition duration-400"
+          onClick={handleClick}
+        />
+      )
+    }
+    return (
+      <Button
+        buttonContent={<IoMdEye className="w-4 h-4 text-black dark:text-white" />}
+        className="absolute top-0 end-0 p-2.5 text-sm font-medium h-full text-white bg-gray-50 rounded-e-lg border dark:border-gray-600 hover:bg-indigo-200  dark:bg-gray-700 dark:hover:bg-indigo-400 ease-in-out transition duration-400"
+        onClick={handleClick}
+      />
+    )
+  }
+
+  const pwdViewType = () => {
+    if (isPwdView) return 'text'
+    return 'password'
+  }
+
+  const inputgroupList = [
+    {
+      headLabelContent: <AiOutlineMail />,
+      title: REGISTER_EMAIL,
+      placeholder: 'abc12@sample.com',
+      useInput: emailInput,
+      type: 'text',
+      isTailLabel: false,
+      tailLabelContent: <></>,
+    },
+    {
+      headLabelContent: <RiLockPasswordFill />,
+      title: REGISTER_PWD,
+      placeholder: 'At least 8 characters',
+      useInput: pwdInput,
+      type: pwdViewType(),
+      isTailLabel: true,
+      tailLabelContent: isPwdViewComponent(),
+    },
+  ]
   useEffect(() => {
     if (accessToken !== ERR_COOKIE_NOT_FOUND) {
       if (loginCompleteState === FALSE) {
@@ -149,22 +200,20 @@ export default function Login() {
     <div className="flex flex-col justify-center items-center h-screen px-4 place-content-center">
       <div className="text-xl md:font-bold mb-6">로그인</div>
       <div className="w-4/5 md:w-2/5">
-        <LoginInput
-          icon={<AiOutlineMail />}
-          title={REGISTER_EMAIL}
-          placeholder="abc12@sample.com"
-          useInput={emailInput}
-          isPwdView={isPwdView}
-          setIsPwdView={setIsPwdView}
-        />
-        <LoginInput
-          icon={<RiLockPasswordFill />}
-          title={REGISTER_PWD}
-          placeholder="At least 8 characters"
-          useInput={pwdInput}
-          isPwdView={isPwdView}
-          setIsPwdView={setIsPwdView}
-        />
+        {inputgroupList.map((data) => (
+          <InputWithLabel
+            key={data.title}
+            isHeadLabel={true}
+            isTailLabel={data.isTailLabel}
+            headLabelContent={data.headLabelContent}
+            tailLabelContent={data.tailLabelContent}
+            title={data.title}
+            placeholder={data.placeholder}
+            useInput={data.useInput}
+            type={data.type}
+            className=""
+          />
+        ))}
         {errorState.isError ? (
           <ErrorAlert description={errorState.description} handleClickError={handleClickError} />
         ) : (
