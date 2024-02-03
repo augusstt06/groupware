@@ -266,7 +266,7 @@ export default function ProjectIssueSchedule() {
         />
         <IssueSelect title="참석자" selectList={attendanceList} />
         {scheduleList.map((data) => (
-          <div key={data.title}>
+          <div key={data.title as string}>
             <IssueCalendarWithTime scheduleData={data} />
             <DialogCalendar dialog={data.dialog} calendarWithTimeData={data} isWithtime={true} />
           </div>

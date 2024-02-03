@@ -140,26 +140,29 @@ export function IssueCalendarWithTime(props: IssueCalendarWithTimeProps) {
       },
     },
   ]
-  const divClassName = () => {
-    if (props.scheduleData.viewCheckAllDay) {
-      return 'col-span-5 grid grid-cols-6 gap-2'
+
+  const renderTitle = () => {
+    if (props.scheduleData.title === '') {
+      return <></>
     }
-    return 'col-span-5 grid grid-cols-6 gap-2'
+    return (
+      <div className="min-w-40 block col-span-1">
+        <span className="text-sm md:text-base">{props.scheduleData.title}</span>
+      </div>
+    )
   }
   return (
     <>
-      <div className="items-center p-2 grid grid-cols-6 gap-2" key={props.scheduleData.title}>
-        <div className="min-w-40 block col-span-1">
-          <span className="text-sm md:text-base">{props.scheduleData.title}</span>
-        </div>
-        <div className={divClassName()}>
-          <div className="col-span-3 lg:ml-0 ml-4 flex flex-col lg:flex-row items-center items-center rounded rounded mt-2 bg-gray-50 border text-gray-900 w-26 text-sm border-gray-300 p-2 dark:bg-gray-700 dark:border-white-600 dark:placeholder-gray-400 dark:text-white truncate">
+      <div className="items-center p-2 grid grid-cols-6 gap-2 ">
+        {renderTitle()}
+        <div className="col-span-5 grid grid-cols-6 gap-2">
+          <div className="col-span-3 lg:ml-0 ml-4 flex flex-col lg:flex-row items-center items-center rounded mt-2 bg-gray-50 border text-gray-900 w-26 text-sm border-gray-300 p-2 dark:bg-gray-700 dark:border-white-600 dark:placeholder-gray-400 dark:text-white truncate">
             <FaRegCalendarAlt onClick={props.scheduleData.openCalendar} className="mb-2 lg:mb-0" />
             <span className="ml-2 lg:text-base text-xs">
               {moment(props.scheduleData.calendarDateValue as ValuePiece).format('YYYY/MM/DD')}
             </span>
           </div>
-          <div className="col-span-2 grid lg:grid-cols-2 grid-row-2 gap-2">
+          <div className="col-span-2 grid lg:grid-cols-2 grid-row-2 gap-2 bg-cyan-300">
             {issueTimeList.map((data) => (
               <IssueTime
                 key={data.unit}
@@ -173,14 +176,14 @@ export function IssueCalendarWithTime(props: IssueCalendarWithTimeProps) {
             ))}
           </div>
           {props.scheduleData.viewCheckAllDay ? (
-            <div className="col-span-1 grid sm:grid-cols-3 grid-row-3 items-center">
+            <div className="col-span-1 grid sm:grid-cols-3 grid-row-3 items-center bg-cyan-300">
               <input
                 type="checkbox"
                 onClick={props.scheduleData.handleAllday}
                 className="w-4 h-4 col-span-1 text-purple-600 bg-gray-100 border-gray-300 rounded dark:bg-gray-700 dark:border-gray-600"
               />
               <div className="col-span-2 xl:inline hidden">
-                <span className="text-sm">하루종일</span>
+                <span className="text-xs">하루종일</span>
               </div>
               <div className="col-span-2 grid grid-row-2 inline xl:hidden ">
                 <span className="text-sm">하루</span>

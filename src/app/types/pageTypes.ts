@@ -127,6 +127,6 @@ export type ProjectDetailTaskColumnProps = {
   cardList: ColumnType[]
 }
 
-export type ProjectTaskDetailProps = {
+export type ProjectIssueDetailProps = {
   issue: IssueDatailType | null
 }

@@ -6,10 +6,12 @@ import { IoIosArrowBack } from 'react-icons/io'
 
 // import Comment from '@/app/component/page/board/comment/Comment'
 // import WriteComment from '@/app/component/page/board/comment/WriteComment'
+import ProjectScheduleDeatil from '@/app/component/page/project/hub/detail/issue/ProjectScheduleDetail'
 import ProjectTaskDetail from '@/app/component/page/project/hub/detail/issue/ProjectTaskDetail'
 import {
   KEY_ACCESS_TOKEN,
   KEY_X_ORGANIZATION_CODE,
+  PROJECT_ISSUE_SCHEDULE_VALUE,
   PROJECT_ISSUE_TASK_VALUE,
 } from '@/app/constant/constant'
 import { API_URL_PROJECT_ISSUE } from '@/app/constant/route/api-route-constant'
@@ -52,6 +54,8 @@ export default function ProjectIssueDetail() {
     switch (issue?.category) {
       case PROJECT_ISSUE_TASK_VALUE.toUpperCase():
         return <ProjectTaskDetail issue={issue} />
+      case PROJECT_ISSUE_SCHEDULE_VALUE.toUpperCase():
+        return <ProjectScheduleDeatil issue={issue} />
     }
   }
 
@@ -59,7 +63,7 @@ export default function ProjectIssueDetail() {
     void fetchGetIssue()
   }, [])
   return (
-    <main className="w-full 2xl:w-2/3 h-4/5 flex flex-col items-center">
+    <main className="w-10/12 max-w-7xl 2xl:w-2/3 h-4/5 flex flex-col items-center ">
       <div className="w-4/5 rounded mr-10 bg-white dark:bg-gray-700 dark:text-white p-5 border-2">
         <div
           className="flex flex-row mb-3 items-center cursor-pointer inline w-20 hover:font-bold"

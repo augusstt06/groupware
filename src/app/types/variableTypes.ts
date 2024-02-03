@@ -178,7 +178,7 @@ export type DialogTextType = {
 }
 
 export type ScheduleListType = {
-  title: string
+  title: React.ReactNode
   timeCategory: 'start' | 'end'
   openCalendar: () => void
   calendarDateValue: CalendarValue
@@ -190,6 +190,7 @@ export type ScheduleListType = {
   timeState: { hour: string; minute: string }
   isCheckAllday: boolean
   dialog: MutableRefObject<HTMLDialogElement | null>
+  keyValue?: string
 }
 
 export type TaskListType = {
@@ -277,6 +278,8 @@ export type ScheduleType = {
 }
 
 export type FullCalendarEventType = {
+  // groupId: number
+  issueId: number
   title: string
   start: string
   end: string

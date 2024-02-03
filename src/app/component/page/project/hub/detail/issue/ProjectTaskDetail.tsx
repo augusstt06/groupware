@@ -25,9 +25,9 @@ import {
   PROJECT_ISSUE_TASK_PROGRESS_REQUESTED_TITLE,
   PROJECT_ISSUE_TASK_PROGRESS_REQUESTED_VALUE,
 } from '@/app/constant/constant'
-import { type CalendarValue, type ProjectTaskDetailProps } from '@/app/types/pageTypes'
+import { type CalendarValue, type ProjectIssueDetailProps } from '@/app/types/pageTypes'
 
-export default function ProjectTaskDetail(props: ProjectTaskDetailProps) {
+export default function ProjectTaskDetail(props: ProjectIssueDetailProps) {
   const { issue } = props
   const startDialogRef = useRef<HTMLDialogElement | null>(null)
   const endDialogRef = useRef<HTMLDialogElement | null>(null)
