@@ -283,3 +283,17 @@ export type FullCalendarEventType = {
   backgroundColor: string
   textColor: string
 }
+
+export type IssueDatailType = {
+  category: string
+  createdAt: string
+  endAt: string
+  id: number
+  issuer: { id: number; name: string; uuid: string; email: string }
+  issuerId: number
+  processState: string
+  projectId: number
+  startAt: string
+  title: string
+  updatedAt: string
+}

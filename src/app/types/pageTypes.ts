@@ -4,6 +4,7 @@ import {
   type BoardListResponseType,
   type ColumnType,
   type CommentType,
+  type IssueDatailType,
   type ScheduleListType,
 } from './variableTypes'
 
@@ -124,4 +125,8 @@ export type ProjectDetailTaskColumnProps = {
   columnCardNumber: number
   columnColor: string
   cardList: ColumnType[]
+}
+
+export type ProjectTaskDetailProps = {
+  issue: IssueDatailType | null
 }
