@@ -6,6 +6,7 @@ import { type Editor } from '@toast-ui/react-editor'
 
 import {
   type BoardListResponseType,
+  type ColleagueType,
   type MyBoardType,
   type ProjectIssueType,
   type ProjectResponseType,
@@ -115,6 +116,7 @@ export type ProjectMainHubProps = {
 }
 
 export type ProjectDetailTabProps = {
+  colleague: ColleagueType[]
   projectInfo: ProjectResponseType | null
 }
 export type ProjectDetailHubProps = {

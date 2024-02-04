@@ -303,3 +303,14 @@ export type IssueDatailType = {
   title: string
   updatedAt: string
 }
+
+export type ColleagueType = {
+  userId: number
+  gradeId: number
+  organizationId: number
+  uuid: string
+  email: string
+  name: string
+  phone: string
+  position: string
+}

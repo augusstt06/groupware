@@ -1,3 +1,6 @@
+// colleagues
+export const API_URL_COLLEAGUES = process.env.NEXT_PUBLIC_COLLEAGUES_SOURCE as string
+
 // auth
 export const API_URL_CHECK_EMAIL = process.env.NEXT_PUBLIC_EMAIL_REQ_SOURCE as string
 export const API_URL_REGISTER = process.env.NEXT_PUBLIC_REGISTER_SOURCE as string

@@ -3,6 +3,7 @@ import { type Dispatch, type ReactEventHandler, type SetStateAction } from 'reac
 import { type UseInputProps } from '../moduleTypes'
 import {
   type BoardListResponseType,
+  type ColleagueType,
   type MyBoardType,
   type ProjectAlertStateType,
 } from '../variableTypes'
@@ -60,4 +61,7 @@ export type BoardWriteModalBtnTabProps = {
   handleClickClose: () => void
   handleClickPosting: () => void
   saveList: BoardListResponseType[]
+}
+export type InviteProjectMemberModalProps = {
+  colleague: ColleagueType[]
 }

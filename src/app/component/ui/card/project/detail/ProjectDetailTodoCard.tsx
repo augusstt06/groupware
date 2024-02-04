@@ -1,9 +1,9 @@
 import { FaCheck } from 'react-icons/fa'
 
 import { moduleConvertDate } from '@/app/module/utils/moduleTime'
-import { type ProjectDetailTodoCardPRops } from '@/app/types/ui/cardTypes'
+import { type ProjectDetailTodoCardProps } from '@/app/types/ui/cardTypes'
 
-export default function ProjectDetailTodoCard(props: ProjectDetailTodoCardPRops) {
+export default function ProjectDetailTodoCard(props: ProjectDetailTodoCardProps) {
   return (
     <div className="flex flex-row items-center justify-between mb-2 w-10/12 rounded-lg  shadow-lg">
       <div className="flex flex-row items-center justify-between lg:w-1/4 w-1/3 truncate">

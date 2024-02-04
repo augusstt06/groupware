@@ -28,6 +28,7 @@ export default function ProjectIssueDetail() {
   const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
   const [issue, setIssue] = useState<IssueDatailType | null>(null)
+
   //   const [rerender, setRerender] = useState(false)
   const goProjectIssue = () => {
     router.push(ROUTE_PROJECT)

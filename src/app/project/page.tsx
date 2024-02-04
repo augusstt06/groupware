@@ -218,6 +218,7 @@ export default function Project() {
       dialogBtnValue: projectDialogBtnValue,
     },
   ]
+
   useEffect(() => {
     if (createProjectModalState) dispatch(createProjectModalReducer(false))
     void fetchGetProjectList()
