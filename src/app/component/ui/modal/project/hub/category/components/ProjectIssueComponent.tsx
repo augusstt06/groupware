@@ -98,7 +98,7 @@ export function IssueCalendar(props: IssueCalendarProps) {
     <>
       <div className="flex flex-row items-center p-2" key={props.title}>
         {renderTitlte()}
-        <div className="flex flex-row items-center rounded rounded mt-2 bg-gray-50 border text-gray-900 w-7/12 lg:w-5/12 sm:w-8/12 text-sm border-gray-300 p-2.5 dark:bg-gray-700 dark:border-white-600 dark:placeholder-gray-400 dark:text-white">
+        <div className="flex flex-row items-center rounded rounded mt-2 bg-gray-50 border text-gray-900 w-40 text-sm border-gray-300 p-2.5 dark:bg-gray-700 dark:border-white-600 dark:placeholder-gray-400 dark:text-white">
           <FaRegCalendarAlt onClick={props.openModal} />
           <span className="ml-2 lg:text-base text-xs">
             {moment(props.dateValue as ValuePiece).format(PROJECT_DATE_FORMAT)}

@@ -1,5 +1,6 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
+import moment from 'moment'
 import { BsAlignEnd, BsAlignStart } from 'react-icons/bs'
 import { FiPaperclip } from 'react-icons/fi'
 import { IoPersonOutline } from 'react-icons/io5'
@@ -8,6 +9,9 @@ import { LuLoader } from 'react-icons/lu'
 import { DialogCalendar } from '@/app/component/ui/modal/dialog/Dialog'
 import { IssueCalendar } from '@/app/component/ui/modal/project/hub/category/components/ProjectIssueComponent'
 import {
+  KEY_ACCESS_TOKEN,
+  KEY_X_ORGANIZATION_CODE,
+  PROJECT_DATE_FORMAT,
   PROJECT_ISSUE_TASK_PROGRESS_COMPLETED_COLOR,
   PROJECT_ISSUE_TASK_PROGRESS_COMPLETED_HOVER_COLOR,
   PROJECT_ISSUE_TASK_PROGRESS_COMPLETED_TITLE,
@@ -24,11 +28,23 @@ import {
   PROJECT_ISSUE_TASK_PROGRESS_REQUESTED_HOVER_COLOR,
   PROJECT_ISSUE_TASK_PROGRESS_REQUESTED_TITLE,
   PROJECT_ISSUE_TASK_PROGRESS_REQUESTED_VALUE,
+  PROJECT_ISSUE_TASK_VALUE,
 } from '@/app/constant/constant'
-import { type CalendarValue, type ProjectIssueDetailProps } from '@/app/types/pageTypes'
+import { API_URL_PROJECT_ISSUE } from '@/app/constant/route/api-route-constant'
+import { useAppSelector } from '@/app/module/hooks/reduxHooks'
+import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
+import { modulePatchFetch } from '@/app/module/utils/moduleFetch'
+import { type ModulePostFetchProps } from '@/app/types/moduleTypes'
+import {
+  type CalendarValue,
+  type ProjectIssueDetailProps,
+  type ValuePiece,
+} from '@/app/types/pageTypes'
 
 export default function ProjectTaskDetail(props: ProjectIssueDetailProps) {
   const { issue } = props
+  const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
+  const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
   const startDialogRef = useRef<HTMLDialogElement | null>(null)
   const endDialogRef = useRef<HTMLDialogElement | null>(null)
   const handleOpenStartCalendar = () => {
@@ -37,16 +53,19 @@ export default function ProjectTaskDetail(props: ProjectIssueDetailProps) {
   const handleOpenEndCalendar = () => {
     endDialogRef.current?.showModal()
   }
+  const [process, setProcess] = useState(issue?.processState)
+  const handleProcessState = (newProcess: string) => {
+    setProcess(newProcess)
+  }
+
   const [startDate, setStartDate] = useState<CalendarValue>(new Date(issue?.startAt as string))
   const [endDate, setEndDate] = useState<CalendarValue>(new Date(issue?.endAt as string))
   const handleStartDate = (date: CalendarValue) => {
-    // const stringDate = moment(date as ValuePiece).format(PROJECT_DATE_FORMAT)
     setStartDate(date)
     startDialogRef.current?.close()
   }
 
   const handleEndDate = (date: CalendarValue) => {
-    // const stringDate = moment(date as ValuePiece).format(PROJECT_DATE_FORMAT)
     setEndDate(date)
     endDialogRef.current?.close()
   }
@@ -76,13 +95,8 @@ export default function ProjectTaskDetail(props: ProjectIssueDetailProps) {
       hoverColor: PROJECT_ISSUE_TASK_PROGRESS_INIT_HOVER_COLOR,
     },
   ]
-  const issueStateClassName = (
-    issueValue: string,
-    bgColor: string,
-    hoverColor: string,
-    processState: string,
-  ) => {
-    if (issueValue === processState) {
+  const issueStateClassName = (issueValue: string, bgColor: string, hoverColor: string) => {
+    if (process === issueValue) {
       return `cursor-pointer mr-3 text-white ${bgColor} transition ease-in-out duration-300 w-1/5 p-2 rounded-full text-center`
     }
     return `cursor-pointer mr-3 bg-gray-200 ${hoverColor}dark:bg-gray-400 hover:text-white  transition ease-in-out duration-300 w-1/5 p-2 rounded-full text-center`
@@ -90,7 +104,7 @@ export default function ProjectTaskDetail(props: ProjectIssueDetailProps) {
 
   const calendarList = [
     {
-      icon: <BsAlignStart className="w-5 h-5 mr-5" />,
+      icon: <BsAlignStart className="w-5 h-5 mr-5 lg:inline hidden" />,
       title: '시작일',
       openModal: handleOpenStartCalendar,
       dateValue: startDate,
@@ -98,7 +112,7 @@ export default function ProjectTaskDetail(props: ProjectIssueDetailProps) {
       dialog: startDialogRef,
     },
     {
-      icon: <BsAlignEnd className="w-5 h-5 mr-5" />,
+      icon: <BsAlignEnd className="w-5 h-5 mr-5 lg:inline hidden" />,
       title: '종료일',
       openModal: handleOpenEndCalendar,
       dateValue: endDate,
@@ -106,21 +120,47 @@ export default function ProjectTaskDetail(props: ProjectIssueDetailProps) {
       dialog: endDialogRef,
     },
   ]
+
+  const convertDate = (date: string) => {
+    return new Date(`${date}T00:00:00Z`).toISOString()
+  }
+  const fetchPatchTaskIssue = async () => {
+    const fetchProps: ModulePostFetchProps = {
+      data: {
+        category: PROJECT_ISSUE_TASK_VALUE.toUpperCase(),
+        // FIXME: issue response에 description 필요함
+        description: '',
+        endAt: convertDate(moment(endDate as ValuePiece).format(PROJECT_DATE_FORMAT)),
+        startAt: convertDate(moment(startDate as ValuePiece).format(PROJECT_DATE_FORMAT)),
+        issueId: issue?.id,
+        processState: process,
+        title: issue?.title,
+      },
+      fetchUrl: API_URL_PROJECT_ISSUE,
+      header: {
+        Authorization: `Bearer ${accessToken}`,
+        [KEY_X_ORGANIZATION_CODE]: orgCode,
+      },
+    }
+    await modulePatchFetch<string>(fetchProps)
+  }
+  useEffect(() => {
+    void fetchPatchTaskIssue()
+  }, [process, startDate, endDate])
+
   return (
     <>
       {/* processState */}
       <div className="flex flex-col items-start mt-5">
-        <div className="flex flex-row items-center justify-start w-2/3">
-          <LuLoader className="w-5 h-5 mr-5" />
+        <div className="flex flex-row items-center justify-start w-full">
+          <LuLoader className="lg:inline hidden w-5 h-5 mr-5" />
           {issueState.map((data) => (
             <div
               key={data.title}
-              className={issueStateClassName(
-                data.value,
-                data.bgColor,
-                data.hoverColor,
-                issue?.processState as string,
-              )}
+              className={issueStateClassName(data.value, data.bgColor, data.hoverColor)}
+              onClick={() => {
+                handleProcessState(data.value)
+              }}
             >
               {data.title}
             </div>
@@ -130,10 +170,10 @@ export default function ProjectTaskDetail(props: ProjectIssueDetailProps) {
       {/*  */}
       {/* issuer */}
       <div className="flex flex-col items-start mt-5">
-        <div className="flex flex-row items-center justify-start w-2/3">
+        <div className="flex flex-row items-center justify-start w-full">
           <IoPersonOutline className="w-5 h-5 mr-5" />
           {/* FIXME: 추후 프로필 사진 추가 */}
-          <div className="w-1/5 p-2 ">{issue?.issuer.name}</div>
+          <div className="p-2 ">{issue?.issuer.name}</div>
         </div>
       </div>
       {/*  */}
@@ -141,7 +181,10 @@ export default function ProjectTaskDetail(props: ProjectIssueDetailProps) {
       {/* schedule */}
       <div className="flex flex-col items-start mt-5">
         {calendarList.map((data) => (
-          <div className="flex flex-row items-center justify-start w-2/3" key={data.title}>
+          <div
+            className="flex flex-row items-center justify-start w-full truncate"
+            key={data.title}
+          >
             {data.icon}
             <div className="w-full">
               <IssueCalendar
