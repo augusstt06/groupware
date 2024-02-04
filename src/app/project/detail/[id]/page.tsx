@@ -103,6 +103,7 @@ export default function ProjectDetail() {
   const convertDateWithTIme = (date: string, hour: string, minute: string) => {
     return new Date(`${date}T${hour}:${minute}:00Z`).toISOString()
   }
+
   const fetchPropsByCategory = () => {
     let fetchProps: ModulePostFetchProps
     switch (issueState.category) {

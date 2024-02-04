@@ -112,9 +112,13 @@ export function IssueCalendar(props: IssueCalendarProps) {
 export function IssueCalendarWithTime(props: IssueCalendarWithTimeProps) {
   const issueTimeList = [
     {
+      timeCategory: props.scheduleData.timeCategory,
       viewCheckAllDate: props.scheduleData.viewCheckAllDay,
+      defaultStartTime: props.scheduleData.defaultStartTime,
+      defaultEndTime: props.scheduleData.defaultEndTime,
       timeState: props.scheduleData.timeState,
       hoursList: props.scheduleData.hoursList,
+      minutesList: props.scheduleData.minutesList,
       unit: PROJECT_ISSUE_SCHEDULE_UNIT_HOUR_KO,
       isCheckAllday: props.scheduleData.isCheckAllday,
       onChange: (e: ChangeEvent<HTMLSelectElement>) => {
@@ -126,9 +130,13 @@ export function IssueCalendarWithTime(props: IssueCalendarWithTimeProps) {
       },
     },
     {
+      timeCategory: props.scheduleData.timeCategory,
       viewCheckAllDate: props.scheduleData.viewCheckAllDay,
+      defaultStartTime: props.scheduleData.defaultStartTime,
+      defaultEndTime: props.scheduleData.defaultEndTime,
       timeState: props.scheduleData.timeState,
       hoursList: props.scheduleData.hoursList,
+      minutesList: props.scheduleData.minutesList,
       unit: PROJECT_ISSUE_SCHEDULE_UNIT_MINUTE_KO,
       isCheckAllday: props.scheduleData.isCheckAllday,
       onChange: (e: ChangeEvent<HTMLSelectElement>) => {
@@ -162,13 +170,17 @@ export function IssueCalendarWithTime(props: IssueCalendarWithTimeProps) {
               {moment(props.scheduleData.calendarDateValue as ValuePiece).format('YYYY/MM/DD')}
             </span>
           </div>
-          <div className="col-span-2 grid lg:grid-cols-2 grid-row-2 gap-2 bg-cyan-300">
+          <div className="col-span-2 grid lg:grid-cols-2 grid-row-2 gap-2">
             {issueTimeList.map((data) => (
               <IssueTime
                 key={data.unit}
+                timeCategory={props.scheduleData.timeCategory}
+                defaultStartTime={props.scheduleData.defaultStartTime}
+                defaultEndTime={props.scheduleData.defaultEndTime}
                 viewCheckAllDay={data.viewCheckAllDate}
                 timeState={data.timeState}
                 hoursList={data.hoursList}
+                minutesList={data.minutesList}
                 unit={data.unit}
                 onChange={data.onChange}
                 isCheckAllday={data.isCheckAllday}
@@ -176,7 +188,7 @@ export function IssueCalendarWithTime(props: IssueCalendarWithTimeProps) {
             ))}
           </div>
           {props.scheduleData.viewCheckAllDay ? (
-            <div className="col-span-1 grid sm:grid-cols-3 grid-row-3 items-center bg-cyan-300">
+            <div className="col-span-1 grid sm:grid-cols-3 grid-row-3 items-center">
               <input
                 type="checkbox"
                 onClick={props.scheduleData.handleAllday}
@@ -200,19 +212,74 @@ export function IssueCalendarWithTime(props: IssueCalendarWithTimeProps) {
 }
 
 export function IssueTime(props: IssueTimeProps) {
-  const setDefaultValue = () => {
-    if (props.isCheckAllday) {
-      switch (props.unit) {
-        case PROJECT_ISSUE_SCHEDULE_UNIT_HOUR_KO:
-          return props.timeState.hour
-        case PROJECT_ISSUE_SCHEDULE_UNIT_MINUTE_KO:
-          return props.timeState.minute
-        default:
-          return ''
-      }
+  const getDefaultValue = () => {
+    switch (props.timeCategory) {
+      case 'start':
+        if (props.unit === PROJECT_ISSUE_SCHEDULE_UNIT_HOUR_KO) {
+          return props.defaultStartTime.hour
+        }
+        return props.defaultStartTime.minute
+      case 'end':
+        if (props.unit === PROJECT_ISSUE_SCHEDULE_UNIT_HOUR_KO) {
+          return props.defaultEndTime.hour
+        }
+        return props.defaultEndTime.minute
     }
   }
 
+  const hourOption = () => {
+    return (
+      <>
+        {props.hoursList.map((data) => (
+          <option key={data} value={data}>
+            {data}
+          </option>
+        ))}
+      </>
+    )
+  }
+  const minuteOption = () => {
+    return (
+      <>
+        {props.minutesList.map((data) => (
+          <option key={data} value={data}>
+            {data}
+          </option>
+        ))}
+      </>
+    )
+  }
+  const renderSelectOption = () => {
+    switch (props.timeCategory) {
+      case 'start':
+        if (props.isCheckAllday) {
+          switch (props.unit) {
+            case PROJECT_ISSUE_SCHEDULE_UNIT_HOUR_KO:
+              return <option value={props.timeState.hour}>{props.timeState.hour}</option>
+            case PROJECT_ISSUE_SCHEDULE_UNIT_MINUTE_KO:
+              return <option value={props.timeState.minute}>{props.timeState.minute}</option>
+          }
+        }
+        if (props.unit === PROJECT_ISSUE_SCHEDULE_UNIT_HOUR_KO) {
+          return hourOption()
+        }
+        return minuteOption()
+
+      case 'end':
+        if (props.isCheckAllday) {
+          switch (props.unit) {
+            case PROJECT_ISSUE_SCHEDULE_UNIT_HOUR_KO:
+              return <option value={props.timeState.hour}>{props.timeState.hour}</option>
+            case PROJECT_ISSUE_SCHEDULE_UNIT_MINUTE_KO:
+              return <option value={props.timeState.minute}>{props.timeState.minute}</option>
+          }
+        }
+        if (props.unit === PROJECT_ISSUE_SCHEDULE_UNIT_HOUR_KO) {
+          return hourOption()
+        }
+        return minuteOption()
+    }
+  }
   const selectClassName = () => {
     if (props.isCheckAllday) {
       return 'border-2 border-gray-300 p-1 rounded-lg text-sm bg-gray-300'
@@ -226,12 +293,9 @@ export function IssueTime(props: IssueTimeProps) {
         className={selectClassName()}
         onChange={props.onChange}
         disabled={props.isCheckAllday}
+        defaultValue={getDefaultValue()}
       >
-        {props.hoursList.map((data) => (
-          <option key={data} value={data}>
-            {props.isCheckAllday ? setDefaultValue() : data}
-          </option>
-        ))}
+        {renderSelectOption()}
       </select>
       <span className="hidden sm:inline ml-1 text-gray-400 text-sm">{props.unit}</span>
     </div>

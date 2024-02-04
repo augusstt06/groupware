@@ -107,8 +107,12 @@ export type IssueCalendarWithTimeProps = {
   scheduleData: ScheduleListType
 }
 export type IssueTimeProps = {
+  timeCategory: string
+  defaultStartTime: { hour: string; minute: string }
+  defaultEndTime: { hour: string; minute: string }
   isCheckAllday: boolean
   hoursList: string[]
+  minutesList: string[]
   timeState: { hour: string; minute: string }
   unit: string
   onChange: (e: ChangeEvent<HTMLSelectElement>) => void

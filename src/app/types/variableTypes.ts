@@ -180,10 +180,13 @@ export type DialogTextType = {
 export type ScheduleListType = {
   title: React.ReactNode
   timeCategory: 'start' | 'end'
+  defaultStartTime: { hour: string; minute: string }
+  defaultEndTime: { hour: string; minute: string }
   openCalendar: () => void
   calendarDateValue: CalendarValue
   onDateChange: (date: CalendarValue) => void
   hoursList: string[]
+  minutesList: string[]
   handleSelectTime: (type: 'start' | 'end', unit: 'hour' | 'minute', value: string) => void
   viewCheckAllDay: boolean
   handleAllday: () => void
