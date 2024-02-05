@@ -25,6 +25,7 @@ import {
   PROJECT_SIDEBAR_TASK_MY,
 } from '@/app/constant/constant'
 import {
+  API_URL_COLLEAGUES,
   API_URL_PROJECT_ISSUE,
   API_URL_PROJECT_ISSUE_LIST,
   API_URL_PROJECT_ISSUE_LIST_PINNED,
@@ -48,6 +49,7 @@ import {
   type SuccessResponseType,
 } from '@/app/types/moduleTypes'
 import {
+  type ColleagueType,
   type DialogTextType,
   type ProjectCreateIssueResponseType,
   type ProjectIssueResponseType,
@@ -69,6 +71,9 @@ export default function ProjectDetail() {
   const taskCategory = useAppSelector((state) => state.projectDetailCategory.task)
 
   const [accessToken, setAccessToken] = useState(moduleGetCookie(KEY_ACCESS_TOKEN))
+  const orgId = useAppSelector((state) => state.userInfo.extraInfo.organizationId)
+  const myUserId = useAppSelector((state) => state.userInfo.extraInfo.userId)
+  const [colleague, setColleague] = useState<ColleagueType[]>([])
   const [rerender, setRerender] = useState<boolean>(false)
   const [projectDialogBtnValue] = useState<DialogBtnValueType>({
     isCancel: false,
@@ -103,6 +108,7 @@ export default function ProjectDetail() {
   const convertDateWithTIme = (date: string, hour: string, minute: string) => {
     return new Date(`${date}T${hour}:${minute}:00Z`).toISOString()
   }
+
   const fetchPropsByCategory = () => {
     let fetchProps: ModulePostFetchProps
     switch (issueState.category) {
@@ -298,7 +304,7 @@ export default function ProjectDetail() {
     {
       onClose: handleCloseInviteModal,
       isModalOpen: isInviteModalOpen,
-      childComponent: <InviteProjectMemberModal />,
+      childComponent: <InviteProjectMemberModal colleague={colleague} />,
       name: MODAL_INVITE_MEMBER_IN_PROJECT,
       btnValue: MODAL_BTN_SAVE,
       confirmFunc: () => {},
@@ -353,7 +359,28 @@ export default function ProjectDetail() {
     }
   }
 
+  const fetchGetColleagues = async () => {
+    const fetchProps: ModuleGetFetchProps = {
+      params: {
+        limit: 10,
+        offset: 0,
+        organizationId: orgId,
+      },
+      fetchUrl: API_URL_COLLEAGUES,
+      header: {
+        Authorization: `Bearer ${accessToken}`,
+        [KEY_X_ORGANIZATION_CODE]: orgCode,
+      },
+    }
+    const res = await moduleGetFetch<ColleagueType[]>(fetchProps)
+    const resList = (res as SuccessResponseType<ColleagueType[]>).result.filter(
+      (data) => data.userId !== myUserId,
+    )
+    setColleague(resList)
+  }
+
   useEffect(() => {
+    void fetchGetColleagues()
     dispatch(changeIssueProjectIdReducer(Number(query.id)))
     if (projectInfo === null) {
       void fetchGetProjectDetail()
@@ -375,10 +402,10 @@ export default function ProjectDetail() {
     filterIssueList()
   }, [rerender, issueList?.length, taskCategory])
   return (
-    <main className="w-full max-w-7xl 2xl:w-2/3 h-4/5 flex flex-col items-center ">
+    <main className="w-10/12 max-w-7xl 2xl:w-2/3 h-4/5 flex flex-col items-center ">
       {projectInfo !== null ? (
         <>
-          <ProjectDetailTab projectInfo={projectInfo} />
+          <ProjectDetailTab projectInfo={projectInfo} colleague={colleague} />
           <ProjectDetailHub
             key={keyForProjectDetailHub}
             projectInfo={projectInfo}

@@ -218,6 +218,7 @@ export default function Project() {
       dialogBtnValue: projectDialogBtnValue,
     },
   ]
+
   useEffect(() => {
     if (createProjectModalState) dispatch(createProjectModalReducer(false))
     void fetchGetProjectList()
@@ -232,7 +233,7 @@ export default function Project() {
   }, [rerender, projectCategory])
 
   return (
-    <main className="w-full  h-4/5 flex flex-col items-center">
+    <main className="w-10/12 h-4/5 flex flex-col items-center">
       {isProjectListEmpty() ? (
         <div className="p-5">
           <span className="font-bold">프로젝트가 없습니다.</span>
