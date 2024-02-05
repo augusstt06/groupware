@@ -70,12 +70,10 @@ export type CustomDecodeTokenType = JwtPayload &
   Record<typeof KEY_UUID | typeof KEY_X_ORGANIZATION_CODE, string>
 
 export type ModuleCheckUserStateProps = {
-  token: string
-  setToken: React.Dispatch<SetStateAction<string>>
-  useRouter: AppRouterInstance
-  isCheckInterval: boolean
-  completeState: string
-  fetchFunc?: () => Promise<void>
+  router: AppRouterInstance
+  loginCompleteState: string
+  accessToken: string
+  setAccessToken: React.Dispatch<SetStateAction<string>>
 }
 
 export type ModuleCheckContentIsEmptyProps = {

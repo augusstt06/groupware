@@ -2,12 +2,12 @@
 
 import { useEffect, useState } from 'react'
 
+import { useQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 
 import BoardHub from '../component/page/main/hub/board/BoardHub'
 import BoardWriteModal from '../component/ui/modal/board/BoardWriteModal'
 import {
-  API_SUCCESS_CODE,
   BOARD_CATEGORY_PROJECT,
   BOARD_CATEGORY_TEAM,
   KEY_ACCESS_TOKEN,
@@ -32,8 +32,6 @@ import { moduleGetFetch } from '../module/utils/moduleFetch'
 import { categoryReduer } from '../store/reducers/board/boardCategoryReducer'
 import {
   type CustomDecodeTokenType,
-  type FailResponseType,
-  type ModuleCheckUserStateProps,
   type ModuleGetFetchProps,
   type SuccessResponseType,
 } from '../types/moduleTypes'
@@ -56,7 +54,6 @@ export default function Board() {
   const loginCompleteState = useAppSelector((state) => state.maintain[KEY_LOGIN_COMPLETE])
   const myBoardState = useAppSelector((state) => state.boardCategory.myBoard)
   const [selectBoard, setSelectBoard] = useState<string>('')
-  const [myBoardList, setMyBoardList] = useState<MyBoardType[]>([])
   const [boardList, setBoardList] = useState<BoardListResponseType[]>([])
   const [pageSize, setPageSize] = useState<number>(1)
 
@@ -65,23 +62,27 @@ export default function Board() {
   }
   const isModalOpen = useAppSelector((state) => state.openBoardWriteModal.isOpen)
 
-  const fetchProps: ModuleGetFetchProps = {
-    params: {
-      organizationId: userInfo.organizationId,
+  const { data: myBoardData } = useQuery<SuccessResponseType<MyBoardType[]>>({
+    queryKey: ['my-board-category'],
+    queryFn: async () => {
+      const fetchProps: ModuleGetFetchProps = {
+        params: {
+          organizationId: userInfo.organizationId,
+        },
+        fetchUrl: API_URL_GET_MY_BOARD,
+        header: {
+          Authorization: `Bearer ${accessToken}`,
+          [KEY_X_ORGANIZATION_CODE]: orgCode,
+        },
+      }
+      const res = await moduleGetFetch<MyBoardType[]>(fetchProps)
+      return res as SuccessResponseType<MyBoardType[]>
     },
-    fetchUrl: API_URL_GET_MY_BOARD,
-    header: {
-      Authorization: `Bearer ${accessToken}`,
-      [KEY_X_ORGANIZATION_CODE]: orgCode,
-    },
-  }
+  })
 
-  const fetchGetMyBoard = async () => {
-    const res = await moduleGetFetch<MyBoardType[]>(fetchProps)
-    if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)
-    const boardMenu = (res as SuccessResponseType<MyBoardType[]>).result
-    dispatch(categoryReduer(boardMenu))
-    setMyBoardList(boardMenu)
+  const successFetchMyBoard = () => {
+    const myBoardCategory = myBoardData?.result as MyBoardType[]
+    dispatch(categoryReduer(myBoardCategory))
   }
 
   const decideFetchUrl = () => {
@@ -94,62 +95,69 @@ export default function Board() {
         return API_URL_POSTINGS_MY_ALL
     }
   }
-  const fetchGetBoardPostings = async () => {
-    const fetchGetBoardListProps: ModuleGetFetchProps = {
-      params: {
-        limit: 10,
-        offset: 0,
-      },
-      fetchUrl: decideFetchUrl(),
-      header: {
-        Authorization: `Bearer ${accessToken}`,
-        [KEY_X_ORGANIZATION_CODE]: orgCode,
-      },
-    }
 
-    const res = await moduleGetFetch<BoardResponseType>(fetchGetBoardListProps)
-
-    if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)
-    const resBoardList = (res as SuccessResponseType<BoardResponseType>).result.data
-
+  const { data: boardPostingData } = useQuery<SuccessResponseType<BoardResponseType>>({
+    queryKey: ['board-postings'],
+    queryFn: async () => {
+      const fetchGetBoardListProps: ModuleGetFetchProps = {
+        params: {
+          limit: 10,
+          offset: 0,
+        },
+        fetchUrl: decideFetchUrl(),
+        header: {
+          Authorization: `Bearer ${accessToken}`,
+          [KEY_X_ORGANIZATION_CODE]: orgCode,
+        },
+      }
+      const res = await moduleGetFetch<BoardResponseType>(fetchGetBoardListProps)
+      return res as SuccessResponseType<BoardResponseType>
+    },
+  })
+  const successFetchBoardPostings = () => {
+    const boardPostingList = (boardPostingData as SuccessResponseType<BoardResponseType>).result
     if (pageSize === 1) {
-      const pageSize = Math.ceil((res as SuccessResponseType<BoardResponseType>).result.total / 10)
+      const pageSize = Math.ceil(boardPostingList.total / 10)
       setPageSize(pageSize)
     }
-    if (selectBoard === '') {
-      setBoardList(resBoardList)
-    } else {
+    if (selectBoard !== '') {
       const selectBoardId = myBoardState.filter((data) => data.name === selectBoard)[0].id
-      const filterList = resBoardList.filter((data) => data.boardId === Number(selectBoardId))
+      const filterList = boardPostingList.data.filter(
+        (data) => data.boardId === Number(selectBoardId),
+      )
       setBoardList(filterList)
+      return
     }
+    setBoardList(boardPostingList.data)
   }
+
+  useEffect(() => {
+    if (checkTokenExpired(accessTokenTime)) {
+      void moduleRefreshToken(accessToken)
+    }
+    moduleCheckUserState({ loginCompleteState, router, accessToken, setAccessToken })
+  }, [accessToken])
 
   useEffect(() => {
     if (isModalOpen) {
       dispatch(openBoardWriteModalReducer())
     }
-    if (checkTokenExpired(accessTokenTime)) {
-      void moduleRefreshToken(accessToken)
-    }
-    void fetchGetMyBoard()
-    void fetchGetBoardPostings()
-    const moduleProps: ModuleCheckUserStateProps = {
-      useRouter: router,
-      token: accessToken,
-      setToken: setAccessToken,
-      completeState: loginCompleteState,
-      isCheckInterval: true,
-    }
-    moduleCheckUserState(moduleProps)
-  }, [selectBoard])
+  }, [isModalOpen])
+
+  useEffect(() => {
+    if (boardPostingData !== undefined) successFetchBoardPostings()
+  }, [selectBoard, boardPostingData])
+
+  useEffect(() => {
+    if (myBoardData !== undefined) successFetchMyBoard()
+  }, [myBoardData])
 
   return (
     <main className="w-10/12 2xl:w-2/3 h-4/5 flex flex-col items-center">
       <BoardHub
         title="게시판"
         boardList={boardList}
-        myBoardList={myBoardList}
+        myBoardList={myBoardData?.result as MyBoardType[]}
         selectBoard={selectBoard}
         changeBoard={changeBoard}
       />

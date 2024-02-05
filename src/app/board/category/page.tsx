@@ -26,7 +26,6 @@ import { moduleGetFetch } from '@/app/module/utils/moduleFetch'
 import { openBoardWriteModalReducer } from '@/app/store/reducers/board/openBoardWriteModalReducer'
 import {
   type FailResponseType,
-  type ModuleCheckUserStateProps,
   type ModuleGetFetchProps,
   type SuccessResponseType,
 } from '@/app/types/moduleTypes'
@@ -124,14 +123,8 @@ export default function BoardCategory() {
     }
     convertBoardId()
     void fetchGetBoardPostings()
-    const moduleProps: ModuleCheckUserStateProps = {
-      useRouter: router,
-      token: accessToken,
-      setToken: setAccessToken,
-      completeState: loginCompleteState,
-      isCheckInterval: true,
-    }
-    moduleCheckUserState(moduleProps)
+
+    moduleCheckUserState({ loginCompleteState, router, accessToken, setAccessToken })
   }, [currentBoard, pageNumber, pageSize, query])
 
   return (

@@ -43,7 +43,6 @@ import { moduleGetFetch, modulePostFetch } from '../module/utils/moduleFetch'
 import { createProjectModalReducer } from '../store/reducers/project/projectModalReducer'
 import {
   type DialogBtnValueType,
-  type ModuleCheckUserStateProps,
   type ModuleGetFetchProps,
   type ModulePostFetchProps,
   type SuccessResponseType,
@@ -222,14 +221,7 @@ export default function Project() {
   useEffect(() => {
     if (createProjectModalState) dispatch(createProjectModalReducer(false))
     void fetchGetProjectList()
-    const moduleProps: ModuleCheckUserStateProps = {
-      useRouter: router,
-      token: accessToken,
-      setToken: setAccessToken,
-      completeState: loginCompleteState,
-      isCheckInterval: true,
-    }
-    moduleCheckUserState(moduleProps)
+    moduleCheckUserState({ loginCompleteState, router, accessToken, setAccessToken })
   }, [rerender, projectCategory])
 
   return (

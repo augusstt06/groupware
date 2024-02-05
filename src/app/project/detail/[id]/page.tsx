@@ -43,7 +43,6 @@ import {
 import {
   type DialogBtnValueType,
   type FailResponseType,
-  type ModuleCheckUserStateProps,
   type ModuleGetFetchProps,
   type ModulePostFetchProps,
   type SuccessResponseType,
@@ -390,14 +389,7 @@ export default function ProjectDetail() {
       void fetchGetIssueList()
       void fetchGetIssuePinnedList()
     }
-    const moduleProps: ModuleCheckUserStateProps = {
-      useRouter: router,
-      token: accessToken,
-      setToken: setAccessToken,
-      completeState: loginCompleteState,
-      isCheckInterval: true,
-    }
-    moduleCheckUserState(moduleProps)
+    moduleCheckUserState({ loginCompleteState, router, accessToken, setAccessToken })
     setKeyForProjectDetailHub((prevKey) => prevKey + 1)
     filterIssueList()
   }, [rerender, issueList?.length, taskCategory])

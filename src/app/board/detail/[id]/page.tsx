@@ -37,7 +37,6 @@ import {
 } from '@/app/store/reducers/board/boardLikeReducer'
 import {
   type FailResponseType,
-  type ModuleCheckUserStateProps,
   type ModuleGetFetchProps,
   type ModulePostFetchProps,
   type SuccessResponseType,
@@ -194,14 +193,7 @@ export default function BoardDetail() {
       router.push(ROUTE_ERR_NOT_FOUND_POSTING_DETAIL)
     }
 
-    const moduleProps: ModuleCheckUserStateProps = {
-      useRouter: router,
-      token: accessToken,
-      setToken: setAccessToken,
-      completeState: loginCompleteState,
-      isCheckInterval: true,
-    }
-    moduleCheckUserState(moduleProps)
+    moduleCheckUserState({ loginCompleteState, router, accessToken, setAccessToken })
   }, [isRerender, postId, accessToken])
 
   return (
