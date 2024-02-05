@@ -2,6 +2,7 @@ import { type Dispatch, type SetStateAction } from 'react'
 
 import {
   type BoardListResponseType,
+  type ColleagueType,
   type MyBoardType,
   type ProjectResponseType,
   type ScheduleType,
@@ -58,6 +59,11 @@ export type ProjectDetailTaskCardProps = {
   time: string
   cardColor: string
 }
-export type ProjectDetailTodoCardPRops = {
+export type ProjectDetailTodoCardProps = {
   todo: ScheduleType
+}
+export type ProjectInviteCardProps = {
+  userInfo: ColleagueType
+  inviteList: ColleagueType[]
+  // handleInviteUser: (user: ColleagueType) => void
 }

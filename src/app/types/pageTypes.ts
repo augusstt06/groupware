@@ -4,6 +4,7 @@ import {
   type BoardListResponseType,
   type ColumnType,
   type CommentType,
+  type IssueDatailType,
   type ScheduleListType,
 } from './variableTypes'
 
@@ -106,8 +107,12 @@ export type IssueCalendarWithTimeProps = {
   scheduleData: ScheduleListType
 }
 export type IssueTimeProps = {
+  timeCategory: string
+  defaultStartTime: { hour: string; minute: string }
+  defaultEndTime: { hour: string; minute: string }
   isCheckAllday: boolean
   hoursList: string[]
+  minutesList: string[]
   timeState: { hour: string; minute: string }
   unit: string
   onChange: (e: ChangeEvent<HTMLSelectElement>) => void
@@ -124,4 +129,8 @@ export type ProjectDetailTaskColumnProps = {
   columnCardNumber: number
   columnColor: string
   cardList: ColumnType[]
+}
+
+export type ProjectIssueDetailProps = {
+  issue: IssueDatailType | null
 }

@@ -1,5 +1,7 @@
 import { Draggable, Droppable } from 'react-beautiful-dnd'
 
+import { useRouter } from 'next/navigation'
+
 import ProjectDetailTaskCard from '@/app/component/ui/card/project/detail/ProjectDetailTaskCard'
 import {
   PROJECT_ISSUE_TASK_PROGRESS_COMPLETED_TITLE,
@@ -7,9 +9,11 @@ import {
   PROJECT_ISSUE_TASK_PROGRESS_PROCESSING_TITLE,
   PROJECT_ISSUE_TASK_PROGRESS_REQUESTED_TITLE,
 } from '@/app/constant/constant'
+import { ROUTE_PROJECT } from '@/app/constant/route/route-constant'
 import { type ProjectDetailTaskColumnProps } from '@/app/types/pageTypes'
 
 export default function ProjectDetailTaskColumn(props: ProjectDetailTaskColumnProps) {
+  const router = useRouter()
   const mainColor = () => {
     switch (props.columnTitle) {
       case PROJECT_ISSUE_TASK_PROGRESS_REQUESTED_TITLE:
@@ -46,6 +50,10 @@ export default function ProjectDetailTaskColumn(props: ProjectDetailTaskColumnPr
     const day = ('0' + date.getDate()).slice(-2)
     return `${year}.${month}.${day}`
   }
+  const handleClickIssue = (id: number) => {
+    router.push(`${ROUTE_PROJECT}/task/${id}`)
+  }
+
   return (
     <div className={`${props.columnColor} p-2 rounded-lg col-span-1`}>
       <div className="w-full lg:w-2/5 flex flex-row justify-around">
@@ -71,6 +79,9 @@ export default function ProjectDetailTaskColumn(props: ProjectDetailTaskColumnPr
                     ref={provided.innerRef}
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
+                    onClick={() => {
+                      handleClickIssue(data.id)
+                    }}
                   >
                     <ProjectDetailTaskCard
                       title={data.title}

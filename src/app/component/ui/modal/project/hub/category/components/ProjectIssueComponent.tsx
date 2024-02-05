@@ -84,13 +84,21 @@ export function IssueSelect(props: IssueSelecProps) {
 }
 
 export function IssueCalendar(props: IssueCalendarProps) {
+  const renderTitlte = () => {
+    if (props.title === '') {
+      return <></>
+    }
+    return (
+      <div className="w-1/6">
+        <span className="text-sm md:text-base">{props.title}</span>
+      </div>
+    )
+  }
   return (
     <>
       <div className="flex flex-row items-center p-2" key={props.title}>
-        <div className="w-1/6">
-          <span className="text-sm md:text-base">{props.title}</span>
-        </div>
-        <div className="flex flex-row items-center rounded rounded mt-2 bg-gray-50 border text-gray-900 w-7/12 lg:w-5/12 sm:w-8/12 text-sm border-gray-300 p-2.5 dark:bg-gray-700 dark:border-white-600 dark:placeholder-gray-400 dark:text-white">
+        {renderTitlte()}
+        <div className="flex flex-row items-center rounded rounded mt-2 bg-gray-50 border text-gray-900 w-40 text-sm border-gray-300 p-2.5 dark:bg-gray-700 dark:border-white-600 dark:placeholder-gray-400 dark:text-white">
           <FaRegCalendarAlt onClick={props.openModal} />
           <span className="ml-2 lg:text-base text-xs">
             {moment(props.dateValue as ValuePiece).format(PROJECT_DATE_FORMAT)}
@@ -104,9 +112,13 @@ export function IssueCalendar(props: IssueCalendarProps) {
 export function IssueCalendarWithTime(props: IssueCalendarWithTimeProps) {
   const issueTimeList = [
     {
+      timeCategory: props.scheduleData.timeCategory,
       viewCheckAllDate: props.scheduleData.viewCheckAllDay,
+      defaultStartTime: props.scheduleData.defaultStartTime,
+      defaultEndTime: props.scheduleData.defaultEndTime,
       timeState: props.scheduleData.timeState,
       hoursList: props.scheduleData.hoursList,
+      minutesList: props.scheduleData.minutesList,
       unit: PROJECT_ISSUE_SCHEDULE_UNIT_HOUR_KO,
       isCheckAllday: props.scheduleData.isCheckAllday,
       onChange: (e: ChangeEvent<HTMLSelectElement>) => {
@@ -118,9 +130,13 @@ export function IssueCalendarWithTime(props: IssueCalendarWithTimeProps) {
       },
     },
     {
+      timeCategory: props.scheduleData.timeCategory,
       viewCheckAllDate: props.scheduleData.viewCheckAllDay,
+      defaultStartTime: props.scheduleData.defaultStartTime,
+      defaultEndTime: props.scheduleData.defaultEndTime,
       timeState: props.scheduleData.timeState,
       hoursList: props.scheduleData.hoursList,
+      minutesList: props.scheduleData.minutesList,
       unit: PROJECT_ISSUE_SCHEDULE_UNIT_MINUTE_KO,
       isCheckAllday: props.scheduleData.isCheckAllday,
       onChange: (e: ChangeEvent<HTMLSelectElement>) => {
@@ -132,20 +148,23 @@ export function IssueCalendarWithTime(props: IssueCalendarWithTimeProps) {
       },
     },
   ]
-  const divClassName = () => {
-    if (props.scheduleData.viewCheckAllDay) {
-      return 'col-span-5 grid grid-cols-6 gap-2'
+
+  const renderTitle = () => {
+    if (props.scheduleData.title === '') {
+      return <></>
     }
-    return 'col-span-5 grid grid-cols-6 gap-2'
+    return (
+      <div className="min-w-40 block col-span-1">
+        <span className="text-sm md:text-base">{props.scheduleData.title}</span>
+      </div>
+    )
   }
   return (
     <>
-      <div className="items-center p-2 grid grid-cols-6 gap-2" key={props.scheduleData.title}>
-        <div className="min-w-40 block col-span-1">
-          <span className="text-sm md:text-base">{props.scheduleData.title}</span>
-        </div>
-        <div className={divClassName()}>
-          <div className="col-span-3 lg:ml-0 ml-4 flex flex-col lg:flex-row items-center items-center rounded rounded mt-2 bg-gray-50 border text-gray-900 w-26 text-sm border-gray-300 p-2 dark:bg-gray-700 dark:border-white-600 dark:placeholder-gray-400 dark:text-white truncate">
+      <div className="items-center p-2 grid grid-cols-6 gap-2 ">
+        {renderTitle()}
+        <div className="col-span-5 grid grid-cols-6 gap-2">
+          <div className="col-span-3 lg:ml-0 ml-4 flex flex-col lg:flex-row items-center items-center rounded mt-2 bg-gray-50 border text-gray-900 w-26 text-sm border-gray-300 p-2 dark:bg-gray-700 dark:border-white-600 dark:placeholder-gray-400 dark:text-white truncate">
             <FaRegCalendarAlt onClick={props.scheduleData.openCalendar} className="mb-2 lg:mb-0" />
             <span className="ml-2 lg:text-base text-xs">
               {moment(props.scheduleData.calendarDateValue as ValuePiece).format('YYYY/MM/DD')}
@@ -155,9 +174,13 @@ export function IssueCalendarWithTime(props: IssueCalendarWithTimeProps) {
             {issueTimeList.map((data) => (
               <IssueTime
                 key={data.unit}
+                timeCategory={props.scheduleData.timeCategory}
+                defaultStartTime={props.scheduleData.defaultStartTime}
+                defaultEndTime={props.scheduleData.defaultEndTime}
                 viewCheckAllDay={data.viewCheckAllDate}
                 timeState={data.timeState}
                 hoursList={data.hoursList}
+                minutesList={data.minutesList}
                 unit={data.unit}
                 onChange={data.onChange}
                 isCheckAllday={data.isCheckAllday}
@@ -172,7 +195,7 @@ export function IssueCalendarWithTime(props: IssueCalendarWithTimeProps) {
                 className="w-4 h-4 col-span-1 text-purple-600 bg-gray-100 border-gray-300 rounded dark:bg-gray-700 dark:border-gray-600"
               />
               <div className="col-span-2 xl:inline hidden">
-                <span className="text-sm">하루종일</span>
+                <span className="text-xs">하루종일</span>
               </div>
               <div className="col-span-2 grid grid-row-2 inline xl:hidden ">
                 <span className="text-sm">하루</span>
@@ -189,19 +212,74 @@ export function IssueCalendarWithTime(props: IssueCalendarWithTimeProps) {
 }
 
 export function IssueTime(props: IssueTimeProps) {
-  const setDefaultValue = () => {
-    if (props.isCheckAllday) {
-      switch (props.unit) {
-        case PROJECT_ISSUE_SCHEDULE_UNIT_HOUR_KO:
-          return props.timeState.hour
-        case PROJECT_ISSUE_SCHEDULE_UNIT_MINUTE_KO:
-          return props.timeState.minute
-        default:
-          return ''
-      }
+  const getDefaultValue = () => {
+    switch (props.timeCategory) {
+      case 'start':
+        if (props.unit === PROJECT_ISSUE_SCHEDULE_UNIT_HOUR_KO) {
+          return props.defaultStartTime.hour
+        }
+        return props.defaultStartTime.minute
+      case 'end':
+        if (props.unit === PROJECT_ISSUE_SCHEDULE_UNIT_HOUR_KO) {
+          return props.defaultEndTime.hour
+        }
+        return props.defaultEndTime.minute
     }
   }
 
+  const hourOption = () => {
+    return (
+      <>
+        {props.hoursList.map((data) => (
+          <option key={data} value={data}>
+            {data}
+          </option>
+        ))}
+      </>
+    )
+  }
+  const minuteOption = () => {
+    return (
+      <>
+        {props.minutesList.map((data) => (
+          <option key={data} value={data}>
+            {data}
+          </option>
+        ))}
+      </>
+    )
+  }
+  const renderSelectOption = () => {
+    switch (props.timeCategory) {
+      case 'start':
+        if (props.isCheckAllday) {
+          switch (props.unit) {
+            case PROJECT_ISSUE_SCHEDULE_UNIT_HOUR_KO:
+              return <option value={props.timeState.hour}>{props.timeState.hour}</option>
+            case PROJECT_ISSUE_SCHEDULE_UNIT_MINUTE_KO:
+              return <option value={props.timeState.minute}>{props.timeState.minute}</option>
+          }
+        }
+        if (props.unit === PROJECT_ISSUE_SCHEDULE_UNIT_HOUR_KO) {
+          return hourOption()
+        }
+        return minuteOption()
+
+      case 'end':
+        if (props.isCheckAllday) {
+          switch (props.unit) {
+            case PROJECT_ISSUE_SCHEDULE_UNIT_HOUR_KO:
+              return <option value={props.timeState.hour}>{props.timeState.hour}</option>
+            case PROJECT_ISSUE_SCHEDULE_UNIT_MINUTE_KO:
+              return <option value={props.timeState.minute}>{props.timeState.minute}</option>
+          }
+        }
+        if (props.unit === PROJECT_ISSUE_SCHEDULE_UNIT_HOUR_KO) {
+          return hourOption()
+        }
+        return minuteOption()
+    }
+  }
   const selectClassName = () => {
     if (props.isCheckAllday) {
       return 'border-2 border-gray-300 p-1 rounded-lg text-sm bg-gray-300'
@@ -215,12 +293,9 @@ export function IssueTime(props: IssueTimeProps) {
         className={selectClassName()}
         onChange={props.onChange}
         disabled={props.isCheckAllday}
+        defaultValue={getDefaultValue()}
       >
-        {props.hoursList.map((data) => (
-          <option key={data} value={data}>
-            {props.isCheckAllday ? setDefaultValue() : data}
-          </option>
-        ))}
+        {renderSelectOption()}
       </select>
       <span className="hidden sm:inline ml-1 text-gray-400 text-sm">{props.unit}</span>
     </div>

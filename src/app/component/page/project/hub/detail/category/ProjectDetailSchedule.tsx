@@ -4,7 +4,7 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import googleCalendarPlugin from '@fullcalendar/google-calendar'
 import FullCalendar from '@fullcalendar/react'
 import timeGridPlugin from '@fullcalendar/timegrid'
-import { useParams } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 
 import {
   API_SUCCESS_CODE,
@@ -17,6 +17,7 @@ import {
   PROJECT_SIDEBAR_SCHEDULE_ALL,
 } from '@/app/constant/constant'
 import { API_URL_PROJECT_ISSUE_LIST } from '@/app/constant/route/api-route-constant'
+import { ROUTE_PROJECT } from '@/app/constant/route/route-constant'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
 import { moduleGetFetch } from '@/app/module/utils/moduleFetch'
@@ -36,6 +37,7 @@ import {
 } from '@/app/types/variableTypes'
 
 export default function ProjectDetailSchedule() {
+  const router = useRouter()
   const query = useParams()
   const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
@@ -93,6 +95,7 @@ export default function ProjectDetailSchedule() {
     const resList = (res as SuccessResponseType<IssueResponseType<ScheduleType>>).result.data
     resList.forEach((data) => {
       const scheduleEventProps: FullCalendarEventType = {
+        issueId: data.id,
         title: data.title,
         start: data.startAt,
         end: data.endAt,
@@ -133,6 +136,7 @@ export default function ProjectDetailSchedule() {
         googleCalendarApiKey={GOOGLE_CALENDAR_API_KEY}
         eventClick={(info) => {
           // FIXME: 클릭 이벤트는 preventDefault()로 막아두었음
+          router.push(`${ROUTE_PROJECT}/schedule/${info.event._def.extendedProps.issueId}`)
           info.jsEvent.preventDefault()
         }}
       />

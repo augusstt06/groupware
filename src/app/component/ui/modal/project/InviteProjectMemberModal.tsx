@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 import { FaSearch } from 'react-icons/fa'
 
 import ProjectInviteCard from '../../card/project/ProjectInviteCard'
@@ -6,8 +8,17 @@ import InputWithLabel from '../../input/InputWithLabel'
 import ProjectInviteList from './invite/ProjectInviteList'
 
 import useInput from '@/app/module/hooks/reactHooks/useInput'
+import { type InviteProjectMemberModalProps } from '@/app/types/ui/modalTypes'
+import { type ColleagueType } from '@/app/types/variableTypes'
 
-export default function InviteProjectMemberModal() {
+export default function InviteProjectMemberModal(props: InviteProjectMemberModalProps) {
+  const { colleague } = props
+  const [inviteList, setInviteList] = useState<ColleagueType[]>([])
+  const handleInviteUser = (user: ColleagueType) => {
+    if (!inviteList.some((data) => data.userId === user.userId)) {
+      setInviteList((prev) => [...prev, user])
+    }
+  }
   // FIXME: 임시 input 변수
   const inviteInput = useInput('')
   const tailLabel = (
@@ -34,7 +45,17 @@ export default function InviteProjectMemberModal() {
               className="ml-3 p-1 focus:outline-none w-5/6 text-xs md:text-sm lg-text-base"
             />
           </div>
-          <ProjectInviteCard />
+          {colleague?.map((data) => (
+            <div
+              key={data.userId}
+              className="w-full"
+              onClick={() => {
+                handleInviteUser(data)
+              }}
+            >
+              <ProjectInviteCard userInfo={data} inviteList={inviteList} />
+            </div>
+          ))}
         </div>
         <div className="w-2/5">
           <ProjectInviteList />

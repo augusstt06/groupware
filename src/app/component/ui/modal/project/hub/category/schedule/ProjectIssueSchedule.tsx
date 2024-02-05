@@ -149,6 +149,11 @@ export default function ProjectIssueSchedule() {
     return hour
   })
 
+  const minuteList = Array.from({ length: 60 }, (_, index) => {
+    const minute = index.toString().padStart(2, '0')
+    return minute
+  })
+
   const handleSelectTimes = (type: 'start' | 'end', unit: 'hour' | 'minute', value: string) => {
     setSelectTime((prev) => ({
       ...prev,
@@ -177,11 +182,14 @@ export default function ProjectIssueSchedule() {
   const scheduleList: ScheduleListType[] = [
     {
       title: PROJECT_ISSUE_SCEDULE_START_TITLE,
+      defaultEndTime: { hour: '00', minute: '00' },
+      defaultStartTime: { hour: '00', minute: '00' },
       timeCategory: PROJECT_ISSUE_SCEDULE_START,
       openCalendar: handleOpenStartCalendar,
       calendarDateValue: startDate,
       onDateChange: handleStartDate,
       hoursList: hourList,
+      minutesList: minuteList,
       handleSelectTime: handleSelectTimes,
       viewCheckAllDay: true,
       isCheckAllday: isAllday,
@@ -191,11 +199,14 @@ export default function ProjectIssueSchedule() {
     },
     {
       title: PROJECT_ISSUE_SCEDULE_END_TITLE,
+      defaultEndTime: { hour: '00', minute: '00' },
+      defaultStartTime: { hour: '00', minute: '00' },
       timeCategory: PROJECT_ISSUE_SCEDULE_END,
       openCalendar: handleOpenEndCalendar,
       calendarDateValue: endDate,
       onDateChange: handleEndDate,
       hoursList: hourList,
+      minutesList: minuteList,
       handleSelectTime: handleSelectTimes,
       viewCheckAllDay: false,
       handleAllday: handleChangeAllday,
@@ -266,7 +277,7 @@ export default function ProjectIssueSchedule() {
         />
         <IssueSelect title="참석자" selectList={attendanceList} />
         {scheduleList.map((data) => (
-          <div key={data.title}>
+          <div key={data.title as string}>
             <IssueCalendarWithTime scheduleData={data} />
             <DialogCalendar dialog={data.dialog} calendarWithTimeData={data} isWithtime={true} />
           </div>
