@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 
 import ProjectMainHub from '../component/page/project/hub/ProjectMainHub'
@@ -41,21 +42,16 @@ import { moduleCheckUserState } from '../module/utils/check/moduleCheckUserState
 import { moduleGetCookie } from '../module/utils/moduleCookie'
 import { moduleGetFetch, modulePostFetch } from '../module/utils/moduleFetch'
 import { createProjectModalReducer } from '../store/reducers/project/projectModalReducer'
-import {
-  type DialogBtnValueType,
-  type ModuleGetFetchProps,
-  type ModulePostFetchProps,
-  type SuccessResponseType,
-} from '../types/moduleTypes'
+import { type DialogBtnValueType, type SuccessResponseType } from '../types/moduleTypes'
 import {
   type DialogTextType,
   type FetchPostProjectResponseType,
   type ProjectListResponseType,
-  type ProjectResponseType,
 } from '../types/variableTypes'
 
 export default function Project() {
   const router = useRouter()
+  const queryClient = useQueryClient()
   const dispatch = useAppDispatch()
   const dialogRef = useRef<HTMLDialogElement | null>(null)
   const handleDialogClose = () => {
@@ -65,12 +61,10 @@ export default function Project() {
     (state) => state.projectModal.isCreateProjectModalOpen,
   )
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
-  const [rerender, setRerender] = useState(false)
 
   const [accessToken, setAccessToken] = useState(moduleGetCookie(KEY_ACCESS_TOKEN))
   const loginCompleteState = useAppSelector((state) => state.maintain[KEY_LOGIN_COMPLETE])
   const projectCategory = useAppSelector((state) => state.projectMainCategory.selectProjectMenu)
-  const [projectList, setProjectList] = useState<ProjectResponseType[]>([])
   const [projectDialogBtnValue, setProjectDialogBtnValue] = useState<DialogBtnValueType>({
     isCancel: false,
     cancleFunc: () => {},
@@ -102,34 +96,45 @@ export default function Project() {
   }
 
   // FIXME: teamID 물어보기
-  const fetchPostProject = async () => {
-    const fetchProps: ModulePostFetchProps = {
-      data: {
-        color: selectColor,
-        name: projectName.value,
-        teamId: 1,
-      },
-      fetchUrl: API_URL_PROJECTS,
-      header: {
-        Authorization: `Bearer ${accessToken}`,
-        [KEY_X_ORGANIZATION_CODE]: orgCode,
-      },
-    }
-    await modulePostFetch<FetchPostProjectResponseType>(fetchProps)
 
-    setDialogText({
-      main: '프로젝트가 성공적으로 생성되었습니다.',
-      sub: '생성된 프로젝트에서 멤버초대를 진행해주세요.',
-    })
-    setProjectDialogBtnValue({
-      isCancel: false,
-      cancleFunc: () => {},
-      cancelText: '',
-      confirmFunc: handleDialogClose,
-      confirmText: '확인',
-    })
-    dialogRef.current?.showModal()
-  }
+  const { mutate: createProject } = useMutation({
+    mutationKey: ['create-project'],
+    mutationFn: async ({
+      projectColor,
+      projectTitle,
+    }: {
+      projectColor: string
+      projectTitle: string
+    }) => {
+      await modulePostFetch<FetchPostProjectResponseType>({
+        data: {
+          color: projectColor,
+          name: projectTitle,
+          teamId: 1,
+        },
+        fetchUrl: API_URL_PROJECTS,
+        header: {
+          Authorization: `Bearer ${accessToken}`,
+          [KEY_X_ORGANIZATION_CODE]: orgCode,
+        },
+      })
+    },
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ['project-list'] })
+      setDialogText({
+        main: '프로젝트가 성공적으로 생성되었습니다.',
+        sub: '생성된 프로젝트에서 멤버초대를 진행해주세요.',
+      })
+      setProjectDialogBtnValue({
+        isCancel: false,
+        cancleFunc: () => {},
+        cancelText: '',
+        confirmFunc: handleDialogClose,
+        confirmText: '확인',
+      })
+      dialogRef.current?.showModal()
+    },
+  })
 
   const handleCloseCreateProjectModal = () => {
     projectName.resetValue()
@@ -155,17 +160,12 @@ export default function Project() {
       return
     }
 
-    void fetchPostProject()
+    createProject({ projectColor: selectColor, projectTitle: projectName.value })
     handleCloseCreateProjectModal()
-    setRerender(!rerender)
     projectName.resetValue()
     setSelectColor('')
   }
 
-  const isProjectListEmpty = () => {
-    if (projectList.length === 0) return true
-    return false
-  }
   const decideFetchUrl = () => {
     switch (projectCategory) {
       case PROJECT_MAIN_CATEGORY_ALL:
@@ -179,22 +179,31 @@ export default function Project() {
     }
   }
   // FIXME: teamID를 얻어올 곳이 없음
-  const fetchGetProjectList = async () => {
-    const fetchProps: ModuleGetFetchProps = {
-      params: {
-        limit: 10,
-        offset: 0,
-        teamId: 1,
-      },
-      fetchUrl: decideFetchUrl(),
-      header: {
-        Authorization: `Bearer ${accessToken}`,
-        [KEY_X_ORGANIZATION_CODE]: orgCode,
-      },
+  const { data: projectList } = useQuery({
+    queryKey: ['project-list', decideFetchUrl(), 'star', 'unstar'],
+    queryFn: async () => {
+      const res = await moduleGetFetch<ProjectListResponseType>({
+        params: {
+          limit: 10,
+          offset: 0,
+          teamId: 1,
+        },
+        fetchUrl: decideFetchUrl(),
+        header: {
+          Authorization: `Bearer ${accessToken}`,
+          [KEY_X_ORGANIZATION_CODE]: orgCode,
+        },
+      })
+      return res as SuccessResponseType<ProjectListResponseType>
+    },
+  })
+
+  const isProjectListEmpty = () => {
+    if (projectList !== undefined) {
+      if (projectList.result.data.length === 0) return true
+      return false
     }
-    const res = await moduleGetFetch<ProjectListResponseType>(fetchProps)
-    const resList = (res as SuccessResponseType<ProjectListResponseType>).result.data
-    setProjectList(resList)
+    return false
   }
 
   const modalList = [
@@ -218,11 +227,17 @@ export default function Project() {
     },
   ]
 
+  const defineProjectList = () => {
+    if (projectList !== undefined) return projectList.result.data
+    return []
+  }
   useEffect(() => {
     if (createProjectModalState) dispatch(createProjectModalReducer(false))
-    void fetchGetProjectList()
+  }, [projectCategory])
+
+  useEffect(() => {
     moduleCheckUserState({ loginCompleteState, router, accessToken, setAccessToken })
-  }, [rerender, projectCategory])
+  }, [accessToken])
 
   return (
     <main className="w-10/12 h-4/5 flex flex-col items-center">
@@ -231,7 +246,7 @@ export default function Project() {
           <span className="font-bold">프로젝트가 없습니다.</span>
         </div>
       ) : (
-        <ProjectMainHub projectList={projectList} rerender={rerender} setRerender={setRerender} />
+        <ProjectMainHub projectList={defineProjectList()} />
       )}
       <ModalHub modals={modalList} />
     </main>
