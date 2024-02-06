@@ -90,7 +90,7 @@ export type ModuleCheckContentIsEmptyProps = {
   boardId: number
   editorContents: string
   inputValue: string
-  fetchFunction: () => Promise<void>
+  fetchFunction: (() => Promise<void>) | (() => void)
 }
 
 export type ModalUsePortalProps = {

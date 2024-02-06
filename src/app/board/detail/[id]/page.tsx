@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 
 import '@toast-ui/editor/dist/toastui-editor-viewer.css'
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import dynamic from 'next/dynamic'
 import { useParams, useRouter } from 'next/navigation'
 import { FaHeart, FaRegHeart } from 'react-icons/fa'
@@ -13,7 +13,6 @@ import WriteComment from '@/app/component/page/board/comment/WriteComment'
 import PostingDetailHeader from '@/app/component/page/board/detail/PostingDetailHeader'
 import BoardWriteModal from '@/app/component/ui/modal/board/BoardWriteModal'
 import {
-  API_SUCCESS_CODE,
   KEY_ACCESS_TOKEN,
   KEY_LOGIN_COMPLETE,
   KEY_X_ORGANIZATION_CODE,
@@ -43,9 +42,7 @@ import {
 } from '@/app/store/reducers/board/boardLikeReducer'
 import {
   type CustomDecodeTokenType,
-  type FailResponseType,
   type ModuleGetFetchProps,
-  type ModulePostFetchProps,
   type SuccessResponseType,
 } from '@/app/types/moduleTypes'
 import { type CommentType, type DetailResponseType } from '@/app/types/variableTypes'
@@ -54,6 +51,7 @@ const Viewbox = dynamic(async () => import('../../../component/ui/editor/TextVie
   ssr: false,
 })
 export default function BoardDetail() {
+  const queryClient = useQueryClient()
   const param = useParams()
   const router = useRouter()
 
@@ -119,9 +117,10 @@ export default function BoardDetail() {
     router.push(ROUTE_BOARD)
   }
 
-  const fetchPostingLike = async () => {
-    try {
-      const fetchProps: ModulePostFetchProps = {
+  const { mutate: likeMutation } = useMutation({
+    mutationKey: ['like'],
+    mutationFn: async () =>
+      modulePostFetch<string>({
         data: {
           postingId: postingData?.result.id,
         },
@@ -130,18 +129,20 @@ export default function BoardDetail() {
           Authorization: `Bearer ${accessToken}`,
           [KEY_X_ORGANIZATION_CODE]: orgCode,
         },
-      }
-      await modulePostFetch<string>(fetchProps)
+      }),
+    onSuccess: async () => {
       await refetch()
+      await queryClient.invalidateQueries({ queryKey: ['posting-detail'] })
       dispatch(addPostingLikeReducer(postingData?.result.id as number))
-    } catch (err) {
+    },
+    onError: () => {
       alert(errDefault('좋아요'))
-    }
-  }
-
-  const fetchPostingUnLike = async () => {
-    try {
-      const fetchProps: ModulePostFetchProps = {
+    },
+  })
+  const { mutate: unLikeMutation } = useMutation({
+    mutationKey: ['unlike'],
+    mutationFn: async () =>
+      await modulePostFetch<string>({
         data: {
           postingId: postingData?.result.id,
         },
@@ -150,23 +151,26 @@ export default function BoardDetail() {
           Authorization: `Bearer ${accessToken}`,
           [KEY_X_ORGANIZATION_CODE]: orgCode,
         },
-      }
-      await modulePostFetch<string>(fetchProps)
+      }),
+    onSuccess: async () => {
       await refetch()
+      await queryClient.invalidateQueries({ queryKey: ['posting-detail'] })
       dispatch(deletePostingLikeReducer(postingData?.result.id as number))
-    } catch (err) {
-      alert(errDefault('좋아요 취소'))
-    }
-  }
+    },
+    onError: () => {
+      alert(errDefault('좋아요'))
+    },
+  })
 
   const clickLike = () => {
-    if (isPostLike) void fetchPostingUnLike()
-    else void fetchPostingLike()
+    if (isPostLike) unLikeMutation()
+    else likeMutation()
   }
 
-  const fetchDeletePostings = async () => {
-    try {
-      const fetchProps: ModuleGetFetchProps = {
+  const { mutate: deletePosting } = useMutation({
+    mutationKey: ['delete-posting'],
+    mutationFn: async () =>
+      await moduleDeleteFetch<string>({
         params: {
           postingId: postingData?.result.id as number,
         },
@@ -175,16 +179,17 @@ export default function BoardDetail() {
           Authorization: `Bearer ${accessToken}`,
           [KEY_X_ORGANIZATION_CODE]: orgCode,
         },
-      }
-      const res = await moduleDeleteFetch<string>(fetchProps)
-      if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)
+      }),
+    onSuccess: () => {
       router.back()
-    } catch (err) {
+    },
+    onError: () => {
       alert(errDefault('게시글 삭제'))
-    }
-  }
+    },
+  })
+
   const clickDelete = () => {
-    void fetchDeletePostings()
+    deletePosting()
   }
 
   if (postingError !== null) {

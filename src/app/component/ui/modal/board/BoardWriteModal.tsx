@@ -1,7 +1,7 @@
 'use client'
 import React, { useRef, useState } from 'react'
 
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/navigation'
 
@@ -11,14 +11,8 @@ import BoardModalSaveListTab from '../../tab/board/BoardModalSaveListTab'
 import BoardWriteModalBtnTab from '../../tab/board/BoardWriteModalBtnTab'
 import Dialog from '../dialog/Dialog'
 
-import {
-  API_SUCCESS_CODE,
-  FALSE,
-  KEY_ACCESS_TOKEN,
-  KEY_X_ORGANIZATION_CODE,
-  TRUE,
-} from '@/app/constant/constant'
-import { ERR_EMPTRY_POSTING_FIELD, errNotEntered } from '@/app/constant/errorMsg'
+import { FALSE, KEY_ACCESS_TOKEN, KEY_X_ORGANIZATION_CODE, TRUE } from '@/app/constant/constant'
+import { errNotEntered } from '@/app/constant/errorMsg'
 import { API_URL_POSTINGS, API_URL_POSTINGS_PENDING } from '@/app/constant/route/api-route-constant'
 import { ROUTE_POSTING_DETAIL } from '@/app/constant/route/route-constant'
 import useInput from '@/app/module/hooks/reactHooks/useInput'
@@ -30,10 +24,8 @@ import { openBoardWriteModalReducer } from '@/app/store/reducers/board/openBoard
 import {
   type ApiResponseType,
   type DialogBtnValueType,
-  type FailResponseType,
   type ModuleCheckContentIsEmptyProps,
   type ModuleGetFetchProps,
-  type ModulePostFetchProps,
   type SuccessResponseType,
 } from '@/app/types/moduleTypes'
 import { type BoardWriteModalprops } from '@/app/types/ui/modalTypes'
@@ -44,6 +36,7 @@ const Editor = dynamic(async () => import('../../editor/TextEditor'), {
 })
 
 export default function BoardWriteModal(props: BoardWriteModalprops) {
+  const queryClient = useQueryClient()
   const dialogRef = useRef<HTMLDialogElement | null>(null)
   const handleDialogClose = () => {
     dialogRef.current?.close()
@@ -67,7 +60,6 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
   const [editorContent, setEditorContent] = useState('')
   const [thumbNailUrl, setThumbNailUrl] = useState<string>('')
   const [saveContent, setSaveContent] = useState('')
-  const [rerender, setRerender] = useState<boolean>(false)
 
   const [isOpenSaveList, setIsOpenSaveList] = useState<boolean>(false)
   const [imgCount, setImgCount] = useState<number>(0)
@@ -119,9 +111,10 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
   if (saveData !== undefined) saveList = saveData.result.data
   else saveList = []
 
-  const fetchDeletePostPending = async (id: number) => {
-    try {
-      const fetchProps: ModuleGetFetchProps = {
+  const { mutate: deleteSave } = useMutation({
+    mutationKey: ['delete-pending'],
+    mutationFn: async (id: number) =>
+      await moduleDeleteFetch<string>({
         params: {
           postingId: id,
         },
@@ -130,26 +123,29 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
           Authorization: `Bearer ${accessToken}`,
           [KEY_X_ORGANIZATION_CODE]: userInfo[KEY_X_ORGANIZATION_CODE],
         },
-      }
-      const res = await moduleDeleteFetch<string>(fetchProps)
+      }),
+    onSuccess: async () => {
       await refetch()
-      if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)
-      setRerender(!rerender)
-    } catch (err) {
+      await queryClient.invalidateQueries({ queryKey: ['save'] })
+    },
+    onError: () => {
       setDialogText({
         main: '삭제에 실패했습니다.',
         sub: '',
       })
       dialogRef.current?.showModal()
-    }
-  }
+    },
+  })
+
   const handleClickDeletePending = (id: number) => {
-    void fetchDeletePostPending(id)
+    deleteSave(id)
     setIsOpenSaveList(false)
   }
-  const fetchPostPending = async () => {
-    try {
-      const fetchProps: ModulePostFetchProps = {
+
+  const { mutate: postSave } = useMutation({
+    mutationKey: ['post-save'],
+    mutationFn: async () =>
+      await modulePostFetch<ApiResponseType>({
         data: {
           // writerId: userId,
           content: editorContent,
@@ -161,14 +157,12 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
           Authorization: `Bearer ${accessToken}`,
           [KEY_X_ORGANIZATION_CODE]: userInfo[KEY_X_ORGANIZATION_CODE],
         },
-      }
-
-      const res = await modulePostFetch<ApiResponseType>(fetchProps)
+      }),
+    onSuccess: async () => {
       await refetch()
-      if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)
-      setRerender(!rerender)
-    } catch (err) {}
-  }
+      await queryClient.invalidateQueries({ queryKey: ['save'] })
+    },
+  })
 
   const handleClickPostPending = () => {
     if (saveList.length >= 10) {
@@ -191,7 +185,7 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
       dialog: dialogRef,
       setBtnValue: setDialogBtnValue,
       setDialogAlertState: setDialogText,
-      fetchFunction: fetchPostPending,
+      fetchFunction: postSave,
       boardId: Number(select),
       editorContents: editorContent,
       inputValue: titleInput.value,
@@ -199,9 +193,10 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
     moduleCheckContentIsEmpty(moduleProps)
   }
 
-  const fetchPostContent = async () => {
-    try {
-      const fetchProps: ModulePostFetchProps = {
+  const { mutate: postContent } = useMutation({
+    mutationKey: ['post-content'],
+    mutationFn: async () => {
+      const res = await modulePostFetch<number>({
         data: {
           thumbnail: thumbNailUrl,
           boardId: props.currentBoard === null ? Number(select) : props.currentBoard.id,
@@ -213,24 +208,19 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
           Authorization: `Bearer ${accessToken}`,
           [KEY_X_ORGANIZATION_CODE]: userInfo[KEY_X_ORGANIZATION_CODE],
         },
-      }
-      const res = await modulePostFetch<number>(fetchProps)
-      if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)
-      const postingId = (res as SuccessResponseType<number>).result
-
+      })
+      return res as SuccessResponseType<number>
+    },
+    onSuccess: (data) => {
       dispatch(openBoardWriteModalReducer())
-      setRerender(!rerender)
+      const postingId = data.result
       router.push(`${ROUTE_POSTING_DETAIL}/${postingId.toString()}`)
-    } catch (err) {
-      if (err instanceof Error) {
-        switch (err.message) {
-          case ERR_EMPTRY_POSTING_FIELD:
-            alert(errNotEntered('필수항목'))
-            break
-        }
-      }
-    }
-  }
+    },
+    onError: () => {
+      alert(errNotEntered('필수항목'))
+    },
+  })
+
   const handleClickOpenSaveList = () => {
     setIsOpenSaveList(!isOpenSaveList)
   }
@@ -262,7 +252,7 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
       dialog: dialogRef,
       setBtnValue: setDialogBtnValue,
       setDialogAlertState: setDialogText,
-      fetchFunction: fetchPostContent,
+      fetchFunction: postContent,
       boardId: Number(select),
       editorContents: editorContent,
       inputValue: titleInput.value,
