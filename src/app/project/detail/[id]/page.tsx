@@ -273,7 +273,6 @@ export default function ProjectDetail() {
     }
     return null
   }
-  // FIXME:
   const { data: issueList, refetch } = useQuery({
     queryKey: ['issue-list'],
     queryFn: async () => {
