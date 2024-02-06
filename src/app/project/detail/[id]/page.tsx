@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useParams, useRouter } from 'next/navigation'
 
 import ProjectDetailHub from '@/app/component/page/project/hub/detail/ProjectDetailHub'
@@ -59,6 +59,7 @@ export default function ProjectDetail() {
   const router = useRouter()
   const query = useParams()
   const dialogRef = useRef<HTMLDialogElement | null>(null)
+  const queryClient = useQueryClient()
   const handleDialogClose = () => {
     dialogRef.current?.close()
   }
@@ -192,6 +193,7 @@ export default function ProjectDetail() {
       await modulePostFetch<ProjectCreateIssueResponseType>(fetchProps)
     },
     onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ['todo-list', 'task-list', 'schedule-list'] })
       await refetch()
       setDialogText({
         main: '성공적으로 이슈를 생성했습니다.',

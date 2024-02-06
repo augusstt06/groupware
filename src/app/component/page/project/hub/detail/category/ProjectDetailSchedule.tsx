@@ -4,10 +4,10 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import googleCalendarPlugin from '@fullcalendar/google-calendar'
 import FullCalendar from '@fullcalendar/react'
 import timeGridPlugin from '@fullcalendar/timegrid'
+import { useQuery } from '@tanstack/react-query'
 import { useParams, useRouter } from 'next/navigation'
 
 import {
-  API_SUCCESS_CODE,
   GOOGLE_CALENDAR_API_KEY,
   GOOGLE_CALENDAR_ID,
   KEY_ACCESS_TOKEN,
@@ -25,11 +25,7 @@ import {
   changeProjectDetailCategoryReducer,
   changeProjectDetailScheduleCategoryReducer,
 } from '@/app/store/reducers/project/projectDetailCategoryReducer'
-import {
-  type FailResponseType,
-  type ModuleGetFetchProps,
-  type SuccessResponseType,
-} from '@/app/types/moduleTypes'
+import { type SuccessResponseType } from '@/app/types/moduleTypes'
 import {
   type FullCalendarEventType,
   type IssueResponseType,
@@ -75,25 +71,27 @@ export default function ProjectDetailSchedule() {
   const isDataInList = (list: FullCalendarEventType[], newData: FullCalendarEventType) => {
     return list.some((item) => item.title === newData.title)
   }
-  const fetchScheduleList = async () => {
-    const fetchProps: ModuleGetFetchProps = {
-      params: {
-        category: PROJECT_ISSUE_SCHEDULE_VALUE.toUpperCase(),
-        limit: 10,
-        offset: 0,
-        projectId: Number(query.id),
-      },
-      fetchUrl: API_URL_PROJECT_ISSUE_LIST,
-      header: {
-        Authorization: `Bearer ${accessToken}`,
-        [KEY_X_ORGANIZATION_CODE]: orgCode,
-      },
-    }
-
-    const res = await moduleGetFetch<IssueResponseType<ScheduleType>>(fetchProps)
-    if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)
-    const resList = (res as SuccessResponseType<IssueResponseType<ScheduleType>>).result.data
-    resList.forEach((data) => {
+  const { data: scheduleList } = useQuery({
+    queryKey: ['schedule-list'],
+    queryFn: async () => {
+      const res = await moduleGetFetch<IssueResponseType<ScheduleType>>({
+        params: {
+          category: PROJECT_ISSUE_SCHEDULE_VALUE.toUpperCase(),
+          limit: 10,
+          offset: 0,
+          projectId: Number(query.id),
+        },
+        fetchUrl: API_URL_PROJECT_ISSUE_LIST,
+        header: {
+          Authorization: `Bearer ${accessToken}`,
+          [KEY_X_ORGANIZATION_CODE]: orgCode,
+        },
+      })
+      return (res as SuccessResponseType<IssueResponseType<ScheduleType>>).result.data
+    },
+  })
+  const successFetchGetScheduleList = () => {
+    scheduleList?.forEach((data) => {
       const scheduleEventProps: FullCalendarEventType = {
         issueId: data.id,
         title: data.title,
@@ -111,8 +109,10 @@ export default function ProjectDetailSchedule() {
   useEffect(() => {
     dispatch(changeProjectDetailCategoryReducer(PROJECT_DETAIL_CATEGORY_SCHEDULE))
     dispatch(changeProjectDetailScheduleCategoryReducer(PROJECT_SIDEBAR_SCHEDULE_ALL))
-    void fetchScheduleList()
   }, [])
+  useEffect(() => {
+    successFetchGetScheduleList()
+  }, [scheduleList])
 
   return (
     <div className="w-full justify-center dark:border-gray-700 border border-gray-200 rounded-lg dark:bg-[#1a202c] shadow-lg p-3 z-1">
