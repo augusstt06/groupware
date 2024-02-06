@@ -1,6 +1,7 @@
 'use client'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 
+import { useQuery } from '@tanstack/react-query'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/navigation'
 
@@ -66,12 +67,12 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
   const [editorContent, setEditorContent] = useState('')
   const [thumbNailUrl, setThumbNailUrl] = useState<string>('')
   const [saveContent, setSaveContent] = useState('')
-  const [saveList, setSaveList] = useState<BoardListResponseType[]>([])
   const [rerender, setRerender] = useState<boolean>(false)
 
   const [isOpenSaveList, setIsOpenSaveList] = useState<boolean>(false)
   const [imgCount, setImgCount] = useState<number>(0)
-  const [select, setSelect] = useState('0')
+  const currentBoardId = props.currentBoard !== null ? props.currentBoard?.id : '0'
+  const [select, setSelect] = useState(currentBoardId)
   const selectList = myBoardState.map((data) => ({ id: data.id, name: data.name }))
   const [dialogBtnValue, setDialogBtnValue] = useState<DialogBtnValueType>({
     isCancel: false,
@@ -94,8 +95,9 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
     else setIsAnnounce(FALSE)
   }
 
-  const fetchGetPostPending = async () => {
-    try {
+  const { data: saveData, refetch } = useQuery({
+    queryKey: ['save'],
+    queryFn: async () => {
       const fetchProps: ModuleGetFetchProps = {
         params: {
           limit: 10,
@@ -109,11 +111,14 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
         },
       }
       const res = await moduleGetFetch<BoardResponseType>(fetchProps)
-      if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)
-      const postingList = (res as SuccessResponseType<BoardResponseType>).result.data
-      setSaveList(postingList)
-    } catch (err) {}
-  }
+      return res as SuccessResponseType<BoardResponseType>
+    },
+  })
+
+  let saveList: [BoardListResponseType] | []
+  if (saveData !== undefined) saveList = saveData.result.data
+  else saveList = []
+
   const fetchDeletePostPending = async (id: number) => {
     try {
       const fetchProps: ModuleGetFetchProps = {
@@ -127,6 +132,7 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
         },
       }
       const res = await moduleDeleteFetch<string>(fetchProps)
+      await refetch()
       if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)
       setRerender(!rerender)
     } catch (err) {
@@ -158,6 +164,7 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
       }
 
       const res = await modulePostFetch<ApiResponseType>(fetchProps)
+      await refetch()
       if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)
       setRerender(!rerender)
     } catch (err) {}
@@ -165,11 +172,11 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
 
   const handleClickPostPending = () => {
     if (saveList.length >= 10) {
-      dialogRef.current?.showModal()
       setDialogText({
         main: '게시글의 임시저장은 10개까지 가능합니다.',
         sub: '',
       })
+      dialogRef.current?.showModal()
       return
     }
     setDialogBtnValue({
@@ -182,6 +189,7 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
     const moduleProps: ModuleCheckContentIsEmptyProps = {
       successText: '게시글이 임시저장되었습니다.',
       dialog: dialogRef,
+      setBtnValue: setDialogBtnValue,
       setDialogAlertState: setDialogText,
       fetchFunction: fetchPostPending,
       boardId: Number(select),
@@ -234,61 +242,32 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
   }
 
   const handleClickPosting = () => {
-    if (props.currentBoard === null) {
-      if (select === '0') {
-        setDialogText({
-          main: '게시판 카테고리를 선택해 주세요.',
-          sub: '',
-        })
-        setDialogBtnValue({
-          isCancel: false,
-          cancleFunc: () => {},
-          cancelText: '',
-          confirmFunc: handleDialogClose,
-          confirmText: '확인',
-        })
-        dialogRef.current?.showModal()
-        return
-      }
-      const moduleProps: ModuleCheckContentIsEmptyProps = {
-        successText: '게시글이 등록되었습니다.',
-        dialog: dialogRef,
-        setDialogAlertState: setDialogText,
-        fetchFunction: fetchPostContent,
-        boardId: Number(select),
-        editorContents: editorContent,
-        inputValue: titleInput.value,
-      }
-      moduleCheckContentIsEmpty(moduleProps)
+    if (select === '0') {
+      setDialogText({
+        main: '게시판 카테고리를 선택해 주세요.',
+        sub: '',
+      })
       setDialogBtnValue({
-        isCancel: true,
-        cancleFunc: handleDialogClose,
-        cancelText: '취소',
-        confirmFunc: () => {
-          void fetchPostContent()
-        },
+        isCancel: false,
+        cancleFunc: () => {},
+        cancelText: '',
+        confirmFunc: handleDialogClose,
         confirmText: '확인',
       })
-    } else {
-      const moduleProps: ModuleCheckContentIsEmptyProps = {
-        successText: '게시글이 등록되었습니다.',
-        dialog: dialogRef,
-        setDialogAlertState: setDialogText,
-        fetchFunction: fetchPostContent,
-        boardId: Number(props.currentBoard.id),
-        editorContents: editorContent,
-        inputValue: titleInput.value,
-      }
-      setDialogBtnValue({
-        isCancel: true,
-        cancleFunc: handleDialogClose,
-        cancelText: '취소',
-        confirmFunc: () => {
-          moduleCheckContentIsEmpty(moduleProps)
-        },
-        confirmText: '확인',
-      })
+      dialogRef.current?.showModal()
+      return
     }
+    const moduleProps: ModuleCheckContentIsEmptyProps = {
+      successText: '게시글이 등록되었습니다.',
+      dialog: dialogRef,
+      setBtnValue: setDialogBtnValue,
+      setDialogAlertState: setDialogText,
+      fetchFunction: fetchPostContent,
+      boardId: Number(select),
+      editorContents: editorContent,
+      inputValue: titleInput.value,
+    }
+    moduleCheckContentIsEmpty(moduleProps)
   }
 
   const allModalClose = () => {
@@ -313,10 +292,6 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
     }
     dispatch(openBoardWriteModalReducer())
   }
-
-  useEffect(() => {
-    void fetchGetPostPending()
-  }, [rerender, select])
 
   return (
     <>

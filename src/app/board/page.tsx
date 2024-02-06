@@ -41,8 +41,6 @@ import {
   type MyBoardType,
 } from '../types/variableTypes'
 
-import { openBoardWriteModalReducer } from '@/app/store/reducers/board/openBoardWriteModalReducer'
-
 export default function Board() {
   const router = useRouter()
   const dispatch = useAppDispatch()
@@ -137,12 +135,6 @@ export default function Board() {
     }
     moduleCheckUserState({ loginCompleteState, router, accessToken, setAccessToken })
   }, [accessToken])
-
-  useEffect(() => {
-    if (isModalOpen) {
-      dispatch(openBoardWriteModalReducer())
-    }
-  }, [isModalOpen])
 
   useEffect(() => {
     if (boardPostingData !== undefined) successFetchBoardPostings()

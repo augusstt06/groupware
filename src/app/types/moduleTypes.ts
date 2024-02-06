@@ -1,4 +1,5 @@
 import {
+  type Dispatch,
   type MutableRefObject,
   type ReactEventHandler,
   type ReactNode,
@@ -79,6 +80,7 @@ export type ModuleCheckUserStateProps = {
 export type ModuleCheckContentIsEmptyProps = {
   successText: string
   dialog: MutableRefObject<HTMLDialogElement | null>
+  setBtnValue: Dispatch<React.SetStateAction<DialogBtnValueType>>
   setDialogAlertState: React.Dispatch<
     React.SetStateAction<{
       main: string
