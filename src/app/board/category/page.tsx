@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 
+import { useQuery } from '@tanstack/react-query'
 import { useRouter, useSearchParams } from 'next/navigation'
 
 import BoardItemHub from '@/app/component/page/main/hub/board/item/BoardItemHub'
@@ -9,7 +10,6 @@ import BoardMainInputGroup from '@/app/component/ui/input/group/board/BoardMainI
 import BoardWriteModal from '@/app/component/ui/modal/board/BoardWriteModal'
 import Pagination from '@/app/component/ui/pagination/Pagination'
 import {
-  API_SUCCESS_CODE,
   KEY_ACCESS_TOKEN,
   KEY_LOGIN_COMPLETE,
   KEY_X_ORGANIZATION_CODE,
@@ -24,12 +24,7 @@ import { moduleCheckUserState } from '@/app/module/utils/check/moduleCheckUserSt
 import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
 import { moduleGetFetch } from '@/app/module/utils/moduleFetch'
 import { openBoardWriteModalReducer } from '@/app/store/reducers/board/openBoardWriteModalReducer'
-import {
-  type FailResponseType,
-  type ModuleCheckUserStateProps,
-  type ModuleGetFetchProps,
-  type SuccessResponseType,
-} from '@/app/types/moduleTypes'
+import { type ModuleGetFetchProps, type SuccessResponseType } from '@/app/types/moduleTypes'
 import {
   type BoardListResponseType,
   type BoardResponseType,
@@ -64,9 +59,10 @@ export default function BoardCategory() {
     setCurrentBoard(currentBoard)
   }
 
-  const fetchGetBoardPostings = async () => {
-    try {
-      const fetchGetBoardListProps: ModuleGetFetchProps = {
+  const { data: boardPostingsData } = useQuery({
+    queryKey: ['board-postings'],
+    queryFn: async () => {
+      const fetchProps: ModuleGetFetchProps = {
         params: {
           limit: 10,
           offset: 10 * pageNumber,
@@ -77,45 +73,48 @@ export default function BoardCategory() {
           [KEY_X_ORGANIZATION_CODE]: orgCode,
         },
       }
-      const res = await moduleGetFetch<BoardResponseType>(fetchGetBoardListProps)
-      if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)
-      const resBoardList = (res as SuccessResponseType<BoardResponseType>).result.data
+      const res = await moduleGetFetch<BoardResponseType>(fetchProps)
+      return res as SuccessResponseType<BoardResponseType>
+    },
+  })
 
-      const filterList = resBoardList.filter((data) => data.boardId === Number(currentBoard.id))
-
-      if (pageSize === 1) {
-        const pageSize = Math.ceil(
-          (res as SuccessResponseType<BoardResponseType>).result.total / 10,
-        )
-        setPageSize(pageSize)
-      }
-      setBoardList(filterList)
-    } catch (err) {}
+  const successFetchBoardPostings = () => {
+    const boardPostingList = (boardPostingsData as SuccessResponseType<BoardResponseType>).result
+    if (pageSize === 1) {
+      const pageSize = Math.ceil(boardPostingList?.total / 10)
+      setPageSize(pageSize)
+    }
+    const filterList = boardPostingList.data.filter(
+      (data) => data.boardId === Number(currentBoard.id),
+    )
+    setBoardList(filterList)
   }
 
-  const fetchGetSearchPostings = async () => {
-    try {
-      const fetchSeachPostingsProps: ModuleGetFetchProps = {
-        params: {
-          boardId: currentBoard.id,
-          limit: 10,
-          offset: 10 * pageNumber,
-          keyword: searchInput.value,
-        },
-        fetchUrl: API_URL_POSTINGS_LIST,
-        header: {
-          Authorization: `Bearer ${accessToken}`,
-          [KEY_X_ORGANIZATION_CODE]: orgCode,
-        },
-      }
-      const res = await moduleGetFetch<BoardResponseType>(fetchSeachPostingsProps)
-      if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)
-      const resSearchBoardList = (res as SuccessResponseType<BoardResponseType>).result.data
-      setBoardList(resSearchBoardList)
-    } catch (err) {}
-  }
   const clickSearchPostings = () => {
-    void fetchGetSearchPostings()
+    const { data: searchData } = useQuery({
+      queryKey: ['search'],
+      queryFn: async () => {
+        const fetchProps: ModuleGetFetchProps = {
+          params: {
+            boardId: currentBoard.id,
+            limit: 10,
+            offset: 10 * pageNumber,
+            keyword: searchInput.value,
+          },
+          fetchUrl: API_URL_POSTINGS_LIST,
+          header: {
+            Authorization: `Bearer ${accessToken}`,
+            [KEY_X_ORGANIZATION_CODE]: orgCode,
+          },
+        }
+        const res = await moduleGetFetch<BoardResponseType>(fetchProps)
+        return res as SuccessResponseType<BoardResponseType>
+      },
+    })
+    if (searchData !== undefined) {
+      const searchList = searchData.result.data
+      setBoardList(searchList)
+    }
   }
 
   useEffect(() => {
@@ -123,16 +122,15 @@ export default function BoardCategory() {
       dispatch(openBoardWriteModalReducer())
     }
     convertBoardId()
-    void fetchGetBoardPostings()
-    const moduleProps: ModuleCheckUserStateProps = {
-      useRouter: router,
-      token: accessToken,
-      setToken: setAccessToken,
-      completeState: loginCompleteState,
-      isCheckInterval: true,
-    }
-    moduleCheckUserState(moduleProps)
   }, [currentBoard, pageNumber, pageSize, query])
+
+  useEffect(() => {
+    if (boardPostingsData !== undefined) successFetchBoardPostings()
+  }, [boardPostingsData])
+
+  useEffect(() => {
+    moduleCheckUserState({ loginCompleteState, router, accessToken, setAccessToken })
+  }, [accessToken])
 
   return (
     <main className="w-full 2xl:w-2/3 h-4/5 flex flex-col items-center">

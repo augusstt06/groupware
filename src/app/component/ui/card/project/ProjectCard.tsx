@@ -2,13 +2,13 @@
 
 import { useEffect, useRef, useState } from 'react'
 
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import Link from 'next/link'
 import { FaRegStar, FaStar } from 'react-icons/fa'
 
 import Dialog from '../../modal/dialog/Dialog'
 
 import {
-  API_SUCCESS_CODE,
   KEY_ACCESS_TOKEN,
   KEY_X_ORGANIZATION_CODE,
   PROJECT_CARD_REAL_COLOR_BLUE,
@@ -32,15 +32,12 @@ import { ROUTE_PROJECT_DETAIL } from '@/app/constant/route/route-constant'
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
 import { moduleDeleteFetchWithBody, modulePostFetch } from '@/app/module/utils/moduleFetch'
-import {
-  type DialogBtnValueType,
-  type FailResponseType,
-  type ModulePostFetchProps,
-} from '@/app/types/moduleTypes'
+import { type DialogBtnValueType } from '@/app/types/moduleTypes'
 import { type ProjectCardProps } from '@/app/types/ui/cardTypes'
 import { type DialogTextType } from '@/app/types/variableTypes'
 
 export default function ProjectCard(props: ProjectCardProps) {
+  const queryClient = useQueryClient()
   const dialogRef = useRef<HTMLDialogElement | null>(null)
   const handleDialogClose = () => {
     dialogRef.current?.close()
@@ -60,9 +57,10 @@ export default function ProjectCard(props: ProjectCardProps) {
   const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
 
-  const fetchStarred = async () => {
-    try {
-      const fetchProps: ModulePostFetchProps = {
+  const { mutate: star } = useMutation({
+    mutationKey: ['star'],
+    mutationFn: async () => {
+      await modulePostFetch<string>({
         data: {
           projectId: props.projectInfo.id,
         },
@@ -71,22 +69,23 @@ export default function ProjectCard(props: ProjectCardProps) {
           Authorization: `Bearer ${accessToken}`,
           [KEY_X_ORGANIZATION_CODE]: orgCode,
         },
-      }
-      const res = await modulePostFetch<string>(fetchProps)
-      if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)
-      props.setRerender(!props.rerender)
-    } catch (err) {
+      })
+    },
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ['project-list'] })
+    },
+    onError: () => {
       setDialogText({
         main: '중요 프로젝트 전환에 실패했습니다.',
         sub: ' 다시 시도해 주세요.',
       })
       dialogRef.current?.showModal()
-    }
-  }
-
-  const fetchUnstar = async () => {
-    try {
-      const fetchProps: ModulePostFetchProps = {
+    },
+  })
+  const { mutate: unstar } = useMutation({
+    mutationKey: ['unstar'],
+    mutationFn: async () => {
+      await moduleDeleteFetchWithBody<string>({
         data: {
           projectId: props.projectInfo.id,
         },
@@ -95,24 +94,23 @@ export default function ProjectCard(props: ProjectCardProps) {
           Authorization: `Bearer ${accessToken}`,
           [KEY_X_ORGANIZATION_CODE]: orgCode,
         },
-      }
-      const res = await moduleDeleteFetchWithBody<string>(fetchProps)
-      if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)
-      props.setRerender(!props.rerender)
-    } catch (err) {
+      })
+    },
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ['project-list'] })
+    },
+    onError: () => {
       setDialogText({
         main: '일반 프로젝트 전환에 실패했습니다.',
         sub: ' 다시 시도해 주세요.',
       })
       dialogRef.current?.showModal()
-    }
-  }
+    },
+  })
 
   const handleClickStar = () => {
-    if (props.projectInfo.starred) {
-      void fetchUnstar()
-    } else void fetchStarred()
-    props.setRerender(!props.rerender)
+    if (props.projectInfo.starred) unstar()
+    else star()
   }
   const cardColor = (color: string) => {
     switch (color) {

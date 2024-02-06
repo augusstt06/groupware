@@ -13,12 +13,26 @@ export const moduleCheckContentIsEmpty = (props: ModuleCheckContentIsEmptyProps)
       main: '제목은 최소 1자 이상 작성 후 임시저장이 가능합니다.',
       sub: '',
     })
+    props.setBtnValue({
+      isCancel: false,
+      cancleFunc: () => {},
+      cancelText: '',
+      confirmFunc: () => props.dialog.current?.close(),
+      confirmText: '확인',
+    })
     props.dialog.current?.showModal()
     return
   } else if (isContentEmpty) {
     props.setDialogAlertState({
       main: '게시글 내용은 최소 1자 이상 작성 후 임시저장이 가능합니다.',
       sub: '',
+    })
+    props.setBtnValue({
+      isCancel: false,
+      cancleFunc: () => {},
+      cancelText: '',
+      confirmFunc: () => props.dialog.current?.close(),
+      confirmText: '확인',
     })
     props.dialog.current?.showModal()
     return
@@ -27,12 +41,29 @@ export const moduleCheckContentIsEmpty = (props: ModuleCheckContentIsEmptyProps)
       main: '게시판 카테고리를 선택해주세요.',
       sub: '',
     })
+    props.setBtnValue({
+      isCancel: false,
+      cancleFunc: () => {},
+      cancelText: '',
+      confirmFunc: () => props.dialog.current?.close(),
+      confirmText: '확인',
+    })
     props.dialog.current?.showModal()
     return
   }
   props.setDialogAlertState({
     main: props.successText,
     sub: '',
+  })
+  props.setBtnValue({
+    isCancel: false,
+    cancleFunc: () => {},
+    cancelText: '',
+    confirmFunc: () => {
+      void props.fetchFunction()
+      props.dialog.current?.close()
+    },
+    confirmText: '확인',
   })
   props.dialog.current?.showModal()
 }
