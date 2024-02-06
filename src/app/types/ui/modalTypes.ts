@@ -63,5 +63,13 @@ export type BoardWriteModalBtnTabProps = {
   saveList: BoardListResponseType[]
 }
 export type InviteProjectMemberModalProps = {
+  inviteList: ColleagueType[]
   colleague: ColleagueType[]
+  setInviteList: Dispatch<SetStateAction<ColleagueType[]>>
+}
+export type ProjectInviteListProps = {
+  inviteList: ColleagueType[]
+}
+export type ProjectInviteMemberCardProps = {
+  user: ColleagueType
 }

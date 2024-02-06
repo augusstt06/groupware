@@ -64,3 +64,5 @@ export const API_URL_PROJECT_ISSUE_LIST_PINNED = process.env
 
 export const API_URL_PROJECT_ISSUE_REARRANGE = process.env
   .NEXT_PUBLIC_PROJECT_ISSUE_REARRANGE_SOURCE as string
+
+export const API_URL_PROJECT_INVITE = process.env.NEXT_PUBLIC_PROJECT_INVITE_SOURCE as string

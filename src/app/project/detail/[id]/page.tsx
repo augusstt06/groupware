@@ -26,6 +26,7 @@ import {
 } from '@/app/constant/constant'
 import {
   API_URL_COLLEAGUES,
+  API_URL_PROJECT_INVITE,
   API_URL_PROJECT_ISSUE,
   API_URL_PROJECT_ISSUE_LIST,
   API_URL_PROJECT_ISSUE_LIST_PINNED,
@@ -82,6 +83,7 @@ export default function ProjectDetail() {
     main: '',
     sub: '',
   })
+  const [inviteList, setInviteList] = useState<ColleagueType[]>([])
   const loginCompleteState = useAppSelector((state) => state.maintain[KEY_LOGIN_COMPLETE])
   const [keyForProjectDetailHub, setKeyForProjectDetailHub] = useState(0)
   const isCreateProjectIssueModalOpen = useAppSelector(
@@ -360,6 +362,36 @@ export default function ProjectDetail() {
     return []
   }
 
+  const { mutate: invite } = useMutation({
+    mutationKey: ['invite-member'],
+    mutationFn: async () => {
+      const inviteIdList = inviteList.map((data) => data.userId)
+      await modulePostFetch<string>({
+        data: {
+          members: inviteIdList,
+          projectId: defineProjectDetail()?.id,
+        },
+        fetchUrl: API_URL_PROJECT_INVITE,
+        header: {
+          Authorization: `Bearer ${accessToken}`,
+          [KEY_X_ORGANIZATION_CODE]: orgCode,
+        },
+      })
+    },
+    onSuccess: () => {
+      setDialogText({
+        main: '초대에 성공했습니다.',
+        sub: '',
+      })
+      handleCloseInviteModal()
+    },
+    onError: () => {
+      setDialogText({
+        main: '초대에 실패했습니다.',
+        sub: '',
+      })
+    },
+  })
   const modalList = [
     {
       onClose: handleCloseCreateIssueModal,
@@ -375,10 +407,16 @@ export default function ProjectDetail() {
     {
       onClose: handleCloseInviteModal,
       isModalOpen: isInviteModalOpen,
-      childComponent: <InviteProjectMemberModal colleague={defineColleague()} />,
+      childComponent: (
+        <InviteProjectMemberModal
+          colleague={defineColleague()}
+          inviteList={inviteList}
+          setInviteList={setInviteList}
+        />
+      ),
       name: MODAL_INVITE_MEMBER_IN_PROJECT,
       btnValue: MODAL_BTN_SAVE,
-      confirmFunc: () => {},
+      confirmFunc: invite,
       dialog: dialogRef,
       dialogAlertText: dialogText,
       dialogBtnValue: projectDialogBtnValue,

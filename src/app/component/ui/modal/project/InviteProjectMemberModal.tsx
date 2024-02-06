@@ -1,5 +1,3 @@
-import { useState } from 'react'
-
 import { FaSearch } from 'react-icons/fa'
 
 import ProjectInviteCard from '../../card/project/ProjectInviteCard'
@@ -12,11 +10,12 @@ import { type InviteProjectMemberModalProps } from '@/app/types/ui/modalTypes'
 import { type ColleagueType } from '@/app/types/variableTypes'
 
 export default function InviteProjectMemberModal(props: InviteProjectMemberModalProps) {
-  const { colleague } = props
-  const [inviteList, setInviteList] = useState<ColleagueType[]>([])
+  const { colleague, inviteList, setInviteList } = props
   const handleInviteUser = (user: ColleagueType) => {
     if (!inviteList.some((data) => data.userId === user.userId)) {
       setInviteList((prev) => [...prev, user])
+    } else {
+      setInviteList(inviteList.filter((data) => data.userId !== user.userId))
     }
   }
   // FIXME: 임시 input 변수
@@ -58,7 +57,7 @@ export default function InviteProjectMemberModal(props: InviteProjectMemberModal
           ))}
         </div>
         <div className="w-2/5">
-          <ProjectInviteList />
+          <ProjectInviteList inviteList={inviteList} />
         </div>
       </div>
     </>
