@@ -16,3 +16,4 @@ export const ROUTE_BOARD = process.env.NEXT_PUBLIC_ROUTE_BOARD as string
 export const ROUTE_POSTING_DETAIL = process.env.NEXT_PUBLIC_ROUTE_POSTING_DETAIL as string
 export const ROUTE_PROJECT = process.env.NEXT_PUBLIC_ROUTE_PROJECT as string
 export const ROUTE_PROJECT_DETAIL = process.env.NEXT_PUBLIC_ROUTE_PROJECT_DETAIL as string
+export const ROUTE_INVITE = process.env.NEXT_PUBLIC_ROUTE_INVITE as string

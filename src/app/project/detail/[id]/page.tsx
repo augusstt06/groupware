@@ -392,6 +392,7 @@ export default function ProjectDetail() {
       })
     },
   })
+
   const modalList = [
     {
       onClose: handleCloseCreateIssueModal,

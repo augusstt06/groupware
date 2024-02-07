@@ -73,3 +73,14 @@ export type ProjectInviteListProps = {
 export type ProjectInviteMemberCardProps = {
   user: ColleagueType
 }
+export type InviteLoginModalProps = {
+  inputList: Array<{
+    headLabelContent: JSX.Element
+    title: string
+    placeholder: string
+    useInput: UseInputProps
+    type: string
+    isTailLabel: boolean
+    tailLabelContent: JSX.Element
+  }>
+}
