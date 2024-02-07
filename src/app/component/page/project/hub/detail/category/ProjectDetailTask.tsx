@@ -3,12 +3,12 @@
 import { type Dispatch, useEffect, useState } from 'react'
 import { DragDropContext, type DropResult } from 'react-beautiful-dnd'
 
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { useParams } from 'next/navigation'
 
 import ProjectDetailTaskColumn from './ProjectDetailTaskColumn'
 
 import {
-  API_SUCCESS_CODE,
   KEY_ACCESS_TOKEN,
   KEY_X_ORGANIZATION_CODE,
   PROJECT_DETAIL_CATEGORY_TASK,
@@ -30,12 +30,7 @@ import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
 import { moduleGetFetch, modulePatchFetch } from '@/app/module/utils/moduleFetch'
 import { changeProjectDetailCategoryReducer } from '@/app/store/reducers/project/projectDetailCategoryReducer'
-import {
-  type FailResponseType,
-  type ModuleGetFetchProps,
-  type ModulePostFetchProps,
-  type SuccessResponseType,
-} from '@/app/types/moduleTypes'
+import { type SuccessResponseType } from '@/app/types/moduleTypes'
 import {
   type ColumnListType,
   type ColumnType,
@@ -52,24 +47,28 @@ export default function ProjectDetailTask() {
   const isDataInList = (list: ColumnType[], newData: ColumnType) => {
     return list.some((item) => item.id === newData.id)
   }
-  const fetchTaskList = async () => {
-    const fetchProps: ModuleGetFetchProps = {
-      params: {
-        category: PROJECT_ISSUE_TASK_VALUE.toUpperCase(),
-        limit: 10,
-        offset: 0,
-        projectId: Number(query.id),
-      },
-      fetchUrl: API_URL_PROJECT_ISSUE_LIST,
-      header: {
-        Authorization: `Bearer ${accessToken}`,
-        [KEY_X_ORGANIZATION_CODE]: orgCode,
-      },
-    }
-    const res = await moduleGetFetch<IssueResponseType<ColumnType>>(fetchProps)
-    if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)
-    const resList = (res as SuccessResponseType<IssueResponseType<ColumnType>>).result.data
-    resList.forEach((data) => {
+  const { data: taskList } = useQuery({
+    queryKey: ['task-list'],
+    queryFn: async () => {
+      const res = await moduleGetFetch<IssueResponseType<ColumnType>>({
+        params: {
+          category: PROJECT_ISSUE_TASK_VALUE.toUpperCase(),
+          limit: 10,
+          offset: 0,
+          projectId: Number(query.id),
+        },
+        fetchUrl: API_URL_PROJECT_ISSUE_LIST,
+        header: {
+          Authorization: `Bearer ${accessToken}`,
+          [KEY_X_ORGANIZATION_CODE]: orgCode,
+        },
+      })
+      return res as SuccessResponseType<IssueResponseType<ColumnType>>
+    },
+  })
+
+  const successFetchTaskList = () => {
+    taskList?.result.data.forEach((data) => {
       switch (data.processState) {
         case PROJECT_ISSUE_TASK_PROGRESS_REQUESTED_VALUE:
           if (!isDataInList(reqCardList, data)) {
@@ -104,23 +103,26 @@ export default function ProjectDetailTask() {
 
   const [columnList, setColumnList] = useState<ColumnListType[]>([])
 
-  const fetchRearrangeColumn = async () => {
-    const fetchProps: ModulePostFetchProps = {
-      data: {
-        complted: completeCardlist,
-        inProgress: progressCardlist,
-        init: initCardlist,
-        requested: reqCardList,
-        updated: updatedCardList,
-      },
-      fetchUrl: API_URL_PROJECT_ISSUE_REARRANGE,
-      header: {
-        Authorization: `Bearer ${accessToken}`,
-        [KEY_X_ORGANIZATION_CODE]: orgCode,
-      },
-    }
-    await modulePatchFetch<string>(fetchProps)
-  }
+  const { mutate: rearrange } = useMutation({
+    mutationKey: ['rearrange'],
+    mutationFn: async () => {
+      await modulePatchFetch<string>({
+        data: {
+          complted: completeCardlist,
+          inProgress: progressCardlist,
+          init: initCardlist,
+          requested: reqCardList,
+          updated: updatedCardList,
+        },
+        fetchUrl: API_URL_PROJECT_ISSUE_REARRANGE,
+        header: {
+          Authorization: `Bearer ${accessToken}`,
+          [KEY_X_ORGANIZATION_CODE]: orgCode,
+        },
+      })
+    },
+  })
+
   // 드래그를 놓았을때 실행되는 함수
   const onDragEnd = (
     result: DropResult,
@@ -174,14 +176,15 @@ export default function ProjectDetailTask() {
   }
 
   useEffect(() => {
-    void fetchRearrangeColumn()
+    rearrange()
+    // void fetchRearrangeColumn()
   }, [updatedCardList])
   useEffect(() => {
     dispatch(changeProjectDetailCategoryReducer(PROJECT_DETAIL_CATEGORY_TASK))
-    void fetchTaskList()
   }, [])
 
   useEffect(() => {
+    successFetchTaskList()
     setColumnList([
       {
         columnTitle: PROJECT_ISSUE_TASK_PROGRESS_REQUESTED_TITLE,
@@ -212,7 +215,8 @@ export default function ProjectDetailTask() {
         setCardList: setInitCardList,
       },
     ])
-  }, [reqCardList, progressCardlist, completeCardlist, initCardlist])
+  }, [reqCardList, progressCardlist, completeCardlist, initCardlist, taskList])
+
   return (
     <>
       <DragDropContext

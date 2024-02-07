@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useParams, useRouter } from 'next/navigation'
 
 import ProjectDetailHub from '@/app/component/page/project/hub/detail/ProjectDetailHub'
@@ -10,7 +11,6 @@ import CreateProjectIssueModal from '@/app/component/ui/modal/project/CreateProj
 import InviteProjectMemberModal from '@/app/component/ui/modal/project/InviteProjectMemberModal'
 import ProjectDetailTab from '@/app/component/ui/tab/project/ProjectDetailTab'
 import {
-  API_SUCCESS_CODE,
   KEY_ACCESS_TOKEN,
   KEY_LOGIN_COMPLETE,
   KEY_X_ORGANIZATION_CODE,
@@ -42,9 +42,6 @@ import {
 } from '@/app/store/reducers/project/projectModalReducer'
 import {
   type DialogBtnValueType,
-  type FailResponseType,
-  type ModuleCheckUserStateProps,
-  type ModuleGetFetchProps,
   type ModulePostFetchProps,
   type SuccessResponseType,
 } from '@/app/types/moduleTypes'
@@ -62,6 +59,7 @@ export default function ProjectDetail() {
   const router = useRouter()
   const query = useParams()
   const dialogRef = useRef<HTMLDialogElement | null>(null)
+  const queryClient = useQueryClient()
   const handleDialogClose = () => {
     dialogRef.current?.close()
   }
@@ -73,8 +71,6 @@ export default function ProjectDetail() {
   const [accessToken, setAccessToken] = useState(moduleGetCookie(KEY_ACCESS_TOKEN))
   const orgId = useAppSelector((state) => state.userInfo.extraInfo.organizationId)
   const myUserId = useAppSelector((state) => state.userInfo.extraInfo.userId)
-  const [colleague, setColleague] = useState<ColleagueType[]>([])
-  const [rerender, setRerender] = useState<boolean>(false)
   const [projectDialogBtnValue] = useState<DialogBtnValueType>({
     isCancel: false,
     cancleFunc: () => {},
@@ -87,9 +83,6 @@ export default function ProjectDetail() {
     sub: '',
   })
   const loginCompleteState = useAppSelector((state) => state.maintain[KEY_LOGIN_COMPLETE])
-  const [projectInfo, setProjectinfo] = useState<ProjectResponseType | null>(null)
-  const [issueList, setIssueList] = useState<ProjectIssueType[] | null>(null)
-  const [pinnedList, setPinnedList] = useState<ProjectIssueType[] | null>(null)
   const [keyForProjectDetailHub, setKeyForProjectDetailHub] = useState(0)
   const isCreateProjectIssueModalOpen = useAppSelector(
     (state) => state.projectModal.isCreateProjectIssueModalOpen,
@@ -193,25 +186,30 @@ export default function ProjectDetail() {
     }
   }
 
-  const fetchPostIssue = async () => {
-    try {
+  const { mutate: postIssue } = useMutation({
+    mutationKey: ['post-issue'],
+    mutationFn: async () => {
       const fetchProps = fetchPropsByCategory()
       await modulePostFetch<ProjectCreateIssueResponseType>(fetchProps)
+    },
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ['todo-list', 'task-list', 'schedule-list'] })
+      await refetch()
       setDialogText({
         main: '성공적으로 이슈를 생성했습니다.',
         sub: '',
       })
       dialogRef.current?.showModal()
       dispatch(createProjectIssueModalOpenReducer(false))
-      setRerender(!rerender)
-    } catch (err) {
+    },
+    onError: () => {
       setDialogText({
         main: '이슈를 생성하는데 실패했습니다.',
         sub: '다시 시도해 주세요.',
       })
       dialogRef.current?.showModal()
-    }
-  }
+    },
+  })
 
   const isIssueInputEmpty = () => {
     const { category, endAt, processState, projectId, startAt, title } = issueState
@@ -252,11 +250,12 @@ export default function ProjectDetail() {
       return
     }
 
-    void fetchPostIssue()
+    postIssue()
   }
-  const fetchGetProjectDetail = async () => {
-    try {
-      const fetchProps: ModuleGetFetchProps = {
+  const { data: projectDetail } = useQuery({
+    queryKey: ['project-detail', 'post-issue'],
+    queryFn: async () => {
+      const res = await moduleGetFetch<ProjectResponseType>({
         params: {
           projectId: Number(query.id),
         },
@@ -265,28 +264,100 @@ export default function ProjectDetail() {
           Authorization: `Bearer ${accessToken}`,
           [KEY_X_ORGANIZATION_CODE]: orgCode,
         },
-      }
-
-      const res = await moduleGetFetch<ProjectResponseType>(fetchProps)
-      if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)
-      const projectDetail = (res as SuccessResponseType<ProjectResponseType>).result
-      setProjectinfo(projectDetail)
-      setRerender(!rerender)
-    } catch (err) {
-      setProjectinfo({
-        color: '',
-        createdAt: '',
-        id: 0,
-        issues: [],
-        name: '프로젝트를 불러오는데 실패했습니다.',
-        ownerId: 0,
-        teamId: 0,
-        updatedAt: '',
-        membersCnt: 0,
-        members: [],
-        starred: false,
       })
+      return res as SuccessResponseType<ProjectResponseType>
+    },
+  })
+
+  const defineProjectDetail = () => {
+    if (projectDetail !== undefined) {
+      return projectDetail.result
     }
+    return null
+  }
+  const { data: issueList, refetch } = useQuery({
+    queryKey: ['issue-list'],
+    queryFn: async () => {
+      if (projectDetail !== undefined) {
+        const res = await moduleGetFetch<ProjectIssueResponseType>({
+          params: {
+            projectId: Number(defineProjectDetail()?.id),
+            limit: 10,
+            offset: 0,
+            category: PROJECT_ISSUE_ALL_VALUE.toUpperCase(),
+          },
+          fetchUrl: API_URL_PROJECT_ISSUE_LIST,
+          header: {
+            Authorization: `Bearer ${accessToken}`,
+            [KEY_X_ORGANIZATION_CODE]: orgCode,
+          },
+        })
+        return res as SuccessResponseType<ProjectIssueResponseType>
+      }
+    },
+  })
+
+  const defineIssueList = () => {
+    if (issueList !== undefined) return issueList.result.data
+    return null
+  }
+
+  const { data: issuePinnedList } = useQuery({
+    queryKey: ['issue-pinned', 'post-issue'],
+    queryFn: async () => {
+      if (defineProjectDetail() !== null) {
+        const res = await moduleGetFetch<ProjectIssueType[]>({
+          params: {
+            projectId: Number(defineProjectDetail()?.id),
+          },
+          fetchUrl: API_URL_PROJECT_ISSUE_LIST_PINNED,
+          header: {
+            Authorization: `Bearer ${accessToken}`,
+            [KEY_X_ORGANIZATION_CODE]: orgCode,
+          },
+        })
+        return res as SuccessResponseType<ProjectIssueType[]>
+      }
+    },
+  })
+  const definePinnedList = () => {
+    if (issuePinnedList !== undefined) return issuePinnedList.result
+    return null
+  }
+
+  const filterIssueList = () => {
+    switch (taskCategory) {
+      case PROJECT_SIDEBAR_TASK_ALL:
+        return issueList
+      case PROJECT_SIDEBAR_TASK_MY:
+        return defineIssueList()?.filter((data) => data.issuer.name === myState.name)
+      default:
+        return issueList
+    }
+  }
+
+  const { data: colleague } = useQuery({
+    queryKey: ['colleague'],
+    queryFn: async () => {
+      const res = await moduleGetFetch<ColleagueType[]>({
+        params: {
+          limit: 10,
+          offset: 0,
+          organizationId: orgId,
+        },
+        fetchUrl: API_URL_COLLEAGUES,
+        header: {
+          Authorization: `Bearer ${accessToken}`,
+          [KEY_X_ORGANIZATION_CODE]: orgCode,
+        },
+      })
+      const arr = (res as SuccessResponseType<ColleagueType[]>).result
+      return arr.filter((data) => data.userId !== myUserId)
+    },
+  })
+  const defineColleague = () => {
+    if (colleague !== undefined) return colleague
+    return []
   }
 
   const modalList = [
@@ -304,7 +375,7 @@ export default function ProjectDetail() {
     {
       onClose: handleCloseInviteModal,
       isModalOpen: isInviteModalOpen,
-      childComponent: <InviteProjectMemberModal colleague={colleague} />,
+      childComponent: <InviteProjectMemberModal colleague={defineColleague()} />,
       name: MODAL_INVITE_MEMBER_IN_PROJECT,
       btnValue: MODAL_BTN_SAVE,
       confirmFunc: () => {},
@@ -313,104 +384,29 @@ export default function ProjectDetail() {
       dialogBtnValue: projectDialogBtnValue,
     },
   ]
-
-  const fetchGetIssueList = async () => {
-    const fetchProps: ModuleGetFetchProps = {
-      params: {
-        projectId: Number(projectInfo?.id),
-        limit: 10,
-        offset: 0,
-        category: PROJECT_ISSUE_ALL_VALUE.toUpperCase(),
-      },
-      fetchUrl: API_URL_PROJECT_ISSUE_LIST,
-      header: {
-        Authorization: `Bearer ${accessToken}`,
-        [KEY_X_ORGANIZATION_CODE]: orgCode,
-      },
-    }
-    const res = await moduleGetFetch<ProjectIssueResponseType>(fetchProps)
-    const issues = (res as SuccessResponseType<ProjectIssueResponseType>).result.data
-    setIssueList([...issues])
-  }
-
-  const fetchGetIssuePinnedList = async () => {
-    const fetchProps: ModuleGetFetchProps = {
-      params: {
-        projectId: Number(projectInfo?.id),
-      },
-      fetchUrl: API_URL_PROJECT_ISSUE_LIST_PINNED,
-      header: {
-        Authorization: `Bearer ${accessToken}`,
-        [KEY_X_ORGANIZATION_CODE]: orgCode,
-      },
-    }
-    const res = await moduleGetFetch<ProjectIssueType[]>(fetchProps)
-    const pinned = (res as SuccessResponseType<ProjectIssueType[]>).result
-    setPinnedList(pinned)
-  }
-  const filterIssueList = () => {
-    switch (taskCategory) {
-      case PROJECT_SIDEBAR_TASK_ALL:
-        return issueList
-      case PROJECT_SIDEBAR_TASK_MY:
-        return issueList?.filter((data) => data.issuer.name === myState.name)
-      default:
-        return issueList
-    }
-  }
-
-  const fetchGetColleagues = async () => {
-    const fetchProps: ModuleGetFetchProps = {
-      params: {
-        limit: 10,
-        offset: 0,
-        organizationId: orgId,
-      },
-      fetchUrl: API_URL_COLLEAGUES,
-      header: {
-        Authorization: `Bearer ${accessToken}`,
-        [KEY_X_ORGANIZATION_CODE]: orgCode,
-      },
-    }
-    const res = await moduleGetFetch<ColleagueType[]>(fetchProps)
-    const resList = (res as SuccessResponseType<ColleagueType[]>).result.filter(
-      (data) => data.userId !== myUserId,
-    )
-    setColleague(resList)
-  }
-
   useEffect(() => {
-    void fetchGetColleagues()
     dispatch(changeIssueProjectIdReducer(Number(query.id)))
-    if (projectInfo === null) {
-      void fetchGetProjectDetail()
-    }
-
-    if (projectInfo !== null) {
-      void fetchGetIssueList()
-      void fetchGetIssuePinnedList()
-    }
-    const moduleProps: ModuleCheckUserStateProps = {
-      useRouter: router,
-      token: accessToken,
-      setToken: setAccessToken,
-      completeState: loginCompleteState,
-      isCheckInterval: true,
-    }
-    moduleCheckUserState(moduleProps)
     setKeyForProjectDetailHub((prevKey) => prevKey + 1)
     filterIssueList()
-  }, [rerender, issueList?.length, taskCategory])
+  }, [taskCategory])
+
+  useEffect(() => {
+    if (projectDetail !== undefined) void refetch()
+  }, [projectDetail])
+
+  useEffect(() => {
+    moduleCheckUserState({ loginCompleteState, router, accessToken, setAccessToken })
+  }, [accessToken])
   return (
     <main className="w-10/12 max-w-7xl 2xl:w-2/3 h-4/5 flex flex-col items-center ">
-      {projectInfo !== null ? (
+      {defineProjectDetail() !== null ? (
         <>
-          <ProjectDetailTab projectInfo={projectInfo} colleague={colleague} />
+          <ProjectDetailTab projectInfo={defineProjectDetail()} colleague={defineColleague()} />
           <ProjectDetailHub
             key={keyForProjectDetailHub}
-            projectInfo={projectInfo}
-            issueList={issueList}
-            pinnedList={pinnedList}
+            projectInfo={defineProjectDetail()}
+            issueList={defineIssueList()}
+            pinnedList={definePinnedList()}
           />
         </>
       ) : (

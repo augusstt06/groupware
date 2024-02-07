@@ -1,11 +1,11 @@
 'use client'
 import { useEffect, useState } from 'react'
 
+import { useQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 
 import MainHub from '../component/page/main/hub/MainHub'
 import {
-  API_SUCCESS_CODE,
   FALSE,
   KEY_ACCESS_TOKEN,
   KEY_LOGIN_COMPLETE,
@@ -35,8 +35,6 @@ import { updateLoginCompleteReducer } from '../store/reducers/maintain/maintainR
 import {
   type ApiResponseType,
   type CustomDecodeTokenType,
-  type FailResponseType,
-  type ModuleCheckUserStateProps,
   type ModuleGetFetchProps,
   type SuccessResponseType,
 } from '../types/moduleTypes'
@@ -44,8 +42,8 @@ import {
 export default function Main() {
   const dispatch = useAppDispatch()
   const router = useRouter()
-  const [accessToken, setAccessToken] = useState(moduleGetCookie(KEY_ACCESS_TOKEN))
   const loginCompleteState = useAppSelector((state) => state.maintain[KEY_LOGIN_COMPLETE])
+  const [accessToken, setAccessToken] = useState(moduleGetCookie(KEY_ACCESS_TOKEN))
   const decodeToken = moduleDecodeToken(accessToken)
 
   const accessTokenTime = Number((decodeToken as CustomDecodeTokenType).exp)
@@ -55,71 +53,71 @@ export default function Main() {
       ? (decodeToken as CustomDecodeTokenType).uuid
       : ERR_COOKIE_NOT_FOUND
 
-  const getFetchUserProps: ModuleGetFetchProps = {
-    params: {
-      [KEY_UUID]: uuid,
+  const { error, data } = useQuery<SuccessResponseType<ApiResponseType>>({
+    queryKey: ['users'],
+    queryFn: async () => {
+      const getFetchUserProps: ModuleGetFetchProps = {
+        params: {
+          [KEY_UUID]: uuid,
+        },
+        fetchUrl: API_URL_GET_USERS,
+        header: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+      const res = await moduleGetFetch<ApiResponseType>(getFetchUserProps)
+      return res as SuccessResponseType<ApiResponseType>
     },
-    fetchUrl: API_URL_GET_USERS,
-    header: {
-      Authorization: `Bearer ${accessToken}`,
-    },
+  })
+
+  const successFetchUserInfo = () => {
+    const userFetchData = data as SuccessResponseType<ApiResponseType>
+    const extraInfoProps = {
+      name: userFetchData.result.name,
+      email: userFetchData.result.email,
+      position: userFetchData.result.position,
+      userId: userFetchData.result.userId,
+      organizationId: userFetchData.result.organizationId,
+      organizationName: userFetchData.result.organizationName,
+    }
+    const userProps = {
+      [KEY_X_ORGANIZATION_CODE]: userFetchData.result.organizationCode as string,
+      [KEY_UUID]: userFetchData.result[KEY_UUID] as string,
+    }
+    const attendanceProps = {
+      status: userFetchData.result.attendanceStatus as string,
+      time: attendanceTime,
+    }
+    dispatch(updateExtraUserInfoReducer(extraInfoProps))
+    dispatch(updateUserInfoReducer(userProps))
+    dispatch(updateAttendanceStatusReducer(attendanceProps))
   }
 
-  const fetchGetUsers = async () => {
-    try {
-      const res = await moduleGetFetch<ApiResponseType>(getFetchUserProps)
-      if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)
-
-      const successRes = res as SuccessResponseType<ApiResponseType>
-      const extraUserInfoReducerProps = {
-        name: successRes.result.name,
-        email: successRes.result.email,
-        position: successRes.result.position,
-        userId: successRes.result.userId,
-        organizationId: successRes.result.organizationId,
-        organizationName: successRes.result.organizationName,
-      }
-      const userReducerProps = {
-        [KEY_X_ORGANIZATION_CODE]: successRes.result.organizationCode as string,
-        [KEY_UUID]: successRes.result[KEY_UUID] as string,
-      }
-      const attendanceReducerProps = {
-        status: successRes.result.attendanceStatus as string,
-        time: attendanceTime,
-      }
-      dispatch(updateExtraUserInfoReducer(extraUserInfoReducerProps))
-      dispatch(updateUserInfoReducer(userReducerProps))
-      dispatch(updateAttendanceStatusReducer(attendanceReducerProps))
-    } catch (err) {
-      if (err instanceof Error) {
-        switch (err.message) {
-          case ERR_ORG_NOT_FOUND:
-            dispatch(updateLoginCompleteReducer(FALSE))
-            router.push(ROUTE_ERR_NOT_FOUND_ORG_TOKEN)
-            break
-          default:
-            dispatch(updateLoginCompleteReducer(FALSE))
-            moduleDeleteCookies(KEY_ACCESS_TOKEN)
-        }
-      }
+  const failFetchUserInfo = () => {
+    switch (error?.message) {
+      case ERR_ORG_NOT_FOUND:
+        dispatch(updateLoginCompleteReducer(FALSE))
+        router.push(ROUTE_ERR_NOT_FOUND_ORG_TOKEN)
+        break
+      default:
+        dispatch(updateLoginCompleteReducer(FALSE))
+        moduleDeleteCookies(KEY_ACCESS_TOKEN)
     }
   }
 
   useEffect(() => {
-    if (checkTokenExpired(accessTokenTime)) {
-      void moduleRefreshToken(accessToken)
-    }
-    const moduleProps: ModuleCheckUserStateProps = {
-      useRouter: router,
-      token: accessToken,
-      setToken: setAccessToken,
-      isCheckInterval: true,
-      completeState: loginCompleteState,
-      fetchFunc: fetchGetUsers,
-    }
-    moduleCheckUserState(moduleProps)
-  }, [accessToken])
+    if (data !== undefined) successFetchUserInfo()
+  }, [accessToken, data])
 
+  useEffect(() => {
+    if (error !== null) failFetchUserInfo()
+  }, [error])
+
+  // FIXME: 동작 확인하기
+  if (checkTokenExpired(accessTokenTime)) {
+    void moduleRefreshToken(accessToken)
+  }
+  moduleCheckUserState({ loginCompleteState, router, accessToken, setAccessToken })
   return (
     <main className="w-full 2xl:w-2/3 h-4/5 flex flex-col items-center">
       <MainHub title={MAIN_CARD_TODO} />

@@ -1,6 +1,10 @@
+// React query로 서버상태와 클라이언트 상태 로직분리
+
 'use client'
 import './globals.css'
 
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { usePathname } from 'next/navigation'
 
 import GlobalNavigationbar from './component/ui/Navigationbar/GlobalNavigationbar'
@@ -11,6 +15,7 @@ import CustomThemeProvider from './providers/themeProvider'
 import { type ReactProps } from './types/pageTypes'
 
 export default function RootLayout({ children }: ReactProps) {
+  const queryClient = new QueryClient()
   const pathname = usePathname()
   const shouldSidebarVisible = () => {
     let extractedString: string
@@ -34,14 +39,17 @@ export default function RootLayout({ children }: ReactProps) {
   return (
     <html lang="en" suppressHydrationWarning={true}>
       <body className="font-mono dark:bg-[#121212] bg-[#fbfbfd]">
-        <ReduxProvider>
-          <CustomThemeProvider>
-            <GlobalNavigationbar />
-            {shouldSidebarVisible() ?? false ? <Sidebar /> : <></>}
-            <div className={bodyClassName}>{children}</div>
-            <div id="modal"></div>
-          </CustomThemeProvider>
-        </ReduxProvider>
+        <QueryClientProvider client={queryClient}>
+          <ReactQueryDevtools initialIsOpen={true} />
+          <ReduxProvider>
+            <CustomThemeProvider>
+              <GlobalNavigationbar />
+              {shouldSidebarVisible() ?? false ? <Sidebar /> : <></>}
+              <div className={bodyClassName}>{children}</div>
+              <div id="modal"></div>
+            </CustomThemeProvider>
+          </ReduxProvider>
+        </QueryClientProvider>
       </body>
     </html>
   )
