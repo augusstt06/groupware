@@ -161,3 +161,7 @@ export const MODAL_BTN_SAVE = '저장'
 export const MODAL_CREATE_PROJECT_ISSUE = 'project-issue'
 export const MODAL_INVITE_MEMBER_IN_PROJECT = 'invite-member'
 export const MODAL_CRAETE_PROJECT = 'create-project'
+
+// invite
+export const INVITE_PROJECT = 'project'
+export const INVITE_TEAM = 'team'

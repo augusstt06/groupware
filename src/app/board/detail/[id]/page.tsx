@@ -19,6 +19,7 @@ import {
 } from '@/app/constant/constant'
 import { errDefault } from '@/app/constant/errorMsg'
 import {
+  API_URL_COMMENT_POSTING,
   API_URL_POSTINGS,
   API_URL_POSTINGS_LIKE,
   API_URL_POSTINGS_UNLIKE,
@@ -247,7 +248,8 @@ export default function BoardDetail() {
                   <Comment
                     comments={data}
                     postingID={postingData?.result.id}
-                    doRerender={doRerender}
+                    url={API_URL_COMMENT_POSTING}
+                    refetch={refetch}
                   />
                 </div>
               ))}
@@ -256,7 +258,8 @@ export default function BoardDetail() {
               <WriteComment
                 postingID={postingData?.result.id}
                 parentID={null}
-                doRerender={doRerender}
+                url={API_URL_COMMENT_POSTING}
+                refetch={refetch}
               />
             </div>
             {isModalOpen ? <BoardWriteModal currentBoard={null} /> : <></>}

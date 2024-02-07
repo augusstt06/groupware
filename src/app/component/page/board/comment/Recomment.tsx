@@ -53,7 +53,6 @@ export default function Recomment(props: CommentProps) {
     try {
       const res = await moduleDeleteFetch<ApiResponseType>(fetchDeleteCommentProps)
       if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)
-      props.doRerender()
     } catch (err) {}
   }
   const clickDeleteComment = () => {
@@ -75,7 +74,6 @@ export default function Recomment(props: CommentProps) {
       const res = await modulePostFetch<ApiResponseType>(fetchPostLikeProps)
       if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)
       dispatch(addCommentLikeReducer(props.comments.id))
-      props.doRerender()
     } catch (err) {}
   }
   const fetchDeleteLikeProps: ModuleGetFetchProps = {
@@ -93,7 +91,6 @@ export default function Recomment(props: CommentProps) {
       const res = await moduleDeleteFetch<ApiResponseType>(fetchDeleteLikeProps)
       if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)
       dispatch(deleteCommentLikeReducer(props.comments.id))
-      props.doRerender()
     } catch (err) {}
   }
 
@@ -151,9 +148,10 @@ export default function Recomment(props: CommentProps) {
       </div>
       {isWriteComment ? (
         <WriteComment
+          url={props.url}
           postingID={props.postingID}
           parentID={props.comments.id}
-          doRerender={props.doRerender}
+          refetch={props.refetch}
         />
       ) : (
         <></>
@@ -162,9 +160,10 @@ export default function Recomment(props: CommentProps) {
         props.comments.childComments.map((data) => (
           <div className="" key={data.content}>
             <Recomment
+              url={props.url}
+              refetch={props.refetch}
               comments={data}
               postingID={props.postingID}
-              doRerender={props.doRerender}
               mention={{ isMention: true, parentName: props.comments.name }}
             />
           </div>

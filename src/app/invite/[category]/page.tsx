@@ -6,7 +6,7 @@
 import { useRef, useState } from 'react'
 
 import { useMutation } from '@tanstack/react-query'
-// import { usePathname, useSearchParams } from 'next/navigation'
+import { usePathname, useSearchParams } from 'next/navigation'
 import { AiOutlineMail } from 'react-icons/ai'
 import { IoMdEye, IoMdEyeOff } from 'react-icons/io'
 import { RiLockPasswordFill } from 'react-icons/ri'
@@ -14,24 +14,47 @@ import { RiLockPasswordFill } from 'react-icons/ri'
 import Button from '../../component/ui/button/Button'
 import ModalHub from '../../component/ui/modal/Modal'
 import InviteLoginModal from '../../component/ui/modal/invite/InviteLoginModal'
-import { KEY_ACCESS_TOKEN, REGISTER_EMAIL, REGISTER_PWD, TRUE } from '../../constant/constant'
+import {
+  INVITE_PROJECT,
+  INVITE_TEAM,
+  KEY_ACCESS_TOKEN,
+  KEY_UUID,
+  KEY_X_ORGANIZATION_CODE,
+  REGISTER_EMAIL,
+  REGISTER_PWD,
+  TRUE,
+} from '../../constant/constant'
 import { ERR_COOKIE_NOT_FOUND } from '../../constant/errorMsg'
-import { API_URL_LOGIN } from '../../constant/route/api-route-constant'
+import {
+  API_URL_GET_USERS,
+  API_URL_LOGIN,
+  API_URL_PROJECT_JOIN,
+} from '../../constant/route/api-route-constant'
 import useInput from '../../module/hooks/reactHooks/useInput'
-import { useAppDispatch } from '../../module/hooks/reduxHooks'
-import { moduleGetCookie, moduleSetCookies } from '../../module/utils/moduleCookie'
-import { modulePostFetch } from '../../module/utils/moduleFetch'
+import { useAppDispatch, useAppSelector } from '../../module/hooks/reduxHooks'
+import {
+  moduleDecodeToken,
+  moduleGetCookie,
+  moduleSetCookies,
+} from '../../module/utils/moduleCookie'
+import { moduleGetFetch, modulePostFetch } from '../../module/utils/moduleFetch'
 import { updateLoginCompleteReducer } from '../../store/reducers/maintain/maintainReducer'
 import {
+  type ApiResponseType,
+  type CustomDecodeTokenType,
   type DialogBtnValueType,
   type LoginResponseType,
+  type ModuleGetFetchProps,
   type SuccessResponseType,
 } from '../../types/moduleTypes'
 import { type DialogTextType } from '../../types/variableTypes'
 
+import { updateUserInfoReducer } from '@/app/store/reducers/main/userInfoReducer'
+import { type AccessInviteProps, type InviteLoginProps } from '@/app/types/pageTypes'
+
 export default function Invite() {
-  // const pathname = usePathname()
-  // const param = useSearchParams().get('token')
+  const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
+  const joinToken = useSearchParams().get('token') as string
   const dispatch = useAppDispatch()
   const emailInput = useInput('')
   const pwdInput = useInput('')
@@ -62,6 +85,25 @@ export default function Invite() {
     setIsLoginModalOpen(!isLoginModalOpen)
   }
 
+  const fetchJoin = async () => {
+    const fetchProps: ModuleGetFetchProps = {
+      params: {
+        token: joinToken,
+      },
+      fetchUrl: API_URL_PROJECT_JOIN,
+      header: {
+        Authorization: `Bearer ${accessToken}`,
+        [KEY_X_ORGANIZATION_CODE]: orgCode,
+      },
+    }
+    // console.log(fetchProps, 'props')
+    await moduleGetFetch<string>(fetchProps)
+    // console.log(res)
+  }
+  const handleClickJoin = () => {
+    void fetchJoin()
+  }
+
   const { mutate: login } = useMutation({
     mutationKey: ['invite-login'],
     mutationFn: async () => {
@@ -74,10 +116,36 @@ export default function Invite() {
       })
       return res as SuccessResponseType<LoginResponseType>
     },
-    onSuccess: (data) => {
+    onSuccess: async (data) => {
       const accessToken = data.result.accessToken
+      const decodeToken = moduleDecodeToken(accessToken)
+      const uuid =
+        decodeToken !== ERR_COOKIE_NOT_FOUND
+          ? (decodeToken as CustomDecodeTokenType).uuid
+          : ERR_COOKIE_NOT_FOUND
       moduleSetCookies({ [KEY_ACCESS_TOKEN]: accessToken })
       dispatch(updateLoginCompleteReducer(TRUE))
+      const getUserInfo = async () => {
+        const getFetchUserProps: ModuleGetFetchProps = {
+          params: {
+            [KEY_UUID]: uuid,
+          },
+          fetchUrl: API_URL_GET_USERS,
+          header: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+        const res = await moduleGetFetch<ApiResponseType>(getFetchUserProps)
+        return res as SuccessResponseType<ApiResponseType>
+      }
+
+      const userInfo = await getUserInfo()
+      dispatch(
+        updateUserInfoReducer({
+          [KEY_X_ORGANIZATION_CODE]: userInfo.result.organizationCode as string,
+          [KEY_UUID]: userInfo.result[KEY_UUID] as string,
+        }),
+      )
       handleLoginModal()
     },
     onError: () => {
@@ -161,22 +229,49 @@ export default function Invite() {
 
   return (
     <div>
-      {isLogin() ? <AccessInvite /> : <InviteLogin handleLoginModal={handleLoginModal} />}
+      {isLogin() ? (
+        <AccessInvite join={handleClickJoin} />
+      ) : (
+        <InviteLogin handleLoginModal={handleLoginModal} />
+      )}
       {renderModal()}
     </div>
   )
 }
 
-export function AccessInvite() {
+function AccessInvite(props: AccessInviteProps) {
+  const { join } = props
+  const pathname = usePathname().split('/').slice(2).join('/')
+  const inviteCategory = () => {
+    switch (pathname) {
+      case INVITE_PROJECT:
+        return '프로젝트'
+      case INVITE_TEAM:
+        return '팀'
+    }
+  }
+
   return (
     <div className="grid h-screen px-4 place-content-center">
       <h1 className="tracking-widest text-gray-600 dark:text-gray-400 font-bold uppercase">
-        초대에 응하기 전에 로그인이 필요합니다.
+        {inviteCategory()}에 초대받았습니다.
       </h1>
+      <div className="flex flex-row items-center  justify-around">
+        <Button
+          buttonContent="가입"
+          className="mt-5 font-bold bg-indigo-400 hover:bg-indigo-700 text-white hover:text-white focus:outline-none rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 transition ease-in-out duration-500"
+          onClick={join}
+        />
+        <Button
+          buttonContent="거절"
+          className="mt-5 font-bold bg-red-400 hover:bg-red-500 text-white hover:text-white focus:outline-none rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 transition ease-in-out duration-500"
+          onClick={() => {}}
+        />
+      </div>
     </div>
   )
 }
-export function InviteLogin(props: { handleLoginModal: () => void }) {
+function InviteLogin(props: InviteLoginProps) {
   const { handleLoginModal } = props
   return (
     <div className="grid h-screen px-4 place-content-center">

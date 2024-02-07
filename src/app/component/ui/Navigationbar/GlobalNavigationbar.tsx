@@ -19,7 +19,7 @@ import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
 
 export default function GlobalNavigationbar() {
   const pathname = usePathname()
-  const isRender = !pathname.startsWith('/err') && pathname.startsWith('/err')
+  const isRender = !pathname.startsWith('/err') && !pathname.startsWith('/invite')
 
   const [isConfirmOpen, setIsConfirmOpen] = useState(false)
   const [confirmValue, setConfirmValue] = useState(false)

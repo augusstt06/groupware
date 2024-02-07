@@ -1,10 +1,11 @@
 'use client'
+
 import { useQuery } from '@tanstack/react-query'
 import { useParams, useRouter } from 'next/navigation'
 import { IoIosArrowBack } from 'react-icons/io'
 
 // import Comment from '@/app/component/page/board/comment/Comment'
-// import WriteComment from '@/app/component/page/board/comment/WriteComment'
+import WriteComment from '@/app/component/page/board/comment/WriteComment'
 import ProjectScheduleDeatil from '@/app/component/page/project/hub/detail/issue/ProjectScheduleDetail'
 import ProjectTaskDetail from '@/app/component/page/project/hub/detail/issue/ProjectTaskDetail'
 import {
@@ -13,7 +14,10 @@ import {
   PROJECT_ISSUE_SCHEDULE_VALUE,
   PROJECT_ISSUE_TASK_VALUE,
 } from '@/app/constant/constant'
-import { API_URL_PROJECT_ISSUE } from '@/app/constant/route/api-route-constant'
+import {
+  API_URL_COMMENT_ISSUES,
+  API_URL_PROJECT_ISSUE,
+} from '@/app/constant/route/api-route-constant'
 import { ROUTE_PROJECT } from '@/app/constant/route/route-constant'
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
@@ -30,7 +34,7 @@ export default function ProjectIssueDetail() {
   const goProjectIssue = () => {
     router.push(ROUTE_PROJECT)
   }
-  const { data: issueDetail } = useQuery({
+  const { data: issueDetail, refetch } = useQuery({
     queryKey: ['issue-detail'],
     queryFn: async () => {
       const res = await moduleGetFetch<IssueDatailType>({
@@ -81,7 +85,12 @@ export default function ProjectIssueDetail() {
             </div>
           </div>
           <div>
-            {/* <WriteComment postingID={content.id} parentID={null} doRerender={setRerender} /> */}
+            <WriteComment
+              postingID={issueDetail?.id}
+              parentID={null}
+              refetch={refetch}
+              url={API_URL_COMMENT_ISSUES}
+            />
           </div>
         </div>
       )}
