@@ -1,6 +1,7 @@
 // React query로 서버상태와 클라이언트 상태 로직분리
 
 'use client'
+
 import './globals.css'
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
@@ -36,6 +37,7 @@ export default function RootLayout({ children }: ReactProps) {
 
   const bodyClassName =
     shouldSidebarVisible() === true ? 'pt-36 md:ml-52 2xl:ml-30 p-2 flex justify-center' : ''
+
   return (
     <html lang="en" suppressHydrationWarning={true}>
       <body className="font-mono dark:bg-[#121212] bg-[#fbfbfd]">

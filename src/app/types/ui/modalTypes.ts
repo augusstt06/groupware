@@ -84,3 +84,26 @@ export type InviteLoginModalProps = {
     tailLabelContent: JSX.Element
   }>
 }
+
+export type SchedulePlaceProps = {
+  schedulePlace: string
+  setSelectedPlace: Dispatch<SetStateAction<SearchType | null>>
+}
+export type SearchType = {
+  address_name: string
+  category_group_code: string
+  category_group_name: string
+  category_name: string
+  distance: string
+  id: string
+  phone: string
+  place_name: string
+  place_url: string
+  road_address_name: string
+  x: string
+  y: string
+}
+export type KakaoMapProps = {
+  searchData: SearchType[]
+  setSelectedPlace: Dispatch<SetStateAction<SearchType | null>>
+}

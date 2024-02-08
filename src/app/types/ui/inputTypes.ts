@@ -20,6 +20,7 @@ export type InputGroupProps = {
   isTailLabel: boolean
   tailLabelContent?: React.ReactNode
   headLabelContent?: React.ReactNode
+  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void
   className: string
 }
 

@@ -1,3 +1,6 @@
+// kakao
+export const API_URL_KAKAO_MAP = process.env.NEXT_PUBLIC_KAKAO_MAP_API_URL
+
 // colleagues
 export const API_URL_COLLEAGUES = process.env.NEXT_PUBLIC_COLLEAGUES_SOURCE as string
 
