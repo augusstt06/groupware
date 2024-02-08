@@ -1,6 +1,5 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
-import { useQuery } from '@tanstack/react-query'
 import { FaSearch } from 'react-icons/fa'
 
 import InputWithLabel from '@/app/component/ui/input/InputWithLabel'
@@ -15,41 +14,47 @@ import {
 } from '@/app/types/ui/modalTypes'
 
 export default function SchedulePlace(props: SchedulePlaceProps) {
+  const [searchInput, setSearchInput] = useState<SearchType[]>([])
   const { setSelectedPlace, schedulePlace } = props
   const place = useInput(schedulePlace)
 
-  const { data: searchData, refetch } = useQuery({
-    queryKey: ['search-place'],
-    queryFn: async () => {
-      if (place.value !== '') {
-        const res = await moduleKaKaoGetFetch({
-          params: {
-            query: place.value,
-          },
-          fetchUrl: API_URL_KAKAO_MAP,
-          header: {
-            Authorization: `KakaoAK ${KAKAO_AUTH_KEY}`,
-          },
-        })
-        return res.documents
-      }
-      return []
-    },
-  })
+  const handleClickSearch = async () => {
+    const res = await moduleKaKaoGetFetch({
+      params: {
+        query: place.value,
+      },
+      fetchUrl: API_URL_KAKAO_MAP,
+      header: {
+        Authorization: `KakaoAK ${KAKAO_AUTH_KEY}`,
+      },
+    })
+    setSearchInput(res.documents)
+  }
 
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      void handleClickSearch()
+    }
+  }
   const tailLabel = (
-    <div className="cursor-pointer w-1/6 flex items-center justify-center trasition duration-500 ease-in-out hover:scale-110">
+    <div
+      className="cursor-pointer w-1/6 flex items-center justify-center trasition duration-500 ease-in-out hover:scale-110 "
+      onClick={() => {
+        void handleClickSearch()
+      }}
+    >
       <FaSearch className="w-4 h-4" />
     </div>
   )
-  useEffect(() => {
-    void refetch()
-  }, [place.value])
 
+  const isRenderMap = () => {
+    return place.value !== '' && searchInput.length !== 0
+  }
   return (
     <div className="flex flex-col items-center justify-center">
       <div className="mt-4 mb-4 flex flex-row items-center justify-center border-2 border-gray-300 rounded-full w-1/2 truncate">
         <InputWithLabel
+          onKeyDown={handleKeyPress}
           title=""
           isHeadLabel={false}
           type="text"
@@ -61,8 +66,8 @@ export default function SchedulePlace(props: SchedulePlaceProps) {
         />
       </div>
 
-      {place.value !== '' && searchData !== undefined ? (
-        <KaKaoMap searchData={searchData as SearchType[]} setSelectedPlace={setSelectedPlace} />
+      {isRenderMap() ? (
+        <KaKaoMap searchData={searchInput} setSelectedPlace={setSelectedPlace} />
       ) : null}
     </div>
   )
