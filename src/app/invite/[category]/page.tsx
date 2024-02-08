@@ -6,7 +6,7 @@
 import { useRef, useState } from 'react'
 
 import { useMutation } from '@tanstack/react-query'
-import { usePathname, useSearchParams } from 'next/navigation'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { AiOutlineMail } from 'react-icons/ai'
 import { IoMdEye, IoMdEyeOff } from 'react-icons/io'
 import { RiLockPasswordFill } from 'react-icons/ri'
@@ -15,6 +15,7 @@ import Button from '../../component/ui/button/Button'
 import ModalHub from '../../component/ui/modal/Modal'
 import InviteLoginModal from '../../component/ui/modal/invite/InviteLoginModal'
 import {
+  API_SUCCESS_CODE,
   INVITE_PROJECT,
   INVITE_TEAM,
   KEY_ACCESS_TOKEN,
@@ -49,11 +50,18 @@ import {
 } from '../../types/moduleTypes'
 import { type DialogTextType } from '../../types/variableTypes'
 
-import { updateUserInfoReducer } from '@/app/store/reducers/main/userInfoReducer'
+import { ROUTE_PROJECT } from '@/app/constant/route/route-constant'
+import {
+  updateAttendanceStatusReducer,
+  updateExtraUserInfoReducer,
+  updateUserInfoReducer,
+} from '@/app/store/reducers/main/userInfoReducer'
 import { type AccessInviteProps, type InviteLoginProps } from '@/app/types/pageTypes'
 
 export default function Invite() {
+  const router = useRouter()
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
+  const attendanceTime = useAppSelector((state) => state.userInfo.attendance.time)
   const joinToken = useSearchParams().get('token') as string
   const dispatch = useAppDispatch()
   const emailInput = useInput('')
@@ -96,9 +104,16 @@ export default function Invite() {
         [KEY_X_ORGANIZATION_CODE]: orgCode,
       },
     }
-    // console.log(fetchProps, 'props')
-    await moduleGetFetch<string>(fetchProps)
-    // console.log(res)
+    const res = await moduleGetFetch<string>(fetchProps)
+    if (res.status !== API_SUCCESS_CODE) {
+      setDialogText({
+        main: '조직 가입 승인에 실패했습니다.',
+        sub: '다시 시도해 주세요.',
+      })
+      loginDialogRef.current?.showModal()
+      return
+    }
+    router.push(ROUTE_PROJECT)
   }
   const handleClickJoin = () => {
     void fetchJoin()
@@ -140,6 +155,20 @@ export default function Invite() {
       }
 
       const userInfo = await getUserInfo()
+      const extraInfoProps = {
+        name: userInfo.result.name,
+        email: userInfo.result.email,
+        position: userInfo.result.position,
+        userId: userInfo.result.userId,
+        organizationId: userInfo.result.organizationId,
+        organizationName: userInfo.result.organizationName,
+      }
+      const attendanceProps = {
+        status: userInfo.result.attendanceStatus as string,
+        time: attendanceTime,
+      }
+      dispatch(updateExtraUserInfoReducer(extraInfoProps))
+      dispatch(updateAttendanceStatusReducer(attendanceProps))
       dispatch(
         updateUserInfoReducer({
           [KEY_X_ORGANIZATION_CODE]: userInfo.result.organizationCode as string,
