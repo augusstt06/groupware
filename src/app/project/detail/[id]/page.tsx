@@ -393,6 +393,11 @@ export default function ProjectDetail() {
     },
   })
 
+  const unInviteMember = () => {
+    const projectMembersIds = defineProjectDetail()?.members.map((member) => member.id) as number[]
+    return defineColleague().filter((colleague) => !projectMembersIds.includes(colleague.userId))
+  }
+
   const modalList = [
     {
       onClose: handleCloseCreateIssueModal,
@@ -410,7 +415,7 @@ export default function ProjectDetail() {
       isModalOpen: isInviteModalOpen,
       childComponent: (
         <InviteProjectMemberModal
-          colleague={defineColleague()}
+          colleague={unInviteMember()}
           inviteList={inviteList}
           setInviteList={setInviteList}
         />

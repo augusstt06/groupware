@@ -11,6 +11,7 @@ import { type ColleagueType } from '@/app/types/variableTypes'
 
 export default function InviteProjectMemberModal(props: InviteProjectMemberModalProps) {
   const { colleague, inviteList, setInviteList } = props
+
   const handleInviteUser = (user: ColleagueType) => {
     if (!inviteList.some((data) => data.userId === user.userId)) {
       setInviteList((prev) => [...prev, user])
