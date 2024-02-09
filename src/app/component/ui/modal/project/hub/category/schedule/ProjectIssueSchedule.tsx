@@ -34,6 +34,7 @@ import {
   changeIssueDescriptionReducer,
   changeIssueEndAtReducer,
   changeIssueEndAtTimeReducer,
+  changeIssuePlaceReducer,
   changeIssueStartAtReducer,
   changeIssueStartAtTimeReducer,
   changeIssueTitleReducer,
@@ -78,6 +79,7 @@ export default function ProjectIssueSchedule() {
   const handlePlaceSelection = () => {
     if (selectedPlace != null) {
       setSchedulePlace(selectedPlace.place_name)
+      dispatch(changeIssuePlaceReducer(selectedPlace.place_name))
       handlePlaceModal()
     }
   }

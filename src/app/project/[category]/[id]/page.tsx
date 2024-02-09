@@ -26,6 +26,7 @@ import { type SuccessResponseType } from '@/app/types/moduleTypes'
 import { type IssueDatailType } from '@/app/types/variableTypes'
 
 export default function ProjectIssueDetail() {
+  // FIXME: detila response에 장소도 있어야함
   const router = useRouter()
   const query = useParams()
   const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
