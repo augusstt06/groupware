@@ -92,6 +92,7 @@ export type ProjectResponseType = {
   teamId: number
   updatedAt: string
   members: Array<{
+    name: string
     id: number
     uuid: string
     email: string
