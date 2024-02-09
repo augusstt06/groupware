@@ -86,6 +86,7 @@ export default function ProjectDetail() {
     sub: '',
   })
   const [inviteList, setInviteList] = useState<ColleagueType[]>([])
+  const [filterIssueList, setFilterIssueList] = useState<ProjectIssueType[] | null>()
   const loginCompleteState = useAppSelector((state) => state.maintain[KEY_LOGIN_COMPLETE])
   const [keyForProjectDetailHub, setKeyForProjectDetailHub] = useState(0)
   const isCreateProjectIssueModalOpen = useAppSelector(
@@ -275,7 +276,7 @@ export default function ProjectDetail() {
     },
   })
 
-  const { data: issueList, refetch } = useQuery({
+  const { refetch } = useQuery({
     queryKey: ['issue-list'],
     queryFn: async () => {
       const res = await moduleGetFetch<ProjectIssueResponseType>({
@@ -291,15 +292,39 @@ export default function ProjectDetail() {
           [KEY_X_ORGANIZATION_CODE]: orgCode,
         },
       })
+      const resIssueList = res as SuccessResponseType<ProjectIssueResponseType>
+      switch (taskCategory) {
+        case PROJECT_SIDEBAR_TASK_ALL:
+          setFilterIssueList(resIssueList.result.data)
+          break
+        case PROJECT_SIDEBAR_TASK_MY:
+          setFilterIssueList(
+            resIssueList.result.data.filter((data) => data.issuer.name === myState.name),
+          )
+          break
+        default:
+          setFilterIssueList(resIssueList.result.data)
+          break
+      }
       return res as SuccessResponseType<ProjectIssueResponseType>
     },
     enabled: !isLoading,
   })
 
-  const defineIssueList = () => {
-    if (issueList !== undefined) return issueList.result.data
-    return null
-  }
+  // const fidlterIssueList = () => {
+  //   switch (taskCategory) {
+  //     case PROJECT_SIDEBAR_TASK_ALL:
+  //       return issueList
+  //     case PROJECT_SIDEBAR_TASK_MY:
+  //       return issueList?.result.data?.filter((data) => data.issuer.name === myState.name)
+  //     default:
+  //       return issueList
+  //   }
+  // }
+  // const defineIssueList = () => {
+  //   if (issueList !== undefined) return issueList.result.data
+  //   return null
+  // }
 
   const { data: issuePinnedList } = useQuery({
     queryKey: ['issue-pinned', 'post-issue'],
@@ -321,17 +346,6 @@ export default function ProjectDetail() {
   const definePinnedList = () => {
     if (issuePinnedList !== undefined) return issuePinnedList.result
     return null
-  }
-
-  const filterIssueList = () => {
-    switch (taskCategory) {
-      case PROJECT_SIDEBAR_TASK_ALL:
-        return issueList
-      case PROJECT_SIDEBAR_TASK_MY:
-        return defineIssueList()?.filter((data) => data.issuer.name === myState.name)
-      default:
-        return issueList
-    }
   }
 
   const { data: colleague } = useQuery({
@@ -428,7 +442,6 @@ export default function ProjectDetail() {
   useEffect(() => {
     dispatch(changeIssueProjectIdReducer(Number(query.id)))
     setKeyForProjectDetailHub((prevKey) => prevKey + 1)
-    filterIssueList()
   }, [taskCategory])
 
   useEffect(() => {
@@ -446,7 +459,7 @@ export default function ProjectDetail() {
           <ProjectDetailHub
             key={keyForProjectDetailHub}
             projectInfo={projectDetail.result}
-            issueList={defineIssueList()}
+            issueList={filterIssueList !== undefined ? filterIssueList : null}
             pinnedList={definePinnedList()}
           />
         </>
