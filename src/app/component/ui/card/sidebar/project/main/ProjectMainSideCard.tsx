@@ -19,6 +19,7 @@ export default function ProjectMainSideCard() {
       <span className="text-sm">새 프로젝트</span>
     </>
   )
+
   return (
     <>
       <SidebarUserProfileCard />

@@ -60,7 +60,7 @@ export const SIDEBAR_URL_PATH_MAIN = 'main'
 export const SIDEBAR_URL_PATH_BOARD = 'board'
 export const SIDEBAR_URL_PATH_PROJECT = 'project'
 export const SIDEBAR_URL_PATH_PROJECT_DETAIL = 'project/detail'
-
+export const SIDEBAR_URL_PATH_PROJECT_ISSUE_DETAIL = 'project/:category/:id'
 export const MAIN_CARD_TODO = 'TODO'
 
 // Board

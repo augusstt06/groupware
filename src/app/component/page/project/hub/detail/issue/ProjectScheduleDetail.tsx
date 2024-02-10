@@ -34,6 +34,7 @@ import { type DialogTextType, type ScheduleListType } from '@/app/types/variable
 
 export default function ProjectScheduleDeatil(props: ProjectIssueDetailProps) {
   const { issue } = props
+
   const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
 

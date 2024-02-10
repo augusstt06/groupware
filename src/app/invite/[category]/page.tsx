@@ -1,8 +1,5 @@
 'use client'
 
-// 1. accessToken확인
-// 2.
-
 import { useRef, useState } from 'react'
 
 import { useMutation } from '@tanstack/react-query'
@@ -15,7 +12,6 @@ import Button from '../../component/ui/button/Button'
 import ModalHub from '../../component/ui/modal/Modal'
 import InviteLoginModal from '../../component/ui/modal/invite/InviteLoginModal'
 import {
-  API_SUCCESS_CODE,
   INVITE_PROJECT,
   INVITE_TEAM,
   KEY_ACCESS_TOKEN,
@@ -46,6 +42,7 @@ import {
   type DialogBtnValueType,
   type LoginResponseType,
   type ModuleGetFetchProps,
+  type ModulePostFetchProps,
   type SuccessResponseType,
 } from '../../types/moduleTypes'
 import { type DialogTextType } from '../../types/variableTypes'
@@ -93,30 +90,36 @@ export default function Invite() {
     setIsLoginModalOpen(!isLoginModalOpen)
   }
 
-  const fetchJoin = async () => {
-    const fetchProps: ModuleGetFetchProps = {
-      params: {
-        token: joinToken,
-      },
-      fetchUrl: API_URL_PROJECT_JOIN,
-      header: {
-        Authorization: `Bearer ${accessToken}`,
-        [KEY_X_ORGANIZATION_CODE]: orgCode,
-      },
-    }
-    const res = await moduleGetFetch<string>(fetchProps)
-    if (res.status !== API_SUCCESS_CODE) {
+  const { mutate: join } = useMutation({
+    mutationKey: ['join'],
+    mutationFn: async () => {
+      const fetchProps: ModulePostFetchProps = {
+        data: {
+          token: joinToken,
+        },
+        fetchUrl: API_URL_PROJECT_JOIN,
+        header: {
+          Authorization: `Bearer ${accessToken}`,
+          [KEY_X_ORGANIZATION_CODE]: orgCode,
+        },
+      }
+      const res = await modulePostFetch<string>(fetchProps)
+      return res as SuccessResponseType<string>
+    },
+    onSuccess: () => {
+      router.push(ROUTE_PROJECT)
+    },
+    onError: () => {
       setDialogText({
         main: '조직 가입 승인에 실패했습니다.',
         sub: '다시 시도해 주세요.',
       })
       loginDialogRef.current?.showModal()
-      return
-    }
-    router.push(ROUTE_PROJECT)
-  }
+    },
+  })
+
   const handleClickJoin = () => {
-    void fetchJoin()
+    join()
   }
 
   const { mutate: login } = useMutation({
