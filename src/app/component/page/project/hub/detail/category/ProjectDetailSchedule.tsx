@@ -15,6 +15,7 @@ import {
   PROJECT_DETAIL_CATEGORY_SCHEDULE,
   PROJECT_ISSUE_SCHEDULE_VALUE,
   PROJECT_SIDEBAR_SCHEDULE_ALL,
+  PROJECT_SIDEBAR_SCHEDULE_MY,
 } from '@/app/constant/constant'
 import { API_URL_PROJECT_ISSUE_LIST } from '@/app/constant/route/api-route-constant'
 import { ROUTE_PROJECT } from '@/app/constant/route/route-constant'
@@ -35,7 +36,9 @@ import {
 export default function ProjectDetailSchedule() {
   const router = useRouter()
   const query = useParams()
+  const userId = useAppSelector((state) => state.userInfo.extraInfo.userId)
   const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
+  const sidebarTitle = useAppSelector((state) => state.projectDetailCategory.schedule)
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
   const dispatch = useAppDispatch()
   const [scheduleEvent, setScheduleEvent] = useState<FullCalendarEventType[]>([])
@@ -67,7 +70,6 @@ export default function ProjectDetailSchedule() {
     }
   }
 
-  // title 말고 다른 것으로 구분할지 생각
   const isDataInList = (list: FullCalendarEventType[], newData: FullCalendarEventType) => {
     return list.some((item) => item.title === newData.title)
   }
@@ -91,6 +93,13 @@ export default function ProjectDetailSchedule() {
     },
   })
   const successFetchGetScheduleList = () => {
+    switch (sidebarTitle) {
+      case PROJECT_SIDEBAR_SCHEDULE_MY:
+        scheduleList?.filter((data) => data.issuer.id === userId)
+        break
+      default:
+        break
+    }
     scheduleList?.forEach((data) => {
       const scheduleEventProps: FullCalendarEventType = {
         issueId: data.id,
@@ -135,7 +144,7 @@ export default function ProjectDetailSchedule() {
         ]}
         googleCalendarApiKey={GOOGLE_CALENDAR_API_KEY}
         eventClick={(info) => {
-          // FIXME: 클릭 이벤트는 preventDefault()로 막아두었음
+          // 클릭 이벤트는 preventDefault()로 막아두었음
           router.push(`${ROUTE_PROJECT}/schedule/${info.event._def.extendedProps.issueId}`)
           info.jsEvent.preventDefault()
         }}
