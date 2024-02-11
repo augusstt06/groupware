@@ -28,13 +28,13 @@ import {
   PROJECT_CARD_RES_COLOR_YELLOW,
   PROJECT_MAIN_CATEGORY_ALL,
   PROJECT_MAIN_CATEGORY_INCLUDED,
-  PROJECT_MAIN_CATEGORY_STARRED,
+  // PROJECT_MAIN_CATEGORY_STARRED,
 } from '../constant/constant'
 import {
   API_URL_PROJECTS,
   API_URL_PROJECTS_LIST,
   API_URL_PROJECTS_LIST_INCLUDED,
-  API_URL_PROJECTS_LIST_STARRED,
+  // API_URL_PROJECTS_LIST_STARRED,
 } from '../constant/route/api-route-constant'
 import useInput from '../module/hooks/reactHooks/useInput'
 import { useAppDispatch, useAppSelector } from '../module/hooks/reduxHooks'
@@ -63,8 +63,10 @@ export default function Project() {
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
 
   const [accessToken, setAccessToken] = useState(moduleGetCookie(KEY_ACCESS_TOKEN))
+  const orgId = useAppSelector((state) => state.userInfo.extraInfo.organizationId)
   const loginCompleteState = useAppSelector((state) => state.maintain[KEY_LOGIN_COMPLETE])
   const projectCategory = useAppSelector((state) => state.projectMainCategory.selectProjectMenu)
+
   const [projectDialogBtnValue, setProjectDialogBtnValue] = useState<DialogBtnValueType>({
     isCancel: false,
     cancleFunc: () => {},
@@ -95,8 +97,6 @@ export default function Project() {
     setSelectColor(colorName)
   }
 
-  // FIXME: teamID 물어보기
-
   const { mutate: createProject } = useMutation({
     mutationKey: ['create-project'],
     mutationFn: async ({
@@ -110,7 +110,7 @@ export default function Project() {
         data: {
           color: projectColor,
           name: projectTitle,
-          teamId: 1,
+          organizationId: orgId,
         },
         fetchUrl: API_URL_PROJECTS,
         header: {
@@ -172,13 +172,12 @@ export default function Project() {
         return API_URL_PROJECTS_LIST
       case PROJECT_MAIN_CATEGORY_INCLUDED:
         return API_URL_PROJECTS_LIST_INCLUDED
-      case PROJECT_MAIN_CATEGORY_STARRED:
-        return API_URL_PROJECTS_LIST_STARRED
+      // case PROJECT_MAIN_CATEGORY_STARRED:
+      //   return API_URL_PROJECTS_LIST_STARRED
       default:
         return API_URL_PROJECTS_LIST
     }
   }
-  // FIXME: teamID를 얻어올 곳이 없음
   const { data: projectList } = useQuery({
     queryKey: ['project-list', decideFetchUrl(), 'star', 'unstar'],
     queryFn: async () => {
@@ -186,7 +185,7 @@ export default function Project() {
         params: {
           limit: 10,
           offset: 0,
-          teamId: 1,
+          organizationId: orgId,
         },
         fetchUrl: decideFetchUrl(),
         header: {
@@ -197,14 +196,6 @@ export default function Project() {
       return res as SuccessResponseType<ProjectListResponseType>
     },
   })
-
-  const isProjectListEmpty = () => {
-    if (projectList !== undefined) {
-      if (projectList.result.data.length === 0) return true
-      return false
-    }
-    return false
-  }
 
   const modalList = [
     {
@@ -241,7 +232,7 @@ export default function Project() {
 
   return (
     <main className="w-10/12 h-4/5 flex flex-col items-center">
-      {isProjectListEmpty() ? (
+      {projectList === undefined ? (
         <div className="p-5">
           <span className="font-bold">프로젝트가 없습니다.</span>
         </div>

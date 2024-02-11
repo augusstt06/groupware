@@ -128,3 +128,11 @@ export type ProjectDetailMainProps = {
   issueList: ProjectIssueType[] | null
   pinnedList: ProjectIssueType[] | null
 }
+export type InviteProjectMemberTableProps = {
+  memberInfo: {
+    name: string
+    id: number
+    uuid: string
+    email: string
+  }
+}

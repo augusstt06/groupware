@@ -26,6 +26,7 @@ import {
 } from '@/app/constant/constant'
 import {
   API_URL_COLLEAGUES,
+  API_URL_PROJECT_INVITE,
   API_URL_PROJECT_ISSUE,
   API_URL_PROJECT_ISSUE_LIST,
   API_URL_PROJECT_ISSUE_LIST_PINNED,
@@ -71,6 +72,8 @@ export default function ProjectDetail() {
   const [accessToken, setAccessToken] = useState(moduleGetCookie(KEY_ACCESS_TOKEN))
   const orgId = useAppSelector((state) => state.userInfo.extraInfo.organizationId)
   const myUserId = useAppSelector((state) => state.userInfo.extraInfo.userId)
+  const [projectDetailId, setProjectDetailId] = useState<number>(0)
+
   const [projectDialogBtnValue] = useState<DialogBtnValueType>({
     isCancel: false,
     cancleFunc: () => {},
@@ -82,6 +85,8 @@ export default function ProjectDetail() {
     main: '',
     sub: '',
   })
+  const [inviteList, setInviteList] = useState<ColleagueType[]>([])
+  const [filterIssueList, setFilterIssueList] = useState<ProjectIssueType[] | null>()
   const loginCompleteState = useAppSelector((state) => state.maintain[KEY_LOGIN_COMPLETE])
   const [keyForProjectDetailHub, setKeyForProjectDetailHub] = useState(0)
   const isCreateProjectIssueModalOpen = useAppSelector(
@@ -127,6 +132,7 @@ export default function ProjectDetail() {
         fetchProps = {
           data: {
             category: issueState.category,
+            place: issueState.place,
             description: issueState.description,
             endAt: convertDateWithTIme(
               issueState.endAt,
@@ -252,7 +258,7 @@ export default function ProjectDetail() {
 
     postIssue()
   }
-  const { data: projectDetail } = useQuery({
+  const { data: projectDetail, isLoading } = useQuery({
     queryKey: ['project-detail', 'post-issue'],
     queryFn: async () => {
       const res = await moduleGetFetch<ProjectResponseType>({
@@ -265,75 +271,81 @@ export default function ProjectDetail() {
           [KEY_X_ORGANIZATION_CODE]: orgCode,
         },
       })
+      setProjectDetailId((res as SuccessResponseType<ProjectResponseType>).result.id)
       return res as SuccessResponseType<ProjectResponseType>
     },
   })
 
-  const defineProjectDetail = () => {
-    if (projectDetail !== undefined) {
-      return projectDetail.result
-    }
-    return null
-  }
-  const { data: issueList, refetch } = useQuery({
+  const { refetch } = useQuery({
     queryKey: ['issue-list'],
     queryFn: async () => {
-      if (projectDetail !== undefined) {
-        const res = await moduleGetFetch<ProjectIssueResponseType>({
-          params: {
-            projectId: Number(defineProjectDetail()?.id),
-            limit: 10,
-            offset: 0,
-            category: PROJECT_ISSUE_ALL_VALUE.toUpperCase(),
-          },
-          fetchUrl: API_URL_PROJECT_ISSUE_LIST,
-          header: {
-            Authorization: `Bearer ${accessToken}`,
-            [KEY_X_ORGANIZATION_CODE]: orgCode,
-          },
-        })
-        return res as SuccessResponseType<ProjectIssueResponseType>
+      const res = await moduleGetFetch<ProjectIssueResponseType>({
+        params: {
+          projectId: projectDetailId,
+          limit: 10,
+          offset: 0,
+          category: PROJECT_ISSUE_ALL_VALUE.toUpperCase(),
+        },
+        fetchUrl: API_URL_PROJECT_ISSUE_LIST,
+        header: {
+          Authorization: `Bearer ${accessToken}`,
+          [KEY_X_ORGANIZATION_CODE]: orgCode,
+        },
+      })
+      const resIssueList = res as SuccessResponseType<ProjectIssueResponseType>
+      switch (taskCategory) {
+        case PROJECT_SIDEBAR_TASK_ALL:
+          setFilterIssueList(resIssueList.result.data)
+          break
+        case PROJECT_SIDEBAR_TASK_MY:
+          setFilterIssueList(
+            resIssueList.result.data.filter((data) => data.issuer.name === myState.name),
+          )
+          break
+        default:
+          setFilterIssueList(resIssueList.result.data)
+          break
       }
+      return res as SuccessResponseType<ProjectIssueResponseType>
     },
+    enabled: !isLoading,
   })
 
-  const defineIssueList = () => {
-    if (issueList !== undefined) return issueList.result.data
-    return null
-  }
+  // const fidlterIssueList = () => {
+  //   switch (taskCategory) {
+  //     case PROJECT_SIDEBAR_TASK_ALL:
+  //       return issueList
+  //     case PROJECT_SIDEBAR_TASK_MY:
+  //       return issueList?.result.data?.filter((data) => data.issuer.name === myState.name)
+  //     default:
+  //       return issueList
+  //   }
+  // }
+  // const defineIssueList = () => {
+  //   if (issueList !== undefined) return issueList.result.data
+  //   return null
+  // }
 
   const { data: issuePinnedList } = useQuery({
     queryKey: ['issue-pinned', 'post-issue'],
     queryFn: async () => {
-      if (defineProjectDetail() !== null) {
-        const res = await moduleGetFetch<ProjectIssueType[]>({
-          params: {
-            projectId: Number(defineProjectDetail()?.id),
-          },
-          fetchUrl: API_URL_PROJECT_ISSUE_LIST_PINNED,
-          header: {
-            Authorization: `Bearer ${accessToken}`,
-            [KEY_X_ORGANIZATION_CODE]: orgCode,
-          },
-        })
-        return res as SuccessResponseType<ProjectIssueType[]>
-      }
+      const res = await moduleGetFetch<ProjectIssueType[]>({
+        params: {
+          projectId: Number(projectDetailId),
+        },
+        fetchUrl: API_URL_PROJECT_ISSUE_LIST_PINNED,
+        header: {
+          Authorization: `Bearer ${accessToken}`,
+          [KEY_X_ORGANIZATION_CODE]: orgCode,
+        },
+      })
+      return res as SuccessResponseType<ProjectIssueType[]>
     },
+    enabled: !isLoading,
   })
   const definePinnedList = () => {
     if (issuePinnedList !== undefined) return issuePinnedList.result
     return null
-  }
-
-  const filterIssueList = () => {
-    switch (taskCategory) {
-      case PROJECT_SIDEBAR_TASK_ALL:
-        return issueList
-      case PROJECT_SIDEBAR_TASK_MY:
-        return defineIssueList()?.filter((data) => data.issuer.name === myState.name)
-      default:
-        return issueList
-    }
   }
 
   const { data: colleague } = useQuery({
@@ -355,9 +367,46 @@ export default function ProjectDetail() {
       return arr.filter((data) => data.userId !== myUserId)
     },
   })
-  const defineColleague = () => {
-    if (colleague !== undefined) return colleague
-    return []
+
+  const { mutate: invite } = useMutation({
+    mutationKey: ['invite-member'],
+    mutationFn: async () => {
+      const inviteIdList = inviteList.map((data) => data.userId)
+      await modulePostFetch<string>({
+        data: {
+          members: inviteIdList,
+          projectId: projectDetail?.result.id,
+        },
+        fetchUrl: API_URL_PROJECT_INVITE,
+        header: {
+          Authorization: `Bearer ${accessToken}`,
+          [KEY_X_ORGANIZATION_CODE]: orgCode,
+        },
+      })
+    },
+    onSuccess: () => {
+      setDialogText({
+        main: '초대에 성공했습니다.',
+        sub: '',
+      })
+      handleCloseInviteModal()
+    },
+    onError: () => {
+      setDialogText({
+        main: '초대에 실패했습니다.',
+        sub: '',
+      })
+    },
+  })
+
+  const unInviteMember = () => {
+    let projectMembersId: number[] = []
+    if (projectDetail !== undefined) {
+      projectMembersId = projectDetail.result.members.map((member) => member.id)
+    }
+    return colleague !== undefined
+      ? colleague.filter((colleague) => !projectMembersId.includes(colleague.userId))
+      : []
   }
 
   const modalList = [
@@ -375,10 +424,16 @@ export default function ProjectDetail() {
     {
       onClose: handleCloseInviteModal,
       isModalOpen: isInviteModalOpen,
-      childComponent: <InviteProjectMemberModal colleague={defineColleague()} />,
+      childComponent: (
+        <InviteProjectMemberModal
+          colleague={unInviteMember()}
+          inviteList={inviteList}
+          setInviteList={setInviteList}
+        />
+      ),
       name: MODAL_INVITE_MEMBER_IN_PROJECT,
       btnValue: MODAL_BTN_SAVE,
-      confirmFunc: () => {},
+      confirmFunc: invite,
       dialog: dialogRef,
       dialogAlertText: dialogText,
       dialogBtnValue: projectDialogBtnValue,
@@ -387,7 +442,6 @@ export default function ProjectDetail() {
   useEffect(() => {
     dispatch(changeIssueProjectIdReducer(Number(query.id)))
     setKeyForProjectDetailHub((prevKey) => prevKey + 1)
-    filterIssueList()
   }, [taskCategory])
 
   useEffect(() => {
@@ -399,13 +453,13 @@ export default function ProjectDetail() {
   }, [accessToken])
   return (
     <main className="w-10/12 max-w-7xl 2xl:w-2/3 h-4/5 flex flex-col items-center ">
-      {defineProjectDetail() !== null ? (
+      {projectDetail !== undefined ? (
         <>
-          <ProjectDetailTab projectInfo={defineProjectDetail()} colleague={defineColleague()} />
+          <ProjectDetailTab projectInfo={projectDetail.result} colleague={colleague ?? []} />
           <ProjectDetailHub
             key={keyForProjectDetailHub}
-            projectInfo={defineProjectDetail()}
-            issueList={defineIssueList()}
+            projectInfo={projectDetail.result}
+            issueList={filterIssueList !== undefined ? filterIssueList : null}
             pinnedList={definePinnedList()}
           />
         </>

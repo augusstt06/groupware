@@ -19,7 +19,7 @@ import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
 
 export default function GlobalNavigationbar() {
   const pathname = usePathname()
-  const isRender = !pathname.startsWith('/err')
+  const isRender = !pathname.startsWith('/err') && !pathname.startsWith('/invite')
 
   const [isConfirmOpen, setIsConfirmOpen] = useState(false)
   const [confirmValue, setConfirmValue] = useState(false)
@@ -46,6 +46,11 @@ export default function GlobalNavigationbar() {
   const [mount, setMount] = useState(false)
   const dropRef = useRef<HTMLDivElement>(null)
 
+  const isGnbRender = () => {
+    if (mount && loginCompleteState === TRUE && accessToken !== ERR_COOKIE_NOT_FOUND && isRender)
+      return true
+    return false
+  }
   useEffect(() => {
     setIsDropOpen(false)
     setIsUserStateOpen(false)
@@ -58,7 +63,7 @@ export default function GlobalNavigationbar() {
 
   return (
     <>
-      {mount && loginCompleteState === TRUE && accessToken !== ERR_COOKIE_NOT_FOUND && isRender ? (
+      {isGnbRender() ? (
         <nav className="fixed bg-white border-gray-200 dark:bg-[#1a202c] z-999 w-full z-50">
           <div className="flex items-center justify-between max-w-screen-xl mx-auto p-4">
             <Link href="/main" className="flex items-center space-x-3 rtl:space-x-reverse ml-3">

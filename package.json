@@ -45,6 +45,7 @@
     "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "^18",
     "react-icons": "^4.11.0",
+    "react-kakao-maps-sdk": "^1.1.26",
     "react-quill": "^2.0.0",
     "react-redux": "^8.1.3"
   },

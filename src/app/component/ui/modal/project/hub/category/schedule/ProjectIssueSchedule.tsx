@@ -4,6 +4,7 @@ import { type ChangeEvent, useEffect, useRef, useState } from 'react'
 
 import moment from 'moment'
 
+import ModalHub from '../../../../Modal'
 import Dialog, { DialogCalendar } from '../../../../dialog/Dialog'
 import {
   IssueCalendarWithTime,
@@ -12,7 +13,11 @@ import {
   IssueSelect,
 } from '../components/ProjectIssueComponent'
 
+import SchedulePlace from './SchedulePlace'
+
+import Input from '@/app/component/ui/input/Input'
 import {
+  MODAL_BTN_SELECT,
   PROJECT_DATE_FORMAT,
   PROJECT_ISSUE_SCEDULE_END,
   PROJECT_ISSUE_SCEDULE_END_TITLE,
@@ -29,15 +34,21 @@ import {
   changeIssueDescriptionReducer,
   changeIssueEndAtReducer,
   changeIssueEndAtTimeReducer,
+  changeIssuePlaceReducer,
   changeIssueStartAtReducer,
   changeIssueStartAtTimeReducer,
   changeIssueTitleReducer,
 } from '@/app/store/reducers/project/projectIssueReducer'
 import { type DialogBtnValueType } from '@/app/types/moduleTypes'
 import { type CalendarValue, type ValuePiece } from '@/app/types/pageTypes'
+import { type SearchType } from '@/app/types/ui/modalTypes'
 import { type DialogTextType, type ScheduleListType } from '@/app/types/variableTypes'
 
 export default function ProjectIssueSchedule() {
+  const [isPlaceModal, setIsPlaceModal] = useState(false)
+  const handlePlaceModal = () => {
+    setIsPlaceModal(!isPlaceModal)
+  }
   const dialogRef = useRef<HTMLDialogElement | null>(null)
   const startDialogRef = useRef<HTMLDialogElement | null>(null)
   const endDialogRef = useRef<HTMLDialogElement | null>(null)
@@ -61,10 +72,18 @@ export default function ProjectIssueSchedule() {
     dispatch(changeIssueTitleReducer(e.target.value))
     scheduleTitleInput.onChange(e)
   }
-  const schedulePlaceInput = useInput('')
-  const handleChangePlace = (e: ChangeEvent<HTMLInputElement>) => {
-    schedulePlaceInput.onChange(e)
+
+  const [schedulePlace, setSchedulePlace] = useState('')
+  const [selectedPlace, setSelectedPlace] = useState<SearchType | null>(null)
+
+  const handlePlaceSelection = () => {
+    if (selectedPlace != null) {
+      setSchedulePlace(selectedPlace.place_name)
+      dispatch(changeIssuePlaceReducer(selectedPlace.place_name))
+      handlePlaceModal()
+    }
   }
+
   const scheduleDescriptionInput = useInput('')
   const handleChangeDescription = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch(changeIssueDescriptionReducer(e.target.value))
@@ -216,6 +235,18 @@ export default function ProjectIssueSchedule() {
     },
   ]
 
+  const placeModal = [
+    {
+      onClose: handlePlaceModal,
+      isModalOpen: isPlaceModal,
+      childComponent: (
+        <SchedulePlace schedulePlace={schedulePlace} setSelectedPlace={setSelectedPlace} />
+      ),
+      name: 'schedule-place',
+      btnValue: MODAL_BTN_SELECT,
+      confirmFunc: handlePlaceSelection,
+    },
+  ]
   useEffect(() => {
     dispatch(changeIssueCategoryReducer(PROJECT_ISSUE_SCHEDULE_VALUE.toUpperCase()))
     dispatch(changeIssueTitleReducer(''))
@@ -282,12 +313,19 @@ export default function ProjectIssueSchedule() {
             <DialogCalendar dialog={data.dialog} calendarWithTimeData={data} isWithtime={true} />
           </div>
         ))}
-        <IssueInput
-          title="장소"
-          placeholder="장소를 입력해 주세요."
-          value={schedulePlaceInput.value}
-          onChange={handleChangePlace}
-        />
+        <div className="flex flex-row items-center p-2">
+          <Input
+            readOnly
+            placeholder="장소를 검색해주세요."
+            onClick={handlePlaceModal}
+            isLabel={true}
+            labelContent="장소"
+            value={schedulePlace}
+            labelClassName="w-1/6"
+            className=" xl:w-3/5 rounded rounded mt-2 bg-gray-80 border text-gray-900 block text-sm border-gray-300 p-2.5 dark:bg-gray-700 dark:border-white-600 dark:placeholder-gray-400 dark:text-white focus:outline-none"
+          />
+        </div>
+
         <IssueDescription
           value={scheduleDescriptionInput.value}
           onChange={handleChangeDescription}
@@ -298,6 +336,7 @@ export default function ProjectIssueSchedule() {
         dialogAlertText={dialogText}
         dialogBtnValue={projectDialogBtnValue}
       />
+      <ModalHub modals={placeModal} />
     </>
   )
 }

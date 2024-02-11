@@ -55,7 +55,7 @@ export default function Comment(props: CommentProps) {
       const res = await modulePostFetch<ApiResponseType>(fetchPostLikeProps)
       if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)
       dispatch(addCommentLikeReducer(props.comments.id))
-      props.doRerender()
+      await props.refetch()
     } catch (err) {}
   }
   const fetchDeleteLikeProps: ModuleGetFetchProps = {
@@ -73,7 +73,7 @@ export default function Comment(props: CommentProps) {
       const res = await moduleDeleteFetch<ApiResponseType>(fetchDeleteLikeProps)
       if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)
       dispatch(deleteCommentLikeReducer(props.comments.id))
-      props.doRerender()
+      await props.refetch()
     } catch (err) {}
   }
 
@@ -96,7 +96,7 @@ export default function Comment(props: CommentProps) {
     try {
       const res = await moduleDeleteFetch<ApiResponseType>(fetchDeleteCommentProps)
       if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)
-      props.doRerender()
+      await props.refetch()
     } catch (err) {}
   }
   const clickDeleteComment = () => {
@@ -147,16 +147,22 @@ export default function Comment(props: CommentProps) {
       <div className="pl-7 border-b-2 border-gray-300">
         {isWriteComment ? (
           <WriteComment
+            url={props.url}
             postingID={props.postingID}
             parentID={props.comments.id}
-            doRerender={props.doRerender}
+            refetch={props.refetch}
           />
         ) : (
           <></>
         )}
         {props.comments.childComments.map((data) => (
           <div className="pl-7 " key={data.content}>
-            <Recomment comments={data} postingID={props.postingID} doRerender={props.doRerender} />
+            <Recomment
+              comments={data}
+              postingID={props.postingID}
+              url={props.url}
+              refetch={props.refetch}
+            />
           </div>
         ))}
       </div>
