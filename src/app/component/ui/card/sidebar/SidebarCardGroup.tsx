@@ -5,11 +5,13 @@ import VacationCard from '../main/VacationCard'
 import BoardSideCard from './board/BoardSideCard'
 import ProjectDetailSideCard from './project/detail/ProjectDetailSideCard'
 import ProjectMainSideCard from './project/main/ProjectMainSideCard'
+import TeamMainSideCard from './team/TeamMainSideCard'
 
 import {
   SIDEBAR_URL_PATH_MAIN,
   SIDEBAR_URL_PATH_PROJECT,
   SIDEBAR_URL_PATH_PROJECT_DETAIL,
+  SIDEBAR_URL_PATH_TEAM,
 } from '@/app/constant/constant'
 import { type MainSidebarCardGroupProps } from '@/app/types/ui/cardTypes'
 
@@ -40,6 +42,8 @@ export default function SidebarCardGroup(props: MainSidebarCardGroupProps) {
 
       case SIDEBAR_URL_PATH_PROJECT_DETAIL:
         return <ProjectDetailSideCard />
+      case SIDEBAR_URL_PATH_TEAM:
+        return <TeamMainSideCard />
       default:
         return <BoardSideCard myBoardList={props.myBoardList} />
     }

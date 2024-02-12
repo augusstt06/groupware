@@ -315,3 +315,18 @@ export type ColleagueType = {
   phone: string
   position: string
 }
+
+export type GetTeamListType = {
+  data: TeamResponseType[]
+  page: number
+  size: number
+  total: number
+}
+export type TeamResponseType = {
+  createdAt: string
+  description: string
+  id: number
+  name: string
+  organizationId: number
+  updatedAt: string
+}

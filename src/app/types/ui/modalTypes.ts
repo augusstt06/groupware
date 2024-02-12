@@ -37,6 +37,15 @@ export type CreateProjectModalProps = {
   handleSelectColor: (colorName: string) => void
   selectColor: string
 }
+export type CreateTeamModalProps = {
+  teamName: UseInputProps
+  colorList: Array<{
+    name: string
+    value: string
+  }>
+  handleSelectColor: (colorName: string) => void
+  selectColor: string
+}
 
 export type ProjectAlertModalProps = CreateProjectModalProps & {
   alertState: ProjectAlertStateType
