@@ -19,5 +19,6 @@ export const ROUTE_PROJECT = '/project'
 export const ROUTE_PROJECT_DETAIL = '/project/detail'
 
 export const ROUTE_TEAM = '/team'
+export const ROUTE_TEAM_DETAIL = '/team/detail'
 
 export const ROUTE_INVITE = '/invite'

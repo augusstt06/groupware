@@ -17,7 +17,6 @@ export default function SchedulePlace(props: SchedulePlaceProps) {
   const [searchInput, setSearchInput] = useState<SearchType[]>([])
   const { setSelectedPlace, schedulePlace } = props
   const place = useInput(schedulePlace)
-
   const handleClickSearch = async () => {
     const res = await moduleKaKaoGetFetch({
       params: {
