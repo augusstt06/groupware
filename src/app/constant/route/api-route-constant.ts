@@ -1,3 +1,6 @@
+// kakao
+export const API_URL_KAKAO_MAP = process.env.NEXT_PUBLIC_KAKAO_MAP_API_URL
+
 // colleagues
 export const API_URL_COLLEAGUES = process.env.NEXT_PUBLIC_COLLEAGUES_SOURCE as string
 
@@ -45,6 +48,7 @@ export const API_URL_POSTINGS_LIST = process.env.NEXT_PUBLIC_POSTINGS_LIST_SOURC
 export const API_URL_COMMENT = process.env.NEXT_PUBLIC_COMMENT_SOURCE as string
 export const API_URL_COMMENT_POSTING = process.env.NEXT_PUBLIC_COMMENT_POSTING_SOURCE as string
 export const API_URL_COMMENT_LIKE = process.env.NEXT_PUBLIC_COMMENT_LIKE_SOURCE as string
+export const API_URL_COMMENT_ISSUES = process.env.NEXT_PUBLIC_COMMENT_ISSUE_SOURCE as string
 
 //  Project
 export const API_URL_PROJECTS = process.env.NEXT_PUBLIC_PROJECT_SOURCE as string
@@ -64,3 +68,6 @@ export const API_URL_PROJECT_ISSUE_LIST_PINNED = process.env
 
 export const API_URL_PROJECT_ISSUE_REARRANGE = process.env
   .NEXT_PUBLIC_PROJECT_ISSUE_REARRANGE_SOURCE as string
+
+export const API_URL_PROJECT_INVITE = process.env.NEXT_PUBLIC_PROJECT_INVITE_SOURCE as string
+export const API_URL_PROJECT_JOIN = process.env.NEXT_PUBLIC_PROJECT_JOIN_SOURCE as string

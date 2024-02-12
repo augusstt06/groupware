@@ -6,9 +6,42 @@ import {
   type ModulePostFileFetchProps,
 } from '@/app/types/moduleTypes'
 
+type searchType = {
+  address_name: string
+  category_group_code: string
+  category_group_name: string
+  category_name: string
+  distance: string
+  id: string
+  phone: string
+  place_name: string
+  place_url: string
+  road_address_name: string
+  x: string
+  y: string
+}
+type KakaoApiResponseType = {
+  documents: searchType[]
+}
 export const moduleGetFetch = async <T>(
   props: ModuleGetFetchProps,
 ): Promise<FetchResponseType<T>> => {
+  const queryString = new URLSearchParams()
+  Object.entries(props.params).forEach(([key, value]) => {
+    queryString.append(key, String(value))
+  })
+  const urlWithQueryString = `${props.fetchUrl}?${queryString.toString()}`
+
+  const res = await fetch(urlWithQueryString, {
+    method: GET,
+    headers: props.header,
+  })
+  return res.json()
+}
+
+export const moduleKaKaoGetFetch = async (
+  props: ModuleGetFetchProps,
+): Promise<KakaoApiResponseType> => {
   const queryString = new URLSearchParams()
   Object.entries(props.params).forEach(([key, value]) => {
     queryString.append(key, String(value))

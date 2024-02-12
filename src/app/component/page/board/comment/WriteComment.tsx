@@ -69,7 +69,7 @@ export default function WriteComment(props: WriteCommentProps) {
             parentId: props.parentID,
             postingId: props.postingID,
           },
-          fetchUrl: API_URL_COMMENT_POSTING,
+          fetchUrl: props.url,
           header: {
             Authorization: `Bearer ${accessToken}`,
             [KEY_X_ORGANIZATION_CODE]: orgCode,
@@ -93,7 +93,7 @@ export default function WriteComment(props: WriteCommentProps) {
       if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)
       commentInput.resetValue()
       setInputCount(0)
-      props.doRerender()
+      await props.refetch()
       router.refresh()
     } catch (err) {}
   }

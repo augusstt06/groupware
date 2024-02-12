@@ -59,9 +59,14 @@ export default function ProjectDetailMain(props: ProjectDetailMainProps) {
           <span className="font-bold text-indigo-400">{props.projectInfo?.members.length}</span>
         </div>
         <div className="flex flex-col items-center">
-          <div className="2xl:w-4/5 w-full transition ease-in-out duration-300 border-t-2 border-b-2 dark:bg-indigo-400 hover:bg-indigo-300 hover:text-white hover:dark:bg-indigo-500 dark:border-gray-700 border border-gray-300 rounded-lg shadow-lg">
-            <InviteProjectMemberTable />
-          </div>
+          {props.projectInfo?.members.map((data) => (
+            <div
+              className="2xl:w-4/5 w-full transition ease-in-out duration-300 border-t-2 border-b-2 dark:bg-indigo-400 hover:bg-indigo-300 hover:text-white hover:dark:bg-indigo-500 dark:border-gray-700 border border-gray-300 rounded-lg shadow-lg"
+              key={data.id}
+            >
+              <InviteProjectMemberTable memberInfo={data} />
+            </div>
+          ))}
         </div>
       </div>
     </div>

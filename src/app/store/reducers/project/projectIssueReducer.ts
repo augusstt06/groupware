@@ -2,6 +2,7 @@ import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 
 type State = {
   category: string
+  place: string
   description: string
   endAt: string
   endAtTime: {
@@ -20,6 +21,7 @@ type State = {
 
 const initialState: State = {
   category: '',
+  place: '',
   description: '',
   endAt: '',
   endAtTime: {
@@ -77,6 +79,9 @@ export const projectIssueSlice = createSlice({
     changeIssueProjectIdReducer(state, action: PayloadAction<number>) {
       state.projectId = action.payload
     },
+    changeIssuePlaceReducer(state, action: PayloadAction<string>) {
+      state.place = action.payload
+    },
 
     resetIssueReducer(state) {
       state.category = ''
@@ -107,6 +112,7 @@ export const {
   changeIssueStartAtReducer,
   changeIssueStartAtTimeReducer,
   changeIssueTitleReducer,
+  changeIssuePlaceReducer,
   resetIssueReducer,
 } = projectIssueSlice.actions
 export default projectIssueSlice.reducer

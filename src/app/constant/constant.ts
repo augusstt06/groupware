@@ -1,3 +1,7 @@
+// kakao
+export const KAKAO_AUTH_KEY = process.env.NEXT_PUBLIC_KAKAO_AUTH_KEY as string
+export const KAKAO_APP_KEY = process.env.NEXT_PUBLIC_KAKAO_APP_KEY as string
+
 // google calendar
 export const GOOGLE_CALENDAR_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_CALENDAR_API_KEY as string
 export const GOOGLE_CALENDAR_ID = process.env.NEXT_PUBLIC_GOOGLE_CALENDAR_ID as string
@@ -56,7 +60,7 @@ export const SIDEBAR_URL_PATH_MAIN = 'main'
 export const SIDEBAR_URL_PATH_BOARD = 'board'
 export const SIDEBAR_URL_PATH_PROJECT = 'project'
 export const SIDEBAR_URL_PATH_PROJECT_DETAIL = 'project/detail'
-
+export const SIDEBAR_URL_PATH_PROJECT_ISSUE_DETAIL = 'project/:category/:id'
 export const MAIN_CARD_TODO = 'TODO'
 
 // Board
@@ -157,7 +161,12 @@ export const PROJECT_DATE_FORMAT = 'YYYY-MM-DD'
 // modal
 export const MODAL_BTN_CREATE = '생성'
 export const MODAL_BTN_SAVE = '저장'
+export const MODAL_BTN_SELECT = '선택'
 
 export const MODAL_CREATE_PROJECT_ISSUE = 'project-issue'
 export const MODAL_INVITE_MEMBER_IN_PROJECT = 'invite-member'
 export const MODAL_CRAETE_PROJECT = 'create-project'
+
+// invite
+export const INVITE_PROJECT = 'project'
+export const INVITE_TEAM = 'team'

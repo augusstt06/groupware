@@ -1,5 +1,7 @@
 import { type ChangeEvent, type Dispatch, type SetStateAction } from 'react'
 
+import { type QueryObserverResult, type RefetchOptions } from '@tanstack/react-query'
+
 import {
   type BoardListResponseType,
   type ColumnType,
@@ -50,7 +52,8 @@ export type PaginationProps = {
 }
 
 export type CommentProps = {
-  doRerender: () => void
+  refetch: (options?: RefetchOptions | undefined) => Promise<QueryObserverResult>
+  url: string
   postingID: number
   comments: {
     childComments: CommentType[]
@@ -68,9 +71,10 @@ export type CommentProps = {
 }
 
 export type WriteCommentProps = {
-  doRerender: () => void
+  refetch: (options?: RefetchOptions | undefined) => Promise<QueryObserverResult>
   postingID: number
   parentID: number | null
+  url: string
 }
 export type IssueInputProps = {
   title: string
@@ -134,3 +138,8 @@ export type ProjectDetailTaskColumnProps = {
 export type ProjectIssueDetailProps = {
   issue: IssueDatailType | null
 }
+
+export type AccessInviteProps = {
+  join: () => void
+}
+export type InviteLoginProps = { handleLoginModal: () => void }
