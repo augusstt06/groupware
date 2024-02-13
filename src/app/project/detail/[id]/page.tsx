@@ -132,7 +132,7 @@ export default function ProjectDetail() {
         fetchProps = {
           data: {
             category: issueState.category,
-            place: issueState.place,
+            location: issueState.place,
             description: issueState.description,
             endAt: convertDateWithTIme(
               issueState.endAt,

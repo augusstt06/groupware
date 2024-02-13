@@ -29,7 +29,6 @@ export default function ProjectInviteCard(props: ProjectInviteCardProps) {
         <span className="sm:text-lg text-sm w-4/5 mb-1 text-left  ">{userInfo.name}</span>
         <div className="truncate lg:inline flex flex-col items-start ">
           <span className="2xl:text-sm text-xs lg:w-4/5 lg:mr-1">{userInfo.position}</span>
-          <span className="2xl:text-sm text-xs lg:w-4/5">프론트엔드 개발</span>
         </div>
       </div>
     </div>

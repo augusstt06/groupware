@@ -10,7 +10,7 @@ import { usePathname } from 'next/navigation'
 
 import GlobalNavigationbar from './component/ui/Navigationbar/GlobalNavigationbar'
 import Sidebar from './component/ui/sidebar/Sidebar'
-import { ROUTE_BOARD, ROUTE_MAIN, ROUTE_PROJECT } from './constant/route/route-constant'
+import { ROUTE_BOARD, ROUTE_MAIN, ROUTE_PROJECT, ROUTE_TEAM } from './constant/route/route-constant'
 import { ReduxProvider } from './providers/reduxProvider'
 import CustomThemeProvider from './providers/themeProvider'
 import { type ReactProps } from './types/pageTypes'
@@ -27,7 +27,8 @@ export default function RootLayout({ children }: ReactProps) {
       if (
         extractedString === ROUTE_MAIN ||
         extractedString === ROUTE_BOARD ||
-        extractedString === ROUTE_PROJECT
+        extractedString === ROUTE_PROJECT ||
+        extractedString === ROUTE_TEAM
       ) {
         return true
       }

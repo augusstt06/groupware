@@ -71,3 +71,9 @@ export const API_URL_PROJECT_ISSUE_REARRANGE = process.env
 
 export const API_URL_PROJECT_INVITE = process.env.NEXT_PUBLIC_PROJECT_INVITE_SOURCE as string
 export const API_URL_PROJECT_JOIN = process.env.NEXT_PUBLIC_PROJECT_JOIN_SOURCE as string
+
+// team
+export const API_URL_TEAMS = process.env.NEXT_PUBLIC_TEAMS_SOURCE as string
+export const API_URL_TEAMS_INVITE = process.env.NEXT_PUBLIC_TEAMS_INVITE_SOURCE as string
+export const API_URL_TEAMS_JOIN = process.env.NEXT_PUBLIC_TEAMS_JOIN_SOURCE as string
+export const API_URL_TEAMS_LIST = process.env.NEXT_PUBLIC_TEAMS_LIST_SOURCE as string

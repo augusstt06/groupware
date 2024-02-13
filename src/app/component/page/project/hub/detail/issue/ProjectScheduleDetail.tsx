@@ -7,7 +7,9 @@ import { IoLocationOutline, IoPersonOutline } from 'react-icons/io5'
 
 import Dialog, { DialogCalendar } from '@/app/component/ui/modal/dialog/Dialog'
 import { IssueTime } from '@/app/component/ui/modal/project/hub/category/components/ProjectIssueComponent'
+import { KaKaoMap } from '@/app/component/ui/modal/project/hub/category/schedule/SchedulePlace'
 import {
+  KAKAO_AUTH_KEY,
   KEY_ACCESS_TOKEN,
   KEY_X_ORGANIZATION_CODE,
   PROJECT_DATE_FORMAT,
@@ -19,10 +21,10 @@ import {
   PROJECT_ISSUE_SCHEDULE_UNIT_MINUTE_KO,
   PROJECT_ISSUE_SCHEDULE_VALUE,
 } from '@/app/constant/constant'
-import { API_URL_PROJECT_ISSUE } from '@/app/constant/route/api-route-constant'
+import { API_URL_KAKAO_MAP, API_URL_PROJECT_ISSUE } from '@/app/constant/route/api-route-constant'
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
-import { modulePatchFetch } from '@/app/module/utils/moduleFetch'
+import { moduleKaKaoGetFetch, modulePatchFetch } from '@/app/module/utils/moduleFetch'
 import { type DialogBtnValueType, type ModulePostFetchProps } from '@/app/types/moduleTypes'
 import {
   type CalendarValue,
@@ -30,14 +32,14 @@ import {
   type ProjectIssueDetailProps,
   type ValuePiece,
 } from '@/app/types/pageTypes'
+import { type SearchType } from '@/app/types/ui/modalTypes'
 import { type DialogTextType, type ScheduleListType } from '@/app/types/variableTypes'
 
 export default function ProjectScheduleDeatil(props: ProjectIssueDetailProps) {
   const { issue } = props
-
   const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
-
+  const [searchInput, setSearchInput] = useState<SearchType[]>([])
   const [dialogText, setDialogText] = useState<DialogTextType>({
     main: '',
     sub: '',
@@ -193,6 +195,21 @@ export default function ProjectScheduleDeatil(props: ProjectIssueDetailProps) {
     await modulePatchFetch<string>(fetchProps)
   }
 
+  const fetchMap = async () => {
+    const res = await moduleKaKaoGetFetch({
+      params: {
+        query: issue?.location as string,
+      },
+      fetchUrl: API_URL_KAKAO_MAP,
+      header: {
+        Authorization: `KakaoAK ${KAKAO_AUTH_KEY}`,
+      },
+    })
+    setSearchInput(res.documents.filter((data) => data.place_name === issue?.location))
+  }
+  useEffect(() => {
+    void fetchMap()
+  }, [])
   useEffect(() => {
     if (isAllday) {
       setSelectTime({
@@ -208,12 +225,12 @@ export default function ProjectScheduleDeatil(props: ProjectIssueDetailProps) {
     }
     void fetchPatchScheduleIssue()
   }, [isAllday, startDate, endDate, selectTime])
+
   return (
     <>
       <div className="flex flex-col items-start mt-5">
         <div className="flex flex-row items-center justify-start w-2/3">
           <IoPersonOutline className="w-5 h-5 mr-5" />
-          {/* FIXME: 추후 프로필 사진 추가 */}
           <div className="w-16 p-2">{issue?.issuer.name}</div>
         </div>
       </div>
@@ -224,9 +241,11 @@ export default function ProjectScheduleDeatil(props: ProjectIssueDetailProps) {
             <DialogCalendar dialog={data.dialog} calendarWithTimeData={data} isWithtime={true} />
           </div>
         ))}
-        <div className="flex flex-col items-start mt-5">
+        <div className="flex flex-row items-start mt-5 mb-5">
           <IoLocationOutline className="w-5 h-5 mr-5" />
+          <span>{searchInput.length !== 0 ? searchInput[0].place_name : ''}</span>
         </div>
+        <KaKaoMap searchData={searchInput} />
         <Dialog
           dialog={dialogRef}
           dialogAlertText={dialogText}

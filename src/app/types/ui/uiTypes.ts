@@ -10,6 +10,7 @@ import {
   type MyBoardType,
   type ProjectIssueType,
   type ProjectResponseType,
+  type TeamResponseType,
 } from '../variableTypes'
 
 export type LabelProps = {
@@ -111,6 +112,9 @@ export type CreateProjectIssueModalHubProps = {
 
 export type ProjectMainHubProps = {
   projectList: ProjectResponseType[]
+}
+export type TeamMainHubProps = {
+  teamList: TeamResponseType[]
 }
 
 export type ProjectDetailTabProps = {
