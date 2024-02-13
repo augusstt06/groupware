@@ -154,6 +154,7 @@ export default function Team() {
       return (res as SuccessResponseType<GetTeamListType>).result.data
     },
   })
+
   const { mutate: createTeam } = useMutation({
     mutationKey: ['create-team'],
     mutationFn: async ({ teamColor, teamTitle }: { teamColor: string; teamTitle: string }) => {

@@ -28,13 +28,13 @@ import {
   PROJECT_CARD_RES_COLOR_YELLOW,
   PROJECT_MAIN_CATEGORY_ALL,
   PROJECT_MAIN_CATEGORY_INCLUDED,
-  // PROJECT_MAIN_CATEGORY_STARRED,
+  PROJECT_MAIN_CATEGORY_STARRED,
 } from '../constant/constant'
 import {
   API_URL_PROJECTS,
   API_URL_PROJECTS_LIST,
   API_URL_PROJECTS_LIST_INCLUDED,
-  // API_URL_PROJECTS_LIST_STARRED,
+  API_URL_PROJECTS_LIST_STARRED,
 } from '../constant/route/api-route-constant'
 import useInput from '../module/hooks/reactHooks/useInput'
 import { useAppDispatch, useAppSelector } from '../module/hooks/reduxHooks'
@@ -172,8 +172,8 @@ export default function Project() {
         return API_URL_PROJECTS_LIST
       case PROJECT_MAIN_CATEGORY_INCLUDED:
         return API_URL_PROJECTS_LIST_INCLUDED
-      // case PROJECT_MAIN_CATEGORY_STARRED:
-      //   return API_URL_PROJECTS_LIST_STARRED
+      case PROJECT_MAIN_CATEGORY_STARRED:
+        return API_URL_PROJECTS_LIST_STARRED
       default:
         return API_URL_PROJECTS_LIST
     }

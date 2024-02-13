@@ -7,6 +7,7 @@ import { useParams, useRouter } from 'next/navigation'
 import { TbUsersPlus } from 'react-icons/tb'
 
 import Button from '@/app/component/ui/button/Button'
+import TeamMemberCard from '@/app/component/ui/card/team/TeamMemberCard'
 import {
   KEY_ACCESS_TOKEN,
   KEY_LOGIN_COMPLETE,
@@ -77,6 +78,14 @@ export default function TeamDetail() {
               dispatch(teamInviteModalReducer(true))
             }}
           />
+        </div>
+      </div>
+      <div className="w-full max-w-7xl flex flex-col items-center dark:bg-[#1a202c] dark:border-gray-700 border border-gray-200 rounded-lg shadow-lg p-2 truncate">
+        <div className="w-full p-3">
+          <span className="font-bold">팀 멤버</span>
+        </div>
+        <div className="grid xl:grid-cols-4 xl:gap-x-10 lg:grid-cols-3 lg:gap-x-10 grid-cols-2 gap-x-8 gap-y-6 p-3 ">
+          <TeamMemberCard />
         </div>
       </div>
     </main>
