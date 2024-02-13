@@ -72,7 +72,7 @@ export default function SchedulePlace(props: SchedulePlaceProps) {
   )
 }
 
-function KaKaoMap(props: KakaoMapProps) {
+export function KaKaoMap(props: KakaoMapProps) {
   const { searchData, setSelectedPlace } = props
 
   const mapScript = document.createElement('script')
@@ -100,7 +100,6 @@ function KaKaoMap(props: KakaoMapProps) {
               position: markerPosition,
             })
             window.kakao.maps.event.addListener(marker, 'click', function () {
-              // FIXME: 테두리 다듬기
               const content = `
                 <div style="padding: 10px; background-color: #fff; border: 1px solid #ddd; display: block;">
                   <h4 style="margin-bottom: 5px; font-size: 16px;">${place.place_name}</h4>
@@ -111,7 +110,7 @@ function KaKaoMap(props: KakaoMapProps) {
 
               infowindow.setContent(content)
               infowindow.open(map, marker)
-              setSelectedPlace(place)
+              if (setSelectedPlace !== undefined) setSelectedPlace(place)
             })
             marker.setMap(map)
           })

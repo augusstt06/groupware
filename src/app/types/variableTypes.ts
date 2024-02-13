@@ -293,6 +293,7 @@ export type FullCalendarEventType = {
 
 export type IssueDatailType = {
   category: string
+  location: string
   createdAt: string
   endAt: string
   id: number

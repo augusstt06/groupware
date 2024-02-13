@@ -114,5 +114,5 @@ export type SearchType = {
 }
 export type KakaoMapProps = {
   searchData: SearchType[]
-  setSelectedPlace: Dispatch<SetStateAction<SearchType | null>>
+  setSelectedPlace?: Dispatch<SetStateAction<SearchType | null>>
 }

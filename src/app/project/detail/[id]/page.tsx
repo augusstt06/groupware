@@ -132,8 +132,7 @@ export default function ProjectDetail() {
         fetchProps = {
           data: {
             category: issueState.category,
-            // FIXME: location으로 변경하기
-            place: issueState.place,
+            location: issueState.place,
             description: issueState.description,
             endAt: convertDateWithTIme(
               issueState.endAt,
