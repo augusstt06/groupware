@@ -13,9 +13,15 @@ import {
   SIDEBAR_URL_PATH_MAIN,
   SIDEBAR_URL_PATH_PROJECT,
   SIDEBAR_URL_PATH_PROJECT_DETAIL,
+  SIDEBAR_URL_PATH_TEAM,
 } from '@/app/constant/constant'
 import { API_URL_GET_MY_BOARD } from '@/app/constant/route/api-route-constant'
-import { ROUTE_BOARD, ROUTE_MAIN, ROUTE_PROJECT } from '@/app/constant/route/route-constant'
+import {
+  ROUTE_BOARD,
+  ROUTE_MAIN,
+  ROUTE_PROJECT,
+  ROUTE_TEAM,
+} from '@/app/constant/route/route-constant'
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
 import { moduleGetFetch } from '@/app/module/utils/moduleFetch'
@@ -52,6 +58,8 @@ export default function Sidebar() {
         case ROUTE_PROJECT:
           if (currentUrl.slice(2, 3).join('/') === 'detail') return SIDEBAR_URL_PATH_PROJECT_DETAIL
           return SIDEBAR_URL_PATH_PROJECT
+        case ROUTE_TEAM:
+          return SIDEBAR_URL_PATH_TEAM
         default:
           return SIDEBAR_URL_PATH_MAIN
       }

@@ -6,6 +6,7 @@ import {
   type MyBoardType,
   type ProjectResponseType,
   type ScheduleType,
+  type TeamResponseType,
 } from '../variableTypes'
 
 export type TaskCardProps = {
@@ -64,4 +65,8 @@ export type ProjectInviteCardProps = {
   userInfo: ColleagueType
   inviteList: ColleagueType[]
   // handleInviteUser: (user: ColleagueType) => void
+}
+
+export type TeamCardProps = {
+  teamInfo: TeamResponseType
 }

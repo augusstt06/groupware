@@ -19,7 +19,6 @@ export default function InviteProjectMemberModal(props: InviteProjectMemberModal
       setInviteList(inviteList.filter((data) => data.userId !== user.userId))
     }
   }
-  // FIXME: 임시 input 변수
   const inviteInput = useInput('')
   const tailLabel = (
     <div className="cursor-pointer w-1/6 flex items-center justify-center trasition duration-500 ease-in-out hover:scale-110">

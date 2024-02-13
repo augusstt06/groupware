@@ -61,6 +61,7 @@ export const SIDEBAR_URL_PATH_BOARD = 'board'
 export const SIDEBAR_URL_PATH_PROJECT = 'project'
 export const SIDEBAR_URL_PATH_PROJECT_DETAIL = 'project/detail'
 export const SIDEBAR_URL_PATH_PROJECT_ISSUE_DETAIL = 'project/:category/:id'
+export const SIDEBAR_URL_PATH_TEAM = 'team'
 export const MAIN_CARD_TODO = 'TODO'
 
 // Board
@@ -166,6 +167,7 @@ export const MODAL_BTN_SELECT = '선택'
 export const MODAL_CREATE_PROJECT_ISSUE = 'project-issue'
 export const MODAL_INVITE_MEMBER_IN_PROJECT = 'invite-member'
 export const MODAL_CRAETE_PROJECT = 'create-project'
+export const MODAL_CREATE_TEAM = 'create-team'
 
 // invite
 export const INVITE_PROJECT = 'project'
