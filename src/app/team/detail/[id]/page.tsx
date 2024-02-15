@@ -84,9 +84,18 @@ export default function TeamDetail() {
         <div className="w-full p-3">
           <span className="font-bold">팀 멤버</span>
         </div>
-        <div className="grid xl:grid-cols-4 xl:gap-x-10 lg:grid-cols-3 lg:gap-x-10 grid-cols-2 gap-x-8 gap-y-6 p-3 ">
-          <TeamMemberCard />
-        </div>
+        {teamData()?.members.length !== 0 ? (
+          <div className="grid xl:grid-cols-4 xl:gap-x-10 lg:grid-cols-3 lg:gap-x-10 grid-cols-2 gap-x-8 gap-y-6 p-3 ">
+            {teamData()?.members.map((data, index) => (
+              <TeamMemberCard key={index} memberInfo={data} />
+            ))}
+          </div>
+        ) : (
+          <div className="text-center">
+            <p>아직 팀 멤버가 없습니다.</p>
+            <p>초대를 진행해주세요.</p>
+          </div>
+        )}
       </div>
     </main>
   )

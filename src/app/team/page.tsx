@@ -105,6 +105,7 @@ export default function Team() {
     teamTitle.resetValue()
     setTeamsColor('')
   }
+
   const renderTeamHub = () => {
     if (isLoading) return <span>데이터를 로딩중입니다.</span>
     else {
@@ -154,7 +155,7 @@ export default function Team() {
       return (res as SuccessResponseType<GetTeamListType>).result.data
     },
   })
-
+  // console.log(teamList)
   const { mutate: createTeam } = useMutation({
     mutationKey: ['create-team'],
     mutationFn: async ({ teamColor, teamTitle }: { teamColor: string; teamTitle: string }) => {
