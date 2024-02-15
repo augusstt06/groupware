@@ -1,36 +1,66 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { useParams, useRouter } from 'next/navigation'
 import { TbUsersPlus } from 'react-icons/tb'
 
 import Button from '@/app/component/ui/button/Button'
 import TeamMemberCard from '@/app/component/ui/card/team/TeamMemberCard'
+import ModalHub from '@/app/component/ui/modal/Modal'
+import InviteProjectMemberModal from '@/app/component/ui/modal/project/InviteProjectMemberModal'
 import {
   KEY_ACCESS_TOKEN,
   KEY_LOGIN_COMPLETE,
   KEY_X_ORGANIZATION_CODE,
+  MODAL_BTN_SAVE,
+  MODAL_INVITE_MEMBER_IN_PROJECT,
 } from '@/app/constant/constant'
-import { API_URL_TEAMS } from '@/app/constant/route/api-route-constant'
+import {
+  API_URL_COLLEAGUES,
+  API_URL_TEAMS,
+  API_URL_TEAMS_INVITE,
+} from '@/app/constant/route/api-route-constant'
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleCheckUserState } from '@/app/module/utils/check/moduleCheckUserState'
 import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
-import { moduleGetFetch } from '@/app/module/utils/moduleFetch'
+import { moduleGetFetch, modulePostFetch } from '@/app/module/utils/moduleFetch'
 import { teamInviteModalReducer } from '@/app/store/reducers/team/teamModalReducer'
-import { type SuccessResponseType } from '@/app/types/moduleTypes'
-import { type TeamResponseType } from '@/app/types/variableTypes'
+import { type DialogBtnValueType, type SuccessResponseType } from '@/app/types/moduleTypes'
+import {
+  type ColleagueType,
+  type DialogTextType,
+  type TeamResponseType,
+} from '@/app/types/variableTypes'
 
 export default function TeamDetail() {
   // outer
   const router = useRouter()
+  const orgId = useAppSelector((state) => state.userInfo.extraInfo.organizationId)
   const dispatch = useAppDispatch()
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
   const [accessToken, setAccessToken] = useState(moduleGetCookie(KEY_ACCESS_TOKEN))
   const loginCompleteState = useAppSelector((state) => state.maintain[KEY_LOGIN_COMPLETE])
 
   // componenet variables
+  const dialogRef = useRef<HTMLDialogElement | null>(null)
+  const [memberList, setMemberList] = useState<ColleagueType[]>([])
+  const [inviteList, setInviteList] = useState<ColleagueType[]>([])
+  const [dialogText, setDialogText] = useState<DialogTextType>({
+    main: '',
+    sub: '',
+  })
+
+  const projectDialogBtnValue: DialogBtnValueType = {
+    isCancel: false,
+    cancleFunc: () => {},
+    cancelText: '',
+    confirmFunc: () => {
+      dialogRef.current?.close()
+    },
+    confirmText: '확인',
+  }
   const queryTeamId = useParams().id
   const teamData = () => {
     if (isLoading) return null
@@ -42,6 +72,10 @@ export default function TeamDetail() {
       <span>초대하기</span>
     </>
   )
+  const isInviteModalOpen = useAppSelector((state) => state.teamModal.isTeamInviteModalOpen)
+  const handleCloseInviteModal = () => {
+    dispatch(teamInviteModalReducer(false))
+  }
 
   // fetch fn
   const { data: team, isLoading } = useQuery({
@@ -61,9 +95,85 @@ export default function TeamDetail() {
     },
   })
 
+  const { mutate: invite } = useMutation({
+    mutationKey: ['invite'],
+    mutationFn: async () => {
+      const invitedList = inviteList.map((data) => data.userId)
+      await modulePostFetch<string>({
+        data: {
+          members: invitedList,
+          teamId: team?.result.id,
+        },
+        fetchUrl: API_URL_TEAMS_INVITE,
+        header: {
+          Authorization: `Bearer ${accessToken}`,
+          [KEY_X_ORGANIZATION_CODE]: orgCode,
+        },
+      })
+    },
+    onSuccess: () => {
+      setDialogText({
+        main: '초대에 성공했습니다.',
+        sub: '',
+      })
+      handleCloseInviteModal()
+    },
+    onError: () => {
+      setDialogText({
+        main: '초대에 실패했습니다.',
+        sub: '',
+      })
+    },
+  })
+  const fetchColleague = async () => {
+    const res = await moduleGetFetch<ColleagueType[]>({
+      params: {
+        limit: 10,
+        offset: 0,
+        organizationId: orgId,
+      },
+      fetchUrl: API_URL_COLLEAGUES,
+      header: {
+        Authorization: `Bearer ${accessToken}`,
+        [KEY_X_ORGANIZATION_CODE]: orgCode,
+      },
+    })
+    const members = (res as SuccessResponseType<ColleagueType[]>).result.filter(
+      (data) => !data.team.some((teamData) => teamData.id === team?.result.id),
+    )
+    setMemberList(members)
+  }
+
+  const modalList = [
+    {
+      onClose: handleCloseInviteModal,
+      isModalOpen: isInviteModalOpen,
+      childComponent: (
+        <InviteProjectMemberModal
+          colleague={memberList}
+          inviteList={inviteList}
+          setInviteList={setInviteList}
+        />
+      ),
+      name: MODAL_INVITE_MEMBER_IN_PROJECT,
+      btnValue: MODAL_BTN_SAVE,
+      confirmFunc: invite,
+      dialog: dialogRef,
+      dialogAlertText: dialogText,
+      dialogBtnValue: projectDialogBtnValue,
+    },
+  ]
+
   useEffect(() => {
     moduleCheckUserState({ loginCompleteState, router, accessToken, setAccessToken })
   }, [accessToken])
+
+  useEffect(() => {
+    if (!isLoading) {
+      void fetchColleague()
+    }
+  }, [isLoading])
+
   return (
     <main className="w-10/12 max-w-7xl 2xl:w-2/3 h-4/5 flex flex-col items-center ">
       <div className="md:5/6 w-full flex flex-col items-left dark:bg-[#1a202c] dark:border-gray-700 border border-gray-200 rounded-lg shadow-lg p-2 mb-5">
@@ -97,6 +207,7 @@ export default function TeamDetail() {
           </div>
         )}
       </div>
+      <ModalHub modals={modalList} />
     </main>
   )
 }

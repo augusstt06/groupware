@@ -3,7 +3,7 @@
 import { useRef, useState } from 'react'
 
 import { useMutation } from '@tanstack/react-query'
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { useParams, useRouter, useSearchParams } from 'next/navigation'
 import { AiOutlineMail } from 'react-icons/ai'
 import { IoMdEye, IoMdEyeOff } from 'react-icons/io'
 import { RiLockPasswordFill } from 'react-icons/ri'
@@ -26,6 +26,7 @@ import {
   API_URL_GET_USERS,
   API_URL_LOGIN,
   API_URL_PROJECT_JOIN,
+  API_URL_TEAMS_JOIN,
 } from '../../constant/route/api-route-constant'
 import useInput from '../../module/hooks/reactHooks/useInput'
 import { useAppDispatch, useAppSelector } from '../../module/hooks/reduxHooks'
@@ -57,6 +58,8 @@ import { type AccessInviteProps, type InviteLoginProps } from '@/app/types/pageT
 
 export default function Invite() {
   const router = useRouter()
+  const category = useParams().category
+
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
   const attendanceTime = useAppSelector((state) => state.userInfo.attendance.time)
   const joinToken = useSearchParams().get('token') as string
@@ -89,6 +92,10 @@ export default function Invite() {
   const handleLoginModal = () => {
     setIsLoginModalOpen(!isLoginModalOpen)
   }
+  const decideFetchUrl = () => {
+    if (category === INVITE_TEAM) return API_URL_TEAMS_JOIN
+    return API_URL_PROJECT_JOIN
+  }
 
   const { mutate: join } = useMutation({
     mutationKey: ['join'],
@@ -97,7 +104,7 @@ export default function Invite() {
         data: {
           token: joinToken,
         },
-        fetchUrl: API_URL_PROJECT_JOIN,
+        fetchUrl: decideFetchUrl(),
         header: {
           Authorization: `Bearer ${accessToken}`,
           [KEY_X_ORGANIZATION_CODE]: orgCode,
@@ -273,9 +280,9 @@ export default function Invite() {
 
 function AccessInvite(props: AccessInviteProps) {
   const { join } = props
-  const pathname = usePathname().split('/').slice(2).join('/')
+  const category = useParams().category
   const inviteCategory = () => {
-    switch (pathname) {
+    switch (category) {
       case INVITE_PROJECT:
         return '프로젝트'
       case INVITE_TEAM:

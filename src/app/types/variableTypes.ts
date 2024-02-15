@@ -315,6 +315,11 @@ export type ColleagueType = {
   name: string
   phone: string
   position: string
+  team: Array<{
+    id: number
+    name: string
+    description: string
+  }>
 }
 
 export type GetTeamListType = {

@@ -155,7 +155,7 @@ export default function Team() {
       return (res as SuccessResponseType<GetTeamListType>).result.data
     },
   })
-  // console.log(teamList)
+
   const { mutate: createTeam } = useMutation({
     mutationKey: ['create-team'],
     mutationFn: async ({ teamColor, teamTitle }: { teamColor: string; teamTitle: string }) => {
@@ -181,13 +181,6 @@ export default function Team() {
       dialogRef.current?.showModal()
     },
   })
-
-  // const {mutate : invite}= useMutation({
-  //   mutationKey:['invite-member'],
-  //   mutationFn : async() => {
-  //     const
-  //   }
-  // })
 
   useEffect(() => {
     moduleCheckUserState({ loginCompleteState, router, accessToken, setAccessToken })
