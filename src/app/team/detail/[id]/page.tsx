@@ -125,6 +125,7 @@ export default function TeamDetail() {
       })
     },
   })
+
   const fetchColleague = async () => {
     const res = await moduleGetFetch<ColleagueType[]>({
       params: {

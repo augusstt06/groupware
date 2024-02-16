@@ -35,7 +35,11 @@ import {
   moduleGetCookie,
   moduleSetCookies,
 } from '../../module/utils/moduleCookie'
-import { moduleGetFetch, modulePostFetch } from '../../module/utils/moduleFetch'
+import {
+  moduleGetFetch,
+  modulePostFetch,
+  modulePostFetchWithQuery,
+} from '../../module/utils/moduleFetch'
 import { updateLoginCompleteReducer } from '../../store/reducers/maintain/maintainReducer'
 import {
   type ApiResponseType,
@@ -43,12 +47,11 @@ import {
   type DialogBtnValueType,
   type LoginResponseType,
   type ModuleGetFetchProps,
-  type ModulePostFetchProps,
   type SuccessResponseType,
 } from '../../types/moduleTypes'
 import { type DialogTextType } from '../../types/variableTypes'
 
-import { ROUTE_PROJECT } from '@/app/constant/route/route-constant'
+import { ROUTE_PROJECT, ROUTE_TEAM } from '@/app/constant/route/route-constant'
 import {
   updateAttendanceStatusReducer,
   updateExtraUserInfoReducer,
@@ -83,7 +86,7 @@ export default function Invite() {
     confirmText: '확인',
   })
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false)
-  const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
+  const [accessToken] = useState(moduleGetCookie(KEY_ACCESS_TOKEN))
   const isLogin = () => {
     if (accessToken === ERR_COOKIE_NOT_FOUND) return false
     return true
@@ -96,11 +99,15 @@ export default function Invite() {
     if (category === INVITE_TEAM) return API_URL_TEAMS_JOIN
     return API_URL_PROJECT_JOIN
   }
+  const decideRedirectUrl = () => {
+    if (category === INVITE_TEAM) return ROUTE_TEAM
+    return ROUTE_PROJECT
+  }
 
   const { mutate: join } = useMutation({
     mutationKey: ['join'],
     mutationFn: async () => {
-      const fetchProps: ModulePostFetchProps = {
+      await modulePostFetchWithQuery<string>({
         data: {
           token: joinToken,
         },
@@ -109,14 +116,13 @@ export default function Invite() {
           Authorization: `Bearer ${accessToken}`,
           [KEY_X_ORGANIZATION_CODE]: orgCode,
         },
-      }
-      const res = await modulePostFetch<string>(fetchProps)
-      return res as SuccessResponseType<string>
+      })
     },
     onSuccess: () => {
-      router.push(ROUTE_PROJECT)
+      router.push(decideRedirectUrl())
     },
     onError: () => {
+      alert('실패')
       setDialogText({
         main: '조직 가입 승인에 실패했습니다.',
         sub: '다시 시도해 주세요.',
