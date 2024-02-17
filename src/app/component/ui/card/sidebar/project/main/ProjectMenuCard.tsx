@@ -55,7 +55,7 @@ export default function ProjectMenuCard() {
     }
   }
   return (
-    <div className="cursor-pointer w-full max-w-sm border-2 border-[#7f8bb1] bg-[#f5f7fc] rounded-lg shadow dark:bg-[#1a202c] dark:border-gray-700 mb-5">
+    <div className="cursor-pointer w-full max-w-sm rounded-lg mb-5">
       {menuList.map((data) => (
         <div
           className={divClassName(data.title)}

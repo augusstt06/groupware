@@ -1,6 +1,6 @@
 import { FaPlus } from 'react-icons/fa'
 
-import SidebarUserProfileCard from '../../SidebarUserProfileCard'
+import NameCard from '../../../main/NameCard'
 
 import ProjectMenuCard from './ProjectMenuCard'
 
@@ -21,14 +21,14 @@ export default function ProjectMainSideCard() {
   )
 
   return (
-    <>
-      <SidebarUserProfileCard />
+    <aside className="bg-[#fff] dark:bg-[#545c74] dark:bg-opacity-100 bg-opacity-70 p-3 rounded-lg">
+      <NameCard />
       <Button
         buttonContent={buttonContent}
         className="w-full mb-5 transition ease-in-out duration-300 rounded-lg shadow bg-indigo-400 dark:bg-indigo-400 hover:bg-indigo-600 hover:dark:bg-indigo-500 justify-center text-white dark:text-white focus:outline-none  font-medium  text-sm px-5 py-2.5 text-center inline-flex items-center"
         onClick={handleClickCreateProject}
       />
       <ProjectMenuCard />
-    </>
+    </aside>
   )
 }
