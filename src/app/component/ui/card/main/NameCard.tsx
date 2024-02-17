@@ -10,7 +10,7 @@ export default function NameCard() {
     setMount(true)
   }, [])
   return (
-    <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mb-5">
+    <div className="w-full max-w-sm border-[#7f8bb1] bg-[#f5f7fc] shadow-xl border-2 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mb-5">
       {mount ? (
         <>
           <div className="flex justify-end px-4 pt-4"></div>

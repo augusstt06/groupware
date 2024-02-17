@@ -3,7 +3,7 @@ import { useAppSelector } from '@/app/module/hooks/reduxHooks'
 export default function SidebarUserProfileCard() {
   const userInfo = useAppSelector((state) => state.userInfo)
   return (
-    <div className="w-full max-w-sm border border-gray-200 rounded-lg shadow dark:bg-[#1a202c] dark:border-gray-700 mb-5">
+    <div className="w-full max-w-sm border-2 border-[#7f8bb1] bg-[#f5f7fc] rounded-lg shadow dark:bg-[#1a202c] dark:border-gray-700 mb-5">
       <div className="flex justify-end px-4 pt-4"></div>
       <div className="flex flex-row items-center justify-start w-full mb-3 p-2">
         <div className="bg-gray-300 p-2 rounded-full">img</div>

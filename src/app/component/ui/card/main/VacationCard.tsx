@@ -2,7 +2,7 @@ import Button from '../../button/Button'
 
 export default function VacationCard() {
   return (
-    <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mb-5">
+    <div className="w-full max-w-sm border-2 border-[#7f8bb1] bg-[#f5f7fc] rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mb-5">
       <div className="flex justify-end px-4 pt-4"></div>
       <div className="flex flex-col items-center pb-4">
         <span className="md:text-base text-sm text-gray-500 dark:text-white w-4/5 mb-1">휴가</span>

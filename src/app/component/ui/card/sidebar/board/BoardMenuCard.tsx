@@ -9,7 +9,7 @@ export default function BoardMenuCard(props: BoardSideCardProps) {
   return (
     <>
       {props.myBoardList.length !== 0 ? (
-        <div className="w-full mt-5 max-w-sm border border-gray-200 rounded-lg shadow dark:bg-[#1a202c] dark:border-gray-700">
+        <div className="w-full mt-5 max-w-sm border-2 border-[#7f8bb1] bg-[#f5f7fc] rounded-lg shadow dark:bg-[#1a202c] dark:border-gray-700">
           <div className="flex flex-col items-center pb-4 w-full justify-center mt-3 border-b-1">
             <span className="text-medium font-bold text-gray-600 dark:text-white w-4/5 mb-1">
               {extraUserInfo.organizationName}

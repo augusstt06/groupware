@@ -6,7 +6,7 @@ export default function TeamMainHub(props: TeamMainHubProps) {
   const { teamList } = props
 
   return (
-    <div className="w-full max-w-7xl flex flex-col items-center dark:bg-[#1a202c] dark:border-gray-700 border border-gray-200 rounded-lg shadow-lg p-2 truncate">
+    <div className="w-full max-w-7xl flex flex-col items-center border-2 border-[#7f8bb1] bg-[#f5f7fc] dark:bg-[#1a202c] dark:border-gray-700 border border-gray-200 rounded-lg shadow-lg p-2 truncate">
       <div className="w-full p-3">
         <span className="font-bold">전체 팀</span>
       </div>
