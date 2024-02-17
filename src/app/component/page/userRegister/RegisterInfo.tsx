@@ -208,6 +208,7 @@ export default function RegisterInfo(props: RegisterInfoTypeProps) {
         )
     }
   }
+
   const inputList = [
     {
       title: REGISTER_EMAIL,
@@ -237,7 +238,7 @@ export default function RegisterInfo(props: RegisterInfoTypeProps) {
       isTailLabel: true,
       headLabelContent: <Si1Password />,
       tailLabelContent: pwdTailContent(REGISTER_CONFIRM_PWD),
-      placeholder: '비밀번호를 입력해주세요.',
+      placeholder: '비밀번호를 동일하게 입력해주세요.',
       useInput: pwdConfirmInput,
       type: props.isPwdConfirmView ? 'text' : 'password',
       className: '',
@@ -248,7 +249,7 @@ export default function RegisterInfo(props: RegisterInfoTypeProps) {
       isTailLabel: false,
       headLabelContent: <BsFillPersonVcardFill />,
       tailLabelContent: '',
-      placeholder: '이름 입력해주세요.',
+      placeholder: '이름을 입력해주세요.',
       useInput: nameInput,
       type: 'text',
       className: '',
@@ -314,7 +315,7 @@ export default function RegisterInfo(props: RegisterInfoTypeProps) {
         setErrorMsg(
           REGISTER_PWD,
           true,
-          '8글자 이상의 영어대소문자, 특수문자, 숫자를 포함한 문자열을 입력해주세요.',
+          '8글자 이상의 영어대소문자, 특수문자, 숫자를 포함해야 합니다.',
         )
       } else {
         setErrorMsg('', false, '')
@@ -351,11 +352,13 @@ export default function RegisterInfo(props: RegisterInfoTypeProps) {
             tailLabelContent={data.tailLabelContent}
             headLabelContent={data.headLabelContent}
             useInput={data.useInput}
-            className=""
+            className={data.className}
             placeholder={data.placeholder}
           />
           {renderAlert(data.title) ? (
-            <ErrorAlert description={errState.description} handleClickError={handleClickError} />
+            <div className="mb-2">
+              <ErrorAlert description={errState.description} handleClickError={handleClickError} />
+            </div>
           ) : (
             <></>
           )}

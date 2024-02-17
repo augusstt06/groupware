@@ -3,9 +3,9 @@
 'use client'
 
 import './globals.css'
-
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { Fredoka } from 'next/font/google'
 import { usePathname } from 'next/navigation'
 
 import GlobalNavigationbar from './component/ui/Navigationbar/GlobalNavigationbar'
@@ -15,6 +15,10 @@ import { ReduxProvider } from './providers/reduxProvider'
 import CustomThemeProvider from './providers/themeProvider'
 import { type ReactProps } from './types/pageTypes'
 
+const fredoka = Fredoka({
+  subsets: ['latin'],
+  weight: '300',
+})
 export default function RootLayout({ children }: ReactProps) {
   const queryClient = new QueryClient()
   const pathname = usePathname()
@@ -37,18 +41,18 @@ export default function RootLayout({ children }: ReactProps) {
   }
 
   const bodyClassName =
-    shouldSidebarVisible() === true ? 'pt-36 md:ml-52 2xl:ml-30 p-2 flex justify-center' : ''
+    shouldSidebarVisible() === true ? 'pt-36 md:ml-60 2xl:ml-30 p-2 flex justify-center' : ''
 
   return (
     <html lang="en" suppressHydrationWarning={true}>
-      <body className="font-mono dark:bg-[#121212] bg-[#fbfbfd]">
+      <body className="font-mono bg-gradient-to-l from-[#c9d6ff] to-[#e2e2e2] dark:from-[#2b2f3d]">
         <QueryClientProvider client={queryClient}>
           <ReactQueryDevtools initialIsOpen={true} />
           <ReduxProvider>
             <CustomThemeProvider>
               <GlobalNavigationbar />
               {shouldSidebarVisible() ?? false ? <Sidebar /> : <></>}
-              <div className={bodyClassName}>{children}</div>
+              <div className={bodyClassName + fredoka.className}>{children}</div>
               <div id="modal"></div>
             </CustomThemeProvider>
           </ReduxProvider>

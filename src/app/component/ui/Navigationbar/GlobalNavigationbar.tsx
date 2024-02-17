@@ -64,7 +64,7 @@ export default function GlobalNavigationbar() {
   return (
     <>
       {isGnbRender() ? (
-        <nav className="fixed bg-white border-gray-200 dark:bg-[#1a202c] z-999 w-full z-50">
+        <nav className="fixed bg-transparent border-gray-200 z-999 w-full z-50">
           <div className="flex items-center justify-between max-w-screen-xl mx-auto p-4">
             <Link href="/main" className="flex items-center space-x-3 rtl:space-x-reverse ml-3">
               <span className="self-center md:text-2xl text-medium font-semibold whitespace-nowrap dark:text-white">
@@ -87,7 +87,7 @@ export default function GlobalNavigationbar() {
             >
               <div
                 id="mega-menu-icons"
-                className="flex md:flex-row flex-col justify-center items-center w-full dark:bg-[#1a202c] bg-white"
+                className="flex md:flex-row flex-col justify-center items-center w-full"
                 ref={dropRef}
               >
                 <GnbCategoryMenu />

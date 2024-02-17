@@ -25,9 +25,9 @@ export default function DarkmodeBtn() {
   return (
     <>
       {currentTheme === 'dark' ? (
-        <BsSunFill onClick={changeThemeMode('light')} className="w-4 h-4" />
+        <BsSunFill onClick={changeThemeMode('light')} className="w-4 h-4 cursor-pointer" />
       ) : (
-        <BsMoonFill onClick={changeThemeMode('dark')} className="w-4 h-4" />
+        <BsMoonFill onClick={changeThemeMode('dark')} className="w-4 h-4 cursor-pointer" />
       )}
     </>
   )

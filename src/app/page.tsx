@@ -197,8 +197,8 @@ export default function Login() {
   }, [])
 
   return (
-    <div className="flex flex-col justify-center items-center h-screen px-4 place-content-center">
-      <div className="text-xl md:font-bold mb-6">로그인</div>
+    <section className="flex flex-col justify-center items-center h-screen px-4 place-content-center">
+      <h1 className="text-xl font-extrabold mb-6">Login</h1>
       <div className="w-4/5 md:w-2/5">
         {inputgroupList.map((data) => (
           <InputWithLabel
@@ -220,24 +220,24 @@ export default function Login() {
           <></>
         )}
         <div className="flex flex-col justify-center items-center mt-5">
-          <div className="w-2/3">
+          <div className="w-2/3 flex justify-center">
             <Button
               ref={buttonRef}
-              className="w-full text-white justify-center bg-indigo-400 transition duration-500 ease-in-out hover:bg-indigo-600 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:hover:bg-white dark:hover:text-indigo-500 mb-2 border-2 dark:hover:border-indigo-500/75"
+              className="w-2/3 text-white justify-center bg-indigo-400 transition duration-500 ease-in-out hover:bg-indigo-600 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:hover:bg-white dark:hover:text-indigo-500 mb-2 border-2 dark:hover:border-indigo-500/75"
               onClick={handleClickLogin}
               buttonContent={'로그인'}
             />
           </div>
           <div className="flex flex-row justify-around md:w-2/3 w-full mt-3">
-            <div className="text-sm text-gray-400 hover:text-gray-500 hover:font-bold hover:dark:text-gray-200">
+            <div className="transition ease-in-out duration-500 text-sm text-gray-500 hover:text-gray-600 hover:scale-110 hover:font-bold hover:dark:text-gray-200">
               <Link href={ROUTE_SIGNUP}>회원가입</Link>
             </div>
-            <div className="text-sm text-gray-400 hover:text-gray-500 hover:font-bold hover:dark:text-gray-200">
+            <div className="transition ease-in-out duration-500 text-sm text-gray-500 hover:text-gray-600 hover:scale-110 hover:font-bold hover:dark:text-gray-200">
               <Link href={ROUTE_FIND_PWD}>비밀번호찾기</Link>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </section>
   )
 }

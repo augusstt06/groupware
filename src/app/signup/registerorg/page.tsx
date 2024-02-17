@@ -185,13 +185,13 @@ export default function RegisterOrgLogin() {
   }, [])
 
   return (
-    <div className="flex flex-col justify-center items-center h-screen px-4">
+    <section className="flex flex-col justify-center items-center h-screen px-4">
       {organization === '' ? (
         <>
-          <h2 className="mb-5 md:text-2xl text-xl font-bold text-center">조직 선택</h2>
-          <span className="md:text-medium text-xs mt-5">
+          <h1 className="mb-5 md:text-2xl text-xl font-bold text-center">조직 선택</h1>
+          <h2 className="md:text-medium text-sm mt-5">
             조직 생성/코드 입력으로 조직에 참가해 주세요
-          </span>
+          </h2>
           <div className="flex flex-row md:w-1/3 w-full justify-around mt-10">
             <div
               onClick={() => {
@@ -255,6 +255,6 @@ export default function RegisterOrgLogin() {
           </div>
         </div>
       )}
-    </div>
+    </section>
   )
 }
