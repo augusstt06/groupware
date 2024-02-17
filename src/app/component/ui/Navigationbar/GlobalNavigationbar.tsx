@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 
+import { Chakra_Petch } from 'next/font/google'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
@@ -16,6 +17,11 @@ import { KEY_ACCESS_TOKEN, KEY_LOGIN_COMPLETE, TRUE } from '@/app/constant/const
 import { ERR_COOKIE_NOT_FOUND } from '@/app/constant/errorMsg'
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
+
+const chakra = Chakra_Petch({
+  subsets: ['latin'],
+  weight: '500',
+})
 
 export default function GlobalNavigationbar() {
   const pathname = usePathname()
@@ -70,7 +76,7 @@ export default function GlobalNavigationbar() {
               href="/main"
               className="flex items-center space-x-3 rtl:space-x-reverse ml-3 self-center md:text-2xl text-medium font-semibold whitespace-nowrap dark:text-white"
             >
-              GroupWare
+              <h1 className={chakra.className}>GroupWare</h1>
             </Link>
             {isConfirmOpen ? (
               <Confirm
@@ -116,7 +122,7 @@ export default function GlobalNavigationbar() {
         </nav>
       ) : (
         <div className="absolute right-10 top-10">
-          <a className="md:inline text-gray-800 dark:hover:text-yellow-400 hover:text-yellow-400 dark:text-white focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm  focus:outline-none dark:focus:ring-gray-800">
+          <a className="transition ease-in-out duration-500 md:inline text-gray-800 dark:hover:text-yellow-400 hover:text-yellow-400 dark:text-white">
             <DarkmodeBtn />
           </a>
         </div>

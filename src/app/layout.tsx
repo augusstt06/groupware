@@ -1,5 +1,3 @@
-// React query로 서버상태와 클라이언트 상태 로직분리
-
 'use client'
 
 import './globals.css'
