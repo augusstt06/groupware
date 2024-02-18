@@ -51,6 +51,11 @@ export default function GlobalNavigationbar() {
 
   const [mount, setMount] = useState(false)
   const dropRef = useRef<HTMLDivElement>(null)
+  const handleClickOutside = (e: MouseEvent) => {
+    if (dropRef.current !== null && !dropRef.current.contains(e.target as Node)) {
+      setIsDropOpen(false)
+    }
+  }
 
   const isGnbRender = () => {
     if (mount && loginCompleteState === TRUE && accessToken !== ERR_COOKIE_NOT_FOUND && isRender)
@@ -63,18 +68,25 @@ export default function GlobalNavigationbar() {
     setMount(true)
     setConfirmValue(false)
   }, [dropRef])
+
   useEffect(() => {
-    setIsDropOpen(false)
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
   }, [])
 
   return (
     <>
       {isGnbRender() ? (
         <nav className="fixed bg-transparent border-gray-200 z-999 w-full z-50">
-          <div className="flex items-center justify-between max-w-screen-xl mx-auto p-4">
+          <div className={`flex items-center justify-between max-w-screen-xl mx-auto p-4`}>
             <Link
               href="/main"
-              className=" hover:scale-110 transition ease-in-out duration-500 flex items-center space-x-3 ml-10 md:text-2xl text-medium font-semibold dark:text-white"
+              className="hover:scale-110 transition ease-in-out duration-500 flex items-center space-x-3 ml-10 md:text-2xl text-medium font-semibold dark:text-white"
+              onClick={() => {
+                setIsDropOpen(false)
+              }}
             >
               <h1 className={chakra.className}>GroupWare</h1>
             </Link>
@@ -90,14 +102,17 @@ export default function GlobalNavigationbar() {
             <div
               className={`${
                 isDropOpen ? '' : 'hidden'
-              } md:flex md:flex-row justify-center md:w-4/5 md:static md:border-none border-b border-1 dark:border-indigo-300 z-999 absolute top-14 left-0 right-0 flex flex-col`}
+              }  backdrop-blur-lg md:flex md:flex-row justify-center md:w-4/5 md:static md:border-none border-b border-1 dark:border-indigo-300 z-50 absolute top-14 left-0 right-0 flex flex-col `}
             >
               <div
-                id="mega-menu-icons"
                 className="flex md:flex-row flex-col justify-center items-center w-full"
                 ref={dropRef}
               >
-                <GnbCategoryMenu />
+                <GnbCategoryMenu
+                  handleClickDrop={() => {
+                    setIsDropOpen(false)
+                  }}
+                />
                 <GnbHamburgerMenu
                   isConfirmOpen={isConfirmOpen}
                   setIsConfirmOpen={setIsConfirmOpen}
