@@ -209,10 +209,10 @@ export default function Login() {
             />
           </div>
           <div className="flex flex-row justify-around md:w-2/3 w-full mt-3">
-            <div className="transition ease-in-out duration-500 text-sm text-gray-500 hover:text-blue-600 hover:scale-110 hover:font-bold hover:dark:text-gray-200">
+            <div className="transition ease-in-out duration-500 text-sm text-gray-500 hover:text-blue-600 hover:scale-110 hover:font-bold hover:dark:text-blue-600">
               <Link href={ROUTE_SIGNUP}>Sign Up</Link>
             </div>
-            <div className="transition ease-in-out duration-500 text-sm text-gray-500 hover:text-gray-600 hover:scale-110 hover:font-bold hover:dark:text-gray-200">
+            <div className="transition ease-in-out duration-500 text-sm text-gray-500 hover:text-red-600 hover:scale-110 hover:font-bold hover:dark:text-red-600">
               <Link href={ROUTE_FIND_PWD}>Forgot Password</Link>
             </div>
           </div>

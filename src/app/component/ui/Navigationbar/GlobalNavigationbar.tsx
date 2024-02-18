@@ -74,7 +74,7 @@ export default function GlobalNavigationbar() {
           <div className="flex items-center justify-between max-w-screen-xl mx-auto p-4">
             <Link
               href="/main"
-              className="flex items-center space-x-3 rtl:space-x-reverse ml-3 self-center md:text-2xl text-medium font-semibold whitespace-nowrap dark:text-white"
+              className=" hover:scale-110 transition ease-in-out duration-500 flex items-center space-x-3 ml-10 md:text-2xl text-medium font-semibold dark:text-white"
             >
               <h1 className={chakra.className}>GroupWare</h1>
             </Link>

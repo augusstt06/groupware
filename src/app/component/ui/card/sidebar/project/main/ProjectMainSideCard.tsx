@@ -21,7 +21,7 @@ export default function ProjectMainSideCard() {
   )
 
   return (
-    <aside className="bg-[#fff] dark:bg-[#545c74] dark:bg-opacity-100 bg-opacity-70 p-3 rounded-lg">
+    <aside className="bg-white dark:bg-opacity-10 bg-opacity-60 p-3 rounded-2xl shadow-2xl">
       <NameCard />
       <Button
         buttonContent={buttonContent}
