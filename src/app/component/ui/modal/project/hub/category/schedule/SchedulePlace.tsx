@@ -7,11 +7,7 @@ import { KAKAO_APP_KEY, KAKAO_AUTH_KEY } from '@/app/constant/constant'
 import { API_URL_KAKAO_MAP } from '@/app/constant/route/api-route-constant'
 import useInput from '@/app/module/hooks/reactHooks/useInput'
 import { moduleKaKaoGetFetch } from '@/app/module/utils/moduleFetch'
-import {
-  type KakaoMapProps,
-  type SchedulePlaceProps,
-  type SearchType,
-} from '@/app/types/ui/modalTypes'
+import { type KakaoMapProps, type SchedulePlaceProps, type SearchType } from '@/app/types/ui/modal'
 
 export default function SchedulePlace(props: SchedulePlaceProps) {
   const [searchInput, setSearchInput] = useState<SearchType[]>([])

@@ -13,8 +13,8 @@ import { API_URL_PROJECT_ISSUE_LIST } from '@/app/constant/route/api-route-const
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
 import { moduleGetFetch } from '@/app/module/utils/moduleFetch'
-import { type SuccessResponseType } from '@/app/types/moduleTypes'
-import { type IssueResponseType, type ScheduleType } from '@/app/types/variableTypes'
+import { type SuccessResponseType } from '@/app/types/module'
+import { type IssueResponseType, type ScheduleType } from '@/app/types/variable'
 
 export default function ProjectDetailTodo() {
   const query = useParams()

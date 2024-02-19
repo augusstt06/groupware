@@ -30,13 +30,13 @@ import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
 import { moduleGetFetch, modulePatchFetch } from '@/app/module/utils/moduleFetch'
 import { changeProjectDetailCategoryReducer } from '@/app/store/reducers/project/projectDetailCategoryReducer'
-import { type SuccessResponseType } from '@/app/types/moduleTypes'
+import { type SuccessResponseType } from '@/app/types/module'
 import {
   type ColumnListType,
   type ColumnType,
   type IssueResponseType,
   type KanbanBoardColumnType,
-} from '@/app/types/variableTypes'
+} from '@/app/types/variable'
 
 export default function ProjectDetailTask() {
   const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)

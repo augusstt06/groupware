@@ -1,6 +1,6 @@
 import TeamCard from '../../ui/card/team/TeamCard'
 
-import { type TeamMainHubProps } from '@/app/types/ui/uiTypes'
+import { type TeamMainHubProps } from '@/app/types/ui/extra'
 
 export default function TeamMainHub(props: TeamMainHubProps) {
   const { teamList } = props

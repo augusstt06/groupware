@@ -33,8 +33,8 @@ import {
   positionReducer,
   pwdReducer,
 } from '@/app/store/reducers/login/signupInfoReducer'
-import { type FailResponseType, type ModuleGetFetchProps } from '@/app/types/moduleTypes'
-import { type RegisterInfoTypeProps } from '@/app/types/pageTypes'
+import { type FailResponseType, type ModuleGetFetchProps } from '@/app/types/module'
+import { type RegisterInfoTypeProps } from '@/app/types/pageType'
 
 export default function RegisterInfo(props: RegisterInfoTypeProps) {
   const dispatch = useAppDispatch()

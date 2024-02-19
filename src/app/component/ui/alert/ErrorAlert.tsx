@@ -1,7 +1,7 @@
 import { CgDanger } from 'react-icons/cg'
 import { IoCloseSharp } from 'react-icons/io5'
 
-import { type ErrorAlertType } from '@/app/types/ui/alertTypes'
+import { type ErrorAlertType } from '@/app/types/ui/alert'
 
 export default function ErrorAlert(props: ErrorAlertType) {
   return (

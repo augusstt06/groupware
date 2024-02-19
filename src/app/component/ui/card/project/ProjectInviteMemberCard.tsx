@@ -1,6 +1,6 @@
 import { IoClose } from 'react-icons/io5'
 
-import { type ProjectInviteMemberCardProps } from '@/app/types/ui/modalTypes'
+import { type ProjectInviteMemberCardProps } from '@/app/types/ui/modal'
 
 export default function ProjectInviteMemberCard(props: ProjectInviteMemberCardProps) {
   const { user } = props

@@ -15,7 +15,7 @@ import {
   PROJECT_CARD_RES_COLOR_YELLOW,
 } from '@/app/constant/constant'
 import { ROUTE_TEAM_DETAIL } from '@/app/constant/route/route-constant'
-import { type TeamCardProps } from '@/app/types/ui/cardTypes'
+import { type TeamCardProps } from '@/app/types/ui/card'
 
 export default function TeamCard(props: TeamCardProps) {
   // component variables

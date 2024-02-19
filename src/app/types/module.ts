@@ -11,7 +11,7 @@ import { type AppRouterInstance } from 'next/dist/shared/lib/app-router-context.
 
 import { type KEY_UUID, type KEY_X_ORGANIZATION_CODE } from '../constant/constant'
 
-import { type ScheduleListType, type TaskListType } from './variableTypes'
+import { type ScheduleListType, type TaskListType } from './variable'
 
 export type UnionStrNumber = string | number
 

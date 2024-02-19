@@ -1,5 +1,4 @@
 'use client'
-
 import { useEffect, useState } from 'react'
 
 import { useQuery } from '@tanstack/react-query'
@@ -113,7 +112,6 @@ export default function Board() {
       return res as SuccessResponseType<BoardResponseType>
     },
   })
-
   const successFetchBoardPostings = () => {
     const boardPostingList = (boardPostingData as SuccessResponseType<BoardResponseType>).result
     if (pageSize === 1) {
@@ -149,7 +147,7 @@ export default function Board() {
   return (
     <section className="w-full 2xl:w-2/3 h-4/5 flex flex-col items-center">
       <BoardHub
-        title={BOARD_MAIN_TITLE.toUpperCase()}
+        title={BOARD_MAIN_TITLE}
         boardList={boardList}
         myBoardList={myBoardData?.result as MyBoardType[]}
         selectBoard={selectBoard}

@@ -37,7 +37,7 @@ import {
   type CustomDecodeTokenType,
   type ModuleGetFetchProps,
   type SuccessResponseType,
-} from '../types/moduleTypes'
+} from '../types/module'
 
 export default function Main() {
   const dispatch = useAppDispatch()

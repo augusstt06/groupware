@@ -6,8 +6,8 @@ import ProjectDetailTable from '@/app/component/ui/table/project/ProjectDetailTa
 import { PROJECT_DETAIL_CATEGORY_HOME } from '@/app/constant/constant'
 import { useAppDispatch } from '@/app/module/hooks/reduxHooks'
 import { changeProjectDetailCategoryReducer } from '@/app/store/reducers/project/projectDetailCategoryReducer'
-import { type ProjectDetailMainProps } from '@/app/types/ui/uiTypes'
-import { type ProjectIssueType } from '@/app/types/variableTypes'
+import { type ProjectDetailMainProps } from '@/app/types/ui/extra'
+import { type ProjectIssueType } from '@/app/types/variable'
 
 export default function ProjectDetailMain(props: ProjectDetailMainProps) {
   const dispatch = useAppDispatch()

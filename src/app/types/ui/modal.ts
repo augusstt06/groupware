@@ -1,12 +1,7 @@
 import { type Dispatch, type ReactEventHandler, type SetStateAction } from 'react'
 
-import { type UseInputProps } from '../moduleTypes'
-import {
-  type BoardListResponseType,
-  type ColleagueType,
-  type MyBoardType,
-  type ProjectAlertStateType,
-} from '../variableTypes'
+import { type UseInputProps } from '../module'
+import { type BoardListResponseType, type ColleagueType, type MyBoardType } from '../variable'
 
 export type BoardWriteModalprops = {
   currentBoard: MyBoardType | null
@@ -18,14 +13,6 @@ export type CreateProjectModalColorSelectProps = {
   }>
   handleSelectColor: (colorName: string) => void
   selectColor: string
-}
-
-export type CreateProjectModalInputProps = {
-  projectName: UseInputProps
-}
-
-export type CreateProjectModalConfirmBtnProps = {
-  handleClickCreateProject: () => void
 }
 
 export type CreateProjectModalProps = {
@@ -47,9 +34,6 @@ export type CreateTeamModalProps = {
   selectColor: string
 }
 
-export type ProjectAlertModalProps = CreateProjectModalProps & {
-  alertState: ProjectAlertStateType
-}
 export type ModalBtnProps = {
   onClose: ReactEventHandler
   btnValue: string
@@ -57,10 +41,8 @@ export type ModalBtnProps = {
 }
 
 export type UserStateModalProps = {
-  isConfirmOpen: boolean
-  setIsConfirmOpen: Dispatch<SetStateAction<boolean>>
-  confirmValue: boolean
-  setConfirmValue: Dispatch<SetStateAction<boolean>>
+  changeDialogConfirmFn: (fn: () => Promise<void>) => void
+  handleOpenDialog: () => void
   setIsUserStateOpen: Dispatch<SetStateAction<boolean>>
 }
 

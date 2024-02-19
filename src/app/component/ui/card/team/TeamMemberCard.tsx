@@ -1,7 +1,7 @@
 import { MdOutlineEmail } from 'react-icons/md'
 import { TbUsersGroup } from 'react-icons/tb'
 
-import { type TeamMemberCardProps } from '@/app/types/ui/cardTypes'
+import { type TeamMemberCardProps } from '@/app/types/ui/card'
 
 export default function TeamMemberCard(props: TeamMemberCardProps) {
   const { email, name, position } = props.memberInfo

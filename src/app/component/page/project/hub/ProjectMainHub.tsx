@@ -1,6 +1,6 @@
 import ProjectCard from '@/app/component/ui/card/project/ProjectCard'
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
-import { type ProjectMainHubProps } from '@/app/types/ui/uiTypes'
+import { type ProjectMainHubProps } from '@/app/types/ui/extra'
 
 export default function ProjectMainHub(props: ProjectMainHubProps) {
   const projectCategory = useAppSelector((state) => state.projectMainCategory.selectProjectMenu)

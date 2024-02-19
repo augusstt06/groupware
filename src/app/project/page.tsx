@@ -42,12 +42,12 @@ import { moduleCheckUserState } from '../module/utils/check/moduleCheckUserState
 import { moduleGetCookie } from '../module/utils/moduleCookie'
 import { moduleGetFetch, modulePostFetch } from '../module/utils/moduleFetch'
 import { createProjectModalReducer } from '../store/reducers/project/projectModalReducer'
-import { type DialogBtnValueType, type SuccessResponseType } from '../types/moduleTypes'
+import { type DialogBtnValueType, type SuccessResponseType } from '../types/module'
 import {
   type DialogTextType,
   type FetchPostProjectResponseType,
   type ProjectListResponseType,
-} from '../types/variableTypes'
+} from '../types/variable'
 
 export default function Project() {
   const router = useRouter()

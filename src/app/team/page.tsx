@@ -33,12 +33,8 @@ import { moduleCheckUserState } from '../module/utils/check/moduleCheckUserState
 import { moduleGetCookie } from '../module/utils/moduleCookie'
 import { moduleGetFetch, modulePostFetch } from '../module/utils/moduleFetch'
 import { createTeamModalReducer } from '../store/reducers/team/teamModalReducer'
-import { type SuccessResponseType } from '../types/moduleTypes'
-import {
-  type DialogTextType,
-  type GetTeamListType,
-  type TeamResponseType,
-} from '../types/variableTypes'
+import { type SuccessResponseType } from '../types/module'
+import { type DialogTextType, type GetTeamListType, type TeamResponseType } from '../types/variable'
 
 export default function Team() {
   // outer variables

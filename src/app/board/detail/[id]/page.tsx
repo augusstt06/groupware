@@ -45,8 +45,8 @@ import {
   type CustomDecodeTokenType,
   type ModuleGetFetchProps,
   type SuccessResponseType,
-} from '@/app/types/moduleTypes'
-import { type CommentType, type DetailResponseType } from '@/app/types/variableTypes'
+} from '@/app/types/module'
+import { type CommentType, type DetailResponseType } from '@/app/types/variable'
 
 const Viewbox = dynamic(async () => import('../../../component/ui/editor/TextViewer'), {
   ssr: false,

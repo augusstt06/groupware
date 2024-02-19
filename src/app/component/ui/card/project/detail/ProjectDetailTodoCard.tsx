@@ -1,7 +1,7 @@
 import { FaCheck } from 'react-icons/fa'
 
 import { moduleConvertDate } from '@/app/module/utils/moduleTime'
-import { type ProjectDetailTodoCardProps } from '@/app/types/ui/cardTypes'
+import { type ProjectDetailTodoCardProps } from '@/app/types/ui/card'
 
 export default function ProjectDetailTodoCard(props: ProjectDetailTodoCardProps) {
   return (

@@ -4,7 +4,7 @@ import {
   type ModuleGetFetchProps,
   type ModulePostFetchProps,
   type ModulePostFileFetchProps,
-} from '@/app/types/moduleTypes'
+} from '@/app/types/module'
 
 type searchType = {
   address_name: string

@@ -11,7 +11,7 @@ import {
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { changeProjectDetailCategoryReducer } from '@/app/store/reducers/project/projectDetailCategoryReducer'
 import { projectInviteModalReducer } from '@/app/store/reducers/project/projectModalReducer'
-import { type ProjectDetailTabProps } from '@/app/types/ui/uiTypes'
+import { type ProjectDetailTabProps } from '@/app/types/ui/extra'
 
 export default function ProjectDetailTab(props: ProjectDetailTabProps) {
   const dispatch = useAppDispatch()

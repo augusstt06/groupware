@@ -23,8 +23,8 @@ import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
 import { modulePatchFetch, modulePostFetch } from '@/app/module/utils/moduleFetch'
 import { updateAttendanceStatusReducer } from '@/app/store/reducers/main/userInfoReducer'
-import { type FailResponseType, type ModulePostFetchProps } from '@/app/types/moduleTypes'
-import { type HistoryCardProps } from '@/app/types/ui/cardTypes'
+import { type FailResponseType, type ModulePostFetchProps } from '@/app/types/module'
+import { type HistoryCardProps } from '@/app/types/ui/card'
 
 export default function HistoryCard(props: HistoryCardProps) {
   const dispatch = useAppDispatch()

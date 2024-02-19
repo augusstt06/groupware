@@ -1,8 +1,8 @@
 import type React from 'react'
 import { type Dispatch, type SetStateAction } from 'react'
 
-import { type UseInputProps } from '../moduleTypes'
-import { type MyBoardType, type SelectListType } from '../variableTypes'
+import { type UseInputProps } from '../module'
+import { type MyBoardType, type SelectListType } from '../variable'
 
 // basic
 export type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {

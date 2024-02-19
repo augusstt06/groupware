@@ -1,4 +1,4 @@
-import { type LabelIconProps, type LabelProps } from '@/app/types/ui/uiTypes'
+import { type LabelIconProps, type LabelProps } from '@/app/types/ui/extra'
 
 export function Label(props: LabelProps) {
   return (

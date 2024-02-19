@@ -4,7 +4,7 @@ import { FaRegComment, FaRegHeart } from 'react-icons/fa'
 
 import { ROUTE_POSTING_DETAIL } from '@/app/constant/route/route-constant'
 import { moduleConvertDate } from '@/app/module/utils/moduleTime'
-import { type BoardCardType } from '@/app/types/ui/cardTypes'
+import { type BoardCardType } from '@/app/types/ui/card'
 
 const Viewbox = dynamic(async () => import('../../../ui/editor/TextViewer'), {
   ssr: false,

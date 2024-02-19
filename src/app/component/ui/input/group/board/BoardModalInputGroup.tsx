@@ -23,11 +23,8 @@ import {
   type FailResponseType,
   type ModulePostFileFetchProps,
   type SuccessResponseType,
-} from '@/app/types/moduleTypes'
-import {
-  type BoardCategoryInputProps,
-  type BoardModalInputGruopProps,
-} from '@/app/types/ui/inputTypes'
+} from '@/app/types/module'
+import { type BoardCategoryInputProps, type BoardModalInputGruopProps } from '@/app/types/ui/input'
 
 export default function BoardModalInputGroup(props: BoardModalInputGruopProps) {
   const userInfo = useAppSelector((state) => state.userInfo)
