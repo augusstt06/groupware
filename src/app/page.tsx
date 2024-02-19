@@ -2,22 +2,22 @@
 
 import { useEffect, useRef, useState } from 'react'
 
+import { Chakra_Petch } from 'next/font/google'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { AiOutlineMail } from 'react-icons/ai'
-import { IoMdEye, IoMdEyeOff } from 'react-icons/io'
-import { RiLockPasswordFill } from 'react-icons/ri'
 
 import ErrorAlert from './component/ui/alert/ErrorAlert'
 import Button from './component/ui/button/Button'
-import InputWithLabel from './component/ui/input/InputWithLabel'
+import FloatingInput from './component/ui/input/FloatingInput'
 import {
   API_SUCCESS_CODE,
   FALSE,
   KEY_ACCESS_TOKEN,
   KEY_LOGIN_COMPLETE,
   REGISTER_EMAIL,
+  REGISTER_EMAIL_EN,
   REGISTER_PWD,
+  REGISTER_PWD_EN,
   TRUE,
 } from './constant/constant'
 import {
@@ -48,6 +48,10 @@ import {
   type UseInputProps,
 } from './types/moduleTypes'
 
+const chakra = Chakra_Petch({
+  subsets: ['latin'],
+  weight: '500',
+})
 export default function Login() {
   const buttonRef = useRef<HTMLButtonElement>(null)
   const [emailInput, pwdInput]: UseInputProps[] = [REGISTER_EMAIL, REGISTER_PWD].map(
@@ -124,53 +128,27 @@ export default function Login() {
     void fetchLogin()
   }
 
-  const isPwdViewComponent = () => {
-    const handleClick = () => {
-      setIsPwdView(!isPwdView)
-    }
-    if (isPwdView) {
-      return (
-        <Button
-          buttonContent={
-            <IoMdEyeOff className="w-4 h-4 text-black hover:text-white dark:text-white" />
-          }
-          className="absolute top-0 end-0 p-2.5 text-sm font-medium h-full text-white bg-gray-50 rounded-e-lg border dark:border-gray-600 hover:bg-indigo-200  dark:bg-gray-700 dark:hover:bg-indigo-400 ease-in-out transition duration-400"
-          onClick={handleClick}
-        />
-      )
-    }
-    return (
-      <Button
-        buttonContent={<IoMdEye className="w-4 h-4 text-black dark:text-white" />}
-        className="absolute top-0 end-0 p-2.5 text-sm font-medium h-full text-white bg-gray-50 rounded-e-lg border dark:border-gray-600 hover:bg-indigo-200  dark:bg-gray-700 dark:hover:bg-indigo-400 ease-in-out transition duration-400"
-        onClick={handleClick}
-      />
-    )
-  }
-
   const pwdViewType = () => {
     if (isPwdView) return 'text'
     return 'password'
   }
+  const handleViewPwd = () => {
+    setIsPwdView(!isPwdView)
+  }
 
   const inputgroupList = [
     {
-      headLabelContent: <AiOutlineMail />,
-      title: REGISTER_EMAIL,
-      placeholder: 'abc12@sample.com',
+      isViewActive: false,
+      title: REGISTER_EMAIL_EN,
       useInput: emailInput,
-      type: 'text',
-      isTailLabel: false,
-      tailLabelContent: <></>,
+      inputViewType: 'text',
     },
     {
-      headLabelContent: <RiLockPasswordFill />,
-      title: REGISTER_PWD,
-      placeholder: 'At least 8 characters',
+      isViewActive: true,
+      title: REGISTER_PWD_EN,
       useInput: pwdInput,
-      type: pwdViewType(),
-      isTailLabel: true,
-      tailLabelContent: isPwdViewComponent(),
+      inputViewType: pwdViewType(),
+      handleViewType: handleViewPwd,
     },
   ]
   useEffect(() => {
@@ -197,22 +175,24 @@ export default function Login() {
   }, [])
 
   return (
-    <div className="flex flex-col justify-center items-center h-screen px-4 place-content-center">
-      <div className="text-xl md:font-bold mb-6">로그인</div>
+    <section className="flex flex-col justify-center items-center h-screen px-4 place-content-center">
+      <section className="flex flex-col items-center mb-5">
+        <div className="text-2xl font-extrabold mb-2">
+          <h1 className={chakra.className}>WelCome to Groupware</h1>
+        </div>
+      </section>
       <div className="w-4/5 md:w-2/5">
-        {inputgroupList.map((data) => (
-          <InputWithLabel
-            key={data.title}
-            isHeadLabel={true}
-            isTailLabel={data.isTailLabel}
-            headLabelContent={data.headLabelContent}
-            tailLabelContent={data.tailLabelContent}
-            title={data.title}
-            placeholder={data.placeholder}
-            useInput={data.useInput}
-            type={data.type}
-            className=""
-          />
+        {inputgroupList.map((data, index) => (
+          <div key={index} className="mb-4">
+            <FloatingInput
+              title={data.title}
+              inputViewType={data.inputViewType}
+              isViewActive={data.isViewActive}
+              value={data.useInput.value}
+              onChange={data.useInput.onChange}
+              handleViewType={data.handleViewType}
+            />
+          </div>
         ))}
         {errorState.isError ? (
           <ErrorAlert description={errorState.description} handleClickError={handleClickError} />
@@ -220,24 +200,24 @@ export default function Login() {
           <></>
         )}
         <div className="flex flex-col justify-center items-center mt-5">
-          <div className="w-2/3">
+          <div className="w-2/3 flex justify-center">
             <Button
               ref={buttonRef}
-              className="w-full text-white justify-center bg-indigo-400 transition duration-500 ease-in-out hover:bg-indigo-600 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:hover:bg-white dark:hover:text-indigo-500 mb-2 border-2 dark:hover:border-indigo-500/75"
+              className="w-2/3 text-white justify-center bg-indigo-400 transition duration-500 ease-in-out hover:bg-indigo-600 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mb-2 border-2"
               onClick={handleClickLogin}
-              buttonContent={'로그인'}
+              buttonContent={'Sign In'}
             />
           </div>
           <div className="flex flex-row justify-around md:w-2/3 w-full mt-3">
-            <div className="text-sm text-gray-400 hover:text-gray-500 hover:font-bold hover:dark:text-gray-200">
-              <Link href={ROUTE_SIGNUP}>회원가입</Link>
+            <div className="transition ease-in-out duration-500 text-sm text-gray-500 hover:text-blue-600 hover:scale-110 hover:font-bold hover:dark:text-blue-600">
+              <Link href={ROUTE_SIGNUP}>Sign Up</Link>
             </div>
-            <div className="text-sm text-gray-400 hover:text-gray-500 hover:font-bold hover:dark:text-gray-200">
-              <Link href={ROUTE_FIND_PWD}>비밀번호찾기</Link>
+            <div className="transition ease-in-out duration-500 text-sm text-gray-500 hover:text-red-600 hover:scale-110 hover:font-bold hover:dark:text-red-600">
+              <Link href={ROUTE_FIND_PWD}>Forgot Password</Link>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </section>
   )
 }

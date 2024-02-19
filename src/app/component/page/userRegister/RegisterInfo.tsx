@@ -1,23 +1,16 @@
 import { useEffect, useState } from 'react'
 
-import { AiFillPhone, AiOutlineMail } from 'react-icons/ai'
-import { BsFillPersonVcardFill } from 'react-icons/bs'
-import { IoMdEye, IoMdEyeOff } from 'react-icons/io'
-import { RiLockPasswordFill, RiTeamLine } from 'react-icons/ri'
-import { Si1Password } from 'react-icons/si'
-
 import ErrorAlert from '../../ui/alert/ErrorAlert'
-import Button from '../../ui/button/Button'
-import InputWithLabel from '../../ui/input/InputWithLabel'
+import FloatingInput from '../../ui/input/FloatingInput'
 
 import {
   API_SUCCESS_CODE,
-  REGISTER_CONFIRM_PWD,
-  REGISTER_EMAIL,
-  REGISTER_NAME,
-  REGISTER_PHONENUMBER,
-  REGISTER_POSITION,
-  REGISTER_PWD,
+  REGISTER_CONFIRM_PWD_EN,
+  REGISTER_EMAIL_EN,
+  REGISTER_NAME_EN,
+  REGISTER_PHONENUMBER_EN,
+  REGISTER_POSITION_EN,
+  REGISTER_PWD_EN,
   VALIDATE_EMAIL_TYPE,
   VALIDATE_PHONE_NUM_TYPE,
   VALIDATE_PWD_TYPE,
@@ -56,12 +49,12 @@ export default function RegisterInfo(props: RegisterInfoTypeProps) {
     return useInput(storedValue as string, title, limit)
   }
 
-  const emailInput = dynamicInput(true, REGISTER_EMAIL, 100)
-  const pwdInput = dynamicInput(false, REGISTER_PWD, 20)
-  const pwdConfirmInput = dynamicInput(false, REGISTER_CONFIRM_PWD, 20)
-  const nameInput = dynamicInput(true, REGISTER_NAME, 10)
-  const positionInput = dynamicInput(true, REGISTER_POSITION, 10)
-  const phoneNumberInput = dynamicInput(true, REGISTER_PHONENUMBER, 13)
+  const emailInput = dynamicInput(true, REGISTER_EMAIL_EN, 100)
+  const pwdInput = dynamicInput(false, REGISTER_PWD_EN, 20)
+  const pwdConfirmInput = dynamicInput(false, REGISTER_CONFIRM_PWD_EN, 20)
+  const nameInput = dynamicInput(true, REGISTER_NAME_EN, 10)
+  const positionInput = dynamicInput(true, REGISTER_POSITION_EN, 10)
+  const phoneNumberInput = dynamicInput(true, REGISTER_PHONENUMBER_EN, 13)
 
   const [errState, setErrorState] = useState({
     type: '',
@@ -84,12 +77,6 @@ export default function RegisterInfo(props: RegisterInfoTypeProps) {
     })
   }
 
-  const handlePwdView = () => {
-    props.setIsPwdView(!props.isPwdView)
-  }
-  const handlePwdConfirmView = () => {
-    props.setIsPwdConfirmView(!props.isPwdConfirmView)
-  }
   const fetchEmailAvaiable = async (props: ModuleGetFetchProps): Promise<void> => {
     try {
       const res = await moduleGetFetch<string>(props)
@@ -103,13 +90,13 @@ export default function RegisterInfo(props: RegisterInfoTypeProps) {
       if (err instanceof Error) {
         switch (err.message) {
           case ERR_MESSAGE_USER_EXIST:
-            setErrorMsg(REGISTER_EMAIL, true, errExist('이메일 주소'))
+            setErrorMsg(REGISTER_EMAIL_EN, true, errExist('이메일 주소'))
             break
           case ERR_MESSAGE_CHECK_MAIL:
-            setErrorMsg(REGISTER_EMAIL, true, '이메일 형식이 올바르지 않습니다.')
+            setErrorMsg(REGISTER_EMAIL_EN, true, '이메일 형식이 올바르지 않습니다.')
             break
           default:
-            setErrorMsg(REGISTER_EMAIL, true, errDefault('이메일 확인'))
+            setErrorMsg(REGISTER_EMAIL_EN, true, errDefault('이메일 확인'))
         }
       }
     }
@@ -123,7 +110,7 @@ export default function RegisterInfo(props: RegisterInfoTypeProps) {
     const isPhoneNumValidate = inputValidate(validateProps)
     if (phoneNumberInput.value.length !== 0) {
       if (!isPhoneNumValidate) {
-        setErrorMsg(REGISTER_PHONENUMBER, true, '전화번호 형식이 잘못되었습니다.')
+        setErrorMsg(REGISTER_PHONENUMBER_EN, true, '전화번호 형식이 잘못되었습니다.')
         dispatch(
           phoneNumberReducer({
             isCheck: false,
@@ -131,7 +118,7 @@ export default function RegisterInfo(props: RegisterInfoTypeProps) {
           }),
         )
       } else {
-        setErrorMsg(REGISTER_PHONENUMBER, false, '')
+        setErrorMsg(REGISTER_PHONENUMBER_EN, false, '')
         dispatch(
           phoneNumberReducer({
             isCheck: true,
@@ -165,115 +152,56 @@ export default function RegisterInfo(props: RegisterInfoTypeProps) {
   const renderAlert = (title: string) => {
     return (
       errState.isError &&
-      (title === REGISTER_EMAIL ||
-        title === REGISTER_PHONENUMBER ||
-        title === REGISTER_CONFIRM_PWD ||
-        title === REGISTER_PWD) &&
+      (title === REGISTER_EMAIL_EN ||
+        title === REGISTER_PHONENUMBER_EN ||
+        title === REGISTER_CONFIRM_PWD_EN ||
+        title === REGISTER_PWD_EN) &&
       errState.type === title
     )
   }
 
-  const pwdViewButton = (viewfunc: () => void, content: React.ReactNode) => (
-    <Button
-      className="absolute top-0 end-0 p-2.5 text-sm font-medium h-full text-white bg-gray-50 rounded-e-lg border dark:border-gray-600 hover:bg-indigo-200  dark:bg-gray-700 dark:hover:bg-indigo-400 "
-      onClick={viewfunc}
-      buttonContent={content}
-    />
-  )
-
-  const pwdTailContent = (title: string) => {
-    switch (title) {
-      case REGISTER_PWD:
-        if (props.isPwdView) {
-          return pwdViewButton(
-            handlePwdView,
-            <IoMdEye className="w-4 h-4 text-black dark:text-white" />,
-          )
-        }
-        return pwdViewButton(
-          handlePwdView,
-          <IoMdEyeOff className="w-4 h-4 text-black dark:text-white" />,
-        )
-
-      case REGISTER_CONFIRM_PWD:
-        if (props.isPwdConfirmView) {
-          return pwdViewButton(
-            handlePwdConfirmView,
-            <IoMdEye className="w-4 h-4 text-black dark:text-white" />,
-          )
-        }
-        return pwdViewButton(
-          handlePwdConfirmView,
-          <IoMdEyeOff className="w-4 h-4 text-black dark:text-white" />,
-        )
-    }
-  }
   const inputList = [
     {
-      title: REGISTER_EMAIL,
-      isHeadLabel: true,
-      isTailLabel: false,
-      headLabelContent: <AiOutlineMail />,
-      tailLabelContent: '',
-      placeholder: '이메일을 입력해주세요.',
+      isViewActive: false,
+      title: REGISTER_EMAIL_EN,
       useInput: emailInput,
-      type: 'text',
-      className: '',
+      inputViewType: 'text',
     },
     {
-      title: REGISTER_PWD,
-      isHeadLabel: true,
-      isTailLabel: true,
-      headLabelContent: <RiLockPasswordFill />,
-      tailLabelContent: pwdTailContent(REGISTER_PWD),
-      placeholder: '비밀번호를 입력해주세요.',
+      isViewActive: true,
+      title: REGISTER_PWD_EN,
       useInput: pwdInput,
-      type: props.isPwdView ? 'text' : 'password',
-      className: '',
+      inputViewType: props.isPwdView ? 'text' : 'password',
+      handleViewType: () => {
+        props.setIsPwdView(!props.isPwdView)
+      },
     },
     {
-      title: REGISTER_CONFIRM_PWD,
-      isHeadLabel: true,
-      isTailLabel: true,
-      headLabelContent: <Si1Password />,
-      tailLabelContent: pwdTailContent(REGISTER_CONFIRM_PWD),
-      placeholder: '비밀번호를 입력해주세요.',
+      isViewActive: true,
+      title: REGISTER_CONFIRM_PWD_EN,
       useInput: pwdConfirmInput,
-      type: props.isPwdConfirmView ? 'text' : 'password',
-      className: '',
+      inputViewType: props.isPwdConfirmView ? 'text' : 'password',
+      handleViewType: () => {
+        props.setIsPwdConfirmView(!props.isPwdConfirmView)
+      },
     },
     {
-      title: REGISTER_NAME,
-      isHeadLabel: true,
-      isTailLabel: false,
-      headLabelContent: <BsFillPersonVcardFill />,
-      tailLabelContent: '',
-      placeholder: '이름 입력해주세요.',
+      isViewActive: false,
+      title: REGISTER_NAME_EN,
       useInput: nameInput,
-      type: 'text',
-      className: '',
+      inputViewType: 'text',
     },
     {
-      title: REGISTER_POSITION,
-      isHeadLabel: true,
-      isTailLabel: false,
-      headLabelContent: <RiTeamLine />,
-      tailLabelContent: '',
-      placeholder: '직무를 입력해주세요.',
+      isViewActive: false,
+      title: REGISTER_POSITION_EN,
       useInput: positionInput,
-      type: 'text',
-      className: '',
+      inputViewType: 'text',
     },
     {
-      title: REGISTER_PHONENUMBER,
-      isHeadLabel: true,
-      isTailLabel: false,
-      headLabelContent: <AiFillPhone />,
-      tailLabelContent: '',
-      placeholder: '휴대폰 번호를 입력해주세요.',
+      isViewActive: false,
+      title: REGISTER_PHONENUMBER_EN,
       useInput: phoneNumberInput,
-      type: 'text',
-      className: '',
+      inputViewType: 'text',
     },
   ]
 
@@ -293,7 +221,7 @@ export default function RegisterInfo(props: RegisterInfoTypeProps) {
         void fetchEmailAvaiable(fetchProps)
       }
     }
-    const inputElement = document.getElementById(REGISTER_EMAIL)
+    const inputElement = document.getElementById(REGISTER_EMAIL_EN)
     inputElement?.addEventListener('blur', handleEmailInputEvent)
     return () => {
       inputElement?.removeEventListener('blur', handleEmailInputEvent)
@@ -312,9 +240,9 @@ export default function RegisterInfo(props: RegisterInfoTypeProps) {
     if (pwdInput.value !== '') {
       if (!isPwdValidate) {
         setErrorMsg(
-          REGISTER_PWD,
+          REGISTER_PWD_EN,
           true,
-          '8글자 이상의 영어대소문자, 특수문자, 숫자를 포함한 문자열을 입력해주세요.',
+          '8글자 이상의 영어대소문자, 특수문자, 숫자를 포함해야 합니다.',
         )
       } else {
         setErrorMsg('', false, '')
@@ -325,12 +253,13 @@ export default function RegisterInfo(props: RegisterInfoTypeProps) {
 
     if (isPwdEmpty) {
       if (pwdInput.value !== pwdConfirmInput.value) {
-        setErrorMsg(REGISTER_CONFIRM_PWD, true, '비밀번호가 다릅니다.')
+        setErrorMsg(REGISTER_CONFIRM_PWD_EN, true, '비밀번호가 다릅니다.')
       } else {
         setErrorMsg('', false, '')
       }
     }
   }, [pwdInput.value, pwdConfirmInput.value])
+
   useEffect(() => {
     if (positionInput.value !== '') {
       dispatch(positionReducer({ isCheck: true, value: positionInput.value }))
@@ -342,20 +271,20 @@ export default function RegisterInfo(props: RegisterInfoTypeProps) {
   return (
     <>
       {inputList.map((data) => (
-        <div key={data.title}>
-          <InputWithLabel
-            type={data.type}
+        <div key={data.title} className="mb-5">
+          <FloatingInput
+            isViewActive={data.isViewActive}
             title={data.title}
-            isHeadLabel={data.isHeadLabel}
-            isTailLabel={data.isTailLabel}
-            tailLabelContent={data.tailLabelContent}
-            headLabelContent={data.headLabelContent}
-            useInput={data.useInput}
-            className=""
-            placeholder={data.placeholder}
+            value={data.useInput.value}
+            onChange={data.useInput.onChange}
+            inputViewType={data.inputViewType}
+            handleViewType={data.handleViewType}
           />
+
           {renderAlert(data.title) ? (
-            <ErrorAlert description={errState.description} handleClickError={handleClickError} />
+            <div className="mt-2 mb-2">
+              <ErrorAlert description={errState.description} handleClickError={handleClickError} />
+            </div>
           ) : (
             <></>
           )}

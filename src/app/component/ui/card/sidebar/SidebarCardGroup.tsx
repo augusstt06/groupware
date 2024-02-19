@@ -27,7 +27,7 @@ export default function SidebarCardGroup(props: MainSidebarCardGroupProps) {
     switch (props.title) {
       case SIDEBAR_URL_PATH_MAIN:
         return (
-          <>
+          <aside className="bg-white dark:bg-opacity-10 bg-opacity-60 p-3 rounded-2xl shadow-2xl">
             <NameCard />
             <HistoryCard
               reRender={props.reRender}
@@ -35,7 +35,7 @@ export default function SidebarCardGroup(props: MainSidebarCardGroupProps) {
               title={props.title}
             />
             <VacationCard />
-          </>
+          </aside>
         )
       case SIDEBAR_URL_PATH_PROJECT:
         return <ProjectMainSideCard />

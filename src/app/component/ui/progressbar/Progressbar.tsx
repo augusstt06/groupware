@@ -3,7 +3,7 @@ export default function Progressbar(props: { time: string }) {
 
   const tailwindClassName =
     props.time === '0'
-      ? `bg-gray-200 w-full h-2.5 rounded-full dark:bg-gray-700`
+      ? `bg-gray-200 w-full h-2.5 rounded-full dark:bg-gray-400`
       : `bg-purple-600 w-${props.time}/12 h-2.5 rounded-full dark:bg-purple-500`
   return (
     <div className="md:w-3/5 w-2/5 bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
