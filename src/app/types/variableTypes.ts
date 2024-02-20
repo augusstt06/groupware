@@ -315,6 +315,11 @@ export type ColleagueType = {
   name: string
   phone: string
   position: string
+  team: Array<{
+    id: number
+    name: string
+    description: string
+  }>
 }
 
 export type GetTeamListType = {
@@ -325,9 +330,11 @@ export type GetTeamListType = {
 }
 export type TeamResponseType = {
   createdAt: string
+  color: string
   description: string
   id: number
   name: string
   organizationId: number
   updatedAt: string
+  members: Array<{ email: string; id: number; name: string; position: string; uuid: string }>
 }

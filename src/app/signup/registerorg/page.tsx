@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 
 import { useRouter } from 'next/navigation'
+import { FaExchangeAlt } from 'react-icons/fa'
 
 import RegisterOrg from '@/app/component/page/organization/RegisterOrg'
 import ErrorAlert from '@/app/component/ui/alert/ErrorAlert'
@@ -185,13 +186,13 @@ export default function RegisterOrgLogin() {
   }, [])
 
   return (
-    <div className="flex flex-col justify-center items-center h-screen px-4">
+    <section className="flex flex-col justify-center items-center h-screen px-4">
       {organization === '' ? (
         <>
-          <h2 className="mb-5 md:text-2xl text-xl font-bold text-center">조직 선택</h2>
-          <span className="md:text-medium text-xs mt-5">
+          <h1 className="mb-5 md:text-2xl text-xl font-bold text-center">조직 선택</h1>
+          <h2 className="md:text-medium text-sm mt-5">
             조직 생성/코드 입력으로 조직에 참가해 주세요
-          </span>
+          </h2>
           <div className="flex flex-row md:w-1/3 w-full justify-around mt-10">
             <div
               onClick={() => {
@@ -217,16 +218,29 @@ export default function RegisterOrgLogin() {
         </>
       ) : (
         <div className="flex flex-col w-full justify-center items-center h-screen px-4 place-content-center">
-          <div className="md:text-2xl text-xl font-bold mt-20">
-            {organization === ORG_CREATE ? '조직 생성' : '조직 가입'}
-          </div>
+          {organization === ORG_CREATE ? (
+            <h1 className="md:text-2xl text-xl font-bold mt-20">Create Organization</h1>
+          ) : (
+            <h1 className="md:text-2xl text-xl font-bold mt-20">Join Organization</h1>
+          )}
+
           <div className="mt-5">
-            <span
-              className="md:text-sm text-xs text-gray-400 hover:text-gray-700 hover:font-bold hover:dark:text-gray-200 cursor-pointer"
+            <p
+              className="transition ease-in-out duration-500 md:text-sm text-xs text-gray-500 hover:text-blue-500 dark:hover:text-blue-500 hover:text-gray-800 hover:scale-110  hover:font-bold hover:dark:text-gray-200 cursor-pointer"
               onClick={changeOrgType}
             >
-              {organization === ORG_CREATE ? '기존 조직에 참여하기' : '새로운 조직 생성하기'}
-            </span>
+              {organization === ORG_CREATE ? (
+                <div className="flex items-center justify-around">
+                  <FaExchangeAlt className="mr-2" />
+                  Join an existing Organization
+                </div>
+              ) : (
+                <div className="flex items-center justify-around">
+                  <FaExchangeAlt className="mr-2" />
+                  Create Organization
+                </div>
+              )}
+            </p>
           </div>
           <div className="mt-5 md:w-3/5 w-full mb-16">
             <RegisterOrg
@@ -255,6 +269,6 @@ export default function RegisterOrgLogin() {
           </div>
         </div>
       )}
-    </div>
+    </section>
   )
 }

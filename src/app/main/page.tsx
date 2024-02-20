@@ -117,7 +117,10 @@ export default function Main() {
   if (checkTokenExpired(accessTokenTime)) {
     void moduleRefreshToken(accessToken)
   }
-  moduleCheckUserState({ loginCompleteState, router, accessToken, setAccessToken })
+  useEffect(() => {
+    moduleCheckUserState({ loginCompleteState, router, accessToken, setAccessToken })
+  }, [accessToken])
+
   return (
     <main className="w-full 2xl:w-2/3 h-4/5 flex flex-col items-center">
       <MainHub title={MAIN_CARD_TODO} />

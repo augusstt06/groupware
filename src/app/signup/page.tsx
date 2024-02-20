@@ -194,9 +194,9 @@ export default function Signup() {
   }, [])
 
   return (
-    <div className="flex flex-col justify-center items-center p 1">
-      <div className="md:text-xl text-medium font-bold mt-20">회원가입</div>
-      <div className="mt-5 md:w-3/5 w-4/5">
+    <section className="flex flex-col justify-center items-center p-1">
+      <h1 className="md:text-xl text-medium font-bold mt-32">Sign Up</h1>
+      <section className="mt-5 md:w-2/5 w-4/5">
         <RegisterInfo
           isPwdView={isPwdView}
           setIsPwdView={setIsPwdView}
@@ -212,23 +212,23 @@ export default function Signup() {
         ) : (
           <></>
         )}
-      </div>
+      </section>
       <div className="flex flex-row justify-around items-center md:w-1/3 w-2/3 mt-5">
         <Link href="/">
           <Button
-            buttonContent="메인으로"
-            className="transition ease-in-out duration-500 text-white bg-indigo-400 hover:bg-indigo-600 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:hover:bg-white dark:hover:text-indigo-500 mb-2 border-2 dark:hover:border-indigo-500/75"
+            buttonContent="Cancel"
+            className="transition ease-in-out duration-500 text-white bg-red-300 hover:bg-red-600 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mb-2 border-2"
           />
         </Link>
         {isPrivateInfoComplete ? (
           <Button
             ref={signupButtonRef}
-            buttonContent="회원가입"
-            className="transition ease-in-out duration-500 text-white bg-indigo-400 hover:bg-indigo-600 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:hover:bg-white dark:hover:text-indigo-500 mb-2 border-2 dark:hover:border-indigo-500/75"
+            buttonContent="Sign Up"
+            className="transition ease-in-out duration-500 text-white bg-indigo-400 hover:bg-indigo-600 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mb-2 border-2"
             onClick={handleClickSignup}
           />
         ) : null}
       </div>
-    </div>
+    </section>
   )
 }

@@ -19,7 +19,7 @@ export default function BoardTab(props: BoardTabProps) {
     { title: '프로젝트' },
   ]
   return (
-    <div className="w-full md:text-sm text-xs md:p-2 md:font-bold text-center border border-gray-200 rounded-lg shadow dark:bg-[#1a202c] dark:border-gray-700 mb-5">
+    <div className="w-full md:text-sm text-xs border-2 border-[#7f8bb1] bg-[#f5f7fc] md:p-2 md:font-bold text-center border border-gray-200 rounded-lg shadow dark:bg-[#1a202c] dark:border-gray-700 mb-5">
       <div className="mt-2 mb-2">
         <span className="md:text-lg text-base">{props.title}</span>
       </div>

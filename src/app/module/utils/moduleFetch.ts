@@ -69,6 +69,25 @@ export const modulePostFetch = async <T>(
   return res.json()
 }
 
+export const modulePostFetchWithQuery = async <T>(
+  props: ModulePostFetchProps,
+): Promise<FetchResponseType<T>> => {
+  const queryString = new URLSearchParams()
+  Object.entries(props.data).forEach(([key, value]) => {
+    queryString.append(key, String(value))
+  })
+  const urlWithQueryString = `${props.fetchUrl}?${queryString.toString()}`
+  const res = await fetch(urlWithQueryString, {
+    method: POST,
+    headers: {
+      'Content-Type': FETCH_CONTENT_TYPE,
+      ...props.header,
+    },
+    body: JSON.stringify(props.data),
+  })
+  return res.json()
+}
+
 export const modulePostFileFetch = async <T>(
   props: ModulePostFileFetchProps,
 ): Promise<FetchResponseType<T>> => {

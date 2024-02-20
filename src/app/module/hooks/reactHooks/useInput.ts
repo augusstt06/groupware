@@ -1,7 +1,7 @@
 import type React from 'react'
 import { useState } from 'react'
 
-import { REGISTER_PHONENUMBER } from '@/app/constant/constant'
+import { REGISTER_PHONENUMBER_EN } from '@/app/constant/constant'
 import { type UseInputProps } from '@/app/types/moduleTypes'
 
 export default function useInput(state: string, title?: string, limit?: number): UseInputProps {
@@ -14,7 +14,7 @@ export default function useInput(state: string, title?: string, limit?: number):
 
     const limitValue = limit !== undefined ? value.slice(0, limit) : value
     const formattedValue =
-      title === REGISTER_PHONENUMBER ? formatPhoneNumber(limitValue) : limitValue
+      title === REGISTER_PHONENUMBER_EN ? formatPhoneNumber(limitValue) : limitValue
 
     setValue(formattedValue)
   }

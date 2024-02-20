@@ -105,6 +105,7 @@ export default function Team() {
     teamTitle.resetValue()
     setTeamsColor('')
   }
+
   const renderTeamHub = () => {
     if (isLoading) return <span>데이터를 로딩중입니다.</span>
     else {
