@@ -1,7 +1,7 @@
 import { CgCalendarToday } from 'react-icons/cg'
 import { FaCheck } from 'react-icons/fa'
 
-import { type ProjectDetailTaskCardProps } from '@/app/types/ui/cardTypes'
+import { type ProjectDetailTaskCardProps } from '@/app/types/ui/card'
 export default function ProjectDetailTaskCard(props: ProjectDetailTaskCardProps) {
   return (
     <>

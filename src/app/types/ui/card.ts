@@ -7,7 +7,7 @@ import {
   type ProjectResponseType,
   type ScheduleType,
   type TeamResponseType,
-} from '../variableTypes'
+} from '../variable'
 
 export type TaskCardProps = {
   title: string
@@ -20,19 +20,11 @@ export type HistoryCardProps = {
   reRender: boolean
   setRerender: React.Dispatch<SetStateAction<boolean>>
 }
-export type UserCardProps = {
-  title: string
-  reRender: boolean
-  setRerender: React.Dispatch<SetStateAction<boolean>>
-}
 
 export type BoardSideCardProps = {
   myBoardList: MyBoardType[]
 }
 
-export type TodoCardType = {
-  // content: boardListResponsetype
-}
 export type BoardCardType = {
   content: BoardListResponseType
 }
@@ -49,10 +41,7 @@ export type MainSidebarCardGroupProps = {
 export type ProjectCardProps = {
   projectInfo: ProjectResponseType
 }
-export type ProjectDetailCardType = {
-  title: string
-  time: string
-}
+
 export type ProjectDetailTaskCardProps = {
   title: string
   time: string
@@ -64,7 +53,6 @@ export type ProjectDetailTodoCardProps = {
 export type ProjectInviteCardProps = {
   userInfo: ColleagueType
   inviteList: ColleagueType[]
-  // handleInviteUser: (user: ColleagueType) => void
 }
 
 export type TeamCardProps = {

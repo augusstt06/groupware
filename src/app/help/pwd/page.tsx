@@ -11,7 +11,7 @@ import { ERR_COOKIE_NOT_FOUND } from '@/app/constant/errorMsg'
 import { ROUTE_LOGIN, ROUTE_MAIN } from '@/app/constant/route/route-constant'
 import useInput from '@/app/module/hooks/reactHooks/useInput'
 import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
-import { type UseInputProps } from '@/app/types/moduleTypes'
+import { type UseInputProps } from '@/app/types/module'
 
 export default function FindPwd() {
   const router = useRouter()

@@ -10,6 +10,7 @@ import BoardWriteModal from '../component/ui/modal/board/BoardWriteModal'
 import {
   BOARD_CATEGORY_PROJECT,
   BOARD_CATEGORY_TEAM,
+  BOARD_MAIN_TITLE,
   KEY_ACCESS_TOKEN,
   KEY_LOGIN_COMPLETE,
   KEY_X_ORGANIZATION_CODE,
@@ -34,12 +35,12 @@ import {
   type CustomDecodeTokenType,
   type ModuleGetFetchProps,
   type SuccessResponseType,
-} from '../types/moduleTypes'
+} from '../types/module'
 import {
   type BoardListResponseType,
   type BoardResponseType,
   type MyBoardType,
-} from '../types/variableTypes'
+} from '../types/variable'
 
 export default function Board() {
   const router = useRouter()
@@ -112,6 +113,7 @@ export default function Board() {
       return res as SuccessResponseType<BoardResponseType>
     },
   })
+
   const successFetchBoardPostings = () => {
     const boardPostingList = (boardPostingData as SuccessResponseType<BoardResponseType>).result
     if (pageSize === 1) {
@@ -145,9 +147,9 @@ export default function Board() {
   }, [myBoardData])
 
   return (
-    <section className="w-10/12 2xl:w-2/3 h-4/5 flex flex-col items-center">
+    <section className="w-full 2xl:w-2/3 h-4/5 flex flex-col items-center">
       <BoardHub
-        title="게시판"
+        title={BOARD_MAIN_TITLE.toUpperCase()}
         boardList={boardList}
         myBoardList={myBoardData?.result as MyBoardType[]}
         selectBoard={selectBoard}

@@ -6,8 +6,8 @@ import InputWithLabel from '../../input/InputWithLabel'
 import ProjectInviteList from './invite/ProjectInviteList'
 
 import useInput from '@/app/module/hooks/reactHooks/useInput'
-import { type InviteProjectMemberModalProps } from '@/app/types/ui/modalTypes'
-import { type ColleagueType } from '@/app/types/variableTypes'
+import { type InviteProjectMemberModalProps } from '@/app/types/ui/modal'
+import { type ColleagueType } from '@/app/types/variable'
 
 export default function InviteProjectMemberModal(props: InviteProjectMemberModalProps) {
   const { colleague, inviteList, setInviteList } = props

@@ -45,7 +45,7 @@ import {
   type DialogBtnValueType,
   type ModulePostFetchProps,
   type SuccessResponseType,
-} from '@/app/types/moduleTypes'
+} from '@/app/types/module'
 import {
   type ColleagueType,
   type DialogTextType,
@@ -53,7 +53,7 @@ import {
   type ProjectIssueResponseType,
   type ProjectIssueType,
   type ProjectResponseType,
-} from '@/app/types/variableTypes'
+} from '@/app/types/variable'
 
 export default function ProjectDetail() {
   const dispatch = useAppDispatch()

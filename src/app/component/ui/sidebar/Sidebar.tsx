@@ -29,8 +29,8 @@ import {
   type FailResponseType,
   type ModuleGetFetchProps,
   type SuccessResponseType,
-} from '@/app/types/moduleTypes'
-import { type MyBoardType } from '@/app/types/variableTypes'
+} from '@/app/types/module'
+import { type MyBoardType } from '@/app/types/variable'
 
 export default function Sidebar() {
   const pathname = usePathname()

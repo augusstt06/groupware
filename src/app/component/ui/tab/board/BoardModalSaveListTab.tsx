@@ -3,7 +3,7 @@ import { IoClose } from 'react-icons/io5'
 
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleConvertDate } from '@/app/module/utils/moduleTime'
-import { type BoardModalSaveListTabProps } from '@/app/types/ui/uiTypes'
+import { type BoardModalSaveListTabProps } from '@/app/types/ui/extra'
 
 export default function BoardModalSaveListTab(props: BoardModalSaveListTabProps) {
   const categoryState = useAppSelector((state) => state.boardCategory.myBoard)

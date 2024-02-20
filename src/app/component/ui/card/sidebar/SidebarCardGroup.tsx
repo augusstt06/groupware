@@ -13,7 +13,7 @@ import {
   SIDEBAR_URL_PATH_PROJECT_DETAIL,
   SIDEBAR_URL_PATH_TEAM,
 } from '@/app/constant/constant'
-import { type MainSidebarCardGroupProps } from '@/app/types/ui/cardTypes'
+import { type MainSidebarCardGroupProps } from '@/app/types/ui/card'
 
 export default function SidebarCardGroup(props: MainSidebarCardGroupProps) {
   const isMyboardListEmpty = () => {

@@ -7,7 +7,7 @@ import BoardMenuCard from './BoardMenuCard'
 
 import { useAppDispatch } from '@/app/module/hooks/reduxHooks'
 import { openBoardWriteModalReducer } from '@/app/store/reducers/board/openBoardWriteModalReducer'
-import { type BoardSideCardProps } from '@/app/types/ui/cardTypes'
+import { type BoardSideCardProps } from '@/app/types/ui/card'
 
 export default function BoardSideCard(props: BoardSideCardProps) {
   const dispatch = useAppDispatch()

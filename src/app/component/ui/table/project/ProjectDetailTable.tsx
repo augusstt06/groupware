@@ -7,7 +7,7 @@ import {
   PROJECT_ISSUE_TODO_VALUE,
 } from '@/app/constant/constant'
 import { moduleConvertDate } from '@/app/module/utils/moduleTime'
-import { type ProjectDetailTableProps } from '@/app/types/ui/uiTypes'
+import { type ProjectDetailTableProps } from '@/app/types/ui/extra'
 
 export default function ProjectDetailTable(props: ProjectDetailTableProps) {
   const convertCategory = () => {

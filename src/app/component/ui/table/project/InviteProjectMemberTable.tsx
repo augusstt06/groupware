@@ -1,4 +1,4 @@
-import { type InviteProjectMemberTableProps } from '@/app/types/ui/uiTypes'
+import { type InviteProjectMemberTableProps } from '@/app/types/ui/extra'
 
 export default function InviteProjectMemberTable(props: InviteProjectMemberTableProps) {
   const { name } = props.memberInfo

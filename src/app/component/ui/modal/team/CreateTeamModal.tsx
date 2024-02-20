@@ -5,7 +5,7 @@ import Input from '../../input/Input'
 import {
   type CreateProjectModalColorSelectProps,
   type CreateTeamModalProps,
-} from '@/app/types/ui/modalTypes'
+} from '@/app/types/ui/modal'
 
 export default function CreateTeamModal(props: CreateTeamModalProps) {
   return (

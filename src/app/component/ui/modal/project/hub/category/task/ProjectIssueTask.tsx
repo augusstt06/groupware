@@ -46,8 +46,8 @@ import {
   changeIssueTitleReducer,
   resetIssueReducer,
 } from '@/app/store/reducers/project/projectIssueReducer'
-import { type CalendarValue, type ValuePiece } from '@/app/types/pageTypes'
-import { type TaskListType } from '@/app/types/variableTypes'
+import { type CalendarValue, type ValuePiece } from '@/app/types/pageType'
+import { type TaskListType } from '@/app/types/variable'
 
 export default function ProjectIssueTask() {
   const startDialogRef = useRef<HTMLDialogElement | null>(null)

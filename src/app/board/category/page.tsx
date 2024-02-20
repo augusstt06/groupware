@@ -24,12 +24,12 @@ import { moduleCheckUserState } from '@/app/module/utils/check/moduleCheckUserSt
 import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
 import { moduleGetFetch } from '@/app/module/utils/moduleFetch'
 import { openBoardWriteModalReducer } from '@/app/store/reducers/board/openBoardWriteModalReducer'
-import { type ModuleGetFetchProps, type SuccessResponseType } from '@/app/types/moduleTypes'
+import { type ModuleGetFetchProps, type SuccessResponseType } from '@/app/types/module'
 import {
   type BoardListResponseType,
   type BoardResponseType,
   type MyBoardType,
-} from '@/app/types/variableTypes'
+} from '@/app/types/variable'
 
 export default function BoardCategory() {
   const dispatch = useAppDispatch()

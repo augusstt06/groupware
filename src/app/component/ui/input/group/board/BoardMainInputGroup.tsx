@@ -7,7 +7,7 @@ import InputWithLabel from '../../InputWithLabel'
 
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { openBoardWriteModalReducer } from '@/app/store/reducers/board/openBoardWriteModalReducer'
-import { type BoardMainInputGroupProps } from '@/app/types/ui/inputTypes'
+import { type BoardMainInputGroupProps } from '@/app/types/ui/input'
 
 export default function BoardMainInputGroup(props: BoardMainInputGroupProps) {
   const dispatch = useAppDispatch()

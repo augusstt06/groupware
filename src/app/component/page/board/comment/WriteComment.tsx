@@ -24,8 +24,8 @@ import {
   type ModulePostFetchProps,
   type ModulePostFileFetchProps,
   type SuccessResponseType,
-} from '@/app/types/moduleTypes'
-import { type WriteCommentProps } from '@/app/types/pageTypes'
+} from '@/app/types/module'
+import { type WriteCommentProps } from '@/app/types/pageType'
 
 export default function WriteComment(props: WriteCommentProps) {
   const router = useRouter()

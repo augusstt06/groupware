@@ -6,12 +6,12 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { Fredoka } from 'next/font/google'
 import { usePathname } from 'next/navigation'
 
-import GlobalNavigationbar from './component/ui/Navigationbar/GlobalNavigationbar'
+import Nav from './component/ui/Navigationbar/Nav'
 import Sidebar from './component/ui/sidebar/Sidebar'
 import { ROUTE_BOARD, ROUTE_MAIN, ROUTE_PROJECT, ROUTE_TEAM } from './constant/route/route-constant'
 import { ReduxProvider } from './providers/reduxProvider'
 import CustomThemeProvider from './providers/themeProvider'
-import { type ReactProps } from './types/pageTypes'
+import { type ReactProps } from './types/pageType'
 
 const fredoka = Fredoka({
   subsets: ['latin'],
@@ -48,7 +48,7 @@ export default function RootLayout({ children }: ReactProps) {
           <ReactQueryDevtools initialIsOpen={true} />
           <ReduxProvider>
             <CustomThemeProvider>
-              <GlobalNavigationbar />
+              <Nav />
               {shouldSidebarVisible() ?? false ? <Sidebar /> : <></>}
               <div className={bodyClassName + fredoka.className}>{children}</div>
               <div id="modal"></div>

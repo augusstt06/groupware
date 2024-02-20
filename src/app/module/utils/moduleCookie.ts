@@ -11,7 +11,7 @@ import {
   type CustomDecodeTokenType,
   type FailResponseType,
   type ModulePostFetchProps,
-} from '@/app/types/moduleTypes'
+} from '@/app/types/module'
 
 export const moduleGetCookie = (name: string) => {
   if (hasCookie(name)) {

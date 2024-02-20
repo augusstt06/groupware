@@ -26,12 +26,12 @@ import {
   changeProjectDetailCategoryReducer,
   changeProjectDetailScheduleCategoryReducer,
 } from '@/app/store/reducers/project/projectDetailCategoryReducer'
-import { type SuccessResponseType } from '@/app/types/moduleTypes'
+import { type SuccessResponseType } from '@/app/types/module'
 import {
   type FullCalendarEventType,
   type IssueResponseType,
   type ScheduleType,
-} from '@/app/types/variableTypes'
+} from '@/app/types/variable'
 
 export default function ProjectDetailSchedule() {
   const router = useRouter()

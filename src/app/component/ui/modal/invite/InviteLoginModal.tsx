@@ -1,6 +1,6 @@
 import InputWithLabel from '../../input/InputWithLabel'
 
-import { type InviteLoginModalProps } from '@/app/types/ui/modalTypes'
+import { type InviteLoginModalProps } from '@/app/types/ui/modal'
 
 export default function InviteLoginModal(props: InviteLoginModalProps) {
   const { inputList } = props

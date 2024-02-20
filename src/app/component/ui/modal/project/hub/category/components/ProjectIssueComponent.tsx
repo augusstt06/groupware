@@ -20,7 +20,7 @@ import {
   type IssueSelecProps,
   type IssueTimeProps,
   type ValuePiece,
-} from '@/app/types/pageTypes'
+} from '@/app/types/pageType'
 
 export function IssueInput(props: IssueInputProps) {
   return (

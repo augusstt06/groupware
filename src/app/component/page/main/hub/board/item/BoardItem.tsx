@@ -5,7 +5,7 @@ import { FaN } from 'react-icons/fa6'
 
 import { ROUTE_POSTING_DETAIL } from '@/app/constant/route/route-constant'
 import { moduleConvertDate } from '@/app/module/utils/moduleTime'
-import { type BoardItemProps } from '@/app/types/pageTypes'
+import { type BoardItemProps } from '@/app/types/pageType'
 
 export default function BoardItem(props: BoardItemProps) {
   return (

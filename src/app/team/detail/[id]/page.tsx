@@ -27,12 +27,12 @@ import { moduleCheckUserState } from '@/app/module/utils/check/moduleCheckUserSt
 import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
 import { moduleGetFetch, modulePostFetch } from '@/app/module/utils/moduleFetch'
 import { teamInviteModalReducer } from '@/app/store/reducers/team/teamModalReducer'
-import { type DialogBtnValueType, type SuccessResponseType } from '@/app/types/moduleTypes'
+import { type DialogBtnValueType, type SuccessResponseType } from '@/app/types/module'
 import {
   type ColleagueType,
   type DialogTextType,
   type TeamResponseType,
-} from '@/app/types/variableTypes'
+} from '@/app/types/variable'
 
 export default function TeamDetail() {
   // outer
