@@ -14,7 +14,7 @@ export default function BoardTab(props: BoardTabProps) {
   }
   const menuList = [{ title: '공지사항' }, { title: '자유게시판' }]
   return (
-    <div className="w-full md:text-sm text-xs  bg-[#f5f7fc] md:p-2 md:font-bold text-center rounded-xl shadow dark:bg-[#1a202c] mb-5 bg-opacity-30">
+    <div className="w-full md:text-sm text-xs bg-[#f5f7fc] md:p-2 md:font-bold text-center rounded-xl shadow dark:bg-[#1a202c] mb-5 bg-opacity-70">
       <div className="mt-2 mb-2">
         <span className="md:text-lg text-base">{props.title}</span>
       </div>
