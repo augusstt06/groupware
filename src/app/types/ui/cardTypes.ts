@@ -70,3 +70,6 @@ export type ProjectInviteCardProps = {
 export type TeamCardProps = {
   teamInfo: TeamResponseType
 }
+export type TeamMemberCardProps = {
+  memberInfo: { email: string; id: number; name: string; position: string; uuid: string }
+}

@@ -66,7 +66,7 @@ export default function UserStateModal(props: UserStateModalProps) {
   return (
     <div
       ref={menuRef}
-      className="absolute right-4 flex flex-col items-center dark:bg-gray-700 bg-white border-2 border-gray-400 p-3 w-1/6 rounded-lg"
+      className="absolute right-4 flex flex-col items-center bg-white dark:bg-opacity-10 backdrop-blur-lg bg-opacity-60 p-3 rounded-2xl shadow-2xl w-40 z-50"
     >
       <div className="flex flex-row items-center justify-start w-full">
         <div className="bg-gray-300 p-2 rounded-full">img</div>
@@ -77,7 +77,7 @@ export default function UserStateModal(props: UserStateModalProps) {
       </div>
       <div className="flex flex-row items-center justify-start w-full font-bold text-sm mb-2 mt-4">
         <IoSettingsOutline className="w-4 h-4" />
-        <span className="ml-3">마이페이지</span>
+        <span className="ml-3">My Page</span>
       </div>
       {/* <div className="flex flex-row items-center justify-start w-full font-bold text-sm mb-2">
         <IoSettingsOutline className="w-4 h-4" />
@@ -85,7 +85,7 @@ export default function UserStateModal(props: UserStateModalProps) {
       </div> */}
       <div className="flex flex-row items-center justify-start w-full font-bold hover:text-red-500 text-sm">
         <Button buttonContent={logoutBtnContent} className="" onClick={handleClickLogout} />
-        <span className="ml-3">로그아웃</span>
+        <span className="ml-3">Logout</span>
       </div>
     </div>
   )

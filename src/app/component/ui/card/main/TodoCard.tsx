@@ -2,7 +2,7 @@ import { LuCircle } from 'react-icons/lu'
 // import { FaRegCheckCircle } from 'react-icons/fa'
 // import { GiCancel } from 'react-icons/gi'
 
-import TodoIndicator from '../../indicator/TodoIndicator'
+import TodoIndicator from '../../indicator/Indicator'
 
 import { type TodoCardType } from '@/app/types/ui/cardTypes'
 

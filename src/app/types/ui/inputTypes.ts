@@ -23,6 +23,12 @@ export type InputGroupProps = {
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void
   className: string
 }
+export type FloatingInputProps = React.InputHTMLAttributes<HTMLInputElement> & {
+  title: string
+  inputViewType: string
+  isViewActive: boolean
+  handleViewType?: () => void
+}
 
 // group
 export type BoardMainInputGroupProps = {

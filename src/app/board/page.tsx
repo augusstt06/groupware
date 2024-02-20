@@ -145,7 +145,7 @@ export default function Board() {
   }, [myBoardData])
 
   return (
-    <main className="w-10/12 2xl:w-2/3 h-4/5 flex flex-col items-center">
+    <section className="w-10/12 2xl:w-2/3 h-4/5 flex flex-col items-center">
       <BoardHub
         title="게시판"
         boardList={boardList}
@@ -155,6 +155,6 @@ export default function Board() {
       />
 
       {isModalOpen ? <BoardWriteModal currentBoard={null} /> : <></>}
-    </main>
+    </section>
   )
 }
