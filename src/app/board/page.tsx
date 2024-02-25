@@ -95,7 +95,7 @@ export default function Board() {
     }
   }
 
-  const { data: boardPostingData } = useQuery<SuccessResponseType<BoardResponseType>>({
+  const { data: boardPostingData, isLoading } = useQuery<SuccessResponseType<BoardResponseType>>({
     queryKey: ['board-postings'],
     queryFn: async () => {
       const fetchGetBoardListProps: ModuleGetFetchProps = {
@@ -114,23 +114,6 @@ export default function Board() {
     },
   })
 
-  const successFetchBoardPostings = () => {
-    const boardPostingList = (boardPostingData as SuccessResponseType<BoardResponseType>).result
-    if (pageSize === 1) {
-      const pageSize = Math.ceil(boardPostingList.total / 10)
-      setPageSize(pageSize)
-    }
-    if (selectBoard !== '') {
-      const selectBoardId = myBoardState.filter((data) => data.name === selectBoard)[0].id
-      const filterList = boardPostingList.data.filter(
-        (data) => data.boardId === Number(selectBoardId),
-      )
-      setBoardList(filterList)
-      return
-    }
-    setBoardList(boardPostingList.data)
-  }
-
   useEffect(() => {
     if (checkTokenExpired(accessTokenTime)) {
       void moduleRefreshToken(accessToken)
@@ -139,8 +122,23 @@ export default function Board() {
   }, [accessToken])
 
   useEffect(() => {
-    if (boardPostingData !== undefined) successFetchBoardPostings()
-  }, [selectBoard, boardPostingData])
+    if (boardPostingData !== undefined) {
+      const boardPostingList = boardPostingData.result
+      if (pageSize === 1) {
+        const pageSize = Math.ceil(boardPostingList.total / 10)
+        setPageSize(pageSize)
+      }
+      if (selectBoard !== '') {
+        const selectBoardId = myBoardState.filter((data) => data.name === selectBoard)[0].id
+        const filterList = boardPostingList.data.filter(
+          (data) => data.boardId === Number(selectBoardId),
+        )
+        setBoardList(filterList)
+        return
+      }
+      setBoardList(boardPostingList.data)
+    }
+  }, [isLoading])
 
   useEffect(() => {
     if (myBoardData !== undefined) successFetchMyBoard()
