@@ -10,7 +10,7 @@ import {
   PROJECT_DETAIL_CATEGORY_TODO,
 } from '@/app/constant/constant'
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
-import { type ProjectDetailHubProps } from '@/app/types/ui/uiTypes'
+import { type ProjectDetailHubProps } from '@/app/types/ui/extra'
 
 export default function ProjectDetailHub(props: ProjectDetailHubProps) {
   const detailCategory = useAppSelector((state) => state.projectDetailCategory.detailCategory)

@@ -30,13 +30,13 @@ import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
 import { moduleGetFetch, modulePatchFetch } from '@/app/module/utils/moduleFetch'
 import { changeProjectDetailCategoryReducer } from '@/app/store/reducers/project/projectDetailCategoryReducer'
-import { type SuccessResponseType } from '@/app/types/moduleTypes'
+import { type SuccessResponseType } from '@/app/types/module'
 import {
   type ColumnListType,
   type ColumnType,
   type IssueResponseType,
   type KanbanBoardColumnType,
-} from '@/app/types/variableTypes'
+} from '@/app/types/variable'
 
 export default function ProjectDetailTask() {
   const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
@@ -224,7 +224,7 @@ export default function ProjectDetailTask() {
           onDragEnd(result, columnList, setColumnList)
         }}
       >
-        <div className=" w-full grid-cols-4 grid gap-2 justify-center dark:border-gray-700 border border-gray-200 rounded-lg dark:bg-[#1a202c] shadow-lg p-3">
+        <div className=" w-4/5 max-w-7xl grid-cols-4 grid gap-2 justify-center rounded-xl shadow-lg p-2 truncate bg-[#f5f7fc] bg-opacity-70 dark:bg-opacity-10 ">
           {columnList.map((data, columnIndex) => (
             <ProjectDetailTaskColumn
               key={data.columnTitle}

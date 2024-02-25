@@ -42,12 +42,12 @@ import { moduleCheckUserState } from '../module/utils/check/moduleCheckUserState
 import { moduleGetCookie } from '../module/utils/moduleCookie'
 import { moduleGetFetch, modulePostFetch } from '../module/utils/moduleFetch'
 import { createProjectModalReducer } from '../store/reducers/project/projectModalReducer'
-import { type DialogBtnValueType, type SuccessResponseType } from '../types/moduleTypes'
+import { type DialogBtnValueType, type SuccessResponseType } from '../types/module'
 import {
   type DialogTextType,
   type FetchPostProjectResponseType,
   type ProjectListResponseType,
-} from '../types/variableTypes'
+} from '../types/variable'
 
 export default function Project() {
   const router = useRouter()
@@ -231,15 +231,9 @@ export default function Project() {
   }, [accessToken])
 
   return (
-    <main className="w-10/12 h-4/5 flex flex-col items-center">
-      {projectList === undefined ? (
-        <div className="p-5">
-          <span className="font-bold">프로젝트가 없습니다.</span>
-        </div>
-      ) : (
-        <ProjectMainHub projectList={defineProjectList()} />
-      )}
+    <section className="w-full 2xl:w-2/3 h-4/5 flex flex-col items-center">
+      <ProjectMainHub projectList={defineProjectList()} />
       <ModalHub modals={modalList} />
-    </main>
+    </section>
   )
 }

@@ -1,6 +1,6 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 
-import { type MyBoardType } from '@/app/types/variableTypes'
+import { type MyBoardType } from '@/app/types/variable'
 
 type State = {
   // category: string

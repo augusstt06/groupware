@@ -46,7 +46,7 @@ import {
   type ModulePostFetchProps,
   type SuccessResponseType,
   type UseInputProps,
-} from './types/moduleTypes'
+} from './types/module'
 
 const chakra = Chakra_Petch({
   subsets: ['latin'],

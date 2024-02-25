@@ -8,7 +8,7 @@ import {
   ROUTE_ERR_NOT_FOUND_ACCESS_TOKEN,
   ROUTE_ERR_NOT_FOUND_ORG_TOKEN,
 } from '@/app/constant/route/route-constant'
-import { type ModuleCheckUserStateProps } from '@/app/types/moduleTypes'
+import { type ModuleCheckUserStateProps } from '@/app/types/module'
 
 export const moduleCheckUserState = ({
   loginCompleteState,

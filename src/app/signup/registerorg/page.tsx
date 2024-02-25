@@ -39,7 +39,7 @@ import { moduleDeleteCookies, moduleGetCookie } from '@/app/module/utils/moduleC
 import { modulePostFetch } from '@/app/module/utils/moduleFetch'
 import { moduleDeleteStorage } from '@/app/module/utils/moduleStorage'
 import { updateLoginCompleteReducer } from '@/app/store/reducers/maintain/maintainReducer'
-import { type FailResponseType, type ModulePostFetchProps } from '@/app/types/moduleTypes'
+import { type FailResponseType, type ModulePostFetchProps } from '@/app/types/module'
 
 export default function RegisterOrgLogin() {
   const router = useRouter()

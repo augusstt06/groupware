@@ -1,10 +1,10 @@
 import BoardCard from '@/app/component/ui/card/main/BoardCard'
 import BoardTab from '@/app/component/ui/tab/board/BoardTab'
-import { type BoardHubProps } from '@/app/types/ui/uiTypes'
+import { type BoardHubProps } from '@/app/types/ui/extra'
 
 export default function BoardHub(props: BoardHubProps) {
   return (
-    <div className=" w-full flex flex-col items-center">
+    <div className="md:w-4/5 w-full flex flex-col items-center">
       <BoardTab
         title={props.title}
         selectBoard={props.selectBoard}
@@ -17,7 +17,9 @@ export default function BoardHub(props: BoardHubProps) {
           ))}
         </>
       ) : (
-        <span>게시글이 없습니다.</span>
+        <section className="rounded-xl w-full h-40 flex items-center justify-center bg-[#f5f7fc] bg-opacity-70 dark:bg-opacity-10">
+          There are no posts yet.
+        </section>
       )}
     </div>
   )

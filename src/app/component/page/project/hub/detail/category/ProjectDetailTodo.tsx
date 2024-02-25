@@ -13,8 +13,8 @@ import { API_URL_PROJECT_ISSUE_LIST } from '@/app/constant/route/api-route-const
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
 import { moduleGetFetch } from '@/app/module/utils/moduleFetch'
-import { type SuccessResponseType } from '@/app/types/moduleTypes'
-import { type IssueResponseType, type ScheduleType } from '@/app/types/variableTypes'
+import { type SuccessResponseType } from '@/app/types/module'
+import { type IssueResponseType, type ScheduleType } from '@/app/types/variable'
 
 export default function ProjectDetailTodo() {
   const query = useParams()
@@ -56,7 +56,7 @@ export default function ProjectDetailTodo() {
   }, [todoList])
 
   return (
-    <div className="w-full justify-center dark:border-gray-700 border border-gray-200 rounded-lg dark:bg-[#1a202c] shadow-lg p-3 z-1">
+    <div className="w-4/5 max-w-7xl justify-center rounded-xl shadow-lg p-2 truncate bg-[#f5f7fc] bg-opacity-70 dark:bg-opacity-10 z-1">
       <div className="w-full p-3 ">
         <span className="font-bold">전체 할일 </span>
         <span className="font-bold text-indigo-400">{todoIssues.length}</span>

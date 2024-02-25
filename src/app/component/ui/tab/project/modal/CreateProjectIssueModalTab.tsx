@@ -6,7 +6,7 @@ import {
   PROJECT_ISSUE_TODO_TITLE,
   PROJECT_ISSUE_TODO_VALUE,
 } from '@/app/constant/constant'
-import { type CreateProjectIssueModalTabProps } from '@/app/types/ui/uiTypes'
+import { type CreateProjectIssueModalTabProps } from '@/app/types/ui/extra'
 
 export default function CreateProjectIssueModalTab(props: CreateProjectIssueModalTabProps) {
   const tabList = [

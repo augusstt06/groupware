@@ -6,8 +6,8 @@ import ProjectDetailTable from '@/app/component/ui/table/project/ProjectDetailTa
 import { PROJECT_DETAIL_CATEGORY_HOME } from '@/app/constant/constant'
 import { useAppDispatch } from '@/app/module/hooks/reduxHooks'
 import { changeProjectDetailCategoryReducer } from '@/app/store/reducers/project/projectDetailCategoryReducer'
-import { type ProjectDetailMainProps } from '@/app/types/ui/uiTypes'
-import { type ProjectIssueType } from '@/app/types/variableTypes'
+import { type ProjectDetailMainProps } from '@/app/types/ui/extra'
+import { type ProjectIssueType } from '@/app/types/variable'
 
 export default function ProjectDetailMain(props: ProjectDetailMainProps) {
   const dispatch = useAppDispatch()
@@ -19,7 +19,7 @@ export default function ProjectDetailMain(props: ProjectDetailMainProps) {
   const renderingIssues = (list: ProjectIssueType[] | null, title: string) => {
     if (!isIssueListNull(list)) {
       return (
-        <div className="border-2 border-gray-300">
+        <div className="space-y-3">
           {list?.map((data) => <ProjectDetailTable key={data.id} title={title} issue={data} />)}
         </div>
       )
@@ -34,8 +34,8 @@ export default function ProjectDetailMain(props: ProjectDetailMainProps) {
     dispatch(changeProjectDetailCategoryReducer(PROJECT_DETAIL_CATEGORY_HOME))
   }, [])
   return (
-    <div className="w-full flex flex-row items-left">
-      <div className="w-2/3 p-2 flex flex-row justify-center items-center dark:border-gray-700 border border-gray-200 rounded-lg mr-4 dark:bg-[#1a202c] dark:border-gray-700 border rounded-lg shadow-lg">
+    <div className="w-4/5 max-w-7xl flex flex-row items-left rounded-xl shadow-lg p-2 truncate bg-[#f5f7fc] bg-opacity-70 dark:bg-opacity-10">
+      <div className="w-2/3 p-2 flex flex-row justify-center items-center rounded-lg mr-4 rounded-lg shadow-lg">
         <div className="flex flex-col mb-2 w-full lg:w-4/5 items-center">
           <div className=" w-full">
             <div className=" w-2/6 md:w-1/6 flex flex-row justify-around mb-2">
@@ -53,15 +53,15 @@ export default function ProjectDetailMain(props: ProjectDetailMainProps) {
           </div>
         </div>
       </div>
-      <div className="w-1/3 p-2 flex flex-col items-left dark:border-gray-700 border border-gray-200 rounded-lg dark:bg-[#1a202c] dark:border-gray-700 border border-gray-200 rounded-lg shadow-lg">
+      <div className="w-1/3 p-2 flex flex-col items-left dark:border-gray-700 border-2 rounded-lg dark:border-indigo-700 border border-indigo-400 rounded-lg shadow-lg ">
         <div className=" w-2/4 lg:w-1/4 flex flex-row justify-around mb-2 mt-2">
           <span className="font-bold">멤버</span>
           <span className="font-bold text-indigo-400">{props.projectInfo?.members.length}</span>
         </div>
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center space-y-4">
           {props.projectInfo?.members.map((data) => (
             <div
-              className="2xl:w-4/5 w-full transition ease-in-out duration-300 border-t-2 border-b-2 dark:bg-indigo-400 hover:bg-indigo-300 hover:text-white hover:dark:bg-indigo-500 dark:border-gray-700 border border-gray-300 rounded-lg shadow-lg"
+              className="2xl:w-4/5 w-full transition ease-in-out duration-300 border-t-2 border-b-2  hover:bg-indigo-300 hover:text-white hover:dark:bg-indigo-500 dark:border-gray-700 border border-gray-300 rounded-lg shadow-lg"
               key={data.id}
             >
               <InviteProjectMemberTable memberInfo={data} />

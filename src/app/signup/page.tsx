@@ -35,7 +35,7 @@ import {
   type LoginResponseType,
   type ModulePostFetchProps,
   type SuccessResponseType,
-} from '../types/moduleTypes'
+} from '../types/module'
 
 export default function Signup() {
   const signupButtonRef = useRef<HTMLButtonElement>(null)

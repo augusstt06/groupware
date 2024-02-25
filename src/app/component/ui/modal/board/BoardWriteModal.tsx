@@ -27,9 +27,9 @@ import {
   type ModuleCheckContentIsEmptyProps,
   type ModuleGetFetchProps,
   type SuccessResponseType,
-} from '@/app/types/moduleTypes'
-import { type BoardWriteModalprops } from '@/app/types/ui/modalTypes'
-import { type BoardListResponseType, type BoardResponseType } from '@/app/types/variableTypes'
+} from '@/app/types/module'
+import { type BoardWriteModalprops } from '@/app/types/ui/modal'
+import { type BoardListResponseType, type BoardResponseType } from '@/app/types/variable'
 
 const Editor = dynamic(async () => import('../../editor/TextEditor'), {
   ssr: false,

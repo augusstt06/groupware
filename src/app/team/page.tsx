@@ -33,12 +33,8 @@ import { moduleCheckUserState } from '../module/utils/check/moduleCheckUserState
 import { moduleGetCookie } from '../module/utils/moduleCookie'
 import { moduleGetFetch, modulePostFetch } from '../module/utils/moduleFetch'
 import { createTeamModalReducer } from '../store/reducers/team/teamModalReducer'
-import { type SuccessResponseType } from '../types/moduleTypes'
-import {
-  type DialogTextType,
-  type GetTeamListType,
-  type TeamResponseType,
-} from '../types/variableTypes'
+import { type SuccessResponseType } from '../types/module'
+import { type DialogTextType, type GetTeamListType, type TeamResponseType } from '../types/variable'
 
 export default function Team() {
   // outer variables
@@ -108,10 +104,7 @@ export default function Team() {
 
   const renderTeamHub = () => {
     if (isLoading) return <span>데이터를 로딩중입니다.</span>
-    else {
-      if (teamList?.length === 0) return <span>생성된 팀이 없습니다.</span>
-      return <TeamMainHub teamList={teamList as TeamResponseType[]} />
-    }
+    return <TeamMainHub teamList={teamList as TeamResponseType[]} />
   }
   const modalList = [
     {
@@ -187,9 +180,9 @@ export default function Team() {
   }, [accessToken])
 
   return (
-    <main className="w-10/12 h-4/5 flex flex-col items-center">
+    <section className="w-full 2xl:w-2/3 h-4/5 flex flex-col items-center">
       {renderTeamHub()}
       <ModalHub modals={modalList} />
-    </main>
+    </section>
   )
 }

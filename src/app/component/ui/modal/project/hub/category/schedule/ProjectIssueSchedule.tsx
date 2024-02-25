@@ -39,10 +39,10 @@ import {
   changeIssueStartAtTimeReducer,
   changeIssueTitleReducer,
 } from '@/app/store/reducers/project/projectIssueReducer'
-import { type DialogBtnValueType } from '@/app/types/moduleTypes'
-import { type CalendarValue, type ValuePiece } from '@/app/types/pageTypes'
-import { type SearchType } from '@/app/types/ui/modalTypes'
-import { type DialogTextType, type ScheduleListType } from '@/app/types/variableTypes'
+import { type DialogBtnValueType } from '@/app/types/module'
+import { type CalendarValue, type ValuePiece } from '@/app/types/pageType'
+import { type SearchType } from '@/app/types/ui/modal'
+import { type DialogTextType, type ScheduleListType } from '@/app/types/variable'
 
 export default function ProjectIssueSchedule() {
   const [isPlaceModal, setIsPlaceModal] = useState(false)

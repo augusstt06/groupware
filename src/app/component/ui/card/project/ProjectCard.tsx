@@ -32,9 +32,9 @@ import { ROUTE_PROJECT_DETAIL } from '@/app/constant/route/route-constant'
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
 import { moduleDeleteFetchWithBody, modulePostFetch } from '@/app/module/utils/moduleFetch'
-import { type DialogBtnValueType } from '@/app/types/moduleTypes'
-import { type ProjectCardProps } from '@/app/types/ui/cardTypes'
-import { type DialogTextType } from '@/app/types/variableTypes'
+import { type DialogBtnValueType } from '@/app/types/module'
+import { type ProjectCardProps } from '@/app/types/ui/card'
+import { type DialogTextType } from '@/app/types/variable'
 
 export default function ProjectCard(props: ProjectCardProps) {
   const queryClient = useQueryClient()

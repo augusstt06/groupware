@@ -1,6 +1,6 @@
 import Calendar from 'react-calendar'
 
-import { type DialogCalenderProps, type DialogModalProps } from '@/app/types/moduleTypes'
+import { type DialogCalenderProps, type DialogModalProps } from '@/app/types/module'
 
 export default function Dialog(props: DialogModalProps) {
   return (

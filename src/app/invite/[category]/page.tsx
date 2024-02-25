@@ -48,8 +48,8 @@ import {
   type LoginResponseType,
   type ModuleGetFetchProps,
   type SuccessResponseType,
-} from '../../types/moduleTypes'
-import { type DialogTextType } from '../../types/variableTypes'
+} from '../../types/module'
+import { type DialogTextType } from '../../types/variable'
 
 import { ROUTE_PROJECT, ROUTE_TEAM } from '@/app/constant/route/route-constant'
 import {
@@ -57,7 +57,7 @@ import {
   updateExtraUserInfoReducer,
   updateUserInfoReducer,
 } from '@/app/store/reducers/main/userInfoReducer'
-import { type AccessInviteProps, type InviteLoginProps } from '@/app/types/pageTypes'
+import { type AccessInviteProps, type InviteLoginProps } from '@/app/types/pageType'
 
 export default function Invite() {
   const router = useRouter()

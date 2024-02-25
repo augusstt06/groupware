@@ -1,8 +1,6 @@
 import { type Dispatch, type MutableRefObject, type SetStateAction } from 'react'
 
-import { type CalendarValue } from './pageTypes'
-
-export type DecodeType = { uuid: string; iss: string; iat: number; exp: number }
+import { type CalendarValue } from './pageType'
 
 export type BoardListResponseType = {
   boardId: number
@@ -49,17 +47,6 @@ export type BoardResponseType = {
   size: number
 }
 
-export type AlertStateType = {
-  headDescription: string
-  additianoalDescription: string
-  option: {
-    positive: string
-    negative: string
-  }
-  onClick: (() => Promise<void>) | (() => void)
-  isPromise: boolean
-}
-
 export type MyBoardType = {
   id: string
   groupUUID: string
@@ -92,7 +79,17 @@ export type ProjectResponseType = {
   teamId: number
   updatedAt: string
   members: Array<{
+    position: string
     name: string
+    teams: Array<{
+      color: string
+      createdAt: string
+      description: string
+      id: number
+      name: string
+      organizationId: number
+      updatedAt: string
+    }>
     id: number
     uuid: string
     email: string
@@ -110,12 +107,6 @@ export type FetchPostProjectResponseType = {
   color: string
   name: string
   teamId: number
-}
-
-export type ProjectAlertStateType = {
-  mainDescription: string
-  subDescription: string
-  isCreateModalClose: boolean
 }
 
 export type ProjectIssueResponseType = {
