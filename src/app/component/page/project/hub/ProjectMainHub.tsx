@@ -18,7 +18,7 @@ export default function ProjectMainHub(props: ProjectMainHubProps) {
           ))}
         </div>
       ) : (
-        <section className="rounded-xl w-full h-40 flex items-center justify-center bg-[#f5f7fc] bg-opacity-70 dark:bg-opacity-10">
+        <section className="rounded-xl w-full h-40 flex items-center justify-center">
           There are no projects yet.
         </section>
       )}
