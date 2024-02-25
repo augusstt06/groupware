@@ -30,6 +30,7 @@ import { type WriteCommentProps } from '@/app/types/pageType'
 export default function WriteComment(props: WriteCommentProps) {
   const router = useRouter()
   const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
+  const userName = useAppSelector((state) => state.userInfo.extraInfo.name)
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
   const commentInput = useInput('')
   const [inputCount, setInputCount] = useState<number>()
@@ -114,12 +115,12 @@ export default function WriteComment(props: WriteCommentProps) {
     <div className=" pt-2 pb-2">
       <div className="border-2 border-gray-300 rounded-lg flex flex-col p-2">
         <div className="flex flex-row justify-between">
-          <span className="text-sm font-bold pl-3 mb-2">작성자 이름</span>
+          <span className="text-sm font-bold pl-3 mb-2">{userName}</span>
           <span className="text-sm text-gray-300">{inputCount} / 1000</span>
         </div>
         <input
           placeholder="댓글을 남겨보세요"
-          className="outline-none bg-white dark:bg-gray-700 p-3 text-sm"
+          className="outline-none bg-transparent p-3 text-sm"
           value={commentInput.value}
           maxLength={1000}
           onChange={handleInput}

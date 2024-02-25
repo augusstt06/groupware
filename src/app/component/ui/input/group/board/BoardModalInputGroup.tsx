@@ -128,9 +128,9 @@ export default function BoardModalInputGroup(props: BoardModalInputGruopProps) {
         <div className="flex flex-row items-center">
           <Label title="썸네일" />
 
-          {imgTag !== null ? (
+          {imgTag === null ? (
             <label htmlFor="imginput" className="mb-2 ml-3 flex flex-row items-center">
-              <AiOutlinePicture className="w-4 h-4" />
+              <AiOutlinePicture className="w-4 h-4 cursor-pointer" />
               <input
                 type="file"
                 id="imginput"
@@ -144,10 +144,9 @@ export default function BoardModalInputGroup(props: BoardModalInputGruopProps) {
         </div>
         <div className="h-full flex border-2 dark:border-white-500 justify-center items-center truncate">
           {imgTag ?? (
-            <label htmlFor="imginput">
-              <span>+ 이미지업로드</span>
-              <Input
-                isLabel={false}
+            <label htmlFor="imginput" className="text-gray-400">
+              <AiOutlinePicture className="w-10 h-10 cursor-pointer" />
+              <input
                 type="file"
                 id="imgInput"
                 onChange={handleUploadThumbmnail}

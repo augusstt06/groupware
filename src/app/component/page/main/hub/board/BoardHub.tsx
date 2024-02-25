@@ -17,7 +17,7 @@ export default function BoardHub(props: BoardHubProps) {
           ))}
         </>
       ) : (
-        <section className="rounded-xl w-full h-40 flex items-center justify-center bg-white bg-opacity-70 bg-opacity-10">
+        <section className="rounded-xl w-full h-40 flex items-center justify-center bg-[#f5f7fc] bg-opacity-70 dark:bg-opacity-10">
           There are no posts yet.
         </section>
       )}

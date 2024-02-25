@@ -6,7 +6,7 @@ export default function TeamMainHub(props: TeamMainHubProps) {
   const { teamList } = props
 
   return (
-    <div className="w-4/5 max-w-7xl flex flex-col items-center rounded-xl shadow-lg p-2 truncate bg-[#f5f7fc] bg-opacity-70 bg-opacity-10">
+    <div className="w-4/5 max-w-7xl flex flex-col items-center rounded-xl shadow-lg p-2 truncate bg-[#f5f7fc] bg-opacity-70 dark:bg-opacity-10">
       <div className="w-full p-3">
         <span className="font-bold">전체 팀</span>
       </div>
@@ -17,7 +17,7 @@ export default function TeamMainHub(props: TeamMainHubProps) {
           ))}
         </div>
       ) : (
-        <section className="rounded-xl w-full h-40 flex items-center justify-center bg-white bg-opacity-70">
+        <section className="rounded-xl w-full h-40 flex items-center justify-center bg-[#f5f7fc] bg-opacity-70 dark:bg-opacity-10">
           There are no teams yet.
         </section>
       )}

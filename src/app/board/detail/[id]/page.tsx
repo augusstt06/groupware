@@ -222,8 +222,8 @@ export default function BoardDetail() {
   return (
     <>
       {postingData?.result !== undefined ? (
-        <main className="w-full 2xl:w-2/3 h-4/5 flex flex-col items-center">
-          <div className="w-4/5 rounded md:col-span-3 mr-10 col-span-4 bg-white dark:bg-gray-700 dark:text-white p-5 border-2">
+        <section className="w-full 2xl:w-2/3 h-4/5 flex flex-col items-center ">
+          <div className="w-4/5 rounded md:col-span-3 mr-10 col-span-4 dark:text-white p-5 border-2 rounded-xl shadow mb-5 bg-[#f5f7fc]  bg-opacity-70 dark:bg-opacity-10">
             <PostingDetailHeader
               moveBoardListPage={moveBoardListPage}
               commentCount={commentCount}
@@ -264,7 +264,7 @@ export default function BoardDetail() {
             </div>
             {isModalOpen ? <BoardWriteModal currentBoard={null} /> : <></>}
           </div>
-        </main>
+        </section>
       ) : (
         <></>
       )}
