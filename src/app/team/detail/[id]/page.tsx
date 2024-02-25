@@ -176,8 +176,8 @@ export default function TeamDetail() {
   }, [isLoading])
 
   return (
-    <main className="w-10/12 max-w-7xl 2xl:w-2/3 h-4/5 flex flex-col items-center ">
-      <div className="md:5/6 w-full flex flex-col items-left dark:bg-[#1a202c] dark:border-gray-700 border border-gray-200 rounded-lg shadow-lg p-2 mb-5">
+    <section className="w-full 2xl:w-2/3 h-4/5 flex flex-col items-center ">
+      <div className="w-4/5 max-w-7xl flex flex-col items-left rounded-xl shadow-lg p-2 truncate bg-[#f5f7fc] bg-opacity-70 dark:bg-opacity-10 p-2 mb-5">
         <div className="w-full p-3 flex flex-row justify-between items-center">
           <span className="font-bold">
             {teamData() !== null ? teamData()?.name : '데이터를 로딩중입니다.'}
@@ -191,7 +191,7 @@ export default function TeamDetail() {
           />
         </div>
       </div>
-      <div className="w-full max-w-7xl flex flex-col items-center dark:bg-[#1a202c] dark:border-gray-700 border border-gray-200 rounded-lg shadow-lg p-2 truncate">
+      <div className="w-4/5 max-w-7xl flex flex-col items-center rounded-xl shadow-lg p-2 truncate bg-[#f5f7fc] bg-opacity-70 dark:bg-opacity-10 p-2 truncate">
         <div className="w-full p-3">
           <span className="font-bold">팀 멤버</span>
         </div>
@@ -209,6 +209,6 @@ export default function TeamDetail() {
         )}
       </div>
       <ModalHub modals={modalList} />
-    </main>
+    </section>
   )
 }

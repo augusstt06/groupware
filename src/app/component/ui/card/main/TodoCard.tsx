@@ -1,21 +1,16 @@
 import { LuCircle } from 'react-icons/lu'
-// import { FaRegCheckCircle } from 'react-icons/fa'
-// import { GiCancel } from 'react-icons/gi'
 
 import TodoIndicator from '../../indicator/Indicator'
 
 export default function TodoCard() {
   return (
-    <div className="w-full flex flex-row p-4 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mb-5">
+    <div className="w-full flex flex-row p-4 rounded-xl shadow-lg p-2 truncate bg-[#f5f7fc] bg-opacity-70 dark:bg-opacity-10">
       <div className="inline-flex items-center mr-2">
-        {/* 상태에 따라 아이콘 변경 */}
         <LuCircle className="w-6 h-6 " />
-        {/* <FaRegCheckCircle className="w-6 h-6 text-indigo-500" /> */}
-        {/* <GiCancel className="w-6 h-6 text-red-500" /> */}
       </div>
       <div className="w-full p-2 ">
         <div className="inline-block text-sm md:text-medium">
-          <p>@ddd 님이 ~~~~~~~~했습니다.</p>
+          <p>1st Issue</p>
           <TodoIndicator />
         </div>
         <div className="flex flex-row md:text-sm text-xs w-4/5 mt-2">

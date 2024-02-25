@@ -19,7 +19,7 @@ export default function ProjectDetailMain(props: ProjectDetailMainProps) {
   const renderingIssues = (list: ProjectIssueType[] | null, title: string) => {
     if (!isIssueListNull(list)) {
       return (
-        <div className="border-2 border-gray-300 ">
+        <div className="space-y-3">
           {list?.map((data) => <ProjectDetailTable key={data.id} title={title} issue={data} />)}
         </div>
       )
