@@ -93,7 +93,17 @@ export type ProjectDetailMainProps = {
 }
 export type InviteProjectMemberTableProps = {
   memberInfo: {
+    position: string
     name: string
+    teams: Array<{
+      color: string
+      createdAt: string
+      description: string
+      id: number
+      name: string
+      organizationId: number
+      updatedAt: string
+    }>
     id: number
     uuid: string
     email: string

@@ -452,7 +452,7 @@ export default function ProjectDetail() {
     moduleCheckUserState({ loginCompleteState, router, accessToken, setAccessToken })
   }, [accessToken])
   return (
-    <section className="w-full 2xl:w-2/3 h-4/5 flex flex-col items-center space-y-5">
+    <section className="w-full 2xl:w-2/3 h-4/5 flex flex-col items-center space-y-5 ">
       {projectDetail !== undefined ? (
         <>
           <ProjectDetailTab projectInfo={projectDetail.result} colleague={colleague ?? []} />

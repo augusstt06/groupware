@@ -224,7 +224,7 @@ export default function ProjectDetailTask() {
           onDragEnd(result, columnList, setColumnList)
         }}
       >
-        <div className=" w-4/5 max-w-7xl grid-cols-4 grid gap-2 justify-center rounded-xl shadow-lg p-2 truncate bg-[#f5f7fc] dark:bg-[#1a202c]  bg-opacity-70">
+        <div className=" w-4/5 max-w-7xl grid-cols-4 grid gap-2 justify-center rounded-xl shadow-lg p-2 truncate bg-[#f5f7fc] bg-opacity-70 dark:bg-opacity-10 ">
           {columnList.map((data, columnIndex) => (
             <ProjectDetailTaskColumn
               key={data.columnTitle}

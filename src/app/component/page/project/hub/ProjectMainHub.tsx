@@ -6,7 +6,7 @@ export default function ProjectMainHub(props: ProjectMainHubProps) {
   const { projectList } = props
   const projectCategory = useAppSelector((state) => state.projectMainCategory.selectProjectMenu)
   return (
-    <div className="w-4/5 max-w-7xl flex flex-col items-center rounded-xl shadow-lg p-2 truncate bg-[#f5f7fc] dark:bg-[#1a202c]  bg-opacity-70">
+    <div className="w-4/5 max-w-7xl flex flex-col items-center rounded-xl shadow-lg p-2 truncate bg-[#f5f7fc] bg-opacity-70 bg-opacity-10">
       <div className="w-full p-3">
         <span className="font-bold">{projectCategory}</span>
       </div>
