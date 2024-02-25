@@ -124,7 +124,7 @@ export default function ProjectDetailSchedule() {
   }, [scheduleList])
 
   return (
-    <div className="w-full justify-center dark:border-gray-700 border border-gray-200 rounded-lg dark:bg-[#1a202c] shadow-lg p-3 z-1">
+    <div className="w-4/5 max-w-7xl justify-center rounded-xl shadow-lg p-2 truncate bg-[#f5f7fc] dark:bg-[#1a202c]  bg-opacity-70 z-1">
       <FullCalendar
         timeZone="UTC"
         initialView="dayGridMonth"

@@ -104,10 +104,7 @@ export default function Team() {
 
   const renderTeamHub = () => {
     if (isLoading) return <span>데이터를 로딩중입니다.</span>
-    else {
-      if (teamList?.length === 0) return <span>생성된 팀이 없습니다.</span>
-      return <TeamMainHub teamList={teamList as TeamResponseType[]} />
-    }
+    return <TeamMainHub teamList={teamList as TeamResponseType[]} />
   }
   const modalList = [
     {
