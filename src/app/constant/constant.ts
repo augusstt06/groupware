@@ -74,6 +74,8 @@ export const SIDEBAR_URL_PATH_TEAM = 'team'
 export const MAIN_CARD_TODO = 'TODO'
 
 // Board
+export const BOARD_MAIN_TITLE = 'Board'
+
 export const BOARD_CATEGORY_TEAM = '팀'
 export const BOARD_CATEGORY_PROJECT = '프로젝트'
 

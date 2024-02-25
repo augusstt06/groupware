@@ -25,15 +25,15 @@ import { API_URL_KAKAO_MAP, API_URL_PROJECT_ISSUE } from '@/app/constant/route/a
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
 import { moduleKaKaoGetFetch, modulePatchFetch } from '@/app/module/utils/moduleFetch'
-import { type DialogBtnValueType, type ModulePostFetchProps } from '@/app/types/moduleTypes'
+import { type DialogBtnValueType, type ModulePostFetchProps } from '@/app/types/module'
 import {
   type CalendarValue,
   type IssueCalendarWithTimeProps,
   type ProjectIssueDetailProps,
   type ValuePiece,
-} from '@/app/types/pageTypes'
-import { type SearchType } from '@/app/types/ui/modalTypes'
-import { type DialogTextType, type ScheduleListType } from '@/app/types/variableTypes'
+} from '@/app/types/pageType'
+import { type SearchType } from '@/app/types/ui/modal'
+import { type DialogTextType, type ScheduleListType } from '@/app/types/variable'
 
 export default function ProjectScheduleDeatil(props: ProjectIssueDetailProps) {
   const { issue } = props

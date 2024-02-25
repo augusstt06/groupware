@@ -34,12 +34,12 @@ import { API_URL_PROJECT_ISSUE } from '@/app/constant/route/api-route-constant'
 import { useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
 import { modulePatchFetch } from '@/app/module/utils/moduleFetch'
-import { type ModulePostFetchProps } from '@/app/types/moduleTypes'
+import { type ModulePostFetchProps } from '@/app/types/module'
 import {
   type CalendarValue,
   type ProjectIssueDetailProps,
   type ValuePiece,
-} from '@/app/types/pageTypes'
+} from '@/app/types/pageType'
 
 export default function ProjectTaskDetail(props: ProjectIssueDetailProps) {
   const { issue } = props

@@ -10,6 +10,7 @@ import BoardWriteModal from '../component/ui/modal/board/BoardWriteModal'
 import {
   BOARD_CATEGORY_PROJECT,
   BOARD_CATEGORY_TEAM,
+  BOARD_MAIN_TITLE,
   KEY_ACCESS_TOKEN,
   KEY_LOGIN_COMPLETE,
   KEY_X_ORGANIZATION_CODE,
@@ -34,12 +35,12 @@ import {
   type CustomDecodeTokenType,
   type ModuleGetFetchProps,
   type SuccessResponseType,
-} from '../types/moduleTypes'
+} from '../types/module'
 import {
   type BoardListResponseType,
   type BoardResponseType,
   type MyBoardType,
-} from '../types/variableTypes'
+} from '../types/variable'
 
 export default function Board() {
   const router = useRouter()
@@ -94,7 +95,7 @@ export default function Board() {
     }
   }
 
-  const { data: boardPostingData } = useQuery<SuccessResponseType<BoardResponseType>>({
+  const { data: boardPostingData, isLoading } = useQuery<SuccessResponseType<BoardResponseType>>({
     queryKey: ['board-postings'],
     queryFn: async () => {
       const fetchGetBoardListProps: ModuleGetFetchProps = {
@@ -112,22 +113,6 @@ export default function Board() {
       return res as SuccessResponseType<BoardResponseType>
     },
   })
-  const successFetchBoardPostings = () => {
-    const boardPostingList = (boardPostingData as SuccessResponseType<BoardResponseType>).result
-    if (pageSize === 1) {
-      const pageSize = Math.ceil(boardPostingList.total / 10)
-      setPageSize(pageSize)
-    }
-    if (selectBoard !== '') {
-      const selectBoardId = myBoardState.filter((data) => data.name === selectBoard)[0].id
-      const filterList = boardPostingList.data.filter(
-        (data) => data.boardId === Number(selectBoardId),
-      )
-      setBoardList(filterList)
-      return
-    }
-    setBoardList(boardPostingList.data)
-  }
 
   useEffect(() => {
     if (checkTokenExpired(accessTokenTime)) {
@@ -137,17 +122,32 @@ export default function Board() {
   }, [accessToken])
 
   useEffect(() => {
-    if (boardPostingData !== undefined) successFetchBoardPostings()
-  }, [selectBoard, boardPostingData])
+    if (boardPostingData !== undefined) {
+      const boardPostingList = boardPostingData.result
+      if (pageSize === 1) {
+        const pageSize = Math.ceil(boardPostingList.total / 10)
+        setPageSize(pageSize)
+      }
+      if (selectBoard !== '') {
+        const selectBoardId = myBoardState.filter((data) => data.name === selectBoard)[0].id
+        const filterList = boardPostingList.data.filter(
+          (data) => data.boardId === Number(selectBoardId),
+        )
+        setBoardList(filterList)
+        return
+      }
+      setBoardList(boardPostingList.data)
+    }
+  }, [isLoading])
 
   useEffect(() => {
     if (myBoardData !== undefined) successFetchMyBoard()
   }, [myBoardData])
 
   return (
-    <section className="w-10/12 2xl:w-2/3 h-4/5 flex flex-col items-center">
+    <section className="w-full 2xl:w-2/3 h-4/5 flex flex-col items-center">
       <BoardHub
-        title="게시판"
+        title={BOARD_MAIN_TITLE.toUpperCase()}
         boardList={boardList}
         myBoardList={myBoardData?.result as MyBoardType[]}
         selectBoard={selectBoard}

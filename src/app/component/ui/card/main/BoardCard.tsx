@@ -4,7 +4,7 @@ import { FaRegComment, FaRegHeart } from 'react-icons/fa'
 
 import { ROUTE_POSTING_DETAIL } from '@/app/constant/route/route-constant'
 import { moduleConvertDate } from '@/app/module/utils/moduleTime'
-import { type BoardCardType } from '@/app/types/ui/cardTypes'
+import { type BoardCardType } from '@/app/types/ui/card'
 
 const Viewbox = dynamic(async () => import('../../../ui/editor/TextViewer'), {
   ssr: false,
@@ -18,7 +18,7 @@ export default function BoardCard(props: BoardCardType) {
   }
   return (
     <div
-      className="cursor-pointer w-full flex flex-row p-4 border border-gray-200 rounded-lg shadow dark:bg-[#1a202c] dark:border-gray-700 mb-5"
+      className="cursor-pointer w-full flex flex-row p-4 border border-gray-200 dark:border-gray-700 mb-5 bg-[#f5f7fc] rounded-xl shadow mb-5 bg-opacity-70 dark:bg-opacity-10"
       onClick={goPostingPage}
     >
       <div className="flex justify-center items-center w-1/3 truncate rounded-lg">

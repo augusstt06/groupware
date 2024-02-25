@@ -8,7 +8,7 @@ import {
   type CommentType,
   type IssueDatailType,
   type ScheduleListType,
-} from './variableTypes'
+} from './variable'
 
 export type ReactProps = {
   children: React.ReactNode
@@ -26,15 +26,6 @@ export type RegisterOrgProps = {
   organization: string
   setOrganization: React.Dispatch<SetStateAction<string>>
   setErrMsg: (errDescription: string) => void
-}
-
-export type HubCategoryProps = {
-  title: string
-  issue: string[]
-}
-
-export type PageParam = {
-  category: string
 }
 
 export type BoardItemHubProps = {

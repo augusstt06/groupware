@@ -11,7 +11,7 @@ import {
 import { useAppDispatch, useAppSelector } from '@/app/module/hooks/reduxHooks'
 import { changeProjectDetailCategoryReducer } from '@/app/store/reducers/project/projectDetailCategoryReducer'
 import { projectInviteModalReducer } from '@/app/store/reducers/project/projectModalReducer'
-import { type ProjectDetailTabProps } from '@/app/types/ui/uiTypes'
+import { type ProjectDetailTabProps } from '@/app/types/ui/extra'
 
 export default function ProjectDetailTab(props: ProjectDetailTabProps) {
   const dispatch = useAppDispatch()
@@ -42,7 +42,7 @@ export default function ProjectDetailTab(props: ProjectDetailTabProps) {
     dispatch(projectInviteModalReducer(true))
   }
   return (
-    <div className="md:5/6 w-full flex flex-col items-left dark:bg-[#1a202c] dark:border-gray-700 border border-gray-200 rounded-lg shadow-lg p-2 mb-5">
+    <div className="w-4/5 max-w-7xl flex flex-col items-center rounded-xl shadow-lg p-2 truncate bg-[#f5f7fc]  bg-opacity-70 dark:bg-opacity-10">
       <div className="w-full p-3 flex flex-row justify-between items-center">
         <span className="font-bold">{props.projectInfo?.name}</span>
         <Button

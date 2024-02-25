@@ -24,8 +24,8 @@ import {
   type FailResponseType,
   type ModuleGetFetchProps,
   type ModulePostFetchProps,
-} from '@/app/types/moduleTypes'
-import { type CommentProps } from '@/app/types/pageTypes'
+} from '@/app/types/module'
+import { type CommentProps } from '@/app/types/pageType'
 
 export default function Recomment(props: CommentProps) {
   const dispatch = useAppDispatch()

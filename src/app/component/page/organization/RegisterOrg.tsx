@@ -4,7 +4,7 @@ import CreateOrgInfo from './create/CreateOrgInfo'
 import JoinOrgInfo from './join/JoinOrgInfo'
 
 import { ORG_CREATE } from '@/app/constant/constant'
-import { type RegisterOrgProps } from '@/app/types/pageTypes'
+import { type RegisterOrgProps } from '@/app/types/pageType'
 
 export default function RegisterOrg(props: RegisterOrgProps) {
   return (

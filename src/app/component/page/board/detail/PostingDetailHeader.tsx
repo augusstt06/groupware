@@ -3,7 +3,7 @@ import { IoIosArrowBack } from 'react-icons/io'
 import { MdRemoveRedEye } from 'react-icons/md'
 
 import { moduleConvertDate } from '@/app/module/utils/moduleTime'
-import { type DetailResponseType } from '@/app/types/variableTypes'
+import { type DetailResponseType } from '@/app/types/variable'
 
 type PostingDetailHeaderProps = {
   moveBoardListPage: () => void

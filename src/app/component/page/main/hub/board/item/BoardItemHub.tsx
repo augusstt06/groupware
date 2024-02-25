@@ -1,6 +1,6 @@
 import BoardItem from './BoardItem'
 
-import { type BoardItemHubProps } from '@/app/types/pageTypes'
+import { type BoardItemHubProps } from '@/app/types/pageType'
 
 export default function BoardItemHub(props: BoardItemHubProps) {
   const isListEmpty = () => {

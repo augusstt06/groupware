@@ -7,7 +7,7 @@ import {
   PROJECT_ISSUE_TASK_VALUE,
   PROJECT_ISSUE_TODO_VALUE,
 } from '@/app/constant/constant'
-import { type CreateProjectIssueModalHubProps } from '@/app/types/ui/uiTypes'
+import { type CreateProjectIssueModalHubProps } from '@/app/types/ui/extra'
 
 export default function CreateProjectIssueModalHub(props: CreateProjectIssueModalHubProps) {
   const selectComponent = () => {

@@ -1,4 +1,4 @@
-import { type InputValidateProps } from '@/app/types/moduleTypes'
+import { type InputValidateProps } from '@/app/types/module'
 
 const inputValidate = (props: InputValidateProps) => {
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/

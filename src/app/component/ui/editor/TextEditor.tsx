@@ -24,8 +24,8 @@ import {
   type FailResponseType,
   type ModulePostFileFetchProps,
   type SuccessResponseType,
-} from '@/app/types/moduleTypes'
-import { type EditorProps } from '@/app/types/ui/uiTypes'
+} from '@/app/types/module'
+import { type EditorProps } from '@/app/types/ui/extra'
 
 export default function TextEditor(props: EditorProps) {
   let imgList: string[] = []

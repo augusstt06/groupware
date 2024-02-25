@@ -5,7 +5,7 @@ import Input from '../../input/Input'
 import {
   type CreateProjectModalColorSelectProps,
   type CreateProjectModalProps,
-} from '@/app/types/ui/modalTypes'
+} from '@/app/types/ui/modal'
 
 export default function CreateProjectModal(props: CreateProjectModalProps) {
   return (
