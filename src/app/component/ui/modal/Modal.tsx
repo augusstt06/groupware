@@ -60,7 +60,7 @@ export function Modal(props: ModalUsePortalProps) {
         className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-opacity-50 bg-gray-500 backdrop-blur-xs z-50"
       >
         <div
-          className={`relative rounded-lg shadow bg-[#f5f7fc]  bg-opacity-70 dark:bg-opacity-10 backdrop-blur-3xl border-solid border-2 border-indigo-300 w-5/6 md:w-1/2 xl:w-2/5 2xl:w-3/12`}
+          className={`relative rounded-lg shadow bg-[#f5f7fc] bg-opacity-70 dark:bg-opacity-10 backdrop-blur-3xl border-solid border-2 border-indigo-300 w-5/6 md:w-1/2 xl:w-2/5 2xl:w-3/12`}
         >
           {props.children}
           <div className={btnClassName()}>

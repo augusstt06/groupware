@@ -53,7 +53,7 @@ export default function ProjectDetailMain(props: ProjectDetailMainProps) {
           </div>
         </div>
       </div>
-      <div className="w-1/3 p-2 flex flex-col items-left dark:border-gray-700 border-2 rounded-lg dark:border-indigo-700 border border-indigo-400 rounded-lg shadow-lg ">
+      <div className="w-1/3 p-2 flex flex-col items-left border-2 rounded-lg border border-indigo-300 rounded-lg shadow-lg ">
         <div className=" w-2/4 lg:w-1/4 flex flex-row justify-around mb-2 mt-2">
           <span className="font-bold">멤버</span>
           <span className="font-bold text-indigo-400">{props.projectInfo?.members.length}</span>
