@@ -1,5 +1,3 @@
-// projectlist api호출해서 issue배열에 담겨있는 내용 렌더링 해주기
-
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
