@@ -51,9 +51,6 @@ export default function TeamCard(props: TeamCardProps) {
           className="flex flex-col items-left h-full justify-around"
         >
           <span className="text-sm font-bold truncate">{teamInfo.name}</span>
-          {/* <span className="text-xs text-gray-300 dark:text-gray-400">
-            {teamInfo.membersCnt}명 참여중
-          </span> */}
         </Link>
       </div>
     </div>

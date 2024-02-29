@@ -202,9 +202,9 @@ export default function TeamDetail() {
             ))}
           </div>
         ) : (
-          <div className="text-center">
-            <p>아직 팀 멤버가 없습니다.</p>
-            <p>초대를 진행해주세요.</p>
+          <div className="text-center p-5">
+            <p>There are no team members yet.</p>
+            <p> Please proceed with the invitation.</p>
           </div>
         )}
       </div>
