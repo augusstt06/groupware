@@ -102,7 +102,7 @@ export default function Nav() {
 
   return (
     <RenderNav isRender={isNavRender}>
-      <nav className="fixed bg-gradient-to-r from-[#c9d6ff] to-[#e2e2e2] dark:from-[#2b2f3d]  border-gray-200 w-full z-50">
+      <nav className="fixed bg-gradient-to-r from-[#c9d6ff] to-[#e2e2e2] dark:from-[#2b2f3d] border-gray-200 w-full z-50">
         <div className={`flex items-center justify-between max-w-screen-xl mx-auto p-4`}>
           <Link
             href="/main"
