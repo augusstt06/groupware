@@ -180,7 +180,7 @@ export default function Team() {
   }, [accessToken])
 
   return (
-    <section className="w-full 2xl:w-2/3 h-4/5 flex flex-col items-center">
+    <section className="w-full h-4/5 flex flex-col items-center">
       {renderTeamHub()}
       <ModalHub modals={modalList} />
     </section>
