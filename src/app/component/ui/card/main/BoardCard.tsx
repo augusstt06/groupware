@@ -22,33 +22,33 @@ export default function BoardCard(props: BoardCardType) {
       onClick={goPostingPage}
     >
       <div className="flex justify-center items-center w-1/3 truncate rounded-lg">
-        {/* <div className="inline-flex items-center mr-2 bg-gray-300 rounded-lg h-10 pr-4 pl-4"> */}
         <img src={props.content.thumbnail} className="rounded-lg" />
-        {/* </div> */}
       </div>
-      <div className="w-full p-2  truncate">
+      <div className="w-full p-2  truncate flex flex-col justify-around">
         <div className="inline-block text-sm md:text-medium">
-          <span className="font-bold">{props.content.title}</span>
+          <span className="font-bold lg:text-2xl">{props.content.title}</span>
         </div>
+
         <Viewbox content={savedText} />
 
-        <div className="flex flex-row md:text-sm text-xs w-1/6 mt-2 items-center justify-around">
-          <div className="flex flex-row items-center">
-            <FaRegHeart className="w-3 h-3 text-red-400 mr-1" />
-            <span className="text-gray-600">{props.content.like}</span>
+        <div className="flex flex-row md:text-sm text-xs w-full mt-2 items-center justify-between">
+          <div className="md:w-1/3 w-1/2 flex flex-row items-center justify-around">
+            <div className="flex flex-row items-center">
+              <FaRegHeart className="lg:w-8 lg:h-8 w-3 h-3 text-red-400 mr-1" />
+              <span className="lg:text-xl text-sm text-gray-600">{props.content.like}</span>
+            </div>
+            <div className="flex flex-row items-center">
+              <FaRegComment className="lg:w-8 lg:h-8 w-3 h-3 text-red-400 mr-1" />
+              <span className="lg:text-xl text-sm text-gray-600">0</span>
+            </div>
           </div>
-          <div className="flex flex-row items-center">
-            <FaRegComment className="w-3 h-3 text-gray-400 mr-1" />
-            {/* FIXME: 댓글수를 따로 response 받아야함 */}
-            <span className="text-gray-600">0</span>
+          <div className="md:w-1/3 w-1/2 text-center flex sm:flex-row flex-col justify-around items-center">
+            <span className="lg:text-xl text-sm ">{props.content.name}</span>
+            <span className="lg:text-xl text-sm ">
+              {moduleConvertDate(props.content.updatedAt, '.', false).split(' ')[0]}
+            </span>
           </div>
         </div>
-      </div>
-      <div className="w-1/3 flex flex-col justify-end p-2">
-        <span className="text-sm mb-2">{props.content.name}</span>
-        <span className="text-xs">
-          {moduleConvertDate(props.content.updatedAt, '.', false).split(' ')[0]}
-        </span>
       </div>
     </div>
   )

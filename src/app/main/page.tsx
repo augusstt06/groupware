@@ -14,7 +14,7 @@ import {
   MAIN_CARD_TODO,
 } from '../constant/constant'
 import { ERR_COOKIE_NOT_FOUND, ERR_ORG_NOT_FOUND } from '../constant/errorMsg'
-import { API_URL_GET_USERS } from '../constant/route/api-route-constant'
+import { API_URL_GET_USERS, API_URL_POSTINGS_MY_ALL } from '../constant/route/api-route-constant'
 import { ROUTE_ERR_NOT_FOUND_ORG_TOKEN } from '../constant/route/route-constant'
 import { useAppDispatch, useAppSelector } from '../module/hooks/reduxHooks'
 import { moduleCheckUserState } from '../module/utils/check/moduleCheckUserState'
@@ -38,6 +38,7 @@ import {
   type ModuleGetFetchProps,
   type SuccessResponseType,
 } from '../types/module'
+import { type BoardListResponseType, type BoardResponseType } from '../types/variable'
 
 export default function Main() {
   const dispatch = useAppDispatch()
@@ -45,6 +46,7 @@ export default function Main() {
   const loginCompleteState = useAppSelector((state) => state.maintain[KEY_LOGIN_COMPLETE])
   const [accessToken, setAccessToken] = useState(moduleGetCookie(KEY_ACCESS_TOKEN))
   const decodeToken = moduleDecodeToken(accessToken)
+  const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
 
   const accessTokenTime = Number((decodeToken as CustomDecodeTokenType).exp)
   const attendanceTime = useAppSelector((state) => state.userInfo.attendance.time)
@@ -52,6 +54,8 @@ export default function Main() {
     decodeToken !== ERR_COOKIE_NOT_FOUND
       ? (decodeToken as CustomDecodeTokenType).uuid
       : ERR_COOKIE_NOT_FOUND
+
+  const [currentPostings, setCurrentPostings] = useState<BoardListResponseType[]>([])
 
   const { error, data } = useQuery<SuccessResponseType<ApiResponseType>>({
     queryKey: ['users'],
@@ -105,6 +109,37 @@ export default function Main() {
     }
   }
 
+  const { data: postings } = useQuery({
+    queryKey: ['current-post'],
+    queryFn: async () => {
+      const res = await moduleGetFetch<BoardResponseType>({
+        params: {
+          limit: 10,
+          offset: 0,
+        },
+        fetchUrl: API_URL_POSTINGS_MY_ALL,
+        header: {
+          Authorization: `Bearer ${accessToken}`,
+          [KEY_X_ORGANIZATION_CODE]: orgCode,
+        },
+      })
+      const today = new Date()
+      const threeDaysAgo = new Date(today)
+      threeDaysAgo.setDate(today.getDate() - 3)
+
+      const currentPost = (res as SuccessResponseType<BoardResponseType>).result.data.filter(
+        (item) => {
+          const createdAtDate = new Date(item.createdAt)
+          return createdAtDate >= threeDaysAgo
+        },
+      )
+      return currentPost
+    },
+  })
+  useEffect(() => {
+    if (postings !== undefined) setCurrentPostings(postings)
+  }, [postings])
+
   useEffect(() => {
     if (data !== undefined) successFetchUserInfo()
   }, [accessToken, data])
@@ -122,8 +157,8 @@ export default function Main() {
   }, [accessToken])
 
   return (
-    <main className="w-full 2xl:w-2/3 h-4/5 flex flex-col items-center">
-      <MainHub title={MAIN_CARD_TODO} />
+    <main className="w-full h-4/5 flex flex-col items-center">
+      <MainHub title={MAIN_CARD_TODO} currentPostings={currentPostings} />
     </main>
   )
 }

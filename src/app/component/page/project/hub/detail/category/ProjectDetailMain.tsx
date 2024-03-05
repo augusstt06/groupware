@@ -35,7 +35,7 @@ export default function ProjectDetailMain(props: ProjectDetailMainProps) {
   }, [])
   return (
     <div className="w-4/5 max-w-7xl flex flex-row items-left rounded-xl shadow-lg p-2 truncate bg-[#f5f7fc] bg-opacity-70 dark:bg-opacity-10">
-      <div className="w-2/3 p-2 flex flex-row justify-center items-center rounded-lg mr-4 rounded-lg shadow-lg">
+      <div className="w-2/3 p-2 flex flex-row justify-center items-center rounded-lg mr-4 rounded-lg shadow-lg border-2 dark:border-indigo-300">
         <div className="flex flex-col mb-2 w-full lg:w-4/5 items-center">
           <div className=" w-full">
             <div className=" w-2/6 md:w-1/6 flex flex-row justify-around mb-2">
@@ -53,7 +53,7 @@ export default function ProjectDetailMain(props: ProjectDetailMainProps) {
           </div>
         </div>
       </div>
-      <div className="w-1/3 p-2 flex flex-col items-left dark:border-gray-700 border-2 rounded-lg dark:border-indigo-700 border border-indigo-400 rounded-lg shadow-lg ">
+      <div className="w-1/3 p-2 flex flex-col items-left border-2 rounded-lg border-2 dark:border-indigo-300 rounded-lg shadow-lg ">
         <div className=" w-2/4 lg:w-1/4 flex flex-row justify-around mb-2 mt-2">
           <span className="font-bold">멤버</span>
           <span className="font-bold text-indigo-400">{props.projectInfo?.members.length}</span>

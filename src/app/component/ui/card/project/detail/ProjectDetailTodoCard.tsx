@@ -1,31 +1,16 @@
-import { FaCheck } from 'react-icons/fa'
-
 import { moduleConvertDate } from '@/app/module/utils/moduleTime'
 import { type ProjectDetailTodoCardProps } from '@/app/types/ui/card'
 
 export default function ProjectDetailTodoCard(props: ProjectDetailTodoCardProps) {
+  const { title, issuer, endAt } = props.todo
+
   return (
-    <div className="flex flex-row items-center justify-between mb-2 w-10/12 rounded-lg  shadow-lg">
-      <div className="flex flex-row items-center justify-between lg:w-1/4 w-1/3 truncate">
-        <div className="md:inline hidden w-4 h-9 bg-indigo-300 rounded-l-lg"></div>
-        <div className="lg:inline hidden bg-gray-300 p-1 rounded-full">
-          <FaCheck className="text-white w-3 h-3" />
-        </div>
-        <div className="md:w-3/5 w-full flex items-center justify-center ">
-          <span className="text-xs md:text-base text-gray-600">{props.todo.title}</span>
-        </div>
-      </div>
-      <div className="flex flex-row items-center justify-between xl:w-1/3 w-2/3 truncate">
-        <div className="flex flex-row items-center justify-around  lg:w-2/3 w-full">
-          <span className="text-xs md:text-sm text-gray-500">{props.todo.issuer.name}</span>
-          <span className="text-xs md:text-sm text-gray-500"> | </span>
-          <span className="text-xs md:text-sm text-gray-500">
-            {moduleConvertDate(props.todo.endAt, '.', false)}
-          </span>
-        </div>
-        <div className="md:inline hidden rounded-full bg-indigo-400 p-1 md:p-2 text-white text-xs">
-          할일
-        </div>
+    <div className="p-3 rounded-xl shadow-xl border-2 bg-[#f5f7fc] dark:text-gray-500 ">
+      <h1 className="font-bold">{title}</h1>
+      <div className="text-sm flex flex-row items-center justify-between">
+        <div>{issuer.name}</div>
+        <div>{moduleConvertDate(endAt, '.', false)}</div>
+        <div className="bg-green-200 w-4 h-4 rounded-full"></div>
       </div>
     </div>
   )
