@@ -176,7 +176,7 @@ export default function TeamDetail() {
   }, [isLoading])
 
   return (
-    <section className="w-full 2xl:w-2/3 h-4/5 flex flex-col items-center ">
+    <section className="w-full  h-4/5 flex flex-col items-center ">
       <div className="w-4/5 max-w-7xl flex flex-col items-left rounded-xl shadow-lg p-2 truncate bg-[#f5f7fc] bg-opacity-70 dark:bg-opacity-10 p-2 mb-5">
         <div className="w-full p-3 flex flex-row justify-between items-center">
           <span className="font-bold">
@@ -202,9 +202,9 @@ export default function TeamDetail() {
             ))}
           </div>
         ) : (
-          <div className="text-center">
-            <p>아직 팀 멤버가 없습니다.</p>
-            <p>초대를 진행해주세요.</p>
+          <div className="text-center p-5">
+            <p>There are no team members yet.</p>
+            <p> Please proceed with the invitation.</p>
           </div>
         )}
       </div>

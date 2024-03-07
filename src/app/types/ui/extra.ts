@@ -40,6 +40,7 @@ export type BoardModalSaveListTabProps = {
 }
 export type MainHubProps = {
   title: string
+  currentPostings: BoardListResponseType[]
 }
 export type BoardHubProps = {
   changeBoard: (name: string) => void

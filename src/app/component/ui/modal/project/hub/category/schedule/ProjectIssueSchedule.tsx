@@ -322,7 +322,7 @@ export default function ProjectIssueSchedule() {
             labelContent="장소"
             value={schedulePlace}
             labelClassName="w-1/6"
-            className=" xl:w-3/5 rounded rounded mt-2 bg-gray-80 border text-gray-900 block text-sm border-gray-300 p-2.5 dark:bg-gray-700 dark:border-white-600 dark:placeholder-gray-400 dark:text-white focus:outline-none"
+            className=" xl:w-3/5 rounded rounded mt-2 text-gray-900 block text-sm p-2.5 dark:placeholder-gray-400 dark:text-white focus:outline-none bg-transparent border-2 border-indigo-200 dark:border-indigo-300"
           />
         </div>
 
