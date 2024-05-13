@@ -53,10 +53,10 @@ export default function NavHamburgerMenu(props: NavHamburgerMenuProps) {
 
   return (
     <div className="flex flex-row items-center mt-2">
-      <a className="md:hidden text-gray-800 border-none dark:hover:text-yellow-400 hover:text-yellow-400 dark:text-white border-solid border-white border-2 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5   focus:outline-none dark:focus:ring-gray-800">
+      <a className="md:hidden dark:hover:text-yellow-400 hover:text-yellow-400 view-icon text-gray-800 dark:text-white">
         <DarkmodeBtn />
       </a>
-      <a className="md:hidden cursor-pointer text-gray-800 border-none hover:text-red-500 dark:hover:text-red-500 dark:text-white border-solid border-white border-2 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5  focus:outline-none dark:focus:ring-gray-800">
+      <a className="md:hidden  hover:text-red-500 dark:hover:text-red-500 view-icon">
         {accessToken !== ERR_COOKIE_NOT_FOUND ? (
           <FiLogOut className="md:w-5 md:h-5 w-4 h-4" onClick={handleClickLogout} />
         ) : (

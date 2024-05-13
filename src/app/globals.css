@@ -24,3 +24,41 @@ body {
   font-family: 'PretendardVariable';
   font-weight: 200;
 }
+
+/* display */
+.sort-vertical-flex {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* animation */
+.smooth-transition {
+  transition: all 0.5s ease-in-out;
+}
+
+/* icon */
+.view-icon {
+  cursor: pointer;
+  border-style: solid;
+  border-color: #fff;
+  outline-width: 4px;
+  outline-color: #d1d5db;
+  font-weight: 500;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  @media (min-width: 768px) {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+    padding-top: 0.625rem;
+    padding-bottom: 0.625rem;
+  }
+
+  outline: none;
+
+  outline-color: #1f2937;
+}

@@ -19,6 +19,7 @@ import { moduleGetCookie } from '@/app/module/utils/moduleCookie'
 import { type DialogBtnValueType } from '@/app/types/module'
 import { type RenderNavProps } from '@/app/types/ui/nav'
 import { type DialogTextType } from '@/app/types/variable'
+import '@/app/globals.css'
 
 const chakra = Chakra_Petch({
   subsets: ['latin'],
@@ -106,12 +107,12 @@ export default function Nav() {
         <div className={`flex items-center justify-between max-w-screen-xl mx-auto p-4`}>
           <Link
             href="/main"
-            className="hover:scale-110 transition ease-in-out duration-500 flex items-center space-x-3 ml-10 md:text-2xl text-medium font-semibold dark:text-white"
+            className="hover:scale-110 smooth-transition flex items-center space-x-3 ml-10 md:text-2xl text-medium font-semibold dark:text-white"
             onClick={() => {
               setIsDropOpen(false)
             }}
           >
-            <h1 className={chakra.className}>GroupWare</h1>
+            <h1 className={chakra.className}>Groupware</h1>
           </Link>
           <ResponsiveNav
             isDropOpen={isDropOpen}
@@ -149,7 +150,7 @@ function RenderNav(props: RenderNavProps) {
         children
       ) : (
         <div className="absolute right-10 top-10">
-          <a className="transition ease-in-out duration-500 md:inline text-gray-800 dark:hover:text-yellow-400 hover:text-yellow-400 dark:text-white">
+          <a className="smooth-transition md:inline text-gray-800 dark:hover:text-yellow-400 hover:text-yellow-400 dark:text-white">
             <DarkmodeBtn />
           </a>
         </div>

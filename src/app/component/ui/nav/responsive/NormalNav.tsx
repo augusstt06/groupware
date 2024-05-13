@@ -24,14 +24,14 @@ export default function NormalNav(props: NavNormalMenuProps) {
 
   return (
     <div className="flex flex-row items-center">
-      <a className="cursor-pointer hidden md:inline text-gray-800 dark:border-gray-900 transition ease-in-out duration-200 hover:scale-125 hover:text-yellow-500 dark:hover:text-yellow-500 dark:text-white font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5">
+      <a className="view-icon smooth-transition hidden md:inline hover:scale-125 hover:text-yellow-500 dark:hover:text-yellow-500 text-gray-800 dark:text-white">
         <DarkmodeBtn />
       </a>
       {accessToken !== ERR_COOKIE_NOT_FOUND ? (
-        <a className="hidden md:inline ">
+        <a className="hidden md:inline relative">
           <button
             type="button"
-            className="text-gray-800 dark:border-gray-900 transition ease-in-out duration-200 hover:scale-125 hover:text-indigo-500 dark:hover:text-indigo-500 dark:text-white font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5"
+            className="view-icon smooth-transition dark:border-gray-900 hover:scale-125 hover:text-indigo-500 dark:hover:text-indigo-500 text-gray-800 dark:text-white"
             onClick={clickUserStateMenu}
           >
             <IoIosArrowDown className="md:w-5 md:h-5 w-4 h-4" />
