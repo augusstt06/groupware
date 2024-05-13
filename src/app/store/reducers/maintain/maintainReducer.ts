@@ -1,6 +1,6 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 
-import { FALSE, KEY_LOGIN_COMPLETE } from '@/app/constant/constant'
+import { FALSE, KEY_LOGIN_COMPLETE } from '@/constant/constant'
 
 type State = {
   [KEY_LOGIN_COMPLETE]: string

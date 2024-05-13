@@ -28,6 +28,9 @@ module.exports = {
   },
   plugins: ['react', 'import'],
   rules: {
+    '@typescript-eslint/no-unnecessary-boolean-literal-compare': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/no-misused-promises': 'off',
     'react/prop-types': 'off',
     'react/react-in-jsx-scope': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',

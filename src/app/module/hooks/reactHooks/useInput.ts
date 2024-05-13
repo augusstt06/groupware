@@ -1,8 +1,8 @@
 import type React from 'react'
 import { useState } from 'react'
 
-import { REGISTER_PHONENUMBER_EN } from '@/app/constant/constant'
-import { type UseInputProps } from '@/app/types/module'
+import { REGISTER_PHONENUMBER_EN } from '@/constant/constant'
+import { type UseInputProps } from '@/types/module'
 
 export default function useInput(state: string, title?: string, limit?: number): UseInputProps {
   const [value, setValue] = useState(state)

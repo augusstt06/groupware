@@ -1,6 +1,6 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 
-import { KEY_ATTENDANCE, KEY_UUID, KEY_X_ORGANIZATION_CODE } from '@/app/constant/constant'
+import { KEY_ATTENDANCE, KEY_UUID, KEY_X_ORGANIZATION_CODE } from '@/constant/constant'
 
 type State = {
   [KEY_X_ORGANIZATION_CODE]: string
