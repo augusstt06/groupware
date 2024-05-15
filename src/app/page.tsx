@@ -6,9 +6,9 @@ import { Chakra_Petch } from 'next/font/google'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
-import ErrorAlert from './component/ui/alert/ErrorAlert'
-import Button from './component/ui/button/Button'
-import FloatingInput from './component/ui/input/FloatingInput'
+import ErrorAlert from './_component/alert/ErrorAlert'
+import Button from './_component/button/Button'
+import FloatingInput from './_component/input/FloatingInput'
 import {
   API_SUCCESS_CODE,
   FALSE,

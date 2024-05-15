@@ -1,6 +1,6 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 
-import { PROJECT_MAIN_CATEGORY_ALL } from '@/app/constant/constant'
+import { PROJECT_MAIN_CATEGORY_ALL } from '@/constant/constant'
 
 type State = {
   selectProjectMenu: string

@@ -3,15 +3,15 @@ import { jwtDecode } from 'jwt-decode'
 
 import { modulePostFetch } from './moduleFetch'
 
-import { API_SUCCESS_CODE, KEY_ACCESS_TOKEN } from '@/app/constant/constant'
-import { ERR_COOKIE_NOT_FOUND } from '@/app/constant/errorMsg'
-import { API_URL_REFRESH } from '@/app/constant/route/api-route-constant'
+import { API_SUCCESS_CODE, KEY_ACCESS_TOKEN } from '@/constant/constant'
+import { ERR_COOKIE_NOT_FOUND } from '@/constant/errorMsg'
+import { API_URL_REFRESH } from '@/constant/route/api-route-constant'
 import {
   type ApiResponseType,
   type CustomDecodeTokenType,
   type FailResponseType,
   type ModulePostFetchProps,
-} from '@/app/types/module'
+} from '@/types/module'
 
 export const moduleGetCookie = (name: string) => {
   if (hasCookie(name)) {
@@ -55,7 +55,7 @@ export const moduleRefreshToken = async (accessToken: string) => {
   }
 }
 
-export const checkTokenExpired = (accessTime: number) => {
+export const checkTokenExpired = (accessTime: number): boolean => {
   // 현재시간이 액세스토큰 만료 15분이하라면 true를 반환하고 아니라면 false를 반환한다.
   const current = Math.floor(Date.now() / 1000)
 

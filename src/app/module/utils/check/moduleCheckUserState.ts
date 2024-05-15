@@ -2,13 +2,13 @@
 
 import { moduleDeleteCookies, moduleGetCookie } from '../moduleCookie'
 
-import { KEY_ACCESS_TOKEN, KEY_LOGIN_COMPLETE, TRUE } from '@/app/constant/constant'
-import { ERR_COOKIE_NOT_FOUND } from '@/app/constant/errorMsg'
+import { KEY_ACCESS_TOKEN, KEY_LOGIN_COMPLETE, TRUE } from '@/constant/constant'
+import { ERR_COOKIE_NOT_FOUND } from '@/constant/errorMsg'
 import {
   ROUTE_ERR_NOT_FOUND_ACCESS_TOKEN,
   ROUTE_ERR_NOT_FOUND_ORG_TOKEN,
-} from '@/app/constant/route/route-constant'
-import { type ModuleCheckUserStateProps } from '@/app/types/module'
+} from '@/constant/route/route-constant'
+import { type ModuleCheckUserStateProps } from '@/types/module'
 
 export const moduleCheckUserState = ({
   loginCompleteState,
