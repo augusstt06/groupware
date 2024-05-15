@@ -217,7 +217,7 @@ export default function BoardDetail() {
   return (
     <>
       {postingData?.result !== undefined ? (
-        <section className="w-full h-4/5 flex flex-col items-center ">
+        <section className="w-full h-4/5 flex flex-col items-center pr-5 pl-5 ml-5 ">
           <div className="w-4/5 md:col-span-3 mr-10 col-span-4 dark:text-white p-5 border-2 rounded-xl shadow mb-5 bg-[#f5f7fc]  bg-opacity-70 dark:bg-opacity-10">
             <PostingDetailHeader
               moveBoardListPage={moveBoardListPage}
