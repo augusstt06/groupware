@@ -31,6 +31,11 @@ body {
   flex-direction: column;
   align-items: center;
 }
+.sort-row-flex {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
 
 /* animation */
 .smooth-transition {
