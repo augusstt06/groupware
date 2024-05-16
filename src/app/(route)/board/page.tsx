@@ -5,12 +5,12 @@ import { useEffect, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 
-import BoardHub from '../main/_childs/hub/board/BoardHub'
-
+import BoardCard from '@/_component/card/main/BoardCard'
 import BoardWriteModal from '@/_component/modal/board/BoardWriteModal'
+import BoardTab from '@/_component/tab/board/BoardTab'
 import {
-  BOARD_CATEGORY_PROJECT,
-  BOARD_CATEGORY_TEAM,
+  BOARD_ANNOUNCE,
+  BOARD_FREE,
   BOARD_MAIN_TITLE,
   KEY_ACCESS_TOKEN,
   KEY_LOGIN_COMPLETE,
@@ -86,18 +86,23 @@ export default function Board() {
     dispatch(categoryReduer(myBoardCategory))
   }
 
+  // FIXME: api url check
   const decideFetchUrl = () => {
     switch (selectBoard) {
-      case BOARD_CATEGORY_TEAM:
+      case BOARD_ANNOUNCE:
         return API_URL_POSTINGS_MY_TEAM
-      case BOARD_CATEGORY_PROJECT:
+      case BOARD_FREE:
         return API_URL_POSTINGS_MY_PROJECT
       default:
         return API_URL_POSTINGS_MY_ALL
     }
   }
 
-  const { data: boardPostingData, isLoading } = useQuery<SuccessResponseType<BoardResponseType>>({
+  const {
+    data: boardPostingData,
+    isLoading,
+    refetch,
+  } = useQuery<SuccessResponseType<BoardResponseType>>({
     queryKey: ['board-postings'],
     queryFn: async () => {
       const fetchGetBoardListProps: ModuleGetFetchProps = {
@@ -146,16 +151,30 @@ export default function Board() {
     if (myBoardData !== undefined) successFetchMyBoard()
   }, [myBoardData])
 
-  return (
-    <section className="w-full h-4/5 flex flex-col items-center">
-      <BoardHub
-        title={BOARD_MAIN_TITLE.toUpperCase()}
-        boardList={boardList}
-        myBoardList={myBoardData?.result as MyBoardType[]}
-        selectBoard={selectBoard}
-        changeBoard={changeBoard}
-      />
+  useEffect(() => {
+    void refetch()
+  }, [selectBoard])
 
+  return (
+    <section className="w-full h-4/5 sort-vertical-flex">
+      <div className="md:w-4/5 w-full flex flex-col items-center pl-5 pr-5">
+        <BoardTab
+          title={BOARD_MAIN_TITLE.toUpperCase()}
+          selectBoard={selectBoard}
+          changeBoard={changeBoard}
+        />
+        {boardList.length !== 0 ? (
+          <section className="grid grid-cols-2 xl:grid-cols-3 place-items-center h-full border-2 border-gray-300 p-5 bg-[#f5f7fc] bg-opacity-70 dark:bg-opacity-10 rounded-lg">
+            {boardList.map((data) => (
+              <BoardCard key={data.id} content={data} />
+            ))}
+          </section>
+        ) : (
+          <div className="rounded-xl w-full h-40 flex items-center justify-center bg-[#f5f7fc] bg-opacity-70 dark:bg-opacity-30">
+            There are no posts yet.
+          </div>
+        )}
+      </div>
       {isModalOpen ? <BoardWriteModal currentBoard={null} /> : <></>}
     </section>
   )
