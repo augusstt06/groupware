@@ -226,18 +226,18 @@ export default function BoardDetail() {
               isAuthor={isAuthor}
               clickDelete={clickDelete}
             />
-            <div className="border-b-2 border-gray-300 pt-2 pb-4">
+            <div className="pt-5 pb-5 space-y-5">
               <Viewbox content={postingData.result.content} />
               <div
-                className="cursor-pointer border-2 rounded-lg border-red-400 p-2 flex flex-row justify-around items-center w-16 hover:font-bold hover:bg-red-400 hover:text-white text-red-400"
+                className="smooth-transition sort-row-flex justify-around cursor-pointer border-2 rounded-lg border-red-400 p-1 w-16 hover:font-bold hover:bg-red-400 hover:text-white text-red-400"
                 onClick={clickLike}
               >
                 {isPostLike ? <FaHeart className="w-3 h-3" /> : <FaRegHeart className=" w-3 h-3" />}
                 <span className="text-xs">{postingData.result.like}</span>
               </div>
             </div>
-            <div className="pt-2 pb-2 ">
-              <span className="font-bold text-base">댓글 {commentCount}</span>
+            <div className="pt-2 pb-2 pl-2 pr-2  border-2 border-gray-300 rounded-lg">
+              <span className="font-medium text-base">댓글 {commentCount}</span>
               {postingData?.result.comments?.map((data) => (
                 <div key={data.content} className="border-b-1 border-gray-300">
                   <Comment

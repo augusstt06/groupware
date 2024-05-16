@@ -105,7 +105,7 @@ export default function WriteComment(props: WriteCommentProps) {
   }
 
   return (
-    <div className=" pt-2 pb-2">
+    <div className="pt-2 pb-2">
       <div className="border-2 border-gray-300 rounded-lg flex flex-col p-2">
         <div className="flex flex-row justify-between">
           <span className="text-sm font-bold pl-3 mb-2">{userName}</span>
@@ -152,7 +152,7 @@ export default function WriteComment(props: WriteCommentProps) {
             {/* </IoCameraOutline> */}
           </div>
           <button
-            className="w-1/5 md:text-sm text-xs text-indigo-500 hover:text-white dark:text-white dark:bg-indigo-500 dark:border-white border-indigo-500 hover:bg-indigo-500 rounded-lg text-center items-center dark:hover:bg-white dark:hover:text-indigo-500 border-2 dark:hover:border-indigo-500/75"
+            className="w-20 smooth-transition md:text-sm text-xs text-indigo-500 hover:text-white dark:text-white dark:bg-indigo-500 dark:border-white border-indigo-500 hover:bg-indigo-500 rounded-lg text-center items-center dark:hover:bg-white dark:hover:text-indigo-500 border-2 dark:hover:border-indigo-500/75"
             onClick={handleClick}
           >
             등록

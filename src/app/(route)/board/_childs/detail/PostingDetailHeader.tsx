@@ -27,7 +27,7 @@ export default function PostingDetailHeader(props: PostingDetailHeaderProps) {
         </section>
         {isAuthor ? (
           <div className="sort-row-flex justify-between w-40">
-            <button className="smooth-transition  w-16 md:text-sm text-xs bg-indigo-400 text-white dark:border-white border-indigo-400 hover:bg-indigo-600 rounded-lg text-center items-center border-2 p-2">
+            <button className="smooth-transition w-16 md:text-sm text-xs bg-indigo-400 text-white dark:border-white border-indigo-400 hover:bg-indigo-600 rounded-lg text-center items-center border-2 p-2">
               수정
             </button>
             <button
@@ -42,34 +42,36 @@ export default function PostingDetailHeader(props: PostingDetailHeaderProps) {
         )}
       </div>
 
-      <div className="flex flex-col border-b-2 border-gray-300 truncate pt-5 pb-5 space-y-3">
+      <section className="flex flex-col border-b-2 border-gray-300 truncate pt-5 pb-3 space-y-3">
         <span className="text-xl font-bold">{content.title}</span>
-        <span className="text-sm">
-          {content.name}({content.position})
-        </span>
-        <div className="flex flex-row justify-between">
-          <div className="flex flex-row w-2/5 justify-start items-center text-gray-400">
-            <span className="text-xs justify-around items-center mr-3">
-              {moduleConvertDate(content?.createdAt, '.', false).split(' ')[0]}
-            </span>
-            {/* 조회수 */}
-            <div className="flex flex-row text-xs justify-around items-center w-6 mr-2">
-              <MdRemoveRedEye />
-              <span>3</span>
-            </div>
-            {/* 좋아요 */}
-            <div className="flex flex-row text-xs justify-around items-center w-6 mr-2">
-              <FaHeart className="text-red-400" />
-              <span>{content.like}</span>
-            </div>
-            {/* 댓글 수 */}
-            <div className="flex flex-row text-xs justify-around items-center w-6">
-              <FaRegComment />
-              <span>{commentCount}</span>
+        <div className="sort-row-flex justify-between">
+          <span className="text-sm">
+            {content.name}({content.position})
+          </span>
+          <div className="flex flex-row justify-between">
+            <div className="sort-row-flex w-2/5 justify-start  text-gray-400">
+              <span className="text-xs justify-around items-center mr-3">
+                {moduleConvertDate(content?.createdAt, '.', false).split(' ')[0]}
+              </span>
+              {/* 조회수 */}
+              <div className="sort-row-flex text-xs justify-around w-6 mr-2">
+                <MdRemoveRedEye />
+                <span>3</span>
+              </div>
+              {/* 좋아요 */}
+              <div className="sort-row-flex text-xs justify-around w-6 mr-2">
+                <FaHeart className="text-red-400" />
+                <span>{content.like}</span>
+              </div>
+              {/* 댓글 수 */}
+              <div className="sort-row-flex text-xs justify-around w-6">
+                <FaRegComment />
+                <span>{commentCount}</span>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
     </div>
   )
 }

@@ -100,7 +100,7 @@ export default function Comment(props: CommentProps) {
   }
 
   return (
-    <div className="border-b-1 border-gray-300">
+    <div>
       <div className="flex flex-row items-center justify-around p-2">
         <div className="border-gray-500 dark:border-gray-300 border-2 rounded-full p-1">img</div>
         <div className="w-5/6 p-1 flex flex-col ">
@@ -140,7 +140,7 @@ export default function Comment(props: CommentProps) {
           </div>
         </div>
       </div>
-      <div className="pl-7 border-b-2 border-gray-300">
+      <div className="pl-7">
         {isWriteComment ? (
           <WriteComment
             url={props.url}
