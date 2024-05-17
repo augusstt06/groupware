@@ -2,8 +2,9 @@
 
 import { useEffect, useState } from 'react'
 
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 
+import BoardWriteModal from '@/_component/modal/board/BoardWriteModal'
 import { KEY_ACCESS_TOKEN, KEY_LOGIN_COMPLETE } from '@/constant/constant'
 import { useAppSelector } from '@/module/hooks/reduxHooks'
 import { moduleCheckUserState } from '@/module/utils/check/moduleCheckUserState'
@@ -18,17 +19,29 @@ import { type ReactProps } from '@/types/pageType'
 
 export default function BoardLayout({ children }: ReactProps) {
   const router = useRouter()
+  const query = useSearchParams().get('name')
   const [accessToken, setAccessToken] = useState(moduleGetCookie(KEY_ACCESS_TOKEN))
   const decodeToken = moduleDecodeToken(accessToken)
-  const accessTokenTime = Number((decodeToken as CustomDecodeTokenType).exp)
-  const isTokenExist: boolean = checkTokenExpired(accessTokenTime)
+
   const loginCompleteState = useAppSelector((state) => state.maintain[KEY_LOGIN_COMPLETE])
 
+  const currentBoard = useAppSelector((state) => state.boardCategory.myBoard).filter(
+    (data) => data.name === query,
+  )[0]
+
+  const isModalOpen = useAppSelector((state) => state.openBoardWriteModal.isOpen)
   useEffect(() => {
+    const accessTokenTime = Number((decodeToken as CustomDecodeTokenType).exp)
+    const isTokenExist: boolean = checkTokenExpired(accessTokenTime)
     if (isTokenExist) {
       void moduleRefreshToken(accessToken)
     }
     moduleCheckUserState({ loginCompleteState, router, accessToken, setAccessToken })
   }, [accessToken])
-  return <>{children}</>
+  return (
+    <>
+      {children}
+      {isModalOpen ? <BoardWriteModal currentBoard={currentBoard} /> : <></>}
+    </>
+  )
 }

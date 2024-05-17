@@ -12,7 +12,6 @@ import Comment from '../../_childs/comment/Comment'
 import WriteComment from '../../_childs/comment/WriteComment'
 import PostingDetailHeader from '../../_childs/detail/PostingDetailHeader'
 
-import BoardWriteModal from '@/_component/modal/board/BoardWriteModal'
 import { KEY_ACCESS_TOKEN, KEY_LOGIN_COMPLETE, KEY_X_ORGANIZATION_CODE } from '@/constant/constant'
 import { errDefault } from '@/constant/errorMsg'
 import {
@@ -61,7 +60,6 @@ export default function BoardDetail() {
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
   const loginCompleteState = useAppSelector((state) => state.maintain[KEY_LOGIN_COMPLETE])
   const [isRerender, setIsRerender] = useState<boolean>(false)
-  const isModalOpen: boolean = useAppSelector((state) => state.openBoardWriteModal.isOpen)
   const [errorState, setErrorState] = useState({
     isError: false,
     description: '',
@@ -257,7 +255,6 @@ export default function BoardDetail() {
                 refetch={refetch}
               />
             </div>
-            {isModalOpen ? <BoardWriteModal currentBoard={null} /> : <></>}
           </div>
         </section>
       ) : (

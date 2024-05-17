@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 
 import BoardCard from '@/_component/card/main/BoardCard'
-import BoardWriteModal from '@/_component/modal/board/BoardWriteModal'
 import BoardTab from '@/_component/tab/board/BoardTab'
 import {
   BOARD_ANNOUNCE,
@@ -46,7 +45,6 @@ export default function Board() {
   const changeBoard = (name: string) => {
     setSelectBoard(name)
   }
-  const isModalOpen: boolean = useAppSelector((state) => state.openBoardWriteModal.isOpen)
 
   const { data: myBoardData } = useQuery<SuccessResponseType<MyBoardType[]>>({
     queryKey: ['my-board-category'],
@@ -153,7 +151,6 @@ export default function Board() {
           </div>
         )}
       </div>
-      {isModalOpen ? <BoardWriteModal currentBoard={null} /> : <></>}
     </section>
   )
 }
