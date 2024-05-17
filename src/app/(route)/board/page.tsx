@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react'
 
 import { useQuery } from '@tanstack/react-query'
-import { useRouter } from 'next/navigation'
 
 import BoardCard from '@/_component/card/main/BoardCard'
 import BoardWriteModal from '@/_component/modal/board/BoardWriteModal'
@@ -13,7 +12,6 @@ import {
   BOARD_FREE,
   BOARD_MAIN_TITLE,
   KEY_ACCESS_TOKEN,
-  KEY_LOGIN_COMPLETE,
   KEY_X_ORGANIZATION_CODE,
 } from '@/constant/constant'
 import {
@@ -23,20 +21,10 @@ import {
   API_URL_POSTINGS_MY_TEAM,
 } from '@/constant/route/api-route-constant'
 import { useAppDispatch, useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleCheckUserState } from '@/module/utils/check/moduleCheckUserState'
-import {
-  checkTokenExpired,
-  moduleDecodeToken,
-  moduleGetCookie,
-  moduleRefreshToken,
-} from '@/module/utils/moduleCookie'
+import { moduleGetCookie } from '@/module/utils/moduleCookie'
 import { moduleGetFetch } from '@/module/utils/moduleFetch'
 import { categoryReduer } from '@/store/reducers/board/boardCategoryReducer'
-import {
-  type CustomDecodeTokenType,
-  type ModuleGetFetchProps,
-  type SuccessResponseType,
-} from '@/types/module'
+import { type ModuleGetFetchProps, type SuccessResponseType } from '@/types/module'
 import {
   type BoardListResponseType,
   type BoardResponseType,
@@ -44,20 +32,17 @@ import {
 } from '@/types/variable'
 
 export default function Board() {
-  const router = useRouter()
+  const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
   const dispatch = useAppDispatch()
   const userInfo = useAppSelector((state) => state.userInfo.extraInfo)
-  const [accessToken, setAccessToken] = useState(moduleGetCookie(KEY_ACCESS_TOKEN))
-  const decodeToken = moduleDecodeToken(accessToken)
+
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
-  const accessTokenTime = Number((decodeToken as CustomDecodeTokenType).exp)
-  const loginCompleteState = useAppSelector((state) => state.maintain[KEY_LOGIN_COMPLETE])
+
   const myBoardState = useAppSelector((state) => state.boardCategory.myBoard)
   const [selectBoard, setSelectBoard] = useState<string>('')
   const [boardList, setBoardList] = useState<BoardListResponseType[]>([])
   const [pageSize, setPageSize] = useState<number>(1)
 
-  const isTokenExist: boolean = checkTokenExpired(accessTokenTime)
   const changeBoard = (name: string) => {
     setSelectBoard(name)
   }
@@ -120,13 +105,6 @@ export default function Board() {
       return res as SuccessResponseType<BoardResponseType>
     },
   })
-
-  useEffect(() => {
-    if (isTokenExist) {
-      void moduleRefreshToken(accessToken)
-    }
-    moduleCheckUserState({ loginCompleteState, router, accessToken, setAccessToken })
-  }, [accessToken])
 
   useEffect(() => {
     if (boardPostingData !== undefined) {

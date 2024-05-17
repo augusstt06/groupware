@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from 'react'
 
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { useRouter } from 'next/navigation'
 
 import ProjectMainHub from './_childs/hub/ProjectMainHub'
 
@@ -11,7 +10,6 @@ import ModalHub from '@/_component/modal/Modal'
 import CreateProjectModal from '@/_component/modal/project/CreateProjectModal'
 import {
   KEY_ACCESS_TOKEN,
-  KEY_LOGIN_COMPLETE,
   KEY_X_ORGANIZATION_CODE,
   MODAL_BTN_CREATE,
   MODAL_CRAETE_PROJECT,
@@ -39,7 +37,6 @@ import {
 } from '@/constant/route/api-route-constant'
 import useInput from '@/module/hooks/reactHooks/useInput'
 import { useAppDispatch, useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleCheckUserState } from '@/module/utils/check/moduleCheckUserState'
 import { moduleGetCookie } from '@/module/utils/moduleCookie'
 import { moduleGetFetch, modulePostFetch } from '@/module/utils/moduleFetch'
 import { createProjectModalReducer } from '@/store/reducers/project/projectModalReducer'
@@ -51,7 +48,7 @@ import {
 } from '@/types/variable'
 
 export default function Project() {
-  const router = useRouter()
+  const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
   const queryClient = useQueryClient()
   const dispatch = useAppDispatch()
   const dialogRef = useRef<HTMLDialogElement | null>(null)
@@ -63,9 +60,8 @@ export default function Project() {
   )
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
 
-  const [accessToken, setAccessToken] = useState(moduleGetCookie(KEY_ACCESS_TOKEN))
   const orgId = useAppSelector((state) => state.userInfo.extraInfo.organizationId)
-  const loginCompleteState = useAppSelector((state) => state.maintain[KEY_LOGIN_COMPLETE])
+
   const projectCategory = useAppSelector((state) => state.projectMainCategory.selectProjectMenu)
 
   const [projectDialogBtnValue, setProjectDialogBtnValue] = useState<DialogBtnValueType>({
@@ -226,10 +222,6 @@ export default function Project() {
   useEffect(() => {
     if (createProjectModalState) dispatch(createProjectModalReducer(false))
   }, [projectCategory])
-
-  useEffect(() => {
-    moduleCheckUserState({ loginCompleteState, router, accessToken, setAccessToken })
-  }, [accessToken])
 
   return (
     <section className="w-full h-4/5 flex flex-col items-center">
