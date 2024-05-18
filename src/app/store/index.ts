@@ -16,6 +16,7 @@ import { projectDeatilCategorySlice } from './reducers/project/projectDetailCate
 import { projectIssueSlice } from './reducers/project/projectIssueReducer'
 import { projectMainCategorySlice } from './reducers/project/projectMainCategoryReducer'
 import { projectModalSlice } from './reducers/project/projectModalReducer'
+import { settingModalSlice } from './reducers/setting/settingModalReducer'
 import { teamModalSlice } from './reducers/team/teamModalReducer'
 
 const createNoopStorage = () => {
@@ -48,6 +49,7 @@ const rootReducer = combineReducers({
   projectIssue: projectIssueSlice.reducer,
   projectDetailCategory: projectDeatilCategorySlice.reducer,
   teamModal: teamModalSlice.reducer,
+  settingModal: settingModalSlice.reducer,
 })
 const persistConfig = {
   key: 'root',
@@ -63,6 +65,7 @@ const persistConfig = {
     'projectIssue',
     'projectDetailCategory',
     'teamModal',
+    'settingModal',
   ],
   blacklist: ['signupInfo', 'loginInfo', 'orgInfo'],
 }

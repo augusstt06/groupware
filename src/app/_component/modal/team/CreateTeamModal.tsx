@@ -19,7 +19,7 @@ export default function CreateTeamModal(props: CreateTeamModalProps) {
           value={props.teamName.value}
           onChange={props.teamName.onChange}
           placeholder="팀명을 입력해주세요."
-          className="rounded rounded mt-2 bg-gray-50 border text-gray-900 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5 dark:bg-gray-700 dark:border-white-600 dark:placeholder-gray-400 dark:text-white focus:outline-none"
+          className="rounded mt-2 bg-gray-50 border text-gray-900 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5 dark:bg-gray-700 dark:border-white-600 dark:placeholder-gray-400 dark:text-white focus:outline-none"
         />
       </div>
       <CreateTeamModalColorSelect

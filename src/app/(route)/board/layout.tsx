@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 
 import BoardWriteModal from '@/_component/modal/board/BoardWriteModal'
+import SettingModal from '@/_component/modal/setting/SettingModal'
 import { KEY_ACCESS_TOKEN, KEY_LOGIN_COMPLETE } from '@/constant/constant'
 import { useAppSelector } from '@/module/hooks/reduxHooks'
 import { moduleCheckUserState } from '@/module/utils/check/moduleCheckUserState'
@@ -20,6 +21,7 @@ import { type ReactProps } from '@/types/pageType'
 export default function BoardLayout({ children }: ReactProps) {
   const router = useRouter()
   const query = useSearchParams().get('name')
+  const isSettingOpen = useAppSelector((state) => state.settingModal.isOpen)
   const [accessToken, setAccessToken] = useState(moduleGetCookie(KEY_ACCESS_TOKEN))
   const decodeToken = moduleDecodeToken(accessToken)
 
@@ -42,6 +44,7 @@ export default function BoardLayout({ children }: ReactProps) {
     <>
       {children}
       {isModalOpen ? <BoardWriteModal currentBoard={currentBoard} /> : <></>}
+      {isSettingOpen ? <SettingModal /> : null}
     </>
   )
 }
