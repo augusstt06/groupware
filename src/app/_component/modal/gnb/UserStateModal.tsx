@@ -12,6 +12,7 @@ import { moduleDeleteCookies, moduleGetCookie } from '@/module/utils/moduleCooki
 import { modulePostFetch } from '@/module/utils/moduleFetch'
 import { resetUserInfoReducer } from '@/store/reducers/main/userInfoReducer'
 import { updateLoginCompleteReducer } from '@/store/reducers/maintain/maintainReducer'
+import { openSettingModalReducer } from '@/store/reducers/setting/settingModalReducer'
 import { type FailResponseType, type ModulePostFetchProps } from '@/types/module'
 import { type UserStateModalProps } from '@/types/ui/modal'
 
@@ -20,6 +21,7 @@ export default function UserStateModal(props: UserStateModalProps) {
   const dispatch = useAppDispatch()
   const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
   const attendanceStatus = useAppSelector((state) => state.userInfo.attendance)
+
   const menuRef = useRef<HTMLDivElement>(null)
   const handleClickOutside = (e: MouseEvent) => {
     if (menuRef.current !== null && !menuRef.current.contains(e.target as Node)) {
@@ -63,20 +65,27 @@ export default function UserStateModal(props: UserStateModalProps) {
   return (
     <div
       ref={menuRef}
-      className="absolute right-4 flex flex-col items-center bg-white dark:bg-opacity-10 backdrop-blur-lg bg-opacity-60 p-3 rounded-2xl shadow-2xl w-40 z-50"
+      className="absolute right-4 sort-vertical-flex bg-white dark:bg-opacity-10 backdrop-blur-lg bg-opacity-60 p-3 rounded-2xl shadow-2xl w-40 z-50"
     >
-      <div className="flex flex-row items-center justify-start w-full">
+      <div className="sort-row-flex justify-start w-full">
         <div className="bg-gray-300 p-2 rounded-full">img</div>
-        <div className="flex flex-col items-center ml-3">
+        <div className="sort-vertical-flex ml-3">
           <span className="font-bold">권한</span>
           <span className="text-xs">소개글</span>
         </div>
       </div>
-      <div className="flex flex-row items-center justify-start w-full font-bold text-sm mb-2 mt-4">
+      <div className="sort-row-flex justify-start w-full font-bold text-sm mb-2 mt-4">
         <IoSettingsOutline className="w-4 h-4" />
-        <span className="ml-3">My Page</span>
+        <span
+          className="ml-3"
+          onClick={() => {
+            openSettingModalReducer()
+          }}
+        >
+          My Page
+        </span>
       </div>
-      <div className="flex flex-row items-center justify-start w-full font-bold hover:text-red-500 text-sm">
+      <div className="sort-row-flex justify-start w-full font-bold hover:text-red-500 text-sm">
         <Button buttonContent={logoutBtnContent} className="" onClick={handleClickLogout} />
         <span className="ml-3">Logout</span>
       </div>
