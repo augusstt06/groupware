@@ -224,7 +224,7 @@ export default function Project() {
   }, [projectCategory])
 
   return (
-    <section className="flex flex-col items-center w-full h-4/5">
+    <section className="w-full sort-vertical-flex h-4/5">
       <ProjectMainHub projectList={defineProjectList()} />
       <ModalHub modals={modalList} />
     </section>

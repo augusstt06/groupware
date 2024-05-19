@@ -173,27 +173,27 @@ export default function TeamDetail() {
   }, [isLoading])
 
   return (
-    <section className="flex flex-col items-center w-full  h-4/5">
-      <div className="w-4/5 max-w-7xl flex flex-col items-left rounded-xl shadow-lg p-2 truncate bg-[#f5f7fc] bg-opacity-70 dark:bg-opacity-10 p-2 mb-5">
-        <div className="flex flex-row items-center justify-between w-full p-3">
+    <section className="w-full sort-vertical-flex h-4/5">
+      <div className="w-4/5 max-w-7xl flex flex-col items-left rounded-xl shadow-lg p-2 truncate bg-[#f5f7fc] bg-opacity-70 dark:bg-opacity-10 mb-5">
+        <div className="justify-between w-full p-3 sort-row-flex">
           <span className="font-bold">
             {teamData() !== null ? teamData()?.name : '데이터를 로딩중입니다.'}
           </span>
           <Button
             buttonContent={inviteBtnContent}
-            className="w-1/7 text-center justify-center transition ease-in-out duration-300 rounded-lg shadow bg-indigo-400 dark:bg-indigo-400 hover:bg-indigo-600 hover:dark:bg-indigo-500 justify-center text-white dark:text-white focus:outline-none  font-medium  text-sm px-5 py-2.5 text-center inline-flex items-center"
+            className="w-1/7 smooth-transition rounded-lg shadow bg-indigo-400 dark:bg-indigo-400 hover:bg-indigo-600 hover:dark:bg-indigo-500 justify-center text-white dark:text-white focus:outline-none  font-medium  text-sm px-5 py-2.5 text-center inline-flex items-center"
             onClick={() => {
               dispatch(teamInviteModalReducer(true))
             }}
           />
         </div>
       </div>
-      <div className="w-4/5 max-w-7xl flex flex-col items-center rounded-xl shadow-lg p-2 truncate bg-[#f5f7fc] bg-opacity-70 dark:bg-opacity-10 p-2 truncate">
+      <div className="w-4/5 max-w-7xl sort-vertical-flex rounded-xl shadow-lg p-2 bg-[#f5f7fc] bg-opacity-70 dark:bg-opacity-10 truncate">
         <div className="w-full p-3">
           <span className="font-bold">팀 멤버</span>
         </div>
         {teamData()?.members.length !== 0 ? (
-          <div className="p-3 grid xl:grid-cols-4 xl:gap-x-10 lg:grid-cols-3 lg:gap-x-10 grid-cols-2 gap-x-8 gap-y-6 ">
+          <div className="grid grid-cols-2 p-3 xl:grid-cols-4 xl:gap-x-10 lg:grid-cols-3 lg:gap-x-10 gap-x-8 gap-y-6 ">
             {teamData()?.members.map((data, index) => (
               <TeamMemberCard key={index} memberInfo={data} />
             ))}

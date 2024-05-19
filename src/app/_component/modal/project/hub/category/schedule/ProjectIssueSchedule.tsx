@@ -313,7 +313,7 @@ export default function ProjectIssueSchedule() {
             <DialogCalendar dialog={data.dialog} calendarWithTimeData={data} isWithtime={true} />
           </div>
         ))}
-        <div className="flex flex-row items-center p-2">
+        <div className="p-2 sort-row-flex">
           <Input
             readOnly
             placeholder="장소를 검색해주세요."
@@ -322,7 +322,7 @@ export default function ProjectIssueSchedule() {
             labelContent="장소"
             value={schedulePlace}
             labelClassName="w-1/6"
-            className=" xl:w-3/5 rounded rounded mt-2 text-gray-900 block text-sm p-2.5 dark:placeholder-gray-400 dark:text-white focus:outline-none bg-transparent border-2 border-indigo-200 dark:border-indigo-300"
+            className=" xl:w-3/5 rounded mt-2 text-gray-900 block text-sm p-2.5 dark:placeholder-gray-400 dark:text-white focus:outline-none bg-transparent border-2 border-indigo-200 dark:border-indigo-300"
           />
         </div>
 
