@@ -32,19 +32,15 @@ body {
   }
   /* display */
   .sort-vertical-flex {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    @apply flex flex-col items-center;
   }
   .sort-row-flex {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+    @apply flex flex-row items-center;
   }
 
   /* animation */
   .smooth-transition {
-    transition: all 0.5s ease-in-out;
+    @apply transition ease-in-out duration-500;
   }
 }
 @layer components {
