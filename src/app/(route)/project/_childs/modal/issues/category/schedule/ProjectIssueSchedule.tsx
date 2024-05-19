@@ -4,8 +4,6 @@ import { type ChangeEvent, useEffect, useRef, useState } from 'react'
 
 import moment from 'moment'
 
-import ModalHub from '../../../../Modal'
-import Dialog, { DialogCalendar } from '../../../../dialog/Dialog'
 import {
   IssueCalendarWithTime,
   IssueDescription,
@@ -16,6 +14,8 @@ import {
 import SchedulePlace from './SchedulePlace'
 
 import Input from '@/_component/input/Input'
+import ModalHub from '@/_component/modal/Modal'
+import Dialog, { DialogCalendar } from '@/_component/modal/dialog/Dialog'
 import {
   MODAL_BTN_SELECT,
   PROJECT_DATE_FORMAT,

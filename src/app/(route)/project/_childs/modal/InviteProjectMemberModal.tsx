@@ -1,10 +1,9 @@
 import { FaSearch } from 'react-icons/fa'
 
-import ProjectInviteCard from '../../card/project/ProjectInviteCard'
-import InputWithLabel from '../../input/InputWithLabel'
-
 import ProjectInviteList from './invite/ProjectInviteList'
 
+import ProjectInviteCard from '@/_component/card/project/ProjectInviteCard'
+import InputWithLabel from '@/_component/input/InputWithLabel'
 import useInput from '@/module/hooks/reactHooks/useInput'
 import { type InviteProjectMemberModalProps } from '@/types/ui/modal'
 import { type ColleagueType } from '@/types/variable'
@@ -22,7 +21,7 @@ export default function InviteProjectMemberModal(props: InviteProjectMemberModal
   }
   const inviteInput = useInput('')
   const tailLabel = (
-    <div className="flex items-center justify-center w-1/6 cursor-pointer trasition duration-500 ease-in-out hover:scale-110">
+    <div className="flex items-center justify-center w-1/6 duration-500 ease-in-out cursor-pointer trasition hover:scale-110">
       <FaSearch className="w-4 h-4" />
     </div>
   )

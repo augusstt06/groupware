@@ -6,10 +6,10 @@ import { useMutation, useQuery } from '@tanstack/react-query'
 import { useParams, useRouter } from 'next/navigation'
 import { TbUsersPlus } from 'react-icons/tb'
 
+import InviteProjectMemberModal from '@/(route)/project/_childs/modal/InviteProjectMemberModal'
 import Button from '@/_component/button/Button'
 import TeamMemberCard from '@/_component/card/team/TeamMemberCard'
 import ModalHub from '@/_component/modal/Modal'
-import InviteProjectMemberModal from '@/_component/modal/project/InviteProjectMemberModal'
 import {
   KEY_ACCESS_TOKEN,
   KEY_LOGIN_COMPLETE,

@@ -1,5 +1,4 @@
-import InputWithLabel from '../../input/InputWithLabel'
-
+import InputWithLabel from '@/_component/input/InputWithLabel'
 import { type InviteLoginModalProps } from '@/types/ui/modal'
 
 export default function InviteLoginModal(props: InviteLoginModalProps) {

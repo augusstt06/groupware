@@ -4,7 +4,8 @@ import { useEffect, useState } from 'react'
 
 import { useRouter, useSearchParams } from 'next/navigation'
 
-import BoardWriteModal from '@/_component/modal/board/BoardWriteModal'
+import BoardWriteModal from './_childs/modal/BoardWriteModal'
+
 import SettingModal from '@/_component/modal/setting/SettingModal'
 import { KEY_ACCESS_TOKEN, KEY_LOGIN_COMPLETE } from '@/constant/constant'
 import { useAppSelector } from '@/module/hooks/reduxHooks'

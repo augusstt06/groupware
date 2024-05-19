@@ -6,8 +6,9 @@ import { FiPaperclip } from 'react-icons/fi'
 import { IoPersonOutline } from 'react-icons/io5'
 import { LuLoader } from 'react-icons/lu'
 
+import { IssueCalendar } from '../../../modal/issues/category/components/ProjectIssueComponent'
+
 import { DialogCalendar } from '@/_component/modal/dialog/Dialog'
-import { IssueCalendar } from '@/_component/modal/project/hub/category/components/ProjectIssueComponent'
 import {
   KEY_ACCESS_TOKEN,
   KEY_X_ORGANIZATION_CODE,

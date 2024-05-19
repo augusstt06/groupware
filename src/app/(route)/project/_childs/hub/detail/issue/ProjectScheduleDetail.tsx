@@ -5,9 +5,10 @@ import { BsAlignEnd, BsAlignStart } from 'react-icons/bs'
 import { FaRegCalendarAlt } from 'react-icons/fa'
 import { IoLocationOutline, IoPersonOutline } from 'react-icons/io5'
 
+import { IssueTime } from '../../../modal/issues/category/components/ProjectIssueComponent'
+import { KaKaoMap } from '../../../modal/issues/category/schedule/SchedulePlace'
+
 import Dialog, { DialogCalendar } from '@/_component/modal/dialog/Dialog'
-import { IssueTime } from '@/_component/modal/project/hub/category/components/ProjectIssueComponent'
-import { KaKaoMap } from '@/_component/modal/project/hub/category/schedule/SchedulePlace'
 import {
   KAKAO_AUTH_KEY,
   KEY_ACCESS_TOKEN,
@@ -301,7 +302,7 @@ export function DetailCalendarTime(props: IssueCalendarWithTimeProps) {
       return <></>
     }
     return (
-      <div className="hidden md:block min-w-40 col-span-1">
+      <div className="hidden col-span-1 md:block min-w-40">
         <span className="text-sm md:text-base">{props.scheduleData.title}</span>
       </div>
     )

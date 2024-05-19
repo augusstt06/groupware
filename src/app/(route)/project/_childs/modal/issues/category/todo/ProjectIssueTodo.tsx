@@ -4,7 +4,6 @@ import { type ChangeEvent, useEffect, useRef, useState } from 'react'
 
 import moment from 'moment'
 
-import { DialogCalendar } from '../../../../dialog/Dialog'
 import {
   IssueCalendar,
   IssueDescription,
@@ -12,6 +11,7 @@ import {
   IssueSelect,
 } from '../components/ProjectIssueComponent'
 
+import { DialogCalendar } from '@/_component/modal/dialog/Dialog'
 import {
   PROJECT_DATE_FORMAT,
   PROJECT_DETAIL_CATEGORY_TODO,

@@ -5,12 +5,11 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/navigation'
 
-import BoardWriteModalCheckBox from '../../checkbox/BoardWriteModalCheckBox'
-import BoardModalInputGroup from '../../input/group/board/BoardModalInputGroup'
-import BoardModalSaveListTab from '../../tab/board/BoardModalSaveListTab'
-import BoardWriteModalBtnTab from '../../tab/board/BoardWriteModalBtnTab'
-import Dialog from '../dialog/Dialog'
-
+import BoardWriteModalCheckBox from '@/_component/checkbox/BoardWriteModalCheckBox'
+import BoardModalInputGroup from '@/_component/input/group/board/BoardModalInputGroup'
+import Dialog from '@/_component/modal/dialog/Dialog'
+import BoardModalSaveListTab from '@/_component/tab/board/BoardModalSaveListTab'
+import BoardWriteModalBtnTab from '@/_component/tab/board/BoardWriteModalBtnTab'
 import { FALSE, KEY_ACCESS_TOKEN, KEY_X_ORGANIZATION_CODE, TRUE } from '@/constant/constant'
 import { errNotEntered } from '@/constant/errorMsg'
 import { API_URL_POSTINGS, API_URL_POSTINGS_PENDING } from '@/constant/route/api-route-constant'
@@ -31,7 +30,7 @@ import {
 import { type BoardWriteModalprops } from '@/types/ui/modal'
 import { type BoardListResponseType, type BoardResponseType } from '@/types/variable'
 
-const Editor = dynamic(async () => import('../../editor/TextEditor'), {
+const Editor = dynamic(async () => import('../../../../_component/editor/TextEditor'), {
   ssr: false,
 })
 

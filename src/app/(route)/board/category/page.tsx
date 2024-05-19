@@ -5,8 +5,7 @@ import { useEffect, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { useRouter, useSearchParams } from 'next/navigation'
 
-import BoardItemHub from '../../main/_childs/hub/board/item/BoardItemHub'
-
+import BoardItemHub from '@/(route)/main/_childs/hub/board/item/BoardItemHub'
 import BoardMainInputGroup from '@/_component/input/group/board/BoardMainInputGroup'
 import Pagination from '@/_component/pagination/Pagination'
 import { KEY_ACCESS_TOKEN, KEY_LOGIN_COMPLETE, KEY_X_ORGANIZATION_CODE } from '@/constant/constant'

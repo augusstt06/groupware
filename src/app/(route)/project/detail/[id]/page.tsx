@@ -6,10 +6,10 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useParams, useRouter } from 'next/navigation'
 
 import ProjectDetailHub from '../../_childs/hub/detail/ProjectDetailHub'
+import InviteProjectMemberModal from '../../_childs/modal/InviteProjectMemberModal'
+import CreateProjectIssueModal from '../../_childs/modal/issues/category/CreateProjectIssueModal'
 
 import ModalHub from '@/_component/modal/Modal'
-import CreateProjectIssueModal from '@/_component/modal/project/CreateProjectIssueModal'
-import InviteProjectMemberModal from '@/_component/modal/project/InviteProjectMemberModal'
 import ProjectDetailTab from '@/_component/tab/project/ProjectDetailTab'
 import {
   KEY_ACCESS_TOKEN,

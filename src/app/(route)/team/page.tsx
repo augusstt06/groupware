@@ -4,9 +4,9 @@ import { useRef, useState } from 'react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 import TeamMainHub from './_childs/TeamMainHub'
+import CreateTeamModal from './_childs/modal/CreateTeamModal'
 
 import ModalHub from '@/_component/modal/Modal'
-import CreateTeamModal from '@/_component/modal/team/CreateTeamModal'
 import {
   KEY_ACCESS_TOKEN,
   KEY_X_ORGANIZATION_CODE,

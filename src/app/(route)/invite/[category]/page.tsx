@@ -8,6 +8,10 @@ import { AiOutlineMail } from 'react-icons/ai'
 import { IoMdEye, IoMdEyeOff } from 'react-icons/io'
 import { RiLockPasswordFill } from 'react-icons/ri'
 
+import InviteLoginModal from '../_childs/modal/InviteLoginModal'
+
+import Button from '@/_component/button/Button'
+import ModalHub from '@/_component/modal/Modal'
 import {
   INVITE_PROJECT,
   INVITE_TEAM,
@@ -17,27 +21,29 @@ import {
   REGISTER_EMAIL,
   REGISTER_PWD,
   TRUE,
-} from '../../../constant/constant'
-import { ERR_COOKIE_NOT_FOUND } from '../../../constant/errorMsg'
+} from '@/constant/constant'
+import { ERR_COOKIE_NOT_FOUND } from '@/constant/errorMsg'
 import {
   API_URL_GET_USERS,
   API_URL_LOGIN,
   API_URL_PROJECT_JOIN,
   API_URL_TEAMS_JOIN,
-} from '../../../constant/route/api-route-constant'
-import useInput from '../../../module/hooks/reactHooks/useInput'
-import { useAppDispatch, useAppSelector } from '../../../module/hooks/reduxHooks'
-import {
-  moduleDecodeToken,
-  moduleGetCookie,
-  moduleSetCookies,
-} from '../../../module/utils/moduleCookie'
+} from '@/constant/route/api-route-constant'
+import { ROUTE_PROJECT, ROUTE_TEAM } from '@/constant/route/route-constant'
+import useInput from '@/module/hooks/reactHooks/useInput'
+import { useAppDispatch, useAppSelector } from '@/module/hooks/reduxHooks'
+import { moduleDecodeToken, moduleGetCookie, moduleSetCookies } from '@/module/utils/moduleCookie'
 import {
   moduleGetFetch,
   modulePostFetch,
   modulePostFetchWithQuery,
-} from '../../../module/utils/moduleFetch'
-import { updateLoginCompleteReducer } from '../../../store/reducers/maintain/maintainReducer'
+} from '@/module/utils/moduleFetch'
+import {
+  updateAttendanceStatusReducer,
+  updateExtraUserInfoReducer,
+  updateUserInfoReducer,
+} from '@/store/reducers/main/userInfoReducer'
+import { updateLoginCompleteReducer } from '@/store/reducers/maintain/maintainReducer'
 import {
   type ApiResponseType,
   type CustomDecodeTokenType,
@@ -45,19 +51,9 @@ import {
   type LoginResponseType,
   type ModuleGetFetchProps,
   type SuccessResponseType,
-} from '../../../types/module'
-import { type DialogTextType } from '../../../types/variable'
-
-import Button from '@/_component/button/Button'
-import ModalHub from '@/_component/modal/Modal'
-import InviteLoginModal from '@/_component/modal/invite/InviteLoginModal'
-import { ROUTE_PROJECT, ROUTE_TEAM } from '@/constant/route/route-constant'
-import {
-  updateAttendanceStatusReducer,
-  updateExtraUserInfoReducer,
-  updateUserInfoReducer,
-} from '@/store/reducers/main/userInfoReducer'
+} from '@/types/module'
 import { type AccessInviteProps, type InviteLoginProps } from '@/types/pageType'
+import { type DialogTextType } from '@/types/variable'
 
 export default function Invite() {
   const router = useRouter()

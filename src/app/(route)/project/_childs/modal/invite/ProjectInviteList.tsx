@@ -1,5 +1,4 @@
-import ProjectInviteMemberCard from '../../../card/project/ProjectInviteMemberCard'
-
+import ProjectInviteMemberCard from '@/_component/card/project/ProjectInviteMemberCard'
 import { type ProjectInviteListProps } from '@/types/ui/modal'
 
 export default function ProjectInviteList(props: ProjectInviteListProps) {
@@ -9,7 +8,7 @@ export default function ProjectInviteList(props: ProjectInviteListProps) {
       <span className="text-sm font-bold lg:text-base">
         총 <span className="text-indigo-400">{inviteList.length}</span>명 선택
       </span>
-      <div className="mt-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-4 mt-2 sm:grid-cols-2">
         {inviteList.map((data) => (
           <ProjectInviteMemberCard key={data.userId} user={data} />
         ))}

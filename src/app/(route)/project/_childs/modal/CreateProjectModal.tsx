@@ -1,7 +1,6 @@
 import { FaCheck } from 'react-icons/fa'
 
-import Input from '../../input/Input'
-
+import Input from '@/_component/input/Input'
 import {
   type CreateProjectModalColorSelectProps,
   type CreateProjectModalProps,

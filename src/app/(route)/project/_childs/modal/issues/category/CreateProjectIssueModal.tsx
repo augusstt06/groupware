@@ -1,13 +1,13 @@
 'use client'
 import { useState } from 'react'
 
-import CreateProjectIssueModalTab from '../../tab/project/modal/CreateProjectIssueModalTab'
+import CreateProjectIssueModalHub from '../CreateProjectIssueModalHub'
 
-import CreateProjectIssueModalHub from './hub/CreateProjectIssueModalHub'
-import ProjectIssueSchedule from './hub/category/schedule/ProjectIssueSchedule'
-import ProjectIssueTask from './hub/category/task/ProjectIssueTask'
-import ProjectIssueTodo from './hub/category/todo/ProjectIssueTodo'
+import ProjectIssueSchedule from './schedule/ProjectIssueSchedule'
+import ProjectIssueTask from './task/ProjectIssueTask'
+import ProjectIssueTodo from './todo/ProjectIssueTodo'
 
+import CreateProjectIssueModalTab from '@/_component/tab/project/modal/CreateProjectIssueModalTab'
 import {
   PROJECT_DETAIL_CATEGORY_SCHEDULE,
   PROJECT_DETAIL_CATEGORY_TASK,
