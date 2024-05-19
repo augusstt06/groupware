@@ -12,7 +12,7 @@ import { moduleDeleteCookies, moduleGetCookie } from '@/module/utils/moduleCooki
 import { modulePostFetch } from '@/module/utils/moduleFetch'
 import { resetUserInfoReducer } from '@/store/reducers/main/userInfoReducer'
 import { updateLoginCompleteReducer } from '@/store/reducers/maintain/maintainReducer'
-import { openSettingModalReducer } from '@/store/reducers/setting/settingModalReducer'
+import { handleSettingModalReducer } from '@/store/reducers/setting/settingModalReducer'
 import { type FailResponseType, type ModulePostFetchProps } from '@/types/module'
 import { type UserStateModalProps } from '@/types/ui/modal'
 
@@ -74,18 +74,18 @@ export default function UserStateModal(props: UserStateModalProps) {
           <span className="text-xs">소개글</span>
         </div>
       </div>
-      <div className="sort-row-flex justify-start w-full font-bold text-sm mb-2 mt-4">
+      <div className="sort-row-flex justify-start w-full font-bold text-sm mb-2 mt-4 cursor-pointer smooth-transition hover:text-indigo-500">
         <IoSettingsOutline className="w-4 h-4" />
         <span
           className="ml-3"
           onClick={() => {
-            openSettingModalReducer()
+            dispatch(handleSettingModalReducer())
           }}
         >
           My Page
         </span>
       </div>
-      <div className="sort-row-flex justify-start w-full font-bold hover:text-red-500 text-sm">
+      <div className="cursor-pointer sort-row-flex justify-start smooth-transition w-full font-bold hover:text-red-500 text-sm">
         <Button buttonContent={logoutBtnContent} className="" onClick={handleClickLogout} />
         <span className="ml-3">Logout</span>
       </div>

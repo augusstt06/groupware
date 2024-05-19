@@ -12,7 +12,7 @@ export const settingModalSlice = createSlice({
   name: 'settingModalSlice',
   initialState,
   reducers: {
-    openSettingModalReducer(state) {
+    handleSettingModalReducer(state) {
       if (state.isOpen) {
         state.isOpen = false
       } else {
@@ -21,6 +21,6 @@ export const settingModalSlice = createSlice({
     },
   },
 })
-export const { openSettingModalReducer } = settingModalSlice.actions
+export const { handleSettingModalReducer } = settingModalSlice.actions
 
 export default settingModalSlice.reducer
