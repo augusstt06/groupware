@@ -28,7 +28,7 @@ export default function ProjectDetailTodoMenu() {
   }
 
   return (
-    <div className="cursor-pointer w-full max-w-sm rounded-lg mb-5">
+    <div className="w-full max-w-sm mb-5 rounded-lg cursor-pointer">
       {menuList.map((data) => (
         <div
           className={divClassName(data.title)}
@@ -37,7 +37,7 @@ export default function ProjectDetailTodoMenu() {
             handleScheduleCategory(data.title)
           }}
         >
-          <div className="w-1/5 flex justify-center items-center mr-3">
+          <div className="flex items-center justify-center w-1/5 mr-3">
             {renderIcon(data.title)}
           </div>
           {data.title}

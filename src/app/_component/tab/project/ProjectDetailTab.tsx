@@ -43,7 +43,7 @@ export default function ProjectDetailTab(props: ProjectDetailTabProps) {
   }
   return (
     <div className="w-4/5 max-w-7xl flex flex-col items-center rounded-xl shadow-lg p-2 truncate bg-[#f5f7fc]  bg-opacity-70 dark:bg-opacity-10">
-      <div className="w-full p-3 flex flex-row justify-between items-center">
+      <div className="flex flex-row items-center justify-between w-full p-3">
         <span className="font-bold">{props.projectInfo?.name}</span>
         <Button
           buttonContent={inviteBtnContent}
@@ -51,7 +51,7 @@ export default function ProjectDetailTab(props: ProjectDetailTabProps) {
           onClick={hancleClickInviteMemberBtn}
         />
       </div>
-      <div className="flex flex-row 2xl:w-2/3 md:w-2/3 sm:w-full justify-around p-1">
+      <div className="flex flex-row justify-around p-1 2xl:w-2/3 md:w-2/3 sm:w-full">
         {issueCategoryList.map((data) => (
           <div
             key={data.title}

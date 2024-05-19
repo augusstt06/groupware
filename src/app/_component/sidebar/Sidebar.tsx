@@ -108,7 +108,7 @@ export default function Sidebar() {
   }, [userInfo])
   return (
     <>
-      <div className="md:hidden fixed top-16 ml-5 z-2">
+      <div className="fixed ml-5 md:hidden top-16 z-2">
         <label className="relative inline-flex items-center cursor-pointer">
           <input
             type="checkbox"

@@ -100,7 +100,7 @@ export default function ProjectTaskDetail(props: ProjectIssueDetailProps) {
 
   const calendarList = [
     {
-      icon: <BsAlignStart className="w-5 h-5 mr-5 lg:inline hidden" />,
+      icon: <BsAlignStart className="hidden w-5 h-5 mr-5 lg:inline" />,
       title: '시작일',
       openModal: handleOpenStartCalendar,
       dateValue: startDate,
@@ -108,7 +108,7 @@ export default function ProjectTaskDetail(props: ProjectIssueDetailProps) {
       dialog: startDialogRef,
     },
     {
-      icon: <BsAlignEnd className="w-5 h-5 mr-5 lg:inline hidden" />,
+      icon: <BsAlignEnd className="hidden w-5 h-5 mr-5 lg:inline" />,
       title: '종료일',
       openModal: handleOpenEndCalendar,
       dateValue: endDate,
@@ -149,7 +149,7 @@ export default function ProjectTaskDetail(props: ProjectIssueDetailProps) {
       {/* processState */}
       <div className="flex flex-col items-start mt-5">
         <div className="flex flex-row items-center justify-start w-full">
-          <LuLoader className="lg:inline hidden w-5 h-5 mr-5" />
+          <LuLoader className="hidden w-5 h-5 mr-5 lg:inline" />
           {issueState.map((data) => (
             <div
               key={data.title}

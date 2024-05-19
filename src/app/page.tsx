@@ -175,9 +175,9 @@ export default function Login() {
   }, [])
 
   return (
-    <section className="sort-vertical-flex justify-center h-screen px-4 place-content-center">
-      <section className="sort-vertical-flex mb-5">
-        <div className="text-2xl font-extrabold mb-2">
+    <section className="justify-center h-screen px-4 sort-vertical-flex place-content-center">
+      <section className="mb-5 sort-vertical-flex">
+        <div className="mb-2 text-2xl font-extrabold">
           <h1 className={chakra.className}>Welcome to Groupware</h1>
         </div>
       </section>
@@ -199,8 +199,8 @@ export default function Login() {
         ) : (
           <></>
         )}
-        <div className="sort-vertical-flex justify-center mt-5">
-          <div className="w-2/3 flex justify-center">
+        <div className="justify-center mt-5 sort-vertical-flex">
+          <div className="flex justify-center w-2/3">
             <Button
               ref={buttonRef}
               className="w-2/3 text-white justify-center bg-indigo-400 smooth-transition hover:bg-indigo-600 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mb-2 border-2"
@@ -208,11 +208,11 @@ export default function Login() {
               buttonContent={'Sign In'}
             />
           </div>
-          <div className="flex flex-row justify-around md:w-2/3 w-full mt-3">
-            <div className="smooth-transition text-sm text-gray-500 hover:text-blue-600 hover:scale-110 hover:font-bold hover:dark:text-blue-600">
+          <div className="flex flex-row justify-around w-full mt-3 md:w-2/3">
+            <div className="text-sm text-gray-500 smooth-transition hover:text-blue-600 hover:scale-110 hover:font-bold hover:dark:text-blue-600">
               <Link href={ROUTE_SIGNUP}>Sign Up</Link>
             </div>
-            <div className="smooth-transition text-sm text-gray-500 hover:text-red-600 hover:scale-110 hover:font-bold hover:dark:text-red-600">
+            <div className="text-sm text-gray-500 smooth-transition hover:text-red-600 hover:scale-110 hover:font-bold hover:dark:text-red-600">
               <Link href={ROUTE_FIND_PWD}>Forgot Password</Link>
             </div>
           </div>

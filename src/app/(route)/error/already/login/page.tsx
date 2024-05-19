@@ -10,8 +10,8 @@ export default function AlreadyLogin() {
     router.push(ROUTE_MAIN)
   }
   return (
-    <div className="grid h-screen px-4 place-content-center">
-      <h1 className="tracking-widest text-gray-600 dark:text-gray-400 font-bold uppercase">
+    <div className="h-screen px-4 grid place-content-center">
+      <h1 className="font-bold tracking-widest text-gray-600 uppercase dark:text-gray-400">
         이미 로그인되어 있는 유저입니다.
       </h1>
       <button

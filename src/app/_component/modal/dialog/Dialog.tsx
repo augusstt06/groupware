@@ -13,15 +13,15 @@ export default function Dialog(props: DialogModalProps) {
         data-modal-backdrop="static"
         tabIndex={-1}
         aria-hidden="true"
-        className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-opacity-50 bg-gray-500 backdrop-blur-xs"
+        className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-gray-500 bg-opacity-50 backdrop-blur-xs"
       >
         <div className="rounded-lg shadow bg-[#f5f7fc] bg-opacity-70 dark:bg-opacity-0 backdrop-blur-3xl border-solid border-2 border-indigo-300 w-4/6 md:w-2/5 xl:w-1/5 2xl:w-2/12 p-5">
           <div className="flex flex-col items-center justify-center">
             <div className="flex flex-col items-center justify-around p-2">
-              <span className="font-bold mb-2">{props.dialogAlertText?.main}</span>
+              <span className="mb-2 font-bold">{props.dialogAlertText?.main}</span>
               <span className="text-sm">{props.dialogAlertText?.sub}</span>
             </div>
-            <div className="flex flew-row w-3/5 justify-around">
+            <div className="flex justify-around w-3/5 flew-row">
               {props.dialogBtnValue?.isCancel ?? false ? (
                 <button
                   className={`smooth-transition ${btnClassName}`}
@@ -68,9 +68,9 @@ export function DialogCalendar(props: DialogCalenderProps) {
         data-modal-backdrop="static"
         tabIndex={-1}
         aria-hidden="true"
-        className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-opacity-50 bg-gray-500 backdrop-blur-xs"
+        className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-gray-500 bg-opacity-50 backdrop-blur-xs"
       >
-        <div className="rounded-lg shadow dark:bg-gray-700 border-solid border-2 border-indigo-300 bg-white w-full sm:w-auto p-5 flex items-center justify-center">
+        <div className="flex items-center justify-center w-full p-5 bg-white border-2 border-indigo-300 border-solid rounded-lg shadow dark:bg-gray-700 sm:w-auto">
           {renderCalendar()}
         </div>
       </div>

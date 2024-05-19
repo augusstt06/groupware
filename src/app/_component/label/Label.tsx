@@ -2,7 +2,7 @@ import { type LabelIconProps, type LabelProps } from '@/types/ui/extra'
 
 export function Label(props: LabelProps) {
   return (
-    <label className="block mb-2 md:text-sm text-xs md:font-bold text-gray-900 dark:text-white">
+    <label className="block mb-2 text-xs text-gray-900 md:text-sm md:font-bold dark:text-white">
       {props.title}
     </label>
   )

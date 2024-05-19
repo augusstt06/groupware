@@ -106,19 +106,19 @@ export default function WriteComment(props: WriteCommentProps) {
 
   return (
     <div className="pt-2 pb-2">
-      <div className="border-2 border-gray-300 rounded-lg flex flex-col p-2">
+      <div className="flex flex-col p-2 border-2 border-gray-300 rounded-lg">
         <div className="flex flex-row justify-between">
-          <span className="text-sm font-bold pl-3 mb-2">{userName}</span>
+          <span className="pl-3 mb-2 text-sm font-bold">{userName}</span>
           <span className="text-sm text-gray-300">{inputCount} / 1000</span>
         </div>
         <input
           placeholder="댓글을 남겨보세요"
-          className="outline-none bg-transparent p-3 text-sm"
+          className="p-3 text-sm bg-transparent outline-none"
           value={commentInput.value}
           maxLength={1000}
           onChange={handleInput}
         />
-        <div className="flex flex-row justify-between w-full items-center pl-3">
+        <div className="flex flex-row items-center justify-between w-full pl-3">
           <div className="flex flex-col justify-around mr-2">
             {/* <IoCameraOutline className="w-5 h-5"> */}
             <div className="mb-2">
@@ -152,7 +152,7 @@ export default function WriteComment(props: WriteCommentProps) {
             {/* </IoCameraOutline> */}
           </div>
           <button
-            className="w-20 smooth-transition md:text-sm text-xs text-indigo-500 hover:text-white dark:text-white dark:bg-indigo-500 dark:border-white border-indigo-500 hover:bg-indigo-500 rounded-lg text-center items-center dark:hover:bg-white dark:hover:text-indigo-500 border-2 dark:hover:border-indigo-500/75"
+            className="items-center w-20 text-xs text-center text-indigo-500 border-2 border-indigo-500 rounded-lg smooth-transition md:text-sm hover:text-white dark:text-white dark:bg-indigo-500 dark:border-white hover:bg-indigo-500 dark:hover:bg-white dark:hover:text-indigo-500 dark:hover:border-indigo-500/75"
             onClick={handleClick}
           >
             등록

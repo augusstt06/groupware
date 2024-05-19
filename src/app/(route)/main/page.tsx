@@ -158,7 +158,7 @@ export default function Main() {
   }, [accessToken])
 
   return (
-    <main className="w-full h-4/5 flex flex-col items-center">
+    <main className="flex flex-col items-center w-full h-4/5">
       <MainHub title={MAIN_CARD_TODO} currentPostings={currentPostings} />
     </main>
   )

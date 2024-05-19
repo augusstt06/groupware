@@ -13,8 +13,8 @@ export default function TodoCard() {
           <p>1st Issue</p>
           <TodoIndicator />
         </div>
-        <div className="flex flex-row md:text-sm text-xs w-4/5 mt-2">
-          <p className="font-bold mr-10">카테고리</p>
+        <div className="flex flex-row w-4/5 mt-2 text-xs md:text-sm">
+          <p className="mr-10 font-bold">카테고리</p>
           <p className="text-gray-600">시간</p>
         </div>
       </div>

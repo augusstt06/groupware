@@ -15,11 +15,11 @@ export default function GnbCategoryMenu(props: { handleClickDrop: () => void }) 
     { title: 'Team', link: ROUTE_TEAM },
   ]
   return (
-    <ul className="md:w-2/3 w-1/3 sort-vertical-flex mt-4 text-sm md:font-medium md:flex-row md:mt-0 md:space-x-8 rtl:space-x-reverse">
+    <ul className="w-1/3 mt-4 text-sm md:w-2/3 sort-vertical-flex md:font-medium md:flex-row md:mt-0 md:space-x-8 rtl:space-x-reverse">
       {menuList.map((data) => (
         <li
           key={data.title}
-          className="w-full flex justify-center smooth-transition hover:scale-110 hover:border-b-2 border-b-2 border-transparent hover:border-indigo-400"
+          className="flex justify-center w-full border-b-2 border-transparent smooth-transition hover:scale-110 hover:border-b-2 hover:border-indigo-400"
           onClick={handleClickDrop}
         >
           <Link href={data.link}>

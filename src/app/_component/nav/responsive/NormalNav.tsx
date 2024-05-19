@@ -24,17 +24,17 @@ export default function NormalNav(props: NavNormalMenuProps) {
 
   return (
     <div className="flex flex-row items-center">
-      <a className="view-icon smooth-transition hidden md:inline hover:scale-125 hover:text-yellow-500 dark:hover:text-yellow-500 text-gray-800 dark:text-white">
+      <a className="hidden text-gray-800 view-icon smooth-transition md:inline hover:scale-125 hover:text-yellow-500 dark:hover:text-yellow-500 dark:text-white">
         <DarkmodeBtn />
       </a>
       {accessToken !== ERR_COOKIE_NOT_FOUND ? (
-        <a className="hidden md:inline relative">
+        <a className="relative hidden md:inline">
           <button
             type="button"
-            className="view-icon smooth-transition dark:border-gray-900 hover:scale-125 hover:text-indigo-500 dark:hover:text-indigo-500 text-gray-800 dark:text-white"
+            className="text-gray-800 view-icon smooth-transition dark:border-gray-900 hover:scale-125 hover:text-indigo-500 dark:hover:text-indigo-500 dark:text-white"
             onClick={clickUserStateMenu}
           >
-            <IoIosArrowDown className="md:w-5 md:h-5 w-4 h-4" />
+            <IoIosArrowDown className="w-4 h-4 md:w-5 md:h-5" />
           </button>
           {isUserStateOpen === true ? (
             <UserStateModal
@@ -52,12 +52,12 @@ export default function NormalNav(props: NavNormalMenuProps) {
 
       {isDropOpen === false ? (
         <GiHamburgerMenu
-          className="md:hidden rounded-lg focus:outline-none focus:shadow-outline mr-3 cursor-pointer"
+          className="mr-3 rounded-lg cursor-pointer md:hidden focus:outline-none focus:shadow-outline"
           onClick={clickDropdownMenu}
         />
       ) : (
         <IoMdClose
-          className="md:hidden rounded-lg focus:outline-none focus:shadow-outline mr-3 cursor-pointer"
+          className="mr-3 rounded-lg cursor-pointer md:hidden focus:outline-none focus:shadow-outline"
           onClick={clickDropdownMenu}
         />
       )}

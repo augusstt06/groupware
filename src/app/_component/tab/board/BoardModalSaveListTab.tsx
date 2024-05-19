@@ -18,17 +18,17 @@ export default function BoardModalSaveListTab(props: BoardModalSaveListTabProps)
   }
 
   return (
-    <div className="absolute w-1/2 h-5/6 top-24 left-1/2 bg-white dark:bg-gray-700 border-2 border-gray-300 overflow-y-scroll">
+    <div className="absolute w-1/2 overflow-y-scroll bg-white border-2 border-gray-300 h-5/6 top-24 left-1/2 dark:bg-gray-700">
       <div className="p-3">
         <span className="font-bold">임시저장</span>
       </div>
       {props.saveList.map((data) => (
         <div
-          className="flex flex-row text-left mt-3 mb-3 p-3 border-b border-gray-300 cursor-pointer"
+          className="flex flex-row p-3 mt-3 mb-3 text-left border-b border-gray-300 cursor-pointer"
           key={data.id}
         >
           <div
-            className="bg-gray-300 flex items-center pl-4 pr-4 rounded-lg justify-center mr-2"
+            className="flex items-center justify-center pl-4 pr-4 mr-2 bg-gray-300 rounded-lg"
             onClick={() => {
               props.loadSaveData(data)
             }}
@@ -42,13 +42,13 @@ export default function BoardModalSaveListTab(props: BoardModalSaveListTabProps)
             }}
           >
             <div className="flex flex-row items-center">
-              <span className="md:text-base md:font-bold text-base p-1 mb-2">
+              <span className="p-1 mb-2 text-base md:text-base md:font-bold">
                 {findCategory(data.boardId).name}
               </span>
-              <span className="md:text-base text-base p-1 mb-2">{data.title}</span>
-              <span className="text-base p-1 mb-2">{extractFirstTag(data.content)}</span>
+              <span className="p-1 mb-2 text-base md:text-base">{data.title}</span>
+              <span className="p-1 mb-2 text-base">{extractFirstTag(data.content)}</span>
             </div>
-            <div className="md:text-sm text-xs">
+            <div className="text-xs md:text-sm">
               <span className="p-1 mr-2">{moduleConvertDate(data.createdAt, '.', false)}</span>
             </div>
           </div>
@@ -59,7 +59,7 @@ export default function BoardModalSaveListTab(props: BoardModalSaveListTabProps)
               props.handleClickDeletePending(data.id)
             }}
           >
-            <IoClose className="bg-gray-300 w-5 h-5 rounded-lg text-white hover:text-black cursor-pointer " />
+            <IoClose className="w-5 h-5 text-white bg-gray-300 rounded-lg cursor-pointer hover:text-black " />
           </div>
         </div>
       ))}

@@ -102,15 +102,15 @@ export default function Comment(props: CommentProps) {
   return (
     <div>
       <div className="flex flex-row items-center justify-around p-2">
-        <div className="border-gray-500 dark:border-gray-300 border-2 rounded-full p-1">img</div>
-        <div className="w-5/6 p-1 flex flex-col ">
-          <div className="flex flex-row justify-between items-center">
-            <span className="text-sm font-bold mb-2">
+        <div className="p-1 border-2 border-gray-500 rounded-full dark:border-gray-300">img</div>
+        <div className="flex flex-col w-5/6 p-1 ">
+          <div className="flex flex-row items-center justify-between">
+            <span className="mb-2 text-sm font-bold">
               {props.comments.name} ({props.comments.position})
             </span>
             {userInfo.name === props.comments.name ? (
               <span
-                className="text-xs text-gray-400 hover:font-bold cursor-pointer"
+                className="text-xs text-gray-400 cursor-pointer hover:font-bold"
                 onClick={clickDeleteComment}
               >
                 삭제
@@ -119,8 +119,8 @@ export default function Comment(props: CommentProps) {
               <></>
             )}
           </div>
-          <span className="text-sm mb-2">{props.comments.content}</span>
-          <div className="text-xs text-gray-400 flex flex-row justify-start items-center">
+          <span className="mb-2 text-sm">{props.comments.content}</span>
+          <div className="flex flex-row items-center justify-start text-xs text-gray-400">
             <span className="mr-4">2024.01.01</span>
 
             <span className="mr-1 cursor-pointer">

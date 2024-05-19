@@ -21,7 +21,7 @@ export default function BoardMainInputGroup(props: BoardMainInputGroupProps) {
   return (
     <div className="flex flex-row justify-around">
       {isModalOpen ? <BoardWriteModal currentBoard={null} /> : <></>}
-      <div className="flex mt-3 mb-3 mr-2 w-4/6">
+      <div className="flex w-4/6 mt-3 mb-3 mr-2">
         <InputWithLabel
           title=""
           className=""
@@ -43,12 +43,12 @@ export default function BoardMainInputGroup(props: BoardMainInputGroupProps) {
       <div className="flex flex-row justify-around w-2/6 p-2">
         <Button
           buttonContent="검색"
-          className="mr-2 mt-3 mb-3 w-1/2 md:text-sm text-xs text-indigo-500 hover:text-white dark:text-white dark:bg-indigo-500 dark:border-white border-indigo-500 hover:bg-indigo-500 rounded-lg text-center items-center dark:hover:bg-white dark:hover:text-indigo-500 border-2 dark:hover:border-indigo-500/75 ease-in-out transition duration-500"
+          className="items-center w-1/2 mt-3 mb-3 mr-2 text-xs text-center text-indigo-500 border-2 border-indigo-500 rounded-lg md:text-sm hover:text-white dark:text-white dark:bg-indigo-500 dark:border-white hover:bg-indigo-500 dark:hover:bg-white dark:hover:text-indigo-500 dark:hover:border-indigo-500/75 ease-in-out transition duration-500"
           onClick={props.clickSearchPostings}
         />
         <Button
           buttonContent="글쓰기"
-          className="mt-3 mb-3 w-1/2 md:text-sm text-xs text-indigo-500 hover:text-white dark:text-white dark:bg-indigo-500 dark:border-white border-indigo-500 hover:bg-indigo-500 rounded-lg text-center items-center dark:hover:bg-white dark:hover:text-indigo-500 border-2 dark:hover:border-indigo-500/75 ease-in-out transition duration-500"
+          className="items-center w-1/2 mt-3 mb-3 text-xs text-center text-indigo-500 border-2 border-indigo-500 rounded-lg md:text-sm hover:text-white dark:text-white dark:bg-indigo-500 dark:border-white hover:bg-indigo-500 dark:hover:bg-white dark:hover:text-indigo-500 dark:hover:border-indigo-500/75 ease-in-out transition duration-500"
           onClick={handleClickWrite}
         />
       </div>

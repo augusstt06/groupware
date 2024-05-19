@@ -127,9 +127,9 @@ export default function BoardCategory() {
 
   return (
     <main className="w-full h-4/5 sort-vertical-flex">
-      <div className="md:w-4/5 w-full sort-vertical-flex">
+      <div className="w-full md:w-4/5 sort-vertical-flex">
         <div className="w-full p-2 border border-gray-200 rounded-lg shadow bg-[#f5f7fc] bg-opacity-70 dark:bg-opacity-10 dark:border-gray-700 mb-5">
-          <div className="p-2 font-bold md:text-lg text-base">
+          <div className="p-2 text-base font-bold md:text-lg">
             <span>{currentBoard.name}</span>
           </div>
 

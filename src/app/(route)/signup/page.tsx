@@ -198,9 +198,9 @@ export default function Signup() {
   }, [])
 
   return (
-    <section className="flex flex-col justify-center items-center p-1">
-      <h1 className="md:text-xl text-medium font-bold mt-32">Sign Up</h1>
-      <section className="mt-5 md:w-2/5 w-4/5">
+    <section className="flex flex-col items-center justify-center p-1">
+      <h1 className="mt-32 font-bold md:text-xl text-medium">Sign Up</h1>
+      <section className="w-4/5 mt-5 md:w-2/5">
         <RegisterInfo
           isPwdView={isPwdView}
           setIsPwdView={setIsPwdView}
@@ -210,14 +210,14 @@ export default function Signup() {
         />
 
         {errorState.isError ? (
-          <div className="mb-5 bg-white w-3/5">
+          <div className="w-3/5 mb-5 bg-white">
             <ErrorAlert description={errorState.description} handleClickError={handleClickError} />
           </div>
         ) : (
           <></>
         )}
       </section>
-      <div className="flex flex-row justify-around items-center md:w-1/3 w-2/3 mt-5">
+      <div className="flex flex-row items-center justify-around w-2/3 mt-5 md:w-1/3">
         <Link href="/">
           <Button
             buttonContent="Cancel"

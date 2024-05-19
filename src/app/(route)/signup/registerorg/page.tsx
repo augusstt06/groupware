@@ -187,14 +187,14 @@ export default function RegisterOrgLogin() {
   }, [])
 
   return (
-    <section className="flex flex-col justify-center items-center h-screen px-4">
+    <section className="flex flex-col items-center justify-center h-screen px-4">
       {organization === '' ? (
         <>
-          <h1 className="mb-5 md:text-2xl text-xl font-bold text-center">조직 선택</h1>
-          <h2 className="md:text-medium text-sm mt-5">
+          <h1 className="mb-5 text-xl font-bold text-center md:text-2xl">조직 선택</h1>
+          <h2 className="mt-5 text-sm md:text-medium">
             조직 생성/코드 입력으로 조직에 참가해 주세요
           </h2>
-          <div className="flex flex-row md:w-1/3 w-full justify-around mt-10">
+          <div className="flex flex-row justify-around w-full mt-10 md:w-1/3">
             <div
               onClick={() => {
                 setOrganization(ORG_CREATE)
@@ -218,16 +218,16 @@ export default function RegisterOrgLogin() {
           </div>
         </>
       ) : (
-        <div className="flex flex-col w-full justify-center items-center h-screen px-4 place-content-center">
+        <div className="flex flex-col items-center justify-center w-full h-screen px-4 place-content-center">
           {organization === ORG_CREATE ? (
-            <h1 className="md:text-2xl text-xl font-bold mt-20">Create Organization</h1>
+            <h1 className="mt-20 text-xl font-bold md:text-2xl">Create Organization</h1>
           ) : (
-            <h1 className="md:text-2xl text-xl font-bold mt-20">Join Organization</h1>
+            <h1 className="mt-20 text-xl font-bold md:text-2xl">Join Organization</h1>
           )}
 
           <div className="mt-5">
             <p
-              className="transition ease-in-out duration-500 md:text-sm text-xs text-gray-500 hover:text-blue-500 dark:hover:text-blue-500 hover:text-gray-800 hover:scale-110  hover:font-bold hover:dark:text-gray-200 cursor-pointer"
+              className="text-xs text-gray-500 cursor-pointer transition ease-in-out duration-500 md:text-sm hover:text-blue-500 dark:hover:text-blue-500 hover:text-gray-800 hover:scale-110  hover:font-bold hover:dark:text-gray-200"
               onClick={changeOrgType}
             >
               {organization === ORG_CREATE ? (
@@ -243,14 +243,14 @@ export default function RegisterOrgLogin() {
               )}
             </p>
           </div>
-          <div className="mt-5 md:w-3/5 w-full mb-16">
+          <div className="w-full mt-5 mb-16 md:w-3/5">
             <RegisterOrg
               organization={organization}
               setOrganization={setOrganization}
               setErrMsg={setErrMsg}
             />
             {errorState.isError ? (
-              <div className="flex flex-col justify-center items-center">
+              <div className="flex flex-col items-center justify-center">
                 <ErrorAlert
                   description={errorState.description}
                   handleClickError={handleClickError}
@@ -260,7 +260,7 @@ export default function RegisterOrgLogin() {
               <></>
             )}
           </div>
-          <div className="flex flex-row justify-around items-center md:w-1/3 w-2/3 mt-2">
+          <div className="flex flex-row items-center justify-around w-2/3 mt-2 md:w-1/3">
             <Button
               ref={orgButtonRef}
               buttonContent={organization === ORG_CREATE ? '조직 생성' : '조직 가입'}

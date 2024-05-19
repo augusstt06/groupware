@@ -8,7 +8,7 @@ export default function MainHub(props: MainHubProps) {
     return currentPostings.length !== 0
   }
   return (
-    <div className="w-4/5 max-w-7xl flex flex-col items-center space-y-5">
+    <div className="flex flex-col items-center w-4/5 max-w-7xl space-y-5">
       <MainTab />
 
       {isCurrentPostingExist() ? (

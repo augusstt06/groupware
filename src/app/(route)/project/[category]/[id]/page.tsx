@@ -61,26 +61,26 @@ export default function ProjectIssueDetail() {
   }
 
   return (
-    <main className="w-10/12 max-w-7xl 2xl:w-2/3 h-4/5 flex flex-col items-center  ">
+    <main className="flex flex-col items-center w-10/12 max-w-7xl 2xl:w-2/3 h-4/5 ">
       {issueDetail != null && (
-        <div className="w-4/5 rounded mr-10 bg-white dark:bg-gray-700 dark:text-white p-5 border-2">
+        <div className="w-4/5 p-5 mr-10 bg-white border-2 rounded dark:bg-gray-700 dark:text-white">
           <div
-            className="flex flex-row mb-3 items-center cursor-pointer inline w-20 hover:font-bold"
+            className="flex flex-row items-center inline w-20 mb-3 cursor-pointer hover:font-bold"
             onClick={goProjectIssue}
           >
             <IoIosArrowBack className="mr-2" />
             <span className="text-xs">돌아가기</span>
           </div>
-          <div className="flex flex-col border-b-2 border-gray-300 pb-2 truncate">
-            <span className="text-xl font-bold mb-2">{issueDetail?.title}</span>
+          <div className="flex flex-col pb-2 truncate border-b-2 border-gray-300">
+            <span className="mb-2 text-xl font-bold">{issueDetail?.title}</span>
             <span className="text-xs">{issueDetail?.issuer.name}</span>
           </div>
           {renderIssueDetail()}
-          <div className="border-b-2 border-t-2 border-gray-300 mt-5 pt-5 pb-5">이슈 코멘트</div>
+          <div className="pt-5 pb-5 mt-5 border-t-2 border-b-2 border-gray-300">이슈 코멘트</div>
           <div className="pt-2 pb-2 ">
-            <span className="font-bold text-base">댓글 0</span>
+            <span className="text-base font-bold">댓글 0</span>
 
-            <div className="border-b-1 border-gray-300">
+            <div className="border-gray-300 border-b-1">
               {/* <Comment comments={data} postingID={content.id} doRerender={setRerender} /> */}
             </div>
           </div>

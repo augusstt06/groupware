@@ -25,7 +25,7 @@ export default function ProjectDetailMain(props: ProjectDetailMainProps) {
       )
     }
     return (
-      <div className=" w-full flex flex-row justify-around">
+      <div className="flex flex-row justify-around w-full ">
         <span className="font-bold">{title} 이슈가 없습니다.</span>
       </div>
     )
@@ -35,17 +35,17 @@ export default function ProjectDetailMain(props: ProjectDetailMainProps) {
   }, [])
   return (
     <div className="w-4/5 max-w-7xl flex flex-row items-left rounded-xl shadow-lg p-2 truncate bg-[#f5f7fc] bg-opacity-70 dark:bg-opacity-10">
-      <div className="w-2/3 p-2 flex flex-row justify-center items-center rounded-lg mr-4 rounded-lg shadow-lg border-2 dark:border-indigo-300">
-        <div className="flex flex-col mb-2 w-full lg:w-4/5 items-center">
-          <div className=" w-full">
-            <div className=" w-2/6 md:w-1/6 flex flex-row justify-around mb-2">
+      <div className="flex flex-row items-center justify-center w-2/3 p-2 mr-4 border-2 rounded-lg shadow-lg dark:border-indigo-300">
+        <div className="flex flex-col items-center w-full mb-2 lg:w-4/5">
+          <div className="w-full ">
+            <div className="flex flex-row justify-around w-2/6 mb-2  md:w-1/6">
               <span className="font-bold">고정</span>
               <span className="font-bold text-indigo-400">{props.pinnedList?.length}</span>
             </div>
             {renderingIssues(props.pinnedList, '고정')}
           </div>
-          <div className="mt-10 w-full">
-            <div className=" w-2/6 md:w-1/6 flex flex-row justify-around mb-2">
+          <div className="w-full mt-10">
+            <div className="flex flex-row justify-around w-2/6 mb-2  md:w-1/6">
               <span className="font-bold">전체</span>
               <span className="font-bold text-indigo-400">{props.issueList?.length}</span>
             </div>
@@ -53,15 +53,15 @@ export default function ProjectDetailMain(props: ProjectDetailMainProps) {
           </div>
         </div>
       </div>
-      <div className="w-1/3 p-2 flex flex-col items-left border-2 rounded-lg border-2 dark:border-indigo-300 rounded-lg shadow-lg ">
-        <div className=" w-2/4 lg:w-1/4 flex flex-row justify-around mb-2 mt-2">
+      <div className="flex flex-col w-1/3 p-2 border-2 rounded-lg shadow-lg items-left dark:border-indigo-300 ">
+        <div className="flex flex-row justify-around w-2/4 mt-2 mb-2  lg:w-1/4">
           <span className="font-bold">멤버</span>
           <span className="font-bold text-indigo-400">{props.projectInfo?.members.length}</span>
         </div>
         <div className="flex flex-col items-center space-y-4">
           {props.projectInfo?.members.map((data) => (
             <div
-              className="2xl:w-4/5 w-full transition ease-in-out duration-300 border-t-2 border-b-2  hover:bg-indigo-300 hover:text-white hover:dark:bg-indigo-500 dark:border-gray-700 border border-gray-300 rounded-lg shadow-lg"
+              className="w-full border border-t-2 border-b-2 border-gray-300 rounded-lg shadow-lg 2xl:w-4/5 transition ease-in-out duration-300  hover:bg-indigo-300 hover:text-white hover:dark:bg-indigo-500 dark:border-gray-700"
               key={data.id}
             >
               <InviteProjectMemberTable memberInfo={data} />

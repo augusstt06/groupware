@@ -172,7 +172,7 @@ export default function Team() {
   })
 
   return (
-    <section className="w-full h-4/5 flex flex-col items-center">
+    <section className="flex flex-col items-center w-full h-4/5">
       {renderTeamHub()}
       <ModalHub modals={modalList} />
     </section>

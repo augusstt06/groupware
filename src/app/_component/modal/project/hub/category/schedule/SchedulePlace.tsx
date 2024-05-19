@@ -33,7 +33,7 @@ export default function SchedulePlace(props: SchedulePlaceProps) {
   }
   const tailLabel = (
     <div
-      className="cursor-pointer w-1/6 flex items-center justify-center trasition duration-500 ease-in-out hover:scale-110 "
+      className="flex items-center justify-center w-1/6 cursor-pointer trasition duration-500 ease-in-out hover:scale-110 "
       onClick={() => {
         void handleClickSearch()
       }}
@@ -47,7 +47,7 @@ export default function SchedulePlace(props: SchedulePlaceProps) {
   }
   return (
     <div className="flex flex-col items-center justify-center">
-      <div className="mt-4 mb-4 flex flex-row items-center justify-center border-2 border-gray-300 rounded-full w-1/2 truncate">
+      <div className="flex flex-row items-center justify-center w-1/2 mt-4 mb-4 truncate border-2 border-gray-300 rounded-full">
         <InputWithLabel
           onKeyDown={handleKeyPress}
           title=""
@@ -57,7 +57,7 @@ export default function SchedulePlace(props: SchedulePlaceProps) {
           isTailLabel={true}
           tailLabelContent={tailLabel}
           placeholder="장소를 입력해주세요."
-          className="ml-3 p-1 focus:outline-none w-5/6 text-xs md:text-sm lg-text-base"
+          className="w-5/6 p-1 ml-3 text-xs focus:outline-none md:text-sm lg-text-base"
         />
       </div>
 

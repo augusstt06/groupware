@@ -301,7 +301,7 @@ export function DetailCalendarTime(props: IssueCalendarWithTimeProps) {
       return <></>
     }
     return (
-      <div className="md:block hidden min-w-40 col-span-1">
+      <div className="hidden md:block min-w-40 col-span-1">
         <span className="text-sm md:text-base">{props.scheduleData.title}</span>
       </div>
     )
@@ -309,13 +309,13 @@ export function DetailCalendarTime(props: IssueCalendarWithTimeProps) {
   return (
     <div className="flex flex-row items-center w-100">
       {renderTitle()}
-      <div className="w-24 lg:w-36 flex flex-col lg:flex-row items-center rounded mt-2 bg-gray-50 border text-gray-900 text-sm border-gray-300 p-2 dark:bg-gray-700 dark:border-white-600 dark:placeholder-gray-400 dark:text-white truncate ">
+      <div className="flex flex-col items-center w-24 p-2 mt-2 text-sm text-gray-900 truncate border border-gray-300 rounded lg:w-36 lg:flex-row bg-gray-50 dark:bg-gray-700 dark:border-white-600 dark:placeholder-gray-400 dark:text-white ">
         <FaRegCalendarAlt onClick={props.scheduleData.openCalendar} className="mb-2 lg:mb-0" />
-        <span className="ml-2 lg:text-base text-xs">
+        <span className="ml-2 text-xs lg:text-base">
           {moment(props.scheduleData.calendarDateValue as ValuePiece).format('YYYY/MM/DD')}
         </span>
       </div>
-      <div className="flex flex-col lg:flex-row items-center justify-center lg:w-44 w-24">
+      <div className="flex flex-col items-center justify-center w-24 lg:flex-row lg:w-44">
         {issueTimeList.map((data) => (
           <div key={data.unit} className="md:ml-3">
             <IssueTime
@@ -334,9 +334,9 @@ export function DetailCalendarTime(props: IssueCalendarWithTimeProps) {
         ))}
       </div>
       {props.scheduleData.viewCheckAllDay === true ? (
-        <div className="w-20 md:flex hidden items-center flex-row">
+        <div className="flex-row items-center hidden w-20 md:flex">
           <input type="checkbox" onClick={props.scheduleData.handleAllday} className="w-4 h-4" />
-          <span className="text-sm ml-3">하루종일</span>
+          <span className="ml-3 text-sm">하루종일</span>
         </div>
       ) : (
         <></>

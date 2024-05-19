@@ -12,8 +12,8 @@ export default function NotfoundAccessTokenInSignup() {
   }
 
   return (
-    <div className="grid h-screen px-4 place-content-center">
-      <h1 className="tracking-widest text-gray-600 dark:text-gray-400 font-bold uppercase">
+    <div className="h-screen px-4 grid place-content-center">
+      <h1 className="font-bold tracking-widest text-gray-600 uppercase dark:text-gray-400">
         회원가입/로그인을 먼저 진행해 주세요.
       </h1>
       <Button

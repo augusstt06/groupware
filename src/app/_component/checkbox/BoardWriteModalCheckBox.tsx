@@ -14,7 +14,7 @@ export default function BoardWriteModalCheckBox(props: BoardWriteModalCheckBoxPr
         />
         <label
           htmlFor="bordered-checkbox-1"
-          className="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+          className="w-full py-4 text-sm font-medium text-gray-900 ms-2 dark:text-gray-300"
         >
           공지글로 지정
         </label>

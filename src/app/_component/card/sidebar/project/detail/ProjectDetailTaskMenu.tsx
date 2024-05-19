@@ -43,14 +43,14 @@ export default function ProjectDetailTaskMenu() {
     switch (title) {
       case PROJECT_SIDEBAR_TASK_MY:
         return (
-          <div className="flex flex-col justify-center items-center">
+          <div className="flex flex-col items-center justify-center">
             <span className="text-sm">내가 작성한</span>
             <span className="text-sm">업무</span>
           </div>
         )
       case PROJECT_SIDEBAR_TASK_INVITE:
         return (
-          <div className="flex flex-col justify-center items-center">
+          <div className="flex flex-col items-center justify-center">
             <span className="text-sm">초대받은</span>
             <span className="text-sm">업무</span>
           </div>
@@ -60,7 +60,7 @@ export default function ProjectDetailTaskMenu() {
     }
   }
   return (
-    <div className="cursor-pointer w-full max-w-sm rounded-lg mb-5">
+    <div className="w-full max-w-sm mb-5 rounded-lg cursor-pointer">
       {menuList.map((data) => (
         <div
           className={divClassName(data.title)}
@@ -69,7 +69,7 @@ export default function ProjectDetailTaskMenu() {
             handleTaskCategory(data.title)
           }}
         >
-          <div className="w-1/5 flex justify-center items-center mr-3">
+          <div className="flex items-center justify-center w-1/5 mr-3">
             {renderIcon(data.title)}
           </div>
           {menuSpan(data.title)}

@@ -297,11 +297,11 @@ function AccessInvite(props: AccessInviteProps) {
   }
 
   return (
-    <div className="grid h-screen px-4 place-content-center">
-      <h1 className="tracking-widest text-gray-600 dark:text-gray-400 font-bold uppercase">
+    <div className="h-screen px-4 grid place-content-center">
+      <h1 className="font-bold tracking-widest text-gray-600 uppercase dark:text-gray-400">
         {inviteCategory()}에 초대받았습니다.
       </h1>
-      <div className="flex flex-row items-center  justify-around">
+      <div className="flex flex-row items-center justify-around ">
         <Button
           buttonContent="가입"
           className="mt-5 font-bold bg-indigo-400 hover:bg-indigo-700 text-white hover:text-white focus:outline-none rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 transition ease-in-out duration-500"
@@ -319,8 +319,8 @@ function AccessInvite(props: AccessInviteProps) {
 function InviteLogin(props: InviteLoginProps) {
   const { handleLoginModal } = props
   return (
-    <div className="grid h-screen px-4 place-content-center">
-      <h1 className="tracking-widest text-gray-600 dark:text-gray-400 font-bold uppercase">
+    <div className="h-screen px-4 grid place-content-center">
+      <h1 className="font-bold tracking-widest text-gray-600 uppercase dark:text-gray-400">
         초대에 응하기 전에 로그인이 필요합니다.
       </h1>
       <Button

@@ -133,7 +133,7 @@ export default function Board() {
 
   return (
     <section className="w-full h-4/5 sort-vertical-flex">
-      <div className="md:w-4/5 w-full flex flex-col items-center pl-5 pr-5">
+      <div className="flex flex-col items-center w-full pl-5 pr-5 md:w-4/5">
         <BoardTab
           title={BOARD_MAIN_TITLE.toUpperCase()}
           selectBoard={selectBoard}

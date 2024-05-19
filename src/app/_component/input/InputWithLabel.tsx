@@ -26,7 +26,7 @@ const InputWithLabel = (props: InputGroupProps) => {
       return <></>
     }
     return (
-      <span className="block mb-2 md:text-sm text-xs md:font-bold text-gray-900 dark:text-white">
+      <span className="block mb-2 text-xs text-gray-900 md:text-sm md:font-bold dark:text-white">
         {props.title}
       </span>
     )
@@ -41,7 +41,7 @@ const InputWithLabel = (props: InputGroupProps) => {
   return (
     <div className="w-full">
       {renderingInputTitle()}
-      <div className="flex relative mt-2 mb-2">
+      <div className="relative flex mt-2 mb-2">
         <Input
           onKeyDown={onKeyDown}
           isLabel={isHeadLabel}

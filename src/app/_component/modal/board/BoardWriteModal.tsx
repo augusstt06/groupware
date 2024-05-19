@@ -290,10 +290,10 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
         data-modal-backdrop="static"
         tabIndex={-1}
         aria-hidden="true"
-        className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-opacity-50 bg-gray-500 backdrop-blur-xs z-50"
+        className="modal-base"
       >
-        <div className="relative p-4 w-5/6">
-          <div className="relative rounded-lg shadow dark:bg-gray-700 border-solid border-2 border-indigo-300 bg-white">
+        <div className="relative w-5/6 p-4">
+          <div className="relative bg-white border-2 border-indigo-300 border-solid rounded-lg shadow dark:bg-gray-700">
             <BoardWriteModalBtnTab
               handleClickOpenSaveList={handleClickOpenSaveList}
               handleClickPostPending={handleClickPostPending}
@@ -301,7 +301,7 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
               handleClickPosting={handleClickPosting}
               saveList={saveList}
             />
-            <div className="p-2 flex flex-row w-full">
+            <div className="flex flex-row w-full p-2">
               <BoardModalInputGroup
                 titleInput={titleInput}
                 select={select}

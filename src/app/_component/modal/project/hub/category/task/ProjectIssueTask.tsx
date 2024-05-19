@@ -151,7 +151,7 @@ export default function ProjectIssueTask() {
 
   return (
     <>
-      <div className="mt-2 p-2 mb-2">
+      <div className="p-2 mt-2 mb-2">
         <span className="font-bold">업무 생성하기</span>
       </div>
       <div>

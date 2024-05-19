@@ -215,7 +215,7 @@ export default function BoardDetail() {
   return (
     <>
       {postingData?.result !== undefined ? (
-        <section className="w-full h-4/5 flex flex-col items-center pr-5 pl-5 ml-5 ">
+        <section className="flex flex-col items-center w-full pl-5 pr-5 ml-5 h-4/5 ">
           <div className="w-4/5 md:col-span-3 mr-10 col-span-4 dark:text-white p-5 border-2 rounded-xl shadow mb-5 bg-[#f5f7fc]  bg-opacity-70 dark:bg-opacity-10">
             <PostingDetailHeader
               moveBoardListPage={moveBoardListPage}
@@ -227,17 +227,17 @@ export default function BoardDetail() {
             <div className="pt-5 pb-5 space-y-5">
               <Viewbox content={postingData.result.content} />
               <div
-                className="smooth-transition sort-row-flex justify-around cursor-pointer border-2 rounded-lg border-red-400 p-1 w-16 hover:font-bold hover:bg-red-400 hover:text-white text-red-400"
+                className="justify-around w-16 p-1 text-red-400 border-2 border-red-400 rounded-lg cursor-pointer smooth-transition sort-row-flex hover:font-bold hover:bg-red-400 hover:text-white"
                 onClick={clickLike}
               >
-                {isPostLike ? <FaHeart className="w-3 h-3" /> : <FaRegHeart className=" w-3 h-3" />}
+                {isPostLike ? <FaHeart className="w-3 h-3" /> : <FaRegHeart className="w-3 h-3 " />}
                 <span className="text-xs">{postingData.result.like}</span>
               </div>
             </div>
-            <div className="pt-2 pb-2 pl-2 pr-2  border-2 border-gray-300 rounded-lg">
-              <span className="font-medium text-base">댓글 {commentCount}</span>
+            <div className="pt-2 pb-2 pl-2 pr-2 border-2 border-gray-300 rounded-lg ">
+              <span className="text-base font-medium">댓글 {commentCount}</span>
               {postingData?.result.comments?.map((data) => (
-                <div key={data.content} className="border-b-1 border-gray-300">
+                <div key={data.content} className="border-gray-300 border-b-1">
                   <Comment
                     comments={data}
                     postingID={postingData?.result.id}

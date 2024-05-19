@@ -12,7 +12,7 @@ export default function ErrorAlert(props: ErrorAlertType) {
     >
       <CgDanger className="w-4 h-4" />
       <span className="sr-only">Info</span>
-      <div className=" ms-3 md:text-sm md:font-medium text-xs w-full md:w-auto">
+      <div className="w-full text-xs  ms-3 md:text-sm md:font-medium md:w-auto">
         {props.description}
       </div>
       <button

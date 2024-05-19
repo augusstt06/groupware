@@ -38,14 +38,14 @@ export default function ProjectDetailScheduleMenu() {
     switch (title) {
       case PROJECT_SIDEBAR_SCHEDULE_MY:
         return (
-          <div className="flex flex-col justify-center items-center">
+          <div className="flex flex-col items-center justify-center">
             <span className="text-sm">내가 작성한</span>
             <span className="text-sm">일정</span>
           </div>
         )
       case PROJECT_SIDEBAR_SCHEDULE_INVITE:
         return (
-          <div className="flex flex-col justify-center items-center">
+          <div className="flex flex-col items-center justify-center">
             <span className="text-sm">초대받은</span>
             <span className="text-sm">일정</span>
           </div>
@@ -55,7 +55,7 @@ export default function ProjectDetailScheduleMenu() {
     }
   }
   return (
-    <div className="cursor-pointer w-full max-w-sm rounded-lg mb-5">
+    <div className="w-full max-w-sm mb-5 rounded-lg cursor-pointer">
       {menuList.map((data) => (
         <div
           className={divClassName(data.title)}
@@ -64,7 +64,7 @@ export default function ProjectDetailScheduleMenu() {
             handleScheduleCategory(data.title)
           }}
         >
-          <div className="w-1/5 flex justify-center items-center mr-3">
+          <div className="flex items-center justify-center w-1/5 mr-3">
             {renderIcon(data.title)}
           </div>
           {menuSpan(data.title)}

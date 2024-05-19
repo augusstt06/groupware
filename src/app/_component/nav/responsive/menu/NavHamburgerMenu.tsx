@@ -53,12 +53,12 @@ export default function NavHamburgerMenu(props: NavHamburgerMenuProps) {
 
   return (
     <div className="flex flex-row items-center mt-2">
-      <a className="md:hidden dark:hover:text-yellow-400 hover:text-yellow-400 view-icon text-gray-800 dark:text-white">
+      <a className="text-gray-800 md:hidden dark:hover:text-yellow-400 hover:text-yellow-400 view-icon dark:text-white">
         <DarkmodeBtn />
       </a>
       <a className="md:hidden  hover:text-red-500 dark:hover:text-red-500 view-icon">
         {accessToken !== ERR_COOKIE_NOT_FOUND ? (
-          <FiLogOut className="md:w-5 md:h-5 w-4 h-4" onClick={handleClickLogout} />
+          <FiLogOut className="w-4 h-4 md:w-5 md:h-5" onClick={handleClickLogout} />
         ) : (
           <></>
         )}

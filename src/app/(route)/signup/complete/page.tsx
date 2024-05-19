@@ -38,11 +38,11 @@ export default function SignupComplete() {
     dispatch(resetOrgReducer())
   })
   return (
-    <div className="grid h-screen px-4 place-content-center">
-      <h1 className="mb-3 md:text-xl text-medium tracking-widest text-white  uppercase text-center">
+    <div className="h-screen px-4 grid place-content-center">
+      <h1 className="mb-3 tracking-widest text-center text-white uppercase md:text-xl text-medium ">
         조직 생성/가입이 완료되었습니다.
       </h1>
-      <h1 className="mb-3 md:text-xl text-medium tracking-widest text-white uppercase text-center">
+      <h1 className="mb-3 tracking-widest text-center text-white uppercase md:text-xl text-medium">
         로그인 이후 서비스를 이용해 주세요.
       </h1>
 

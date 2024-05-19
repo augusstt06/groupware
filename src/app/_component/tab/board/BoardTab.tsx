@@ -17,12 +17,12 @@ export default function BoardTab(props: BoardTabProps) {
   return (
     <div className="w-full md:text-sm text-xs bg-[#f5f7fc] md:p-2 md:font-bold text-center rounded-xl shadow mb-5 bg-opacity-70 dark:bg-opacity-10">
       <div className="mt-2 mb-2">
-        <span className="md:text-lg text-base">{title}</span>
+        <span className="text-base md:text-lg">{title}</span>
       </div>
       <ul className="flex flex-row justify-around">
         <li className={entireBoardClassName}>
           <a
-            className="text-xs md:text-medium inline-block md:p-4 p-3 rounded-t-lg"
+            className="inline-block p-3 text-xs rounded-t-lg md:text-medium md:p-4"
             onClick={() => {
               changeBoard('')
             }}
@@ -33,7 +33,7 @@ export default function BoardTab(props: BoardTabProps) {
         {menuList.map((data) => (
           <li className={otherBoardClassName(data.title)} key={data.title}>
             <a
-              className="text-xs md:text-medium inline-block md:p-4 p-3 rounded-t-lg cursor-pointer"
+              className="inline-block p-3 text-xs rounded-t-lg cursor-pointer md:text-medium md:p-4"
               onClick={() => {
                 changeBoard(data.title)
               }}

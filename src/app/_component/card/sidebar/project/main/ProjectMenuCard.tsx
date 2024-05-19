@@ -38,14 +38,14 @@ export default function ProjectMenuCard() {
     switch (title) {
       case PROJECT_SIDEBAR_MENU_PARTICIPATING:
         return (
-          <div className="flex flex-col justify-center items-center">
+          <div className="flex flex-col items-center justify-center">
             <span className="text-sm">참여중인</span>
             <span className="text-sm">프로젝트</span>
           </div>
         )
       case PROJECT_SIDEBAR_MENU_IMPORTANT:
         return (
-          <div className="flex flex-col justify-center items-center">
+          <div className="flex flex-col items-center justify-center">
             <span className="text-sm">중요</span>
             <span className="text-sm">프로젝트</span>
           </div>
@@ -55,7 +55,7 @@ export default function ProjectMenuCard() {
     }
   }
   return (
-    <div className="cursor-pointer w-full max-w-sm rounded-lg mb-5">
+    <div className="w-full max-w-sm mb-5 rounded-lg cursor-pointer">
       {menuList.map((data) => (
         <div
           className={divClassName(data.title)}

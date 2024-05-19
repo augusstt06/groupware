@@ -57,7 +57,7 @@ export function Modal(props: ModalUsePortalProps) {
         data-modal-backdrop="static"
         tabIndex={-1}
         aria-hidden="true"
-        className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-opacity-50 bg-gray-500 backdrop-blur-xs z-50"
+        className="modal-base"
       >
         <div
           className={`relative rounded-lg shadow bg-[#f5f7fc] bg-opacity-70 dark:bg-opacity-10 backdrop-blur-3xl border-solid border-2 border-indigo-300 w-5/6 md:w-1/2 xl:w-2/5 2xl:w-3/12`}
@@ -89,15 +89,15 @@ export function Modal(props: ModalUsePortalProps) {
 
 export function ModalBtn(props: ModalBtnProps) {
   return (
-    <div className=" flex flex-row items-center justify-center p-3">
+    <div className="justify-center p-3 sort-row-flex">
       <Button
         buttonContent="취소"
-        className="transition ease-in-out duration-300 border-gray-400 border-2 bg-white-600 hover:bg-gray-500 hover:dark:bg-gray-200 hover:dark:text-black hover:text-white focus:outline-none font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center me-2er mr-5"
+        className="smooth-transition border-gray-400 border-2 bg-white-600 hover:bg-gray-500 hover:dark:bg-gray-200 hover:dark:text-black hover:text-white focus:outline-none font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center me-2er mr-5"
         onClick={props.onClose}
       />
       <Button
         buttonContent={props.btnValue}
-        className="transition ease-in-out duration-300 border-gray-400 border-2 bg-white-600 hover:bg-gray-500 hover:dark:bg-gray-200 hover:dark:text-black hover:text-white focus:outline-none font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center me-2er"
+        className="smooth-transition border-gray-400 border-2 bg-white-600 hover:bg-gray-500 hover:dark:bg-gray-200 hover:dark:text-black hover:text-white focus:outline-none font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center me-2er"
         onClick={props.confirmFunc}
       />
     </div>

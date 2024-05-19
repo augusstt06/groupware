@@ -173,9 +173,9 @@ export default function TeamDetail() {
   }, [isLoading])
 
   return (
-    <section className="w-full  h-4/5 flex flex-col items-center ">
+    <section className="flex flex-col items-center w-full  h-4/5">
       <div className="w-4/5 max-w-7xl flex flex-col items-left rounded-xl shadow-lg p-2 truncate bg-[#f5f7fc] bg-opacity-70 dark:bg-opacity-10 p-2 mb-5">
-        <div className="w-full p-3 flex flex-row justify-between items-center">
+        <div className="flex flex-row items-center justify-between w-full p-3">
           <span className="font-bold">
             {teamData() !== null ? teamData()?.name : '데이터를 로딩중입니다.'}
           </span>
@@ -193,13 +193,13 @@ export default function TeamDetail() {
           <span className="font-bold">팀 멤버</span>
         </div>
         {teamData()?.members.length !== 0 ? (
-          <div className="grid xl:grid-cols-4 xl:gap-x-10 lg:grid-cols-3 lg:gap-x-10 grid-cols-2 gap-x-8 gap-y-6 p-3 ">
+          <div className="p-3 grid xl:grid-cols-4 xl:gap-x-10 lg:grid-cols-3 lg:gap-x-10 grid-cols-2 gap-x-8 gap-y-6 ">
             {teamData()?.members.map((data, index) => (
               <TeamMemberCard key={index} memberInfo={data} />
             ))}
           </div>
         ) : (
-          <div className="text-center p-5">
+          <div className="p-5 text-center">
             <p>There are no team members yet.</p>
             <p> Please proceed with the invitation.</p>
           </div>

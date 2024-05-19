@@ -18,7 +18,7 @@ export default function ResponsiveNav(props: ResponsiveNavProps) {
         isDropOpen === true ? '' : 'hidden'
       }  backdrop-blur-lg md:backdrop-blur-none md:flex md:flex-row justify-center md:w-4/5 md:static md:border-none border-b border-1 dark:border-indigo-300 z-50 absolute top-14 left-0 right-0 flex flex-col `}
     >
-      <div className="sort-vertical-flex md:flex-row justify-center w-full" ref={dropRef}>
+      <div className="justify-center w-full sort-vertical-flex md:flex-row" ref={dropRef}>
         <GnbCategoryMenu
           handleClickDrop={() => {
             setIsDropOpen(false)

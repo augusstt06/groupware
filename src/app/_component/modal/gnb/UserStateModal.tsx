@@ -55,7 +55,7 @@ export default function UserStateModal(props: UserStateModalProps) {
       void fetchLogout()
     }
   }
-  const logoutBtnContent = <FiLogOut className="md:w-5 md:h-5 w-4 h-4" />
+  const logoutBtnContent = <FiLogOut className="w-4 h-4 md:w-5 md:h-5" />
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside)
     return () => {
@@ -65,27 +65,25 @@ export default function UserStateModal(props: UserStateModalProps) {
   return (
     <div
       ref={menuRef}
-      className="absolute right-4 sort-vertical-flex bg-white dark:bg-opacity-10 backdrop-blur-lg bg-opacity-60 p-3 rounded-2xl shadow-2xl w-40 z-50"
+      className="absolute z-50 w-40 p-3 bg-white shadow-2xl right-4 sort-vertical-flex dark:bg-opacity-10 backdrop-blur-lg bg-opacity-60 rounded-2xl"
     >
-      <div className="sort-row-flex justify-start w-full">
-        <div className="bg-gray-300 p-2 rounded-full">img</div>
-        <div className="sort-vertical-flex ml-3">
+      <div className="justify-start w-full sort-row-flex">
+        <div className="p-2 bg-gray-300 rounded-full">img</div>
+        <div className="ml-3 sort-vertical-flex">
           <span className="font-bold">권한</span>
           <span className="text-xs">소개글</span>
         </div>
       </div>
-      <div className="sort-row-flex justify-start w-full font-bold text-sm mb-2 mt-4 cursor-pointer smooth-transition hover:text-indigo-500">
+      <div
+        className="justify-start w-full mt-4 mb-2 text-sm font-bold cursor-pointer sort-row-flex smooth-transition hover:text-indigo-500"
+        onClick={() => {
+          dispatch(handleSettingModalReducer())
+        }}
+      >
         <IoSettingsOutline className="w-4 h-4" />
-        <span
-          className="ml-3"
-          onClick={() => {
-            dispatch(handleSettingModalReducer())
-          }}
-        >
-          My Page
-        </span>
+        <span className="ml-3">My Page</span>
       </div>
-      <div className="cursor-pointer sort-row-flex justify-start smooth-transition w-full font-bold hover:text-red-500 text-sm">
+      <div className="justify-start w-full text-sm font-bold cursor-pointer sort-row-flex smooth-transition hover:text-red-500">
         <Button buttonContent={logoutBtnContent} className="" onClick={handleClickLogout} />
         <span className="ml-3">Logout</span>
       </div>

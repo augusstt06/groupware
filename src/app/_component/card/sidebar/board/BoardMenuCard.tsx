@@ -9,14 +9,14 @@ export default function BoardMenuCard(props: BoardSideCardProps) {
   return (
     <>
       {props.myBoardList.length !== 0 ? (
-        <div className="w-full mt-5 max-w-sm rounded-lg">
-          <div className="flex flex-col items-center pb-4 w-full justify-center mt-3 border-b-1">
-            <span className="text-medium font-bold text-gray-600 dark:text-white w-4/5 mb-1">
+        <div className="w-full max-w-sm mt-5 rounded-lg">
+          <div className="flex flex-col items-center justify-center w-full pb-4 mt-3 border-b-1">
+            <span className="w-4/5 mb-1 font-bold text-gray-600 text-medium dark:text-white">
               {extraUserInfo.organizationName}
             </span>
             {props.myBoardList.map((data) => (
               <span
-                className="text-sm text-gray-500 dark:text-gray-400 w-4/5 mb-1 cursor-pointer hover:text-indigo-500 dark:hover:text-white"
+                className="w-4/5 mb-1 text-sm text-gray-500 cursor-pointer dark:text-gray-400 hover:text-indigo-500 dark:hover:text-white"
                 key={data.id}
               >
                 <Link href={`${ROUTE_BOARD}/category?name=${data.name}`}>{data.name}</Link>

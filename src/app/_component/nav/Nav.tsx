@@ -107,7 +107,7 @@ export default function Nav() {
         <div className={`flex items-center justify-between max-w-screen-xl mx-auto p-4`}>
           <Link
             href="/main"
-            className="hover:scale-110 smooth-transition flex items-center space-x-3 ml-10 md:text-2xl text-medium font-semibold dark:text-white"
+            className="flex items-center ml-10 font-semibold hover:scale-110 smooth-transition space-x-3 md:text-2xl text-medium dark:text-white"
             onClick={() => {
               setIsDropOpen(false)
             }}
@@ -150,7 +150,7 @@ function RenderNav(props: RenderNavProps) {
         children
       ) : (
         <div className="absolute right-10 top-10">
-          <a className="smooth-transition md:inline text-gray-800 dark:hover:text-yellow-400 hover:text-yellow-400 dark:text-white">
+          <a className="text-gray-800 smooth-transition md:inline dark:hover:text-yellow-400 hover:text-yellow-400 dark:text-white">
             <DarkmodeBtn />
           </a>
         </div>

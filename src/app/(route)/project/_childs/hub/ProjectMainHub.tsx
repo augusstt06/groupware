@@ -12,13 +12,13 @@ export default function ProjectMainHub(props: ProjectMainHubProps) {
       </div>
 
       {projectList.length !== 0 ? (
-        <div className="grid xl:grid-cols-4 xl:gap-x-10 lg:grid-cols-3 lg:gap-x-10 grid-cols-2 gap-x-8 gap-y-6 p-3 ">
+        <div className="p-3 grid xl:grid-cols-4 xl:gap-x-10 lg:grid-cols-3 lg:gap-x-10 grid-cols-2 gap-x-8 gap-y-6 ">
           {projectList.map((data) => (
             <ProjectCard key={data.id} projectInfo={data} />
           ))}
         </div>
       ) : (
-        <section className="rounded-xl w-full h-40 flex items-center justify-center">
+        <section className="flex items-center justify-center w-full h-40 rounded-xl">
           There are no projects yet.
         </section>
       )}

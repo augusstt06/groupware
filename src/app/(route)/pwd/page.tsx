@@ -24,15 +24,15 @@ export default function FindPwd() {
     }
   }, [])
   return (
-    <div className="flex flex-col justify-center items-center h-screen px-4 place-content-center">
-      <div className="flex flex-col justify-center items-center mb-5">
-        <div className="text-xl font-bold mb-6">비밀번호 찾기</div>
+    <div className="flex flex-col items-center justify-center h-screen px-4 place-content-center">
+      <div className="flex flex-col items-center justify-center mb-5">
+        <div className="mb-6 text-xl font-bold">비밀번호 찾기</div>
         <div className="text-sm">회원정보의 이메일로 비밀번호 재설정 메일이 발송됩니다.</div>
       </div>
-      <div className="md:w-2/5 w-4/5 mt-3">
+      <div className="w-4/5 mt-3 md:w-2/5">
         <div className="w-full">
           <Label title={REGISTER_EMAIL} />
-          <div className="flex relative mt-2 mb-6">
+          <div className="relative flex mt-2 mb-6">
             <LabelIcon icon={<AiOutlineMail />} />
             <input
               type="text"

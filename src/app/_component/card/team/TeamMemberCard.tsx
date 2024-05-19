@@ -6,17 +6,17 @@ import { type TeamMemberCardProps } from '@/types/ui/card'
 export default function TeamMemberCard(props: TeamMemberCardProps) {
   const { email, name, position } = props.memberInfo
   return (
-    <div className="bg-indigo-200 cursor-pointer p-2 rounded-lg flex flex-col items-center justify-around w-70 h-20 shadow-lg hover:scale-110 transition ease-in-out duration-500 text-gray-600">
+    <div className="flex flex-col items-center justify-around h-20 p-2 text-gray-600 bg-indigo-200 rounded-lg shadow-lg cursor-pointer w-70 hover:scale-110 transition ease-in-out duration-500">
       <div className="flex items-center justify-around w-full">
-        <span className="font-bold text-lg ">{name}</span>
+        <span className="text-lg font-bold ">{name}</span>
         <div className="flex flex-col items-left ">
-          <div className="flex items-center  justify-around">
+          <div className="flex items-center justify-around ">
             <TbUsersGroup />
             <span className="text-xs">{position}</span>
           </div>
         </div>
       </div>
-      <div className="flex items-center  justify-around ">
+      <div className="flex items-center justify-around ">
         <MdOutlineEmail />
         <span className="text-xs">{email}</span>
       </div>

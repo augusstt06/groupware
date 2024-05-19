@@ -53,7 +53,7 @@ export default function ProjectDetailSideCard() {
     </>
   )
   return (
-    <aside className="bg-white dark:bg-opacity-10 bg-opacity-60 p-3 rounded-2xl shadow-2xl">
+    <aside className="p-3 bg-white shadow-2xl dark:bg-opacity-10 bg-opacity-60 rounded-2xl">
       <NameCard />
       <Button
         buttonContent={buttonContent}

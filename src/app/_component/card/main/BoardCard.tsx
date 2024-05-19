@@ -23,12 +23,12 @@ export default function BoardCard(props: BoardCardType) {
       onClick={goPostingPage}
     >
       <img src={content.thumbnail} className="rounded-lg h-4/5" />
-      <div className="sort-row-flex w-full justify-center space-x-5">
+      <div className="justify-center w-full sort-row-flex space-x-5">
         <span className="font-medium lg:text-xl">{content.title}</span>
       </div>
-      <div className="sort-row-flex w-full justify-center space-x-5">
+      <div className="justify-center w-full sort-row-flex space-x-5">
         <div className="flex flex-row items-center">
-          <FaRegHeart className="w-4 h-4 text-red-400 mr-1" />
+          <FaRegHeart className="w-4 h-4 mr-1 text-red-400" />
           <span className="text-sm text-red-400">{content.like}</span>
         </div>
         <div className="flex flex-row items-center">

@@ -2,7 +2,7 @@ import { FaRegFolderOpen } from 'react-icons/fa6'
 
 export default function DashBoardCard(props: { title: string }) {
   return (
-    <div className=" col-span-1 max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+    <div className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow  col-span-1 dark:bg-gray-800 dark:border-gray-700">
       <div className="mb-3">
         <FaRegFolderOpen className="w-20 h-20" />
       </div>

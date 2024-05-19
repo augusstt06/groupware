@@ -11,7 +11,7 @@ export default function NameCard() {
     setMount(true)
   }, [])
   return (
-    <div className="w-full max-w-sm rounded-lg mb-5">
+    <div className="w-full max-w-sm mb-5 rounded-lg">
       {mount ? (
         <div className="flex flex-col items-center justify-center rounded-lg">
           <IoPeopleCircleSharp className="w-8 h-8" />
