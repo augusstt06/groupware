@@ -4,7 +4,6 @@ import { useState } from 'react'
 import ChangeOptions from './childs/ChangeOptions'
 import ChangePwd from './childs/ChangePwd'
 
-import Button from '@/_component/button/Button'
 import { NAME, ORG, PJT, PWD } from '@/constant/constant'
 import { useAppDispatch } from '@/module/hooks/reduxHooks'
 import { handleSettingModalReducer } from '@/store/reducers/setting/settingModalReducer'
@@ -27,7 +26,7 @@ export default function SettingModal() {
   const renderComponent = () => {
     switch (setting) {
       case PWD:
-        return <ChangePwd />
+        return <ChangePwd handleChangeSetting={handleChangeSetting} />
       case NAME:
         return
       case ORG:
@@ -35,7 +34,12 @@ export default function SettingModal() {
       case PJT:
         return
       default:
-        return <ChangeOptions handleChangeSetting={handleChangeSetting} />
+        return (
+          <ChangeOptions
+            handleChangeSetting={handleChangeSetting}
+            handleCloseModal={handleCloseModal}
+          />
+        )
     }
   }
 
@@ -49,11 +53,6 @@ export default function SettingModal() {
     >
       <div className="justify-center w-4/6 p-4 space-y-5 bg-white border-2 border-indigo-300 border-solid rounded-lg shadow Prelative sort-vertical-flex dark:bg-gray-700 ">
         {renderComponent()}
-        <Button
-          buttonContent={'닫기'}
-          onClick={handleCloseModal}
-          className="p-2 pl-3 pr-3 text-white bg-red-300 rounded-lg smooth-transition hover:bg-red-500"
-        />
       </div>
     </div>
   )

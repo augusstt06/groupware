@@ -1,10 +1,12 @@
+import Button from '@/_component/button/Button'
 import { NAME, ORG, PJT, PWD } from '@/constant/constant'
 
 type Props = {
   handleChangeSetting: (setting: string) => void
+  handleCloseModal: () => void
 }
 const ChangeOptions = (props: Props) => {
-  const { handleChangeSetting } = props
+  const { handleChangeSetting, handleCloseModal } = props
   const settingList = [
     {
       name: '비밀번호 변경',
@@ -36,7 +38,7 @@ const ChangeOptions = (props: Props) => {
       <section className="justify-center text-xl sort-row-flex">
         <h1>My Page</h1>
       </section>
-      <section className="w-4/5 grid grid-cols-2 space-y-5 place-items-center">
+      <section className="grid w-4/5 grid-cols-2 space-y-5 place-items-center">
         {settingList.map((data) => (
           <div
             key={data.name}
@@ -47,6 +49,11 @@ const ChangeOptions = (props: Props) => {
           </div>
         ))}
       </section>
+      <Button
+        buttonContent={'닫기'}
+        onClick={handleCloseModal}
+        className="p-2 pl-3 pr-3 text-white bg-red-300 rounded-lg smooth-transition hover:bg-red-500"
+      />
     </>
   )
 }
