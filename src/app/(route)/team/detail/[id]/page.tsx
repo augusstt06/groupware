@@ -193,7 +193,7 @@ export default function TeamDetail() {
           <span className="font-bold">팀 멤버</span>
         </div>
         {teamData()?.members.length !== 0 ? (
-          <div className="grid grid-cols-2 p-3 xl:grid-cols-4 xl:gap-x-10 lg:grid-cols-3 lg:gap-x-10 gap-x-8 gap-y-6 ">
+          <div className="p-3 grid grid-cols-2 xl:grid-cols-4 xl:gap-x-10 lg:grid-cols-3 lg:gap-x-10 gap-x-8 gap-y-6 ">
             {teamData()?.members.map((data, index) => (
               <TeamMemberCard key={index} memberInfo={data} />
             ))}

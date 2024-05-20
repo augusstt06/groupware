@@ -43,12 +43,12 @@ export default function BoardMainInputGroup(props: BoardMainInputGroupProps) {
       <div className="flex flex-row justify-around w-2/6 p-2">
         <Button
           buttonContent="검색"
-          className="items-center w-1/2 mt-3 mb-3 mr-2 text-xs text-center text-indigo-500 transition duration-500 ease-in-out border-2 border-indigo-500 rounded-lg md:text-sm hover:text-white dark:text-white dark:bg-indigo-500 dark:border-white hover:bg-indigo-500 dark:hover:bg-white dark:hover:text-indigo-500 dark:hover:border-indigo-500/75"
+          className="items-center w-1/2 mt-3 mb-3 mr-2 text-xs text-center text-indigo-500 border-2 border-indigo-500 rounded-lg transition duration-500 ease-in-out md:text-sm hover:text-white dark:text-white dark:bg-indigo-500 dark:border-white hover:bg-indigo-500 dark:hover:bg-white dark:hover:text-indigo-500 dark:hover:border-indigo-500/75"
           onClick={props.clickSearchPostings}
         />
         <Button
           buttonContent="글쓰기"
-          className="items-center w-1/2 mt-3 mb-3 text-xs text-center text-indigo-500 transition duration-500 ease-in-out border-2 border-indigo-500 rounded-lg md:text-sm hover:text-white dark:text-white dark:bg-indigo-500 dark:border-white hover:bg-indigo-500 dark:hover:bg-white dark:hover:text-indigo-500 dark:hover:border-indigo-500/75"
+          className="items-center w-1/2 mt-3 mb-3 text-xs text-center text-indigo-500 border-2 border-indigo-500 rounded-lg transition duration-500 ease-in-out md:text-sm hover:text-white dark:text-white dark:bg-indigo-500 dark:border-white hover:bg-indigo-500 dark:hover:bg-white dark:hover:text-indigo-500 dark:hover:border-indigo-500/75"
           onClick={handleClickWrite}
         />
       </div>

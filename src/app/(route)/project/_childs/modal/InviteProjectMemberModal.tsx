@@ -21,7 +21,7 @@ export default function InviteProjectMemberModal(props: InviteProjectMemberModal
   }
   const inviteInput = useInput('')
   const tailLabel = (
-    <div className="flex items-center justify-center w-1/6 duration-500 ease-in-out cursor-pointer trasition hover:scale-110">
+    <div className="flex items-center justify-center w-1/6 cursor-pointer duration-500 ease-in-out trasition hover:scale-110">
       <FaSearch className="w-4 h-4" />
     </div>
   )

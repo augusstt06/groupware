@@ -186,3 +186,9 @@ export const MODAL_CREATE_TEAM = 'create-team'
 // invite
 export const INVITE_PROJECT = 'project'
 export const INVITE_TEAM = 'team'
+
+// settings
+export const PWD = 'pwd'
+export const ORG = 'org'
+export const PJT = 'project'
+export const NAME = 'name'

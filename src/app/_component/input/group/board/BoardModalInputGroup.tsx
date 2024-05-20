@@ -171,7 +171,7 @@ function BoardCategoryInput(props: BoardCategoryInputProps) {
           labelContent="게시판"
           type="text"
           value={currentBoard?.name}
-          className="rounded rounded bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:outline-none block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  bg-gray-400 dark:bg-gray-600 dark:border-white-600 dark:placeholder-gray-400 dark:text-gray-700 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          className="rounded bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:outline-none block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  bg-gray-400 dark:bg-gray-600 dark:border-white-600 dark:placeholder-gray-400 dark:text-gray-700 dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder="게시글 제목을 입력해주세요."
           readOnly
         />
