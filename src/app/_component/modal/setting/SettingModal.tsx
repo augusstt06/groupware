@@ -2,6 +2,8 @@
 import { useState } from 'react'
 
 import ChangeOptions from './childs/ChangeOptions'
+import ChangeOrg from './childs/ChangeOrg'
+import ChangeProject from './childs/ChangeProject'
 import ChangePwd from './childs/ChangePwd'
 
 import { NAME, ORG, PJT, PWD } from '@/constant/constant'
@@ -30,9 +32,9 @@ export default function SettingModal() {
       case NAME:
         return
       case ORG:
-        return
+        return <ChangeOrg />
       case PJT:
-        return
+        return <ChangeProject />
       default:
         return (
           <ChangeOptions
