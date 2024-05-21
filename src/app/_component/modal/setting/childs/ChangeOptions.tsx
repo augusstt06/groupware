@@ -38,7 +38,7 @@ const ChangeOptions = (props: Props) => {
       <section className="justify-center text-xl sort-row-flex">
         <h1>My Page</h1>
       </section>
-      <section className="grid w-4/5 grid-cols-2 space-y-5 place-items-center">
+      <section className="w-4/5 grid grid-cols-2 space-y-5 place-items-center">
         {settingList.map((data) => (
           <div
             key={data.name}

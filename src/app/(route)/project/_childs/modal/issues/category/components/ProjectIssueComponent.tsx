@@ -24,13 +24,13 @@ import {
 
 export function IssueInput(props: IssueInputProps) {
   return (
-    <div className="flex flex-row items-center p-2">
+    <div className="p-2 sort-row-flex">
       <div className="w-1/6">
         <span className="text-sm md:text-base">{props.title}</span>
       </div>
       <input
         placeholder={props.placeholder}
-        className="ml-4 w-full xl:w-3/5 rounded mt-2 border-2 text-gray-900 block text-sm border-indigo-200 dark:border-indigo-300 p-2.5 bg-transparent dark:border-white-600 dark:placeholder-gray-400 dark:text-white focus:outline-none"
+        className="w-full xl:w-3/5 rounded mt-2 border-2 text-gray-900 block text-sm border-indigo-200 dark:border-indigo-300 p-2.5 bg-transparent dark:border-white-600 dark:placeholder-gray-400 dark:text-white focus:outline-none"
         value={props.value}
         onChange={props.onChange}
       />
@@ -47,7 +47,7 @@ export function IssueProgress(props: IssueProgressProps) {
   }
 
   return (
-    <div className="flex flex-row items-center p-2">
+    <div className="p-2 sort-row-flex">
       <div className="w-1/6">
         <span className="text-sm md:text-base">진행상태</span>
       </div>
@@ -70,7 +70,7 @@ export function IssueProgress(props: IssueProgressProps) {
 
 export function IssueSelect(props: IssueSelecProps) {
   return (
-    <div className="flex flex-row items-center p-2">
+    <div className="p-2 sort-row-flex">
       <div className="w-1/6">
         <span className="text-sm md:text-base">{props.title}</span>
       </div>
@@ -96,9 +96,9 @@ export function IssueCalendar(props: IssueCalendarProps) {
   }
   return (
     <>
-      <div className="flex flex-row items-center p-2" key={props.title}>
+      <div className="p-2 sort-row-flex" key={props.title}>
         {renderTitlte()}
-        <div className="flex flex-row items-center rounded rounded mt-2 bg-transparent border-2 text-gray-900 w-40 text-sm border-indigo-200 dark:border-indigo-300 p-2.5 dark:placeholder-gray-400 dark:text-white">
+        <div className="sort-row-flex rounded mt-2 bg-transparent border-2 text-gray-900 w-40 text-sm border-indigo-200 dark:border-indigo-300 p-2.5 dark:placeholder-gray-400 dark:text-white">
           <FaRegCalendarAlt onClick={props.openModal} />
           <span className="ml-2 text-xs lg:text-base">
             {moment(props.dateValue as ValuePiece).format(PROJECT_DATE_FORMAT)}
@@ -154,7 +154,7 @@ export function IssueCalendarWithTime(props: IssueCalendarWithTimeProps) {
       return <></>
     }
     return (
-      <div className="block min-w-40 col-span-1">
+      <div className="block col-span-1 min-w-40">
         <span className="text-sm md:text-base">{props.scheduleData.title}</span>
       </div>
     )
@@ -163,14 +163,14 @@ export function IssueCalendarWithTime(props: IssueCalendarWithTimeProps) {
     <>
       <div className="items-center p-2 grid grid-cols-6 gap-2 ">
         {renderTitle()}
-        <div className="col-span-5 grid grid-cols-6 gap-2">
-          <div className="flex flex-col items-center p-2 mt-2 ml-4 text-sm text-gray-900 truncate bg-transparent border-2 border-indigo-200 rounded col-span-3 lg:ml-0 lg:flex-row dark:border-indigo-300 w-26  dark:placeholder-gray-400 dark:text-white">
+        <div className="grid grid-cols-6 col-span-5 gap-2">
+          <div className="flex flex-col items-center p-2 mt-2 ml-4 text-sm text-gray-900 truncate bg-transparent border-2 border-indigo-200 rounded col-span-3 lg:ml-0 lg:flex-row dark:border-indigo-300 w-26 dark:placeholder-gray-400 dark:text-white">
             <FaRegCalendarAlt onClick={props.scheduleData.openCalendar} className="mb-2 lg:mb-0" />
             <span className="ml-2 text-xs lg:text-base">
               {moment(props.scheduleData.calendarDateValue as ValuePiece).format('YYYY/MM/DD')}
             </span>
           </div>
-          <div className="col-span-2 grid lg:grid-cols-2 grid-row-2 gap-2">
+          <div className="grid col-span-2 gap-2 lg:grid-cols-2 grid-row-2">
             {issueTimeList.map((data) => (
               <IssueTime
                 key={data.unit}
@@ -188,7 +188,7 @@ export function IssueCalendarWithTime(props: IssueCalendarWithTimeProps) {
             ))}
           </div>
           {props.scheduleData.viewCheckAllDay === true ? (
-            <div className="items-center col-span-1 grid sm:grid-cols-3 grid-row-3">
+            <div className="items-center grid col-span-1 sm:grid-cols-3 grid-row-3">
               <input
                 type="checkbox"
                 onClick={props.scheduleData.handleAllday}
@@ -197,7 +197,7 @@ export function IssueCalendarWithTime(props: IssueCalendarWithTimeProps) {
               <div className="hidden col-span-2 xl:inline">
                 <span className="text-xs">All</span>
               </div>
-              <div className="inline col-span-2 grid grid-row-2 xl:hidden ">
+              <div className="inline grid col-span-2 grid-row-2 xl:hidden ">
                 <span className="text-sm">All</span>
               </div>
             </div>
@@ -287,7 +287,7 @@ export function IssueTime(props: IssueTimeProps) {
   }
 
   return (
-    <div className="flex flex-row items-center justify-around w-full mt-2  lg:justify-between">
+    <div className="justify-around w-full mt-2 sort-row-flex lg:justify-between">
       <select
         className={selectClassName()}
         onChange={props.onChange}
@@ -303,7 +303,7 @@ export function IssueTime(props: IssueTimeProps) {
 
 export function IssueFile() {
   return (
-    <div className="flex flex-row items-center p-2">
+    <div className="p-2 sort-row-flex">
       <div className="w-1/6">
         <span className="text-sm md:text-base">파일첨부</span>
       </div>

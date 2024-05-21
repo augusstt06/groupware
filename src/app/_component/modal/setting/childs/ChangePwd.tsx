@@ -30,7 +30,7 @@ const ChangePwd = (props: Props) => {
   return (
     <>
       <h1 className="text-xl font-bold">비밀번호 변경</h1>
-      <section className="grid w-full grid-rows-3 gap-4 place-items-center">
+      <section className="w-full grid grid-rows-3 gap-4 place-items-center">
         {inputList.map((data) => (
           <div key={data.labelContent} className="justify-start sort-vertical-flex">
             <Input
