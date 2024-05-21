@@ -46,7 +46,7 @@ export default function SchedulePlace(props: SchedulePlaceProps) {
     return place.value !== '' && searchInput.length !== 0
   }
   return (
-    <div className="sort-vertical-flex justify-center">
+    <div className="justify-center sort-vertical-flex">
       <div className="sort-row-flex justify-center w-1/2 mt-4 mb-4 truncate border-2 border-gray-300 rounded-full dark:bg-[#505050]">
         <InputWithLabel
           onKeyDown={handleKeyPress}

@@ -21,7 +21,7 @@ export default function BoardMainInputGroup(props: BoardMainInputGroupProps) {
   return (
     <div className="flex flex-row justify-start">
       {isModalOpen ? <BoardWriteModal currentBoard={null} /> : <></>}
-      <div className="flex w-4/6 mt-3 mb-3 mr-2 max-w-3xl">
+      <div className="flex w-4/6 max-w-3xl mt-3 mb-3 mr-2">
         <InputWithLabel
           title=""
           className=""
@@ -40,7 +40,7 @@ export default function BoardMainInputGroup(props: BoardMainInputGroupProps) {
           }
         />
       </div>
-      <div className="flex flex-row justify-around w-60 p-2">
+      <div className="flex flex-row justify-around p-2 w-60">
         <Button
           buttonContent="검색"
           className="items-center w-1/2 mt-3 mb-3 mr-2 text-xs text-center text-indigo-500 border-2 border-indigo-500 rounded-lg smooth-transition md:text-sm hover:text-white dark:text-white dark:bg-indigo-500 dark:border-white hover:bg-indigo-500 dark:hover:bg-white dark:hover:text-indigo-500 dark:hover:border-indigo-500/75"

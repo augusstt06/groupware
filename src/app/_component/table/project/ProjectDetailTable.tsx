@@ -29,15 +29,15 @@ export default function ProjectDetailTable(props: ProjectDetailTableProps) {
 
   return (
     <div>
-      <div className="flex flex-row items-center justify-between overflow-x-auto text-black border-2 border-gray-300 rounded-lg dark:border-gray-500  dark:text-gray-200">
-        <div className="flex items-center justify-center w-1/5 h-12 text-center text-black bg-gray-300 dark:bg-gray-500 ">
+      <div className="justify-between overflow-x-auto text-black border-2 border-gray-300 rounded-lg sort-row-flex dark:border-gray-500 dark:text-gray-200">
+        <div className="sort-row-flex justify-center w-1/5 h-12 text-center text-black dark:text-white bg-gray-300 dark:bg-[#505050] ">
           <span className="text-sm font-bold">{convertCategory()}</span>
         </div>
         <div className="flex flex-col justify-between w-4/5 h-12 overflow-y-auto lg:flex-row">
-          <div className="flex items-center justify-center w-full pl-2 pr-2">
+          <div className="justify-center w-full pl-2 pr-2 sort-row-flex">
             <span className="text-sm">{props.issue.title}</span>
           </div>
-          <div className="flex items-center justify-around w-full">
+          <div className="justify-around w-full sort-row-flex">
             <span className="text-xs">{props.issue.issuer.name}</span>
             <span className="text-xs">{sliceTime()}</span>
           </div>

@@ -313,7 +313,7 @@ export default function ProjectIssueSchedule() {
             <DialogCalendar dialog={data.dialog} calendarWithTimeData={data} isWithtime={true} />
           </div>
         ))}
-        <div className="p-2 sort-row-flex">
+        <div className="p-2 sort-row-flex ">
           <Input
             readOnly
             placeholder="장소를 검색해주세요."
