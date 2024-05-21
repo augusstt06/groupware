@@ -79,6 +79,9 @@ export const BOARD_MAIN_TITLE = 'Board'
 export const BOARD_CATEGORY_TEAM = '팀'
 export const BOARD_CATEGORY_PROJECT = '프로젝트'
 
+export const BOARD_ANNOUNCE = '공지사항'
+export const BOARD_FREE = '자유 게시판'
+
 export const BOARD_MODAL_TITLE = '제목'
 export const BOARD_MODAL_AUTHOR = '작성자'
 export const BOARD_MODAL_EMAIL = '이메일'
@@ -183,3 +186,9 @@ export const MODAL_CREATE_TEAM = 'create-team'
 // invite
 export const INVITE_PROJECT = 'project'
 export const INVITE_TEAM = 'team'
+
+// settings
+export const PWD = 'pwd'
+export const ORG = 'org'
+export const PJT = 'project'
+export const NAME = 'name'

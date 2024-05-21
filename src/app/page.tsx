@@ -6,9 +6,9 @@ import { Chakra_Petch } from 'next/font/google'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
-import ErrorAlert from './component/ui/alert/ErrorAlert'
-import Button from './component/ui/button/Button'
-import FloatingInput from './component/ui/input/FloatingInput'
+import ErrorAlert from './_component/alert/ErrorAlert'
+import Button from './_component/button/Button'
+import FloatingInput from './_component/input/FloatingInput'
 import {
   API_SUCCESS_CODE,
   FALSE,
@@ -175,10 +175,10 @@ export default function Login() {
   }, [])
 
   return (
-    <section className="flex flex-col justify-center items-center h-screen px-4 place-content-center">
-      <section className="flex flex-col items-center mb-5">
-        <div className="text-2xl font-extrabold mb-2">
-          <h1 className={chakra.className}>WelCome to Groupware</h1>
+    <section className="justify-center h-screen px-4 sort-vertical-flex place-content-center">
+      <section className="mb-5 sort-vertical-flex">
+        <div className="mb-2 text-2xl font-extrabold">
+          <h1 className={chakra.className}>Welcome to Groupware</h1>
         </div>
       </section>
       <div className="w-4/5 md:w-2/5">
@@ -199,20 +199,20 @@ export default function Login() {
         ) : (
           <></>
         )}
-        <div className="flex flex-col justify-center items-center mt-5">
-          <div className="w-2/3 flex justify-center">
+        <div className="justify-center mt-5 sort-vertical-flex">
+          <div className="flex justify-center w-2/3">
             <Button
               ref={buttonRef}
-              className="w-2/3 text-white justify-center bg-indigo-400 transition duration-500 ease-in-out hover:bg-indigo-600 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mb-2 border-2"
+              className="w-2/3 text-white justify-center bg-indigo-400 smooth-transition hover:bg-indigo-600 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mb-2 border-2"
               onClick={handleClickLogin}
               buttonContent={'Sign In'}
             />
           </div>
-          <div className="flex flex-row justify-around md:w-2/3 w-full mt-3">
-            <div className="transition ease-in-out duration-500 text-sm text-gray-500 hover:text-blue-600 hover:scale-110 hover:font-bold hover:dark:text-blue-600">
+          <div className="flex flex-row justify-around w-full mt-3 md:w-2/3">
+            <div className="text-sm text-gray-500 smooth-transition hover:text-blue-600 hover:scale-110 hover:font-bold hover:dark:text-blue-600">
               <Link href={ROUTE_SIGNUP}>Sign Up</Link>
             </div>
-            <div className="transition ease-in-out duration-500 text-sm text-gray-500 hover:text-red-600 hover:scale-110 hover:font-bold hover:dark:text-red-600">
+            <div className="text-sm text-gray-500 smooth-transition hover:text-red-600 hover:scale-110 hover:font-bold hover:dark:text-red-600">
               <Link href={ROUTE_FIND_PWD}>Forgot Password</Link>
             </div>
           </div>
