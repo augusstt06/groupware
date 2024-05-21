@@ -61,17 +61,17 @@ export default function ProjectIssueDetail() {
   }
 
   return (
-    <main className="flex flex-col items-center w-10/12 max-w-7xl 2xl:w-2/3 h-4/5 ">
+    <main className="w-10/12 sort-vertical-flex max-w-7xl 2xl:w-2/3 h-4/5 ">
       {issueDetail != null && (
         <div className="w-4/5 p-5 mr-10 bg-white border-2 rounded dark:bg-gray-700 dark:text-white">
           <div
-            className="flex flex-row items-center inline w-20 mb-3 cursor-pointer hover:font-bold"
+            className="w-20 mb-3 cursor-pointer sort-row-flex hover:font-bold"
             onClick={goProjectIssue}
           >
             <IoIosArrowBack className="mr-2" />
             <span className="text-xs">돌아가기</span>
           </div>
-          <div className="flex flex-col pb-2 truncate border-b-2 border-gray-300">
+          <div className="pb-2 truncate border-b-2 border-gray-300 sort-vertical-flex">
             <span className="mb-2 text-xl font-bold">{issueDetail?.title}</span>
             <span className="text-xs">{issueDetail?.issuer.name}</span>
           </div>
