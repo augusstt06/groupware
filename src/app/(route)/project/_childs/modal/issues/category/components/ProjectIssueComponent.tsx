@@ -30,7 +30,7 @@ export function IssueInput(props: IssueInputProps) {
       </div>
       <input
         placeholder={props.placeholder}
-        className="w-full xl:w-3/5 rounded mt-2 border-2 text-gray-900 block text-sm border-indigo-200 dark:border-indigo-300 p-2.5 bg-transparent dark:border-white-600 dark:placeholder-gray-400 dark:text-white focus:outline-none"
+        className="w-full xl:w-3/5 rounded-lg mt-2 border-2 text-gray-900 block text-sm border-indigo-200 dark:border-indigo-300 p-2.5 bg-transparent dark:border-white-600 dark:placeholder-gray-400 dark:bg-[#505050] dark:text-white focus:outline-none"
         value={props.value}
         onChange={props.onChange}
       />
@@ -41,9 +41,9 @@ export function IssueInput(props: IssueInputProps) {
 export function IssueProgress(props: IssueProgressProps) {
   const divClassName = (selectStatus: string, hoverColor: string, color: string) => {
     if (props.progress === selectStatus) {
-      return `cursor-pointer text-white ${color} transition ease-in-out duration-300 w-1/5 p-2 rounded-full text-center`
+      return `cursor-pointer text-white ${color} smooth-transition w-1/5 p-2 rounded-full sort-row-flex justify-center`
     } else
-      return `cursor-pointer bg-transparent border-2 border-indigo-200 dark:border-indigo-300 hover:border-transparent hover:text-white ${hoverColor} transition ease-in-out duration-300 w-1/5 p-2 rounded-full text-center`
+      return `cursor-pointer bg-transparent dark:bg-[#505050] border-2 border-indigo-200 dark:border-indigo-300 hover:border-transparent hover:text-white ${hoverColor} smooth-transition w-1/5 p-2 rounded-full text-center`
   }
 
   return (
@@ -74,7 +74,7 @@ export function IssueSelect(props: IssueSelecProps) {
       <div className="w-1/6">
         <span className="text-sm md:text-base">{props.title}</span>
       </div>
-      <select className="p-2 text-sm bg-transparent border-2 border-indigo-200 rounded-lg dark:border-indigo-300">
+      <select className="p-2 text-sm bg-transparent dark:bg-[#505050] border-2 border-indigo-200 rounded-lg dark:border-indigo-300">
         {props.selectList.map((data) => (
           <option key={data}>{data}</option>
         ))}
@@ -98,7 +98,7 @@ export function IssueCalendar(props: IssueCalendarProps) {
     <>
       <div className="p-2 sort-row-flex" key={props.title}>
         {renderTitlte()}
-        <div className="sort-row-flex rounded mt-2 bg-transparent border-2 text-gray-900 w-40 text-sm border-indigo-200 dark:border-indigo-300 p-2.5 dark:placeholder-gray-400 dark:text-white">
+        <div className="sort-row-flex rounded-lg mt-2 bg-transparent dark:bg-[#505050] border-2 text-gray-900 w-40 text-sm border-indigo-200 dark:border-indigo-300 p-2.5 dark:placeholder-gray-400 dark:text-white">
           <FaRegCalendarAlt onClick={props.openModal} />
           <span className="ml-2 text-xs lg:text-base">
             {moment(props.dateValue as ValuePiece).format(PROJECT_DATE_FORMAT)}
@@ -161,10 +161,10 @@ export function IssueCalendarWithTime(props: IssueCalendarWithTimeProps) {
   }
   return (
     <>
-      <div className="items-center p-2 grid grid-cols-6 gap-2 ">
+      <div className="items-center p-2 grid grid-cols-6 gap-2 bg-red-100">
         {renderTitle()}
         <div className="grid grid-cols-6 col-span-5 gap-2">
-          <div className="flex flex-col items-center p-2 mt-2 ml-4 text-sm text-gray-900 truncate bg-transparent border-2 border-indigo-200 rounded col-span-3 lg:ml-0 lg:flex-row dark:border-indigo-300 w-26 dark:placeholder-gray-400 dark:text-white">
+          <div className="sort-vertical-flex p-2 mt-2 ml-4 text-sm text-gray-900 truncate bg-transparent dark:bg-[#505050] border-2 border-indigo-200 rounded col-span-3 lg:ml-0 lg:flex-row dark:border-indigo-300 w-26 dark:placeholder-gray-400 dark:text-white">
             <FaRegCalendarAlt onClick={props.scheduleData.openCalendar} className="mb-2 lg:mb-0" />
             <span className="ml-2 text-xs lg:text-base">
               {moment(props.scheduleData.calendarDateValue as ValuePiece).format('YYYY/MM/DD')}
@@ -197,7 +197,7 @@ export function IssueCalendarWithTime(props: IssueCalendarWithTimeProps) {
               <div className="hidden col-span-2 xl:inline">
                 <span className="text-xs">All</span>
               </div>
-              <div className="inline grid col-span-2 grid-row-2 xl:hidden ">
+              <div className="grid col-span-2 grid-row-2 xl:hidden ">
                 <span className="text-sm">All</span>
               </div>
             </div>
@@ -308,7 +308,7 @@ export function IssueFile() {
         <span className="text-sm md:text-base">파일첨부</span>
       </div>
       <label htmlFor="selectFile">
-        <div className="p-2 bg-transparent border-2 border-indigo-200 rounded-lg cursor-pointer dark:border-indigo-300">
+        <div className="p-2 bg-transparent dark:bg-[#505050] border-2 border-indigo-200 rounded-lg cursor-pointer dark:border-indigo-300">
           파일선택
         </div>
         <input type="file" id="selectFile" className="hidden" />
@@ -319,10 +319,10 @@ export function IssueFile() {
 
 export function IssueDescription(props: IssueDescriptionProps) {
   return (
-    <div className="w-full p-2 mt-2 border-t-2 border-b-2 border-gray-200">
+    <div className="w-full p-2 mt-2">
       <input
         placeholder="내용을 입력해주세요"
-        className="w-full p-5 text-sm bg-transparent focus:outline-none"
+        className="w-full p-5 text-sm bg-transparent dark:bg-[#505050] rounded-lg focus:outline-none"
         value={props.value}
         onChange={props.onChange}
       />

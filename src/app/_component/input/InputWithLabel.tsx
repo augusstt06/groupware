@@ -33,7 +33,7 @@ const InputWithLabel = (props: InputGroupProps) => {
   }
   const inputClassName = () => {
     if (className === '') {
-      return 'rounded-none rounded-r-lg bg-gray-50 border text-gray-900 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:outline-none'
+      return 'rounded-none rounded-r-lg bg-gray-50 border text-gray-900 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-[#2e2e2e] dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:outline-none'
     }
     return className
   }
@@ -45,7 +45,7 @@ const InputWithLabel = (props: InputGroupProps) => {
         <Input
           onKeyDown={onKeyDown}
           isLabel={isHeadLabel}
-          labelClassName="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-50 border border-r-0 border-gray-300 rounded-l-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600 "
+          labelClassName="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-50 border border-r-0 border-gray-300 rounded-l-md dark:bg-[#505050] dark:text-gray-400 dark:border-[#505050] "
           labelContent={headLabelContent}
           type={type}
           value={useInput.value}

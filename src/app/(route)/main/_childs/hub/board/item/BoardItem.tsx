@@ -9,7 +9,7 @@ import { type BoardItemProps } from '@/types/pageType'
 
 export default function BoardItem(props: BoardItemProps) {
   return (
-    <div className="flex flex-col p-3 mt-3 mb-3 text-left truncate bg-gray-200 rounded-lg dark:bg-gray-600">
+    <div className="flex flex-col p-3 mt-3 mb-3 text-left truncate bg-gray-200 rounded-lg dark:bg-[#505050]">
       <div className="sort-row-flex">
         <span className="p-1 mb-2 text-base md:text-base md:font-bold">
           <Link href={`${ROUTE_POSTING_DETAIL}/${props.boardListItem.id}`}>

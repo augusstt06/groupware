@@ -292,7 +292,7 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
         className="modal-base"
       >
         <div className="relative w-5/6 p-4">
-          <div className="relative bg-white border-2 border-indigo-300 border-solid rounded-lg shadow dark:bg-gray-700">
+          <div className="relative bg-white border-2 border-indigo-300 border-solid rounded-lg shadow dark:bg-[#2e2e2e]">
             <BoardWriteModalBtnTab
               handleClickOpenSaveList={handleClickOpenSaveList}
               handleClickPostPending={handleClickPostPending}
