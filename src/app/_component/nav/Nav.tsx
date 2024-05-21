@@ -103,11 +103,11 @@ export default function Nav() {
 
   return (
     <RenderNav isRender={isNavRender}>
-      <nav className="fixed bg-gradient-to-r from-[#c9d6ff] to-[#e2e2e2] dark:from-[#2b2f3d] border-gray-200 w-full z-50">
+      <nav className="fixed bg-gradient-to-r from-[#c9d6ff] to-[#e2e2e2] dark:from-[#24262f] dark:to-[#24262f] border-gray-200 w-full z-50">
         <div className={`flex items-center justify-between max-w-screen-xl mx-auto p-4`}>
           <Link
             href="/main"
-            className="flex items-center ml-10 font-semibold hover:scale-110 smooth-transition space-x-3 md:text-2xl text-medium dark:text-white"
+            className="flex items-center ml-10 space-x-3 font-semibold hover:scale-110 smooth-transition md:text-2xl text-medium dark:text-white"
             onClick={() => {
               setIsDropOpen(false)
             }}

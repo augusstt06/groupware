@@ -43,7 +43,7 @@ export default function RootLayout({ children }: ReactProps) {
 
   return (
     <html lang="en" suppressHydrationWarning={true}>
-      <body className="font-mono bg-gradient-to-r from-[#c9d6ff] to-[#e2e2e2] dark:from-[#2b2f3d]">
+      <body className="font-mono bg-gradient-to-r from-[#c9d6ff] to-[#e2e2e2] dark:from-[#24262f] dark:to-[#24262f]">
         <QueryClientProvider client={queryClient}>
           <ReactQueryDevtools initialIsOpen={true} />
           <ReduxProvider>
