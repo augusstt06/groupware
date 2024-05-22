@@ -97,10 +97,10 @@ export default function Recomment(props: CommentProps) {
 
   return (
     <>
-      <div className="flex flex-row items-center justify-around p-2">
+      <div className="sort-row-flex justify-around p-2">
         <div className="p-1 border-2 border-gray-500 rounded-full dark:border-gray-300">img</div>
         <div className="flex flex-col w-5/6 p-1 ">
-          <div className="flex flex-row items-center justify-between">
+          <div className="sort-row-flex justify-between">
             <span className="mb-2 text-sm font-bold">
               {props.comments.name} ({props.comments.position})
             </span>
@@ -126,7 +126,7 @@ export default function Recomment(props: CommentProps) {
 
             {props.comments.content}
           </span>
-          <div className="flex flex-row items-center justify-start text-xs text-gray-400">
+          <div className="sort-row-flex justify-start text-xs text-gray-400">
             <span className="mr-4">2024.01.01</span>
             <span className="mr-1 cursor-pointer">
               {isCommentLike ? (
