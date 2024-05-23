@@ -48,7 +48,7 @@ export default function SignupComplete() {
 
       <button
         type="button"
-        className="mt-5 text-medium font-bold text-indigo-500 hover:text-white dark:text-white dark:bg-indigo-500 dark:border-white bg-white border-indigo-500 hover:bg-indigo-500 focus:ring-4 focus:outline-none dark:hover:bg-white dark:hover:text-indigo-500 focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+        className="mt-5 text-medium text-indigo-500 hover:text-white dark:text-white dark:bg-indigo-500 dark:border-white bg-white border-indigo-500 hover:bg-indigo-500 focus:ring-4 focus:outline-none dark:hover:bg-white dark:hover:text-indigo-500 focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
         onClick={handleClick}
       >
         로그인

@@ -211,7 +211,7 @@ export default function Invite() {
           buttonContent={
             <IoMdEyeOff className="w-4 h-4 text-black hover:text-white dark:text-white" />
           }
-          className="absolute top-0 end-0 p-2.5 text-sm font-medium h-full text-white bg-gray-50 rounded-e-lg border dark:border-gray-600 hover:bg-indigo-200  dark:bg-gray-700 dark:hover:bg-indigo-400 ease-in-out transition duration-400"
+          className="absolute top-0 end-0 p-2.5 text-sm font-medium h-full text-white bg-gray-50 rounded-e-lg border dark:border-gray-600 hover:bg-indigo-200  dark:bg-gray-700 dark:hover:bg-indigo-400 smooth-transition"
           onClick={handleClick}
         />
       )
@@ -219,7 +219,7 @@ export default function Invite() {
     return (
       <Button
         buttonContent={<IoMdEye className="w-4 h-4 text-black dark:text-white" />}
-        className="absolute top-0 end-0 p-2.5 text-sm font-medium h-full text-white bg-gray-50 rounded-e-lg border dark:border-gray-600 hover:bg-indigo-200  dark:bg-gray-700 dark:hover:bg-indigo-400 ease-in-out transition duration-400"
+        className="absolute top-0 end-0 p-2.5 text-sm font-medium h-full text-white bg-gray-50 rounded-e-lg border dark:border-gray-600 hover:bg-indigo-200  dark:bg-gray-700 dark:hover:bg-indigo-400 smooth-transition"
         onClick={handleClick}
       />
     )
@@ -293,19 +293,19 @@ function AccessInvite(props: AccessInviteProps) {
   }
 
   return (
-    <div className="h-screen px-4 grid place-content-center">
+    <div className="grid h-screen px-4 place-content-center">
       <h1 className="font-bold tracking-widest text-gray-600 uppercase dark:text-gray-400">
         {inviteCategory()}에 초대받았습니다.
       </h1>
       <div className="justify-around sort-row-flex ">
         <Button
           buttonContent="가입"
-          className="mt-5 font-bold bg-indigo-400 hover:bg-indigo-700 text-white hover:text-white focus:outline-none rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 transition ease-in-out duration-500"
+          className="mt-5 font-bold bg-indigo-400 hover:bg-indigo-700 text-white hover:text-white focus:outline-none rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 smooth-transition"
           onClick={join}
         />
         <Button
           buttonContent="거절"
-          className="mt-5 font-bold bg-red-400 hover:bg-red-500 text-white hover:text-white focus:outline-none rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 transition ease-in-out duration-500"
+          className="mt-5 font-bold bg-red-400 hover:bg-red-500 text-white hover:text-white focus:outline-none rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 smooth-transition"
           onClick={() => {}}
         />
       </div>
@@ -315,13 +315,13 @@ function AccessInvite(props: AccessInviteProps) {
 function InviteLogin(props: InviteLoginProps) {
   const { handleLoginModal } = props
   return (
-    <div className="h-screen px-4 grid place-content-center">
+    <div className="grid h-screen px-4 place-content-center">
       <h1 className="font-bold tracking-widest text-gray-600 uppercase dark:text-gray-400">
         초대에 응하기 전에 로그인이 필요합니다.
       </h1>
       <Button
         buttonContent="로그인"
-        className="mt-5 font-bold bg-gray-500 hover:bg-gray-700 text-white hover:text-white focus:outline-none rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 transition ease-in-out duration-500"
+        className="mt-5 font-bold bg-gray-500 hover:bg-gray-700 text-white hover:text-white focus:outline-none rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 smooth-transition"
         onClick={handleLoginModal}
       />
     </div>

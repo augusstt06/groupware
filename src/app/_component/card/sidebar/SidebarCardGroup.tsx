@@ -16,24 +16,21 @@ import {
 import { type MainSidebarCardGroupProps } from '@/types/ui/card'
 
 export default function SidebarCardGroup(props: MainSidebarCardGroupProps) {
+  const { title, reRender, setRerender, myBoardList } = props
   const isMyboardListEmpty = () => {
-    if (props.myBoardList.length === 0) return true
+    if (myBoardList.length === 0) return true
     return false
   }
   const renderSidebarContent = () => {
     if (isMyboardListEmpty()) {
       return <NameCard />
     }
-    switch (props.title) {
+    switch (title) {
       case SIDEBAR_URL_PATH_MAIN:
         return (
           <aside className="p-3 bg-white shadow-2xl dark:bg-opacity-10 bg-opacity-60 rounded-2xl">
             <NameCard />
-            <HistoryCard
-              reRender={props.reRender}
-              setRerender={props.setRerender}
-              title={props.title}
-            />
+            <HistoryCard reRender={reRender} setRerender={setRerender} title={title} />
             <VacationCard />
           </aside>
         )
@@ -45,7 +42,7 @@ export default function SidebarCardGroup(props: MainSidebarCardGroupProps) {
       case SIDEBAR_URL_PATH_TEAM:
         return <TeamMainSideCard />
       default:
-        return <BoardSideCard myBoardList={props.myBoardList} />
+        return <BoardSideCard myBoardList={myBoardList} />
     }
   }
 

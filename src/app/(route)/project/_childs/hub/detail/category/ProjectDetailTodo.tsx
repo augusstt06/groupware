@@ -61,7 +61,7 @@ export default function ProjectDetailTodo() {
         <span className="font-bold">전체 할일 </span>
         <span className="font-bold text-indigo-400">{todoIssues.length}</span>
       </div>
-      <div className="grid grid-cols-1 gap-4 p-3 xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2">
+      <div className="p-3 grid grid-cols-1 gap-4 xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2">
         {todoIssues.map((data) => (
           <ProjectDetailTodoCard todo={data} key={data.id} />
         ))}

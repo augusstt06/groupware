@@ -24,8 +24,8 @@ export default function FindPwd() {
     }
   }, [])
   return (
-    <div className="flex flex-col items-center justify-center h-screen px-4 place-content-center">
-      <div className="flex flex-col items-center justify-center mb-5">
+    <div className="justify-center h-screen px-4 sort-vertical-flex place-content-center">
+      <div className="justify-center mb-5 sort-vertical-flex">
         <div className="mb-6 text-xl font-bold">비밀번호 찾기</div>
         <div className="text-sm">회원정보의 이메일로 비밀번호 재설정 메일이 발송됩니다.</div>
       </div>

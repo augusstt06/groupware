@@ -198,7 +198,7 @@ export default function Signup() {
   }, [])
 
   return (
-    <section className="flex flex-col items-center justify-center p-1">
+    <section className="justify-center p-1 sort-vertical-flex">
       <h1 className="mt-32 font-bold md:text-xl text-medium">Sign Up</h1>
       <section className="w-4/5 mt-5 md:w-2/5">
         <RegisterInfo
@@ -217,18 +217,18 @@ export default function Signup() {
           <></>
         )}
       </section>
-      <div className="flex flex-row items-center justify-around w-2/3 mt-5 md:w-1/3">
+      <div className="justify-around w-2/3 mt-5 sort-vertical-flex md:w-1/3">
         <Link href="/">
           <Button
             buttonContent="Cancel"
-            className="transition ease-in-out duration-500 text-white bg-red-300 hover:bg-red-600 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mb-2 border-2"
+            className="smooth-transition text-white bg-red-300 hover:bg-red-600 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mb-2 border-2"
           />
         </Link>
         {isPrivateInfoComplete ? (
           <Button
             ref={signupButtonRef}
             buttonContent="Sign Up"
-            className="transition ease-in-out duration-500 text-white bg-indigo-400 hover:bg-indigo-600 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mb-2 border-2"
+            className="smooth-transition text-white bg-indigo-400 hover:bg-indigo-600 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mb-2 border-2"
             onClick={handleClickSignup}
           />
         ) : null}

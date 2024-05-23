@@ -107,7 +107,7 @@ export default function Nav() {
         <div className={`flex items-center justify-between max-w-screen-xl mx-auto p-4`}>
           <Link
             href="/main"
-            className="flex items-center ml-10 space-x-3 font-semibold hover:scale-110 smooth-transition md:text-2xl text-medium dark:text-white"
+            className="flex items-center ml-10 font-semibold space-x-3 hover:scale-110 smooth-transition md:text-2xl text-medium dark:text-white"
             onClick={() => {
               setIsDropOpen(false)
             }}

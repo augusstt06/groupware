@@ -118,7 +118,7 @@ export default function WriteComment(props: WriteCommentProps) {
           maxLength={1000}
           onChange={handleInput}
         />
-        <div className="sort-row-flex justify-between w-full pl-3">
+        <div className="justify-between w-full pl-3 sort-row-flex">
           <div className="flex flex-col justify-around mr-2">
             {/* <IoCameraOutline className="w-5 h-5"> */}
             <div className="mb-2">

@@ -8,7 +8,7 @@ export default function MainHub(props: MainHubProps) {
     return currentPostings.length !== 0
   }
   return (
-    <div className="sort-vertical-flex w-4/5 max-w-7xl space-y-5">
+    <div className="w-4/5 sort-vertical-flex max-w-7xl space-y-5">
       <MainTab />
 
       {isCurrentPostingExist() ? (

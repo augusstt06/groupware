@@ -187,7 +187,7 @@ export default function RegisterOrgLogin() {
   }, [])
 
   return (
-    <section className="flex flex-col items-center justify-center h-screen px-4">
+    <section className="justify-center h-screen px-4 sort-vertical-flex">
       {organization === '' ? (
         <>
           <h1 className="mb-5 text-xl font-bold text-center md:text-2xl">조직 선택</h1>
@@ -202,7 +202,7 @@ export default function RegisterOrgLogin() {
             >
               <Button
                 buttonContent="조직 생성"
-                className="transition ease-in-out duration-500 text-white bg-indigo-400 hover:bg-indigo-600 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:hover:bg-white dark:hover:text-indigo-500 mb-2 border-2 dark:hover:border-indigo-500/75"
+                className="smooth-transition text-white bg-indigo-400 hover:bg-indigo-600 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:hover:bg-white dark:hover:text-indigo-500 mb-2 border-2 dark:hover:border-indigo-500/75"
               />
             </div>
             <div
@@ -212,13 +212,13 @@ export default function RegisterOrgLogin() {
             >
               <Button
                 buttonContent="조직 가입"
-                className="transition ease-in-out duration-500 text-white bg-indigo-400 hover:bg-indigo-600 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:hover:bg-white dark:hover:text-indigo-500 mb-2 border-2 dark:hover:border-indigo-500/75"
+                className="smooth-transition text-white bg-indigo-400 hover:bg-indigo-600 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:hover:bg-white dark:hover:text-indigo-500 mb-2 border-2 dark:hover:border-indigo-500/75"
               />
             </div>
           </div>
         </>
       ) : (
-        <div className="flex flex-col items-center justify-center w-full h-screen px-4 place-content-center">
+        <div className="justify-center w-full h-screen px-4 sort-vertical-flex place-content-center">
           {organization === ORG_CREATE ? (
             <h1 className="mt-20 text-xl font-bold md:text-2xl">Create Organization</h1>
           ) : (
@@ -227,7 +227,7 @@ export default function RegisterOrgLogin() {
 
           <div className="mt-5">
             <p
-              className="text-xs text-gray-500 cursor-pointer transition ease-in-out duration-500 md:text-sm hover:text-blue-500 dark:hover:text-blue-500 hover:text-gray-800 hover:scale-110  hover:font-bold hover:dark:text-gray-200"
+              className="text-xs text-gray-500 cursor-pointer smooth-transition md:text-sm hover:text-blue-500 dark:hover:text-blue-500 hover:scale-110  hover:font-bold hover:dark:text-gray-200"
               onClick={changeOrgType}
             >
               {organization === ORG_CREATE ? (
@@ -250,7 +250,7 @@ export default function RegisterOrgLogin() {
               setErrMsg={setErrMsg}
             />
             {errorState.isError ? (
-              <div className="flex flex-col items-center justify-center">
+              <div className="justify-center sort-vertical-flex">
                 <ErrorAlert
                   description={errorState.description}
                   handleClickError={handleClickError}
@@ -260,11 +260,11 @@ export default function RegisterOrgLogin() {
               <></>
             )}
           </div>
-          <div className="flex flex-row items-center justify-around w-2/3 mt-2 md:w-1/3">
+          <div className="justify-around w-2/3 mt-2 sort-row-flex md:w-1/3">
             <Button
               ref={orgButtonRef}
               buttonContent={organization === ORG_CREATE ? '조직 생성' : '조직 가입'}
-              className="transition ease-in-out duration-500 text-white bg-indigo-400 hover:bg-indigo-600 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:hover:bg-white dark:hover:text-indigo-500 mb-2 border-2 dark:hover:border-indigo-500/75"
+              className="smooth-transition text-white bg-indigo-400 hover:bg-indigo-600 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:hover:bg-white dark:hover:text-indigo-500 mb-2 border-2 dark:hover:border-indigo-500/75"
               onClick={handleFetchOrg}
             />
           </div>

@@ -101,10 +101,10 @@ export default function Comment(props: CommentProps) {
 
   return (
     <div>
-      <div className="sort-row-flex justify-around p-2">
+      <div className="justify-around p-2 sort-row-flex">
         <div className="p-1 border-2 border-gray-500 rounded-full dark:border-gray-300">img</div>
         <div className="flex flex-col w-5/6 p-1 ">
-          <div className="sort-row-flex justify-between">
+          <div className="justify-between sort-row-flex">
             <span className="mb-2 text-sm font-bold">
               {props.comments.name} ({props.comments.position})
             </span>
@@ -120,7 +120,7 @@ export default function Comment(props: CommentProps) {
             )}
           </div>
           <span className="mb-2 text-sm">{props.comments.content}</span>
-          <div className="sort-row-flex justify-start text-xs text-gray-400">
+          <div className="justify-start text-xs text-gray-400 sort-row-flex">
             <span className="mr-4">2024.01.01</span>
 
             <span className="mr-1 cursor-pointer">

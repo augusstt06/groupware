@@ -21,7 +21,7 @@ export default function InviteProjectMemberModal(props: InviteProjectMemberModal
   }
   const inviteInput = useInput('')
   const tailLabel = (
-    <div className="flex items-center justify-center w-1/6 cursor-pointer duration-500 ease-in-out trasition hover:scale-110">
+    <div className="flex items-center justify-center w-1/6 cursor-pointer smooth-transition hover:scale-110">
       <FaSearch className="w-4 h-4" />
     </div>
   )
@@ -31,8 +31,8 @@ export default function InviteProjectMemberModal(props: InviteProjectMemberModal
         <span className="font-bold">초대하기</span>
       </div>
       <div className="flex flex-row justify-between h-full">
-        <div className="flex flex-col items-center w-3/5 border-r-2 border-gray-300">
-          <div className="flex flex-row items-center justify-center w-5/6 mt-4 truncate border-2 border-gray-300 rounded-full">
+        <div className="w-3/5 border-r-2 border-gray-300 sort-vertical-center">
+          <div className="justify-center w-5/6 mt-4 truncate border-2 border-gray-300 rounded-full sort-row-flex">
             <InputWithLabel
               title=""
               isHeadLabel={false}
