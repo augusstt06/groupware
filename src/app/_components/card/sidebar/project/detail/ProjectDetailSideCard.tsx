@@ -6,7 +6,7 @@ import ProjectDetailScheduleMenu from './ProjectDetailScheduleMenu'
 import ProjectDetailTaskMenu from './ProjectDetailTaskMenu'
 import ProjectDetailTodoMenu from './ProjectDetailTodoMenu'
 
-import Button from '@/_component/button/Button'
+import Button from '@/_components/button/Button'
 import {
   PROJECT_DETAIL_CATEGORY_HOME,
   PROJECT_DETAIL_CATEGORY_SCHEDULE,

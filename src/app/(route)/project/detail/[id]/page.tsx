@@ -9,8 +9,8 @@ import ProjectDetailHub from '../../_childs/hub/detail/ProjectDetailHub'
 import InviteProjectMemberModal from '../../_childs/modal/InviteProjectMemberModal'
 import CreateProjectIssueModal from '../../_childs/modal/issues/category/CreateProjectIssueModal'
 
-import ModalHub from '@/_component/modal/Modal'
-import ProjectDetailTab from '@/_component/tab/project/ProjectDetailTab'
+import ModalHub from '@/_components/modal/Modal'
+import ProjectDetailTab from '@/_components/tab/project/ProjectDetailTab'
 import {
   KEY_ACCESS_TOKEN,
   KEY_LOGIN_COMPLETE,

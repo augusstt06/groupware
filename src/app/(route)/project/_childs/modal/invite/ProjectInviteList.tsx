@@ -1,4 +1,4 @@
-import ProjectInviteMemberCard from '@/_component/card/project/ProjectInviteMemberCard'
+import ProjectInviteMemberCard from '@/_components/card/project/ProjectInviteMemberCard'
 import { type ProjectInviteListProps } from '@/_types/ui/modal'
 
 export default function ProjectInviteList(props: ProjectInviteListProps) {

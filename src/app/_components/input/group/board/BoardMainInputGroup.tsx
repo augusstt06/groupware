@@ -4,7 +4,7 @@ import { IoSearchSharp } from 'react-icons/io5'
 import InputWithLabel from '../../InputWithLabel'
 
 import BoardWriteModal from '@/(route)/board/_childs/modal/BoardWriteModal'
-import Button from '@/_component/button/Button'
+import Button from '@/_components/button/Button'
 import { useAppDispatch, useAppSelector } from '@/_module/hooks/reduxHooks'
 import { openBoardWriteModalReducer } from '@/_store/reducers/board/openBoardWriteModalReducer'
 import { type BoardMainInputGroupProps } from '@/_types/ui/input'

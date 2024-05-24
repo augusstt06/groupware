@@ -6,8 +6,8 @@ import { useRouter } from 'next/navigation'
 
 import RegisterInfo from './_childs/userRegister/RegisterInfo'
 
-import ErrorAlert from '@/_component/alert/ErrorAlert'
-import Button from '@/_component/button/Button'
+import ErrorAlert from '@/_components/alert/ErrorAlert'
+import Button from '@/_components/button/Button'
 import {
   KEY_ACCESS_TOKEN,
   REGISTER_EMAIL,

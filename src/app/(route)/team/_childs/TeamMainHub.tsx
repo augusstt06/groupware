@@ -1,4 +1,4 @@
-import TeamCard from '@/_component/card/team/TeamCard'
+import TeamCard from '@/_components/card/team/TeamCard'
 import { type TeamMainHubProps } from '@/_types/ui/extra'
 
 export default function TeamMainHub(props: TeamMainHubProps) {

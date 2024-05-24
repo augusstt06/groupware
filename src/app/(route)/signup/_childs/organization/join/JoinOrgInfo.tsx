@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-import FloatingInput from '@/_component/input/FloatingInput'
+import FloatingInput from '@/_components/input/FloatingInput'
 import { REGISTER_ORG_JOIN, REGISTER_ORG_JOIN_EN } from '@/_constant/constant'
 import useInput from '@/_module/hooks/reactHooks/useInput'
 import { useAppDispatch } from '@/_module/hooks/reduxHooks'

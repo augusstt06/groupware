@@ -8,7 +8,7 @@ import { IoLocationOutline, IoPersonOutline } from 'react-icons/io5'
 import { IssueTime } from '../../../modal/issues/category/components/ProjectIssueComponent'
 import { KaKaoMap } from '../../../modal/issues/category/schedule/SchedulePlace'
 
-import Dialog, { DialogCalendar } from '@/_component/modal/dialog/Dialog'
+import Dialog, { DialogCalendar } from '@/_components/modal/dialog/Dialog'
 import {
   KAKAO_AUTH_KEY,
   KEY_ACCESS_TOKEN,

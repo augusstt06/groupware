@@ -4,7 +4,7 @@ import NameCard from '../../../main/NameCard'
 
 import ProjectMenuCard from './ProjectMenuCard'
 
-import Button from '@/_component/button/Button'
+import Button from '@/_components/button/Button'
 import { useAppDispatch } from '@/_module/hooks/reduxHooks'
 import { createProjectModalReducer } from '@/_store/reducers/project/projectModalReducer'
 

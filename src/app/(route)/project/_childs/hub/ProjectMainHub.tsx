@@ -1,4 +1,4 @@
-import ProjectCard from '@/_component/card/project/ProjectCard'
+import ProjectCard from '@/_components/card/project/ProjectCard'
 import { useAppSelector } from '@/_module/hooks/reduxHooks'
 import { type ProjectMainHubProps } from '@/_types/ui/extra'
 

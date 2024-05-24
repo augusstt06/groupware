@@ -2,7 +2,7 @@ import { Draggable, Droppable } from 'react-beautiful-dnd'
 
 import { useRouter } from 'next/navigation'
 
-import ProjectDetailTaskCard from '@/_component/card/project/detail/ProjectDetailTaskCard'
+import ProjectDetailTaskCard from '@/_components/card/project/detail/ProjectDetailTaskCard'
 import {
   PROJECT_ISSUE_TASK_PROGRESS_COMPLETED_TITLE,
   PROJECT_ISSUE_TASK_PROGRESS_INIT_TITLE,

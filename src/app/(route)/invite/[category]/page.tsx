@@ -10,8 +10,8 @@ import { RiLockPasswordFill } from 'react-icons/ri'
 
 import InviteLoginModal from '../_childs/modal/InviteLoginModal'
 
-import Button from '@/_component/button/Button'
-import ModalHub from '@/_component/modal/Modal'
+import Button from '@/_components/button/Button'
+import ModalHub from '@/_components/modal/Modal'
 import {
   INVITE_PROJECT,
   INVITE_TEAM,

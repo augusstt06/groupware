@@ -7,7 +7,7 @@ import ProjectIssueSchedule from './schedule/ProjectIssueSchedule'
 import ProjectIssueTask from './task/ProjectIssueTask'
 import ProjectIssueTodo from './todo/ProjectIssueTodo'
 
-import CreateProjectIssueModalTab from '@/_component/tab/project/modal/CreateProjectIssueModalTab'
+import CreateProjectIssueModalTab from '@/_components/tab/project/modal/CreateProjectIssueModalTab'
 import {
   PROJECT_DETAIL_CATEGORY_SCHEDULE,
   PROJECT_DETAIL_CATEGORY_TASK,

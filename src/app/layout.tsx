@@ -6,8 +6,8 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { Fredoka } from 'next/font/google'
 import { usePathname } from 'next/navigation'
 
-import Nav from './_component/nav/Nav'
-import Sidebar from './_component/sidebar/Sidebar'
+import Nav from './_components/nav/Nav'
+import Sidebar from './_components/sidebar/Sidebar'
 import {
   ROUTE_BOARD,
   ROUTE_MAIN,

@@ -1,5 +1,5 @@
-import BoardCard from '@/_component/card/main/BoardCard'
-import MainTab from '@/_component/tab/main/MainTab'
+import BoardCard from '@/_components/card/main/BoardCard'
+import MainTab from '@/_components/tab/main/MainTab'
 import { type MainHubProps } from '@/_types/ui/extra'
 
 export default function MainHub(props: MainHubProps) {

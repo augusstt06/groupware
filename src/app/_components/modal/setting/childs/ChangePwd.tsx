@@ -1,5 +1,5 @@
-import Button from '@/_component/button/Button'
-import Input from '@/_component/input/Input'
+import Button from '@/_components/button/Button'
+import Input from '@/_components/input/Input'
 import useInput from '@/_module/hooks/reactHooks/useInput'
 
 type Props = {

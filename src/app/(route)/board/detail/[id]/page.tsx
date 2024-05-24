@@ -41,7 +41,7 @@ import {
 } from '@/_types/module'
 import { type CommentType, type DetailResponseType } from '@/_types/variable'
 
-const Viewbox = dynamic(async () => import('../../../../_component/editor/TextViewer'), {
+const Viewbox = dynamic(async () => import('../../../../_components/editor/TextViewer'), {
   ssr: false,
 })
 export default function BoardDetail() {

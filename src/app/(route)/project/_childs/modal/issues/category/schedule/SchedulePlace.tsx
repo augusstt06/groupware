@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 
 import { FaSearch } from 'react-icons/fa'
 
-import InputWithLabel from '@/_component/input/InputWithLabel'
+import InputWithLabel from '@/_components/input/InputWithLabel'
 import { KAKAO_APP_KEY, KAKAO_AUTH_KEY } from '@/_constant/constant'
 import { API_URL_KAKAO_MAP } from '@/_constant/route/api-route-constant'
 import useInput from '@/_module/hooks/reactHooks/useInput'

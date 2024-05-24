@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react'
 
 import { useQuery } from '@tanstack/react-query'
 
-import BoardCard from '@/_component/card/main/BoardCard'
-import BoardTab from '@/_component/tab/board/BoardTab'
+import BoardCard from '@/_components/card/main/BoardCard'
+import BoardTab from '@/_components/tab/board/BoardTab'
 import {
   BOARD_ANNOUNCE,
   BOARD_FREE,

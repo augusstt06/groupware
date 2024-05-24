@@ -11,7 +11,7 @@ import {
   IssueSelect,
 } from '../components/ProjectIssueComponent'
 
-import { DialogCalendar } from '@/_component/modal/dialog/Dialog'
+import { DialogCalendar } from '@/_components/modal/dialog/Dialog'
 import {
   PROJECT_DATE_FORMAT,
   PROJECT_DETAIL_CATEGORY_TODO,

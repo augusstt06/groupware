@@ -8,7 +8,7 @@ import { LuLoader } from 'react-icons/lu'
 
 import { IssueCalendar } from '../../../modal/issues/category/components/ProjectIssueComponent'
 
-import { DialogCalendar } from '@/_component/modal/dialog/Dialog'
+import { DialogCalendar } from '@/_components/modal/dialog/Dialog'
 import {
   KEY_ACCESS_TOKEN,
   KEY_X_ORGANIZATION_CODE,

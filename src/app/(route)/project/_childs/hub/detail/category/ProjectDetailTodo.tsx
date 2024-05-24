@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { useParams } from 'next/navigation'
 
-import ProjectDetailTodoCard from '@/_component/card/project/detail/ProjectDetailTodoCard'
+import ProjectDetailTodoCard from '@/_components/card/project/detail/ProjectDetailTodoCard'
 import {
   KEY_ACCESS_TOKEN,
   KEY_X_ORGANIZATION_CODE,

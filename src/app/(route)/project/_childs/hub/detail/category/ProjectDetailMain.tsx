@@ -1,8 +1,8 @@
 'use client'
 import { useEffect } from 'react'
 
-import InviteProjectMemberTable from '@/_component/table/project/InviteProjectMemberTable'
-import ProjectDetailTable from '@/_component/table/project/ProjectDetailTable'
+import InviteProjectMemberTable from '@/_components/table/project/InviteProjectMemberTable'
+import ProjectDetailTable from '@/_components/table/project/ProjectDetailTable'
 import { PROJECT_DETAIL_CATEGORY_HOME } from '@/_constant/constant'
 import { useAppDispatch } from '@/_module/hooks/reduxHooks'
 import { changeProjectDetailCategoryReducer } from '@/_store/reducers/project/projectDetailCategoryReducer'

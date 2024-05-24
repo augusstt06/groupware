@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { AiOutlineMail } from 'react-icons/ai'
 
-import { Label, LabelIcon } from '@/_component/label/Label'
+import { Label, LabelIcon } from '@/_components/label/Label'
 import { KEY_ACCESS_TOKEN, REGISTER_EMAIL } from '@/_constant/constant'
 import { ERR_COOKIE_NOT_FOUND } from '@/_constant/errorMsg'
 import { ROUTE_LOGIN, ROUTE_MAIN } from '@/_constant/route/route-constant'

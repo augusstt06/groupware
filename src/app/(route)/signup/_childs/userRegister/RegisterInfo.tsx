@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
-import ErrorAlert from '@/_component/alert/ErrorAlert'
-import FloatingInput from '@/_component/input/FloatingInput'
+import ErrorAlert from '@/_components/alert/ErrorAlert'
+import FloatingInput from '@/_components/input/FloatingInput'
 import {
   API_SUCCESS_CODE,
   REGISTER_CONFIRM_PWD_EN,

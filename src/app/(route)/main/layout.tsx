@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 
 import { useRouter } from 'next/navigation'
 
-import SettingModal from '@/_component/modal/setting/SettingModal'
+import SettingModal from '@/_components/modal/setting/SettingModal'
 import { KEY_ACCESS_TOKEN, KEY_LOGIN_COMPLETE } from '@/_constant/constant'
 import { useAppDispatch, useAppSelector } from '@/_module/hooks/reduxHooks'
 import { moduleCheckUserState } from '@/_module/utils/check/moduleCheckUserState'

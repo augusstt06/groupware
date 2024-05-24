@@ -7,7 +7,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import ProjectMainHub from './_childs/hub/ProjectMainHub'
 import CreateProjectModal from './_childs/modal/CreateProjectModal'
 
-import ModalHub from '@/_component/modal/Modal'
+import ModalHub from '@/_components/modal/Modal'
 import {
   KEY_ACCESS_TOKEN,
   KEY_X_ORGANIZATION_CODE,

@@ -13,9 +13,9 @@ import {
 
 import SchedulePlace from './SchedulePlace'
 
-import Input from '@/_component/input/Input'
-import ModalHub from '@/_component/modal/Modal'
-import Dialog, { DialogCalendar } from '@/_component/modal/dialog/Dialog'
+import Input from '@/_components/input/Input'
+import ModalHub from '@/_components/modal/Modal'
+import Dialog, { DialogCalendar } from '@/_components/modal/dialog/Dialog'
 import {
   MODAL_BTN_SELECT,
   PROJECT_DATE_FORMAT,

@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-import FloatingInput from '@/_component/input/FloatingInput'
+import FloatingInput from '@/_components/input/FloatingInput'
 import {
   REGISTER_ORG_DESCRIPTION,
   REGISTER_ORG_DESCRIPTION_EN,

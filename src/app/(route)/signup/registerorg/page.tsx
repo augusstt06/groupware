@@ -7,8 +7,8 @@ import { FaExchangeAlt } from 'react-icons/fa'
 
 import RegisterOrg from '../_childs/organization/RegisterOrg'
 
-import ErrorAlert from '@/_component/alert/ErrorAlert'
-import Button from '@/_component/button/Button'
+import ErrorAlert from '@/_components/alert/ErrorAlert'
+import Button from '@/_components/button/Button'
 import {
   API_SUCCESS_CODE,
   FALSE,

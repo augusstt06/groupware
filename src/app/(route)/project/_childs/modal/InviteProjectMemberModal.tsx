@@ -2,8 +2,8 @@ import { FaSearch } from 'react-icons/fa'
 
 import ProjectInviteList from './invite/ProjectInviteList'
 
-import ProjectInviteCard from '@/_component/card/project/ProjectInviteCard'
-import InputWithLabel from '@/_component/input/InputWithLabel'
+import ProjectInviteCard from '@/_components/card/project/ProjectInviteCard'
+import InputWithLabel from '@/_components/input/InputWithLabel'
 import useInput from '@/_module/hooks/reactHooks/useInput'
 import { type InviteProjectMemberModalProps } from '@/_types/ui/modal'
 import { type ColleagueType } from '@/_types/variable'
