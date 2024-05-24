@@ -126,11 +126,11 @@ export default function BoardModalInputGroup(props: BoardModalInputGruopProps) {
         </div>
       ))}
       <div className="h-40 p-2 ">
-        <div className="flex flex-row items-center">
+        <div className="sort-row-flex">
           <Label title="썸네일" />
 
           {imgTag === null ? (
-            <label htmlFor="imginput" className="flex flex-row items-center mb-2 ml-3">
+            <label htmlFor="imginput" className="mb-2 ml-3 sort-row-flex">
               <AiOutlinePicture className="w-4 h-4 cursor-pointer" />
               <input
                 type="file"

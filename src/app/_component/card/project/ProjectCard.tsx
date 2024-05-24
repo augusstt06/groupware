@@ -151,12 +151,12 @@ export default function ProjectCard(props: ProjectCardProps) {
       <div className="h-full p-2 cursor-pointer">
         {props.projectInfo.starred === true ? (
           <FaStar
-            className="text-yellow-400 transition ease-in-out duration-500 hover:scale-150"
+            className="text-yellow-400 smooth-transition hover:scale-150"
             onClick={handleClickStar}
           />
         ) : (
           <FaRegStar
-            className="text-yellow-400 transition ease-in-out duration-500 hover:scale-150"
+            className="text-yellow-400 smooth-transition hover:scale-150"
             onClick={handleClickStar}
           />
         )}

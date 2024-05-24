@@ -186,7 +186,7 @@ export default function HistoryCard(props: HistoryCardProps) {
     <div className="w-full max-w-sm mb-5">
       {mount ? (
         <>
-          <div className="flex flex-col items-center pb-4">
+          <div className="pb-4 sort-vertical-flex">
             <span className="w-full mb-1 text-xs text-gray-500 md:text-sm dark:text-white">
               {viewCurrentDate()}
             </span>
@@ -201,15 +201,15 @@ export default function HistoryCard(props: HistoryCardProps) {
               <Progressbar time={convertTime} />
             </div>
             <div className="flex flex-row justify-around w-4/5 mt-4 md:mt-6">
-              <div className="flex flex-row items-center justify-between w-full">
+              <div className="justify-between w-full sort-row-flex">
                 <Button
                   buttonContent="출근"
-                  className="w-2/5 transition duration-500 ease-in-out justify-center text-indigo-400 hover:text-white dark:text-white dark:bg-indigo-400 dark:border-white bg-white border-indigo-400 hover:bg-indigo-400 focus:outline-none rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:hover:bg-white dark:hover:text-indigo-500 mb-2 border-2 dark:hover:border-indigo-500/75"
+                  className="w-2/5 smooth-transition justify-center text-indigo-400 hover:text-white dark:text-white dark:bg-indigo-400 dark:border-white bg-white border-indigo-400 hover:bg-indigo-400 focus:outline-none rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:hover:bg-white dark:hover:text-indigo-500 mb-2 border-2 dark:hover:border-indigo-500/75"
                   onClick={handleClickAttendance}
                 />
                 <Button
                   buttonContent="퇴근"
-                  className="w-2/5 transition duration-500 ease-in-out justify-center text-indigo-400 hover:text-white dark:text-white dark:bg-indigo-400 dark:border-white bg-white border-indigo-400 hover:bg-indigo-400 focus:outline-none rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:hover:bg-white dark:hover:text-indigo-500 mb-2 border-2 dark:hover:border-indigo-500/75"
+                  className="w-2/5 smooth-transition justify-center text-indigo-400 hover:text-white dark:text-white dark:bg-indigo-400 dark:border-white bg-white border-indigo-400 hover:bg-indigo-400 focus:outline-none rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:hover:bg-white dark:hover:text-indigo-500 mb-2 border-2 dark:hover:border-indigo-500/75"
                   onClick={handleClickLeave}
                 />
               </div>
@@ -231,7 +231,7 @@ export default function HistoryCard(props: HistoryCardProps) {
               <span className="text-xs font-bold md:text-sm text-white-400">근무시간</span>
             </div>
             <div className="flex justify-between w-full flex-start">
-              <span className="text-xs text-sm text-gray-500 md:text-sm  dark:text-gray-400">
+              <span className="text-xs text-sm text-gray-500 md:text-sm dark:text-gray-400">
                 초과 근무
               </span>
               <span className="text-xs font-bold md:text-sm text-white-400">근무시간</span>

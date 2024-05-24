@@ -8,7 +8,7 @@ export default function ProjectDetailTaskCard(props: ProjectDetailTaskCardProps)
       <div className="bg-[rgb(255,255,255)] rounded-lg mt-5 truncate">
         <div className="flex flex-col">
           <div className="flex flex-row items-center justify-around w-full ">
-            <div className="flex items-center justify-center hidden w-1/5 p-1 lg:inline-block">
+            <div className="flex items-center justify-center w-1/5 p-1 lg:inline-block">
               <div
                 className={`${props.cardColor} p-1 rounded-full items-center flex justify-center w-4 lg:w-5`}
               >
@@ -21,9 +21,9 @@ export default function ProjectDetailTaskCard(props: ProjectDetailTaskCardProps)
           </div>
 
           <div className="flex flex-row items-center justify-around w-full truncate ">
-            <div className="flex items-center justify-center hidden w-7 lg:block">
+            <div className="flex items-center justify-center w-7 lg:block">
               <div className="items-center p-1 w-7">
-                <CgCalendarToday className="w-4 h-4  lg:w-5 lg:h-5" />
+                <CgCalendarToday className="w-4 h-4 lg:w-5 lg:h-5" />
               </div>
             </div>
             <div className="hidden w-4/5 lg:block">
@@ -31,7 +31,7 @@ export default function ProjectDetailTaskCard(props: ProjectDetailTaskCardProps)
             </div>
           </div>
           <div className="w-full p-1">
-            <div className="w-3 h-3 bg-gray-300 rounded-full  lg:w-5 lg:h-5"></div>
+            <div className="w-3 h-3 bg-gray-300 rounded-full lg:w-5 lg:h-5"></div>
           </div>
         </div>
         <div className={`${props.cardColor} h-2`}></div>

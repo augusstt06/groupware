@@ -2,8 +2,8 @@ import { type BoardWriteModalCheckBoxProps } from '@/types/ui/extra'
 
 export default function BoardWriteModalCheckBox(props: BoardWriteModalCheckBoxProps) {
   return (
-    <div className="flex items-center">
-      <div className="flex items-center ps-4 ">
+    <div className="sort-row-flex">
+      <div className="sort-row-flex ps-4 ">
         <input
           id="bordered-checkbox-1"
           type="checkbox"
