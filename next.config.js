@@ -9,7 +9,7 @@ register({
   transpileOnly: true,
 })
 
-const rewritePaths = require(resolve('./path')).default
+const rewritePaths = require(resolve('./rewrites')).default
 const nextConfig = {
   images: {
     domains: [process.env.NEXT_PUBLIC_IMG_DOMAIN],
