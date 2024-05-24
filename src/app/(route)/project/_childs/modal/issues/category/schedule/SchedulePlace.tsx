@@ -2,12 +2,12 @@ import { useEffect, useState } from 'react'
 
 import { FaSearch } from 'react-icons/fa'
 
-import InputWithLabel from '@/_component/input/InputWithLabel'
-import { KAKAO_APP_KEY, KAKAO_AUTH_KEY } from '@/constant/constant'
-import { API_URL_KAKAO_MAP } from '@/constant/route/api-route-constant'
-import useInput from '@/module/hooks/reactHooks/useInput'
-import { moduleKaKaoGetFetch } from '@/module/utils/moduleFetch'
-import { type KakaoMapProps, type SchedulePlaceProps, type SearchType } from '@/types/ui/modal'
+import InputWithLabel from '@/_components/input/InputWithLabel'
+import { KAKAO_APP_KEY, KAKAO_AUTH_KEY } from '@/_constant/constant'
+import { API_URL_KAKAO_MAP } from '@/_constant/route/api-route-constant'
+import useInput from '@/_module/hooks/reactHooks/useInput'
+import { moduleKaKaoGetFetch } from '@/_module/utils/moduleFetch'
+import { type KakaoMapProps, type SchedulePlaceProps, type SearchType } from '@/_types/ui/modal'
 
 export default function SchedulePlace(props: SchedulePlaceProps) {
   const [searchInput, setSearchInput] = useState<SearchType[]>([])
@@ -33,7 +33,7 @@ export default function SchedulePlace(props: SchedulePlaceProps) {
   }
   const tailLabel = (
     <div
-      className="flex items-center justify-center w-1/6 cursor-pointer trasition duration-500 ease-in-out hover:scale-110 "
+      className="flex items-center justify-center w-1/6 cursor-pointer smooth-transition hover:scale-110 "
       onClick={() => {
         void handleClickSearch()
       }}
@@ -46,8 +46,8 @@ export default function SchedulePlace(props: SchedulePlaceProps) {
     return place.value !== '' && searchInput.length !== 0
   }
   return (
-    <div className="flex flex-col items-center justify-center">
-      <div className="flex flex-row items-center justify-center w-1/2 mt-4 mb-4 truncate border-2 border-gray-300 rounded-full">
+    <div className="justify-center sort-vertical-flex">
+      <div className="sort-row-flex justify-center w-1/2 mt-4 mb-4 truncate border-2 border-gray-300 rounded-full dark:bg-[#505050]">
         <InputWithLabel
           onKeyDown={handleKeyPress}
           title=""
@@ -57,7 +57,7 @@ export default function SchedulePlace(props: SchedulePlaceProps) {
           isTailLabel={true}
           tailLabelContent={tailLabel}
           placeholder="장소를 입력해주세요."
-          className="w-5/6 p-1 ml-3 text-xs focus:outline-none md:text-sm lg-text-base"
+          className="w-5/6 p-1 ml-3 text-xs focus:outline-none md:text-sm lg-text-base dark:bg-[#505050]"
         />
       </div>
 

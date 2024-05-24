@@ -3,18 +3,18 @@ import { useEffect, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { useParams } from 'next/navigation'
 
-import ProjectDetailTodoCard from '@/_component/card/project/detail/ProjectDetailTodoCard'
+import ProjectDetailTodoCard from '@/_components/card/project/detail/ProjectDetailTodoCard'
 import {
   KEY_ACCESS_TOKEN,
   KEY_X_ORGANIZATION_CODE,
   PROJECT_ISSUE_TODO_VALUE,
-} from '@/constant/constant'
-import { API_URL_PROJECT_ISSUE_LIST } from '@/constant/route/api-route-constant'
-import { useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleGetCookie } from '@/module/utils/moduleCookie'
-import { moduleGetFetch } from '@/module/utils/moduleFetch'
-import { type SuccessResponseType } from '@/types/module'
-import { type IssueResponseType, type ScheduleType } from '@/types/variable'
+} from '@/_constant/constant'
+import { API_URL_PROJECT_ISSUE_LIST } from '@/_constant/route/api-route-constant'
+import { useAppSelector } from '@/_module/hooks/reduxHooks'
+import { moduleGetCookie } from '@/_module/utils/moduleCookie'
+import { moduleGetFetch } from '@/_module/utils/moduleFetch'
+import { type SuccessResponseType } from '@/_types/module'
+import { type IssueResponseType, type ScheduleType } from '@/_types/variable'
 
 export default function ProjectDetailTodo() {
   const query = useParams()
@@ -61,7 +61,7 @@ export default function ProjectDetailTodo() {
         <span className="font-bold">전체 할일 </span>
         <span className="font-bold text-indigo-400">{todoIssues.length}</span>
       </div>
-      <div className="p-3 grid xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4">
+      <div className="p-3 grid grid-cols-1 gap-4 xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2">
         {todoIssues.map((data) => (
           <ProjectDetailTodoCard todo={data} key={data.id} />
         ))}

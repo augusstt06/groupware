@@ -21,22 +21,22 @@ import {
   PROJECT_ISSUE_TASK_PROGRESS_REQUESTED_TITLE,
   PROJECT_ISSUE_TASK_PROGRESS_REQUESTED_VALUE,
   PROJECT_ISSUE_TASK_VALUE,
-} from '@/constant/constant'
+} from '@/_constant/constant'
 import {
   API_URL_PROJECT_ISSUE_LIST,
   API_URL_PROJECT_ISSUE_REARRANGE,
-} from '@/constant/route/api-route-constant'
-import { useAppDispatch, useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleGetCookie } from '@/module/utils/moduleCookie'
-import { moduleGetFetch, modulePatchFetch } from '@/module/utils/moduleFetch'
-import { changeProjectDetailCategoryReducer } from '@/store/reducers/project/projectDetailCategoryReducer'
-import { type SuccessResponseType } from '@/types/module'
+} from '@/_constant/route/api-route-constant'
+import { useAppDispatch, useAppSelector } from '@/_module/hooks/reduxHooks'
+import { moduleGetCookie } from '@/_module/utils/moduleCookie'
+import { moduleGetFetch, modulePatchFetch } from '@/_module/utils/moduleFetch'
+import { changeProjectDetailCategoryReducer } from '@/_store/reducers/project/projectDetailCategoryReducer'
+import { type SuccessResponseType } from '@/_types/module'
 import {
   type ColumnListType,
   type ColumnType,
   type IssueResponseType,
   type KanbanBoardColumnType,
-} from '@/types/variable'
+} from '@/_types/variable'
 
 export default function ProjectDetailTask() {
   const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)

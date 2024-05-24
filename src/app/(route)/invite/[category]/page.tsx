@@ -10,8 +10,8 @@ import { RiLockPasswordFill } from 'react-icons/ri'
 
 import InviteLoginModal from '../_childs/modal/InviteLoginModal'
 
-import Button from '@/_component/button/Button'
-import ModalHub from '@/_component/modal/Modal'
+import Button from '@/_components/button/Button'
+import ModalHub from '@/_components/modal/Modal'
 import {
   INVITE_PROJECT,
   INVITE_TEAM,
@@ -21,29 +21,29 @@ import {
   REGISTER_EMAIL,
   REGISTER_PWD,
   TRUE,
-} from '@/constant/constant'
-import { ERR_COOKIE_NOT_FOUND } from '@/constant/errorMsg'
+} from '@/_constant/constant'
+import { ERR_COOKIE_NOT_FOUND } from '@/_constant/errorMsg'
 import {
   API_URL_GET_USERS,
   API_URL_LOGIN,
   API_URL_PROJECT_JOIN,
   API_URL_TEAMS_JOIN,
-} from '@/constant/route/api-route-constant'
-import { ROUTE_PROJECT, ROUTE_TEAM } from '@/constant/route/route-constant'
-import useInput from '@/module/hooks/reactHooks/useInput'
-import { useAppDispatch, useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleDecodeToken, moduleGetCookie, moduleSetCookies } from '@/module/utils/moduleCookie'
+} from '@/_constant/route/api-route-constant'
+import { ROUTE_PROJECT, ROUTE_TEAM } from '@/_constant/route/route-constant'
+import useInput from '@/_module/hooks/reactHooks/useInput'
+import { useAppDispatch, useAppSelector } from '@/_module/hooks/reduxHooks'
+import { moduleDecodeToken, moduleGetCookie, moduleSetCookies } from '@/_module/utils/moduleCookie'
 import {
   moduleGetFetch,
   modulePostFetch,
   modulePostFetchWithQuery,
-} from '@/module/utils/moduleFetch'
+} from '@/_module/utils/moduleFetch'
 import {
   updateAttendanceStatusReducer,
   updateExtraUserInfoReducer,
   updateUserInfoReducer,
-} from '@/store/reducers/main/userInfoReducer'
-import { updateLoginCompleteReducer } from '@/store/reducers/maintain/maintainReducer'
+} from '@/_store/reducers/main/userInfoReducer'
+import { updateLoginCompleteReducer } from '@/_store/reducers/maintain/maintainReducer'
 import {
   type ApiResponseType,
   type CustomDecodeTokenType,
@@ -51,9 +51,9 @@ import {
   type LoginResponseType,
   type ModuleGetFetchProps,
   type SuccessResponseType,
-} from '@/types/module'
-import { type AccessInviteProps, type InviteLoginProps } from '@/types/pageType'
-import { type DialogTextType } from '@/types/variable'
+} from '@/_types/module'
+import { type AccessInviteProps, type InviteLoginProps } from '@/_types/pageType'
+import { type DialogTextType } from '@/_types/variable'
 
 export default function Invite() {
   const router = useRouter()
@@ -211,7 +211,7 @@ export default function Invite() {
           buttonContent={
             <IoMdEyeOff className="w-4 h-4 text-black hover:text-white dark:text-white" />
           }
-          className="absolute top-0 end-0 p-2.5 text-sm font-medium h-full text-white bg-gray-50 rounded-e-lg border dark:border-gray-600 hover:bg-indigo-200  dark:bg-gray-700 dark:hover:bg-indigo-400 ease-in-out transition duration-400"
+          className="absolute top-0 end-0 p-2.5 text-sm font-medium h-full text-white bg-gray-50 rounded-e-lg border dark:border-gray-600 hover:bg-indigo-200  dark:bg-gray-700 dark:hover:bg-indigo-400 smooth-transition"
           onClick={handleClick}
         />
       )
@@ -219,7 +219,7 @@ export default function Invite() {
     return (
       <Button
         buttonContent={<IoMdEye className="w-4 h-4 text-black dark:text-white" />}
-        className="absolute top-0 end-0 p-2.5 text-sm font-medium h-full text-white bg-gray-50 rounded-e-lg border dark:border-gray-600 hover:bg-indigo-200  dark:bg-gray-700 dark:hover:bg-indigo-400 ease-in-out transition duration-400"
+        className="absolute top-0 end-0 p-2.5 text-sm font-medium h-full text-white bg-gray-50 rounded-e-lg border dark:border-gray-600 hover:bg-indigo-200  dark:bg-gray-700 dark:hover:bg-indigo-400 smooth-transition"
         onClick={handleClick}
       />
     )
@@ -293,19 +293,19 @@ function AccessInvite(props: AccessInviteProps) {
   }
 
   return (
-    <div className="h-screen px-4 grid place-content-center">
+    <div className="grid h-screen px-4 place-content-center">
       <h1 className="font-bold tracking-widest text-gray-600 uppercase dark:text-gray-400">
         {inviteCategory()}에 초대받았습니다.
       </h1>
       <div className="justify-around sort-row-flex ">
         <Button
           buttonContent="가입"
-          className="mt-5 font-bold bg-indigo-400 hover:bg-indigo-700 text-white hover:text-white focus:outline-none rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 transition ease-in-out duration-500"
+          className="mt-5 font-bold bg-indigo-400 hover:bg-indigo-700 text-white hover:text-white focus:outline-none rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 smooth-transition"
           onClick={join}
         />
         <Button
           buttonContent="거절"
-          className="mt-5 font-bold bg-red-400 hover:bg-red-500 text-white hover:text-white focus:outline-none rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 transition ease-in-out duration-500"
+          className="mt-5 font-bold bg-red-400 hover:bg-red-500 text-white hover:text-white focus:outline-none rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 smooth-transition"
           onClick={() => {}}
         />
       </div>
@@ -315,13 +315,13 @@ function AccessInvite(props: AccessInviteProps) {
 function InviteLogin(props: InviteLoginProps) {
   const { handleLoginModal } = props
   return (
-    <div className="h-screen px-4 grid place-content-center">
+    <div className="grid h-screen px-4 place-content-center">
       <h1 className="font-bold tracking-widest text-gray-600 uppercase dark:text-gray-400">
         초대에 응하기 전에 로그인이 필요합니다.
       </h1>
       <Button
         buttonContent="로그인"
-        className="mt-5 font-bold bg-gray-500 hover:bg-gray-700 text-white hover:text-white focus:outline-none rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 transition ease-in-out duration-500"
+        className="mt-5 font-bold bg-gray-500 hover:bg-gray-700 text-white hover:text-white focus:outline-none rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 smooth-transition"
         onClick={handleLoginModal}
       />
     </div>

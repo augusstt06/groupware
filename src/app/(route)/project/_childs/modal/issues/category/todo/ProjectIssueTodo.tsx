@@ -11,23 +11,23 @@ import {
   IssueSelect,
 } from '../components/ProjectIssueComponent'
 
-import { DialogCalendar } from '@/_component/modal/dialog/Dialog'
+import { DialogCalendar } from '@/_components/modal/dialog/Dialog'
 import {
   PROJECT_DATE_FORMAT,
   PROJECT_DETAIL_CATEGORY_TODO,
   PROJECT_ISSUE_TODO_VALUE,
-} from '@/constant/constant'
-import useInput from '@/module/hooks/reactHooks/useInput'
-import { useAppDispatch } from '@/module/hooks/reduxHooks'
+} from '@/_constant/constant'
+import useInput from '@/_module/hooks/reactHooks/useInput'
+import { useAppDispatch } from '@/_module/hooks/reduxHooks'
 import {
   changeIssueCategoryReducer,
   changeIssueDescriptionReducer,
   changeIssueEndAtReducer,
   changeIssueTitleReducer,
   resetIssueReducer,
-} from '@/store/reducers/project/projectIssueReducer'
-import { type CalendarValue, type ValuePiece } from '@/types/pageType'
-import { type TaskListType } from '@/types/variable'
+} from '@/_store/reducers/project/projectIssueReducer'
+import { type CalendarValue, type ValuePiece } from '@/_types/pageType'
+import { type TaskListType } from '@/_types/variable'
 
 export default function ProjectIssueTodo() {
   const dialogRef = useRef<HTMLDialogElement | null>(null)

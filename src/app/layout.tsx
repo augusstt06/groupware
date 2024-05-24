@@ -6,12 +6,17 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { Fredoka } from 'next/font/google'
 import { usePathname } from 'next/navigation'
 
-import Nav from './_component/nav/Nav'
-import Sidebar from './_component/sidebar/Sidebar'
-import { ROUTE_BOARD, ROUTE_MAIN, ROUTE_PROJECT, ROUTE_TEAM } from './constant/route/route-constant'
-import { ReduxProvider } from './providers/reduxProvider'
-import CustomThemeProvider from './providers/themeProvider'
-import { type ReactProps } from './types/pageType'
+import Nav from './_components/nav/Nav'
+import Sidebar from './_components/sidebar/Sidebar'
+import {
+  ROUTE_BOARD,
+  ROUTE_MAIN,
+  ROUTE_PROJECT,
+  ROUTE_TEAM,
+} from './_constant/route/route-constant'
+import { ReduxProvider } from './_providers/reduxProvider'
+import CustomThemeProvider from './_providers/themeProvider'
+import { type ReactProps } from './_types/pageType'
 
 const fredoka = Fredoka({
   subsets: ['latin'],
@@ -43,7 +48,7 @@ export default function RootLayout({ children }: ReactProps) {
 
   return (
     <html lang="en" suppressHydrationWarning={true}>
-      <body className="font-mono bg-gradient-to-r from-[#c9d6ff] to-[#e2e2e2] dark:from-[#2b2f3d]">
+      <body className="font-mono bg-gradient-to-r from-[#c9d6ff] to-[#e2e2e2] dark:from-[#24262f] dark:to-[#24262f]">
         <QueryClientProvider client={queryClient}>
           <ReactQueryDevtools initialIsOpen={true} />
           <ReduxProvider>

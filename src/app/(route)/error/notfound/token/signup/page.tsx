@@ -2,8 +2,8 @@
 
 import { useRouter } from 'next/navigation'
 
-import Button from '@/_component/button/Button'
-import { ROUTE_LOGIN } from '@/constant/route/route-constant'
+import Button from '@/_components/button/Button'
+import { ROUTE_LOGIN } from '@/_constant/route/route-constant'
 
 export default function NotfoundAccessTokenInSignup() {
   const router = useRouter()

@@ -13,33 +13,33 @@ import {
   KEY_UUID,
   KEY_X_ORGANIZATION_CODE,
   MAIN_CARD_TODO,
-} from '@/constant/constant'
-import { ERR_COOKIE_NOT_FOUND, ERR_ORG_NOT_FOUND } from '@/constant/errorMsg'
-import { API_URL_GET_USERS, API_URL_POSTINGS_MY_ALL } from '@/constant/route/api-route-constant'
-import { ROUTE_ERR_NOT_FOUND_ORG_TOKEN } from '@/constant/route/route-constant'
-import { useAppDispatch, useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleCheckUserState } from '@/module/utils/check/moduleCheckUserState'
+} from '@/_constant/constant'
+import { ERR_COOKIE_NOT_FOUND, ERR_ORG_NOT_FOUND } from '@/_constant/errorMsg'
+import { API_URL_GET_USERS, API_URL_POSTINGS_MY_ALL } from '@/_constant/route/api-route-constant'
+import { ROUTE_ERR_NOT_FOUND_ORG_TOKEN } from '@/_constant/route/route-constant'
+import { useAppDispatch, useAppSelector } from '@/_module/hooks/reduxHooks'
+import { moduleCheckUserState } from '@/_module/utils/check/moduleCheckUserState'
 import {
   checkTokenExpired,
   moduleDecodeToken,
   moduleDeleteCookies,
   moduleGetCookie,
   moduleRefreshToken,
-} from '@/module/utils/moduleCookie'
-import { moduleGetFetch } from '@/module/utils/moduleFetch'
+} from '@/_module/utils/moduleCookie'
+import { moduleGetFetch } from '@/_module/utils/moduleFetch'
 import {
   updateAttendanceStatusReducer,
   updateExtraUserInfoReducer,
   updateUserInfoReducer,
-} from '@/store/reducers/main/userInfoReducer'
-import { updateLoginCompleteReducer } from '@/store/reducers/maintain/maintainReducer'
+} from '@/_store/reducers/main/userInfoReducer'
+import { updateLoginCompleteReducer } from '@/_store/reducers/maintain/maintainReducer'
 import {
   type ApiResponseType,
   type CustomDecodeTokenType,
   type ModuleGetFetchProps,
   type SuccessResponseType,
-} from '@/types/module'
-import { type BoardListResponseType, type BoardResponseType } from '@/types/variable'
+} from '@/_types/module'
+import { type BoardListResponseType, type BoardResponseType } from '@/_types/variable'
 
 export default function Main() {
   const dispatch = useAppDispatch()
@@ -158,7 +158,7 @@ export default function Main() {
   }, [accessToken])
 
   return (
-    <main className="flex flex-col items-center w-full h-4/5">
+    <main className="w-full sort-vertical-flex h-4/5">
       <MainHub title={MAIN_CARD_TODO} currentPostings={currentPostings} />
     </main>
   )

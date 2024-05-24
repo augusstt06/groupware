@@ -8,7 +8,7 @@ import { IoLocationOutline, IoPersonOutline } from 'react-icons/io5'
 import { IssueTime } from '../../../modal/issues/category/components/ProjectIssueComponent'
 import { KaKaoMap } from '../../../modal/issues/category/schedule/SchedulePlace'
 
-import Dialog, { DialogCalendar } from '@/_component/modal/dialog/Dialog'
+import Dialog, { DialogCalendar } from '@/_components/modal/dialog/Dialog'
 import {
   KAKAO_AUTH_KEY,
   KEY_ACCESS_TOKEN,
@@ -21,20 +21,20 @@ import {
   PROJECT_ISSUE_SCHEDULE_UNIT_MINUTE_EN,
   PROJECT_ISSUE_SCHEDULE_UNIT_MINUTE_KO,
   PROJECT_ISSUE_SCHEDULE_VALUE,
-} from '@/constant/constant'
-import { API_URL_KAKAO_MAP, API_URL_PROJECT_ISSUE } from '@/constant/route/api-route-constant'
-import { useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleGetCookie } from '@/module/utils/moduleCookie'
-import { moduleKaKaoGetFetch, modulePatchFetch } from '@/module/utils/moduleFetch'
-import { type DialogBtnValueType, type ModulePostFetchProps } from '@/types/module'
+} from '@/_constant/constant'
+import { API_URL_KAKAO_MAP, API_URL_PROJECT_ISSUE } from '@/_constant/route/api-route-constant'
+import { useAppSelector } from '@/_module/hooks/reduxHooks'
+import { moduleGetCookie } from '@/_module/utils/moduleCookie'
+import { moduleKaKaoGetFetch, modulePatchFetch } from '@/_module/utils/moduleFetch'
+import { type DialogBtnValueType, type ModulePostFetchProps } from '@/_types/module'
 import {
   type CalendarValue,
   type IssueCalendarWithTimeProps,
   type ProjectIssueDetailProps,
   type ValuePiece,
-} from '@/types/pageType'
-import { type SearchType } from '@/types/ui/modal'
-import { type DialogTextType, type ScheduleListType } from '@/types/variable'
+} from '@/_types/pageType'
+import { type SearchType } from '@/_types/ui/modal'
+import { type DialogTextType, type ScheduleListType } from '@/_types/variable'
 
 export default function ProjectScheduleDeatil(props: ProjectIssueDetailProps) {
   const { issue } = props

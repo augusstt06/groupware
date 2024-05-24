@@ -5,13 +5,13 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { AiOutlineMail } from 'react-icons/ai'
 
-import { Label, LabelIcon } from '@/_component/label/Label'
-import { KEY_ACCESS_TOKEN, REGISTER_EMAIL } from '@/constant/constant'
-import { ERR_COOKIE_NOT_FOUND } from '@/constant/errorMsg'
-import { ROUTE_LOGIN, ROUTE_MAIN } from '@/constant/route/route-constant'
-import useInput from '@/module/hooks/reactHooks/useInput'
-import { moduleGetCookie } from '@/module/utils/moduleCookie'
-import { type UseInputProps } from '@/types/module'
+import { Label, LabelIcon } from '@/_components/label/Label'
+import { KEY_ACCESS_TOKEN, REGISTER_EMAIL } from '@/_constant/constant'
+import { ERR_COOKIE_NOT_FOUND } from '@/_constant/errorMsg'
+import { ROUTE_LOGIN, ROUTE_MAIN } from '@/_constant/route/route-constant'
+import useInput from '@/_module/hooks/reactHooks/useInput'
+import { moduleGetCookie } from '@/_module/utils/moduleCookie'
+import { type UseInputProps } from '@/_types/module'
 
 export default function FindPwd() {
   const router = useRouter()
@@ -24,8 +24,8 @@ export default function FindPwd() {
     }
   }, [])
   return (
-    <div className="flex flex-col items-center justify-center h-screen px-4 place-content-center">
-      <div className="flex flex-col items-center justify-center mb-5">
+    <div className="justify-center h-screen px-4 sort-vertical-flex place-content-center">
+      <div className="justify-center mb-5 sort-vertical-flex">
         <div className="mb-6 text-xl font-bold">비밀번호 찾기</div>
         <div className="text-sm">회원정보의 이메일로 비밀번호 재설정 메일이 발송됩니다.</div>
       </div>

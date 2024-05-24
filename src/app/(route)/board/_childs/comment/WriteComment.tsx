@@ -5,20 +5,20 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { IoCameraOutline } from 'react-icons/io5'
 
-import { API_SUCCESS_CODE, KEY_ACCESS_TOKEN, KEY_X_ORGANIZATION_CODE } from '@/constant/constant'
-import { API_URL_COMMENT_POSTING, API_URL_UPLOAD_IMG } from '@/constant/route/api-route-constant'
-import useInput from '@/module/hooks/reactHooks/useInput'
-import { useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleGetCookie } from '@/module/utils/moduleCookie'
-import { modulePostFetch, modulePostFileFetch } from '@/module/utils/moduleFetch'
+import { API_SUCCESS_CODE, KEY_ACCESS_TOKEN, KEY_X_ORGANIZATION_CODE } from '@/_constant/constant'
+import { API_URL_COMMENT_POSTING, API_URL_UPLOAD_IMG } from '@/_constant/route/api-route-constant'
+import useInput from '@/_module/hooks/reactHooks/useInput'
+import { useAppSelector } from '@/_module/hooks/reduxHooks'
+import { moduleGetCookie } from '@/_module/utils/moduleCookie'
+import { modulePostFetch, modulePostFileFetch } from '@/_module/utils/moduleFetch'
 import {
   type ApiResponseType,
   type FailResponseType,
   type ModulePostFetchProps,
   type ModulePostFileFetchProps,
   type SuccessResponseType,
-} from '@/types/module'
-import { type WriteCommentProps } from '@/types/pageType'
+} from '@/_types/module'
+import { type WriteCommentProps } from '@/_types/pageType'
 
 export default function WriteComment(props: WriteCommentProps) {
   const router = useRouter()
@@ -118,7 +118,7 @@ export default function WriteComment(props: WriteCommentProps) {
           maxLength={1000}
           onChange={handleInput}
         />
-        <div className="flex flex-row items-center justify-between w-full pl-3">
+        <div className="justify-between w-full pl-3 sort-row-flex">
           <div className="flex flex-col justify-around mr-2">
             {/* <IoCameraOutline className="w-5 h-5"> */}
             <div className="mb-2">

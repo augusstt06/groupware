@@ -2,15 +2,15 @@ import { Draggable, Droppable } from 'react-beautiful-dnd'
 
 import { useRouter } from 'next/navigation'
 
-import ProjectDetailTaskCard from '@/_component/card/project/detail/ProjectDetailTaskCard'
+import ProjectDetailTaskCard from '@/_components/card/project/detail/ProjectDetailTaskCard'
 import {
   PROJECT_ISSUE_TASK_PROGRESS_COMPLETED_TITLE,
   PROJECT_ISSUE_TASK_PROGRESS_INIT_TITLE,
   PROJECT_ISSUE_TASK_PROGRESS_PROCESSING_TITLE,
   PROJECT_ISSUE_TASK_PROGRESS_REQUESTED_TITLE,
-} from '@/constant/constant'
-import { ROUTE_PROJECT } from '@/constant/route/route-constant'
-import { type ProjectDetailTaskColumnProps } from '@/types/pageType'
+} from '@/_constant/constant'
+import { ROUTE_PROJECT } from '@/_constant/route/route-constant'
+import { type ProjectDetailTaskColumnProps } from '@/_types/pageType'
 
 export default function ProjectDetailTaskColumn(props: ProjectDetailTaskColumnProps) {
   const router = useRouter()

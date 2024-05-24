@@ -6,22 +6,25 @@ import { useQuery } from '@tanstack/react-query'
 import { useRouter, useSearchParams } from 'next/navigation'
 
 import BoardItemHub from '@/(route)/main/_childs/hub/board/item/BoardItemHub'
-import BoardMainInputGroup from '@/_component/input/group/board/BoardMainInputGroup'
-import Pagination from '@/_component/pagination/Pagination'
-import { KEY_ACCESS_TOKEN, KEY_LOGIN_COMPLETE, KEY_X_ORGANIZATION_CODE } from '@/constant/constant'
-import { API_URL_POSTINGS_LIST, API_URL_POSTINGS_MY_ALL } from '@/constant/route/api-route-constant'
-import useInput from '@/module/hooks/reactHooks/useInput'
-import { useAppDispatch, useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleCheckUserState } from '@/module/utils/check/moduleCheckUserState'
-import { moduleGetCookie } from '@/module/utils/moduleCookie'
-import { moduleGetFetch } from '@/module/utils/moduleFetch'
-import { openBoardWriteModalReducer } from '@/store/reducers/board/openBoardWriteModalReducer'
-import { type ModuleGetFetchProps, type SuccessResponseType } from '@/types/module'
+import BoardMainInputGroup from '@/_components/input/group/board/BoardMainInputGroup'
+import Pagination from '@/_components/pagination/Pagination'
+import { KEY_ACCESS_TOKEN, KEY_LOGIN_COMPLETE, KEY_X_ORGANIZATION_CODE } from '@/_constant/constant'
+import {
+  API_URL_POSTINGS_LIST,
+  API_URL_POSTINGS_MY_ALL,
+} from '@/_constant/route/api-route-constant'
+import useInput from '@/_module/hooks/reactHooks/useInput'
+import { useAppDispatch, useAppSelector } from '@/_module/hooks/reduxHooks'
+import { moduleCheckUserState } from '@/_module/utils/check/moduleCheckUserState'
+import { moduleGetCookie } from '@/_module/utils/moduleCookie'
+import { moduleGetFetch } from '@/_module/utils/moduleFetch'
+import { openBoardWriteModalReducer } from '@/_store/reducers/board/openBoardWriteModalReducer'
+import { type ModuleGetFetchProps, type SuccessResponseType } from '@/_types/module'
 import {
   type BoardListResponseType,
   type BoardResponseType,
   type MyBoardType,
-} from '@/types/variable'
+} from '@/_types/variable'
 
 export default function BoardCategory() {
   const dispatch = useAppDispatch()

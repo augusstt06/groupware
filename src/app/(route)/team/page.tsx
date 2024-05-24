@@ -6,7 +6,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import TeamMainHub from './_childs/TeamMainHub'
 import CreateTeamModal from './_childs/modal/CreateTeamModal'
 
-import ModalHub from '@/_component/modal/Modal'
+import ModalHub from '@/_components/modal/Modal'
 import {
   KEY_ACCESS_TOKEN,
   KEY_X_ORGANIZATION_CODE,
@@ -24,15 +24,15 @@ import {
   PROJECT_CARD_RES_COLOR_PURPLE,
   PROJECT_CARD_RES_COLOR_RED,
   PROJECT_CARD_RES_COLOR_YELLOW,
-} from '@/constant/constant'
-import { API_URL_TEAMS, API_URL_TEAMS_LIST } from '@/constant/route/api-route-constant'
-import useInput from '@/module/hooks/reactHooks/useInput'
-import { useAppDispatch, useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleGetCookie } from '@/module/utils/moduleCookie'
-import { moduleGetFetch, modulePostFetch } from '@/module/utils/moduleFetch'
-import { createTeamModalReducer } from '@/store/reducers/team/teamModalReducer'
-import { type SuccessResponseType } from '@/types/module'
-import { type DialogTextType, type GetTeamListType, type TeamResponseType } from '@/types/variable'
+} from '@/_constant/constant'
+import { API_URL_TEAMS, API_URL_TEAMS_LIST } from '@/_constant/route/api-route-constant'
+import useInput from '@/_module/hooks/reactHooks/useInput'
+import { useAppDispatch, useAppSelector } from '@/_module/hooks/reduxHooks'
+import { moduleGetCookie } from '@/_module/utils/moduleCookie'
+import { moduleGetFetch, modulePostFetch } from '@/_module/utils/moduleFetch'
+import { createTeamModalReducer } from '@/_store/reducers/team/teamModalReducer'
+import { type SuccessResponseType } from '@/_types/module'
+import { type DialogTextType, type GetTeamListType, type TeamResponseType } from '@/_types/variable'
 
 export default function Team() {
   // outer variables

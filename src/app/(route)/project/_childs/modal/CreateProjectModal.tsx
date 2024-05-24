@@ -1,10 +1,10 @@
 import { FaCheck } from 'react-icons/fa'
 
-import Input from '@/_component/input/Input'
+import Input from '@/_components/input/Input'
 import {
   type CreateProjectModalColorSelectProps,
   type CreateProjectModalProps,
-} from '@/types/ui/modal'
+} from '@/_types/ui/modal'
 
 export default function CreateProjectModal(props: CreateProjectModalProps) {
   return (
@@ -18,7 +18,7 @@ export default function CreateProjectModal(props: CreateProjectModalProps) {
           value={props.projectName.value}
           onChange={props.projectName.onChange}
           placeholder="프로젝트명을 입력해주세요."
-          className="rounded mt-2 bg-gray-50 border text-gray-900 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5 dark:bg-gray-700 dark:border-white-600 dark:placeholder-gray-400 dark:text-white focus:outline-none"
+          className="rounded mt-2 bg-gray-50 border text-gray-900 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5 dark:bg-[#505050] dark:border-white-600 dark:placeholder-gray-400 dark:text-white focus:outline-none"
         />
       </div>
       <CreateProjectModalColorSelect
@@ -34,15 +34,15 @@ export function CreateProjectModalColorSelect(props: CreateProjectModalColorSele
   const { colorList, handleSelectColor, selectColor } = props
   const divClassName = (name: string, value: string) => {
     if (props.selectColor === name) {
-      return `${value} lg:w-20 md:w-12 w-8 h-8 rounded-lg mt-2 transition ease-in-out duration-600 scale-110 flex items-center justify-center`
+      return `${value} lg:w-20 md:w-12 w-8 h-8 rounded-lg mt-2 smooth-transition scale-110 flex items-center justify-center`
     } else {
-      return `${value} lg:w-20 md:w-12 w-8 h-8 rounded-lg mt-2 transition ease-in-out duration-500 hover:scale-110 flex items-center justify-center`
+      return `${value} lg:w-20 md:w-12 w-8 h-8 rounded-lg mt-2 smooth-transition hover:scale-110 flex items-center justify-center`
     }
   }
   return (
     <div className="mb-2">
       <span className="text-sm">프로젝트 색상</span>
-      <div className="flex flex-row items-center justify-around w-full">
+      <div className="justify-around w-full sort-row-flex">
         {colorList.map((data) => (
           <div
             className={divClassName(data.name, data.value)}

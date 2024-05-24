@@ -7,7 +7,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import ProjectMainHub from './_childs/hub/ProjectMainHub'
 import CreateProjectModal from './_childs/modal/CreateProjectModal'
 
-import ModalHub from '@/_component/modal/Modal'
+import ModalHub from '@/_components/modal/Modal'
 import {
   KEY_ACCESS_TOKEN,
   KEY_X_ORGANIZATION_CODE,
@@ -28,24 +28,24 @@ import {
   PROJECT_MAIN_CATEGORY_ALL,
   PROJECT_MAIN_CATEGORY_INCLUDED,
   PROJECT_MAIN_CATEGORY_STARRED,
-} from '@/constant/constant'
+} from '@/_constant/constant'
 import {
   API_URL_PROJECTS,
   API_URL_PROJECTS_LIST,
   API_URL_PROJECTS_LIST_INCLUDED,
   API_URL_PROJECTS_LIST_STARRED,
-} from '@/constant/route/api-route-constant'
-import useInput from '@/module/hooks/reactHooks/useInput'
-import { useAppDispatch, useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleGetCookie } from '@/module/utils/moduleCookie'
-import { moduleGetFetch, modulePostFetch } from '@/module/utils/moduleFetch'
-import { createProjectModalReducer } from '@/store/reducers/project/projectModalReducer'
-import { type DialogBtnValueType, type SuccessResponseType } from '@/types/module'
+} from '@/_constant/route/api-route-constant'
+import useInput from '@/_module/hooks/reactHooks/useInput'
+import { useAppDispatch, useAppSelector } from '@/_module/hooks/reduxHooks'
+import { moduleGetCookie } from '@/_module/utils/moduleCookie'
+import { moduleGetFetch, modulePostFetch } from '@/_module/utils/moduleFetch'
+import { createProjectModalReducer } from '@/_store/reducers/project/projectModalReducer'
+import { type DialogBtnValueType, type SuccessResponseType } from '@/_types/module'
 import {
   type DialogTextType,
   type FetchPostProjectResponseType,
   type ProjectListResponseType,
-} from '@/types/variable'
+} from '@/_types/variable'
 
 export default function Project() {
   const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)

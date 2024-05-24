@@ -13,9 +13,9 @@ import {
 
 import SchedulePlace from './SchedulePlace'
 
-import Input from '@/_component/input/Input'
-import ModalHub from '@/_component/modal/Modal'
-import Dialog, { DialogCalendar } from '@/_component/modal/dialog/Dialog'
+import Input from '@/_components/input/Input'
+import ModalHub from '@/_components/modal/Modal'
+import Dialog, { DialogCalendar } from '@/_components/modal/dialog/Dialog'
 import {
   MODAL_BTN_SELECT,
   PROJECT_DATE_FORMAT,
@@ -26,9 +26,9 @@ import {
   PROJECT_ISSUE_SCHEDULE_UNIT_HOUR_EN,
   PROJECT_ISSUE_SCHEDULE_UNIT_MINUTE_EN,
   PROJECT_ISSUE_SCHEDULE_VALUE,
-} from '@/constant/constant'
-import useInput from '@/module/hooks/reactHooks/useInput'
-import { useAppDispatch } from '@/module/hooks/reduxHooks'
+} from '@/_constant/constant'
+import useInput from '@/_module/hooks/reactHooks/useInput'
+import { useAppDispatch } from '@/_module/hooks/reduxHooks'
 import {
   changeIssueCategoryReducer,
   changeIssueDescriptionReducer,
@@ -38,11 +38,11 @@ import {
   changeIssueStartAtReducer,
   changeIssueStartAtTimeReducer,
   changeIssueTitleReducer,
-} from '@/store/reducers/project/projectIssueReducer'
-import { type DialogBtnValueType } from '@/types/module'
-import { type CalendarValue, type ValuePiece } from '@/types/pageType'
-import { type SearchType } from '@/types/ui/modal'
-import { type DialogTextType, type ScheduleListType } from '@/types/variable'
+} from '@/_store/reducers/project/projectIssueReducer'
+import { type DialogBtnValueType } from '@/_types/module'
+import { type CalendarValue, type ValuePiece } from '@/_types/pageType'
+import { type SearchType } from '@/_types/ui/modal'
+import { type DialogTextType, type ScheduleListType } from '@/_types/variable'
 
 export default function ProjectIssueSchedule() {
   const [isPlaceModal, setIsPlaceModal] = useState(false)
@@ -313,7 +313,7 @@ export default function ProjectIssueSchedule() {
             <DialogCalendar dialog={data.dialog} calendarWithTimeData={data} isWithtime={true} />
           </div>
         ))}
-        <div className="p-2 sort-row-flex">
+        <div className="p-2 sort-row-flex ">
           <Input
             readOnly
             placeholder="장소를 검색해주세요."
@@ -322,7 +322,7 @@ export default function ProjectIssueSchedule() {
             labelContent="장소"
             value={schedulePlace}
             labelClassName="w-1/6"
-            className=" xl:w-3/5 rounded mt-2 text-gray-900 block text-sm p-2.5 dark:placeholder-gray-400 dark:text-white focus:outline-none bg-transparent border-2 border-indigo-200 dark:border-indigo-300"
+            className=" xl:w-3/5 rounded-lg mt-2 text-gray-900 block text-sm p-2.5 dark:placeholder-gray-400 dark:text-white focus:outline-none bg-transparent dark:bg-[#505050] border-2 border-indigo-200 dark:border-indigo-300"
           />
         </div>
 

@@ -4,16 +4,16 @@ import { useEffect } from 'react'
 
 import { useRouter } from 'next/navigation'
 
-import { KEY_ACCESS_TOKEN, KEY_LOGIN_COMPLETE, TRUE } from '@/constant/constant'
-import { ERR_COOKIE_NOT_FOUND } from '@/constant/errorMsg'
+import { KEY_ACCESS_TOKEN, KEY_LOGIN_COMPLETE, TRUE } from '@/_constant/constant'
+import { ERR_COOKIE_NOT_FOUND } from '@/_constant/errorMsg'
 import {
   ROUTE_ERR_NOT_FOUND_ORG_TOKEN,
   ROUTE_LOGIN,
   ROUTE_MAIN,
-} from '@/constant/route/route-constant'
-import { useAppDispatch, useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleGetCookie } from '@/module/utils/moduleCookie'
-import { resetOrgReducer } from '@/store/reducers/login/orgInfoReducer'
+} from '@/_constant/route/route-constant'
+import { useAppDispatch, useAppSelector } from '@/_module/hooks/reduxHooks'
+import { moduleGetCookie } from '@/_module/utils/moduleCookie'
+import { resetOrgReducer } from '@/_store/reducers/login/orgInfoReducer'
 
 export default function SignupComplete() {
   const router = useRouter()
@@ -48,7 +48,7 @@ export default function SignupComplete() {
 
       <button
         type="button"
-        className="mt-5 text-medium font-bold text-indigo-500 hover:text-white dark:text-white dark:bg-indigo-500 dark:border-white bg-white border-indigo-500 hover:bg-indigo-500 focus:ring-4 focus:outline-none dark:hover:bg-white dark:hover:text-indigo-500 focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+        className="mt-5 text-medium text-indigo-500 hover:text-white dark:text-white dark:bg-indigo-500 dark:border-white bg-white border-indigo-500 hover:bg-indigo-500 focus:ring-4 focus:outline-none dark:hover:bg-white dark:hover:text-indigo-500 focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
         onClick={handleClick}
       >
         로그인
