@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-import { type TaskCardProps } from '@/types/ui/card'
+import { type TaskCardProps } from '@/_types/ui/card'
 
 export default function TaskCard(props: TaskCardProps) {
   return (

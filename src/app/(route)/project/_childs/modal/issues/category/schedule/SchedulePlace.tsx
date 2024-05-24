@@ -3,11 +3,11 @@ import { useEffect, useState } from 'react'
 import { FaSearch } from 'react-icons/fa'
 
 import InputWithLabel from '@/_component/input/InputWithLabel'
-import { KAKAO_APP_KEY, KAKAO_AUTH_KEY } from '@/constant/constant'
-import { API_URL_KAKAO_MAP } from '@/constant/route/api-route-constant'
-import useInput from '@/module/hooks/reactHooks/useInput'
-import { moduleKaKaoGetFetch } from '@/module/utils/moduleFetch'
-import { type KakaoMapProps, type SchedulePlaceProps, type SearchType } from '@/types/ui/modal'
+import { KAKAO_APP_KEY, KAKAO_AUTH_KEY } from '@/_constant/constant'
+import { API_URL_KAKAO_MAP } from '@/_constant/route/api-route-constant'
+import useInput from '@/_module/hooks/reactHooks/useInput'
+import { moduleKaKaoGetFetch } from '@/_module/utils/moduleFetch'
+import { type KakaoMapProps, type SchedulePlaceProps, type SearchType } from '@/_types/ui/modal'
 
 export default function SchedulePlace(props: SchedulePlaceProps) {
   const [searchInput, setSearchInput] = useState<SearchType[]>([])

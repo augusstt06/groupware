@@ -12,8 +12,8 @@ import {
   PROJECT_DETAIL_CATEGORY_SCHEDULE,
   PROJECT_DETAIL_CATEGORY_TASK,
   PROJECT_DETAIL_CATEGORY_TODO,
-} from '@/constant/constant'
-import { useAppSelector } from '@/module/hooks/reduxHooks'
+} from '@/_constant/constant'
+import { useAppSelector } from '@/_module/hooks/reduxHooks'
 
 export default function CreateProjectIssueModal() {
   const detailCategory = useAppSelector((state) => state.projectDetailCategory.detailCategory)

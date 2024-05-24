@@ -5,9 +5,9 @@ import {
   PROJECT_ISSUE_TASK_VALUE,
   PROJECT_ISSUE_TODO_TITLE,
   PROJECT_ISSUE_TODO_VALUE,
-} from '@/constant/constant'
-import { moduleConvertDate } from '@/module/utils/moduleTime'
-import { type ProjectDetailTableProps } from '@/types/ui/extra'
+} from '@/_constant/constant'
+import { moduleConvertDate } from '@/_module/utils/moduleTime'
+import { type ProjectDetailTableProps } from '@/_types/ui/extra'
 
 export default function ProjectDetailTable(props: ProjectDetailTableProps) {
   const convertCategory = () => {

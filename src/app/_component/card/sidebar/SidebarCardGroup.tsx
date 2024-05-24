@@ -12,8 +12,8 @@ import {
   SIDEBAR_URL_PATH_PROJECT,
   SIDEBAR_URL_PATH_PROJECT_DETAIL,
   SIDEBAR_URL_PATH_TEAM,
-} from '@/constant/constant'
-import { type MainSidebarCardGroupProps } from '@/types/ui/card'
+} from '@/_constant/constant'
+import { type MainSidebarCardGroupProps } from '@/_types/ui/card'
 
 export default function SidebarCardGroup(props: MainSidebarCardGroupProps) {
   const { title, reRender, setRerender, myBoardList } = props

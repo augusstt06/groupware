@@ -8,13 +8,13 @@ import {
   KEY_ACCESS_TOKEN,
   KEY_X_ORGANIZATION_CODE,
   PROJECT_ISSUE_TODO_VALUE,
-} from '@/constant/constant'
-import { API_URL_PROJECT_ISSUE_LIST } from '@/constant/route/api-route-constant'
-import { useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleGetCookie } from '@/module/utils/moduleCookie'
-import { moduleGetFetch } from '@/module/utils/moduleFetch'
-import { type SuccessResponseType } from '@/types/module'
-import { type IssueResponseType, type ScheduleType } from '@/types/variable'
+} from '@/_constant/constant'
+import { API_URL_PROJECT_ISSUE_LIST } from '@/_constant/route/api-route-constant'
+import { useAppSelector } from '@/_module/hooks/reduxHooks'
+import { moduleGetCookie } from '@/_module/utils/moduleCookie'
+import { moduleGetFetch } from '@/_module/utils/moduleFetch'
+import { type SuccessResponseType } from '@/_types/module'
+import { type IssueResponseType, type ScheduleType } from '@/_types/variable'
 
 export default function ProjectDetailTodo() {
   const query = useParams()

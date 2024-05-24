@@ -1,9 +1,9 @@
 import { BsRecordCircle } from 'react-icons/bs'
 import { FaRegCircle } from 'react-icons/fa'
 
-import { PROJECT_SIDEBAR_TODO_ALL, PROJECT_SIDEBAR_TODO_MY } from '@/constant/constant'
-import { useAppDispatch, useAppSelector } from '@/module/hooks/reduxHooks'
-import { changeProjectDetailTodoCategoryReducer } from '@/store/reducers/project/projectDetailCategoryReducer'
+import { PROJECT_SIDEBAR_TODO_ALL, PROJECT_SIDEBAR_TODO_MY } from '@/_constant/constant'
+import { useAppDispatch, useAppSelector } from '@/_module/hooks/reduxHooks'
+import { changeProjectDetailTodoCategoryReducer } from '@/_store/reducers/project/projectDetailCategoryReducer'
 
 export default function ProjectDetailTodoMenu() {
   const dispatch = useAppDispatch()

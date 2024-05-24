@@ -1,6 +1,6 @@
 import Button from '@/_component/button/Button'
 import Input from '@/_component/input/Input'
-import useInput from '@/module/hooks/reactHooks/useInput'
+import useInput from '@/_module/hooks/reactHooks/useInput'
 
 type Props = {
   handleChangeSetting: (setting: string) => void

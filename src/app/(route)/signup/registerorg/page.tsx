@@ -20,7 +20,7 @@ import {
   REGISTER_ORG_JOIN,
   REGISTER_ORG_NAME,
   TRUE,
-} from '@/constant/constant'
+} from '@/_constant/constant'
 import {
   ERR_COOKIE_NOT_FOUND,
   ERR_MESSAGE_JOIN_ORG_FAIL_EXIST,
@@ -28,19 +28,19 @@ import {
   ERR_MESSAGE_RECORD_NOT_FOUND,
   errNotEntered,
   errNotFound,
-} from '@/constant/errorMsg'
-import { API_URL_CREATE_ORG, API_URL_JOIN_ORG } from '@/constant/route/api-route-constant'
+} from '@/_constant/errorMsg'
+import { API_URL_CREATE_ORG, API_URL_JOIN_ORG } from '@/_constant/route/api-route-constant'
 import {
   ROUTE_ERR_NOT_FOUND_ACCESS_TOKEN,
   ROUTE_MAIN,
   ROUTE_SIGNUP_COMPLETE,
-} from '@/constant/route/route-constant'
-import { useAppDispatch, useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleDeleteCookies, moduleGetCookie } from '@/module/utils/moduleCookie'
-import { modulePostFetch } from '@/module/utils/moduleFetch'
-import { moduleDeleteStorage } from '@/module/utils/moduleStorage'
-import { updateLoginCompleteReducer } from '@/store/reducers/maintain/maintainReducer'
-import { type FailResponseType, type ModulePostFetchProps } from '@/types/module'
+} from '@/_constant/route/route-constant'
+import { useAppDispatch, useAppSelector } from '@/_module/hooks/reduxHooks'
+import { moduleDeleteCookies, moduleGetCookie } from '@/_module/utils/moduleCookie'
+import { modulePostFetch } from '@/_module/utils/moduleFetch'
+import { moduleDeleteStorage } from '@/_module/utils/moduleStorage'
+import { updateLoginCompleteReducer } from '@/_store/reducers/maintain/maintainReducer'
+import { type FailResponseType, type ModulePostFetchProps } from '@/_types/module'
 
 export default function RegisterOrgLogin() {
   const router = useRouter()

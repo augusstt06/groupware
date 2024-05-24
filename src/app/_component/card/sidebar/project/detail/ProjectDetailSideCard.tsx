@@ -12,9 +12,9 @@ import {
   PROJECT_DETAIL_CATEGORY_SCHEDULE,
   PROJECT_DETAIL_CATEGORY_TASK,
   PROJECT_DETAIL_CATEGORY_TODO,
-} from '@/constant/constant'
-import { useAppDispatch, useAppSelector } from '@/module/hooks/reduxHooks'
-import { createProjectIssueModalOpenReducer } from '@/store/reducers/project/projectModalReducer'
+} from '@/_constant/constant'
+import { useAppDispatch, useAppSelector } from '@/_module/hooks/reduxHooks'
+import { createProjectIssueModalOpenReducer } from '@/_store/reducers/project/projectModalReducer'
 
 export default function ProjectDetailSideCard() {
   const dispatch = useAppDispatch()

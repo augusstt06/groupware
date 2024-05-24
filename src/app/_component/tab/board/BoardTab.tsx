@@ -1,4 +1,4 @@
-import { type BoardTabProps } from '@/types/ui/extra'
+import { type BoardTabProps } from '@/_types/ui/extra'
 
 export default function BoardTab(props: BoardTabProps) {
   const { changeBoard, selectBoard, title } = props

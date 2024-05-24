@@ -5,9 +5,9 @@ import {
   PROJECT_SIDEBAR_SCHEDULE_ALL,
   PROJECT_SIDEBAR_SCHEDULE_INVITE,
   PROJECT_SIDEBAR_SCHEDULE_MY,
-} from '@/constant/constant'
-import { useAppDispatch, useAppSelector } from '@/module/hooks/reduxHooks'
-import { changeProjectDetailScheduleCategoryReducer } from '@/store/reducers/project/projectDetailCategoryReducer'
+} from '@/_constant/constant'
+import { useAppDispatch, useAppSelector } from '@/_module/hooks/reduxHooks'
+import { changeProjectDetailScheduleCategoryReducer } from '@/_store/reducers/project/projectDetailCategoryReducer'
 
 export default function ProjectDetailScheduleMenu() {
   const dispatch = useAppDispatch()

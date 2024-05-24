@@ -5,7 +5,7 @@ import {
   PROJECT_SIDEBAR_SCHEDULE_ALL,
   PROJECT_SIDEBAR_TASK_ALL,
   PROJECT_SIDEBAR_TODO_ALL,
-} from '@/constant/constant'
+} from '@/_constant/constant'
 
 type State = {
   detailCategory: string

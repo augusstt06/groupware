@@ -10,25 +10,25 @@ import BoardModalInputGroup from '@/_component/input/group/board/BoardModalInput
 import Dialog from '@/_component/modal/dialog/Dialog'
 import BoardModalSaveListTab from '@/_component/tab/board/BoardModalSaveListTab'
 import BoardWriteModalBtnTab from '@/_component/tab/board/BoardWriteModalBtnTab'
-import { FALSE, KEY_ACCESS_TOKEN, KEY_X_ORGANIZATION_CODE, TRUE } from '@/constant/constant'
-import { errNotEntered } from '@/constant/errorMsg'
-import { API_URL_POSTINGS, API_URL_POSTINGS_PENDING } from '@/constant/route/api-route-constant'
-import { ROUTE_POSTING_DETAIL } from '@/constant/route/route-constant'
-import useInput from '@/module/hooks/reactHooks/useInput'
-import { useAppDispatch, useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleCheckContentIsEmpty } from '@/module/utils/check/moduleCheckContent'
-import { moduleGetCookie } from '@/module/utils/moduleCookie'
-import { moduleDeleteFetch, moduleGetFetch, modulePostFetch } from '@/module/utils/moduleFetch'
-import { openBoardWriteModalReducer } from '@/store/reducers/board/openBoardWriteModalReducer'
+import { FALSE, KEY_ACCESS_TOKEN, KEY_X_ORGANIZATION_CODE, TRUE } from '@/_constant/constant'
+import { errNotEntered } from '@/_constant/errorMsg'
+import { API_URL_POSTINGS, API_URL_POSTINGS_PENDING } from '@/_constant/route/api-route-constant'
+import { ROUTE_POSTING_DETAIL } from '@/_constant/route/route-constant'
+import useInput from '@/_module/hooks/reactHooks/useInput'
+import { useAppDispatch, useAppSelector } from '@/_module/hooks/reduxHooks'
+import { moduleCheckContentIsEmpty } from '@/_module/utils/check/moduleCheckContent'
+import { moduleGetCookie } from '@/_module/utils/moduleCookie'
+import { moduleDeleteFetch, moduleGetFetch, modulePostFetch } from '@/_module/utils/moduleFetch'
+import { openBoardWriteModalReducer } from '@/_store/reducers/board/openBoardWriteModalReducer'
 import {
   type ApiResponseType,
   type DialogBtnValueType,
   type ModuleCheckContentIsEmptyProps,
   type ModuleGetFetchProps,
   type SuccessResponseType,
-} from '@/types/module'
-import { type BoardWriteModalprops } from '@/types/ui/modal'
-import { type BoardListResponseType, type BoardResponseType } from '@/types/variable'
+} from '@/_types/module'
+import { type BoardWriteModalprops } from '@/_types/ui/modal'
+import { type BoardListResponseType, type BoardResponseType } from '@/_types/variable'
 
 const Editor = dynamic(async () => import('../../../../_component/editor/TextEditor'), {
   ssr: false,

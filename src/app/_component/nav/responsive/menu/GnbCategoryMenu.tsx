@@ -1,7 +1,7 @@
 import { Chakra_Petch } from 'next/font/google'
 import Link from 'next/link'
 
-import { ROUTE_BOARD, ROUTE_PROJECT, ROUTE_TEAM } from '@/constant/route/route-constant'
+import { ROUTE_BOARD, ROUTE_PROJECT, ROUTE_TEAM } from '@/_constant/route/route-constant'
 
 const chakra = Chakra_Petch({
   subsets: ['latin'],

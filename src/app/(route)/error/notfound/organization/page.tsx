@@ -2,7 +2,7 @@
 import { useRouter } from 'next/navigation'
 
 import Button from '@/_component/button/Button'
-import { ROUTE_SIGNUP_ORG } from '@/constant/route/route-constant'
+import { ROUTE_SIGNUP_ORG } from '@/_constant/route/route-constant'
 
 export default function NotFoundOrg() {
   const router = useRouter()

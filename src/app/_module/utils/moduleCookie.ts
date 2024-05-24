@@ -3,15 +3,15 @@ import { jwtDecode } from 'jwt-decode'
 
 import { modulePostFetch } from './moduleFetch'
 
-import { API_SUCCESS_CODE, KEY_ACCESS_TOKEN } from '@/constant/constant'
-import { ERR_COOKIE_NOT_FOUND } from '@/constant/errorMsg'
-import { API_URL_REFRESH } from '@/constant/route/api-route-constant'
+import { API_SUCCESS_CODE, KEY_ACCESS_TOKEN } from '@/_constant/constant'
+import { ERR_COOKIE_NOT_FOUND } from '@/_constant/errorMsg'
+import { API_URL_REFRESH } from '@/_constant/route/api-route-constant'
 import {
   type ApiResponseType,
   type CustomDecodeTokenType,
   type FailResponseType,
   type ModulePostFetchProps,
-} from '@/types/module'
+} from '@/_types/module'
 
 export const moduleGetCookie = (name: string) => {
   if (hasCookie(name)) {

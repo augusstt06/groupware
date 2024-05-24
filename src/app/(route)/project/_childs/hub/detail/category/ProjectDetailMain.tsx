@@ -3,11 +3,11 @@ import { useEffect } from 'react'
 
 import InviteProjectMemberTable from '@/_component/table/project/InviteProjectMemberTable'
 import ProjectDetailTable from '@/_component/table/project/ProjectDetailTable'
-import { PROJECT_DETAIL_CATEGORY_HOME } from '@/constant/constant'
-import { useAppDispatch } from '@/module/hooks/reduxHooks'
-import { changeProjectDetailCategoryReducer } from '@/store/reducers/project/projectDetailCategoryReducer'
-import { type ProjectDetailMainProps } from '@/types/ui/extra'
-import { type ProjectIssueType } from '@/types/variable'
+import { PROJECT_DETAIL_CATEGORY_HOME } from '@/_constant/constant'
+import { useAppDispatch } from '@/_module/hooks/reduxHooks'
+import { changeProjectDetailCategoryReducer } from '@/_store/reducers/project/projectDetailCategoryReducer'
+import { type ProjectDetailMainProps } from '@/_types/ui/extra'
+import { type ProjectIssueType } from '@/_types/variable'
 
 export default function ProjectDetailMain(props: ProjectDetailMainProps) {
   const { projectInfo, issueList, pinnedList } = props

@@ -6,9 +6,9 @@ import ChangeOrg from './childs/ChangeOrg'
 import ChangeProject from './childs/ChangeProject'
 import ChangePwd from './childs/ChangePwd'
 
-import { NAME, ORG, PJT, PWD } from '@/constant/constant'
-import { useAppDispatch } from '@/module/hooks/reduxHooks'
-import { handleSettingModalReducer } from '@/store/reducers/setting/settingModalReducer'
+import { NAME, ORG, PJT, PWD } from '@/_constant/constant'
+import { useAppDispatch } from '@/_module/hooks/reduxHooks'
+import { handleSettingModalReducer } from '@/_store/reducers/setting/settingModalReducer'
 
 /**
  * 마이 페이지 모달

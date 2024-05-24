@@ -4,10 +4,10 @@ import { IoIosArrowDown, IoMdClose } from 'react-icons/io'
 import DarkmodeBtn from '../../button/DarkmodeBtn'
 import UserStateModal from '../../modal/gnb/UserStateModal'
 
-import { KEY_ACCESS_TOKEN } from '@/constant/constant'
-import { ERR_COOKIE_NOT_FOUND } from '@/constant/errorMsg'
-import { moduleGetCookie } from '@/module/utils/moduleCookie'
-import { type NavNormalMenuProps } from '@/types/ui/nav'
+import { KEY_ACCESS_TOKEN } from '@/_constant/constant'
+import { ERR_COOKIE_NOT_FOUND } from '@/_constant/errorMsg'
+import { moduleGetCookie } from '@/_module/utils/moduleCookie'
+import { type NavNormalMenuProps } from '@/_types/ui/nav'
 
 export default function NormalNav(props: NavNormalMenuProps) {
   const {

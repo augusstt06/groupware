@@ -8,10 +8,15 @@ import { usePathname } from 'next/navigation'
 
 import Nav from './_component/nav/Nav'
 import Sidebar from './_component/sidebar/Sidebar'
-import { ROUTE_BOARD, ROUTE_MAIN, ROUTE_PROJECT, ROUTE_TEAM } from './constant/route/route-constant'
-import { ReduxProvider } from './providers/reduxProvider'
-import CustomThemeProvider from './providers/themeProvider'
-import { type ReactProps } from './types/pageType'
+import {
+  ROUTE_BOARD,
+  ROUTE_MAIN,
+  ROUTE_PROJECT,
+  ROUTE_TEAM,
+} from './_constant/route/route-constant'
+import { ReduxProvider } from './_providers/reduxProvider'
+import CustomThemeProvider from './_providers/themeProvider'
+import { type ReactProps } from './_types/pageType'
 
 const fredoka = Fredoka({
   subsets: ['latin'],

@@ -14,17 +14,17 @@ import {
   BOARD_MODAL_TITLE,
   KEY_ACCESS_TOKEN,
   KEY_X_ORGANIZATION_CODE,
-} from '@/constant/constant'
-import { API_URL_UPLOAD_IMG } from '@/constant/route/api-route-constant'
-import { useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleGetCookie } from '@/module/utils/moduleCookie'
-import { modulePostFileFetch } from '@/module/utils/moduleFetch'
+} from '@/_constant/constant'
+import { API_URL_UPLOAD_IMG } from '@/_constant/route/api-route-constant'
+import { useAppSelector } from '@/_module/hooks/reduxHooks'
+import { moduleGetCookie } from '@/_module/utils/moduleCookie'
+import { modulePostFileFetch } from '@/_module/utils/moduleFetch'
 import {
   type FailResponseType,
   type ModulePostFileFetchProps,
   type SuccessResponseType,
-} from '@/types/module'
-import { type BoardCategoryInputProps, type BoardModalInputGruopProps } from '@/types/ui/input'
+} from '@/_types/module'
+import { type BoardCategoryInputProps, type BoardModalInputGruopProps } from '@/_types/ui/input'
 
 export default function BoardModalInputGroup(props: BoardModalInputGruopProps) {
   const { currentBoard, titleInput, select, setSelect, setThumbNailUrl, selectList } = props

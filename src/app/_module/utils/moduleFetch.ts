@@ -1,10 +1,10 @@
-import { DELETE, FETCH_CONTENT_TYPE, GET, PATCH, POST } from '@/constant/constant'
+import { DELETE, FETCH_CONTENT_TYPE, GET, PATCH, POST } from '@/_constant/constant'
 import {
   type FetchResponseType,
   type ModuleGetFetchProps,
   type ModulePostFetchProps,
   type ModulePostFileFetchProps,
-} from '@/types/module'
+} from '@/_types/module'
 
 type searchType = {
   address_name: string

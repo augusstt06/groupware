@@ -1,8 +1,8 @@
 import Link from 'next/link'
 
-import { ROUTE_BOARD } from '@/constant/route/route-constant'
-import { useAppSelector } from '@/module/hooks/reduxHooks'
-import { type BoardSideCardProps } from '@/types/ui/card'
+import { ROUTE_BOARD } from '@/_constant/route/route-constant'
+import { useAppSelector } from '@/_module/hooks/reduxHooks'
+import { type BoardSideCardProps } from '@/_types/ui/card'
 
 export default function BoardMenuCard(props: BoardSideCardProps) {
   const extraUserInfo = useAppSelector((state) => state.userInfo.extraInfo)

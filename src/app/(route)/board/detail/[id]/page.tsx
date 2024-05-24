@@ -12,34 +12,34 @@ import Comment from '../../_childs/comment/Comment'
 import WriteComment from '../../_childs/comment/WriteComment'
 import PostingDetailHeader from '../../_childs/detail/PostingDetailHeader'
 
-import { KEY_ACCESS_TOKEN, KEY_LOGIN_COMPLETE, KEY_X_ORGANIZATION_CODE } from '@/constant/constant'
-import { errDefault } from '@/constant/errorMsg'
+import { KEY_ACCESS_TOKEN, KEY_LOGIN_COMPLETE, KEY_X_ORGANIZATION_CODE } from '@/_constant/constant'
+import { errDefault } from '@/_constant/errorMsg'
 import {
   API_URL_COMMENT_POSTING,
   API_URL_POSTINGS,
   API_URL_POSTINGS_LIKE,
   API_URL_POSTINGS_UNLIKE,
-} from '@/constant/route/api-route-constant'
-import { ROUTE_BOARD, ROUTE_ERR_NOT_FOUND_POSTING_DETAIL } from '@/constant/route/route-constant'
-import { useAppDispatch, useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleCheckUserState } from '@/module/utils/check/moduleCheckUserState'
+} from '@/_constant/route/api-route-constant'
+import { ROUTE_BOARD, ROUTE_ERR_NOT_FOUND_POSTING_DETAIL } from '@/_constant/route/route-constant'
+import { useAppDispatch, useAppSelector } from '@/_module/hooks/reduxHooks'
+import { moduleCheckUserState } from '@/_module/utils/check/moduleCheckUserState'
 import {
   checkTokenExpired,
   moduleDecodeToken,
   moduleGetCookie,
   moduleRefreshToken,
-} from '@/module/utils/moduleCookie'
-import { moduleDeleteFetch, moduleGetFetch, modulePostFetch } from '@/module/utils/moduleFetch'
+} from '@/_module/utils/moduleCookie'
+import { moduleDeleteFetch, moduleGetFetch, modulePostFetch } from '@/_module/utils/moduleFetch'
 import {
   addPostingLikeReducer,
   deletePostingLikeReducer,
-} from '@/store/reducers/board/boardLikeReducer'
+} from '@/_store/reducers/board/boardLikeReducer'
 import {
   type CustomDecodeTokenType,
   type ModuleGetFetchProps,
   type SuccessResponseType,
-} from '@/types/module'
-import { type CommentType, type DetailResponseType } from '@/types/variable'
+} from '@/_types/module'
+import { type CommentType, type DetailResponseType } from '@/_types/variable'
 
 const Viewbox = dynamic(async () => import('../../../../_component/editor/TextViewer'), {
   ssr: false,

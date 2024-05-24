@@ -8,9 +8,9 @@ import {
   PROJECT_DETAIL_CATEGORY_SCHEDULE,
   PROJECT_DETAIL_CATEGORY_TASK,
   PROJECT_DETAIL_CATEGORY_TODO,
-} from '@/constant/constant'
-import { useAppSelector } from '@/module/hooks/reduxHooks'
-import { type ProjectDetailHubProps } from '@/types/ui/extra'
+} from '@/_constant/constant'
+import { useAppSelector } from '@/_module/hooks/reduxHooks'
+import { type ProjectDetailHubProps } from '@/_types/ui/extra'
 
 export default function ProjectDetailHub(props: ProjectDetailHubProps) {
   const detailCategory = useAppSelector((state) => state.projectDetailCategory.detailCategory)

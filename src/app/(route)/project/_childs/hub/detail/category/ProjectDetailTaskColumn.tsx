@@ -8,9 +8,9 @@ import {
   PROJECT_ISSUE_TASK_PROGRESS_INIT_TITLE,
   PROJECT_ISSUE_TASK_PROGRESS_PROCESSING_TITLE,
   PROJECT_ISSUE_TASK_PROGRESS_REQUESTED_TITLE,
-} from '@/constant/constant'
-import { ROUTE_PROJECT } from '@/constant/route/route-constant'
-import { type ProjectDetailTaskColumnProps } from '@/types/pageType'
+} from '@/_constant/constant'
+import { ROUTE_PROJECT } from '@/_constant/route/route-constant'
+import { type ProjectDetailTaskColumnProps } from '@/_types/pageType'
 
 export default function ProjectDetailTaskColumn(props: ProjectDetailTaskColumnProps) {
   const router = useRouter()

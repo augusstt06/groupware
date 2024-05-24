@@ -23,15 +23,15 @@ import {
   PROJECT_CARD_RES_COLOR_PURPLE,
   PROJECT_CARD_RES_COLOR_RED,
   PROJECT_CARD_RES_COLOR_YELLOW,
-} from '@/constant/constant'
-import { API_URL_PROJECT_STAR, API_URL_PROJECT_UNSTAR } from '@/constant/route/api-route-constant'
-import { ROUTE_PROJECT_DETAIL } from '@/constant/route/route-constant'
-import { useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleGetCookie } from '@/module/utils/moduleCookie'
-import { moduleDeleteFetchWithBody, modulePostFetch } from '@/module/utils/moduleFetch'
-import { type DialogBtnValueType } from '@/types/module'
-import { type ProjectCardProps } from '@/types/ui/card'
-import { type DialogTextType } from '@/types/variable'
+} from '@/_constant/constant'
+import { API_URL_PROJECT_STAR, API_URL_PROJECT_UNSTAR } from '@/_constant/route/api-route-constant'
+import { ROUTE_PROJECT_DETAIL } from '@/_constant/route/route-constant'
+import { useAppSelector } from '@/_module/hooks/reduxHooks'
+import { moduleGetCookie } from '@/_module/utils/moduleCookie'
+import { moduleDeleteFetchWithBody, modulePostFetch } from '@/_module/utils/moduleFetch'
+import { type DialogBtnValueType } from '@/_types/module'
+import { type ProjectCardProps } from '@/_types/ui/card'
+import { type DialogTextType } from '@/_types/variable'
 
 export default function ProjectCard(props: ProjectCardProps) {
   const queryClient = useQueryClient()

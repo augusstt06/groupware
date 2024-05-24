@@ -5,9 +5,9 @@ import {
   PROJECT_SIDEBAR_TASK_ALL,
   PROJECT_SIDEBAR_TASK_INVITE,
   PROJECT_SIDEBAR_TASK_MY,
-} from '@/constant/constant'
-import { useAppDispatch, useAppSelector } from '@/module/hooks/reduxHooks'
-import { changeProjectDetailTaskCategoryReducer } from '@/store/reducers/project/projectDetailCategoryReducer'
+} from '@/_constant/constant'
+import { useAppDispatch, useAppSelector } from '@/_module/hooks/reduxHooks'
+import { changeProjectDetailTaskCategoryReducer } from '@/_store/reducers/project/projectDetailCategoryReducer'
 
 export default function ProjectDetailTaskMenu() {
   const dispatch = useAppDispatch()

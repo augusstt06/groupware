@@ -4,18 +4,18 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 
 import SettingModal from '@/_component/modal/setting/SettingModal'
-import { KEY_ACCESS_TOKEN, KEY_LOGIN_COMPLETE } from '@/constant/constant'
-import { useAppDispatch, useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleCheckUserState } from '@/module/utils/check/moduleCheckUserState'
+import { KEY_ACCESS_TOKEN, KEY_LOGIN_COMPLETE } from '@/_constant/constant'
+import { useAppDispatch, useAppSelector } from '@/_module/hooks/reduxHooks'
+import { moduleCheckUserState } from '@/_module/utils/check/moduleCheckUserState'
 import {
   checkTokenExpired,
   moduleDecodeToken,
   moduleGetCookie,
   moduleRefreshToken,
-} from '@/module/utils/moduleCookie'
-import { handleSettingModalReducer } from '@/store/reducers/setting/settingModalReducer'
-import { type CustomDecodeTokenType } from '@/types/module'
-import { type ReactProps } from '@/types/pageType'
+} from '@/_module/utils/moduleCookie'
+import { handleSettingModalReducer } from '@/_store/reducers/setting/settingModalReducer'
+import { type CustomDecodeTokenType } from '@/_types/module'
+import { type ReactProps } from '@/_types/pageType'
 
 export default function MainLayout({ children }: ReactProps) {
   const router = useRouter()

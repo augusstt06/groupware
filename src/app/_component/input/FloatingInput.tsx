@@ -1,6 +1,6 @@
 import { IoMdEye, IoMdEyeOff } from 'react-icons/io'
 
-import { type FloatingInputProps } from '@/types/ui/input'
+import { type FloatingInputProps } from '@/_types/ui/input'
 
 export default function FloatingInput(props: FloatingInputProps) {
   const { title, value, onChange, inputViewType, isViewActive, handleViewType } = props

@@ -1,4 +1,4 @@
-import { type BoardWriteModalCheckBoxProps } from '@/types/ui/extra'
+import { type BoardWriteModalCheckBoxProps } from '@/_types/ui/extra'
 
 export default function BoardWriteModalCheckBox(props: BoardWriteModalCheckBoxProps) {
   return (

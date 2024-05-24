@@ -1,6 +1,6 @@
 import BoardCard from '@/_component/card/main/BoardCard'
 import MainTab from '@/_component/tab/main/MainTab'
-import { type MainHubProps } from '@/types/ui/extra'
+import { type MainHubProps } from '@/_types/ui/extra'
 
 export default function MainHub(props: MainHubProps) {
   const { currentPostings } = props

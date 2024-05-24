@@ -5,9 +5,9 @@ import InputWithLabel from '../../InputWithLabel'
 
 import BoardWriteModal from '@/(route)/board/_childs/modal/BoardWriteModal'
 import Button from '@/_component/button/Button'
-import { useAppDispatch, useAppSelector } from '@/module/hooks/reduxHooks'
-import { openBoardWriteModalReducer } from '@/store/reducers/board/openBoardWriteModalReducer'
-import { type BoardMainInputGroupProps } from '@/types/ui/input'
+import { useAppDispatch, useAppSelector } from '@/_module/hooks/reduxHooks'
+import { openBoardWriteModalReducer } from '@/_store/reducers/board/openBoardWriteModalReducer'
+import { type BoardMainInputGroupProps } from '@/_types/ui/input'
 
 export default function BoardMainInputGroup(props: BoardMainInputGroupProps) {
   const dispatch = useAppDispatch()

@@ -1,5 +1,5 @@
 import Button from '@/_component/button/Button'
-import { NAME, ORG, PJT, PWD } from '@/constant/constant'
+import { NAME, ORG, PJT, PWD } from '@/_constant/constant'
 
 type Props = {
   handleChangeSetting: (setting: string) => void

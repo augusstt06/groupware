@@ -1,10 +1,10 @@
 import { useEffect } from 'react'
 
 import FloatingInput from '@/_component/input/FloatingInput'
-import { REGISTER_ORG_JOIN, REGISTER_ORG_JOIN_EN } from '@/constant/constant'
-import useInput from '@/module/hooks/reactHooks/useInput'
-import { useAppDispatch } from '@/module/hooks/reduxHooks'
-import { joinOrgReducer } from '@/store/reducers/login/orgInfoReducer'
+import { REGISTER_ORG_JOIN, REGISTER_ORG_JOIN_EN } from '@/_constant/constant'
+import useInput from '@/_module/hooks/reactHooks/useInput'
+import { useAppDispatch } from '@/_module/hooks/reduxHooks'
+import { joinOrgReducer } from '@/_store/reducers/login/orgInfoReducer'
 
 export default function JoinOrgInfo() {
   const dispatch = useAppDispatch()

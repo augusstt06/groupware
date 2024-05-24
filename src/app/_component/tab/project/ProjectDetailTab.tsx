@@ -7,11 +7,11 @@ import {
   PROJECT_DETAIL_CATEGORY_SCHEDULE,
   PROJECT_DETAIL_CATEGORY_TASK,
   PROJECT_DETAIL_CATEGORY_TODO,
-} from '@/constant/constant'
-import { useAppDispatch, useAppSelector } from '@/module/hooks/reduxHooks'
-import { changeProjectDetailCategoryReducer } from '@/store/reducers/project/projectDetailCategoryReducer'
-import { projectInviteModalReducer } from '@/store/reducers/project/projectModalReducer'
-import { type ProjectDetailTabProps } from '@/types/ui/extra'
+} from '@/_constant/constant'
+import { useAppDispatch, useAppSelector } from '@/_module/hooks/reduxHooks'
+import { changeProjectDetailCategoryReducer } from '@/_store/reducers/project/projectDetailCategoryReducer'
+import { projectInviteModalReducer } from '@/_store/reducers/project/projectModalReducer'
+import { type ProjectDetailTabProps } from '@/_types/ui/extra'
 
 export default function ProjectDetailTab(props: ProjectDetailTabProps) {
   const dispatch = useAppDispatch()

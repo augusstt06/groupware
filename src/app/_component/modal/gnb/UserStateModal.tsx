@@ -5,16 +5,16 @@ import { IoSettingsOutline } from 'react-icons/io5'
 
 import Button from '../../button/Button'
 
-import { API_SUCCESS_CODE, FALSE, KEY_ACCESS_TOKEN } from '@/constant/constant'
-import { API_URL_LOGOUT } from '@/constant/route/api-route-constant'
-import { useAppDispatch, useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleDeleteCookies, moduleGetCookie } from '@/module/utils/moduleCookie'
-import { modulePostFetch } from '@/module/utils/moduleFetch'
-import { resetUserInfoReducer } from '@/store/reducers/main/userInfoReducer'
-import { updateLoginCompleteReducer } from '@/store/reducers/maintain/maintainReducer'
-import { handleSettingModalReducer } from '@/store/reducers/setting/settingModalReducer'
-import { type FailResponseType, type ModulePostFetchProps } from '@/types/module'
-import { type UserStateModalProps } from '@/types/ui/modal'
+import { API_SUCCESS_CODE, FALSE, KEY_ACCESS_TOKEN } from '@/_constant/constant'
+import { API_URL_LOGOUT } from '@/_constant/route/api-route-constant'
+import { useAppDispatch, useAppSelector } from '@/_module/hooks/reduxHooks'
+import { moduleDeleteCookies, moduleGetCookie } from '@/_module/utils/moduleCookie'
+import { modulePostFetch } from '@/_module/utils/moduleFetch'
+import { resetUserInfoReducer } from '@/_store/reducers/main/userInfoReducer'
+import { updateLoginCompleteReducer } from '@/_store/reducers/maintain/maintainReducer'
+import { handleSettingModalReducer } from '@/_store/reducers/setting/settingModalReducer'
+import { type FailResponseType, type ModulePostFetchProps } from '@/_types/module'
+import { type UserStateModalProps } from '@/_types/ui/modal'
 
 export default function UserStateModal(props: UserStateModalProps) {
   const { changeDialogConfirmFn, handleOpenDialog, setIsUserStateOpen } = props

@@ -5,9 +5,9 @@ import NameCard from '../../main/NameCard'
 
 import BoardMenuCard from './BoardMenuCard'
 
-import { useAppDispatch } from '@/module/hooks/reduxHooks'
-import { openBoardWriteModalReducer } from '@/store/reducers/board/openBoardWriteModalReducer'
-import { type BoardSideCardProps } from '@/types/ui/card'
+import { useAppDispatch } from '@/_module/hooks/reduxHooks'
+import { openBoardWriteModalReducer } from '@/_store/reducers/board/openBoardWriteModalReducer'
+import { type BoardSideCardProps } from '@/_types/ui/card'
 
 export default function BoardSideCard(props: BoardSideCardProps) {
   const { myBoardList } = props

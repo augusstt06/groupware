@@ -1,6 +1,6 @@
 import Input from './Input'
 
-import { type InputGroupProps } from '@/types/ui/input'
+import { type InputGroupProps } from '@/_types/ui/input'
 
 const InputWithLabel = (props: InputGroupProps) => {
   const {

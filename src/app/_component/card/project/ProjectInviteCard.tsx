@@ -1,6 +1,6 @@
 import { MdCheckBoxOutlineBlank, MdOutlineCheckBox } from 'react-icons/md'
 
-import { type ProjectInviteCardProps } from '@/types/ui/card'
+import { type ProjectInviteCardProps } from '@/_types/ui/card'
 
 export default function ProjectInviteCard(props: ProjectInviteCardProps) {
   const { userInfo, inviteList } = props

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 
 // import { IoPeopleCircleSharp } from 'react-icons/io5'
 
-import { useAppSelector } from '@/module/hooks/reduxHooks'
+import { useAppSelector } from '@/_module/hooks/reduxHooks'
 export default function NameCard() {
   const [mount, setMount] = useState(false)
   const extraUserInfo = useAppSelector((state) => state.userInfo.extraInfo)

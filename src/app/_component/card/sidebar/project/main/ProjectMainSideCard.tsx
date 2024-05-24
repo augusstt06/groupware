@@ -5,8 +5,8 @@ import NameCard from '../../../main/NameCard'
 import ProjectMenuCard from './ProjectMenuCard'
 
 import Button from '@/_component/button/Button'
-import { useAppDispatch } from '@/module/hooks/reduxHooks'
-import { createProjectModalReducer } from '@/store/reducers/project/projectModalReducer'
+import { useAppDispatch } from '@/_module/hooks/reduxHooks'
+import { createProjectModalReducer } from '@/_store/reducers/project/projectModalReducer'
 
 export default function ProjectMainSideCard() {
   const dispatch = useAppDispatch()

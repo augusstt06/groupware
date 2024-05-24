@@ -26,9 +26,9 @@ import {
   PROJECT_ISSUE_SCHEDULE_UNIT_HOUR_EN,
   PROJECT_ISSUE_SCHEDULE_UNIT_MINUTE_EN,
   PROJECT_ISSUE_SCHEDULE_VALUE,
-} from '@/constant/constant'
-import useInput from '@/module/hooks/reactHooks/useInput'
-import { useAppDispatch } from '@/module/hooks/reduxHooks'
+} from '@/_constant/constant'
+import useInput from '@/_module/hooks/reactHooks/useInput'
+import { useAppDispatch } from '@/_module/hooks/reduxHooks'
 import {
   changeIssueCategoryReducer,
   changeIssueDescriptionReducer,
@@ -38,11 +38,11 @@ import {
   changeIssueStartAtReducer,
   changeIssueStartAtTimeReducer,
   changeIssueTitleReducer,
-} from '@/store/reducers/project/projectIssueReducer'
-import { type DialogBtnValueType } from '@/types/module'
-import { type CalendarValue, type ValuePiece } from '@/types/pageType'
-import { type SearchType } from '@/types/ui/modal'
-import { type DialogTextType, type ScheduleListType } from '@/types/variable'
+} from '@/_store/reducers/project/projectIssueReducer'
+import { type DialogBtnValueType } from '@/_types/module'
+import { type CalendarValue, type ValuePiece } from '@/_types/pageType'
+import { type SearchType } from '@/_types/ui/modal'
+import { type DialogTextType, type ScheduleListType } from '@/_types/variable'
 
 export default function ProjectIssueSchedule() {
   const [isPlaceModal, setIsPlaceModal] = useState(false)

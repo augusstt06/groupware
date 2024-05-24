@@ -10,7 +10,7 @@ import {
   PROJECT_ISSUE_SCHEDULE_UNIT_HOUR_KO,
   PROJECT_ISSUE_SCHEDULE_UNIT_MINUTE_EN,
   PROJECT_ISSUE_SCHEDULE_UNIT_MINUTE_KO,
-} from '@/constant/constant'
+} from '@/_constant/constant'
 import {
   type IssueCalendarProps,
   type IssueCalendarWithTimeProps,
@@ -20,7 +20,7 @@ import {
   type IssueSelecProps,
   type IssueTimeProps,
   type ValuePiece,
-} from '@/types/pageType'
+} from '@/_types/pageType'
 
 export function IssueInput(props: IssueInputProps) {
   const { title, placeholder, value, onChange } = props

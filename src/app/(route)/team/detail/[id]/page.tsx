@@ -16,19 +16,19 @@ import {
   KEY_X_ORGANIZATION_CODE,
   MODAL_BTN_SAVE,
   MODAL_INVITE_MEMBER_IN_PROJECT,
-} from '@/constant/constant'
+} from '@/_constant/constant'
 import {
   API_URL_COLLEAGUES,
   API_URL_TEAMS,
   API_URL_TEAMS_INVITE,
-} from '@/constant/route/api-route-constant'
-import { useAppDispatch, useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleCheckUserState } from '@/module/utils/check/moduleCheckUserState'
-import { moduleGetCookie } from '@/module/utils/moduleCookie'
-import { moduleGetFetch, modulePostFetch } from '@/module/utils/moduleFetch'
-import { teamInviteModalReducer } from '@/store/reducers/team/teamModalReducer'
-import { type DialogBtnValueType, type SuccessResponseType } from '@/types/module'
-import { type ColleagueType, type DialogTextType, type TeamResponseType } from '@/types/variable'
+} from '@/_constant/route/api-route-constant'
+import { useAppDispatch, useAppSelector } from '@/_module/hooks/reduxHooks'
+import { moduleCheckUserState } from '@/_module/utils/check/moduleCheckUserState'
+import { moduleGetCookie } from '@/_module/utils/moduleCookie'
+import { moduleGetFetch, modulePostFetch } from '@/_module/utils/moduleFetch'
+import { teamInviteModalReducer } from '@/_store/reducers/team/teamModalReducer'
+import { type DialogBtnValueType, type SuccessResponseType } from '@/_types/module'
+import { type ColleagueType, type DialogTextType, type TeamResponseType } from '@/_types/variable'
 
 export default function TeamDetail() {
   // outer

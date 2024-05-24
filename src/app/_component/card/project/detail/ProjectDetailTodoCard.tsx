@@ -1,5 +1,5 @@
-import { moduleConvertDate } from '@/module/utils/moduleTime'
-import { type ProjectDetailTodoCardProps } from '@/types/ui/card'
+import { moduleConvertDate } from '@/_module/utils/moduleTime'
+import { type ProjectDetailTodoCardProps } from '@/_types/ui/card'
 
 export default function ProjectDetailTodoCard(props: ProjectDetailTodoCardProps) {
   const { title, issuer, endAt } = props.todo

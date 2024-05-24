@@ -2,9 +2,9 @@
 import { useRouter } from 'next/navigation'
 import { FaRegComment, FaRegHeart } from 'react-icons/fa'
 
-import { ROUTE_POSTING_DETAIL } from '@/constant/route/route-constant'
-import { moduleConvertDate } from '@/module/utils/moduleTime'
-import { type BoardCardType } from '@/types/ui/card'
+import { ROUTE_POSTING_DETAIL } from '@/_constant/route/route-constant'
+import { moduleConvertDate } from '@/_module/utils/moduleTime'
+import { type BoardCardType } from '@/_types/ui/card'
 
 // const Viewbox = dynamic(async () => import('../../editor/TextViewer'), {
 //   ssr: false,

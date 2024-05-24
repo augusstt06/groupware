@@ -1,7 +1,7 @@
 import GnbCategoryMenu from './menu/GnbCategoryMenu'
 import GnbHamburgerMenu from './menu/NavHamburgerMenu'
 
-import { type ResponsiveNavProps } from '@/types/ui/nav'
+import { type ResponsiveNavProps } from '@/_types/ui/nav'
 
 export default function ResponsiveNav(props: ResponsiveNavProps) {
   const {

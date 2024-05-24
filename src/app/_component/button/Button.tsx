@@ -1,6 +1,6 @@
 import { type ForwardedRef, forwardRef } from 'react'
 
-import { type ButtonProps } from '@/types/ui/button'
+import { type ButtonProps } from '@/_types/ui/button'
 
 const Button = forwardRef((props: ButtonProps, fowardRef: ForwardedRef<HTMLButtonElement>) => {
   const { buttonContent, ...rest } = props

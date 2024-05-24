@@ -9,7 +9,7 @@ import {
 import { type JwtPayload } from 'jwt-decode'
 import { type AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime'
 
-import { type KEY_UUID, type KEY_X_ORGANIZATION_CODE } from '../constant/constant'
+import { type KEY_UUID, type KEY_X_ORGANIZATION_CODE } from '../_constant/constant'
 
 import { type ScheduleListType, type TaskListType } from './variable'
 

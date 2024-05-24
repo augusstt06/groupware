@@ -18,25 +18,25 @@ import {
   REGISTER_PHONENUMBER,
   REGISTER_POSITION,
   TRUE,
-} from '@/constant/constant'
+} from '@/_constant/constant'
 import {
   ERR_COOKIE_NOT_FOUND,
   ERR_MESSAGE_SIGNUP_USER_EXIST,
   errDefault,
-} from '@/constant/errorMsg'
-import { API_URL_LOGIN, API_URL_REGISTER } from '@/constant/route/api-route-constant'
-import { ROUTE_MAIN, ROUTE_SIGNUP_ORG } from '@/constant/route/route-constant'
-import { useAppDispatch, useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleGetCookie, moduleSetCookies } from '@/module/utils/moduleCookie'
-import { modulePostFetch } from '@/module/utils/moduleFetch'
-import inputValidate from '@/module/utils/moduleInputValidate'
-import { resetSignupInfoReducer } from '@/store/reducers/login/signupInfoReducer'
+} from '@/_constant/errorMsg'
+import { API_URL_LOGIN, API_URL_REGISTER } from '@/_constant/route/api-route-constant'
+import { ROUTE_MAIN, ROUTE_SIGNUP_ORG } from '@/_constant/route/route-constant'
+import { useAppDispatch, useAppSelector } from '@/_module/hooks/reduxHooks'
+import { moduleGetCookie, moduleSetCookies } from '@/_module/utils/moduleCookie'
+import { modulePostFetch } from '@/_module/utils/moduleFetch'
+import inputValidate from '@/_module/utils/moduleInputValidate'
+import { resetSignupInfoReducer } from '@/_store/reducers/login/signupInfoReducer'
 import {
   type FailResponseType,
   type LoginResponseType,
   type ModulePostFetchProps,
   type SuccessResponseType,
-} from '@/types/module'
+} from '@/_types/module'
 
 export default function Signup() {
   const signupButtonRef = useRef<HTMLButtonElement>(null)

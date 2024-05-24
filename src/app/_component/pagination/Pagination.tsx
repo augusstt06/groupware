@@ -1,7 +1,7 @@
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
 import { MdKeyboardDoubleArrowLeft, MdKeyboardDoubleArrowRight } from 'react-icons/md'
 
-import { type PaginationProps } from '@/types/pageType'
+import { type PaginationProps } from '@/_types/pageType'
 
 export default function Pagination(props: PaginationProps) {
   const moveNextBoardList = () => {

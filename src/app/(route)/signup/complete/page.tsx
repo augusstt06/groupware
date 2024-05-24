@@ -4,16 +4,16 @@ import { useEffect } from 'react'
 
 import { useRouter } from 'next/navigation'
 
-import { KEY_ACCESS_TOKEN, KEY_LOGIN_COMPLETE, TRUE } from '@/constant/constant'
-import { ERR_COOKIE_NOT_FOUND } from '@/constant/errorMsg'
+import { KEY_ACCESS_TOKEN, KEY_LOGIN_COMPLETE, TRUE } from '@/_constant/constant'
+import { ERR_COOKIE_NOT_FOUND } from '@/_constant/errorMsg'
 import {
   ROUTE_ERR_NOT_FOUND_ORG_TOKEN,
   ROUTE_LOGIN,
   ROUTE_MAIN,
-} from '@/constant/route/route-constant'
-import { useAppDispatch, useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleGetCookie } from '@/module/utils/moduleCookie'
-import { resetOrgReducer } from '@/store/reducers/login/orgInfoReducer'
+} from '@/_constant/route/route-constant'
+import { useAppDispatch, useAppSelector } from '@/_module/hooks/reduxHooks'
+import { moduleGetCookie } from '@/_module/utils/moduleCookie'
+import { resetOrgReducer } from '@/_store/reducers/login/orgInfoReducer'
 
 export default function SignupComplete() {
   const router = useRouter()

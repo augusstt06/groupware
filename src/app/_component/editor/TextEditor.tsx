@@ -11,17 +11,17 @@ import '@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin
 import 'prismjs/themes/prism.css'
 import Prism from 'prismjs'
 
-import { API_SUCCESS_CODE, KEY_ACCESS_TOKEN, KEY_X_ORGANIZATION_CODE } from '@/constant/constant'
-import { API_URL_UPLOAD_IMG } from '@/constant/route/api-route-constant'
-import { useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleGetCookie } from '@/module/utils/moduleCookie'
-import { modulePostFileFetch } from '@/module/utils/moduleFetch'
+import { API_SUCCESS_CODE, KEY_ACCESS_TOKEN, KEY_X_ORGANIZATION_CODE } from '@/_constant/constant'
+import { API_URL_UPLOAD_IMG } from '@/_constant/route/api-route-constant'
+import { useAppSelector } from '@/_module/hooks/reduxHooks'
+import { moduleGetCookie } from '@/_module/utils/moduleCookie'
+import { modulePostFileFetch } from '@/_module/utils/moduleFetch'
 import {
   type FailResponseType,
   type ModulePostFileFetchProps,
   type SuccessResponseType,
-} from '@/types/module'
-import { type EditorProps } from '@/types/ui/extra'
+} from '@/_types/module'
+import { type EditorProps } from '@/_types/ui/extra'
 
 export default function TextEditor(props: EditorProps) {
   let imgList: string[] = []

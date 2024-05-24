@@ -24,7 +24,7 @@ import {
   PROJECT_ISSUE_TODO_VALUE,
   PROJECT_SIDEBAR_TASK_ALL,
   PROJECT_SIDEBAR_TASK_MY,
-} from '@/constant/constant'
+} from '@/_constant/constant'
 import {
   API_URL_COLLEAGUES,
   API_URL_PROJECT_INVITE,
@@ -32,21 +32,21 @@ import {
   API_URL_PROJECT_ISSUE_LIST,
   API_URL_PROJECT_ISSUE_LIST_PINNED,
   API_URL_PROJECTS,
-} from '@/constant/route/api-route-constant'
-import { useAppDispatch, useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleCheckUserState } from '@/module/utils/check/moduleCheckUserState'
-import { moduleGetCookie } from '@/module/utils/moduleCookie'
-import { moduleGetFetch, modulePostFetch } from '@/module/utils/moduleFetch'
-import { changeIssueProjectIdReducer } from '@/store/reducers/project/projectIssueReducer'
+} from '@/_constant/route/api-route-constant'
+import { useAppDispatch, useAppSelector } from '@/_module/hooks/reduxHooks'
+import { moduleCheckUserState } from '@/_module/utils/check/moduleCheckUserState'
+import { moduleGetCookie } from '@/_module/utils/moduleCookie'
+import { moduleGetFetch, modulePostFetch } from '@/_module/utils/moduleFetch'
+import { changeIssueProjectIdReducer } from '@/_store/reducers/project/projectIssueReducer'
 import {
   createProjectIssueModalOpenReducer,
   projectInviteModalReducer,
-} from '@/store/reducers/project/projectModalReducer'
+} from '@/_store/reducers/project/projectModalReducer'
 import {
   type DialogBtnValueType,
   type ModulePostFetchProps,
   type SuccessResponseType,
-} from '@/types/module'
+} from '@/_types/module'
 import {
   type ColleagueType,
   type DialogTextType,
@@ -54,7 +54,7 @@ import {
   type ProjectIssueResponseType,
   type ProjectIssueType,
   type ProjectResponseType,
-} from '@/types/variable'
+} from '@/_types/variable'
 
 export default function ProjectDetail() {
   const dispatch = useAppDispatch()

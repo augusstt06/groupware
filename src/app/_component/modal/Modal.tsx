@@ -5,9 +5,9 @@ import Button from '../button/Button'
 
 import Dialog from './dialog/Dialog'
 
-import { MODAL_CREATE_PROJECT_ISSUE, MODAL_INVITE_MEMBER_IN_PROJECT } from '@/constant/constant'
-import { type ModalHubProps, type ModalUsePortalProps } from '@/types/module'
-import { type ModalBtnProps } from '@/types/ui/modal'
+import { MODAL_CREATE_PROJECT_ISSUE, MODAL_INVITE_MEMBER_IN_PROJECT } from '@/_constant/constant'
+import { type ModalHubProps, type ModalUsePortalProps } from '@/_types/module'
+import { type ModalBtnProps } from '@/_types/ui/modal'
 
 export default function ModalHub(props: ModalHubProps) {
   return (

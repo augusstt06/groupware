@@ -1,4 +1,4 @@
-import { type ModuleCheckContentIsEmptyProps } from '@/types/module'
+import { type ModuleCheckContentIsEmptyProps } from '@/_types/module'
 
 export const moduleCheckContentIsEmpty = (props: ModuleCheckContentIsEmptyProps) => {
   const parser = new DOMParser()

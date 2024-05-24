@@ -6,9 +6,9 @@ import {
   PROJECT_SIDEBAR_MENU_ALL,
   PROJECT_SIDEBAR_MENU_IMPORTANT,
   PROJECT_SIDEBAR_MENU_PARTICIPATING,
-} from '@/constant/constant'
-import { useAppDispatch, useAppSelector } from '@/module/hooks/reduxHooks'
-import { changeProjectMainCategoryReducer } from '@/store/reducers/project/projectMainCategoryReducer'
+} from '@/_constant/constant'
+import { useAppDispatch, useAppSelector } from '@/_module/hooks/reduxHooks'
+import { changeProjectMainCategoryReducer } from '@/_store/reducers/project/projectMainCategoryReducer'
 
 export default function ProjectMenuCard() {
   const dispatch = useAppDispatch()

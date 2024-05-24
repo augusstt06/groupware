@@ -3,8 +3,8 @@ import { FaPlus } from 'react-icons/fa'
 import Button from '../../../button/Button'
 import NameCard from '../../main/NameCard'
 
-import { useAppDispatch } from '@/module/hooks/reduxHooks'
-import { createTeamModalReducer } from '@/store/reducers/team/teamModalReducer'
+import { useAppDispatch } from '@/_module/hooks/reduxHooks'
+import { createTeamModalReducer } from '@/_store/reducers/team/teamModalReducer'
 
 export default function TeamMainSideCard() {
   const dispatch = useAppDispatch()

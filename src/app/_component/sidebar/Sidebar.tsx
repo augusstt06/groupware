@@ -14,18 +14,23 @@ import {
   SIDEBAR_URL_PATH_PROJECT,
   SIDEBAR_URL_PATH_PROJECT_DETAIL,
   SIDEBAR_URL_PATH_TEAM,
-} from '@/constant/constant'
-import { API_URL_GET_MY_BOARD } from '@/constant/route/api-route-constant'
-import { ROUTE_BOARD, ROUTE_MAIN, ROUTE_PROJECT, ROUTE_TEAM } from '@/constant/route/route-constant'
-import { useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleGetCookie } from '@/module/utils/moduleCookie'
-import { moduleGetFetch } from '@/module/utils/moduleFetch'
+} from '@/_constant/constant'
+import { API_URL_GET_MY_BOARD } from '@/_constant/route/api-route-constant'
+import {
+  ROUTE_BOARD,
+  ROUTE_MAIN,
+  ROUTE_PROJECT,
+  ROUTE_TEAM,
+} from '@/_constant/route/route-constant'
+import { useAppSelector } from '@/_module/hooks/reduxHooks'
+import { moduleGetCookie } from '@/_module/utils/moduleCookie'
+import { moduleGetFetch } from '@/_module/utils/moduleFetch'
 import {
   type FailResponseType,
   type ModuleGetFetchProps,
   type SuccessResponseType,
-} from '@/types/module'
-import { type MyBoardType } from '@/types/variable'
+} from '@/_types/module'
+import { type MyBoardType } from '@/_types/variable'
 
 export default function Sidebar() {
   const pathname = usePathname()

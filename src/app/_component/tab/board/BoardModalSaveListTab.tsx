@@ -1,9 +1,9 @@
 import { HiOutlinePencilAlt } from 'react-icons/hi'
 import { IoClose } from 'react-icons/io5'
 
-import { useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleConvertDate } from '@/module/utils/moduleTime'
-import { type BoardModalSaveListTabProps } from '@/types/ui/extra'
+import { useAppSelector } from '@/_module/hooks/reduxHooks'
+import { moduleConvertDate } from '@/_module/utils/moduleTime'
+import { type BoardModalSaveListTabProps } from '@/_types/ui/extra'
 
 export default function BoardModalSaveListTab(props: BoardModalSaveListTabProps) {
   const categoryState = useAppSelector((state) => state.boardCategory.myBoard)

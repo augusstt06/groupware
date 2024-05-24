@@ -3,9 +3,9 @@
 import Link from 'next/link'
 import { FaN } from 'react-icons/fa6'
 
-import { ROUTE_POSTING_DETAIL } from '@/constant/route/route-constant'
-import { moduleConvertDate } from '@/module/utils/moduleTime'
-import { type BoardItemProps } from '@/types/pageType'
+import { ROUTE_POSTING_DETAIL } from '@/_constant/route/route-constant'
+import { moduleConvertDate } from '@/_module/utils/moduleTime'
+import { type BoardItemProps } from '@/_types/pageType'
 
 export default function BoardItem(props: BoardItemProps) {
   return (

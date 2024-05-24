@@ -11,15 +11,15 @@ import {
   KEY_ACCESS_TOKEN,
   KEY_ATTENDANCE,
   KEY_X_ORGANIZATION_CODE,
-} from '@/constant/constant'
-import { ERR_COOKIE_NOT_FOUND, errDefault, errDuplicate, errNotFound } from '@/constant/errorMsg'
-import { API_URL_ATTENDANCE } from '@/constant/route/api-route-constant'
-import { useAppDispatch, useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleGetCookie } from '@/module/utils/moduleCookie'
-import { modulePatchFetch, modulePostFetch } from '@/module/utils/moduleFetch'
-import { updateAttendanceStatusReducer } from '@/store/reducers/main/userInfoReducer'
-import { type FailResponseType, type ModulePostFetchProps } from '@/types/module'
-import { type HistoryCardProps } from '@/types/ui/card'
+} from '@/_constant/constant'
+import { ERR_COOKIE_NOT_FOUND, errDefault, errDuplicate, errNotFound } from '@/_constant/errorMsg'
+import { API_URL_ATTENDANCE } from '@/_constant/route/api-route-constant'
+import { useAppDispatch, useAppSelector } from '@/_module/hooks/reduxHooks'
+import { moduleGetCookie } from '@/_module/utils/moduleCookie'
+import { modulePatchFetch, modulePostFetch } from '@/_module/utils/moduleFetch'
+import { updateAttendanceStatusReducer } from '@/_store/reducers/main/userInfoReducer'
+import { type FailResponseType, type ModulePostFetchProps } from '@/_types/module'
+import { type HistoryCardProps } from '@/_types/ui/card'
 
 export default function HistoryCard(props: HistoryCardProps) {
   const dispatch = useAppDispatch()

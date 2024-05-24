@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import Calendar from 'react-calendar'
 
-import { type DialogCalenderProps, type DialogModalProps } from '@/types/module'
+import { type DialogCalenderProps, type DialogModalProps } from '@/_types/module'
 
 export default function Dialog(props: DialogModalProps) {
   const btnClassName =
