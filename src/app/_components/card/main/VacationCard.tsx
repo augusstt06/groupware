@@ -23,7 +23,7 @@ export default function VacationCard() {
       <div className="flex flex-row items-center justify-center w-full mb-2">
         <Button
           buttonContent="휴가 신청"
-          className="w-4/5  transition duration-500 ease-in-out justify-center text-indigo-500 hover:text-white dark:text-white dark:bg-indigo-400 dark:border-white bg-white border-indigo-400 hover:bg-indigo-400 focus:outline-none rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:hover:bg-white dark:hover:text-indigo-500 mb-2 border-2 dark:hover:border-indigo-500/75"
+          className="w-4/5  smooth-transition justify-center text-indigo-500 hover:text-white dark:text-white dark:bg-indigo-400 dark:border-white bg-white border-indigo-400 hover:bg-indigo-400 focus:outline-none rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:hover:bg-white dark:hover:text-indigo-500 mb-2 border-2 dark:hover:border-indigo-500/75"
         />
       </div>
     </div>

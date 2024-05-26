@@ -98,9 +98,9 @@ export default function ProjectTaskDetail(props: ProjectIssueDetailProps) {
   ]
   const issueStateClassName = (issueValue: string, bgColor: string, hoverColor: string) => {
     if (process === issueValue) {
-      return `cursor-pointer mr-3 text-white ${bgColor} transition ease-in-out duration-300 w-1/5 p-2 rounded-full text-center`
+      return `cursor-pointer mr-3 text-white ${bgColor} smooth-transition w-1/5 p-2 rounded-full text-center`
     }
-    return `cursor-pointer mr-3 bg-gray-200 ${hoverColor}dark:bg-gray-400 hover:text-white  transition ease-in-out duration-300 w-1/5 p-2 rounded-full text-center`
+    return `cursor-pointer mr-3 bg-gray-200 ${hoverColor}dark:bg-gray-400 hover:text-white  smooth-transition w-1/5 p-2 rounded-full text-center`
   }
 
   const calendarList = [
