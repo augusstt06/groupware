@@ -27,7 +27,7 @@ export default function ProjectDetailTaskMenu() {
     if (selectTitle === taskCategory) {
       return 'p-5 flex flex-row bg-indigo-400 text-white rounded-lg'
     } else {
-      return 'p-5 flex flex-row transition ease-in-out duration-500 hover:bg-indigo-400 hover:text-white hover:dark:bg-indigo-400 rounded-lg'
+      return 'p-5 flex flex-row smooth-transition hover:bg-indigo-400 hover:text-white hover:dark:bg-indigo-400 rounded-lg'
     }
   }
   const renderIcon = (selectTitle: string) => {
