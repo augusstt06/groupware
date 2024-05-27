@@ -293,7 +293,7 @@ function AccessInvite(props: AccessInviteProps) {
   }
 
   return (
-    <div className="grid h-screen px-4 place-content-center">
+    <div className="h-screen px-4 grid place-content-center">
       <h1 className="font-bold tracking-widest text-gray-600 uppercase dark:text-gray-400">
         {inviteCategory()}에 초대받았습니다.
       </h1>
@@ -315,7 +315,7 @@ function AccessInvite(props: AccessInviteProps) {
 function InviteLogin(props: InviteLoginProps) {
   const { handleLoginModal } = props
   return (
-    <div className="grid h-screen px-4 place-content-center">
+    <div className="h-screen px-4 grid place-content-center">
       <h1 className="font-bold tracking-widest text-gray-600 uppercase dark:text-gray-400">
         초대에 응하기 전에 로그인이 필요합니다.
       </h1>

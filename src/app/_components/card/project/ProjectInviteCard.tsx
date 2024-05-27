@@ -11,7 +11,7 @@ export default function ProjectInviteCard(props: ProjectInviteCardProps) {
   const renderCheck = () => {
     if (isUserInvite()) {
       return (
-        <MdOutlineCheckBox className="w-6 h-6 transition ease-in-out cursor-pointer sm:w-8 sm:h-8 hover:scale-110 duration-400" />
+        <MdOutlineCheckBox className="w-6 h-6 cursor-pointer transition ease-in-out sm:w-8 sm:h-8 hover:scale-110 duration-400" />
       )
     }
     return (
