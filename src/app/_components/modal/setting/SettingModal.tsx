@@ -53,7 +53,7 @@ export default function SettingModal() {
       aria-hidden="true"
       className="modal-base"
     >
-      <div className="justify-center w-4/6 p-4 bg-white border-2 border-indigo-300 border-solid rounded-lg shadow space-y-5 Prelative sort-vertical-flex dark:bg-gray-700 ">
+      <div className="justify-center w-4/6 p-4 bg-white border-2 border-indigo-300 border-solid rounded-lg shadow space-y-5 Prelative sort-vertical-flex dark:bg-[#2e2e2e] ">
         {renderComponent()}
       </div>
     </div>
