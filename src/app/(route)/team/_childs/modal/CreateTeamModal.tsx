@@ -1,10 +1,10 @@
 import { FaCheck } from 'react-icons/fa'
 
-import Input from '@/_components/input/Input'
+import Input from '@/components/input/Input'
 import {
   type CreateProjectModalColorSelectProps,
   type CreateTeamModalProps,
-} from '@/_types/ui/modal'
+} from '@/types/ui/modal'
 
 export default function CreateTeamModal(props: CreateTeamModalProps) {
   return (

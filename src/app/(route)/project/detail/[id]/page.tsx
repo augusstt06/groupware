@@ -9,8 +9,8 @@ import ProjectDetailHub from '../../_childs/hub/detail/ProjectDetailHub'
 import InviteProjectMemberModal from '../../_childs/modal/InviteProjectMemberModal'
 import CreateProjectIssueModal from '../../_childs/modal/issues/category/CreateProjectIssueModal'
 
-import ModalHub from '@/_components/modal/Modal'
-import ProjectDetailTab from '@/_components/tab/project/ProjectDetailTab'
+import ModalHub from '@/components/modal/Modal'
+import ProjectDetailTab from '@/components/tab/project/ProjectDetailTab'
 import {
   KEY_ACCESS_TOKEN,
   KEY_LOGIN_COMPLETE,
@@ -24,7 +24,7 @@ import {
   PROJECT_ISSUE_TODO_VALUE,
   PROJECT_SIDEBAR_TASK_ALL,
   PROJECT_SIDEBAR_TASK_MY,
-} from '@/_constant/constant'
+} from '@/constant/constant'
 import {
   API_URL_COLLEAGUES,
   API_URL_PROJECT_INVITE,
@@ -32,21 +32,21 @@ import {
   API_URL_PROJECT_ISSUE_LIST,
   API_URL_PROJECT_ISSUE_LIST_PINNED,
   API_URL_PROJECTS,
-} from '@/_constant/route/api-route-constant'
-import { useAppDispatch, useAppSelector } from '@/_module/hooks/reduxHooks'
-import { moduleCheckUserState } from '@/_module/utils/check/moduleCheckUserState'
-import { moduleGetCookie } from '@/_module/utils/moduleCookie'
-import { moduleGetFetch, modulePostFetch } from '@/_module/utils/moduleFetch'
-import { changeIssueProjectIdReducer } from '@/_store/reducers/project/projectIssueReducer'
+} from '@/constant/route/api-route-constant'
+import { useAppDispatch, useAppSelector } from '@/module/hooks/reduxHooks'
+import { moduleCheckUserState } from '@/module/utils/check/moduleCheckUserState'
+import { moduleGetCookie } from '@/module/utils/moduleCookie'
+import { moduleGetFetch, modulePostFetch } from '@/module/utils/moduleFetch'
+import { changeIssueProjectIdReducer } from '@/store/reducers/project/projectIssueReducer'
 import {
   createProjectIssueModalOpenReducer,
   projectInviteModalReducer,
-} from '@/_store/reducers/project/projectModalReducer'
+} from '@/store/reducers/project/projectModalReducer'
 import {
   type DialogBtnValueType,
   type ModulePostFetchProps,
   type SuccessResponseType,
-} from '@/_types/module'
+} from '@/types/module'
 import {
   type ColleagueType,
   type DialogTextType,
@@ -54,7 +54,7 @@ import {
   type ProjectIssueResponseType,
   type ProjectIssueType,
   type ProjectResponseType,
-} from '@/_types/variable'
+} from '@/types/variable'
 
 export default function ProjectDetail() {
   const dispatch = useAppDispatch()

@@ -4,14 +4,14 @@ import 'react-calendar/dist/Calendar.css'
 import moment from 'moment'
 import { FaRegCalendarAlt } from 'react-icons/fa'
 
-import Button from '@/_components/button/Button'
+import Button from '@/components/button/Button'
 import {
   PROJECT_DATE_FORMAT,
   PROJECT_ISSUE_SCHEDULE_UNIT_HOUR_EN,
   PROJECT_ISSUE_SCHEDULE_UNIT_HOUR_KO,
   PROJECT_ISSUE_SCHEDULE_UNIT_MINUTE_EN,
   PROJECT_ISSUE_SCHEDULE_UNIT_MINUTE_KO,
-} from '@/_constant/constant'
+} from '@/constant/constant'
 import {
   type IssueCalendarProps,
   type IssueCalendarWithTimeProps,
@@ -21,7 +21,7 @@ import {
   type IssueSelecProps,
   type IssueTimeProps,
   type ValuePiece,
-} from '@/_types/pageType'
+} from '@/types/pageType'
 
 export function IssueInput(props: IssueInputProps) {
   const { title, placeholder, value, onChange } = props

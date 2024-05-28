@@ -1,5 +1,5 @@
-import ProjectInviteMemberCard from '@/_components/card/project/ProjectInviteMemberCard'
-import { type ProjectInviteListProps } from '@/_types/ui/modal'
+import ProjectInviteMemberCard from '@/components/card/project/ProjectInviteMemberCard'
+import { type ProjectInviteListProps } from '@/types/ui/modal'
 
 export default function ProjectInviteList(props: ProjectInviteListProps) {
   const { inviteList } = props

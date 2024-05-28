@@ -7,13 +7,13 @@ import ProjectIssueSchedule from './schedule/ProjectIssueSchedule'
 import ProjectIssueTask from './task/ProjectIssueTask'
 import ProjectIssueTodo from './todo/ProjectIssueTodo'
 
-import CreateProjectIssueModalTab from '@/_components/tab/project/modal/CreateProjectIssueModalTab'
+import CreateProjectIssueModalTab from '@/components/tab/project/modal/CreateProjectIssueModalTab'
 import {
   PROJECT_DETAIL_CATEGORY_SCHEDULE,
   PROJECT_DETAIL_CATEGORY_TASK,
   PROJECT_DETAIL_CATEGORY_TODO,
-} from '@/_constant/constant'
-import { useAppSelector } from '@/_module/hooks/reduxHooks'
+} from '@/constant/constant'
+import { useAppSelector } from '@/module/hooks/reduxHooks'
 
 export default function CreateProjectIssueModal() {
   const detailCategory = useAppSelector((state) => state.projectDetailCategory.detailCategory)

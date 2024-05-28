@@ -2,8 +2,8 @@
 
 import { useRouter } from 'next/navigation'
 
-import Button from '@/_components/button/Button'
-import { ROUTE_BOARD } from '@/_constant/route/route-constant'
+import Button from '@/components/button/Button'
+import { ROUTE_BOARD } from '@/constant/route/route-constant'
 
 export default function NotFoundPostingDetail() {
   const router = useRouter()

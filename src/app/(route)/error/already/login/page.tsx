@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation'
 
-import { ROUTE_MAIN } from '@/_constant/route/route-constant'
+import { ROUTE_MAIN } from '@/constant/route/route-constant'
 
 export default function AlreadyLogin() {
   const router = useRouter()
