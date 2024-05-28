@@ -167,7 +167,7 @@ export function IssueCalendarWithTime(props: IssueCalendarWithTimeProps) {
   }
   return (
     <>
-      <div className="grid items-center grid-cols-6 gap-2 p-2">
+      <div className="items-center p-2 grid grid-cols-6 gap-2">
         {renderTitle()}
         <div className="grid grid-cols-6 col-span-5 gap-2">
           <div className="sort-vertical-flex p-2 ml-4 text-sm text-gray-900 truncate bg-transparent dark:bg-[#505050] border-2 border-indigo-200 rounded col-span-3 lg:ml-0 lg:flex-row dark:border-indigo-300 w-26 dark:placeholder-gray-400 dark:text-white">
@@ -176,7 +176,7 @@ export function IssueCalendarWithTime(props: IssueCalendarWithTimeProps) {
               {moment(scheduleData.calendarDateValue as ValuePiece).format('YYYY/MM/DD')}
             </span>
           </div>
-          <div className="grid items-center col-span-2 gap-2 lg:grid-cols-2 grid-row-2">
+          <div className="items-center grid col-span-2 gap-2 lg:grid-cols-2 grid-row-2">
             {issueTimeList.map((data) => (
               <IssueTime
                 key={data.unit}

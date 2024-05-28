@@ -21,6 +21,7 @@ export default function SettingModal() {
   const handleChangeSetting = (setting: string) => {
     setSetting(setting)
   }
+
   const dispatch = useAppDispatch()
   const handleCloseModal = () => {
     dispatch(handleSettingModalReducer())
