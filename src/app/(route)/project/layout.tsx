@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 
 import { useRouter } from 'next/navigation'
 
+import SettingModal from '@/components/modal/setting/SettingModal'
 import { KEY_ACCESS_TOKEN, KEY_LOGIN_COMPLETE } from '@/constant/constant'
 import { useAppDispatch, useAppSelector } from '@/module/hooks/reduxHooks'
 import { moduleCheckUserState } from '@/module/utils/check/moduleCheckUserState'
@@ -23,8 +24,6 @@ export default function ProjetLayout({ children }: ReactProps) {
   const isSettingOpen = useAppSelector((state) => state.settingModal.isOpen)
   const [accessToken, setAccessToken] = useState(moduleGetCookie(KEY_ACCESS_TOKEN))
   const decodeToken = moduleDecodeToken(accessToken)
-  const accessTokenTime = Number((decodeToken as CustomDecodeTokenType).exp)
-  const isTokenExist: boolean = checkTokenExpired(accessTokenTime)
   const loginCompleteState = useAppSelector((state) => state.maintain[KEY_LOGIN_COMPLETE])
 
   useEffect(() => {
@@ -32,10 +31,17 @@ export default function ProjetLayout({ children }: ReactProps) {
   }, [])
 
   useEffect(() => {
+    const accessTokenTime = Number((decodeToken as CustomDecodeTokenType).exp)
+    const isTokenExist: boolean = checkTokenExpired(accessTokenTime)
     if (isTokenExist) {
       void moduleRefreshToken(accessToken)
     }
     moduleCheckUserState({ loginCompleteState, router, accessToken, setAccessToken })
   }, [accessToken])
-  return <>{children}</>
+  return (
+    <>
+      {children}
+      {isSettingOpen ? <SettingModal /> : null}
+    </>
+  )
 }
