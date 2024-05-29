@@ -56,11 +56,11 @@ const ChangeOptions = (props: Props) => {
       <section className="justify-center text-xl sort-row-flex">
         <h1>My Page</h1>
       </section>
-      <section className="justify-center w-2/3 gap-1 p-1 sort-vertical-flex">
-        <div className="justify-center gap-5 p-1 sort-row-flex">
+      <section className="justify-center w-2/3 p-1 gap-1 sort-vertical-flex">
+        <div className="justify-center p-1 gap-5 sort-row-flex">
           <CiImageOff className="w-24 h-24" />
           <div className="flex flex-col items-start gap-2">
-            <div className="flex items-end gap-3 text-3xl font-bold">
+            <div className="flex items-end text-3xl font-bold gap-3">
               <h1>{user.extraInfo.name}</h1>{' '}
               {isChangeName ? (
                 <IoClose
@@ -78,12 +78,12 @@ const ChangeOptions = (props: Props) => {
               <div className="sort-row-flex gap-3">
                 <Input
                   placeholder="새 이름을 입력해주세요"
-                  className="text-sm text-gray-900 py-1 px-1 bg-white rounded-lg h-8"
+                  className="h-8 px-1 py-1 text-sm text-gray-900 bg-white rounded-lg"
                   isLabel={false}
                 />
                 <Button
                   buttonContent={'변경'}
-                  className="p-2 pl-3 pr-3 text-white bg-indigo-300 rounded-lg smooth-transition hover:bg-indigo-500 text-sm h-8"
+                  className="h-8 p-2 pl-3 pr-3 text-sm text-white bg-indigo-300 rounded-lg smooth-transition hover:bg-indigo-500"
                 />
               </div>
             ) : (
@@ -99,11 +99,11 @@ const ChangeOptions = (props: Props) => {
         </button> */}
       </section>
 
-      <section className="grid w-4/5 grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 place-items-center">
+      <section className="w-4/5 grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 place-items-center">
         {settingList.map((data) => (
           <div
             key={data.name}
-            className="justify-center w-40 gap-3 p-3 border-2 border-indigo-300 rounded-lg cursor-pointer hover:bg-indigo-400 hover:text-white sort-vertical-flex dark:hover:bg-indigo-500 smooth-transition"
+            className="justify-center w-40 p-3 border-2 border-indigo-300 rounded-lg cursor-pointer gap-3 hover:bg-indigo-400 hover:text-white sort-vertical-flex dark:hover:bg-indigo-500 smooth-transition"
             onClick={data.handleChange}
           >
             {data.icon}

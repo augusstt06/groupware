@@ -177,6 +177,7 @@ export const PROJECT_DATE_FORMAT = 'YYYY-MM-DD'
 export const MODAL_BTN_CREATE = '생성'
 export const MODAL_BTN_SAVE = '저장'
 export const MODAL_BTN_SELECT = '선택'
+export const MODAL_BTN_INVITE = '초대'
 
 export const MODAL_CREATE_PROJECT_ISSUE = 'project-issue'
 export const MODAL_INVITE_MEMBER_IN_PROJECT = 'invite-member'

@@ -5,7 +5,6 @@ import Button from '../button/Button'
 
 import Dialog from './dialog/Dialog'
 
-import { MODAL_CREATE_PROJECT_ISSUE, MODAL_INVITE_MEMBER_IN_PROJECT } from '@/constant/constant'
 import { type ModalHubProps, type ModalUsePortalProps } from '@/types/module'
 import { type ModalBtnProps } from '@/types/ui/modal'
 
@@ -39,14 +38,6 @@ export default function ModalHub(props: ModalHubProps) {
 }
 export function Modal(props: ModalUsePortalProps) {
   const [render, setRender] = useState<HTMLDivElement | null>(null)
-  const btnClassName = () => {
-    switch (props.name) {
-      case MODAL_CREATE_PROJECT_ISSUE:
-        return ''
-      case MODAL_INVITE_MEMBER_IN_PROJECT:
-        return 'border-t-2 border-gray-300'
-    }
-  }
 
   const viewModal = () => {
     if (render === null) return null
@@ -63,13 +54,11 @@ export function Modal(props: ModalUsePortalProps) {
           className={`p-3 relative rounded-lg shadow bg-[#f5f7fc] dark:bg-[#2e2e2e] backdrop-blur-3xl border-solid border-4 border-indigo-300 w-5/6 md:w-1/2 xl:w-2/5 2xl:w-1/3 `}
         >
           {props.children}
-          <div className={btnClassName()}>
-            <ModalBtn
-              onClose={props.onClose}
-              btnValue={props.btnValue}
-              confirmFunc={props.confirmFunc}
-            />
-          </div>
+          <ModalBtn
+            onClose={props.onClose}
+            btnValue={props.btnValue}
+            confirmFunc={props.confirmFunc}
+          />
         </div>
       </div>,
       document.getElementById('modal') as HTMLElement,

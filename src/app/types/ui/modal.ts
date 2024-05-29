@@ -60,9 +60,11 @@ export type InviteProjectMemberModalProps = {
 }
 export type ProjectInviteListProps = {
   inviteList: ColleagueType[]
+  handleInviteUser: (user: ColleagueType) => void
 }
 export type ProjectInviteMemberCardProps = {
   user: ColleagueType
+  handleInviteUser: (user: ColleagueType) => void
 }
 export type InviteLoginModalProps = {
   inputList: Array<{

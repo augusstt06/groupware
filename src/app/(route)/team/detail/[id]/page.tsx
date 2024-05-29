@@ -14,7 +14,7 @@ import {
   KEY_ACCESS_TOKEN,
   KEY_LOGIN_COMPLETE,
   KEY_X_ORGANIZATION_CODE,
-  MODAL_BTN_SAVE,
+  MODAL_BTN_INVITE,
   MODAL_INVITE_MEMBER_IN_PROJECT,
 } from '@/constant/constant'
 import {
@@ -136,7 +136,6 @@ export default function TeamDetail() {
       },
     })
     const members = (res as SuccessResponseType<ColleagueType[]>).result.filter(
-      // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
       (data) => !data.team.some((teamData) => teamData.id === team?.result.id),
     )
     setMemberList(members)
@@ -154,7 +153,7 @@ export default function TeamDetail() {
         />
       ),
       name: MODAL_INVITE_MEMBER_IN_PROJECT,
-      btnValue: MODAL_BTN_SAVE,
+      btnValue: MODAL_BTN_INVITE,
       confirmFunc: invite,
       dialog: dialogRef,
       dialogAlertText: dialogText,
