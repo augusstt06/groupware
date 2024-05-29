@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import ChangeOptions from './childs/ChangeOptions'
 import ChangeOrg from './childs/ChangeOrg'
@@ -12,6 +12,7 @@ import { useAppDispatch } from '@/module/hooks/reduxHooks'
 import { handleSettingModalReducer } from '@/store/reducers/setting/settingModalReducer'
 
 type SettingModalBtnProps = {
+  clickEvent: () => void
   handleChangeSetting: (setting: string) => void
   handleCloseModal: () => void
   isInitialSetting: boolean
@@ -20,6 +21,10 @@ export default function SettingModal() {
   const [setting, setSetting] = useState<string>('')
   const handleChangeSetting = (setting: string) => {
     setSetting(setting)
+  }
+  const [clickEvent, setClickEvent] = useState<() => void>(() => {})
+  const updateClickEvent = (fetchFn: () => void) => {
+    setClickEvent(fetchFn)
   }
 
   const isInitialSetting = setting === ''
@@ -30,7 +35,7 @@ export default function SettingModal() {
   const renderComponent = () => {
     switch (setting) {
       case PWD:
-        return <ChangePwd />
+        return <ChangePwd updateClickEvent={updateClickEvent} />
       case NAME:
         return
       case ORG:
@@ -42,6 +47,9 @@ export default function SettingModal() {
     }
   }
 
+  useEffect(() => {
+    if (setting === '') updateClickEvent(() => {})
+  }, [setting])
   return (
     <div
       id="static-modal"
@@ -53,6 +61,7 @@ export default function SettingModal() {
       <div className="justify-center w-4/6 p-4 bg-white border-2 border-indigo-300 border-solid rounded-lg shadow space-y-5 Prelative sort-vertical-flex dark:bg-[#2e2e2e] ">
         {renderComponent()}
         <SettingModalBtn
+          clickEvent={clickEvent}
           isInitialSetting={isInitialSetting}
           handleChangeSetting={handleChangeSetting}
           handleCloseModal={handleCloseModal}
@@ -63,9 +72,10 @@ export default function SettingModal() {
 }
 
 const SettingModalBtn = (props: SettingModalBtnProps) => {
-  const { isInitialSetting, handleCloseModal, handleChangeSetting } = props
+  const { isInitialSetting, handleCloseModal, handleChangeSetting, clickEvent } = props
+
   const buttonList = [
-    { buttonContent: '변경', onClick: () => {}, className: 'bg-indigo-300 hover:bg-indigo-500' },
+    { buttonContent: '변경', onClick: clickEvent, className: 'bg-indigo-300 hover:bg-indigo-500' },
     {
       buttonContent: '이전',
       onClick: () => {
@@ -74,6 +84,7 @@ const SettingModalBtn = (props: SettingModalBtnProps) => {
       className: 'bg-red-300 hover:bg-red-500',
     },
   ]
+
   return (
     <>
       {isInitialSetting ? (
