@@ -5,13 +5,13 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { AiOutlineMail } from 'react-icons/ai'
 
-import { Label, LabelIcon } from '@/_components/label/Label'
-import { KEY_ACCESS_TOKEN, REGISTER_EMAIL } from '@/_constant/constant'
-import { ERR_COOKIE_NOT_FOUND } from '@/_constant/errorMsg'
-import { ROUTE_LOGIN, ROUTE_MAIN } from '@/_constant/route/route-constant'
-import useInput from '@/_module/hooks/reactHooks/useInput'
-import { moduleGetCookie } from '@/_module/utils/moduleCookie'
-import { type UseInputProps } from '@/_types/module'
+import { Label, LabelIcon } from '@/components/label/Label'
+import { KEY_ACCESS_TOKEN, REGISTER_EMAIL } from '@/constant/constant'
+import { ERR_COOKIE_NOT_FOUND } from '@/constant/errorMsg'
+import { ROUTE_LOGIN, ROUTE_MAIN } from '@/constant/route/route-constant'
+import useInput from '@/module/hooks/reactHooks/useInput'
+import { moduleGetCookie } from '@/module/utils/moduleCookie'
+import { type UseInputProps } from '@/types/module'
 
 export default function FindPwd() {
   const router = useRouter()

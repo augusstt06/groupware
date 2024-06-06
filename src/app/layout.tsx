@@ -6,17 +6,12 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { Fredoka } from 'next/font/google'
 import { usePathname } from 'next/navigation'
 
-import Nav from './_components/nav/Nav'
-import Sidebar from './_components/sidebar/Sidebar'
-import {
-  ROUTE_BOARD,
-  ROUTE_MAIN,
-  ROUTE_PROJECT,
-  ROUTE_TEAM,
-} from './_constant/route/route-constant'
-import { ReduxProvider } from './_providers/reduxProvider'
-import CustomThemeProvider from './_providers/themeProvider'
-import { type ReactProps } from './_types/pageType'
+import Nav from './components/nav/Nav'
+import Sidebar from './components/sidebar/Sidebar'
+import { ROUTE_BOARD, ROUTE_MAIN, ROUTE_PROJECT, ROUTE_TEAM } from './constant/route/route-constant'
+import { ReduxProvider } from './providers/reduxProvider'
+import CustomThemeProvider from './providers/themeProvider'
+import { type ReactProps } from './types/pageType'
 
 const fredoka = Fredoka({
   subsets: ['latin'],

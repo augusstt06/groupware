@@ -10,8 +10,8 @@ import { RiLockPasswordFill } from 'react-icons/ri'
 
 import InviteLoginModal from '../_childs/modal/InviteLoginModal'
 
-import Button from '@/_components/button/Button'
-import ModalHub from '@/_components/modal/Modal'
+import Button from '@/components/button/Button'
+import ModalHub from '@/components/modal/Modal'
 import {
   INVITE_PROJECT,
   INVITE_TEAM,
@@ -21,29 +21,29 @@ import {
   REGISTER_EMAIL,
   REGISTER_PWD,
   TRUE,
-} from '@/_constant/constant'
-import { ERR_COOKIE_NOT_FOUND } from '@/_constant/errorMsg'
+} from '@/constant/constant'
+import { ERR_COOKIE_NOT_FOUND } from '@/constant/errorMsg'
 import {
   API_URL_GET_USERS,
   API_URL_LOGIN,
   API_URL_PROJECT_JOIN,
   API_URL_TEAMS_JOIN,
-} from '@/_constant/route/api-route-constant'
-import { ROUTE_PROJECT, ROUTE_TEAM } from '@/_constant/route/route-constant'
-import useInput from '@/_module/hooks/reactHooks/useInput'
-import { useAppDispatch, useAppSelector } from '@/_module/hooks/reduxHooks'
-import { moduleDecodeToken, moduleGetCookie, moduleSetCookies } from '@/_module/utils/moduleCookie'
+} from '@/constant/route/api-route-constant'
+import { ROUTE_PROJECT, ROUTE_TEAM } from '@/constant/route/route-constant'
+import useInput from '@/module/hooks/reactHooks/useInput'
+import { useAppDispatch, useAppSelector } from '@/module/hooks/reduxHooks'
+import { moduleDecodeToken, moduleGetCookie, moduleSetCookies } from '@/module/utils/moduleCookie'
 import {
   moduleGetFetch,
   modulePostFetch,
   modulePostFetchWithQuery,
-} from '@/_module/utils/moduleFetch'
+} from '@/module/utils/moduleFetch'
 import {
   updateAttendanceStatusReducer,
   updateExtraUserInfoReducer,
   updateUserInfoReducer,
-} from '@/_store/reducers/main/userInfoReducer'
-import { updateLoginCompleteReducer } from '@/_store/reducers/maintain/maintainReducer'
+} from '@/store/reducers/main/userInfoReducer'
+import { updateLoginCompleteReducer } from '@/store/reducers/maintain/maintainReducer'
 import {
   type ApiResponseType,
   type CustomDecodeTokenType,
@@ -51,9 +51,9 @@ import {
   type LoginResponseType,
   type ModuleGetFetchProps,
   type SuccessResponseType,
-} from '@/_types/module'
-import { type AccessInviteProps, type InviteLoginProps } from '@/_types/pageType'
-import { type DialogTextType } from '@/_types/variable'
+} from '@/types/module'
+import { type AccessInviteProps, type InviteLoginProps } from '@/types/pageType'
+import { type DialogTextType } from '@/types/variable'
 
 export default function Invite() {
   const router = useRouter()
@@ -293,7 +293,7 @@ function AccessInvite(props: AccessInviteProps) {
   }
 
   return (
-    <div className="grid h-screen px-4 place-content-center">
+    <div className="h-screen px-4 grid place-content-center">
       <h1 className="font-bold tracking-widest text-gray-600 uppercase dark:text-gray-400">
         {inviteCategory()}에 초대받았습니다.
       </h1>
@@ -315,7 +315,7 @@ function AccessInvite(props: AccessInviteProps) {
 function InviteLogin(props: InviteLoginProps) {
   const { handleLoginModal } = props
   return (
-    <div className="grid h-screen px-4 place-content-center">
+    <div className="h-screen px-4 grid place-content-center">
       <h1 className="font-bold tracking-widest text-gray-600 uppercase dark:text-gray-400">
         초대에 응하기 전에 로그인이 필요합니다.
       </h1>

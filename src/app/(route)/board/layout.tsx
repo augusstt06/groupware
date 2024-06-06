@@ -6,19 +6,19 @@ import { useRouter, useSearchParams } from 'next/navigation'
 
 import BoardWriteModal from './_childs/modal/BoardWriteModal'
 
-import SettingModal from '@/_components/modal/setting/SettingModal'
-import { KEY_ACCESS_TOKEN, KEY_LOGIN_COMPLETE } from '@/_constant/constant'
-import { useAppDispatch, useAppSelector } from '@/_module/hooks/reduxHooks'
-import { moduleCheckUserState } from '@/_module/utils/check/moduleCheckUserState'
+import SettingModal from '@/components/modal/setting/SettingModal'
+import { KEY_ACCESS_TOKEN, KEY_LOGIN_COMPLETE } from '@/constant/constant'
+import { useAppDispatch, useAppSelector } from '@/module/hooks/reduxHooks'
+import { moduleCheckUserState } from '@/module/utils/check/moduleCheckUserState'
 import {
   checkTokenExpired,
   moduleDecodeToken,
   moduleGetCookie,
   moduleRefreshToken,
-} from '@/_module/utils/moduleCookie'
-import { handleSettingModalReducer } from '@/_store/reducers/setting/settingModalReducer'
-import { type CustomDecodeTokenType } from '@/_types/module'
-import { type ReactProps } from '@/_types/pageType'
+} from '@/module/utils/moduleCookie'
+import { handleSettingModalReducer } from '@/store/reducers/setting/settingModalReducer'
+import { type CustomDecodeTokenType } from '@/types/module'
+import { type ReactProps } from '@/types/pageType'
 
 export default function BoardLayout({ children }: ReactProps) {
   const router = useRouter()

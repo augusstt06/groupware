@@ -1,15 +1,15 @@
 import { useEffect } from 'react'
 
-import FloatingInput from '@/_components/input/FloatingInput'
+import FloatingInput from '@/components/input/FloatingInput'
 import {
   REGISTER_ORG_DESCRIPTION,
   REGISTER_ORG_DESCRIPTION_EN,
   REGISTER_ORG_NAME,
   REGISTER_ORG_NAME_EN,
-} from '@/_constant/constant'
-import useInput from '@/_module/hooks/reactHooks/useInput'
-import { useAppDispatch, useAppSelector } from '@/_module/hooks/reduxHooks'
-import { createOrgReducer } from '@/_store/reducers/login/orgInfoReducer'
+} from '@/constant/constant'
+import useInput from '@/module/hooks/reactHooks/useInput'
+import { useAppDispatch, useAppSelector } from '@/module/hooks/reduxHooks'
+import { createOrgReducer } from '@/store/reducers/login/orgInfoReducer'
 
 export default function CreateOrgInfo() {
   const dispatch = useAppDispatch()

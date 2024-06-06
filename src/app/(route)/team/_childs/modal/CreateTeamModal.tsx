@@ -1,10 +1,10 @@
 import { FaCheck } from 'react-icons/fa'
 
-import Input from '@/_components/input/Input'
+import Input from '@/components/input/Input'
 import {
   type CreateProjectModalColorSelectProps,
   type CreateTeamModalProps,
-} from '@/_types/ui/modal'
+} from '@/types/ui/modal'
 
 export default function CreateTeamModal(props: CreateTeamModalProps) {
   return (
@@ -34,9 +34,9 @@ export function CreateTeamModalColorSelect(props: CreateProjectModalColorSelectP
   const { colorList, handleSelectColor, selectColor } = props
   const divClassName = (name: string, value: string) => {
     if (props.selectColor === name) {
-      return `${value} lg:w-20 md:w-12 w-8 h-8 rounded-lg mt-2 transition ease-in-out duration-600 scale-110 flex items-center justify-center`
+      return `${value} lg:w-20 md:w-12 w-8 h-8 rounded-lg mt-2 smooth-transition scale-110 flex items-center justify-center`
     } else {
-      return `${value} lg:w-20 md:w-12 w-8 h-8 rounded-lg mt-2 transition ease-in-out duration-500 hover:scale-110 flex items-center justify-center`
+      return `${value} lg:w-20 md:w-12 w-8 h-8 rounded-lg mt-2 smooth-transition hover:scale-110 flex items-center justify-center`
     }
   }
   return (

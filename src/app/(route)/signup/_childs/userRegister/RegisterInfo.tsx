@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
-import ErrorAlert from '@/_components/alert/ErrorAlert'
-import FloatingInput from '@/_components/input/FloatingInput'
+import ErrorAlert from '@/components/alert/ErrorAlert'
+import FloatingInput from '@/components/input/FloatingInput'
 import {
   API_SUCCESS_CODE,
   REGISTER_CONFIRM_PWD_EN,
@@ -13,27 +13,27 @@ import {
   VALIDATE_EMAIL_TYPE,
   VALIDATE_PHONE_NUM_TYPE,
   VALIDATE_PWD_TYPE,
-} from '@/_constant/constant'
+} from '@/constant/constant'
 import {
   ERR_MESSAGE_CHECK_MAIL,
   ERR_MESSAGE_USER_EXIST,
   errDefault,
   errExist,
-} from '@/_constant/errorMsg'
-import { API_URL_CHECK_EMAIL } from '@/_constant/route/api-route-constant'
-import useInput from '@/_module/hooks/reactHooks/useInput'
-import { useAppDispatch } from '@/_module/hooks/reduxHooks'
-import { moduleGetFetch } from '@/_module/utils/moduleFetch'
-import inputValidate from '@/_module/utils/moduleInputValidate'
+} from '@/constant/errorMsg'
+import { API_URL_CHECK_EMAIL } from '@/constant/route/api-route-constant'
+import useInput from '@/module/hooks/reactHooks/useInput'
+import { useAppDispatch } from '@/module/hooks/reduxHooks'
+import { moduleGetFetch } from '@/module/utils/moduleFetch'
+import inputValidate from '@/module/utils/moduleInputValidate'
 import {
   emailReducer,
   nameReducer,
   phoneNumberReducer,
   positionReducer,
   pwdReducer,
-} from '@/_store/reducers/login/signupInfoReducer'
-import { type FailResponseType, type ModuleGetFetchProps } from '@/_types/module'
-import { type RegisterInfoTypeProps } from '@/_types/pageType'
+} from '@/store/reducers/login/signupInfoReducer'
+import { type FailResponseType, type ModuleGetFetchProps } from '@/types/module'
+import { type RegisterInfoTypeProps } from '@/types/pageType'
 
 export default function RegisterInfo(props: RegisterInfoTypeProps) {
   const dispatch = useAppDispatch()

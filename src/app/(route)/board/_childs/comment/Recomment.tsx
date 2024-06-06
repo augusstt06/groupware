@@ -6,22 +6,22 @@ import { FaHeart, FaRegHeart } from 'react-icons/fa'
 
 import WriteComment from './WriteComment'
 
-import { API_SUCCESS_CODE, KEY_ACCESS_TOKEN, KEY_X_ORGANIZATION_CODE } from '@/_constant/constant'
-import { API_URL_COMMENT, API_URL_COMMENT_LIKE } from '@/_constant/route/api-route-constant'
-import { useAppDispatch, useAppSelector } from '@/_module/hooks/reduxHooks'
-import { moduleGetCookie } from '@/_module/utils/moduleCookie'
-import { moduleDeleteFetch, modulePostFetch } from '@/_module/utils/moduleFetch'
+import { API_SUCCESS_CODE, KEY_ACCESS_TOKEN, KEY_X_ORGANIZATION_CODE } from '@/constant/constant'
+import { API_URL_COMMENT, API_URL_COMMENT_LIKE } from '@/constant/route/api-route-constant'
+import { useAppDispatch, useAppSelector } from '@/module/hooks/reduxHooks'
+import { moduleGetCookie } from '@/module/utils/moduleCookie'
+import { moduleDeleteFetch, modulePostFetch } from '@/module/utils/moduleFetch'
 import {
   addCommentLikeReducer,
   deleteCommentLikeReducer,
-} from '@/_store/reducers/board/boardLikeReducer'
+} from '@/store/reducers/board/boardLikeReducer'
 import {
   type ApiResponseType,
   type FailResponseType,
   type ModuleGetFetchProps,
   type ModulePostFetchProps,
-} from '@/_types/module'
-import { type CommentProps } from '@/_types/pageType'
+} from '@/types/module'
+import { type CommentProps } from '@/types/pageType'
 
 export default function Recomment(props: CommentProps) {
   const dispatch = useAppDispatch()

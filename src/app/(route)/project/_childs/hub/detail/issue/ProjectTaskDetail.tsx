@@ -8,7 +8,7 @@ import { LuLoader } from 'react-icons/lu'
 
 import { IssueCalendar } from '../../../modal/issues/category/components/ProjectIssueComponent'
 
-import { DialogCalendar } from '@/_components/modal/dialog/Dialog'
+import { DialogCalendar } from '@/components/modal/dialog/Dialog'
 import {
   KEY_ACCESS_TOKEN,
   KEY_X_ORGANIZATION_CODE,
@@ -30,17 +30,13 @@ import {
   PROJECT_ISSUE_TASK_PROGRESS_REQUESTED_TITLE,
   PROJECT_ISSUE_TASK_PROGRESS_REQUESTED_VALUE,
   PROJECT_ISSUE_TASK_VALUE,
-} from '@/_constant/constant'
-import { API_URL_PROJECT_ISSUE } from '@/_constant/route/api-route-constant'
-import { useAppSelector } from '@/_module/hooks/reduxHooks'
-import { moduleGetCookie } from '@/_module/utils/moduleCookie'
-import { modulePatchFetch } from '@/_module/utils/moduleFetch'
-import { type ModulePostFetchProps } from '@/_types/module'
-import {
-  type CalendarValue,
-  type ProjectIssueDetailProps,
-  type ValuePiece,
-} from '@/_types/pageType'
+} from '@/constant/constant'
+import { API_URL_PROJECT_ISSUE } from '@/constant/route/api-route-constant'
+import { useAppSelector } from '@/module/hooks/reduxHooks'
+import { moduleGetCookie } from '@/module/utils/moduleCookie'
+import { modulePatchFetch } from '@/module/utils/moduleFetch'
+import { type ModulePostFetchProps } from '@/types/module'
+import { type CalendarValue, type ProjectIssueDetailProps, type ValuePiece } from '@/types/pageType'
 
 export default function ProjectTaskDetail(props: ProjectIssueDetailProps) {
   const { issue } = props
@@ -98,9 +94,9 @@ export default function ProjectTaskDetail(props: ProjectIssueDetailProps) {
   ]
   const issueStateClassName = (issueValue: string, bgColor: string, hoverColor: string) => {
     if (process === issueValue) {
-      return `cursor-pointer mr-3 text-white ${bgColor} transition ease-in-out duration-300 w-1/5 p-2 rounded-full text-center`
+      return `cursor-pointer mr-3 text-white ${bgColor} smooth-transition w-1/5 p-2 rounded-full text-center`
     }
-    return `cursor-pointer mr-3 bg-gray-200 ${hoverColor}dark:bg-gray-400 hover:text-white  transition ease-in-out duration-300 w-1/5 p-2 rounded-full text-center`
+    return `cursor-pointer mr-3 bg-gray-200 ${hoverColor}dark:bg-gray-400 hover:text-white  smooth-transition w-1/5 p-2 rounded-full text-center`
   }
 
   const calendarList = [

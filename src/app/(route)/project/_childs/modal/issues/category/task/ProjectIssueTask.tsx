@@ -14,7 +14,7 @@ import {
   IssueSelect,
 } from '../components/ProjectIssueComponent'
 
-import { DialogCalendar } from '@/_components/modal/dialog/Dialog'
+import { DialogCalendar } from '@/components/modal/dialog/Dialog'
 import {
   PROJECT_DATE_FORMAT,
   PROJECT_ISSUE_TASK_PROGRESS_COMPLETED_COLOR,
@@ -34,9 +34,9 @@ import {
   PROJECT_ISSUE_TASK_PROGRESS_REQUESTED_TITLE,
   PROJECT_ISSUE_TASK_PROGRESS_REQUESTED_VALUE,
   PROJECT_ISSUE_TASK_VALUE,
-} from '@/_constant/constant'
-import useInput from '@/_module/hooks/reactHooks/useInput'
-import { useAppDispatch } from '@/_module/hooks/reduxHooks'
+} from '@/constant/constant'
+import useInput from '@/module/hooks/reactHooks/useInput'
+import { useAppDispatch } from '@/module/hooks/reduxHooks'
 import {
   changeIssueCategoryReducer,
   changeIssueDescriptionReducer,
@@ -45,9 +45,9 @@ import {
   changeIssueStartAtReducer,
   changeIssueTitleReducer,
   resetIssueReducer,
-} from '@/_store/reducers/project/projectIssueReducer'
-import { type CalendarValue, type ValuePiece } from '@/_types/pageType'
-import { type TaskListType } from '@/_types/variable'
+} from '@/store/reducers/project/projectIssueReducer'
+import { type CalendarValue, type ValuePiece } from '@/types/pageType'
+import { type TaskListType } from '@/types/variable'
 
 export default function ProjectIssueTask() {
   const startDialogRef = useRef<HTMLDialogElement | null>(null)

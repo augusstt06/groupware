@@ -6,9 +6,9 @@ import { Chakra_Petch } from 'next/font/google'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
-import ErrorAlert from './_components/alert/ErrorAlert'
-import Button from './_components/button/Button'
-import FloatingInput from './_components/input/FloatingInput'
+import ErrorAlert from './components/alert/ErrorAlert'
+import Button from './components/button/Button'
+import FloatingInput from './components/input/FloatingInput'
 import {
   API_SUCCESS_CODE,
   FALSE,
@@ -19,34 +19,34 @@ import {
   REGISTER_PWD,
   REGISTER_PWD_EN,
   TRUE,
-} from './_constant/constant'
+} from './constant/constant'
 import {
   ERR_COOKIE_NOT_FOUND,
   ERR_MESSAGE_LOGIN_EMAIL_FAIL,
   ERR_MESSAGE_LOGIN_PWD_FAIL,
   errDefault,
-} from './_constant/errorMsg'
-import { API_URL_LOGIN } from './_constant/route/api-route-constant'
+} from './constant/errorMsg'
+import { API_URL_LOGIN } from './constant/route/api-route-constant'
 import {
   ROUTE_ERR_NOT_FOUND_ORG_TOKEN,
   ROUTE_FIND_PWD,
   ROUTE_MAIN,
   ROUTE_SIGNUP,
-} from './_constant/route/route-constant'
-import useInput from './_module/hooks/reactHooks/useInput'
-import { useAppDispatch, useAppSelector } from './_module/hooks/reduxHooks'
-import { moduleGetCookie, moduleSetCookies } from './_module/utils/moduleCookie'
-import { modulePostFetch } from './_module/utils/moduleFetch'
-import inputValidate from './_module/utils/moduleInputValidate'
-import { resetLoginReducer } from './_store/reducers/login/loginInfoReducer'
-import { updateLoginCompleteReducer } from './_store/reducers/maintain/maintainReducer'
+} from './constant/route/route-constant'
+import useInput from './module/hooks/reactHooks/useInput'
+import { useAppDispatch, useAppSelector } from './module/hooks/reduxHooks'
+import { moduleGetCookie, moduleSetCookies } from './module/utils/moduleCookie'
+import { modulePostFetch } from './module/utils/moduleFetch'
+import inputValidate from './module/utils/moduleInputValidate'
+import { resetLoginReducer } from './store/reducers/login/loginInfoReducer'
+import { updateLoginCompleteReducer } from './store/reducers/maintain/maintainReducer'
 import {
   type FailResponseType,
   type LoginResponseType,
   type ModulePostFetchProps,
   type SuccessResponseType,
   type UseInputProps,
-} from './_types/module'
+} from './types/module'
 
 const chakra = Chakra_Petch({
   subsets: ['latin'],

@@ -16,22 +16,22 @@ import {
   PROJECT_ISSUE_SCHEDULE_VALUE,
   PROJECT_SIDEBAR_SCHEDULE_ALL,
   PROJECT_SIDEBAR_SCHEDULE_MY,
-} from '@/_constant/constant'
-import { API_URL_PROJECT_ISSUE_LIST } from '@/_constant/route/api-route-constant'
-import { ROUTE_PROJECT } from '@/_constant/route/route-constant'
-import { useAppDispatch, useAppSelector } from '@/_module/hooks/reduxHooks'
-import { moduleGetCookie } from '@/_module/utils/moduleCookie'
-import { moduleGetFetch } from '@/_module/utils/moduleFetch'
+} from '@/constant/constant'
+import { API_URL_PROJECT_ISSUE_LIST } from '@/constant/route/api-route-constant'
+import { ROUTE_PROJECT } from '@/constant/route/route-constant'
+import { useAppDispatch, useAppSelector } from '@/module/hooks/reduxHooks'
+import { moduleGetCookie } from '@/module/utils/moduleCookie'
+import { moduleGetFetch } from '@/module/utils/moduleFetch'
 import {
   changeProjectDetailCategoryReducer,
   changeProjectDetailScheduleCategoryReducer,
-} from '@/_store/reducers/project/projectDetailCategoryReducer'
-import { type SuccessResponseType } from '@/_types/module'
+} from '@/store/reducers/project/projectDetailCategoryReducer'
+import { type SuccessResponseType } from '@/types/module'
 import {
   type FullCalendarEventType,
   type IssueResponseType,
   type ScheduleType,
-} from '@/_types/variable'
+} from '@/types/variable'
 
 export default function ProjectDetailSchedule() {
   const router = useRouter()
