@@ -4,31 +4,31 @@ import { useEffect, useState } from 'react'
 
 import { useQuery } from '@tanstack/react-query'
 
-import BoardCard from '@/_components/card/main/BoardCard'
-import BoardTab from '@/_components/tab/board/BoardTab'
+import BoardCard from '@/components/card/main/BoardCard'
+import BoardTab from '@/components/tab/board/BoardTab'
 import {
   BOARD_ANNOUNCE,
   BOARD_FREE,
   BOARD_MAIN_TITLE,
   KEY_ACCESS_TOKEN,
   KEY_X_ORGANIZATION_CODE,
-} from '@/_constant/constant'
+} from '@/constant/constant'
 import {
   API_URL_GET_MY_BOARD,
   API_URL_POSTINGS_MY_ALL,
   API_URL_POSTINGS_MY_PROJECT,
   API_URL_POSTINGS_MY_TEAM,
-} from '@/_constant/route/api-route-constant'
-import { useAppDispatch, useAppSelector } from '@/_module/hooks/reduxHooks'
-import { moduleGetCookie } from '@/_module/utils/moduleCookie'
-import { moduleGetFetch } from '@/_module/utils/moduleFetch'
-import { categoryReduer } from '@/_store/reducers/board/boardCategoryReducer'
-import { type ModuleGetFetchProps, type SuccessResponseType } from '@/_types/module'
+} from '@/constant/route/api-route-constant'
+import { useAppDispatch, useAppSelector } from '@/module/hooks/reduxHooks'
+import { moduleGetCookie } from '@/module/utils/moduleCookie'
+import { moduleGetFetch } from '@/module/utils/moduleFetch'
+import { categoryReduer } from '@/store/reducers/board/boardCategoryReducer'
+import { type ModuleGetFetchProps, type SuccessResponseType } from '@/types/module'
 import {
   type BoardListResponseType,
   type BoardResponseType,
   type MyBoardType,
-} from '@/_types/variable'
+} from '@/types/variable'
 
 export default function Board() {
   const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)

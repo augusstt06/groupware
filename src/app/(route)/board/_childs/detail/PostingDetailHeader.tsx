@@ -2,8 +2,8 @@ import { FaHeart, FaRegComment } from 'react-icons/fa'
 import { IoIosArrowBack } from 'react-icons/io'
 import { MdRemoveRedEye } from 'react-icons/md'
 
-import { moduleConvertDate } from '@/_module/utils/moduleTime'
-import { type DetailResponseType } from '@/_types/variable'
+import { moduleConvertDate } from '@/module/utils/moduleTime'
+import { type DetailResponseType } from '@/types/variable'
 
 type PostingDetailHeaderProps = {
   moveBoardListPage: () => void

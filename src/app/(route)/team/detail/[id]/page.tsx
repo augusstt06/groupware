@@ -7,28 +7,28 @@ import { useParams, useRouter } from 'next/navigation'
 import { TbUsersPlus } from 'react-icons/tb'
 
 import InviteProjectMemberModal from '@/(route)/project/_childs/modal/InviteProjectMemberModal'
-import Button from '@/_components/button/Button'
-import TeamMemberCard from '@/_components/card/team/TeamMemberCard'
-import ModalHub from '@/_components/modal/Modal'
+import Button from '@/components/button/Button'
+import TeamMemberCard from '@/components/card/team/TeamMemberCard'
+import ModalHub from '@/components/modal/Modal'
 import {
   KEY_ACCESS_TOKEN,
   KEY_LOGIN_COMPLETE,
   KEY_X_ORGANIZATION_CODE,
-  MODAL_BTN_SAVE,
+  MODAL_BTN_INVITE,
   MODAL_INVITE_MEMBER_IN_PROJECT,
-} from '@/_constant/constant'
+} from '@/constant/constant'
 import {
   API_URL_COLLEAGUES,
   API_URL_TEAMS,
   API_URL_TEAMS_INVITE,
-} from '@/_constant/route/api-route-constant'
-import { useAppDispatch, useAppSelector } from '@/_module/hooks/reduxHooks'
-import { moduleCheckUserState } from '@/_module/utils/check/moduleCheckUserState'
-import { moduleGetCookie } from '@/_module/utils/moduleCookie'
-import { moduleGetFetch, modulePostFetch } from '@/_module/utils/moduleFetch'
-import { teamInviteModalReducer } from '@/_store/reducers/team/teamModalReducer'
-import { type DialogBtnValueType, type SuccessResponseType } from '@/_types/module'
-import { type ColleagueType, type DialogTextType, type TeamResponseType } from '@/_types/variable'
+} from '@/constant/route/api-route-constant'
+import { useAppDispatch, useAppSelector } from '@/module/hooks/reduxHooks'
+import { moduleCheckUserState } from '@/module/utils/check/moduleCheckUserState'
+import { moduleGetCookie } from '@/module/utils/moduleCookie'
+import { moduleGetFetch, modulePostFetch } from '@/module/utils/moduleFetch'
+import { teamInviteModalReducer } from '@/store/reducers/team/teamModalReducer'
+import { type DialogBtnValueType, type SuccessResponseType } from '@/types/module'
+import { type ColleagueType, type DialogTextType, type TeamResponseType } from '@/types/variable'
 
 export default function TeamDetail() {
   // outer
@@ -136,7 +136,6 @@ export default function TeamDetail() {
       },
     })
     const members = (res as SuccessResponseType<ColleagueType[]>).result.filter(
-      // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
       (data) => !data.team.some((teamData) => teamData.id === team?.result.id),
     )
     setMemberList(members)
@@ -154,7 +153,7 @@ export default function TeamDetail() {
         />
       ),
       name: MODAL_INVITE_MEMBER_IN_PROJECT,
-      btnValue: MODAL_BTN_SAVE,
+      btnValue: MODAL_BTN_INVITE,
       confirmFunc: invite,
       dialog: dialogRef,
       dialogAlertText: dialogText,

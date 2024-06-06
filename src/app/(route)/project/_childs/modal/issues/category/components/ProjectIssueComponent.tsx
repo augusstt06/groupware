@@ -4,13 +4,14 @@ import 'react-calendar/dist/Calendar.css'
 import moment from 'moment'
 import { FaRegCalendarAlt } from 'react-icons/fa'
 
+import Button from '@/components/button/Button'
 import {
   PROJECT_DATE_FORMAT,
   PROJECT_ISSUE_SCHEDULE_UNIT_HOUR_EN,
   PROJECT_ISSUE_SCHEDULE_UNIT_HOUR_KO,
   PROJECT_ISSUE_SCHEDULE_UNIT_MINUTE_EN,
   PROJECT_ISSUE_SCHEDULE_UNIT_MINUTE_KO,
-} from '@/_constant/constant'
+} from '@/constant/constant'
 import {
   type IssueCalendarProps,
   type IssueCalendarWithTimeProps,
@@ -20,7 +21,7 @@ import {
   type IssueSelecProps,
   type IssueTimeProps,
   type ValuePiece,
-} from '@/_types/pageType'
+} from '@/types/pageType'
 
 export function IssueInput(props: IssueInputProps) {
   const { title, placeholder, value, onChange } = props
@@ -169,13 +170,13 @@ export function IssueCalendarWithTime(props: IssueCalendarWithTimeProps) {
       <div className="items-center p-2 grid grid-cols-6 gap-2">
         {renderTitle()}
         <div className="grid grid-cols-6 col-span-5 gap-2">
-          <div className="sort-vertical-flex p-2 mt-2 ml-4 text-sm text-gray-900 truncate bg-transparent dark:bg-[#505050] border-2 border-indigo-200 rounded col-span-3 lg:ml-0 lg:flex-row dark:border-indigo-300 w-26 dark:placeholder-gray-400 dark:text-white">
+          <div className="sort-vertical-flex p-2 ml-4 text-sm text-gray-900 truncate bg-transparent dark:bg-[#505050] border-2 border-indigo-200 rounded col-span-3 lg:ml-0 lg:flex-row dark:border-indigo-300 w-26 dark:placeholder-gray-400 dark:text-white">
             <FaRegCalendarAlt onClick={scheduleData.openCalendar} className="mb-2 lg:mb-0" />
             <span className="ml-2 text-xs lg:text-base">
               {moment(scheduleData.calendarDateValue as ValuePiece).format('YYYY/MM/DD')}
             </span>
           </div>
-          <div className="grid col-span-2 gap-2 lg:grid-cols-2 grid-row-2">
+          <div className="items-center grid col-span-2 gap-2 lg:grid-cols-2 grid-row-2">
             {issueTimeList.map((data) => (
               <IssueTime
                 key={data.unit}
@@ -193,18 +194,16 @@ export function IssueCalendarWithTime(props: IssueCalendarWithTimeProps) {
             ))}
           </div>
           {scheduleData.viewCheckAllDay === true ? (
-            <div className="items-center grid col-span-1 sm:grid-cols-3 grid-row-3">
-              <input
-                type="checkbox"
+            <div className="justify-center p-2 sort-vertical-flex">
+              <Button
+                buttonContent={scheduleData.isCheckAllday ? 'cancel' : 'All'}
+                className={
+                  scheduleData.isCheckAllday
+                    ? 'p-2 text-xs bg-red-300 rounded-lg smooth-transition hover:bg-red-500'
+                    : 'p-2 text-xs bg-indigo-300 rounded-lg smooth-transition hover:bg-indigo-500'
+                }
                 onClick={scheduleData.handleAllday}
-                className="w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded col-span-1 dark:bg-gray-700 dark:border-gray-600"
               />
-              <div className="hidden col-span-2 xl:inline">
-                <span className="text-xs">All</span>
-              </div>
-              <div className="grid col-span-2 grid-row-2 xl:hidden ">
-                <span className="text-sm">All</span>
-              </div>
             </div>
           ) : (
             <></>
@@ -303,7 +302,7 @@ export function IssueTime(props: IssueTimeProps) {
   }
 
   return (
-    <div className="justify-around w-full mt-2 sort-row-flex lg:justify-between">
+    <div className="justify-around w-full sort-row-flex">
       <select
         className={selectClassName()}
         onChange={onChange}
@@ -312,7 +311,7 @@ export function IssueTime(props: IssueTimeProps) {
       >
         {renderSelectOption()}
       </select>
-      <span className="hidden ml-1 text-sm text-gray-400 sm:inline">{unit}</span>
+      <span className="hidden text-sm text-gray-400 sm:inline">{unit}</span>
     </div>
   )
 }

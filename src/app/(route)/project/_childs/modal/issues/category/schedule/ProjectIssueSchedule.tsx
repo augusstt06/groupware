@@ -13,9 +13,9 @@ import {
 
 import SchedulePlace from './SchedulePlace'
 
-import Input from '@/_components/input/Input'
-import ModalHub from '@/_components/modal/Modal'
-import Dialog, { DialogCalendar } from '@/_components/modal/dialog/Dialog'
+import Input from '@/components/input/Input'
+import ModalHub from '@/components/modal/Modal'
+import Dialog, { DialogCalendar } from '@/components/modal/dialog/Dialog'
 import {
   MODAL_BTN_SELECT,
   PROJECT_DATE_FORMAT,
@@ -26,9 +26,9 @@ import {
   PROJECT_ISSUE_SCHEDULE_UNIT_HOUR_EN,
   PROJECT_ISSUE_SCHEDULE_UNIT_MINUTE_EN,
   PROJECT_ISSUE_SCHEDULE_VALUE,
-} from '@/_constant/constant'
-import useInput from '@/_module/hooks/reactHooks/useInput'
-import { useAppDispatch } from '@/_module/hooks/reduxHooks'
+} from '@/constant/constant'
+import useInput from '@/module/hooks/reactHooks/useInput'
+import { useAppDispatch } from '@/module/hooks/reduxHooks'
 import {
   changeIssueCategoryReducer,
   changeIssueDescriptionReducer,
@@ -38,11 +38,11 @@ import {
   changeIssueStartAtReducer,
   changeIssueStartAtTimeReducer,
   changeIssueTitleReducer,
-} from '@/_store/reducers/project/projectIssueReducer'
-import { type DialogBtnValueType } from '@/_types/module'
-import { type CalendarValue, type ValuePiece } from '@/_types/pageType'
-import { type SearchType } from '@/_types/ui/modal'
-import { type DialogTextType, type ScheduleListType } from '@/_types/variable'
+} from '@/store/reducers/project/projectIssueReducer'
+import { type DialogBtnValueType } from '@/types/module'
+import { type CalendarValue, type ValuePiece } from '@/types/pageType'
+import { type SearchType } from '@/types/ui/modal'
+import { type DialogTextType, type ScheduleListType } from '@/types/variable'
 
 export default function ProjectIssueSchedule() {
   const [isPlaceModal, setIsPlaceModal] = useState(false)

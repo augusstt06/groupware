@@ -13,33 +13,33 @@ import {
   KEY_UUID,
   KEY_X_ORGANIZATION_CODE,
   MAIN_CARD_TODO,
-} from '@/_constant/constant'
-import { ERR_COOKIE_NOT_FOUND, ERR_ORG_NOT_FOUND } from '@/_constant/errorMsg'
-import { API_URL_GET_USERS, API_URL_POSTINGS_MY_ALL } from '@/_constant/route/api-route-constant'
-import { ROUTE_ERR_NOT_FOUND_ORG_TOKEN } from '@/_constant/route/route-constant'
-import { useAppDispatch, useAppSelector } from '@/_module/hooks/reduxHooks'
-import { moduleCheckUserState } from '@/_module/utils/check/moduleCheckUserState'
+} from '@/constant/constant'
+import { ERR_COOKIE_NOT_FOUND, ERR_ORG_NOT_FOUND } from '@/constant/errorMsg'
+import { API_URL_GET_USERS, API_URL_POSTINGS_MY_ALL } from '@/constant/route/api-route-constant'
+import { ROUTE_ERR_NOT_FOUND_ORG_TOKEN } from '@/constant/route/route-constant'
+import { useAppDispatch, useAppSelector } from '@/module/hooks/reduxHooks'
+import { moduleCheckUserState } from '@/module/utils/check/moduleCheckUserState'
 import {
   checkTokenExpired,
   moduleDecodeToken,
   moduleDeleteCookies,
   moduleGetCookie,
   moduleRefreshToken,
-} from '@/_module/utils/moduleCookie'
-import { moduleGetFetch } from '@/_module/utils/moduleFetch'
+} from '@/module/utils/moduleCookie'
+import { moduleGetFetch } from '@/module/utils/moduleFetch'
 import {
   updateAttendanceStatusReducer,
   updateExtraUserInfoReducer,
   updateUserInfoReducer,
-} from '@/_store/reducers/main/userInfoReducer'
-import { updateLoginCompleteReducer } from '@/_store/reducers/maintain/maintainReducer'
+} from '@/store/reducers/main/userInfoReducer'
+import { updateLoginCompleteReducer } from '@/store/reducers/maintain/maintainReducer'
 import {
   type ApiResponseType,
   type CustomDecodeTokenType,
   type ModuleGetFetchProps,
   type SuccessResponseType,
-} from '@/_types/module'
-import { type BoardListResponseType, type BoardResponseType } from '@/_types/variable'
+} from '@/types/module'
+import { type BoardListResponseType, type BoardResponseType } from '@/types/variable'
 
 export default function Main() {
   const dispatch = useAppDispatch()

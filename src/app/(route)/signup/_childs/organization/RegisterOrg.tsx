@@ -3,8 +3,8 @@
 import CreateOrgInfo from './create/CreateOrgInfo'
 import JoinOrgInfo from './join/JoinOrgInfo'
 
-import { ORG_CREATE } from '@/_constant/constant'
-import { type RegisterOrgProps } from '@/_types/pageType'
+import { ORG_CREATE } from '@/constant/constant'
+import { type RegisterOrgProps } from '@/types/pageType'
 
 export default function RegisterOrg(props: RegisterOrgProps) {
   return (
