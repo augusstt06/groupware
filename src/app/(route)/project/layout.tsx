@@ -41,7 +41,7 @@ export default function ProjetLayout({ children }: ReactProps) {
   return (
     <>
       {children}
-      {isSettingOpen ? <SettingModal /> : null}
+      {isSettingOpen ? <SettingModal /> : <></>}
     </>
   )
 }

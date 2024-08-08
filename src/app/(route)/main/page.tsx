@@ -137,6 +137,7 @@ export default function Main() {
       return currentPost
     },
   })
+  // FIXME: useEffect 필요한지 생각해보기
   useEffect(() => {
     if (postings !== undefined) setCurrentPostings(postings)
   }, [postings])
@@ -149,7 +150,6 @@ export default function Main() {
     if (error !== null) failFetchUserInfo()
   }, [error])
 
-  // FIXME: 동작 확인하기
   if (checkTokenExpired(accessTokenTime)) {
     void moduleRefreshToken(accessToken)
   }
