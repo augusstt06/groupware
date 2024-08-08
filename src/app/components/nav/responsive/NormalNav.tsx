@@ -2,7 +2,7 @@ import { GiHamburgerMenu } from 'react-icons/gi'
 import { IoIosArrowDown, IoMdClose } from 'react-icons/io'
 
 import DarkmodeBtn from '../../button/DarkmodeBtn'
-import UserStateModal from '../../modal/gnb/UserStateModal'
+import UserStateModal from '../../modal/nav/UserStateModal'
 
 import { KEY_ACCESS_TOKEN } from '@/constant/constant'
 import { ERR_COOKIE_NOT_FOUND } from '@/constant/errorMsg'
