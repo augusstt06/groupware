@@ -14,10 +14,8 @@ import {
 } from '../variable'
 
 export type LabelProps = {
-  title: string
-}
-export type LabelIconProps = {
-  icon: React.ReactNode
+  category: 'label' | 'label-icon'
+  childs: string | React.ReactNode
 }
 
 export type BoardWriteModalCheckBoxProps = {
