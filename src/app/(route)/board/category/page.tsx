@@ -3,18 +3,17 @@
 import { useEffect, useState } from 'react'
 
 import { useQuery } from '@tanstack/react-query'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 
 import BoardItemHub from '@/(route)/main/_childs/hub/board/item/BoardItemHub'
 import BoardMainInputGroup from '@/components/input/group/board/BoardMainInputGroup'
 import Pagination from '@/components/pagination/Pagination'
-import { KEY_ACCESS_TOKEN, KEY_LOGIN_COMPLETE, KEY_X_ORGANIZATION_CODE } from '@/constant/constant'
+import { KEY_X_ORGANIZATION_CODE } from '@/constant/constant'
 import { API_URL_POSTINGS_LIST, API_URL_POSTINGS_MY_ALL } from '@/constant/route/api-route-constant'
 import useInput from '@/module/hooks/reactHooks/useInput'
 import { useAppDispatch, useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleCheckUserState } from '@/module/utils/check/moduleCheckUserState'
-import { moduleGetCookie } from '@/module/utils/moduleCookie'
 import { moduleGetFetch } from '@/module/utils/moduleFetch'
+import { createAccessTokenManager } from '@/module/utils/token'
 import { openBoardWriteModalReducer } from '@/store/reducers/board/openBoardWriteModalReducer'
 import { type ModuleGetFetchProps, type SuccessResponseType } from '@/types/module'
 import {
@@ -25,11 +24,9 @@ import {
 
 export default function BoardCategory() {
   const dispatch = useAppDispatch()
-  const router = useRouter()
   const query = useSearchParams().get('name')
   const searchInput = useInput('')
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
-  const loginCompleteState = useAppSelector((state) => state.maintain[KEY_LOGIN_COMPLETE])
   const isModalOpen: boolean = useAppSelector((state) => state.openBoardWriteModal.isOpen)
   const myBoardState = useAppSelector((state) => state.boardCategory.myBoard)
 
@@ -40,7 +37,7 @@ export default function BoardCategory() {
     createdAt: '',
     updatedAt: '',
   })
-  const [accessToken, setAccessToken] = useState(moduleGetCookie(KEY_ACCESS_TOKEN))
+  const { getAccessToken } = createAccessTokenManager
 
   const [boardList, setBoardList] = useState<BoardListResponseType[]>([])
   const [pageSize, setPageSize] = useState<number>(1)
@@ -61,7 +58,7 @@ export default function BoardCategory() {
         },
         fetchUrl: API_URL_POSTINGS_MY_ALL,
         header: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${getAccessToken()}`,
           [KEY_X_ORGANIZATION_CODE]: orgCode,
         },
       }
@@ -95,7 +92,7 @@ export default function BoardCategory() {
           },
           fetchUrl: API_URL_POSTINGS_LIST,
           header: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${getAccessToken()}`,
             [KEY_X_ORGANIZATION_CODE]: orgCode,
           },
         }
@@ -119,10 +116,6 @@ export default function BoardCategory() {
   useEffect(() => {
     if (boardPostingsData !== undefined) successFetchBoardPostings()
   }, [boardPostingsData])
-
-  useEffect(() => {
-    moduleCheckUserState({ loginCompleteState, router, accessToken, setAccessToken })
-  }, [accessToken])
 
   return (
     <main className="w-full h-4/5 sort-vertical-flex">

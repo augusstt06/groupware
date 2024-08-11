@@ -6,27 +6,13 @@ import { useRouter } from 'next/navigation'
 
 import MainHub from './_childs/hub/MainHub'
 
-import {
-  FALSE,
-  KEY_ACCESS_TOKEN,
-  KEY_LOGIN_COMPLETE,
-  KEY_UUID,
-  KEY_X_ORGANIZATION_CODE,
-  MAIN_CARD_TODO,
-} from '@/constant/constant'
-import { ERR_COOKIE_NOT_FOUND, ERR_ORG_NOT_FOUND } from '@/constant/errorMsg'
+import { FALSE, KEY_UUID, KEY_X_ORGANIZATION_CODE, MAIN_CARD_TODO } from '@/constant/constant'
+import { ERR_ORG_NOT_FOUND } from '@/constant/errorMsg'
 import { API_URL_GET_USERS, API_URL_POSTINGS_MY_ALL } from '@/constant/route/api-route-constant'
 import { ROUTE_ERR_NOT_FOUND_ORG_TOKEN } from '@/constant/route/route-constant'
 import { useAppDispatch, useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleCheckUserState } from '@/module/utils/check/moduleCheckUserState'
-import {
-  checkTokenExpired,
-  moduleDecodeToken,
-  moduleDeleteCookies,
-  moduleGetCookie,
-  moduleRefreshToken,
-} from '@/module/utils/moduleCookie'
 import { moduleGetFetch } from '@/module/utils/moduleFetch'
+import { createAccessTokenManager } from '@/module/utils/token'
 import {
   updateAttendanceStatusReducer,
   updateExtraUserInfoReducer,
@@ -35,7 +21,6 @@ import {
 import { updateLoginCompleteReducer } from '@/store/reducers/maintain/maintainReducer'
 import {
   type ApiResponseType,
-  type CustomDecodeTokenType,
   type ModuleGetFetchProps,
   type SuccessResponseType,
 } from '@/types/module'
@@ -44,17 +29,11 @@ import { type BoardListResponseType, type BoardResponseType } from '@/types/vari
 export default function Main() {
   const dispatch = useAppDispatch()
   const router = useRouter()
-  const loginCompleteState = useAppSelector((state) => state.maintain[KEY_LOGIN_COMPLETE])
-  const [accessToken, setAccessToken] = useState(moduleGetCookie(KEY_ACCESS_TOKEN))
-  const decodeToken = moduleDecodeToken(accessToken)
+  const { getAccessToken, getUuid, deleteAccessToken } = createAccessTokenManager
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
 
-  const accessTokenTime = Number((decodeToken as CustomDecodeTokenType).exp)
   const attendanceTime = useAppSelector((state) => state.userInfo.attendance.time)
-  const uuid =
-    decodeToken !== ERR_COOKIE_NOT_FOUND
-      ? (decodeToken as CustomDecodeTokenType).uuid
-      : ERR_COOKIE_NOT_FOUND
+  const uuid = getUuid()
 
   const [currentPostings, setCurrentPostings] = useState<BoardListResponseType[]>([])
 
@@ -67,7 +46,7 @@ export default function Main() {
         },
         fetchUrl: API_URL_GET_USERS,
         header: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${getAccessToken()}`,
         },
       }
       const res = await moduleGetFetch<ApiResponseType>(getFetchUserProps)
@@ -106,7 +85,7 @@ export default function Main() {
         break
       default:
         dispatch(updateLoginCompleteReducer(FALSE))
-        moduleDeleteCookies(KEY_ACCESS_TOKEN)
+        deleteAccessToken()
     }
   }
 
@@ -120,7 +99,7 @@ export default function Main() {
         },
         fetchUrl: API_URL_POSTINGS_MY_ALL,
         header: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${getAccessToken()}`,
           [KEY_X_ORGANIZATION_CODE]: orgCode,
         },
       })
@@ -143,18 +122,11 @@ export default function Main() {
 
   useEffect(() => {
     if (data !== undefined) successFetchUserInfo()
-  }, [accessToken, data])
+  }, [getAccessToken(), data])
 
   useEffect(() => {
     if (error !== null) failFetchUserInfo()
   }, [error])
-
-  if (checkTokenExpired(accessTokenTime)) {
-    void moduleRefreshToken(accessToken)
-  }
-  useEffect(() => {
-    moduleCheckUserState({ loginCompleteState, router, accessToken, setAccessToken })
-  }, [accessToken])
 
   return (
     <main className="w-full sort-vertical-flex h-4/5">

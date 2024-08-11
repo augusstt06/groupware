@@ -11,7 +11,6 @@ import { KaKaoMap } from '../../../modal/issues/category/schedule/SchedulePlace'
 import Dialog, { DialogCalendar } from '@/components/modal/dialog/Dialog'
 import {
   KAKAO_AUTH_KEY,
-  KEY_ACCESS_TOKEN,
   KEY_X_ORGANIZATION_CODE,
   PROJECT_DATE_FORMAT,
   PROJECT_ISSUE_SCEDULE_END,
@@ -24,8 +23,8 @@ import {
 } from '@/constant/constant'
 import { API_URL_KAKAO_MAP, API_URL_PROJECT_ISSUE } from '@/constant/route/api-route-constant'
 import { useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleGetCookie } from '@/module/utils/moduleCookie'
 import { moduleKaKaoGetFetch, modulePatchFetch } from '@/module/utils/moduleFetch'
+import { createAccessTokenManager } from '@/module/utils/token'
 import { type DialogBtnValueType, type ModulePostFetchProps } from '@/types/module'
 import {
   type CalendarValue,
@@ -38,7 +37,7 @@ import { type DialogTextType, type ScheduleListType } from '@/types/variable'
 
 export default function ProjectScheduleDeatil(props: ProjectIssueDetailProps) {
   const { issue } = props
-  const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
+  const { getAccessToken } = createAccessTokenManager
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
   const [searchInput, setSearchInput] = useState<SearchType[]>([])
   const [dialogText, setDialogText] = useState<DialogTextType>({
@@ -189,7 +188,7 @@ export default function ProjectScheduleDeatil(props: ProjectIssueDetailProps) {
       },
       fetchUrl: API_URL_PROJECT_ISSUE,
       header: {
-        Authorization: `Bearer ${accessToken}`,
+        Authorization: `Bearer ${getAccessToken()}`,
         [KEY_X_ORGANIZATION_CODE]: orgCode,
       },
     }

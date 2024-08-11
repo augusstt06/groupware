@@ -9,7 +9,6 @@ import ProjectTaskDetail from '../../_childs/hub/detail/issue/ProjectTaskDetail'
 
 import WriteComment from '@/(route)/board/_childs/comment/WriteComment'
 import {
-  KEY_ACCESS_TOKEN,
   KEY_X_ORGANIZATION_CODE,
   PROJECT_ISSUE_SCHEDULE_VALUE,
   PROJECT_ISSUE_TASK_VALUE,
@@ -17,18 +16,17 @@ import {
 import { API_URL_COMMENT_ISSUES, API_URL_PROJECT_ISSUE } from '@/constant/route/api-route-constant'
 import { ROUTE_PROJECT } from '@/constant/route/route-constant'
 import { useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleGetCookie } from '@/module/utils/moduleCookie'
 import { moduleGetFetch } from '@/module/utils/moduleFetch'
+import { createAccessTokenManager } from '@/module/utils/token'
 import { type SuccessResponseType } from '@/types/module'
 import { type IssueDatailType } from '@/types/variable'
 
 // import Comment from '@/app/component/page/board/comment/Comment'
 
 export default function ProjectIssueDetail() {
-  // FIXME: detila response에 장소도 있어야함
   const router = useRouter()
   const query = useParams()
-  const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
+  const { getAccessToken } = createAccessTokenManager
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
 
   const goProjectIssue = () => {
@@ -43,7 +41,7 @@ export default function ProjectIssueDetail() {
         },
         fetchUrl: API_URL_PROJECT_ISSUE,
         header: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${getAccessToken()}`,
           [KEY_X_ORGANIZATION_CODE]: orgCode,
         },
       })

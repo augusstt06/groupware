@@ -10,15 +10,15 @@ import BoardModalInputGroup from '@/components/input/group/board/BoardModalInput
 import Dialog from '@/components/modal/dialog/Dialog'
 import BoardModalSaveListTab from '@/components/tab/board/BoardModalSaveListTab'
 import BoardWriteModalBtnTab from '@/components/tab/board/BoardWriteModalBtnTab'
-import { FALSE, KEY_ACCESS_TOKEN, KEY_X_ORGANIZATION_CODE, TRUE } from '@/constant/constant'
+import { FALSE, KEY_X_ORGANIZATION_CODE, TRUE } from '@/constant/constant'
 import { errNotEntered } from '@/constant/errorMsg'
 import { API_URL_POSTINGS, API_URL_POSTINGS_PENDING } from '@/constant/route/api-route-constant'
 import { ROUTE_POSTING_DETAIL } from '@/constant/route/route-constant'
 import useInput from '@/module/hooks/reactHooks/useInput'
 import { useAppDispatch, useAppSelector } from '@/module/hooks/reduxHooks'
 import { moduleCheckContentIsEmpty } from '@/module/utils/check/moduleCheckContent'
-import { moduleGetCookie } from '@/module/utils/moduleCookie'
 import { moduleDeleteFetch, moduleGetFetch, modulePostFetch } from '@/module/utils/moduleFetch'
+import { createAccessTokenManager } from '@/module/utils/token'
 import { openBoardWriteModalReducer } from '@/store/reducers/board/openBoardWriteModalReducer'
 import {
   type ApiResponseType,
@@ -54,7 +54,7 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
   const titleInput = useInput('')
   const userId = useAppSelector((state) => state.userInfo.extraInfo.userId)
   const userInfo = useAppSelector((state) => state.userInfo)
-  const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
+  const { getAccessToken } = createAccessTokenManager
   const [isAnnounce, setIsAnnounce] = useState(FALSE)
   const [editorContent, setEditorContent] = useState('')
   const [thumbNailUrl, setThumbNailUrl] = useState<string>('')
@@ -97,7 +97,7 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
         },
         fetchUrl: API_URL_POSTINGS_PENDING,
         header: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${getAccessToken()}`,
           [KEY_X_ORGANIZATION_CODE]: userInfo[KEY_X_ORGANIZATION_CODE],
         },
       }
@@ -119,7 +119,7 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
         },
         fetchUrl: API_URL_POSTINGS_PENDING,
         header: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${getAccessToken()}`,
           [KEY_X_ORGANIZATION_CODE]: userInfo[KEY_X_ORGANIZATION_CODE],
         },
       }),
@@ -153,7 +153,7 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
         },
         fetchUrl: API_URL_POSTINGS_PENDING,
         header: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${getAccessToken()}`,
           [KEY_X_ORGANIZATION_CODE]: userInfo[KEY_X_ORGANIZATION_CODE],
         },
       }),
@@ -204,7 +204,7 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
         },
         fetchUrl: API_URL_POSTINGS,
         header: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${getAccessToken()}`,
           [KEY_X_ORGANIZATION_CODE]: userInfo[KEY_X_ORGANIZATION_CODE],
         },
       })

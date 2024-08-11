@@ -10,7 +10,6 @@ import { IssueCalendar } from '../../../modal/issues/category/components/Project
 
 import { DialogCalendar } from '@/components/modal/dialog/Dialog'
 import {
-  KEY_ACCESS_TOKEN,
   KEY_X_ORGANIZATION_CODE,
   PROJECT_DATE_FORMAT,
   PROJECT_ISSUE_TASK_PROGRESS_COMPLETED_COLOR,
@@ -33,14 +32,14 @@ import {
 } from '@/constant/constant'
 import { API_URL_PROJECT_ISSUE } from '@/constant/route/api-route-constant'
 import { useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleGetCookie } from '@/module/utils/moduleCookie'
 import { modulePatchFetch } from '@/module/utils/moduleFetch'
+import { createAccessTokenManager } from '@/module/utils/token'
 import { type ModulePostFetchProps } from '@/types/module'
 import { type CalendarValue, type ProjectIssueDetailProps, type ValuePiece } from '@/types/pageType'
 
 export default function ProjectTaskDetail(props: ProjectIssueDetailProps) {
   const { issue } = props
-  const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
+  const { getAccessToken } = createAccessTokenManager
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
   const startDialogRef = useRef<HTMLDialogElement | null>(null)
   const endDialogRef = useRef<HTMLDialogElement | null>(null)
@@ -135,7 +134,7 @@ export default function ProjectTaskDetail(props: ProjectIssueDetailProps) {
       },
       fetchUrl: API_URL_PROJECT_ISSUE,
       header: {
-        Authorization: `Bearer ${accessToken}`,
+        Authorization: `Bearer ${getAccessToken()}`,
         [KEY_X_ORGANIZATION_CODE]: orgCode,
       },
     }

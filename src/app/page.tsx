@@ -12,7 +12,6 @@ import FloatingInput from './components/input/FloatingInput'
 import {
   API_SUCCESS_CODE,
   FALSE,
-  KEY_ACCESS_TOKEN,
   KEY_LOGIN_COMPLETE,
   REGISTER_EMAIL,
   REGISTER_EMAIL_EN,
@@ -35,9 +34,9 @@ import {
 } from './constant/route/route-constant'
 import useInput from './module/hooks/reactHooks/useInput'
 import { useAppDispatch, useAppSelector } from './module/hooks/reduxHooks'
-import { moduleGetCookie, moduleSetCookies } from './module/utils/moduleCookie'
 import { modulePostFetch } from './module/utils/moduleFetch'
 import inputValidate from './module/utils/moduleInputValidate'
+import { createAccessTokenManager } from './module/utils/token'
 import { resetLoginReducer } from './store/reducers/login/loginInfoReducer'
 import { updateLoginCompleteReducer } from './store/reducers/maintain/maintainReducer'
 import {
@@ -62,7 +61,7 @@ export default function Login() {
   const router = useRouter()
   const loginCompleteState = useAppSelector((state) => state.maintain[KEY_LOGIN_COMPLETE])
   // const loginState = useAppSelector((state) => state.loginInfo)
-  const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
+  const { getAccessToken, setAccessToken } = createAccessTokenManager
   const [isPwdView, setIsPwdView] = useState(false)
 
   const [errorState, setErrorState] = useState({
@@ -94,9 +93,7 @@ export default function Login() {
       const res = await modulePostFetch<LoginResponseType>(fetchProps)
       if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)
       const accessToken = (res as SuccessResponseType<LoginResponseType>).result.accessToken
-      moduleSetCookies({
-        [KEY_ACCESS_TOKEN]: accessToken,
-      })
+      setAccessToken(accessToken)
       dispatch(updateLoginCompleteReducer(TRUE))
       dispatch(resetLoginReducer())
       router.push(ROUTE_MAIN)
@@ -152,7 +149,7 @@ export default function Login() {
     },
   ]
   useEffect(() => {
-    if (accessToken !== ERR_COOKIE_NOT_FOUND) {
+    if (getAccessToken() !== ERR_COOKIE_NOT_FOUND) {
       if (loginCompleteState === FALSE) {
         router.push(ROUTE_ERR_NOT_FOUND_ORG_TOKEN)
       } else {

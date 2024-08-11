@@ -7,7 +7,6 @@ import SidebarCardGroup from '../card/sidebar/SidebarCardGroup'
 
 import {
   API_SUCCESS_CODE,
-  KEY_ACCESS_TOKEN,
   KEY_X_ORGANIZATION_CODE,
   SIDEBAR_URL_PATH_BOARD,
   SIDEBAR_URL_PATH_MAIN,
@@ -18,8 +17,8 @@ import {
 import { API_URL_GET_MY_BOARD } from '@/constant/route/api-route-constant'
 import { ROUTE_BOARD, ROUTE_MAIN, ROUTE_PROJECT, ROUTE_TEAM } from '@/constant/route/route-constant'
 import { useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleGetCookie } from '@/module/utils/moduleCookie'
 import { moduleGetFetch } from '@/module/utils/moduleFetch'
+import { createAccessTokenManager } from '@/module/utils/token'
 import {
   type FailResponseType,
   type ModuleGetFetchProps,
@@ -29,7 +28,7 @@ import { type MyBoardType } from '@/types/variable'
 
 export default function Sidebar() {
   const pathname = usePathname()
-  const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
+  const { getAccessToken } = createAccessTokenManager
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
   const userInfo = useAppSelector((state) => state.userInfo.extraInfo)
   const [myBoardList, setMyBoardList] = useState<MyBoardType[]>([])
@@ -69,7 +68,7 @@ export default function Sidebar() {
       },
       fetchUrl: API_URL_GET_MY_BOARD,
       header: {
-        Authorization: `Bearer ${accessToken}`,
+        Authorization: `Bearer ${getAccessToken()}`,
         [KEY_X_ORGANIZATION_CODE]: orgCode,
       },
     }

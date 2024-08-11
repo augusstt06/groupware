@@ -11,11 +11,11 @@ import '@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin
 import 'prismjs/themes/prism.css'
 import Prism from 'prismjs'
 
-import { API_SUCCESS_CODE, KEY_ACCESS_TOKEN, KEY_X_ORGANIZATION_CODE } from '@/constant/constant'
+import { API_SUCCESS_CODE, KEY_X_ORGANIZATION_CODE } from '@/constant/constant'
 import { API_URL_UPLOAD_IMG } from '@/constant/route/api-route-constant'
 import { useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleGetCookie } from '@/module/utils/moduleCookie'
 import { modulePostFileFetch } from '@/module/utils/moduleFetch'
+import { createAccessTokenManager } from '@/module/utils/token'
 import {
   type FailResponseType,
   type ModulePostFileFetchProps,
@@ -25,7 +25,7 @@ import { type EditorProps } from '@/types/ui/extra'
 
 export default function TextEditor(props: EditorProps) {
   let imgList: string[] = []
-  const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
+  const { getAccessToken } = createAccessTokenManager
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
   type HookCallback = (url: string, text?: string) => void
   const checkImgCount = () => {
@@ -44,7 +44,7 @@ export default function TextEditor(props: EditorProps) {
         file: formData,
         fetchUrl: API_URL_UPLOAD_IMG,
         header: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${getAccessToken()}`,
           [KEY_X_ORGANIZATION_CODE]: orgCode,
         },
       }

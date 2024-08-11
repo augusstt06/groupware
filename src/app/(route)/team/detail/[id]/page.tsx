@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 
 import { useMutation, useQuery } from '@tanstack/react-query'
-import { useParams, useRouter } from 'next/navigation'
+import { useParams } from 'next/navigation'
 import { TbUsersPlus } from 'react-icons/tb'
 
 import InviteProjectMemberModal from '@/(route)/project/_childs/modal/InviteProjectMemberModal'
@@ -11,8 +11,6 @@ import Button from '@/components/button/Button'
 import TeamMemberCard from '@/components/card/team/TeamMemberCard'
 import ModalHub from '@/components/modal/Modal'
 import {
-  KEY_ACCESS_TOKEN,
-  KEY_LOGIN_COMPLETE,
   KEY_X_ORGANIZATION_CODE,
   MODAL_BTN_INVITE,
   MODAL_INVITE_MEMBER_IN_PROJECT,
@@ -23,21 +21,19 @@ import {
   API_URL_TEAMS_INVITE,
 } from '@/constant/route/api-route-constant'
 import { useAppDispatch, useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleCheckUserState } from '@/module/utils/check/moduleCheckUserState'
-import { moduleGetCookie } from '@/module/utils/moduleCookie'
 import { moduleGetFetch, modulePostFetch } from '@/module/utils/moduleFetch'
+import { createAccessTokenManager } from '@/module/utils/token'
 import { teamInviteModalReducer } from '@/store/reducers/team/teamModalReducer'
 import { type DialogBtnValueType, type SuccessResponseType } from '@/types/module'
 import { type ColleagueType, type DialogTextType, type TeamResponseType } from '@/types/variable'
 
 export default function TeamDetail() {
   // outer
-  const router = useRouter()
+
   const orgId = useAppSelector((state) => state.userInfo.extraInfo.organizationId)
   const dispatch = useAppDispatch()
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
-  const [accessToken, setAccessToken] = useState(moduleGetCookie(KEY_ACCESS_TOKEN))
-  const loginCompleteState = useAppSelector((state) => state.maintain[KEY_LOGIN_COMPLETE])
+  const { getAccessToken } = createAccessTokenManager
 
   // componenet variables
   const dialogRef = useRef<HTMLDialogElement | null>(null)
@@ -83,7 +79,7 @@ export default function TeamDetail() {
         },
         fetchUrl: API_URL_TEAMS,
         header: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${getAccessToken()}`,
           [KEY_X_ORGANIZATION_CODE]: orgCode,
         },
       })
@@ -102,7 +98,7 @@ export default function TeamDetail() {
         },
         fetchUrl: API_URL_TEAMS_INVITE,
         header: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${getAccessToken()}`,
           [KEY_X_ORGANIZATION_CODE]: orgCode,
         },
       })
@@ -131,7 +127,7 @@ export default function TeamDetail() {
       },
       fetchUrl: API_URL_COLLEAGUES,
       header: {
-        Authorization: `Bearer ${accessToken}`,
+        Authorization: `Bearer ${getAccessToken()}`,
         [KEY_X_ORGANIZATION_CODE]: orgCode,
       },
     })
@@ -160,10 +156,6 @@ export default function TeamDetail() {
       dialogBtnValue: projectDialogBtnValue,
     },
   ]
-
-  useEffect(() => {
-    moduleCheckUserState({ loginCompleteState, router, accessToken, setAccessToken })
-  }, [accessToken])
 
   useEffect(() => {
     if (!isLoading) {

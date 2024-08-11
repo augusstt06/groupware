@@ -6,20 +6,21 @@ import { useRouter } from 'next/navigation'
 import { AiOutlineMail } from 'react-icons/ai'
 
 import { Label } from '@/components/label/Label'
-import { KEY_ACCESS_TOKEN, LABEL, LABEL_ICON, REGISTER_EMAIL } from '@/constant/constant'
+import { LABEL, LABEL_ICON, REGISTER_EMAIL } from '@/constant/constant'
 import { ERR_COOKIE_NOT_FOUND } from '@/constant/errorMsg'
 import { ROUTE_LOGIN, ROUTE_MAIN } from '@/constant/route/route-constant'
 import useInput from '@/module/hooks/reactHooks/useInput'
-import { moduleGetCookie } from '@/module/utils/moduleCookie'
+import { createAccessTokenManager } from '@/module/utils/token'
 import { type UseInputProps } from '@/types/module'
 
 export default function FindPwd() {
   const router = useRouter()
   const emailInput: UseInputProps = useInput('', REGISTER_EMAIL)
-  const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
+  const { getAccessToken } = createAccessTokenManager
 
+  // FIXME: 로직 빼는것 고려
   useEffect(() => {
-    if (accessToken !== ERR_COOKIE_NOT_FOUND) {
+    if (getAccessToken() !== ERR_COOKIE_NOT_FOUND) {
       router.push(ROUTE_MAIN)
     }
   }, [])

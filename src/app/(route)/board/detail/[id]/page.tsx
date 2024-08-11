@@ -12,7 +12,7 @@ import Comment from '../../_childs/comment/Comment'
 import WriteComment from '../../_childs/comment/WriteComment'
 import PostingDetailHeader from '../../_childs/detail/PostingDetailHeader'
 
-import { KEY_ACCESS_TOKEN, KEY_LOGIN_COMPLETE, KEY_X_ORGANIZATION_CODE } from '@/constant/constant'
+import { KEY_X_ORGANIZATION_CODE } from '@/constant/constant'
 import { errDefault } from '@/constant/errorMsg'
 import {
   API_URL_COMMENT_POSTING,
@@ -22,23 +22,13 @@ import {
 } from '@/constant/route/api-route-constant'
 import { ROUTE_BOARD, ROUTE_ERR_NOT_FOUND_POSTING_DETAIL } from '@/constant/route/route-constant'
 import { useAppDispatch, useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleCheckUserState } from '@/module/utils/check/moduleCheckUserState'
-import {
-  checkTokenExpired,
-  moduleDecodeToken,
-  moduleGetCookie,
-  moduleRefreshToken,
-} from '@/module/utils/moduleCookie'
 import { moduleDeleteFetch, moduleGetFetch, modulePostFetch } from '@/module/utils/moduleFetch'
+import { createAccessTokenManager } from '@/module/utils/token'
 import {
   addPostingLikeReducer,
   deletePostingLikeReducer,
 } from '@/store/reducers/board/boardLikeReducer'
-import {
-  type CustomDecodeTokenType,
-  type ModuleGetFetchProps,
-  type SuccessResponseType,
-} from '@/types/module'
+import { type ModuleGetFetchProps, type SuccessResponseType } from '@/types/module'
 import { type CommentType, type DetailResponseType } from '@/types/variable'
 
 const Viewbox = dynamic(async () => import('../../../../components/editor/TextViewer'), {
@@ -54,17 +44,15 @@ export default function BoardDetail() {
 
   const userInfo = useAppSelector((state) => state.userInfo.extraInfo)
   const [commentCount, setCommentCount] = useState<number>(0)
-  const [accessToken, setAccessToken] = useState(moduleGetCookie(KEY_ACCESS_TOKEN))
-  const decodeToken = moduleDecodeToken(accessToken)
-  const accessTokenTime = Number((decodeToken as CustomDecodeTokenType).exp)
+  const { getAccessToken } = createAccessTokenManager
+
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
-  const loginCompleteState = useAppSelector((state) => state.maintain[KEY_LOGIN_COMPLETE])
   const [isRerender, setIsRerender] = useState<boolean>(false)
   const [errorState, setErrorState] = useState({
     isError: false,
     description: '',
   })
-  const isTokenExist: boolean = checkTokenExpired(accessTokenTime)
+  // const isTokenExist: boolean = checkTokenExpired(accessTokenTime)
 
   const doRerender = () => {
     setIsRerender(!isRerender)
@@ -97,7 +85,7 @@ export default function BoardDetail() {
         },
         fetchUrl: API_URL_POSTINGS,
         header: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${getAccessToken()}`,
           [KEY_X_ORGANIZATION_CODE]: orgCode,
         },
       }
@@ -120,7 +108,7 @@ export default function BoardDetail() {
         },
         fetchUrl: API_URL_POSTINGS_LIKE,
         header: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${getAccessToken()}`,
           [KEY_X_ORGANIZATION_CODE]: orgCode,
         },
       }),
@@ -142,7 +130,7 @@ export default function BoardDetail() {
         },
         fetchUrl: API_URL_POSTINGS_UNLIKE,
         header: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${getAccessToken()}`,
           [KEY_X_ORGANIZATION_CODE]: orgCode,
         },
       }),
@@ -170,7 +158,7 @@ export default function BoardDetail() {
         },
         fetchUrl: API_URL_POSTINGS,
         header: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${getAccessToken()}`,
           [KEY_X_ORGANIZATION_CODE]: orgCode,
         },
       }),
@@ -191,17 +179,10 @@ export default function BoardDetail() {
   }
 
   useEffect(() => {
-    if (isTokenExist) {
-      void moduleRefreshToken(accessToken)
-    }
-    moduleCheckUserState({ loginCompleteState, router, accessToken, setAccessToken })
-  }, [accessToken])
-
-  useEffect(() => {
     if (errorState.isError) {
       router.push(ROUTE_ERR_NOT_FOUND_POSTING_DETAIL)
     }
-  }, [isRerender, postingData?.result.id, accessToken])
+  }, [isRerender, postingData?.result.id, getAccessToken()])
 
   useEffect(() => {
     if (postingData?.result !== undefined) {

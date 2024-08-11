@@ -7,11 +7,11 @@ import { FaHeart, FaRegHeart } from 'react-icons/fa'
 import Recomment from './Recomment'
 import WriteComment from './WriteComment'
 
-import { API_SUCCESS_CODE, KEY_ACCESS_TOKEN, KEY_X_ORGANIZATION_CODE } from '@/constant/constant'
+import { API_SUCCESS_CODE, KEY_X_ORGANIZATION_CODE } from '@/constant/constant'
 import { API_URL_COMMENT, API_URL_COMMENT_LIKE } from '@/constant/route/api-route-constant'
 import { useAppDispatch, useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleGetCookie } from '@/module/utils/moduleCookie'
 import { moduleDeleteFetch, modulePostFetch } from '@/module/utils/moduleFetch'
+import { createAccessTokenManager } from '@/module/utils/token'
 import {
   addCommentLikeReducer,
   deleteCommentLikeReducer,
@@ -26,10 +26,10 @@ import { type CommentProps } from '@/types/pageType'
 
 export default function Comment(props: CommentProps) {
   const dispatch = useAppDispatch()
+  const { getAccessToken } = createAccessTokenManager
   const userInfo = useAppSelector((state) => state.userInfo.extraInfo)
   const likeState = useAppSelector((state) => state.boardLike.commentLikeList)
   const isCommentLike: boolean = likeState.includes(props.comments.id)
-  const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
   const [isWriteComment, setIsWriteComment] = useState(false)
 
@@ -42,7 +42,7 @@ export default function Comment(props: CommentProps) {
     },
     fetchUrl: API_URL_COMMENT_LIKE,
     header: {
-      Authorization: `Bearer ${accessToken}`,
+      Authorization: `Bearer ${getAccessToken()}`,
       [KEY_X_ORGANIZATION_CODE]: orgCode,
     },
   }
@@ -60,7 +60,7 @@ export default function Comment(props: CommentProps) {
     },
     fetchUrl: API_URL_COMMENT_LIKE,
     header: {
-      Authorization: `Bearer ${accessToken}`,
+      Authorization: `Bearer ${getAccessToken()}`,
       [KEY_X_ORGANIZATION_CODE]: orgCode,
     },
   }
@@ -84,7 +84,7 @@ export default function Comment(props: CommentProps) {
     },
     fetchUrl: API_URL_COMMENT,
     header: {
-      Authorization: `Bearer ${accessToken}`,
+      Authorization: `Bearer ${getAccessToken()}`,
       [KEY_X_ORGANIZATION_CODE]: orgCode,
     },
   }

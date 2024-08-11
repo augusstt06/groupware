@@ -8,8 +8,9 @@ import Button from '../../button/Button'
 import { API_SUCCESS_CODE, FALSE, KEY_ACCESS_TOKEN } from '@/constant/constant'
 import { API_URL_LOGOUT } from '@/constant/route/api-route-constant'
 import { useAppDispatch, useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleDeleteCookies, moduleGetCookie } from '@/module/utils/moduleCookie'
+import { moduleDeleteCookies } from '@/module/utils/moduleCookie'
 import { modulePostFetch } from '@/module/utils/moduleFetch'
+import { createAccessTokenManager } from '@/module/utils/token'
 import { resetUserInfoReducer } from '@/store/reducers/main/userInfoReducer'
 import { updateLoginCompleteReducer } from '@/store/reducers/maintain/maintainReducer'
 import { handleSettingModalReducer } from '@/store/reducers/setting/settingModalReducer'
@@ -19,7 +20,7 @@ import { type UserStateModalProps } from '@/types/ui/modal'
 export default function UserStateModal(props: UserStateModalProps) {
   const { changeDialogConfirmFn, handleOpenDialog, setIsUserStateOpen } = props
   const dispatch = useAppDispatch()
-  const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
+  const { getAccessToken } = createAccessTokenManager
   const attendanceStatus = useAppSelector((state) => state.userInfo.attendance)
 
   const menuRef = useRef<HTMLDivElement>(null)
@@ -34,7 +35,7 @@ export default function UserStateModal(props: UserStateModalProps) {
         data: {},
         fetchUrl: API_URL_LOGOUT,
         header: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${getAccessToken()}`,
         },
       }
       const res = await modulePostFetch<string>(fetchProps)

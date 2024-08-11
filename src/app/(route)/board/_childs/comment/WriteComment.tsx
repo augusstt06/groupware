@@ -5,12 +5,12 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { IoCameraOutline } from 'react-icons/io5'
 
-import { API_SUCCESS_CODE, KEY_ACCESS_TOKEN, KEY_X_ORGANIZATION_CODE } from '@/constant/constant'
+import { API_SUCCESS_CODE, KEY_X_ORGANIZATION_CODE } from '@/constant/constant'
 import { API_URL_COMMENT_POSTING, API_URL_UPLOAD_IMG } from '@/constant/route/api-route-constant'
 import useInput from '@/module/hooks/reactHooks/useInput'
 import { useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleGetCookie } from '@/module/utils/moduleCookie'
 import { modulePostFetch, modulePostFileFetch } from '@/module/utils/moduleFetch'
+import { createAccessTokenManager } from '@/module/utils/token'
 import {
   type ApiResponseType,
   type FailResponseType,
@@ -22,7 +22,7 @@ import { type WriteCommentProps } from '@/types/pageType'
 
 export default function WriteComment(props: WriteCommentProps) {
   const router = useRouter()
-  const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
+  const { getAccessToken } = createAccessTokenManager
   const userName = useAppSelector((state) => state.userInfo.extraInfo.name)
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
   const commentInput = useInput('')
@@ -44,7 +44,7 @@ export default function WriteComment(props: WriteCommentProps) {
         file: formData,
         fetchUrl: API_URL_UPLOAD_IMG,
         header: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${getAccessToken()}`,
           [KEY_X_ORGANIZATION_CODE]: orgCode,
         },
       }
@@ -65,7 +65,7 @@ export default function WriteComment(props: WriteCommentProps) {
           },
           fetchUrl: props.url,
           header: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${getAccessToken()}`,
             [KEY_X_ORGANIZATION_CODE]: orgCode,
           },
         }
@@ -76,7 +76,7 @@ export default function WriteComment(props: WriteCommentProps) {
           },
           fetchUrl: API_URL_COMMENT_POSTING,
           header: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${getAccessToken()}`,
             [KEY_X_ORGANIZATION_CODE]: orgCode,
           },
         }

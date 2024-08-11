@@ -12,14 +12,13 @@ import {
   BOARD_MODAL_AUTHOR,
   BOARD_MODAL_EMAIL,
   BOARD_MODAL_TITLE,
-  KEY_ACCESS_TOKEN,
   KEY_X_ORGANIZATION_CODE,
   LABEL,
 } from '@/constant/constant'
 import { API_URL_UPLOAD_IMG } from '@/constant/route/api-route-constant'
 import { useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleGetCookie } from '@/module/utils/moduleCookie'
 import { modulePostFileFetch } from '@/module/utils/moduleFetch'
+import { createAccessTokenManager } from '@/module/utils/token'
 import {
   type FailResponseType,
   type ModulePostFileFetchProps,
@@ -30,7 +29,7 @@ import { type BoardCategoryInputProps, type BoardModalInputGruopProps } from '@/
 export default function BoardModalInputGroup(props: BoardModalInputGruopProps) {
   const { currentBoard, titleInput, select, setSelect, setThumbNailUrl, selectList } = props
   const userInfo = useAppSelector((state) => state.userInfo)
-  const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
+  const { getAccessToken } = createAccessTokenManager
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
   const [imgTag, setImgTag] = useState<JSX.Element | null>(null)
 
@@ -47,7 +46,7 @@ export default function BoardModalInputGroup(props: BoardModalInputGruopProps) {
         file: formData,
         fetchUrl: API_URL_UPLOAD_IMG,
         header: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${getAccessToken()}`,
           [KEY_X_ORGANIZATION_CODE]: orgCode,
         },
       }

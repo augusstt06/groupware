@@ -6,24 +6,19 @@ import ErrorAlert from '../../alert/ErrorAlert'
 import Button from '../../button/Button'
 import Progressbar from '../../progressbar/Progressbar'
 
-import {
-  API_SUCCESS_CODE,
-  KEY_ACCESS_TOKEN,
-  KEY_ATTENDANCE,
-  KEY_X_ORGANIZATION_CODE,
-} from '@/constant/constant'
+import { API_SUCCESS_CODE, KEY_ATTENDANCE, KEY_X_ORGANIZATION_CODE } from '@/constant/constant'
 import { ERR_COOKIE_NOT_FOUND, errDefault, errDuplicate, errNotFound } from '@/constant/errorMsg'
 import { API_URL_ATTENDANCE } from '@/constant/route/api-route-constant'
 import { useAppDispatch, useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleGetCookie } from '@/module/utils/moduleCookie'
 import { modulePatchFetch, modulePostFetch } from '@/module/utils/moduleFetch'
+import { createAccessTokenManager } from '@/module/utils/token'
 import { updateAttendanceStatusReducer } from '@/store/reducers/main/userInfoReducer'
 import { type FailResponseType, type ModulePostFetchProps } from '@/types/module'
 import { type HistoryCardProps } from '@/types/ui/card'
 
 export default function HistoryCard(props: HistoryCardProps) {
   const dispatch = useAppDispatch()
-  const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
+  const { getAccessToken } = createAccessTokenManager
   const [elapsed, setElapsed] = useState('0')
   const [convertTime, setConvertTime] = useState('0')
   const attendanceState = useAppSelector((state) => state.userInfo[KEY_ATTENDANCE])
@@ -60,7 +55,6 @@ export default function HistoryCard(props: HistoryCardProps) {
     return result
   }
 
-  // FIXME: 이거 dialog로 변경하기 에러
   const fetchPostAttendance = async () => {
     try {
       const fetchProps: ModulePostFetchProps = {
@@ -70,7 +64,7 @@ export default function HistoryCard(props: HistoryCardProps) {
         },
         fetchUrl: API_URL_ATTENDANCE,
         header: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${getAccessToken()}`,
           [KEY_X_ORGANIZATION_CODE]: orgCode,
         },
       }
@@ -104,7 +98,7 @@ export default function HistoryCard(props: HistoryCardProps) {
         },
         fetchUrl: API_URL_ATTENDANCE,
         header: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${getAccessToken()}`,
           [KEY_X_ORGANIZATION_CODE]: orgCode,
         },
       }

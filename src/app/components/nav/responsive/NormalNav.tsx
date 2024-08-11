@@ -4,9 +4,8 @@ import { IoIosArrowDown, IoMdClose } from 'react-icons/io'
 import DarkmodeBtn from '../../button/DarkmodeBtn'
 import UserStateModal from '../../modal/nav/UserStateModal'
 
-import { KEY_ACCESS_TOKEN } from '@/constant/constant'
 import { ERR_COOKIE_NOT_FOUND } from '@/constant/errorMsg'
-import { moduleGetCookie } from '@/module/utils/moduleCookie'
+import { createAccessTokenManager } from '@/module/utils/token'
 import { type NavNormalMenuProps } from '@/types/ui/nav'
 
 export default function NormalNav(props: NavNormalMenuProps) {
@@ -20,14 +19,13 @@ export default function NormalNav(props: NavNormalMenuProps) {
     setIsUserStateOpen,
   } = props
 
-  const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
-
+  const { getAccessToken } = createAccessTokenManager
   return (
     <div className="flex flex-row items-center">
       <a className="hidden text-gray-800 view-icon smooth-transition md:inline hover:scale-125 hover:text-yellow-500 dark:hover:text-yellow-500 dark:text-white">
         <DarkmodeBtn />
       </a>
-      {accessToken !== ERR_COOKIE_NOT_FOUND ? (
+      {getAccessToken() !== ERR_COOKIE_NOT_FOUND ? (
         <a className="relative hidden md:inline">
           <button
             type="button"

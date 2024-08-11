@@ -9,7 +9,6 @@ import CreateProjectModal from './_childs/modal/CreateProjectModal'
 
 import ModalHub from '@/components/modal/Modal'
 import {
-  KEY_ACCESS_TOKEN,
   KEY_X_ORGANIZATION_CODE,
   MODAL_BTN_CREATE,
   MODAL_CRAETE_PROJECT,
@@ -37,8 +36,8 @@ import {
 } from '@/constant/route/api-route-constant'
 import useInput from '@/module/hooks/reactHooks/useInput'
 import { useAppDispatch, useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleGetCookie } from '@/module/utils/moduleCookie'
 import { moduleGetFetch, modulePostFetch } from '@/module/utils/moduleFetch'
+import { createAccessTokenManager } from '@/module/utils/token'
 import { createProjectModalReducer } from '@/store/reducers/project/projectModalReducer'
 import { type DialogBtnValueType, type SuccessResponseType } from '@/types/module'
 import {
@@ -48,7 +47,7 @@ import {
 } from '@/types/variable'
 
 export default function Project() {
-  const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
+  const { getAccessToken } = createAccessTokenManager
   const queryClient = useQueryClient()
   const dispatch = useAppDispatch()
   const dialogRef = useRef<HTMLDialogElement | null>(null)
@@ -111,7 +110,7 @@ export default function Project() {
         },
         fetchUrl: API_URL_PROJECTS,
         header: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${getAccessToken()}`,
           [KEY_X_ORGANIZATION_CODE]: orgCode,
         },
       })
@@ -186,7 +185,7 @@ export default function Project() {
         },
         fetchUrl: decideFetchUrl(),
         header: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${getAccessToken()}`,
           [KEY_X_ORGANIZATION_CODE]: orgCode,
         },
       })

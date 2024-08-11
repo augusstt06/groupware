@@ -39,6 +39,7 @@ import { useAppDispatch, useAppSelector } from '@/module/hooks/reduxHooks'
 import { moduleDeleteCookies, moduleGetCookie } from '@/module/utils/moduleCookie'
 import { modulePostFetch } from '@/module/utils/moduleFetch'
 import { moduleDeleteStorage } from '@/module/utils/moduleStorage'
+import { createAccessTokenManager } from '@/module/utils/token'
 import { updateLoginCompleteReducer } from '@/store/reducers/maintain/maintainReducer'
 import { type FailResponseType, type ModulePostFetchProps } from '@/types/module'
 
@@ -46,7 +47,7 @@ export default function RegisterOrgLogin() {
   const router = useRouter()
   const orgButtonRef = useRef<HTMLButtonElement>(null)
   const dispatch = useAppDispatch()
-  const [accessToken, setAccessToken] = useState(moduleGetCookie(KEY_ACCESS_TOKEN))
+  const { getAccessToken, setAccessToken } = createAccessTokenManager
   const loginCompleteState = useAppSelector((state) => state.maintain['login-complete'])
   const orgState = useAppSelector((state) => state.orgInfo)
   const [organization, setOrganization] = useState('')
@@ -108,7 +109,7 @@ export default function RegisterOrgLogin() {
               },
               fetchUrl: API_URL_CREATE_ORG,
               header: {
-                Authorization: `Bearer ${accessToken}`,
+                Authorization: `Bearer ${getAccessToken()}`,
               },
             }
           : {
@@ -117,7 +118,7 @@ export default function RegisterOrgLogin() {
               },
               fetchUrl: API_URL_JOIN_ORG,
               header: {
-                Authorization: `Bearer ${accessToken}`,
+                Authorization: `Bearer ${getAccessToken()}`,
               },
             }
       const res = await modulePostFetch<string>(fetchProps)
@@ -151,15 +152,16 @@ export default function RegisterOrgLogin() {
     void fetchOrg()
   }
   useEffect(() => {
-    if (accessToken !== ERR_COOKIE_NOT_FOUND && loginCompleteState === TRUE) {
+    if (getAccessToken() !== ERR_COOKIE_NOT_FOUND && loginCompleteState === TRUE) {
       router.push(ROUTE_MAIN)
       return
     }
+    // FIXME: 아래 함수 로직 확인해서 모듈에 넣을것 생각하기
     const checkAccessToken = () => {
       const newAccessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
       if (newAccessToken === ERR_COOKIE_NOT_FOUND) {
         router.push(ROUTE_ERR_NOT_FOUND_ACCESS_TOKEN)
-      } else if (newAccessToken !== accessToken) {
+      } else if (newAccessToken !== getAccessToken()) {
         setAccessToken(newAccessToken)
       }
       if (loginCompleteState === TRUE) {
@@ -172,7 +174,7 @@ export default function RegisterOrgLogin() {
     return () => {
       clearInterval(intervalId)
     }
-  }, [accessToken])
+  }, [getAccessToken()])
 
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {

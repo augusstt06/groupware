@@ -2,11 +2,11 @@
 import { useEffect } from 'react'
 
 import Input from '@/components/input/Input'
-import { API_SUCCESS_CODE, KEY_ACCESS_TOKEN } from '@/constant/constant'
+import { API_SUCCESS_CODE } from '@/constant/constant'
 import useInput from '@/module/hooks/reactHooks/useInput'
 import { useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleGetCookie } from '@/module/utils/moduleCookie'
 import { modulePatchFetch } from '@/module/utils/moduleFetch'
+import { createAccessTokenManager } from '@/module/utils/token'
 import { type FailResponseType } from '@/types/module'
 
 type Props = {
@@ -15,7 +15,7 @@ type Props = {
 const ChangePwd = (props: Props) => {
   const { updateClickEvent } = props
   const user = useAppSelector((state) => state.userInfo.extraInfo)
-  const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
+  const { getAccessToken } = createAccessTokenManager
   const currentPwd = useInput('')
   const newPwd = useInput('')
   const confirmPwd = useInput('')
@@ -39,7 +39,7 @@ const ChangePwd = (props: Props) => {
         data: patchData,
         fetchUrl: API_ENDPOINT,
         header: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${getAccessToken()}`,
         },
       })
       if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)

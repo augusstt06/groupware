@@ -9,7 +9,6 @@ import { FaRegStar, FaStar } from 'react-icons/fa'
 import Dialog from '../../modal/dialog/Dialog'
 
 import {
-  KEY_ACCESS_TOKEN,
   KEY_X_ORGANIZATION_CODE,
   PROJECT_CARD_REAL_COLOR_BLUE,
   PROJECT_CARD_REAL_COLOR_GREEN,
@@ -27,8 +26,8 @@ import {
 import { API_URL_PROJECT_STAR, API_URL_PROJECT_UNSTAR } from '@/constant/route/api-route-constant'
 import { ROUTE_PROJECT_DETAIL } from '@/constant/route/route-constant'
 import { useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleGetCookie } from '@/module/utils/moduleCookie'
 import { moduleDeleteFetchWithBody, modulePostFetch } from '@/module/utils/moduleFetch'
+import { createAccessTokenManager } from '@/module/utils/token'
 import { type DialogBtnValueType } from '@/types/module'
 import { type ProjectCardProps } from '@/types/ui/card'
 import { type DialogTextType } from '@/types/variable'
@@ -51,7 +50,7 @@ export default function ProjectCard(props: ProjectCardProps) {
     sub: '',
   })
   // FIXME: response에 star 들어오면 별모양 바꾸기
-  const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
+  const { getAccessToken } = createAccessTokenManager
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
 
   const { mutate: star } = useMutation({
@@ -63,7 +62,7 @@ export default function ProjectCard(props: ProjectCardProps) {
         },
         fetchUrl: API_URL_PROJECT_STAR,
         header: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${getAccessToken()}`,
           [KEY_X_ORGANIZATION_CODE]: orgCode,
         },
       })
@@ -88,7 +87,7 @@ export default function ProjectCard(props: ProjectCardProps) {
         },
         fetchUrl: API_URL_PROJECT_UNSTAR,
         header: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${getAccessToken()}`,
           [KEY_X_ORGANIZATION_CODE]: orgCode,
         },
       })

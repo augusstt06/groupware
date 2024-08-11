@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { useParams, useRouter } from 'next/navigation'
+import { useParams } from 'next/navigation'
 
 import ProjectDetailHub from '../../_childs/hub/detail/ProjectDetailHub'
 import InviteProjectMemberModal from '../../_childs/modal/InviteProjectMemberModal'
@@ -12,8 +12,6 @@ import CreateProjectIssueModal from '../../_childs/modal/issues/category/CreateP
 import ModalHub from '@/components/modal/Modal'
 import ProjectDetailTab from '@/components/tab/project/ProjectDetailTab'
 import {
-  KEY_ACCESS_TOKEN,
-  KEY_LOGIN_COMPLETE,
   KEY_X_ORGANIZATION_CODE,
   MODAL_BTN_SAVE,
   MODAL_CREATE_PROJECT_ISSUE,
@@ -34,9 +32,8 @@ import {
   API_URL_PROJECTS,
 } from '@/constant/route/api-route-constant'
 import { useAppDispatch, useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleCheckUserState } from '@/module/utils/check/moduleCheckUserState'
-import { moduleGetCookie } from '@/module/utils/moduleCookie'
 import { moduleGetFetch, modulePostFetch } from '@/module/utils/moduleFetch'
+import { createAccessTokenManager } from '@/module/utils/token'
 import { changeIssueProjectIdReducer } from '@/store/reducers/project/projectIssueReducer'
 import {
   createProjectIssueModalOpenReducer,
@@ -58,7 +55,6 @@ import {
 
 export default function ProjectDetail() {
   const dispatch = useAppDispatch()
-  const router = useRouter()
   const query = useParams()
   const dialogRef = useRef<HTMLDialogElement | null>(null)
   const queryClient = useQueryClient()
@@ -70,7 +66,7 @@ export default function ProjectDetail() {
   const issueState = useAppSelector((state) => state.projectIssue)
   const taskCategory = useAppSelector((state) => state.projectDetailCategory.task)
 
-  const [accessToken, setAccessToken] = useState(moduleGetCookie(KEY_ACCESS_TOKEN))
+  const { getAccessToken } = createAccessTokenManager
   const orgId = useAppSelector((state) => state.userInfo.extraInfo.organizationId)
   const myUserId = useAppSelector((state) => state.userInfo.extraInfo.userId)
   const [projectDetailId, setProjectDetailId] = useState<number>(0)
@@ -88,7 +84,6 @@ export default function ProjectDetail() {
   })
   const [inviteList, setInviteList] = useState<ColleagueType[]>([])
   const [filterIssueList, setFilterIssueList] = useState<ProjectIssueType[] | null>()
-  const loginCompleteState = useAppSelector((state) => state.maintain[KEY_LOGIN_COMPLETE])
   const [keyForProjectDetailHub, setKeyForProjectDetailHub] = useState(0)
   const isCreateProjectIssueModalOpen = useAppSelector(
     (state) => state.projectModal.isCreateProjectIssueModalOpen,
@@ -124,7 +119,7 @@ export default function ProjectDetail() {
           },
           fetchUrl: API_URL_PROJECT_ISSUE,
           header: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${getAccessToken()}`,
             [KEY_X_ORGANIZATION_CODE]: orgCode,
           },
         }
@@ -150,7 +145,7 @@ export default function ProjectDetail() {
           },
           fetchUrl: API_URL_PROJECT_ISSUE,
           header: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${getAccessToken()}`,
             [KEY_X_ORGANIZATION_CODE]: orgCode,
           },
         }
@@ -167,7 +162,7 @@ export default function ProjectDetail() {
           },
           fetchUrl: API_URL_PROJECT_ISSUE,
           header: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${getAccessToken()}`,
             [KEY_X_ORGANIZATION_CODE]: orgCode,
           },
         }
@@ -185,7 +180,7 @@ export default function ProjectDetail() {
           },
           fetchUrl: API_URL_PROJECT_ISSUE,
           header: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${getAccessToken()}`,
             [KEY_X_ORGANIZATION_CODE]: orgCode,
           },
         }
@@ -268,7 +263,7 @@ export default function ProjectDetail() {
         },
         fetchUrl: API_URL_PROJECTS,
         header: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${getAccessToken()}`,
           [KEY_X_ORGANIZATION_CODE]: orgCode,
         },
       })
@@ -289,7 +284,7 @@ export default function ProjectDetail() {
         },
         fetchUrl: API_URL_PROJECT_ISSUE_LIST,
         header: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${getAccessToken()}`,
           [KEY_X_ORGANIZATION_CODE]: orgCode,
         },
       })
@@ -336,7 +331,7 @@ export default function ProjectDetail() {
         },
         fetchUrl: API_URL_PROJECT_ISSUE_LIST_PINNED,
         header: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${getAccessToken()}`,
           [KEY_X_ORGANIZATION_CODE]: orgCode,
         },
       })
@@ -360,7 +355,7 @@ export default function ProjectDetail() {
         },
         fetchUrl: API_URL_COLLEAGUES,
         header: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${getAccessToken()}`,
           [KEY_X_ORGANIZATION_CODE]: orgCode,
         },
       })
@@ -380,7 +375,7 @@ export default function ProjectDetail() {
         },
         fetchUrl: API_URL_PROJECT_INVITE,
         header: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${getAccessToken()}`,
           [KEY_X_ORGANIZATION_CODE]: orgCode,
         },
       })
@@ -449,9 +444,6 @@ export default function ProjectDetail() {
     if (projectDetail !== undefined) void refetch()
   }, [projectDetail])
 
-  useEffect(() => {
-    moduleCheckUserState({ loginCompleteState, router, accessToken, setAccessToken })
-  }, [accessToken])
   return (
     <section className="w-full space-y-5 sort-vertical-flex h-4/5 ">
       {projectDetail !== undefined ? (

@@ -10,7 +10,6 @@ import { useParams, useRouter } from 'next/navigation'
 import {
   GOOGLE_CALENDAR_API_KEY,
   GOOGLE_CALENDAR_ID,
-  KEY_ACCESS_TOKEN,
   KEY_X_ORGANIZATION_CODE,
   PROJECT_DETAIL_CATEGORY_SCHEDULE,
   PROJECT_ISSUE_SCHEDULE_VALUE,
@@ -20,8 +19,8 @@ import {
 import { API_URL_PROJECT_ISSUE_LIST } from '@/constant/route/api-route-constant'
 import { ROUTE_PROJECT } from '@/constant/route/route-constant'
 import { useAppDispatch, useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleGetCookie } from '@/module/utils/moduleCookie'
 import { moduleGetFetch } from '@/module/utils/moduleFetch'
+import { createAccessTokenManager } from '@/module/utils/token'
 import {
   changeProjectDetailCategoryReducer,
   changeProjectDetailScheduleCategoryReducer,
@@ -37,7 +36,7 @@ export default function ProjectDetailSchedule() {
   const router = useRouter()
   const query = useParams()
   const userId = useAppSelector((state) => state.userInfo.extraInfo.userId)
-  const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
+  const { getAccessToken } = createAccessTokenManager
   const sidebarTitle = useAppSelector((state) => state.projectDetailCategory.schedule)
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
   const dispatch = useAppDispatch()
@@ -85,7 +84,7 @@ export default function ProjectDetailSchedule() {
         },
         fetchUrl: API_URL_PROJECT_ISSUE_LIST,
         header: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${getAccessToken()}`,
           [KEY_X_ORGANIZATION_CODE]: orgCode,
         },
       })

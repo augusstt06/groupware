@@ -9,7 +9,6 @@ import RegisterInfo from './_childs/userRegister/RegisterInfo'
 import ErrorAlert from '@/components/alert/ErrorAlert'
 import Button from '@/components/button/Button'
 import {
-  KEY_ACCESS_TOKEN,
   REGISTER_EMAIL,
   REGISTER_NAME,
   REGISTER_ORG_DESCRIPTION,
@@ -27,9 +26,9 @@ import {
 import { API_URL_LOGIN, API_URL_REGISTER } from '@/constant/route/api-route-constant'
 import { ROUTE_MAIN, ROUTE_SIGNUP_ORG } from '@/constant/route/route-constant'
 import { useAppDispatch, useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleGetCookie, moduleSetCookies } from '@/module/utils/moduleCookie'
 import { modulePostFetch } from '@/module/utils/moduleFetch'
 import inputValidate from '@/module/utils/moduleInputValidate'
+import { createAccessTokenManager } from '@/module/utils/token'
 import { resetSignupInfoReducer } from '@/store/reducers/login/signupInfoReducer'
 import {
   type FailResponseType,
@@ -41,7 +40,7 @@ import {
 export default function Signup() {
   const signupButtonRef = useRef<HTMLButtonElement>(null)
   const dispatch = useAppDispatch()
-  const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
+  const { getAccessToken, setAccessToken } = createAccessTokenManager
   const loginCompleteState = useAppSelector((state) => state.maintain['login-complete'])
   const orgState = useAppSelector((state) => state.orgInfo)
   const signupState = useAppSelector((state) => state.signupInfo)
@@ -137,10 +136,8 @@ export default function Signup() {
       }
       const loginRes = await modulePostFetch<LoginResponseType>(fetchLoginProps)
       if (loginRes.status !== 200) throw new Error((loginRes as FailResponseType).message)
-      const accessToken = (loginRes as SuccessResponseType<LoginResponseType>).result.accessToken
-      moduleSetCookies({
-        [KEY_ACCESS_TOKEN]: accessToken,
-      })
+      const newToken = (loginRes as SuccessResponseType<LoginResponseType>).result.accessToken
+      setAccessToken(newToken)
       dispatch(resetSignupInfoReducer())
       router.push(ROUTE_SIGNUP_ORG)
     } catch (err) {
@@ -162,7 +159,7 @@ export default function Signup() {
     void fetchSignUp()
   }
   useEffect(() => {
-    if (accessToken !== ERR_COOKIE_NOT_FOUND) {
+    if (getAccessToken() !== ERR_COOKIE_NOT_FOUND) {
       if (loginCompleteState === TRUE) {
         router.push(ROUTE_MAIN)
         return

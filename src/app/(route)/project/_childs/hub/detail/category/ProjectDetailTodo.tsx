@@ -4,21 +4,17 @@ import { useQuery } from '@tanstack/react-query'
 import { useParams } from 'next/navigation'
 
 import ProjectDetailTodoCard from '@/components/card/project/detail/ProjectDetailTodoCard'
-import {
-  KEY_ACCESS_TOKEN,
-  KEY_X_ORGANIZATION_CODE,
-  PROJECT_ISSUE_TODO_VALUE,
-} from '@/constant/constant'
+import { KEY_X_ORGANIZATION_CODE, PROJECT_ISSUE_TODO_VALUE } from '@/constant/constant'
 import { API_URL_PROJECT_ISSUE_LIST } from '@/constant/route/api-route-constant'
 import { useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleGetCookie } from '@/module/utils/moduleCookie'
 import { moduleGetFetch } from '@/module/utils/moduleFetch'
+import { createAccessTokenManager } from '@/module/utils/token'
 import { type SuccessResponseType } from '@/types/module'
 import { type IssueResponseType, type ScheduleType } from '@/types/variable'
 
 export default function ProjectDetailTodo() {
   const query = useParams()
-  const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
+  const { getAccessToken } = createAccessTokenManager
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
   const [todoIssues, setTodoIssues] = useState<ScheduleType[]>([])
   const isDataInList = (list: ScheduleType[], newData: ScheduleType) => {
@@ -36,7 +32,7 @@ export default function ProjectDetailTodo() {
         },
         fetchUrl: API_URL_PROJECT_ISSUE_LIST,
         header: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${getAccessToken()}`,
           [KEY_X_ORGANIZATION_CODE]: orgCode,
         },
       })

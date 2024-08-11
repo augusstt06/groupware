@@ -1,8 +1,9 @@
 'use client'
 
-import { moduleDeleteCookies, moduleGetCookie } from '../moduleCookie'
+import { moduleDeleteCookies } from '../moduleCookie'
+import { createAccessTokenManager } from '../token'
 
-import { KEY_ACCESS_TOKEN, KEY_LOGIN_COMPLETE, TRUE } from '@/constant/constant'
+import { KEY_LOGIN_COMPLETE, TRUE } from '@/constant/constant'
 import { ERR_COOKIE_NOT_FOUND } from '@/constant/errorMsg'
 import {
   ROUTE_ERR_NOT_FOUND_ACCESS_TOKEN,
@@ -10,13 +11,11 @@ import {
 } from '@/constant/route/route-constant'
 import { type ModuleCheckUserStateProps } from '@/types/module'
 
-export const moduleCheckUserState = ({
-  loginCompleteState,
-  router,
-  accessToken,
-  setAccessToken,
-}: ModuleCheckUserStateProps) => {
-  if (accessToken === ERR_COOKIE_NOT_FOUND) {
+export const moduleCheckUserState = ({ loginCompleteState, router }: ModuleCheckUserStateProps) => {
+  const accessTokenManager = createAccessTokenManager
+  const { getAccessToken } = accessTokenManager
+
+  if (getAccessToken() === ERR_COOKIE_NOT_FOUND) {
     router.push(ROUTE_ERR_NOT_FOUND_ACCESS_TOKEN)
     return
   }
@@ -28,14 +27,12 @@ export const moduleCheckUserState = ({
   let isStop = false
   const checkInterval = () => {
     if (isStop) return
-    const newToken = moduleGetCookie(KEY_ACCESS_TOKEN)
 
-    if (newToken === ERR_COOKIE_NOT_FOUND) {
+    // FIXME: 이 부분 모듈로 뺴거나 다른곳에서 실시하기
+    if (getAccessToken() === ERR_COOKIE_NOT_FOUND) {
       moduleDeleteCookies(KEY_LOGIN_COMPLETE)
       router.push(ROUTE_ERR_NOT_FOUND_ACCESS_TOKEN)
       isStop = true
-    } else if (newToken !== accessToken) {
-      setAccessToken(newToken)
     }
   }
   setInterval(checkInterval, 500)

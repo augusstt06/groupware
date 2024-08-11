@@ -15,7 +15,6 @@ import ModalHub from '@/components/modal/Modal'
 import {
   INVITE_PROJECT,
   INVITE_TEAM,
-  KEY_ACCESS_TOKEN,
   KEY_UUID,
   KEY_X_ORGANIZATION_CODE,
   REGISTER_EMAIL,
@@ -32,12 +31,12 @@ import {
 import { ROUTE_PROJECT, ROUTE_TEAM } from '@/constant/route/route-constant'
 import useInput from '@/module/hooks/reactHooks/useInput'
 import { useAppDispatch, useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleDecodeToken, moduleGetCookie, moduleSetCookies } from '@/module/utils/moduleCookie'
 import {
   moduleGetFetch,
   modulePostFetch,
   modulePostFetchWithQuery,
 } from '@/module/utils/moduleFetch'
+import { createAccessTokenManager } from '@/module/utils/token'
 import {
   updateAttendanceStatusReducer,
   updateExtraUserInfoReducer,
@@ -46,7 +45,6 @@ import {
 import { updateLoginCompleteReducer } from '@/store/reducers/maintain/maintainReducer'
 import {
   type ApiResponseType,
-  type CustomDecodeTokenType,
   type DialogBtnValueType,
   type LoginResponseType,
   type ModuleGetFetchProps,
@@ -82,9 +80,9 @@ export default function Invite() {
     confirmText: '확인',
   })
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false)
-  const [accessToken] = useState(moduleGetCookie(KEY_ACCESS_TOKEN))
+  const { getAccessToken, setAccessToken, getUuid } = createAccessTokenManager
   const isLogin = () => {
-    if (accessToken === ERR_COOKIE_NOT_FOUND) return false
+    if (getAccessToken() === ERR_COOKIE_NOT_FOUND) return false
     return true
   }
 
@@ -109,7 +107,7 @@ export default function Invite() {
         },
         fetchUrl: decideFetchUrl(),
         header: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${getAccessToken()}`,
           [KEY_X_ORGANIZATION_CODE]: orgCode,
         },
       })
@@ -144,13 +142,9 @@ export default function Invite() {
       return res as SuccessResponseType<LoginResponseType>
     },
     onSuccess: async (data) => {
-      const accessToken = data.result.accessToken
-      const decodeToken = moduleDecodeToken(accessToken)
-      const uuid =
-        decodeToken !== ERR_COOKIE_NOT_FOUND
-          ? (decodeToken as CustomDecodeTokenType).uuid
-          : ERR_COOKIE_NOT_FOUND
-      moduleSetCookies({ [KEY_ACCESS_TOKEN]: accessToken })
+      const newToken = data.result.accessToken
+      const uuid = getUuid()
+      setAccessToken(newToken)
       dispatch(updateLoginCompleteReducer(TRUE))
       const getUserInfo = async () => {
         const getFetchUserProps: ModuleGetFetchProps = {
@@ -159,7 +153,7 @@ export default function Invite() {
           },
           fetchUrl: API_URL_GET_USERS,
           header: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${newToken}`,
           },
         }
         const res = await moduleGetFetch<ApiResponseType>(getFetchUserProps)

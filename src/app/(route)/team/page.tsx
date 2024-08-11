@@ -8,7 +8,6 @@ import CreateTeamModal from './_childs/modal/CreateTeamModal'
 
 import ModalHub from '@/components/modal/Modal'
 import {
-  KEY_ACCESS_TOKEN,
   KEY_X_ORGANIZATION_CODE,
   MODAL_BTN_CREATE,
   MODAL_CREATE_TEAM,
@@ -28,15 +27,15 @@ import {
 import { API_URL_TEAMS, API_URL_TEAMS_LIST } from '@/constant/route/api-route-constant'
 import useInput from '@/module/hooks/reactHooks/useInput'
 import { useAppDispatch, useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleGetCookie } from '@/module/utils/moduleCookie'
 import { moduleGetFetch, modulePostFetch } from '@/module/utils/moduleFetch'
+import { createAccessTokenManager } from '@/module/utils/token'
 import { createTeamModalReducer } from '@/store/reducers/team/teamModalReducer'
 import { type SuccessResponseType } from '@/types/module'
 import { type DialogTextType, type GetTeamListType, type TeamResponseType } from '@/types/variable'
 
 export default function Team() {
   // outer variables
-  const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
+  const { getAccessToken } = createAccessTokenManager
   const dispatch = useAppDispatch()
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
   const orgId = useAppSelector((state) => state.userInfo.extraInfo.organizationId)
@@ -137,7 +136,7 @@ export default function Team() {
         },
         fetchUrl: API_URL_TEAMS_LIST,
         header: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${getAccessToken()}`,
           [KEY_X_ORGANIZATION_CODE]: orgCode,
         },
       })
@@ -156,7 +155,7 @@ export default function Team() {
         },
         fetchUrl: API_URL_TEAMS,
         header: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${getAccessToken()}`,
           [KEY_X_ORGANIZATION_CODE]: orgCode,
         },
       })

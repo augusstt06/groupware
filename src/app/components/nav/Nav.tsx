@@ -12,10 +12,10 @@ import Dialog from '../modal/dialog/Dialog'
 import NormalNav from './responsive/NormalNav'
 import ResponsiveNav from './responsive/ResponsiveNav'
 
-import { KEY_ACCESS_TOKEN, KEY_LOGIN_COMPLETE, TRUE } from '@/constant/constant'
+import { KEY_LOGIN_COMPLETE, TRUE } from '@/constant/constant'
 import { ERR_COOKIE_NOT_FOUND } from '@/constant/errorMsg'
 import { useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleGetCookie } from '@/module/utils/moduleCookie'
+import { createAccessTokenManager } from '@/module/utils/token'
 import { type DialogBtnValueType } from '@/types/module'
 import { type RenderNavProps } from '@/types/ui/nav'
 import { type DialogTextType } from '@/types/variable'
@@ -73,7 +73,7 @@ export default function Nav() {
     }
   }
 
-  const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
+  const { getAccessToken } = createAccessTokenManager
   const loginCompleteState = useAppSelector((state) => state.maintain[KEY_LOGIN_COMPLETE])
 
   const [mount, setMount] = useState(false)
@@ -85,7 +85,9 @@ export default function Nav() {
   }
 
   const isNavRender = () => {
-    return mount && loginCompleteState === TRUE && accessToken !== ERR_COOKIE_NOT_FOUND && isRender
+    return (
+      mount && loginCompleteState === TRUE && getAccessToken() !== ERR_COOKIE_NOT_FOUND && isRender
+    )
   }
 
   useEffect(() => {

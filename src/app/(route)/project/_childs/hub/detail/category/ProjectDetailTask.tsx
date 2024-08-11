@@ -9,7 +9,6 @@ import { useParams } from 'next/navigation'
 import ProjectDetailTaskColumn from './ProjectDetailTaskColumn'
 
 import {
-  KEY_ACCESS_TOKEN,
   KEY_X_ORGANIZATION_CODE,
   PROJECT_DETAIL_CATEGORY_TASK,
   PROJECT_ISSUE_TASK_PROGRESS_COMPLETED_TITLE,
@@ -27,8 +26,8 @@ import {
   API_URL_PROJECT_ISSUE_REARRANGE,
 } from '@/constant/route/api-route-constant'
 import { useAppDispatch, useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleGetCookie } from '@/module/utils/moduleCookie'
 import { moduleGetFetch, modulePatchFetch } from '@/module/utils/moduleFetch'
+import { createAccessTokenManager } from '@/module/utils/token'
 import { changeProjectDetailCategoryReducer } from '@/store/reducers/project/projectDetailCategoryReducer'
 import { type SuccessResponseType } from '@/types/module'
 import {
@@ -39,7 +38,7 @@ import {
 } from '@/types/variable'
 
 export default function ProjectDetailTask() {
-  const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
+  const { getAccessToken } = createAccessTokenManager
   const orgCode = useAppSelector((state) => state.userInfo[KEY_X_ORGANIZATION_CODE])
   const query = useParams()
   const dispatch = useAppDispatch()
@@ -59,7 +58,7 @@ export default function ProjectDetailTask() {
         },
         fetchUrl: API_URL_PROJECT_ISSUE_LIST,
         header: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${getAccessToken()}`,
           [KEY_X_ORGANIZATION_CODE]: orgCode,
         },
       })
@@ -116,7 +115,7 @@ export default function ProjectDetailTask() {
         },
         fetchUrl: API_URL_PROJECT_ISSUE_REARRANGE,
         header: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${getAccessToken()}`,
           [KEY_X_ORGANIZATION_CODE]: orgCode,
         },
       })

@@ -1,10 +1,4 @@
-import {
-  type Dispatch,
-  type MutableRefObject,
-  type ReactEventHandler,
-  type ReactNode,
-  type SetStateAction,
-} from 'react'
+import { type Dispatch, type MutableRefObject, type ReactEventHandler, type ReactNode } from 'react'
 
 import { type JwtPayload } from 'jwt-decode'
 import { type AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime'
@@ -73,8 +67,6 @@ export type CustomDecodeTokenType = JwtPayload &
 export type ModuleCheckUserStateProps = {
   router: AppRouterInstance
   loginCompleteState: string
-  accessToken: string
-  setAccessToken: React.Dispatch<SetStateAction<string>>
 }
 
 export type ModuleCheckContentIsEmptyProps = {

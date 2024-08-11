@@ -10,7 +10,6 @@ import {
   BOARD_ANNOUNCE,
   BOARD_FREE,
   BOARD_MAIN_TITLE,
-  KEY_ACCESS_TOKEN,
   KEY_X_ORGANIZATION_CODE,
 } from '@/constant/constant'
 import {
@@ -20,8 +19,8 @@ import {
   API_URL_POSTINGS_MY_TEAM,
 } from '@/constant/route/api-route-constant'
 import { useAppDispatch, useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleGetCookie } from '@/module/utils/moduleCookie'
 import { moduleGetFetch } from '@/module/utils/moduleFetch'
+import { createAccessTokenManager } from '@/module/utils/token'
 import { categoryReduer } from '@/store/reducers/board/boardCategoryReducer'
 import { type ModuleGetFetchProps, type SuccessResponseType } from '@/types/module'
 import {
@@ -31,7 +30,8 @@ import {
 } from '@/types/variable'
 
 export default function Board() {
-  const accessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
+  const { getAccessToken } = createAccessTokenManager
+
   const dispatch = useAppDispatch()
   const userInfo = useAppSelector((state) => state.userInfo.extraInfo)
 
@@ -55,7 +55,7 @@ export default function Board() {
         },
         fetchUrl: API_URL_GET_MY_BOARD,
         header: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${getAccessToken()}`,
           [KEY_X_ORGANIZATION_CODE]: orgCode,
         },
       }
@@ -94,7 +94,7 @@ export default function Board() {
         },
         fetchUrl: decideFetchUrl(),
         header: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${getAccessToken()}`,
           [KEY_X_ORGANIZATION_CODE]: orgCode,
         },
       }
