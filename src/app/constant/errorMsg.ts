@@ -17,6 +17,7 @@ export const errExist = (description: string) => {
 export const ERR_INPUT_ERROR = '입력값이 잘못되었습니다.'
 export const ERR_INTERNAL_SERVER = '통신오류가 발생했습니다. 다시 시도해 주세요'
 export const ERR_COOKIE_NOT_FOUND = 'cookies not found'
+export const ERR_ACCESS = 'Access to accessToken is restricted'
 
 // Response Error Message
 export const ERR_MESSAGE_USER_EXIST = 'user already exists'

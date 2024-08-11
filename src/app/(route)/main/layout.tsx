@@ -21,6 +21,7 @@ export default function MainLayout({ children }: ReactProps) {
   const router = useRouter()
   const dispatch = useAppDispatch()
   const isSettingOpen = useAppSelector((state) => state.settingModal.isOpen)
+  // 클로저로 관리
   const [accessToken, setAccessToken] = useState(moduleGetCookie(KEY_ACCESS_TOKEN))
   const decodeToken = moduleDecodeToken(accessToken)
 
