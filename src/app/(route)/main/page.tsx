@@ -137,7 +137,6 @@ export default function Main() {
       return currentPost
     },
   })
-  // FIXME: useEffect 필요한지 생각해보기
   useEffect(() => {
     if (postings !== undefined) setCurrentPostings(postings)
   }, [postings])
