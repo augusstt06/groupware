@@ -14,6 +14,7 @@ import {
   BOARD_MODAL_TITLE,
   KEY_ACCESS_TOKEN,
   KEY_X_ORGANIZATION_CODE,
+  LABEL,
 } from '@/constant/constant'
 import { API_URL_UPLOAD_IMG } from '@/constant/route/api-route-constant'
 import { useAppSelector } from '@/module/hooks/reduxHooks'
@@ -102,7 +103,7 @@ export default function BoardModalInputGroup(props: BoardModalInputGruopProps) {
       />
       {inputList.map((data) => (
         <div className="p-2" key={data.title}>
-          <Label title={data.title} />
+          <Label category={LABEL} childs={data.title} />
           {data.readonly ? (
             <Input
               isLabel={false}
@@ -125,12 +126,12 @@ export default function BoardModalInputGroup(props: BoardModalInputGruopProps) {
           )}
         </div>
       ))}
-      <div className="h-40 p-2 ">
+      <div className=" h-40 p-2">
         <div className="sort-row-flex">
-          <Label title="썸네일" />
+          <Label category={LABEL} childs={'썸네일'} />
 
           {imgTag === null ? (
-            <label htmlFor="imginput" className="mb-2 ml-3 sort-row-flex">
+            <label htmlFor="imginput" className="sort-row-flex mb-2 ml-3">
               <AiOutlinePicture className="w-4 h-4 cursor-pointer" />
               <input
                 type="file"
@@ -143,7 +144,7 @@ export default function BoardModalInputGroup(props: BoardModalInputGruopProps) {
             <></>
           )}
         </div>
-        <div className="flex items-center justify-center h-full truncate border-2 dark:border-white-500">
+        <div className="dark:border-white-500 flex items-center justify-center h-full truncate border-2">
           {imgTag ?? (
             <label htmlFor="imginput" className="text-gray-400">
               <AiOutlinePicture className="w-10 h-10 cursor-pointer" />
@@ -178,7 +179,7 @@ function BoardCategoryInput(props: BoardCategoryInputProps) {
         />
       ) : (
         <>
-          <Label title="게시판" />
+          <Label category={LABEL} childs={'게시판'} />
           <select
             id="boardCategory"
             onChange={handleSelectChange}

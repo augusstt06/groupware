@@ -5,8 +5,8 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { AiOutlineMail } from 'react-icons/ai'
 
-import { Label, LabelIcon } from '@/components/label/Label'
-import { KEY_ACCESS_TOKEN, REGISTER_EMAIL } from '@/constant/constant'
+import { Label } from '@/components/label/Label'
+import { KEY_ACCESS_TOKEN, LABEL, LABEL_ICON, REGISTER_EMAIL } from '@/constant/constant'
 import { ERR_COOKIE_NOT_FOUND } from '@/constant/errorMsg'
 import { ROUTE_LOGIN, ROUTE_MAIN } from '@/constant/route/route-constant'
 import useInput from '@/module/hooks/reactHooks/useInput'
@@ -24,16 +24,16 @@ export default function FindPwd() {
     }
   }, [])
   return (
-    <div className="justify-center h-screen px-4 sort-vertical-flex place-content-center">
-      <div className="justify-center mb-5 sort-vertical-flex">
+    <div className="sort-vertical-flex place-content-center justify-center h-screen px-4">
+      <div className="sort-vertical-flex justify-center mb-5">
         <div className="mb-6 text-xl font-bold">비밀번호 찾기</div>
         <div className="text-sm">회원정보의 이메일로 비밀번호 재설정 메일이 발송됩니다.</div>
       </div>
-      <div className="w-4/5 mt-3 md:w-2/5">
+      <div className="md:w-2/5 w-4/5 mt-3">
         <div className="w-full">
-          <Label title={REGISTER_EMAIL} />
+          <Label category={LABEL} childs={REGISTER_EMAIL} />
           <div className="relative flex mt-2 mb-6">
-            <LabelIcon icon={<AiOutlineMail />} />
+            <Label category={LABEL_ICON} childs={<AiOutlineMail />} />
             <input
               type="text"
               value={emailInput.value}
@@ -51,7 +51,7 @@ export default function FindPwd() {
       >
         발송하기
       </button>
-      <div className="text-sm text-gray-400 hover:text-gray-200">
+      <div className="hover:text-gray-200 text-sm text-gray-400">
         <Link href={ROUTE_LOGIN}>메인으로</Link>
       </div>
     </div>

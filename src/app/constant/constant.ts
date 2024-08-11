@@ -6,7 +6,7 @@ export const KAKAO_APP_KEY = process.env.NEXT_PUBLIC_KAKAO_APP_KEY as string
 export const GOOGLE_CALENDAR_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_CALENDAR_API_KEY as string
 export const GOOGLE_CALENDAR_ID = process.env.NEXT_PUBLIC_GOOGLE_CALENDAR_ID as string
 
-// valite in signup
+// validate in signup
 export const VALIDATE_EMAIL_TYPE = 'email'
 export const VALIDATE_PWD_TYPE = 'pwd'
 export const VALIDATE_PHONE_NUM_TYPE = 'phoneNumber'
@@ -194,3 +194,7 @@ export const ORG = 'org'
 export const PJT = 'project'
 export const NAME = 'name'
 export const TEAM = 'team'
+
+// label component
+export const LABEL = 'label'
+export const LABEL_ICON = 'label-icon'
