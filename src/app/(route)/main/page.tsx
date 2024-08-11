@@ -149,7 +149,6 @@ export default function Main() {
     if (error !== null) failFetchUserInfo()
   }, [error])
 
-  // FIXME: 동작 확인하기
   if (checkTokenExpired(accessTokenTime)) {
     void moduleRefreshToken(accessToken)
   }

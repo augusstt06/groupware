@@ -69,7 +69,6 @@ export default function Board() {
     dispatch(categoryReduer(myBoardCategory))
   }
 
-  // FIXME: api url check
   const decideFetchUrl = () => {
     switch (selectBoard) {
       case BOARD_ANNOUNCE:
