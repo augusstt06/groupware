@@ -27,7 +27,7 @@ import {
 import { API_URL_TEAMS, API_URL_TEAMS_LIST } from '@/constant/route/api-route-constant'
 import useInput from '@/module/hooks/reactHooks/useInput'
 import { useAppDispatch, useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleGetFetch, modulePostFetch } from '@/module/utils/moduleFetch'
+import { moduleGetFetch, modulePostFetch } from '@/module/utils/fetch'
 import { createAccessTokenManager } from '@/module/utils/token'
 import { createTeamModalReducer } from '@/store/reducers/team/teamModalReducer'
 import { type SuccessResponseType } from '@/types/module'

@@ -12,8 +12,6 @@ import Button from '@/components/button/Button'
 import {
   API_SUCCESS_CODE,
   FALSE,
-  KEY_ACCESS_TOKEN,
-  KEY_LOGIN_COMPLETE,
   ORG_CREATE,
   ORG_JOIN,
   REGISTER_ORG_DESCRIPTION,
@@ -36,9 +34,8 @@ import {
   ROUTE_SIGNUP_COMPLETE,
 } from '@/constant/route/route-constant'
 import { useAppDispatch, useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleDeleteCookies, moduleGetCookie } from '@/module/utils/moduleCookie'
-import { modulePostFetch } from '@/module/utils/moduleFetch'
-import { moduleDeleteStorage } from '@/module/utils/moduleStorage'
+import { modulePostFetch } from '@/module/utils/fetch'
+import { deleteStorage } from '@/module/utils/storage'
 import { createAccessTokenManager } from '@/module/utils/token'
 import { updateLoginCompleteReducer } from '@/store/reducers/maintain/maintainReducer'
 import { type FailResponseType, type ModulePostFetchProps } from '@/types/module'
@@ -47,7 +44,7 @@ export default function RegisterOrgLogin() {
   const router = useRouter()
   const orgButtonRef = useRef<HTMLButtonElement>(null)
   const dispatch = useAppDispatch()
-  const { getAccessToken, setAccessToken } = createAccessTokenManager
+  const { getAccessToken, setAccessToken, deleteAccessToken } = createAccessTokenManager
   const loginCompleteState = useAppSelector((state) => state.maintain['login-complete'])
   const orgState = useAppSelector((state) => state.orgInfo)
   const [organization, setOrganization] = useState('')
@@ -124,9 +121,9 @@ export default function RegisterOrgLogin() {
       const res = await modulePostFetch<string>(fetchProps)
       if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)
 
-      moduleDeleteStorage([REGISTER_ORG_DESCRIPTION, REGISTER_ORG_NAME, REGISTER_ORG_JOIN])
+      deleteStorage([REGISTER_ORG_DESCRIPTION, REGISTER_ORG_NAME, REGISTER_ORG_JOIN])
       dispatch(updateLoginCompleteReducer(FALSE))
-      moduleDeleteCookies(KEY_ACCESS_TOKEN)
+      deleteAccessToken()
       router.push(ROUTE_SIGNUP_COMPLETE)
     } catch (err) {
       if (err instanceof Error) {
@@ -158,14 +155,14 @@ export default function RegisterOrgLogin() {
     }
     // FIXME: 아래 함수 로직 확인해서 모듈에 넣을것 생각하기
     const checkAccessToken = () => {
-      const newAccessToken = moduleGetCookie(KEY_ACCESS_TOKEN)
+      const newAccessToken = getAccessToken()
       if (newAccessToken === ERR_COOKIE_NOT_FOUND) {
         router.push(ROUTE_ERR_NOT_FOUND_ACCESS_TOKEN)
       } else if (newAccessToken !== getAccessToken()) {
         setAccessToken(newAccessToken)
       }
       if (loginCompleteState === TRUE) {
-        moduleDeleteCookies(KEY_LOGIN_COMPLETE)
+        deleteAccessToken()
       }
     }
 

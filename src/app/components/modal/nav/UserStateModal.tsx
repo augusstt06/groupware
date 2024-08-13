@@ -5,11 +5,10 @@ import { IoSettingsOutline } from 'react-icons/io5'
 
 import Button from '../../button/Button'
 
-import { API_SUCCESS_CODE, FALSE, KEY_ACCESS_TOKEN } from '@/constant/constant'
+import { API_SUCCESS_CODE, FALSE } from '@/constant/constant'
 import { API_URL_LOGOUT } from '@/constant/route/api-route-constant'
 import { useAppDispatch, useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleDeleteCookies } from '@/module/utils/moduleCookie'
-import { modulePostFetch } from '@/module/utils/moduleFetch'
+import { modulePostFetch } from '@/module/utils/fetch'
 import { createAccessTokenManager } from '@/module/utils/token'
 import { resetUserInfoReducer } from '@/store/reducers/main/userInfoReducer'
 import { updateLoginCompleteReducer } from '@/store/reducers/maintain/maintainReducer'
@@ -20,7 +19,7 @@ import { type UserStateModalProps } from '@/types/ui/modal'
 export default function UserStateModal(props: UserStateModalProps) {
   const { changeDialogConfirmFn, handleOpenDialog, setIsUserStateOpen } = props
   const dispatch = useAppDispatch()
-  const { getAccessToken } = createAccessTokenManager
+  const { getAccessToken, deleteAccessToken } = createAccessTokenManager
   const attendanceStatus = useAppSelector((state) => state.userInfo.attendance)
 
   const menuRef = useRef<HTMLDivElement>(null)
@@ -40,7 +39,7 @@ export default function UserStateModal(props: UserStateModalProps) {
       }
       const res = await modulePostFetch<string>(fetchProps)
       if (res.status !== API_SUCCESS_CODE) throw new Error((res as FailResponseType).message)
-      moduleDeleteCookies(KEY_ACCESS_TOKEN)
+      deleteAccessToken()
       dispatch(updateLoginCompleteReducer(FALSE))
       dispatch(resetUserInfoReducer())
       setIsUserStateOpen(false)

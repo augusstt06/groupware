@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { FaN } from 'react-icons/fa6'
 
 import { ROUTE_POSTING_DETAIL } from '@/constant/route/route-constant'
-import { moduleConvertDate } from '@/module/utils/moduleTime'
+import { convertDate } from '@/module/utils/time'
 import { type BoardItemProps } from '@/types/pageType'
 
 export default function BoardItem(props: BoardItemProps) {
@@ -26,7 +26,7 @@ export default function BoardItem(props: BoardItemProps) {
       <div className="text-xs md:text-sm">
         <span className="p-1 mr-2">{boardListItem.position}</span>
         <span className="p-1 mr-2">{boardListItem.name}</span>
-        <span className="p-1 mr-2">{moduleConvertDate(boardListItem.createdAt, '.', false)}</span>
+        <span className="p-1 mr-2">{convertDate(boardListItem.createdAt, '.', false)}</span>
       </div>
     </div>
   )

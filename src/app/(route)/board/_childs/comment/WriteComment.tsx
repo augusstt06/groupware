@@ -9,7 +9,7 @@ import { API_SUCCESS_CODE, KEY_X_ORGANIZATION_CODE } from '@/constant/constant'
 import { API_URL_COMMENT_POSTING, API_URL_UPLOAD_IMG } from '@/constant/route/api-route-constant'
 import useInput from '@/module/hooks/reactHooks/useInput'
 import { useAppSelector } from '@/module/hooks/reduxHooks'
-import { modulePostFetch, modulePostFileFetch } from '@/module/utils/moduleFetch'
+import { modulePostFetch, modulePostFileFetch } from '@/module/utils/fetch'
 import { createAccessTokenManager } from '@/module/utils/token'
 import {
   type ApiResponseType,

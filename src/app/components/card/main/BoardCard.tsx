@@ -3,7 +3,7 @@ import { useRouter } from 'next/navigation'
 import { FaRegComment, FaRegHeart } from 'react-icons/fa'
 
 import { ROUTE_POSTING_DETAIL } from '@/constant/route/route-constant'
-import { moduleConvertDate } from '@/module/utils/moduleTime'
+import { convertDate } from '@/module/utils/time'
 import { type BoardCardType } from '@/types/ui/card'
 
 // const Viewbox = dynamic(async () => import('../../editor/TextViewer'), {
@@ -35,9 +35,7 @@ export default function BoardCard(props: BoardCardType) {
           <FaRegComment className="w-4 h-4 mr-1" />
           <span className="text-sm ">0</span>
         </div>
-        <span className="text-sm ">
-          {moduleConvertDate(content.updatedAt, '.', false).split(' ')[0]}
-        </span>
+        <span className="text-sm ">{convertDate(content.updatedAt, '.', false).split(' ')[0]}</span>
       </div>
     </div>
   )

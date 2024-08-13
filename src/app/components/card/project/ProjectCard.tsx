@@ -26,7 +26,7 @@ import {
 import { API_URL_PROJECT_STAR, API_URL_PROJECT_UNSTAR } from '@/constant/route/api-route-constant'
 import { ROUTE_PROJECT_DETAIL } from '@/constant/route/route-constant'
 import { useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleDeleteFetchWithBody, modulePostFetch } from '@/module/utils/moduleFetch'
+import { moduleDeleteFetchWithBody, modulePostFetch } from '@/module/utils/fetch'
 import { createAccessTokenManager } from '@/module/utils/token'
 import { type DialogBtnValueType } from '@/types/module'
 import { type ProjectCardProps } from '@/types/ui/card'

@@ -23,7 +23,7 @@ import {
 } from '@/constant/constant'
 import { API_URL_KAKAO_MAP, API_URL_PROJECT_ISSUE } from '@/constant/route/api-route-constant'
 import { useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleKaKaoGetFetch, modulePatchFetch } from '@/module/utils/moduleFetch'
+import { moduleKaKaoGetFetch, modulePatchFetch } from '@/module/utils/fetch'
 import { createAccessTokenManager } from '@/module/utils/token'
 import { type DialogBtnValueType, type ModulePostFetchProps } from '@/types/module'
 import {

@@ -23,8 +23,8 @@ import {
 import { API_URL_CHECK_EMAIL } from '@/constant/route/api-route-constant'
 import useInput from '@/module/hooks/reactHooks/useInput'
 import { useAppDispatch } from '@/module/hooks/reduxHooks'
-import { moduleGetFetch } from '@/module/utils/moduleFetch'
-import inputValidate from '@/module/utils/moduleInputValidate'
+import { moduleGetFetch } from '@/module/utils/fetch'
+import { inputValidate } from '@/module/utils/validate'
 import {
   emailReducer,
   nameReducer,

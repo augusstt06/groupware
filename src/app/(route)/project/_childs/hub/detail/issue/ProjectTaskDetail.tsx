@@ -32,7 +32,7 @@ import {
 } from '@/constant/constant'
 import { API_URL_PROJECT_ISSUE } from '@/constant/route/api-route-constant'
 import { useAppSelector } from '@/module/hooks/reduxHooks'
-import { modulePatchFetch } from '@/module/utils/moduleFetch'
+import { modulePatchFetch } from '@/module/utils/fetch'
 import { createAccessTokenManager } from '@/module/utils/token'
 import { type ModulePostFetchProps } from '@/types/module'
 import { type CalendarValue, type ProjectIssueDetailProps, type ValuePiece } from '@/types/pageType'

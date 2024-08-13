@@ -17,7 +17,7 @@ import {
 } from '@/constant/constant'
 import { API_URL_UPLOAD_IMG } from '@/constant/route/api-route-constant'
 import { useAppSelector } from '@/module/hooks/reduxHooks'
-import { modulePostFileFetch } from '@/module/utils/moduleFetch'
+import { modulePostFileFetch } from '@/module/utils/fetch'
 import { createAccessTokenManager } from '@/module/utils/token'
 import {
   type FailResponseType,

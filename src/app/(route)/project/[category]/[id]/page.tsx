@@ -16,7 +16,7 @@ import {
 import { API_URL_COMMENT_ISSUES, API_URL_PROJECT_ISSUE } from '@/constant/route/api-route-constant'
 import { ROUTE_PROJECT } from '@/constant/route/route-constant'
 import { useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleGetFetch } from '@/module/utils/moduleFetch'
+import { moduleGetFetch } from '@/module/utils/fetch'
 import { createAccessTokenManager } from '@/module/utils/token'
 import { type SuccessResponseType } from '@/types/module'
 import { type IssueDatailType } from '@/types/variable'

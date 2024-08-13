@@ -1,8 +1,8 @@
 import { deleteCookie, getCookie, setCookie } from 'cookies-next'
 import { jwtDecode } from 'jwt-decode'
 
-import { moduleDeleteCookies } from './moduleCookie'
-import { modulePostFetch } from './moduleFetch'
+import { moduleDeleteCookies } from './cookie'
+import { modulePostFetch } from './fetch'
 
 import { API_SUCCESS_CODE, KEY_ACCESS_TOKEN } from '@/constant/constant'
 import { ERR_COOKIE_NOT_FOUND } from '@/constant/errorMsg'

@@ -31,11 +31,7 @@ import {
 import { ROUTE_PROJECT, ROUTE_TEAM } from '@/constant/route/route-constant'
 import useInput from '@/module/hooks/reactHooks/useInput'
 import { useAppDispatch, useAppSelector } from '@/module/hooks/reduxHooks'
-import {
-  moduleGetFetch,
-  modulePostFetch,
-  modulePostFetchWithQuery,
-} from '@/module/utils/moduleFetch'
+import { moduleGetFetch, modulePostFetch, modulePostFetchWithQuery } from '@/module/utils/fetch'
 import { createAccessTokenManager } from '@/module/utils/token'
 import {
   updateAttendanceStatusReducer,

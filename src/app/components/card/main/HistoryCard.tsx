@@ -10,7 +10,7 @@ import { API_SUCCESS_CODE, KEY_ATTENDANCE, KEY_X_ORGANIZATION_CODE } from '@/con
 import { ERR_COOKIE_NOT_FOUND, errDefault, errDuplicate, errNotFound } from '@/constant/errorMsg'
 import { API_URL_ATTENDANCE } from '@/constant/route/api-route-constant'
 import { useAppDispatch, useAppSelector } from '@/module/hooks/reduxHooks'
-import { modulePatchFetch, modulePostFetch } from '@/module/utils/moduleFetch'
+import { modulePatchFetch, modulePostFetch } from '@/module/utils/fetch'
 import { createAccessTokenManager } from '@/module/utils/token'
 import { updateAttendanceStatusReducer } from '@/store/reducers/main/userInfoReducer'
 import { type FailResponseType, type ModulePostFetchProps } from '@/types/module'

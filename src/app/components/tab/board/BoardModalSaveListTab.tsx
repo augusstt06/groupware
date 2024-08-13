@@ -2,7 +2,7 @@ import { HiOutlinePencilAlt } from 'react-icons/hi'
 import { IoClose } from 'react-icons/io5'
 
 import { useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleConvertDate } from '@/module/utils/moduleTime'
+import { convertDate } from '@/module/utils/time'
 import { type BoardModalSaveListTabProps } from '@/types/ui/extra'
 
 export default function BoardModalSaveListTab(props: BoardModalSaveListTabProps) {
@@ -49,7 +49,7 @@ export default function BoardModalSaveListTab(props: BoardModalSaveListTabProps)
               <span className="p-1 mb-2 text-base">{extractFirstTag(data.content)}</span>
             </div>
             <div className="text-xs md:text-sm">
-              <span className="p-1 mr-2">{moduleConvertDate(data.createdAt, '.', false)}</span>
+              <span className="p-1 mr-2">{convertDate(data.createdAt, '.', false)}</span>
             </div>
           </div>
           {/* FIXME: 삭제 api 연결하기 */}

@@ -5,7 +5,7 @@ import Input from '@/components/input/Input'
 import { API_SUCCESS_CODE } from '@/constant/constant'
 import useInput from '@/module/hooks/reactHooks/useInput'
 import { useAppSelector } from '@/module/hooks/reduxHooks'
-import { modulePatchFetch } from '@/module/utils/moduleFetch'
+import { modulePatchFetch } from '@/module/utils/fetch'
 import { createAccessTokenManager } from '@/module/utils/token'
 import { type FailResponseType } from '@/types/module'
 

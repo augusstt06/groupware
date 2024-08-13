@@ -19,7 +19,7 @@ import {
   API_URL_POSTINGS_MY_TEAM,
 } from '@/constant/route/api-route-constant'
 import { useAppDispatch, useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleGetFetch } from '@/module/utils/moduleFetch'
+import { moduleGetFetch } from '@/module/utils/fetch'
 import { createAccessTokenManager } from '@/module/utils/token'
 import { categoryReduer } from '@/store/reducers/board/boardCategoryReducer'
 import { type ModuleGetFetchProps, type SuccessResponseType } from '@/types/module'

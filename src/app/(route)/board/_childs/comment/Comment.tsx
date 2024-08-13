@@ -10,7 +10,7 @@ import WriteComment from './WriteComment'
 import { API_SUCCESS_CODE, KEY_X_ORGANIZATION_CODE } from '@/constant/constant'
 import { API_URL_COMMENT, API_URL_COMMENT_LIKE } from '@/constant/route/api-route-constant'
 import { useAppDispatch, useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleDeleteFetch, modulePostFetch } from '@/module/utils/moduleFetch'
+import { moduleDeleteFetch, modulePostFetch } from '@/module/utils/fetch'
 import { createAccessTokenManager } from '@/module/utils/token'
 import {
   addCommentLikeReducer,

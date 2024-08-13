@@ -19,7 +19,7 @@ import {
 import { API_URL_PROJECT_ISSUE_LIST } from '@/constant/route/api-route-constant'
 import { ROUTE_PROJECT } from '@/constant/route/route-constant'
 import { useAppDispatch, useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleGetFetch } from '@/module/utils/moduleFetch'
+import { moduleGetFetch } from '@/module/utils/fetch'
 import { createAccessTokenManager } from '@/module/utils/token'
 import {
   changeProjectDetailCategoryReducer,

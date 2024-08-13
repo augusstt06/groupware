@@ -17,7 +17,7 @@ import {
 import { API_URL_GET_MY_BOARD } from '@/constant/route/api-route-constant'
 import { ROUTE_BOARD, ROUTE_MAIN, ROUTE_PROJECT, ROUTE_TEAM } from '@/constant/route/route-constant'
 import { useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleGetFetch } from '@/module/utils/moduleFetch'
+import { moduleGetFetch } from '@/module/utils/fetch'
 import { createAccessTokenManager } from '@/module/utils/token'
 import {
   type FailResponseType,

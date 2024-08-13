@@ -11,7 +11,7 @@ import { ERR_ORG_NOT_FOUND } from '@/constant/errorMsg'
 import { API_URL_GET_USERS, API_URL_POSTINGS_MY_ALL } from '@/constant/route/api-route-constant'
 import { ROUTE_ERR_NOT_FOUND_ORG_TOKEN } from '@/constant/route/route-constant'
 import { useAppDispatch, useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleGetFetch } from '@/module/utils/moduleFetch'
+import { moduleGetFetch } from '@/module/utils/fetch'
 import { createAccessTokenManager } from '@/module/utils/token'
 import {
   updateAttendanceStatusReducer,

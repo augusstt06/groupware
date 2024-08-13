@@ -2,7 +2,7 @@ import { FaHeart, FaRegComment } from 'react-icons/fa'
 import { IoIosArrowBack } from 'react-icons/io'
 import { MdRemoveRedEye } from 'react-icons/md'
 
-import { moduleConvertDate } from '@/module/utils/moduleTime'
+import { convertDate } from '@/module/utils/time'
 import { type DetailResponseType } from '@/types/variable'
 
 type PostingDetailHeaderProps = {
@@ -51,7 +51,7 @@ export default function PostingDetailHeader(props: PostingDetailHeaderProps) {
           <div className="flex flex-row justify-between">
             <div className="justify-start w-2/5 text-gray-400 sort-row-flex ">
               <span className="items-center justify-around mr-3 text-xs">
-                {moduleConvertDate(content?.createdAt, '.', false).split(' ')[0]}
+                {convertDate(content?.createdAt, '.', false).split(' ')[0]}
               </span>
               {/* 조회수 */}
               <div className="justify-around w-6 mr-2 text-xs sort-row-flex">

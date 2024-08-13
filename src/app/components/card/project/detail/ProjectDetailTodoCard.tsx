@@ -1,4 +1,4 @@
-import { moduleConvertDate } from '@/module/utils/moduleTime'
+import { convertDate } from '@/module/utils/time'
 import { type ProjectDetailTodoCardProps } from '@/types/ui/card'
 
 export default function ProjectDetailTodoCard(props: ProjectDetailTodoCardProps) {
@@ -9,7 +9,7 @@ export default function ProjectDetailTodoCard(props: ProjectDetailTodoCardProps)
       <h1 className="font-bold">{title}</h1>
       <div className="justify-between text-sm sort-row-flex">
         <div>{issuer.name}</div>
-        <div>{moduleConvertDate(endAt, '.', false)}</div>
+        <div>{convertDate(endAt, '.', false)}</div>
         <div className="w-4 h-4 bg-green-200 rounded-full"></div>
       </div>
     </div>

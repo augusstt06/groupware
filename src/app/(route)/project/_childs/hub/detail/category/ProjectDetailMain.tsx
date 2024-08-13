@@ -11,7 +11,7 @@ import {
   PROJECT_ISSUE_TODO_VALUE,
 } from '@/constant/constant'
 import { useAppDispatch } from '@/module/hooks/reduxHooks'
-import { moduleConvertDate } from '@/module/utils/moduleTime'
+import { convertDate } from '@/module/utils/time'
 import { changeProjectDetailCategoryReducer } from '@/store/reducers/project/projectDetailCategoryReducer'
 import {
   type InviteProjectMemberTableProps,
@@ -113,7 +113,7 @@ function DetailTable(props: ProjectDetailTableProps) {
     }
   }
   const sliceTime = () => {
-    const time = moduleConvertDate(props.issue.updatedAt, '.', false)
+    const time = convertDate(props.issue.updatedAt, '.', false)
     const [datePart] = time.split(' ')
 
     return datePart

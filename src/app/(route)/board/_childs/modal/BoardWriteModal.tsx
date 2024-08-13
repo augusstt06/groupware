@@ -16,9 +16,9 @@ import { API_URL_POSTINGS, API_URL_POSTINGS_PENDING } from '@/constant/route/api
 import { ROUTE_POSTING_DETAIL } from '@/constant/route/route-constant'
 import useInput from '@/module/hooks/reactHooks/useInput'
 import { useAppDispatch, useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleCheckContentIsEmpty } from '@/module/utils/check/moduleCheckContent'
-import { moduleDeleteFetch, moduleGetFetch, modulePostFetch } from '@/module/utils/moduleFetch'
+import { moduleDeleteFetch, moduleGetFetch, modulePostFetch } from '@/module/utils/fetch'
 import { createAccessTokenManager } from '@/module/utils/token'
+import { validateContentIsEmpty } from '@/module/utils/validate'
 import { openBoardWriteModalReducer } from '@/store/reducers/board/openBoardWriteModalReducer'
 import {
   type ApiResponseType,
@@ -189,7 +189,7 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
       editorContents: editorContent,
       inputValue: titleInput.value,
     }
-    moduleCheckContentIsEmpty(moduleProps)
+    validateContentIsEmpty(moduleProps)
   }
 
   const { mutate: postContent } = useMutation({
@@ -256,7 +256,7 @@ export default function BoardWriteModal(props: BoardWriteModalprops) {
       editorContents: editorContent,
       inputValue: titleInput.value,
     }
-    moduleCheckContentIsEmpty(moduleProps)
+    validateContentIsEmpty(moduleProps)
   }
 
   const allModalClose = () => {

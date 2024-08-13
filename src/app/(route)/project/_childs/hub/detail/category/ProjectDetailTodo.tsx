@@ -7,7 +7,7 @@ import ProjectDetailTodoCard from '@/components/card/project/detail/ProjectDetai
 import { KEY_X_ORGANIZATION_CODE, PROJECT_ISSUE_TODO_VALUE } from '@/constant/constant'
 import { API_URL_PROJECT_ISSUE_LIST } from '@/constant/route/api-route-constant'
 import { useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleGetFetch } from '@/module/utils/moduleFetch'
+import { moduleGetFetch } from '@/module/utils/fetch'
 import { createAccessTokenManager } from '@/module/utils/token'
 import { type SuccessResponseType } from '@/types/module'
 import { type IssueResponseType, type ScheduleType } from '@/types/variable'

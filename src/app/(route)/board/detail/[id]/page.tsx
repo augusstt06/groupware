@@ -22,7 +22,7 @@ import {
 } from '@/constant/route/api-route-constant'
 import { ROUTE_BOARD, ROUTE_ERR_NOT_FOUND_POSTING_DETAIL } from '@/constant/route/route-constant'
 import { useAppDispatch, useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleDeleteFetch, moduleGetFetch, modulePostFetch } from '@/module/utils/moduleFetch'
+import { moduleDeleteFetch, moduleGetFetch, modulePostFetch } from '@/module/utils/fetch'
 import { createAccessTokenManager } from '@/module/utils/token'
 import {
   addPostingLikeReducer,

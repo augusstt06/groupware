@@ -6,7 +6,7 @@ import InputWithLabel from '@/components/input/InputWithLabel'
 import { KAKAO_APP_KEY, KAKAO_AUTH_KEY } from '@/constant/constant'
 import { API_URL_KAKAO_MAP } from '@/constant/route/api-route-constant'
 import useInput from '@/module/hooks/reactHooks/useInput'
-import { moduleKaKaoGetFetch } from '@/module/utils/moduleFetch'
+import { moduleKaKaoGetFetch } from '@/module/utils/fetch'
 import { type KakaoMapProps, type SchedulePlaceProps, type SearchType } from '@/types/ui/modal'
 
 export default function SchedulePlace(props: SchedulePlaceProps) {

@@ -32,7 +32,7 @@ import {
   API_URL_PROJECTS,
 } from '@/constant/route/api-route-constant'
 import { useAppDispatch, useAppSelector } from '@/module/hooks/reduxHooks'
-import { moduleGetFetch, modulePostFetch } from '@/module/utils/moduleFetch'
+import { moduleGetFetch, modulePostFetch } from '@/module/utils/fetch'
 import { createAccessTokenManager } from '@/module/utils/token'
 import { changeIssueProjectIdReducer } from '@/store/reducers/project/projectIssueReducer'
 import {

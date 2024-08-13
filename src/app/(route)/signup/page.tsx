@@ -26,9 +26,10 @@ import {
 import { API_URL_LOGIN, API_URL_REGISTER } from '@/constant/route/api-route-constant'
 import { ROUTE_MAIN, ROUTE_SIGNUP_ORG } from '@/constant/route/route-constant'
 import { useAppDispatch, useAppSelector } from '@/module/hooks/reduxHooks'
-import { modulePostFetch } from '@/module/utils/moduleFetch'
-import inputValidate from '@/module/utils/moduleInputValidate'
+import { modulePostFetch } from '@/module/utils/fetch'
+import { deleteStorage } from '@/module/utils/storage'
 import { createAccessTokenManager } from '@/module/utils/token'
+import { inputValidate } from '@/module/utils/validate'
 import { resetSignupInfoReducer } from '@/store/reducers/login/signupInfoReducer'
 import {
   type FailResponseType,
@@ -169,11 +170,7 @@ export default function Signup() {
     if (orgState.createOrg.name !== '' || orgState.joinOrg.code !== '') {
       router.push(ROUTE_SIGNUP_ORG)
     }
-    const deleteStorage = (arr: string[]) => {
-      arr.forEach((name) => {
-        localStorage.removeItem(name)
-      })
-    }
+
     deleteStorage([
       REGISTER_EMAIL,
       REGISTER_NAME,
